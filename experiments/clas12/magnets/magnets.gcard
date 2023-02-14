@@ -1,12 +1,18 @@
 <gcard>
 
+	<option name="geometry" value="1400x1200"/>
 
-	<detector name="experiments/clas12/magnets/solenoid" factory="TEXT" variation="original"/>
+	<detector name="cad/" factory="CAD" />
 
-	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
-	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
+	<detector name="../targets/target"     factory="TEXT" variation="lH2"/>
+	<detector name="../fc/forwardCarriage" factory="TEXT" variation="original"/>
 
-<option name="ROTATE_FIELDMAP" value="clas12-newSolenoid, 90*deg, 0*deg, 0*deg"/>
-
+	<option name="NO_FIELD" value="all"/>
+	
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="FTFP_BERT + STD"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+	<option name="RECORD_OPTICALPHOTONS"   value="1"/>
 
 </gcard>

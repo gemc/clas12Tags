@@ -1,32 +1,36 @@
 <gcard>
-	
-	<detector name="../fc/forwardCarriage"      factory="TEXT" variation="TorusSymmetric"/>
- 	<detector name="../ftof/ftof"      factory="TEXT" variation="java"/>
-	<detector name="ltcc" factory="TEXT" variation="original"/>
-	<detector name="cad_cone/" factory="CAD"/>
-	<detector name="cad/" factory="CAD"/>
-
 
 	<option name="geometry" value="1400x1200"/>
 
-	<option name="INTEGRATEDRAW"   value="ltcc"/>
-	<option name="RECORD_OPTICALPHOTONS"  value="1"/>
-	<option name="RECORD_PASSBY"   value="1"/>
+	<detector name="../fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
+	<detector name="ltcc"      factory="TEXT" variation="rgm"/>
+	<detector name="cad_cone/" factory="CAD"/>
+	<detector name="cad/"      factory="CAD"/>
 
+	<option name="INTEGRATEDRAW"          value="ltcc"/>
+	<option name="RECORD_PASSBY"          value="1"/>
 
-	<option name="BEAM_P"        value="pi-, 6*GeV, 22.5*deg, 0*deg"/>
-	<option name="SPREAD_P"      value="4*GeV, 10*deg, 180*deg"/>
+	<!--	<option name="BEAM_P"        value="opticalphoton, 2.5*eV, 90*deg, 90*deg"/>-->
+	<option name="BEAM_P"        value="e-, 8*GeV, 15*deg, 60*deg"/>
+	<option name="SPREAD_P"      value="1*GeV, 5*deg, 40*deg"/>
 	<option name="BEAM_V"        value="(0,0,0)cm"/>
 	<option name="SPREAD_V"      value="(0,2.5)cm"/>
-	<option name="SCALE_FIELD" value="clas12-torus-big, -1"/>
+
+	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
+	<option name="SCALE_FIELD"      value="TorusSymmetric, -1"/>
 
 <!--
  <option name="SWITCH_MATERIALTO"  value="C4F10,HTCCgas"/>
  -->
 
-	<option name="OUTPUT"        value="evio, out.ev"/>
-	
-	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="FTFP_BERT + STD + Optical"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+	<option name="RECORD_OPTICALPHOTONS"   value="1"/>
+
+
+	<option name="PRODUCTIONCUTFORVOLUMES" value="frame1_s2 frame1_s5 frame1_s6 frame2_s2 frame2_s5 frame2_s6 frame3_s2 frame3_s5 frame3_s6 frame4_s2 frame4_s5 frame4_s6 frame5_s2 frame5_s5 frame5_s6 frame6_s2 frame6_s5 frame6_s6 frame7_s2 frame7_s5 frame7_s6 frame8_s2 frame8_s5 frame8_s6 frame9_s2 frame9_s5 frame9_s6 20" />
 
 </gcard>
 

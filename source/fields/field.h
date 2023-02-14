@@ -6,7 +6,6 @@
 #define FIELD_H 1
 
 
-
 // The magnetic fields are self-descriptive, using an XML reader
 // The maps are stored in several format. 
 // Each format corresponds to a gfield factory. Example: ASCII, EVIO.
@@ -22,12 +21,14 @@
 // At detector construction time the mfield entry in detector.h, if 
 // different than "no" must be associated to a key of the  map<string, gfield>.
 //
-// At that point the MFM is checked on the gfield. If NULL, the MFM is created. Either way, the MFM will be 
+// At that point the MFM is checked on the gfield. If nullptr, the MFM is created. Either way, the MFM will be
 // associated with the logical volume.
 
 // gemc headers
-#include "options.h"
+#include "gemcOptions.h"
 #include "mappedField.h"
+#include "bclas12MappedField.h"
+
 // forward declaration of fieldFactory
 class fieldFactory;
 
@@ -53,9 +54,13 @@ class gfield
 {
 public:
 	gfield(){;}
-	gfield(goptions opts) : symmetry("na"), format("na"), dimensions("na"), map(nullptr), MFM(nullptr)
-	{
-		// initialize Magnetic Field Manager and Mapped field to NULL
+	gfield(goptions opts) : symmetry("na"),
+	format("na"),
+	dimensions("na"),
+	map(nullptr),
+	bc12map(nullptr),
+	MFM(nullptr) {
+		// initialize Magnetic Field Manager and Mapped field to nullptr
 		scaleFactor	     = 1;
 		minStep          = 1*mm;
 		integration      = "G4ClassicalRK4";
@@ -86,8 +91,9 @@ public:
 	void create_simple_multipole_MFM();
 	
 	// mapped Field. We need to factory to load the map
-	gMappedField *map;       ///< Mapped Field
-	fieldFactory *fFactory;  ///< fieldFactory that created the field
+	gMappedField *map;                   ///< Mapped Field
+	gclas12BinaryMappedField *bc12map;   ///< Binary CLAS12 Map
+	fieldFactory *fFactory;              ///< fieldFactory that created the field
 	
 private:
 	G4FieldManager *MFM;             	///< G4 Magnetic Field Manager
@@ -96,11 +102,10 @@ private:
 public:
 	// Returns Magnetic Field Manager Pointer
 	// creates one if it doesn't exist
-	G4FieldManager* get_MFM()
-	{
-		if(MFM == NULL)
+	G4FieldManager* get_MFM() {
+		if(MFM == nullptr) {
 			create_MFM();
-		
+		}
 		return MFM;
 	}
 	

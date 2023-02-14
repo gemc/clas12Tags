@@ -6,29 +6,33 @@
 	<!-- target. Notice variation give the target type. Can be: lH2, lD2, ND3 -->
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="bonus"/>
 
+
 	<!-- central detectors 	-->
 	<detector name="experiments/clas12/rtpc/rtpc"             factory="TEXT" variation="original"/>
 	<detector name="experiments/clas12/micromegas/micromegas" factory="TEXT" variation="rgf_spring2020"/>
 
+
 	<!--ctof, cad  -->
-	<detector name="experiments/clas12/ctof/ctof"                   factory="TEXT" variation="rga_fall2018"/>
-	<detector name="experiments/clas12/ctof/javacad_rga_fall2018/"  factory="CAD"/>
-	<detector name="experiments/clas12/cnd/cnd"                     factory="TEXT" variation="original"/>
+	<detector name="experiments/clas12/ctof/ctof"                     factory="TEXT" variation="rga_fall2018"/>
+	<detector name="experiments/clas12/ctof/javacad_rga_fall2018/"    factory="CAD"/>
+	<detector name="experiments/clas12/cnd/cnd"                       factory="TEXT" variation="original"/>
 
 	<!--high threshold cherenkov -->
-	<detector name="experiments/clas12/htcc/htcc"         factory="TEXT" variation="original"/>
-	<detector name="experiments/clas12/htcc/cad_fall18/"  factory="CAD"/>
+	<detector name="experiments/clas12/htcc/htcc"           factory="TEXT" variation="original"/>
+	<detector name="experiments/clas12/htcc/cad_fall18/"    factory="CAD"/>
 
 	<!-- magnets -->
 	<detector name="experiments/clas12/magnets/solenoid" factory="TEXT" variation="original"/>
 	<detector name="experiments/clas12/magnets/cad/"     factory="CAD" />
 
 
-	<!-- Beamline configuration: FT is used -->
+	<!-- Beamline configuration: FTOff is used -->
 	<detector name="experiments/clas12/ft/ft"                      factory="TEXT" variation="FTOff"/>
 	<detector name="experiments/clas12/beamline/cadBeamlineFTOFF/" factory="CAD"/>
 	<detector name="experiments/clas12/beamline/vacuumLine/"       factory="CAD"/>
 	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="FTOff"/>
+
+
 
 	<!-- forward carriage -->
 	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
@@ -66,7 +70,7 @@
 
 	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
 
-	<option name="OUTPUT"   value="evio, out.ev"/>
+	<option name="OUTPUT"   value="hipo, out.hipo"/>
 
 	<!--  Will print message every 10 events -->
 	<option name="PRINT_EVENT"    value="10" />

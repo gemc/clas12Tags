@@ -1,9 +1,11 @@
                  cnd  |              bankid  |                                       cnd bank ID  |  300   |                  Di  
-                 cnd  |              sector  |                                     sector number  |    1   |                  Di  
-                 cnd  |               layer  |                                      layer number  |    2   |                  Di  
-                 cnd  |           component  |                                  component number  |    3   |                  Di  
-                 cnd  |                ADCL  |                                          ADC Left  |    4   |                  Di  
-                 cnd  |                ADCR  |                                         ADC Right  |    5   |                  Di  
-                 cnd  |                TDCL  |                                          TDC Left  |    6   |                  Di  
-                 cnd  |                TDCR  |                                         TDC Right  |    7   |                  Di  
+                 cnd  |              sector  |                             CND sector (paddle id  |    1   |                  Di  
+                 cnd  |               layer  |                                         CND layer  |    2   |                  Di  
+                 cnd  |           component  |                                          always 1  |    3   |                  Di  
+                 cnd  |           ADC_order  |                      0 = direct, 2 = indirect hit  |    4   |                  Di  
+                 cnd  |             ADC_ADC  |                                         ADC value  |    5   |                  Di  
+                 cnd  |            ADC_time  |                                       same as TDC  |    6   |                  Dd  
+                 cnd  |             ADC_ped  |                                          pedestal  |    7   |                  Di  
+                 cnd  |           TDC_order  |                      2 = direct, 3 = indirect hit  |    8   |                  Di  
+                 cnd  |             TDC_TDC  |                                         TDC value  |    9   |                  Di  
                  cnd  |                hitn  |                                        hit number  |   99   |                  Di  

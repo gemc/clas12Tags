@@ -27,7 +27,7 @@ static richConstants initializeRICHConstants(int runno, string digiVariation = "
 	//	// database
 	//	richc.runNo = runno;
 	//	richc.date       = "2016-03-15";
-	//	if(getenv ("CCDB_CONNECTION") != NULL)
+	//	if(getenv ("CCDB_CONNECTION") != nullptr)
 	//		richc.connection = (string) getenv("CCDB_CONNECTION");
 	//	else
 	//		richc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
@@ -44,7 +44,9 @@ map<string, double> rich_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;
-	
+	rejectHitConditions = false;
+	writeHit = true;
+
 	dgtz["hitn"]   = hitn;
 	
 	writeHit = false;
@@ -80,9 +82,9 @@ void rich_HitProcess::initWithRunNumber(int runno)
 {
 	string digiVariation    = gemcOpt.optMap["DIGITIZATION_VARIATION"].args;
 	string digiSnapshotTime = gemcOpt.optMap["DIGITIZATION_TIMESTAMP"].args;
-
+	
 	if(richc.runNo != runno) {
-//		cout << " > Initializing " << HCname << " digitization for run number " << runno << endl;
+		//		cout << " > Initializing " << HCname << " digitization for run number " << runno << endl;
 		richc = initializeRICHConstants(runno, digiVariation, digiSnapshotTime, accountForHardwareStatus);
 		richc.runNo = runno;
 	}

@@ -1,0 +1,19 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	<detector name="forwardCarriage"      factory="TEXT" variation="TorusSymmetric"/>
+	<detector name="../dc/dc"             factory="TEXT" variation="java"/>
+
+	<option name="SCALE_FIELD" value="TorusSymmetric, -1"/>
+	<option name="HALL_FIELD"  value="clas12-solenoid"/>
+
+	<option name="BEAM_P" value="e-, 2.0*GeV, 20*deg, 10*deg"/>
+
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+
+</gcard>
+

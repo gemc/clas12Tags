@@ -7,9 +7,10 @@ map<string, double> SVT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;
-
 	vector<identifier> identity = aHit->GetId();
-	
+	rejectHitConditions = false;
+	writeHit = true;
+
 	// STR ID:
 	// layer, type, sector, module, strip
 	// class str_strip strs;
@@ -40,6 +41,11 @@ map<string, double> SVT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["segment"] = segment;
 	dgtz["module"]  = module;
 	dgtz["strip"]   = strip;
+	
+	// define conditions to reject hit
+	if(rejectHitConditions) {
+		writeHit = false;
+	}
 	
 	return dgtz;
 }

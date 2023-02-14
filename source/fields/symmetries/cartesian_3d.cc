@@ -1,7 +1,9 @@
-// gemc headers
-#include "asciiField.h"
-#include "utils.h"
+// this file should be reorganized to split the asciiField and clas12BinField factories
 
+// gemc headers
+#include "gemcUtils.h"
+#include "asciiField.h"
+#include "clas12BinField.h"
 
 // 3D field in cartesian coordinates. Field itself is in cartesian coordinates.
 // Dependent on 3 cartesian coordinates (Y, X, Z) 
@@ -9,8 +11,10 @@
 // The values are indexed as B1_3D[X][Y][Z],B2_3D[X][Y][Z],B3_3D[X][Y][Z]
 // The field is three dimensional, ordered in the class as B1=Bx, B2=By, B3=Bz
 
-//symmetry "cartesian_3D" is for full 3D map
-//symmetry "cartesian_3D_quadrant" is for 3D map covering only the 1st quadrant where x>=0 && y>=0
+// symmetry "cartesian_3D" is for full 3D map
+// symmetry "cartesian_3D_quadrant" is for 3D map covering only the 1st quadrant where x>=0 && y>=0
+
+
 
 // from fieldFactory:  load field map
 void asciiField::loadFieldMap_cartesian3d(gMappedField* map, double verbosity)
@@ -32,13 +36,11 @@ void asciiField::loadFieldMap_cartesian3d(gMappedField* map, double verbosity)
 	map->B1_3D = new double**[map->np[0]];
 	map->B2_3D = new double**[map->np[0]];
 	map->B3_3D = new double**[map->np[0]];
-	for (unsigned i = 0; i < map->np[0]; ++i)
-	{
+	for (unsigned i = 0; i < map->np[0]; ++i) {
 		map->B1_3D[i] = new double*[map->np[1]];
 		map->B2_3D[i] = new double*[map->np[1]];
 		map->B3_3D[i] = new double*[map->np[1]];
-		for (unsigned j = 0; j < map->np[1]; ++j)
-		{
+		for (unsigned j = 0; j < map->np[1]; ++j) {
 			map->B1_3D[i][j] = new double[map->np[2]];
 			map->B2_3D[i][j] = new double[map->np[2]];
 			map->B3_3D[i][j] = new double[map->np[2]];
@@ -63,20 +65,16 @@ void asciiField::loadFieldMap_cartesian3d(gMappedField* map, double verbosity)
 	FILE *fp = fopen (map->identifier.c_str(), "r");
 
 	// ignoring header
-	while(tmp != "</mfield>")
-	{
+	while(tmp != "</mfield>") {
 		if(fscanf(fp, "%s", ctmp) != 0)
 			tmp = string(ctmp);
 	}
 
 	// now reading map
 	// values as read from map
-	for(int i1 = 0; i1<np_1 ; i1++)
-	{
-		for(int i2 = 0; i2<np_2 ; i2++)
-		{
-			for(int i3 = 0; i3<np_3 ; i3++)
-			{
+	for(int i1 = 0; i1<np_1 ; i1++) {
+		for(int i2 = 0; i2<np_2 ; i2++) {
+			for(int i3 = 0; i3<np_3 ; i3++) {
 				if(fscanf(fp, "%lg %lg %lg %lg %lg %lg", &d1, &d2, &d3, &b1, &b2, &b3) !=0 ) {
 
 					d1 *= unit1;
@@ -109,7 +107,6 @@ void asciiField::loadFieldMap_cartesian3d(gMappedField* map, double verbosity)
 					unsigned t1 = (unsigned) floor( ( d1 - min1 + cell1/2 ) / ( cell1 ) ) ;
 					unsigned t2 = (unsigned) floor( ( d2 - min2 + cell2/2 ) / ( cell2 ) ) ;
 					unsigned t3 = (unsigned) floor( ( d3 - min3 + cell3/2 ) / ( cell3 ) ) ;
-
 
 					// The values are indexed as B1_3D[X][Y][Z]
 					if(   map->getCoordinateWithSpeed(0).name == "X"
@@ -201,7 +198,6 @@ void asciiField::loadFieldMap_cartesian3d(gMappedField* map, double verbosity)
 // from mappedField:  GetFieldValue
 void gMappedField::GetFieldValue_cartesian3d( const double x[3], double *Bfield, int FIRST_ONLY) const
 {
-
 	double xx = x[0];
 	double yy = x[1];
 	double zz = x[2];
@@ -229,12 +225,11 @@ void gMappedField::GetFieldValue_cartesian3d( const double x[3], double *Bfield,
 
 	// outside map, returning no field
 	if (XX < startMap[0] || YY < startMap[1] || ZZ < startMap[2]) return;
-	if (XX >= endMap[0] || YY >= endMap[1] || ZZ >= endMap[2]) return;
+	if (XX >= endMap[0]  || YY >= endMap[1]  || ZZ >= endMap[2]) return;
 	
 	double B1,B2,B3;
 	// no interpolation
-	if(interpolation == "none")
-	{
+	if(interpolation == "none") {
 		// checking if the point is closer to the top of the cell
 		if( fabs( startMap[0] + IXX*cellSize[0] - XX) > fabs( startMap[0] + (IXX+1)*cellSize[0] - XX)  ) IXX++;
 		if( fabs( startMap[0] + IYY*cellSize[0] - YY) > fabs( startMap[0] + (IYY+1)*cellSize[0] - YY)  ) IYY++;
@@ -243,9 +238,8 @@ void gMappedField::GetFieldValue_cartesian3d( const double x[3], double *Bfield,
 		B1 = B1_3D[IXX][IYY][IZZ];
 		B2 = B2_3D[IXX][IYY][IZZ];
 		B3 = B3_3D[IXX][IYY][IZZ];
-	}
-	else if (interpolation == "linear")
-	{
+	} else if (interpolation == "linear") {
+		
 		// relative positions within cell
 		double Xd = (XX - (startMap[0] + IXX*cellSize[0])) / cellSize[0];
 		double Yd = (YY - (startMap[1] + IYY*cellSize[1])) / cellSize[1];
@@ -301,8 +295,7 @@ void gMappedField::GetFieldValue_cartesian3d( const double x[3], double *Bfield,
 	// we don't worry about computer speed
 	// if verbosity is set this high
 	// so we can output units as well
-	if(verbosity>3 && FIRST_ONLY != 99)
-	{
+	if(verbosity>3 && FIRST_ONLY != 99) {
 		cout << "  > Track position in magnetic field map, with displacement and rotations (x,y,z)/cm:"
 		<< "("  << x[0]/cm << ", "
 		<< x[1]/cm << ", "

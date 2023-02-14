@@ -26,8 +26,7 @@ static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "
 	}
 	
 	ftc.runNo = runno;
-	ftc.date = "2015-11-29";
-	if (getenv("CCDB_CONNECTION") != NULL)
+	if (getenv("CCDB_CONNECTION") != nullptr)
 		ftc.connection = (string) getenv("CCDB_CONNECTION");
 	else
 		ftc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
@@ -90,6 +89,29 @@ static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "
 			ftc.status[isec - 1][ilay - 1][1].push_back(data[row][4]);
 		}
 	}
+	
+	cout << "FTOF:Getting threshold" << endl;
+	sprintf(ftc.database, "/calibration/ftof/threshold:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear();
+	calib->GetCalib(data, ftc.database);
+	for (unsigned row = 0; row < data.size(); row++) {
+		isec = data[row][0];
+		ilay = data[row][1];
+		ftc.threshold[isec - 1][ilay - 1][0].push_back(data[row][3]);
+		ftc.threshold[isec - 1][ilay - 1][1].push_back(data[row][4]);
+	}
+	
+	cout << "FTOF:Getting efficiency" << endl;
+	sprintf(ftc.database, "/calibration/ftof/efficiency:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear();
+	calib->GetCalib(data, ftc.database);
+	for (unsigned row = 0; row < data.size(); row++) {
+		isec = data[row][0];
+		ilay = data[row][1];
+		ftc.efficiency[isec - 1][ilay - 1][0].push_back(data[row][3]);
+		ftc.efficiency[isec - 1][ilay - 1][1].push_back(data[row][3]);
+	}
+	
 	cout << "FTOF:Getting gain_balance" << endl;
 	sprintf(ftc.database, "/calibration/ftof/gain_balance:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
@@ -217,39 +239,37 @@ static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "
 
 map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	map<string, double> dgtz;
-	
-	// hit ids
 	vector<identifier> identity = aHit->GetId();
-	
+	rejectHitConditions = false;
+	writeHit = true;
+
 	int sector = identity[0].id;
-	int panel = identity[1].id;
+	int panel  = identity[1].id; // 1-1A, 2-1B, 3-2B
 	int paddle = identity[2].id;
-	int pmt = identity[3].id; // 0=> Left PMT, 1=> Right PMT
+	int pmt    = identity[3].id; // 0=> Left PMT, 1=> Right PMT. A better name would be pmtSide
 	
 	// TDC conversion factors
 	double tdcconv = ftc.tdcconv[sector - 1][panel - 1][pmt][paddle - 1];
-	
 	
 	if(aHit->isBackgroundHit == 1) {
 		
 		// background hit has all the energy in the first step. Time is also first step
 		double totEdep = aHit->GetEdep()[0];
 		double stepTime = aHit->GetTime()[0];
-		
-		dgtz["hitn"]   = hitn;
-		dgtz["sector"] = sector;
-		dgtz["layer"] = panel;
-		dgtz["paddle"] = paddle;
-		dgtz["side"] = (int) pmt;
-		
-		double adc  = totEdep * ftc.countsForMIP[sector - 1][panel - 1][pmt][paddle - 1] / ftc.dEMIP[panel - 1] ; // no gain as that comes from data already
+		double adc = totEdep * ftc.countsForMIP[sector - 1][panel - 1][pmt][paddle - 1] / ftc.dEMIP[panel - 1] ; // no gain as that comes from data already
 		double tdc = stepTime/tdcconv;
 		
-		dgtz["ADC"] = (int) adc;
-		dgtz["ADCu"] = (int) adc;
+		dgtz["hitn"]      = hitn;
+		dgtz["sector"]    = sector;
+		dgtz["layer"]     = panel;
+		dgtz["component"] = paddle;
+		dgtz["ADC_order"] = pmt;
+		dgtz["ADC_ADC"]   = (int) adc;
+		dgtz["ADC_time"]  = (tdc*24.0/1000);
+		dgtz["ADC_ped"]   = 0;
 		
-		dgtz["TDC"]  = (int) tdc;
-		dgtz["TDCu"] = (int) tdc;
+		dgtz["TDC_order"] = pmt + 2;
+		dgtz["TDC_TDC"]   = (int) tdc;
 		
 		return dgtz;
 	}
@@ -291,7 +311,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	//	double eneL = tInfos.eTot*attLeft;
 	//	double eneR = tInfos.eTot*attRight;
 	
-	double ene = tInfos.eTot*att;
+	double energyDepositedAttenuated = tInfos.eTot*att;
 	
 	// giving geantinos some energies
 	if (aHit->GetPID() == 0) {
@@ -299,27 +319,27 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		//		eneL = gmomentum*attLeft;
 		//		eneR = gmomentum*attRight;
 		
-		ene = gmomentum*att;
+		energyDepositedAttenuated = gmomentum*att;
 		
 	}
 	
 	double adc = 0;
-	double adcu = 0;
 	double tdc = 0;
-	double tdcu = 0;
+	// not used anymore
+	//	double adcu = 0;
+	//	double tdcu = 0;
+	
+	//	if (ene > 0) {
+	//		adcu = ene * ftc.countsForMIP[sector - 1][panel - 1][pmt][paddle - 1] / ftc.dEMIP[panel - 1] / gain;
+	//	}
 	
 	// Fluctuate the light measured by the PMT with
 	// Poisson distribution for emitted photoelectrons
 	// Treat L and R separately, in case nphe=0
 	
-	if (ene > 0) {
-		adcu = ene * ftc.countsForMIP[sector - 1][panel - 1][pmt][paddle - 1] / ftc.dEMIP[panel - 1] / gain;
-	}
 	
-	
-	
-	double nphe = G4Poisson(ene * ftc.pmtPEYld);
-	ene = nphe / ftc.pmtPEYld;
+	double nphe = G4Poisson(energyDepositedAttenuated * ftc.pmtPEYld);
+	double ene = nphe / ftc.pmtPEYld;
 	
 	if (ene > 0) {
 		adc = ene * ftc.countsForMIP[sector - 1][panel - 1][pmt][paddle - 1] / ftc.dEMIP[panel - 1] / gain;
@@ -328,7 +348,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		//double            C = ftc.twlk[sector-1][panel-1][2][paddle-1];
 		
 		double timeWalk  = A / pow(adc, B);
-		double timeWalkU = A / pow(adcu, B);
+		//		double timeWalkU = A / pow(adcu, B);
 		
 		//		double tU = tInfos.time + d/ftc.veff[sector-1][panel-1][pmt][paddle-1]/cm + (1. - 2. * pmt)*ftc.toff_LR[sector-1][panel-1][paddle-1]/2.
 		//		- ftc.toff_RFpad[sector-1][panel-1][paddle-1]
@@ -343,7 +363,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		
 		// cout << " FTOF Unsmeared Time after p2p subtraction: " << tU << endl;
 		
-		tdcu = (tU + timeWalkU) / tdcconv;
+		//		tdcu = (tU + timeWalkU) / tdcconv;
 		tdc  = G4RandGauss::shoot(tU+ timeWalk, sqrt(2) * ftc.tres[sector - 1][panel - 1][paddle - 1]) / tdcconv;
 		
 	}
@@ -352,42 +372,56 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	// Status flags
 	if(accountForHardwareStatus) {
 		switch (ftc.status[sector - 1][panel - 1][pmt][paddle - 1]) {
-		case 0:
-			break;
-		case 1:
-			adc = 0;
-			break;
-		case 2:
-			tdc = 0;
-			break;
-		case 3:
-			adc = tdc = 0;
-			break;
-			
-		case 5:
-			break;
-			
-		default:
-			cout << " > Unknown FTOF status: " << ftc.status[sector - 1][panel - 1][0][paddle - 1] << " for sector " << sector << ",  panel " << panel << ", paddle " << paddle << " left " << endl;
+			case 0:
+				break;
+			case 1:
+				adc = 0;
+				break;
+			case 2:
+				tdc = 0;
+				break;
+			case 3:
+				adc = tdc = 0;
+				break;
+				
+			case 5:
+				break;
+				
+			default:
+				cout << " > Unknown FTOF status: " << ftc.status[sector - 1][panel - 1][0][paddle - 1] << " for sector " << sector << ",  panel " << panel << ", paddle " << paddle << " left " << endl;
 		}
 	}
 	
 	//	cout << " > FTOF status: " << ftc.status[sector-1][panel-1][0][paddle-1] << " for sector " << sector << ",  panel " << panel << ", paddle " << paddle << " left: " << adcl << endl;
 	//	cout << " > FTOF status: " << ftc.status[sector-1][panel-1][1][paddle-1] << " for sector " << sector << ",  panel " << panel << ", paddle " << paddle << " right:  " << adcr << endl;
 	
+	dgtz["sector"]    = sector;
+	dgtz["layer"]     = panel;
+	dgtz["component"] = paddle;
+	dgtz["ADC_order"] = pmt;
+	dgtz["ADC_ADC"]   = (int) adc;
+	dgtz["ADC_time"]  = (tdc*tdcconv);
+	dgtz["ADC_ped"]   = 0;
 	
-	dgtz["hitn"] = hitn;
-	dgtz["sector"] = sector;
-	dgtz["layer"] = panel;
-	dgtz["paddle"] = paddle;
-	dgtz["side"] = (int) pmt;
-	dgtz["ADC"] = (int) adc;
-	dgtz["TDC"] = (int) tdc;
-	dgtz["ADCu"] = (int) adcu;
-	dgtz["TDCu"] = (int) tdcu;
+	dgtz["TDC_order"] = pmt + 2;
+	dgtz["TDC_TDC"]   = (int) tdc;
+
+
+
+	// reject hit if below threshold or efficiency
+	if ( energyDepositedAttenuated < ftc.threshold[sector - 1][panel - 1][pmt][paddle - 1] && applyThresholds) {
+		rejectHitConditions = true;
+	}
+	double random = G4UniformRand();
+
+//	cout << " FTOF EDEP energyDepositedAttenuated " << sector << " " << panel << " " << paddle << " " << energyDepositedAttenuated << "  vs "
+//	<< ftc.threshold[sector - 1][panel - 1][pmt][paddle - 1]  << " and efficiency " << ftc.efficiency[sector - 1][panel - 1][pmt][paddle - 1]
+//	<< " random " << random << endl;
+
+	if ( random > ftc.efficiency[sector - 1][panel - 1][pmt][paddle - 1] && applyInefficiencies) {
+		rejectHitConditions = true;
+	}
 	
-	// decide if write an hit or not
-	writeHit = true;
 	// define conditions to reject hit
 	if (rejectHitConditions) {
 		writeHit = false;
@@ -396,9 +430,16 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	return dgtz;
 }
 
+
+// sector = identity[0].id;
+// panel  = identity[1].id; // 1-1A, 2-1B, 3-2B
+// paddle = identity[2].id;
+// pmt    = identity[3].id; // 0=> Left PMT, 1=> Right PMT. A better name would be pmtSide
+
+
+
+
 vector<identifier> ftof_HitProcess::processID(vector<identifier> id, G4Step* aStep, detector Detector) {
-	
-	id[id.size() - 1].id_sharing = 1;
 	
 	vector<identifier> yid = id;
 	yid[0].id_sharing = 1; // sector
@@ -464,9 +505,9 @@ map< int, vector <double> > ftof_HitProcess::chargeTime(MHit* aHit, int hitn) {
 	vector<identifier> identity = aHit->GetId();
 	
 	int sector = identity[0].id;
-	int panel = identity[1].id;
+	int panel  = identity[1].id;
 	int paddle = identity[2].id;
-	int pmt = identity[3].id; // 0=> Left PMT, 1=> Right PMT
+	int pmt    = identity[3].id; // 0=> Left PMT, 1=> Right PMT. A better name would be pmtSide
 	
 	identifiers.push_back(sector); // sector
 	identifiers.push_back(panel); // panel, 1a, 1b, 2a

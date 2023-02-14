@@ -3,7 +3,7 @@
 
 // gemc headers
 #include "mysql_det_factory.h"
-#include "utils.h"
+#include "gemcUtils.h"
 
 map<string, detector> mysql_det_factory::loadDetectors()
 {
@@ -54,7 +54,7 @@ map<string, detector> mysql_det_factory::loadDetectors()
 		{
 			cout << hd_msg << " !!! Failed to execute MYSQL query " << dbexecute <<  ". This is a fatal error. Exiting." << endl;
      		qDebug() << q.lastError();
-			exit(0);
+			exit(1);
 		}
 		// Warning if nothing is found
 		if(q.size() == 0 && verbosity)

@@ -1,0 +1,50 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	<!-- Beamline configuration Nominal	-->
+	<detector name="../targets/cad/"    factory="CAD"/>
+	<detector name="../targets/target"  factory="TEXT" variation="lH2"/>
+
+
+	<!-- Beamline FTOn configuration
+	<detector name="../ft/ft"                 factory="TEXT" variation="FTOn"/>
+	<detector name="../beamline/cadBeamline/" factory="CAD"/>
+	<detector name="../beamline/vacuumLine/"  factory="CAD"/>
+	<detector name="../beamline/beamline"     factory="TEXT" variation="FTOn"/>
+	END of FTOn -->
+	
+	<!-- Beamline rghFTOut configuration END of rghFTOut -->
+<!--	<detector name="../beamline/cadBeamline/" factory="CAD"/>-->
+<!--	<detector name="../beamline/vacuumLine/"  factory="CAD"/>-->
+	<detector name="../beamline/beamline"     factory="TEXT" variation="rghFTOut"/>
+
+
+	<!-- Beamline configuration ELMO:
+	<detector name="experiments/clas12/targets/transverseTargetCad/" factory="CAD"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="transverse"/>
+	<detector name="/experiments/clas12/beamline/cadBeamlineELMO/" factory="CAD"/>
+	<detector name="/experiments/clas12/beamline/vacuumLine/"  factory="CAD"/>
+	<detector name="/experiments/clas12/beamline/beamline"     factory="TEXT" variation="ELMO"/>
+	<detector name="connectUpstreamToTorusPipe">
+		<existence exist="no" />
+	</detector>
+
+	
+	<detector name="ElmoTungstenTip">
+		<existence exist="no" />
+	</detector>
+	End of ELMO  -->
+
+	<detector name="experiments/clas12/htcc/htcc" factory="TEXT" variation="original"/>
+
+
+	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
+
+
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+
+</gcard>

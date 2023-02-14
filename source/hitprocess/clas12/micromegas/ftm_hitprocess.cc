@@ -31,7 +31,9 @@ map<string, double> ftm_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;
-	
+	rejectHitConditions = false;
+	writeHit = true;
+
 	vector<identifier> identity = aHit->GetId();
 	
 	// FTM ID:
@@ -53,10 +55,11 @@ map<string, double> ftm_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["sector"]     = 1;
 	dgtz["layer"]      = layer;
 	dgtz["component"]  = strip;
-	dgtz["adc"]        = adc;
+	dgtz["ADC_order"] = 0;
+	dgtz["ADC_ADC"]   = adc;
+	dgtz["ADC_time"]  = 0;
+	dgtz["ADC_ped"]   = 0;
 	
-	// decide if write an hit or not
-	writeHit = true;
 	// define conditions to reject hit
 	if(rejectHitConditions) {
 		writeHit = false;
@@ -181,7 +184,7 @@ void ftm_HitProcess::initWithRunNumber(int runno)
 {
 	string digiVariation    = gemcOpt.optMap["DIGITIZATION_VARIATION"].args;
 	string digiSnapshotTime = gemcOpt.optMap["DIGITIZATION_TIMESTAMP"].args;
-
+	
 	if(this->ftmcc.runNo != runno)
 	{
 		cout << " > Initializing " << HCname << " digitization for run number " << runno << endl;

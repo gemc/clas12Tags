@@ -1,0 +1,49 @@
+<gcard>
+
+	<!-- Implementation alert detector, example -->
+	<detector name="ahdc" factory="TEXT" variation="default"/>
+
+	<detector name="/jlab/work/myworkGemcDocker/AHDC_ATOF_GeomFromReco_GEMC/ATOF_geom/myatof" factory="TEXT" variation="default"/>
+	
+	<!-- Beamline configuration: FT is used
+	<detector name="/projet/nucleon/sergeyeva/gemc_github/gemc_clas12tags/clas12Tags-master/4a.2.4/experiments/clas12/ft/ft"                 factory="TEXT" variation="FTOff"/>
+	<detector name="/projet/nucleon/sergeyeva/gemc_github/gemc_clas12tags/clas12Tags-master/4a.2.4/experiments/clas12/beamline/cadBeamline/" factory="CAD"/>
+	<detector name="/projet/nucleon/sergeyeva/gemc_github/gemc_clas12tags/clas12Tags-master/4a.2.4/experiments/clas12/beamline/vacuumLine/"  factory="CAD"/>
+	<detector name="/projet/nucleon/sergeyeva/gemc_github/gemc_clas12tags/clas12Tags-master/4a.2.4/experiments/clas12/beamline/beamline"     factory="TEXT" variation="FTOff"/> -->
+	
+	<!-- <detector name="/projet/nucleon/sergeyeva/gemc_github/gemc_clas12tags/clas12Tags-master/4a.2.4/experiments/clas12/cnd/cnd"               factory="TEXT" variation="original"/> -->
+
+	<!-- forward carriage -->
+	<!-- <detector name="/projet/nucleon/sergeyeva/gemc_github/gemc_clas12tags/clas12Tags-master/4a.2.4/experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/> -->
+	
+	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING
+	<option name="SCALE_FIELD" value="TorusSymmetric, -1"/>
+	<option name="SCALE_FIELD" value="clas12-newSolenoid, -1"/> -->
+
+	<!-- hall field
+	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>  -->
+
+	<!-- fields, precise mode
+	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
+	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>  -->
+
+	
+	<!-- <option name="INTEGRATEDRAW" value="ahdc"/>  -->
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	
+	<option name="BEAM_P" value="e-, 10.0*GeV, 20*deg, 20*deg"/>
+	<option name="SPREAD_P" value="2.0*GeV, 20*deg, 180*deg, flat"/>
+	
+	<option name="BEAM_V" value="(0, 0, -2.0)cm"/>
+	<option name="SPREAD_V" value="(0.0, 2.0)cm"/>
+	
+	
+	<option name="OUTPUT" value="txt, alert_test_july27_2020.txt"/>
+	<!-- <option name="OUTPUT" value="evio, alert_test_july27_2020.ev"/> -->
+	<option name="N" value="10"/>
+
+	<!--
+	<option name="" value=""/> -->
+
+</gcard>

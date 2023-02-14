@@ -1,0 +1,16 @@
+
+CLAS12 EC README
+
+--------------------------------------------------
+
+The geometry consists of 39 layers of scintillators alternating with lead.
+
+In MYSQL mode, before building the geometry one must
+upload the parameters onto the DB.
+
+The commands to build the geometry, banks, hit defs
+and materials are:
+
+upload_parameters.pl config.dat   < only for MYSQL factory
+
+./ec.pl config.dat

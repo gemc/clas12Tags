@@ -29,15 +29,15 @@ vector<double> fmt_strip::FindStrip(int layer, int sector, double x, double y, d
 		x_real = x*cos(-fmtc.alpha[layer])-y*sin(-fmtc.alpha[layer]);
 		y_real = y*cos(-fmtc.alpha[layer])+x*sin(-fmtc.alpha[layer]);
 		
-		if(y_real>-fmtc.y_central && y_real < fmtc.y_central){ 
+		if(y_real>-fmtc.y_central && y_real < fmtc.y_central){
 			if (x_real>=0) ClosestStrip = (int) (floor((fmtc.y_central-y_real)/fmtc.pitch)+1);
 			if (x_real<0) ClosestStrip = (int) (floor((y_real+fmtc.y_central)/fmtc.pitch)+1) + fmtc.N_halfstr+fmtc.N_sidestr;
 		}
-		else if(y_real <= -fmtc.y_central && y_real > -fmtc.R_max){ 
-			ClosestStrip = (int) (floor((fmtc.y_central-y_real)/fmtc.pitch)+1); 
+		else if(y_real <= -fmtc.y_central && y_real > -fmtc.R_max){
+			ClosestStrip = (int) (floor((fmtc.y_central-y_real)/fmtc.pitch)+1);
 		}
-		else if(y_real >= fmtc.y_central && y_real < fmtc.R_max){ 
-			ClosestStrip = (int) (floor((y_real+fmtc.y_central)/fmtc.pitch)+1) + fmtc.N_halfstr+fmtc.N_sidestr;  
+		else if(y_real >= fmtc.y_central && y_real < fmtc.R_max){
+			ClosestStrip = (int) (floor((y_real+fmtc.y_central)/fmtc.pitch)+1) + fmtc.N_halfstr+fmtc.N_sidestr;
 		}
 		
 		int strip_num=ClosestStrip;// To look around closeststrip
@@ -74,7 +74,7 @@ vector<double> fmt_strip::FindStrip(int layer, int sector, double x, double y, d
 						weight=Weight_td(strip_num, x_real, y_real, z, fmtc);
 						strip_id.push_back(strip_num);
 						strip_id.push_back(weight);
-					} 
+					}
 				}
 			}
 			//We have computed the weight with a gaussian distribution. But considering the few electrons, it makes no sense.
@@ -100,7 +100,7 @@ vector<double> fmt_strip::FindStrip(int layer, int sector, double x, double y, d
 		}
 		else
 		{// Warning - something is wrong
-		 //cout<<"WARNING!!!!!! Something is wrong in FMT strip finder..... "<<ClosestStrip<<" "<<x_real<<" "<<y_real<<endl;
+			//cout<<"WARNING!!!!!! Something is wrong in FMT strip finder..... "<<ClosestStrip<<" "<<x_real<<" "<<y_real<<endl;
 			strip_id.push_back(-1);
 			strip_id.push_back(1);
 		}
@@ -127,19 +127,19 @@ void fmt_strip::Carac_strip(int strip, fmtConstants fmtc){
 	if ((strip>fmtc.N_halfstr&&strip<fmtc.N_halfstr+fmtc.N_sidestr+1)||(strip<fmtc.N_str+1&&strip>2*fmtc.N_halfstr+fmtc.N_sidestr)) {
 		//strip_length=2*fmtc.R_max*sin(acos(fabs(strip_y)/fmtc.R_max));
 		strip_x=0;
-	}	
+	}
 	else{
-		//if (fabs(strip_length)/fmtc.R_min<1){ 
+		//if (fabs(strip_length)/fmtc.R_min<1){
 		if (fabs(strip_y)/fmtc.R_min<1){
 			strip_length=fmtc.R_max*sin(acos(fabs(strip_y)/fmtc.R_max))-fmtc.R_min*sin(acos(fabs(strip_y)/fmtc.R_min));
-			if (strip<=fmtc.N_str/2) 
+			if (strip<=fmtc.N_str/2)
 				strip_x=strip_length/2.+fmtc.R_min*sin(acos(fabs(strip_y)/fmtc.R_min));
 			else
 				strip_x=-strip_length/2.-fmtc.R_min*sin(acos(fabs(strip_y)/fmtc.R_min));
 		}
-		else{ 
+		else{
 			strip_length=fmtc.R_max*sin(acos(fabs(strip_y)/fmtc.R_max));
-			if (strip<=fmtc.N_str/2) 
+			if (strip<=fmtc.N_str/2)
 				strip_x=strip_length/2.;
 			else
 				strip_x=-strip_length/2.;

@@ -1,0 +1,17 @@
+
+CLAS12 BST README
+
+--------------------------------------------------
+
+The geometry consists of 3(4) barrela of modules, 
+each with 3 silicon sensors.
+
+In MYSQL mode, before building the geometry one must
+upload the parameters onto the DB.
+
+The commands to build the geometry, banks, hit defs
+and materials are:
+
+upload_parameters.pl config.dat   < only for MYSQL factory
+
+./bst.pl config.dat

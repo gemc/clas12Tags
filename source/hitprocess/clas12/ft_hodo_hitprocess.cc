@@ -32,8 +32,7 @@ static ftHodoConstants initializeFTHODOConstants(int runno, string digiVariation
 	// database
 	fthc.runNo = runno;
 	
-	fthc.date       = "2016-03-15";
-	if(getenv ("CCDB_CONNECTION") != NULL)
+	if(getenv ("CCDB_CONNECTION") != nullptr)
 		fthc.connection = (string) getenv("CCDB_CONNECTION");
 	else
 		fthc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
@@ -137,9 +136,10 @@ static ftHodoConstants initializeFTHODOConstants(int runno, string digiVariation
 map<string, double> ft_hodo_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 {
 	map<string, double> dgtz;
-	
-	// use Crystal ID to define IDX and IDY
 	vector<identifier> identity = aHit->GetId();
+	rejectHitConditions = false;
+	writeHit = true;
+
 	int isector    = identity[0].id;
 	int ilayer     = identity[1].id;
 	int icomponent = identity[2].id;
@@ -156,8 +156,10 @@ map<string, double> ft_hodo_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		dgtz["sector"]    = isector;
 		dgtz["layer"]     = ilayer;
 		dgtz["component"] = icomponent;
-		dgtz["adc"]       = (int) (charge/fthc.fadc_LSB);
-		dgtz["tdc"]       = (int) (stepTime*fthc.time_to_tdc);;
+		dgtz["ADC_order"] = 0;
+		dgtz["ADC_ADC"]   = (int) (charge/fthc.fadc_LSB);
+		dgtz["ADC_time"]  = (int) (stepTime*fthc.time_to_tdc)/25;
+		dgtz["ADC_ped"]   = 0;
 		
 		return dgtz;
 	}
@@ -191,33 +193,32 @@ map<string, double> ft_hodo_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	if(accountForHardwareStatus) {
 		switch (fthc.status[isector-1][ilayer-1][icomponent-1])
 		{
-		case 0:
-			break;
-		case 1:
-			break;
-		case 3:
-			ADC = TDC = 0;
-			break;
-			
-		case 5:
-			break;
-			
-		default:
-			cout << " > Unknown FTHODO status: " << fthc.status[isector-1][ilayer-1][icomponent-1] << " for sector, layer, component "
-			<< isector << ", "
-			<< ilayer  << ", "
-			<< icomponent << endl;
+			case 0:
+				break;
+			case 1:
+				break;
+			case 3:
+				ADC = TDC = 0;
+				break;
+				
+			case 5:
+				break;
+				
+			default:
+				cout << " > Unknown FTHODO status: " << fthc.status[isector-1][ilayer-1][icomponent-1] << " for sector, layer, component "
+				<< isector << ", "
+				<< ilayer  << ", "
+				<< icomponent << endl;
 		}
 	}
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = isector;
 	dgtz["layer"]     = ilayer;
 	dgtz["component"] = icomponent;
-	dgtz["adc"]       = ADC;
-	dgtz["tdc"]       = TDC;
-	
-	// decide if write an hit or not
-	writeHit = true;
+	dgtz["ADC_order"] = 0;
+	dgtz["ADC_ADC"]   = ADC;
+	dgtz["ADC_time"]  = TDC/25;
+	dgtz["ADC_ped"]   = 0;
 	
 	// define conditions to reject hit
 	if(rejectHitConditions) {

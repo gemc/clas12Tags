@@ -22,10 +22,9 @@ using namespace CLHEP;
 materials *getMaterialFactory(map<string, materialFactory> *factory, string materialsMethod)
 {
 	
-	if(factory->find(materialsMethod) == factory->end())
-	{
+	if(factory->find(materialsMethod) == factory->end()) {
 		cout << endl << endl << "  >>> WARNING: " << materialsMethod << " NOT FOUND IN Material Factory Map." << endl;
-		return NULL;
+		return nullptr;
 	}
 	
 	return (*factory)[materialsMethod]();
@@ -44,17 +43,15 @@ map<string, materialFactory> registerMaterialFactories()
 	
 	// TEXT initialization
 	materialMethodMap["TEXT"] = &text_materials::createMaterials;
-		
+
 	return materialMethodMap;
 }
 
 void printMaterials(map<string, G4Material*> matMap)
 {
-	for(map<string, G4Material*>::iterator it = matMap.begin(); it != matMap.end(); it++)
-	{
+	for(map<string, G4Material*>::iterator it = matMap.begin(); it != matMap.end(); it++) {
 		cout << "    - material: " << it->first << " " << it->second << endl;
-		if(it->second->GetMaterialPropertiesTable())
-		{
+		if(it->second->GetMaterialPropertiesTable()) {
 			cout << "    - Optical Properties for " << it->first << ":" << endl;
 			it->second->GetMaterialPropertiesTable()->DumpTable();
 			cout << endl << endl;
@@ -66,8 +63,7 @@ void material::componentsFromString(string s)
 {
 	stringstream comps(s);
 	
-	for(int e=0; e<ncomponents; e++)
-	{
+	for(int e=0; e<ncomponents; e++) {
 		string thisComp;
 		double thisFrac;
 		comps >> thisComp >> thisFrac;
@@ -84,7 +80,7 @@ void material::opticalsFromString(string property, string what)
 	else
 	{
 		stringstream comps(property);
-	
+
 		while(!comps.eof())
 		{
 			string c;
@@ -134,7 +130,7 @@ void material::opticalsFromString(string property, string what)
 			if(what == "birkConstant")
 				birkConstant = get_number(trimmedC);
 		}
-	
+
 		if(what == "rayleigh")
 		{
 			// yieldratio is the last quantity to be loaded
@@ -148,7 +144,7 @@ void material::opticalsFromString(string property, string what)
 			if(slowcomponent.size()     != photonEnergy.size()) slowcomponent.clear();
 			if(rayleigh.size()          != photonEnergy.size()) rayleigh.clear();
 		}
-	
+
 	}
 }
 
@@ -164,7 +160,7 @@ map<string, G4Material*> buildMaterials(map<string, materialFactory> materialFac
 	// Loading CPP def
 	materials *materialSelectedFactory = getMaterialFactory(&materialFactoryMap, "CPP");
 	map<string, G4Material*> mats = materialSelectedFactory->initMaterials(rc, go);
-		
+
 	// adding MYSQL
 	materials *mysqlFactory = getMaterialFactory(&materialFactoryMap, "MYSQL");
 	map<string, G4Material*> mysqlMats = mysqlFactory->initMaterials(rc, go);
@@ -190,7 +186,7 @@ map<string, G4Material*>  materials::materialsFromMap(map<string, material> mmap
 	vector<G4String> allMats = matman->GetNistMaterialNames();
 	for(unsigned int j=0; j<allMats.size(); j++) {
 		nistMap.insert(allMats[j]);
-	//	cout << allMats[j] << " material " << endl;
+		//	cout << allMats[j] << " material " << endl;
 	}
 	vector<G4String> allEls = matman->GetNistElementNames();
 	for(unsigned int j=0; j<allEls.size(); j++)
@@ -268,7 +264,7 @@ map<string, G4Material*>  materials::materialsFromMap(map<string, material> mmap
 			if(!allExist) continue;
 			
 			else
-			// elements exist, build material and remove it from from mmap
+				// elements exist, build material and remove it from from mmap
 			{
 				mats[it->first] = new G4Material(it->first, it->second.density*g/cm3, it->second.ncomponents);
 				
@@ -285,7 +281,7 @@ map<string, G4Material*>  materials::materialsFromMap(map<string, material> mmap
 					for(unsigned int i=0; i<it->second.fracs.size(); i++)
 					{
 						string compName = it->second.components[i];
-												
+
 						// existing material
 						if(mats.find(compName) != mats.end())
 							mats[it->first]->AddMaterial(mats[compName], it->second.fracs[i]);
@@ -304,7 +300,7 @@ map<string, G4Material*>  materials::materialsFromMap(map<string, material> mmap
 						if(it->second.fracs[i] < 1)
 						{
 							cout << " The number of atoms of " << compName << " is " << it->second.fracs[i] << " but it should be an integer. Exiting" << endl;
-							exit(0);
+							exit(1);
 						}
 						mats[it->first]->AddElement(matman->FindOrBuildElement(compName), (int) it->second.fracs[i]);
 					}
@@ -424,7 +420,7 @@ map<string, G4Material*>  materials::materialsFromMap(map<string, material> mmap
 
 					mats[it->first]->SetMaterialPropertiesTable(optTable.back());
 				}
-			
+
 				// tagging material to be removed from map
 				toDelete.push_back(it->first);
 			}
@@ -474,11 +470,11 @@ map<string, G4Material*>  materialsWithIsotopes()
 			mats["H3"] = thisMat;
 		}
 		if(thisMat->GetName() == "Hgas")
-                {
-                        // Hgas already defined, so we can add the isotopes in our map here
-                        mats["Hgas"] = thisMat;
-                }
-	
+		{
+			// Hgas already defined, so we can add the isotopes in our map here
+			mats["Hgas"] = thisMat;
+		}
+
 	}
 	
 	if(already_defined)
@@ -501,7 +497,7 @@ map<string, G4Material*>  materialsWithIsotopes()
 	
 	// Deuterium gas
 	mats["deuteriumGas"] = new G4Material("deuteriumGas", 0.000452*g/cm3, 1, kStateGas, 294.25*kelvin);
-	mats["deuteriumGas"]->AddElement(deuterium, 1);
+	mats["deuteriumGas"]->AddElement(deuterium, 2);
 	
 	// Liquid Deuterium
 	mats["LD2"] = new G4Material("LD2", 0.169*g/cm3, 1, kStateLiquid, 22.0*kelvin);
@@ -532,7 +528,7 @@ map<string, G4Material*>  materialsWithIsotopes()
 
 
 
-	// ----  tritium 
+	// ----  tritium
 
 	// Tritium isotope
 	G4Isotope* triton  = new G4Isotope("triton", Z=1, N=3, a=3.0160492*g/mole);
@@ -547,9 +543,9 @@ map<string, G4Material*>  materialsWithIsotopes()
 
 
 	// hydrogen gas
-	G4Element* Hydrogen   = new G4Element("Hydrogen",  "H",  Z=1,  a=1.01*g/mole);        
+	G4Element* Hydrogen   = new G4Element("Hydrogen",  "H",  Z=1,  a=1.01*g/mole);
 	mats["Hgas"] = new G4Material("Hgas", 0.00275*g/cm3, 1, kStateGas, 50.0*kelvin);
-	mats["Hgas"]->AddElement(Hydrogen,1);
+	mats["Hgas"]->AddElement(Hydrogen, 2);
 	
 	return mats;
 }

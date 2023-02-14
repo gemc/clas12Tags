@@ -1,7 +1,7 @@
 
 // gemc headers
 #include "gdml_det_factory.h"
-#include "utils.h"
+#include "gemcUtils.h"
 
 // geant4
 #include "G4GDMLParser.hh"
@@ -46,7 +46,7 @@ map<string, detector> gdml_det_factory::loadDetectors()
 		ifstream fstl(gname.c_str());
 		if(!fstl.good()) {
 			cout << " !! Error: " << gname << " file found. Exiting." << endl;
-			exit(0);
+			exit(1);
 		}
 
 		// parsing G4 volumes
@@ -55,11 +55,21 @@ map<string, detector> gdml_det_factory::loadDetectors()
 
 		// the volume name has to be "World"
 		// its origin are "root" coordinate
-		G4LogicalVolume* gdmlWorld = parser.GetVolume("World");
+		G4LogicalVolume* gdmlWorld;
+
+		if(parser.GetVolume("World") != nullptr) {
+			gdmlWorld = parser.GetVolume("World");
+			cout << "GDML World volume is <World>" << endl;
+		} else {
+			cout << "Trying GDML World volume <" << dname << ">" << endl;
+			gdmlWorld = parser.GetVolume(dname);
+		}
+
+
 		G4PhysicalVolumeStore::DeRegister(parser.GetWorldVolume());
 
 		// first daughters: these volumes will be the ones with mother = "root"
-		for(int d=0; d<gdmlWorld->GetNoDaughters (); d++) {
+		for(unsigned d=0; d<gdmlWorld->GetNoDaughters (); d++) {
 
 
 			string thisDetName = gdmlWorld->GetDaughter(d)->GetLogicalVolume()->GetName();
@@ -71,7 +81,7 @@ map<string, detector> gdml_det_factory::loadDetectors()
 
 			// now browsing for daughters
 			G4LogicalVolume* firstDaughter = gdmlWorld->GetDaughter(d)->GetLogicalVolume();
-			for(int gd=0; gd<firstDaughter->GetNoDaughters(); gd++) {
+			for(unsigned gd=0; gd<firstDaughter->GetNoDaughters(); gd++) {
 
 				detector thisDDet = get_detector(firstDaughter->GetDaughter(d),  gemcOpt, RC);
 				thisDDet.mother = thisDetName;
@@ -103,7 +113,7 @@ map<string, detector> gdml_det_factory::loadDetectors()
 			// opening gcard and filling domDocument
 			if(!domDocument.setContent(&gxml)) {
 				cout << " >>  xml format for file <" << fname << "> is wrong - check XML syntax. Exiting." << endl;
-				exit(0);
+				exit(1);
 			}
 			gxml.close();
 

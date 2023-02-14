@@ -1,1 +1,1 @@
-                  ec  |            ec hit definitions  |                 sector stack view strip  | 0.5*MeV   |  400*ns   | 5.00*mm   | 5.00*mm   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  
+                ecal  |          ecal hit definitions  |                      sector layer strip  | 0.5*MeV   |  400*ns   |  5.0*mm   |  5.0*mm   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  

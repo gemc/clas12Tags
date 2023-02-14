@@ -1,16 +1,18 @@
                  fmt  |              bankid  |                                       fmt bank ID  |  500   |                  Di  
-                 fmt  |               layer  |                                      layer number  |    1   |                  Di  
-                 fmt  |              sector  |                                     sector number  |    2   |                  Di  
-                 fmt  |               strip  |                                      strip number  |    3   |                  Di  
-                 fmt  |                Edep  |                                  energy deposited  |    4   |                  Dd  
-                 fmt  |                 ADC  |                                               ADC  |    5   |                  Di  
-                 fmt  |                time |                                               time  |    6   |                  Dd  
+                 fmt  |              sector  |                                     sector number  |    1   |                  Di  
+                 fmt  |               layer  |                                      layer number  |    2   |                  Di  
+                 fmt  |           component  |                                      strip number  |    3   |                  Di  
+                 fmt  |           ADC_order  |                                          always 0  |    4   |                  Di  
+                 fmt  |             ADC_ADC  |                                               ADC  |    5   |                  Di  
+                 fmt  |            ADC_time  |                                              time  |    6   |                  Dd  
+                 fmt  |             ADC_ped  |                                          always 0  |    7   |                  Di  
                  fmt  |                hitn  |                                        hit number  |   99   |                  Di  
                  bmt  |              bankid  |                                       bmt bank ID  |  200   |                  Di  
-                 bmt  |               layer  |                                      layer number  |    1   |                  Di  
-                 bmt  |              sector  |                                     sector number  |    2   |                  Di  
-                 bmt  |               strip  |                                      strip number  |    3   |                  Di  
-                 bmt  |                Edep  |                                  energy deposited  |    4   |                  Dd  
-                 bmt  |                 ADC  |                                               ADC  |    5   |                  Di  
-                 bmt |                time |                                               time  |    6   |                  Dd  
-                bmt  |                hitn  |                                        hit number  |   99   |                  Di  
+                 bmt  |              sector  |                                     sector number  |    1   |                  Di  
+                 bmt  |               layer  |                                      layer number  |    2   |                  Di  
+                 bmt  |           component  |                                      strip number  |    3   |                  Di  
+                 bmt  |           ADC_order  |                                          always 0  |    4   |                  Di  
+                 bmt  |             ADC_ADC  |                                               ADC  |    5   |                  Di  
+                 bmt  |            ADC_time  |                                              time  |    6   |                  Dd  
+                 bmt  |             ADC_ped  |                                          always 0  |    7   |                  Di  
+                 bmt  |                hitn  |                                        hit number  |   99   |                  Di  

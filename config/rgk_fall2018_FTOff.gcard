@@ -26,12 +26,14 @@
 	<detector name="experiments/clas12/magnets/cad/"     factory="CAD" />
 
 
-	<!-- Beamline configuration: FT is used -->
+	<!-- Beamline configuration: FTOFF is used -->
 	<detector name="experiments/clas12/ft/ft"                      factory="TEXT" variation="FTOff"/>
 	<detector name="experiments/clas12/beamline/cadBeamlineFTOFF/" factory="CAD"/>
 	<detector name="experiments/clas12/beamline/vacuumLine/"       factory="CAD"/>
 	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="FTOff"/>
 
+	
+	
 	<!-- forward carriage -->
 	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
 
@@ -68,7 +70,7 @@
 
 	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
 
-	<option name="OUTPUT"   value="evio, out.ev"/>
+	<option name="OUTPUT"   value="hipo, out.hipo"/>
 
 	<!--  Will print message every 10 events -->
 	<option name="PRINT_EVENT"    value="10" />

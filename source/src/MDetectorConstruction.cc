@@ -48,8 +48,6 @@ G4VPhysicalVolume* MDetectorConstruction::Construct()
 	double VERB       = gemcOpt.optMap["G4P_VERBOSITY"].arg ;
 	double geo_verb   = gemcOpt.optMap["GEO_VERBOSITY"].arg ;
 	string catch_v    = gemcOpt.optMap["CATCH"].args;
-	string hall_mat   = gemcOpt.optMap["HALL_MATERIAL"].args;
-	string hall_field = gemcOpt.optMap["HALL_FIELD"].args;
 
 	// Clean old geometry, if any
 	G4GeometryManager::GetInstance()->OpenGeometry();
@@ -61,7 +59,7 @@ G4VPhysicalVolume* MDetectorConstruction::Construct()
 	// dimensions coming from HALL_DIMENSIONS options
 	(*hallMap)["root"].create_solid(gemcOpt, hallMap);
 	(*hallMap)["root"].create_logical_volume(mats, gemcOpt);
-	(*hallMap)["root"].create_physical_volumes(gemcOpt, NULL);
+	(*hallMap)["root"].create_physical_volumes(gemcOpt, nullptr);
 	hasMagfield((*hallMap)["root"]);
 	(*hallMap)["root"].scanned = 1;
 
@@ -158,8 +156,9 @@ G4VPhysicalVolume* MDetectorConstruction::Construct()
 			// checking that we didn't already processed this file
 			if(gdmlAlreadyProcessed.find(filename) == gdmlAlreadyProcessed.end()) {
 
-				if(VERB > 1)
+				if(VERB > 1) {
 				 cout << "  > Parsing GDML Physical volumes from " << filename << endl;
+				}
 
 				// parsing G4 volumes
 				G4GDMLParser *parser = new G4GDMLParser();
@@ -167,12 +166,16 @@ G4VPhysicalVolume* MDetectorConstruction::Construct()
 
 				G4PhysicalVolumeStore::DeRegister(parser->GetWorldVolume());
 
-				// the volume name has to be "World"
+				size_t lastindex = filename.find_last_of(".");
+				string detectorName = filename.substr(0, lastindex);
+
+				// the setup volume name has to be "detectorName"
 				// its oririn are "root" coordinate
 				G4LogicalVolume* gdmlWorld = parser->GetVolume("World");
+//				G4LogicalVolume* gdmlWorld = parser->GetVolume(detectorName);
 
 				// only daughters of World will be a new G4PVPlacement in root
-				for(int d=0; d<gdmlWorld->GetNoDaughters (); d++) {
+				for(unsigned d=0; d<gdmlWorld->GetNoDaughters (); d++) {
 
 					string thisDetName = gdmlWorld->GetDaughter(d)->GetLogicalVolume()->GetName();
 					G4LogicalVolume* thisLogical = parser->GetVolume(thisDetName.c_str());
@@ -210,18 +213,14 @@ G4VPhysicalVolume* MDetectorConstruction::Construct()
 		}
 	}
 
-
-
 	// build mirrors
 	buildMirrors();
-
 
 	// assigns production cuts for root
 	// assigns production cuts coming from sensitive detector assignment
 	// assigns production cuts coming from PRODUCTIONCUTFORVOLUMES option
 	regions.push_back("root");
 	assignProductionCuts(regions);
-	
 
 	// now output det information if verbosity or catch is given
 	for(auto &dd : *hallMap) {
@@ -310,7 +309,7 @@ void MDetectorConstruction::buildCADDetector(string dname, string filename, int 
 	string mom = (*hallMap)[dname].mother;
 	if(hallMap->find(mom) == hallMap->end()) {
 		cout << " Error: mom " << mom << " not found for " << dname << endl;
-		exit(0);
+		exit(1);
 	}
 
 	detector thisMom =  (*hallMap)[mom];
@@ -344,15 +343,13 @@ void MDetectorConstruction::hasMagfield(detector detect)
 	
 	string magf   = detect.magfield;
 	
-	if(magf != "no")
-	{
+	if(magf != "no") {
 		map<string, gfield>::iterator itr = fieldsMap->find(magf);
 		
-		if(itr == fieldsMap->end())
-		{
+		if(itr == fieldsMap->end()) {
 			cout << hd_msg << " Electro-Magnetic Field <" << magf
 			<< "> is not defined. Exiting." << endl;
-			exit(0);
+			exit(1);
 		}
 		
 		activeFields.insert(magf);
@@ -482,7 +479,7 @@ void MDetectorConstruction::buildMirrors()
 				if(!(*hallMap)[borderv].GetPhysical() && borderv != "SkinSurface")
 				{
 					cout << hd_msg << " !! Error: border volume >" << borderv << "< is not found for volume " << name << ". Exiting." << endl;
-					exit(0);
+					exit(1);
 				}
 				
 				else if(borderv == "SkinSurface")
@@ -555,12 +552,10 @@ void MDetectorConstruction::buildMirrors()
 							for(unsigned i=0; i<peneSize; i++)var[i] = backscatter[i];
 							mirrorsMPT.back()->AddProperty("BACKSCATTERCONSTANT", pene, var, peneSize);
 						}
-					}
-					else
-					{
+					} else {
 						cout << " !! Fatal error: no optical property material, and no optical properties for mirror "
 						     << itr->second->name << endl;
-						exit(0);
+						exit(1);
 					}
 				}
 				mirrorSurfaces.back()->SetMaterialPropertiesTable(mirrorsMPT.back());
@@ -614,8 +609,7 @@ void MDetectorConstruction::buildMirrors()
 				}
 				
 
-				if(VERB > 3 || name.find(catch_v) != string::npos)
-				{
+				if(VERB > 3 || name.find(catch_v) != string::npos) {
 					cout << hd_msg  << " " <<  name << " is a mirror:" << endl;
 					cout << "                             > Border Volume: "      << borderv << endl;
 					cout << "                             > Surface Type: "       << surfaceType << endl;
@@ -626,11 +620,9 @@ void MDetectorConstruction::buildMirrors()
 					// why it's not dumping all properties?
 					mirrorsMPT.back()->DumpTable();
 				}
-			}
-			else
-			{
+			} else {
 				cout << " !! Fatal error: mirror <" << mirrorString << "> not found for " << it->second.name << "." << endl;
-				exit(0);
+				exit(1);
 
 			}
 		}
@@ -681,10 +673,9 @@ void MDetectorConstruction::assignProductionCuts(vector<string> volumes)
 
 					SePC_Map[regionName] ->SetProductionCut(productionThreshold);
 
-
-					if(VERB > 3)
+					if(VERB > 3) {
 						cout << "  Region " << regionName << " activated for volume " << regionDet.name << " with range: " << itr->second->SDID.prodThreshold << endl;
-					
+					}
 					SeRe_Map[regionName]->SetProductionCuts(SePC_Map[regionName]);
 					
 				}
@@ -710,21 +701,24 @@ void MDetectorConstruction::assignProductionCuts(vector<string> volumes)
 		// the last element is the actual volume cut
 		for(unsigned v=0; v<volsProdCuts.size() - 1; v++) {
 			detector volumeWithCut = findDetector(volsProdCuts[v]);
-			if(volumeWithCut.name != "notfound"  && volumeWithCut.GetLogical() != nullptr)	{
+			if(volumeWithCut.name != "notfound"  && volumeWithCut.GetLogical() != nullptr) {
 				volumesForThisRegion += volumeWithCut.name + " ";
 				SeRe_Map[regionName]->AddRootLogicalVolume(volumeWithCut.GetLogical());
 			} else {
 				cout << " !! Warning for option PRODUCTIONCUTFORVOLUMES: Detector " << volsProdCuts[v] << " not found." << endl;
 			}
 		}
+
 		// production cut is the last element
 		double prodCut = getG4Number(volsProdCuts.back());
+
+
+
 		SePC_Map[regionName]->SetProductionCut(prodCut);
 		SeRe_Map[regionName]->SetProductionCuts(SePC_Map[regionName]);
 
 		
 		cout << " Production cut set to " << prodCut << "mm for volumes: " << volumesForThisRegion << endl;
-		//cout << " Production cut set to " << volsProdCuts.back() << " for volumes: " << volumesForThisRegion << endl;
 
 	}
 	
@@ -751,7 +745,7 @@ void MDetectorConstruction::scanDetectors(int VERB, string catch_v)
 		{
 			detector kid = findDetector(relatives.back());
 			detector mom = findDetector(kid.mother);
-			// cout << " ASD " << kid.name << " " << kid.mother <<  " " << kid.scanned << " " << mom.scanned << " " << mom.factory << endl;
+			 // cout << kid.name << " " << kid.mother <<  " " << kid.scanned << " " << mom.scanned << " " << mom.factory << " mom system: " << mom.system << endl;
 
 			// production cut affects all volumes in a system rather than just the sensitive volumes
 			// if the mother system is different than the kid system
@@ -761,16 +755,14 @@ void MDetectorConstruction::scanDetectors(int VERB, string catch_v)
 
 
 			// Mom doesn't exists in the hallMap. Stopping everything.
-			if(mom.name != "akasha"  && mom.name == "notfound")
-			{
+			if(mom.name != "akasha"  && mom.name == "notfound") {
 				cout << hd_msg << "  Mom was not found for <" << relatives.back() << ">. "
 				<< " We have a No Child Left Behind policy. Exiting. " << endl << endl;
-				exit(0);
+				exit(1);
 			}
 
 			// output the Geneaology
-			if(VERB > 3 || kid.name.find(catch_v) != string::npos)
-			{
+			if(VERB > 3 || kid.name.find(catch_v) != string::npos) {
 				for(unsigned int ir=0; ir<relatives.size()-1; ir++) cout << "\t";
 				cout << hd_msg << " Checking " << kid.name << ", child of " << mom.name
 				<< ", for a living ancestor. "
@@ -975,13 +967,13 @@ void MDetectorConstruction::scanCadDetectors(int VERB, string catch_v)
 		{
 			detector kid = findDetector(relatives.back());
 			detector mom = findDetector(kid.mother);
-			// cout << " ASD " << kid.name << " " << kid.mother <<  " " << kid.scanned << " " << mom.scanned << " " << mom.factory << endl;
+			// cout << kid.name << " " << kid.mother <<  " " << kid.scanned << " " << mom.scanned << " " << mom.factory << endl;
 
 			// Mom doesn't exists in the hallMap. Stopping everything.
 			if(mom.name != "akasha"  && mom.name == "notfound") {
 				cout << hd_msg << "  Mom was not found for <" << relatives.back() << ">. "
 				<< " We have a No Child Left Behind policy. Exiting. " << endl << endl;
-				exit(0);
+				exit(1);
 			}
 
 			// Mom is built, kid not built yet. Build kid

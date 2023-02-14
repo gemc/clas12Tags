@@ -23,19 +23,6 @@ static bstConstants initializeBSTConstants(int runno, string digiVariation = "de
 	
 	// no DB connection yet
 	
-	//
-	//
-	//	// database
-	//	bstc.runNo = runno;
-	//	bstc.date       = "2016-03-15";
-	//	if(getenv ("CCDB_CONNECTION") != NULL)
-	//	bstc.connection = (string) getenv("CCDB_CONNECTION");
-	//	else
-	//	bstc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
-	//
-	//	bstc.variation  = "main";
-	//	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(bstc.connection));
-	
 	return bstc;
 }
 
@@ -43,29 +30,28 @@ map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();
-	
+	rejectHitConditions = false;
+	writeHit = true;
+
 	double minHit = 0.0261*MeV;
 	double maxHit = 0.11747*MeV;
 	double deltaADC = maxHit - minHit;
-	
 	
 	if(aHit->isBackgroundHit == 1) {
 		
 		// background hit has all the energy in the first step. Time is also first step
 		double totEdep = aHit->GetEdep()[0];
-		double stepTime = aHit->GetTime()[0];
 		
-		int adc     = floor(   7*(totEdep - minHit)/deltaADC);
-		int adchd   = floor(8196*(totEdep - minHit)/deltaADC);
+		int adc     = floor(   7*(totEdep - minHit)/deltaADC);		
 		
-		dgtz["hitn"]   = hitn;
-		dgtz["sector"] = identity[0].id;
-		dgtz["layer"]  = identity[1].id;
-		dgtz["strip"]  = identity[2].id;
-		dgtz["ADC"]    = adc;
-		dgtz["ADCHD"]  = adchd;
-		dgtz["time"]   = stepTime;
-		dgtz["bco"]    = (int) 255*G4UniformRand();
+		// this assumes the hits have these ID in the LUND file
+		dgtz["sector"]    = identity[0].id;
+		dgtz["layer"]     = identity[1].id;
+		dgtz["component"] = identity[2].id;  // strip number
+		dgtz["ADC_order"] = 0;
+		dgtz["ADC_ADC"]   = (int) adc;
+		dgtz["ADC_time"]  = (int) 255*G4UniformRand();
+		dgtz["ADC_ped"]   = 0;
 		
 		return dgtz;
 	}
@@ -87,6 +73,14 @@ map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			cout << "  Warning: dimensions mismatch between sensor reconstruction dimensions and gemc card dimensions." << endl << endl;
 	}
 	
+	// 0. region (1 to 3)
+	// 1. module (bottom = 1, top = 2)
+	// 2. sector (variables depending on sector, starts at 1)
+	// 3. sensor (1 to 3)
+	// 4. strip id
+	// layer:
+	// 2 * region + module - 2
+	// example for region 2 top (2): layer = 4 + 2 - 2 = 4
 	int layer  = 2*identity[0].id + identity[1].id - 2 ;
 	int sector = identity[2].id;
 	int card   = identity[3].id;
@@ -101,36 +95,35 @@ map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// I.e. there are 7 bins plus an overflow bin.
 	
 	int adc     = floor(   7*(tInfos.eTot - minHit)/deltaADC);
-	int adchd   = floor(8196*(tInfos.eTot - minHit)/deltaADC);
 	
-	if(tInfos.eTot>maxHit)
-	{
+	if(tInfos.eTot>maxHit) {
 		adc   = 7;
-		adchd = 8196;
-	}
-	if(tInfos.eTot<minHit)
-	{
-		adc   = -5;
-		adchd = -5000;
 	}
 	
-	if(verbosity>4)
-	{
+	if(tInfos.eTot<minHit) {
+		adc   = -5;
+	}
+	
+	if(verbosity>4) {
 		cout <<  log_msg << " layer: " << layer << "  sector: " << sector << "  Card: " << card <<  "  Strip: " << strip
 		<< " x=" << tInfos.x << " y=" << tInfos.y << " z=" << tInfos.z << endl;
 	}
 	
-	dgtz["hitn"]   = hitn;
-	dgtz["layer"]  = layer;
-	dgtz["sector"] = sector;
-	dgtz["strip"]  = strip;
-	dgtz["ADC"]    = adc;
-	dgtz["ADCHD"]  = adchd;
-	dgtz["time"]   = tInfos.time;
-	dgtz["bco"]    = (int) 255*G4UniformRand();
 	
-	// decide if write an hit or not
-	writeHit = true;
+	dgtz["sector"]    = sector;
+	dgtz["layer"]     = layer;
+	dgtz["component"] = strip;  // strip number
+	dgtz["ADC_order"] = 0;
+	dgtz["ADC_ADC"]   = (int) adc;
+	dgtz["ADC_time"]  = (int) 255*G4UniformRand();
+	dgtz["ADC_ped"]   = 0;
+	
+	// for geantinos, assigning ADC = 1
+	// notice for geant4 < 10.7, the pid of 0 conflicts with the optical photon
+	if (aHit->GetPID() == 0) {
+		dgtz["ADC_ADC"]   = 1.0;
+	}
+	
 	// define conditions to reject hit
 	if(rejectHitConditions) {
 		writeHit = false;
@@ -145,13 +138,13 @@ vector<identifier> bst_HitProcess :: processID(vector<identifier> id, G4Step* aS
 {
 	// yid is the current strip identifier.
 	// it has 5 dimensions:
-	// 0. superlayer
-	// 1. region
-	// 2. sector
-	// 3. sensor
+	// 0. region (0 to 3)
+	// 1. module (bottom, top)
+	// 2. sector (variables depending on sector)
+	// 3. sensor (0 to 2)
 	// 4. strip id
 	// the first 4 are set in the identifer:
-	// superlayer manual 1 type manual 1 segment manual 3 module manual 1 strip manual 1
+	// region manual $r module manual $m sector manual $s sensor manual $sp
 	// the strip id is set by this routine
 	//
 	// this routine ALSO identifies contiguos strips and their energy sharing
@@ -170,7 +163,6 @@ vector<identifier> bst_HitProcess :: processID(vector<identifier> id, G4Step* aS
 	bsts.fill_infos();
 	
 	int layer   = 2*yid[0].id + yid[1].id - 2 ;
-	int sector  = yid[2].id;
 	int isensor = yid[3].id;
 	
 	// FindStrip returns the strips index that are hit
@@ -178,7 +170,7 @@ vector<identifier> bst_HitProcess :: processID(vector<identifier> id, G4Step* aS
 	// for bst there can be:
 	// - no energy sharing
 	// - energy sharing to ONE contiguos (left OR right) strip
-	vector<double> multi_hit = bsts.FindStrip(layer-1, sector-1, isensor, Lxyz);
+	vector<double> multi_hit = bsts.FindStrip(layer-1, isensor, Lxyz);
 	
 	// n_multi_hits: number of contiguous strips
 	// it is either single strip (n_multi_hits = 1) or both strips are hit (n_multi_hits=2)
@@ -200,10 +192,11 @@ vector<identifier> bst_HitProcess :: processID(vector<identifier> id, G4Step* aS
 	// additional strip
 	if(n_multi_hits == 2) {
 		// the first four identifiers are
-		// 0. superlayer
-		// 1. region
-		// 2. sector
-		// 3. sensor
+		// 0. region (0 to 3)
+		// 1. module (bottom, top)
+		// 2. sector (variables depending on sector)
+		// 3. sensor (0 to 2)
+		// 4. strip id
 		// if n_multi_hits has size two:
 		// creating ONE additional identifier vector.
 		// the first 4 identifier are the same as the original strip, so copying them
@@ -324,7 +317,7 @@ void bst_HitProcess::initWithRunNumber(int runno)
 {
 	string digiVariation    = gemcOpt.optMap["DIGITIZATION_VARIATION"].args;
 	string digiSnapshotTime = gemcOpt.optMap["DIGITIZATION_TIMESTAMP"].args;
-
+	
 	if(bstc.runNo != runno) {
 		cout << " > Initializing " << HCname << " digitization for run number " << runno << endl;
 		bstc = initializeBSTConstants(runno, digiVariation, digiSnapshotTime, accountForHardwareStatus);

@@ -2,12 +2,11 @@
                 band  |              sector  |                                     sector number  |    1   |                  Di  
                 band  |               layer  |                                      layer number  |    2   |                  Di  
                 band  |           component  |                                  component number  |    3   |                  Di  
-                band  |                ADCL  |                                               ADC  |    4   |                  Di  
-                band  |          amplitudeL  |                                         amplitude  |    5   |                  Di  
-                band  |            ADCtimeL  |                                    time from FADC  |    6   |                  Dd  
-                band  |                TDCL  |                                     time from TDC  |    7   |                  Di  
-                band  |                ADCR  |                                               ADC  |    8   |                  Di  
-                band  |          amplitudeR  |                                         amplitude  |    9   |                  Di  
-                band  |            ADCtimeR  |                                    time from FADC  |   10   |                  Dd  
-                band  |                TDCR  |                                     time from TDC  |   11   |                  Di  
+                band  |           ADC_order  |                                side of PMT L or R  |    4   |                  Di  
+                band  |             ADC_ADC  |                                         ADC value  |    5   |                  Di  
+                band  |       ADC_amplitude  |                                         amplitude  |    6   |                  Di  
+                band  |            ADC_time  |                                    flash adc time  |    7   |                  Dd  
+                band  |             ADC_ped  |                                          pedestal  |    8   |                  Di  
+                band  |           TDC_order  |                                   side of PMT + 2  |    9   |                  Di  
+                band  |             TDC_TDC  |                                         TDC value  |   10   |                  Di  
                 band  |                hitn  |                                        hit number  |   99   |                  Di  

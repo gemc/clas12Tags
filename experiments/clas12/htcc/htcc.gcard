@@ -1,14 +1,34 @@
 <gcard>
-	<detector name="experiments/clas12/htcc/htcc" factory="TEXT" variation="original"/>
 
 	<option name="geometry" value="1400x1200"/>
 
+	<detector name="./htcc" factory="TEXT" variation="original"/>
+	<detector name="./cad/" factory="CAD"/>
+
+<!--	<detector name="../beamline/cadBeamline/" factory="CAD"/>-->
+<!--	<detector name="../beamline/vacuumLine/"  factory="CAD"/>-->
+<!--	<detector name="../beamline/beamline"     factory="TEXT" variation="FTOn"/>-->
+
+<!--	<detector name="../fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>-->
+
 	<option name="INTEGRATEDRAW" value="htcc"/>
 	
-	<option name="BEAM_P"   value="e-, 6.0*GeV, 20*deg, 10*deg"/>
-	<option name="SPREAD_P" value="0.0*GeV, 10*deg, 180*deg"/>
-	
-	<option name="OUTPUT" value="evio, out.ev"/>
+	<option name="BEAM_P"   value="geantino, 6.0*GeV, 90*deg, 90*deg"/>
 
-	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
+	<option name="RECORD_OPTICALPHOTONS"   value="1"/>
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="FTFP_BERT + STD + Optical"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+
+
+	<detector name="htcc">                 <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
+
+
+	<!-- uncomment for cad_fall18 variation
+	<detector name="htccEntryWindow">      <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
+	<detector name="htccEntryWindow">      <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
+	-->
+
+	
 </gcard>

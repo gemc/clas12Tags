@@ -1,0 +1,9 @@
+             alrttof  |              bankid  |                                   alrttof bank ID  | 2500   |                  Di  
+             alrttof  |              sector  |                                           sector   |    1   |                  Di  
+             alrttof  |               layer  |               hipo layer is superlayer*10 + layer  |    2   |                  Di  
+             alrttof  |           component  |                                     paddle number  |    3   |                  Di  
+             alrttof  |           ADC_order  |long paddles: 0/1 = Front/Back. Top paddles: set to 0  |    4   |                  Di  
+             alrttof  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
+             alrttof  |            ADC_time  |                               time from pulse fit  |    6   |                  Dd  
+             alrttof  |             ADC_ped  |                      pedestal from pulse analysis  |    7   |                  Di  
+             alrttof  |                hitn  |                                        hit number  |   99   |                  Di  

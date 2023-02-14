@@ -1,12 +1,9 @@
 <gcard>
-	<detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
-	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
-
-	<!-- central detectors 	-->
-	<detector name="experiments/clas12/bst/bst"               factory="TEXT" variation="default"/>
-	<detector name="experiments/clas12/bstShield/bstShield"   factory="TEXT" variation="w51"/>
 
 	<option name="geometry" value="1400x1200"/>
+	
+	<detector name="bst"                     factory="TEXT" variation="default"/>
+	<detector name="../bstShield/bstShield"  factory="TEXT" variation="w51"/>
 
 	<option name="INTEGRATEDRAW" value="bst"/>
 
@@ -19,12 +16,15 @@
 	<option name="COSMICAREA" value="0*cm, 0*cm, 0*cm, 60*cm"/>
 	-->
 
-	<option name="OUTPUT" value="evio, out.ev"/>
-
 
 	<!-- hall field  -->
-	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
-	<option name="SCALE_FIELD" value="clas12-newSolenoid, -1"/>
+	<option name="HALL_FIELD"       value="clas12-newSolenoid"/>
+	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 0.5*mm, G4HelixSimpleRunge, linear"/>
+	<option name="SCALE_FIELD"      value="clas12-newSolenoid, -1"/>
 
-	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+
 </gcard>

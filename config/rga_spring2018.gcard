@@ -2,7 +2,7 @@
 
 
 
-
+	
 	<!-- target. Notice variation give the target type. Can be: lH2, lD2, ND3 -->
 	<detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
@@ -26,12 +26,14 @@
 	<detector name="experiments/clas12/magnets/cad/"     factory="CAD" />
 
 
-	<!-- Beamline configuration: FT is used -->
-	<detector name="experiments/clas12/ft/ft"                 factory="TEXT" variation="FTOn"/>
-	<detector name="experiments/clas12/beamline/cadBeamline/" factory="CAD"/>
-	<detector name="experiments/clas12/beamline/vacuumLine/"  factory="CAD"/>
-	<detector name="experiments/clas12/beamline/beamline"     factory="TEXT" variation="FTOn"/>
+	<!-- Beamline configuration: FTOn is used -->
+	<detector name="experiments/clas12/ft/ft"                      factory="TEXT" variation="FTOn"/>
+	<detector name="experiments/clas12/beamline/cadBeamline/"      factory="CAD"/>
+	<detector name="experiments/clas12/beamline/vacuumLine/"       factory="CAD"/>
+	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="FTOn"/>
 
+	
+	
 	<!-- forward carriage -->
 	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
 
@@ -68,7 +70,7 @@
 
 	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
 
-	<option name="OUTPUT"   value="evio, out.ev"/>
+	<option name="OUTPUT"   value="hipo, out.hipo"/>
 
 	<!--  Will print message every 10 events -->
 	<option name="PRINT_EVENT"    value="10" />
@@ -125,6 +127,7 @@
 	<detector name="htcc">                 <position x="0*cm"  y="0*cm"  z="-1.0*cm"  />  </detector>
 	<detector name="htccEntryWindow">      <position x="0*cm"  y="0*cm"  z="-1.0*cm"  />  </detector>
 	<detector name="htccExitWindow">       <position x="0*cm"  y="0*cm"  z="-1.0*cm"  />  </detector>
+
 
 
 	

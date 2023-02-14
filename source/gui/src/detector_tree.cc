@@ -7,7 +7,7 @@
 #include "detector_tree.h"
 #include "MDetectorConstruction.h"
 #include "MPrimaryGeneratorAction.h"
-#include "options.h"
+#include "gemcOptions.h"
 #include "string_utilities.h"
 #include "detector_editor.h"
 
@@ -170,7 +170,7 @@ map<string, tree_item> detector_tree::read_geometry(QTreeWidget *motherWidget)
 	{
 		item.volume    = i->second.name;
 		item.mother    = i->second.mother;
-		item.treeItem  = NULL;
+		item.treeItem  = nullptr;
 		item.scanned   = 0;
 		item.sensitive = 0;
 		if(i->second.sensitivity != "no")
@@ -439,7 +439,7 @@ void detector_tree::write_gdml_file(string name)
 	}
 	
 	G4GDMLParser parser;
-	parser.Write(fileout.c_str(),detect.GetPhysical(),false);	
+	parser.Write(fileout.c_str(), detect.GetPhysical(), false);
 }
 
 

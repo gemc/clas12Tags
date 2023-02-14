@@ -1,7 +1,7 @@
 // gemc headers
 #include "run_conditions.h"
 #include "string_utilities.h"
-#include "utils.h"
+#include "gemcUtils.h"
 
 // CLHEP units
 #include "CLHEP/Units/PhysicalConstants.h"
@@ -29,11 +29,10 @@ runConditions::runConditions(goptions gemcOpt)
 	
 	QFile gcard(file.c_str());
 	// reading gcard and checking the consistency
-	if (!domDocument.setContent(&gcard))
-	{
+	if (!domDocument.setContent(&gcard)) {
 		gcard.close();
 		cout << hd_msg << " gcard format is wrong - check XML syntax. Exiting." << endl;
-		exit(0);
+		exit(1);
 	}
 	gcard.close();
 	
@@ -135,23 +134,20 @@ map<string, string> runConditions::getDetectorConditionsMap()
 	map<string, string> detmap;
 	
 	// filling name, rotation, position modifications from gcard
-	for(map<string, detectorCondition>::iterator it = detectorConditionsMap.begin(); it != detectorConditionsMap.end(); it++)
-	{
-		
-		detmap[it->first] = " is loaded with factory " +  it->second.get_factory()
+	for(map<string, detectorCondition>::iterator it = detectorConditionsMap.begin(); it != detectorConditionsMap.end(); it++) {
+
+		detmap["detector " + it->first] = " is loaded with factory " +  it->second.get_factory()
 		+ ", variation "     + it->second.get_variation()
 		+ " and run number " + stringify(it->second.get_run_number());
 		
-		if(it->second.get_position().mag2() != 0)
-		{
+		if(it->second.get_position().mag2() != 0) {
 			string key = "local shift for " + it->first;
 			detmap[key] = "(" + stringify(it->second.get_position().x()/mm) + ", "
 			+ stringify(it->second.get_position().y()/mm) + ", "
 			+ stringify(it->second.get_position().z()/mm) + ")mm";
 		}
 		
-		if(it->second.get_vrotation().mag2() != 0)
-		{
+		if(it->second.get_vrotation().mag2() != 0) {
 			string key = "local rotation for " + it->first;
 			detmap[key] = "(" + stringify(it->second.get_vrotation().x()/degree) + ", "
 			+ stringify(it->second.get_vrotation().y()/degree) + ", "
@@ -166,8 +162,7 @@ int check_if_factory_is_needed(map<string, detectorCondition> dcon, string facto
 {
 	int isneeded = 0;
 	
-	for(map<string, detectorCondition>::iterator it=dcon.begin(); it != dcon.end(); it++)
-	{
+	for(map<string, detectorCondition>::iterator it=dcon.begin(); it != dcon.end(); it++) {
 		if(it->second.get_factory() == factory)
 			isneeded++;
 	}
@@ -234,10 +229,9 @@ runWeights::runWeights(goptions opts)
 	
 	ifstream in(fname.c_str());
 	
-	if(!in)
-	{
+	if(!in) {
 		cerr << " !!! Can't open input file " << fname.c_str() << ". Exiting. " << endl;
-		exit(1);
+		exit(301);
 	}
 	
 	// filling weight map

@@ -1,14 +1,14 @@
 <!--
 
- The mesh export presents a small overlap between the flanges of the tagger and torus mount.
- The position is modified by to produce a little gap
+The mesh export presents a small overlap between the flanges of the tagger and torus mount.
+The position is modified by to produce a little gap
 
- For the FTON configurration the cone is shifted by -238.8mm
+For the FTON configurration the cone is shifted by -238.8mm
 
- -->
+-->
 
 <gxml>
-    <volume name="connectUpstreamToTorusPipe"   color="99bbbb" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
-    <volume name="connectTorusToDownstreamPipe" mother="fc" color="99bbbb" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
-    <volume name="downstreamPipeFlange"         mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
- </gxml>
+	<volume name="connectUpstreamToTorusPipe"   color="99bbbb" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="connectTorusToDownstreamPipe" mother="fc" color="99bbbb" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="downstreamPipeFlange"         mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+</gxml>

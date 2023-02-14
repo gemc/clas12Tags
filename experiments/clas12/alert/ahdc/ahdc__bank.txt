@@ -1,0 +1,9 @@
+              alrtdc  |              bankid  |                                    alrtdc bank ID  | 2400   |                  Di  
+              alrtdc  |              sector  |                                          set to 0  |    1   |                  Di  
+              alrtdc  |               layer  |               hipo layer is superlayer*10 + layer  |    2   |                  Di  
+              alrtdc  |           component  |                                       wire number  |    3   |                  Di  
+              alrtdc  |           ADC_order  |                                          set to 0  |    4   |                  Di  
+              alrtdc  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
+              alrtdc  |            ADC_time  |                               time from pulse fit  |    6   |                  Dd  
+              alrtdc  |             ADC_ped  |pedestal from pulse analysis - currently set to doca  |    7   |                  Di  
+              alrtdc  |                hitn  |                                        hit number  |   99   |                  Di  

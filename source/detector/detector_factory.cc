@@ -21,10 +21,9 @@ using namespace CLHEP;
 detectorFactory *getDetectorFactory(map<string, detectorFactoryInMap> *detectorFactoryMap, string fname)
 {
 
-	if(detectorFactoryMap->find(fname) == detectorFactoryMap->end())
-	{
+	if(detectorFactoryMap->find(fname) == detectorFactoryMap->end()) {
 		cout << " *** WARNING: " << fname << " NOT FOUND IN  Detector Factory Map." << endl;
-		return NULL;
+		return nullptr;
 	}
 	
 	return (*detectorFactoryMap)[fname]();
@@ -208,11 +207,11 @@ void detectorFactory::initFactory(goptions go, runConditions rc, string ft)
 // returns detector from a gtable
 detector get_detector(gtable gt, goptions go, runConditions RC)
 {
-	if(gt.data.size() < 18)
-	{
+	if(gt.data.size() < 18) {
 		cout << " !!! ERROR: Detector data size should be at least 18. There are " << gt.data.size() << " items on the line for " << gt.data[0] << endl;
-		exit(0);
-	}	
+		exit(21);
+	}
+	
 	string hd_msg     = " >> GTABLE Factory: ";
 	double verbosity  = go.optMap["GEO_VERBOSITY"].arg;
 	
@@ -260,11 +259,10 @@ detector get_detector(gtable gt, goptions go, runConditions RC)
 				
 				
 	// 5: Color, opacity
-	if(gt.data[5].size() != 6 && gt.data[5].size() != 7)
-	{
+	if(gt.data[5].size() != 6 && gt.data[5].size() != 7) {
 		cout << hd_msg << " Color Attributes for " << det.name << "<" << gt.data[5] << ">  have wrong size: " << gt.data[5].size()
 		<< ". It should be 6 or 7 digits  rrggbb[t]  (red, green, blue hexadecimals + optional transparency)." << endl;
-		exit(9);
+		exit(51);
 	}
 
 	G4Colour thisCol = gcol(gt.data[5]);
@@ -413,8 +411,7 @@ detector get_detector(G4VPhysicalVolume *pv, goptions go, runConditions RC)
 
 		// Adding gcard rotation for this detector if if non zero
 		G4ThreeVector more_rot = RC.detectorConditionsMap[det.name].get_vrotation();
-		if(more_rot.mag2() != 0)
-		{
+		if(more_rot.mag2() != 0) {
 			if(verbosity > 3 || det.name.find(catch_v) != string::npos)
 				cout << hd_msg << " Detector " << det.name << " is rotated by: " << more_rot/deg << " deg" << endl;
 

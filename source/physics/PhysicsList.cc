@@ -110,8 +110,8 @@ PhysicsList::PhysicsList(goptions opts) : G4VModularPhysicsList()
 	physIngredients = getStringVectorFromStringWithDelimiter(ingredientsList, "+");
 
 	// G4VPhysicsConstructor
-	g4EMPhysics    = NULL;
-	g4DecayPhys = NULL;
+	g4EMPhysics = nullptr;
+	g4DecayPhys = nullptr;
 
 	// validateIngredients will also set hadronicPhys, EMPhys, opticalPhys
 	if(!validateIngredients()) {
@@ -119,7 +119,7 @@ PhysicsList::PhysicsList(goptions opts) : G4VModularPhysicsList()
 		list();
 
 		cout << " Exiting." << endl;
-		exit(0);
+		exit(1);
 	} else {
 		cookPhysics();
 	}
@@ -297,6 +297,7 @@ void PhysicsList::cookPhysics()
 	g4DecayPhys = new G4DecayPhysics("decays");
 
 	// EM Physics
+	// see also https://geant4-userdoc.web.cern.ch/UsersGuides/PhysicsListGuide/html/electromagnetic/index.html
 	if(g4EMPhysics) delete  g4EMPhysics;
 	if(EMPhys == "STD")  g4EMPhysics = new G4EmStandardPhysics();
 	else if(EMPhys == "EMV")  g4EMPhysics = new G4EmStandardPhysics_option1();
@@ -309,7 +310,7 @@ void PhysicsList::cookPhysics()
 	else if(EMPhys == "LEM")  g4EMPhysics = new G4EmLowEPPhysics();
 	else if(EMPhys != "none") {
 		cout << " !! Wrong EMPhys " << EMPhys << endl << "Exiting." << endl;
-		exit(0);
+		exit(1);
 	}
 
 	// Hadronic Physics
@@ -371,9 +372,10 @@ void PhysicsList::cookPhysics()
 	else if(hadronicPhys == "ShieldingLEND")  {g4HadronicPhysics.push_back( new G4HadronPhysicsShieldingLEND(verbosity));}
 //	else if(hadronicPhys == "ShieldingM")     {g4HadronicPhysics.push_back( new G4HadronPhysicsFTFP_BERT(verbosity));}
 	else if(hadronicPhys == "NuBeam")         {g4HadronicPhysics.push_back( new G4HadronPhysicsNuBeam(verbosity));}
+	else if(hadronicPhys == "none")           {;}
 	else {
 		cout << " > " << hadronicPhys << " is not supported in this version of GEMC yet. Exiting." << endl;
-		exit(0);
+		exit(1);
 	}
 
 

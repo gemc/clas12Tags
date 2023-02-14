@@ -143,7 +143,7 @@ MPrimaryGeneratorAction::MPrimaryGeneratorAction(goptions *opts)
 
 			DIR* dirp = opendir(rsp.dir.c_str());
 			struct dirent * dp;
-			while ((dp = readdir(dirp)) != NULL) {
+			while ((dp = readdir(dirp)) != nullptr) {
 				string dname (dp->d_name);
 				size_t rpos = dname.find ("run");
 				size_t epos = dname.find ("evt");
@@ -188,11 +188,24 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 		}
 	}
 
+	double raster_r   = G4UniformRand();
+	double raster_phi = 2.0*pi*G4UniformRand();
+	double rasterx    = rvdx * raster_r * cos(raster_phi);
+	double rastery    = rvdy * raster_r * sin(raster_phi);
+
+	double beamSpot_phi  = 2.0*pi*G4UniformRand();
+	double beamSpot_ox   = G4RandGauss::shoot(0, bsdx) * cos(beamSpot_phi);
+	double beamSpot_oy   = G4RandGauss::shoot(0, bsdy) * cos(beamSpot_phi);
+	
+	double beamSpot_x   = bssx + beamSpot_ox * cos(bsphi) - beamSpot_oy * sin(bsphi);
+	double beamSpot_y   = bssy + beamSpot_ox * sin(bsphi) + beamSpot_oy * cos(bsphi);
+	
+	double displaceZ = displaceZs + (2.0*G4UniformRand() - 1)*displaceZd;
+
 	// internal generator. Particle defined by command line
 	if(input_gen == "gemc_internal") {
 
-		// internal, no cosmic
-		if(cosmics == "no") {
+		if(cosmics == "no") { // internal, no cosmic
 			// redefining particle if in graphic mode
 			if( gemcOpt->optMap["USE_GUI"].arg > 0) {
 				setBeam();
@@ -228,9 +241,6 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 			}
 
 
-
-			G4ThreeVector beam_dir;
-
 			// 4-momenta
 			double Mom   = mom/MeV   + (2.0*G4UniformRand()-1.0)*dmom/MeV;
 			double Theta = acos(G4UniformRand()*(cos(theta/rad-dtheta/rad)-cos(theta/rad+dtheta/rad)) + cos(theta/rad+dtheta/rad))/rad;
@@ -250,7 +260,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 			}
 			double akine = sqrt(Mom*Mom + mass*mass) - mass ;
 
-
+			// beam direction
+			G4ThreeVector beam_dir;
 			if(gemcOpt->optMap["ALIGN_ZAXIS"].args == "no") {
 				beam_dir = G4ThreeVector(cos(Phi/rad)*sin(Theta/rad), sin(Phi/rad)*sin(Theta/rad), cos(Theta/rad));
 			} else if(gemcOpt->optMap["ALIGN_ZAXIS"].args == "beamp") {
@@ -285,28 +296,41 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 					VR  = sqrt(G4UniformRand())*dvr;
 				}
 
-
 				double PHI = 2.0*pi*G4UniformRand();
+				double Vx = vx/mm + VR*cos(PHI) + rasterx /cm + beamSpot_x /cm;
+				double Vy = vy/mm + VR*sin(PHI) + rastery /cm + beamSpot_y /cm;
+				double Vz = vz/mm + (2.0*G4UniformRand()-1.0)*dvz/mm + displaceZ /cm;
 
-				double Vx = vx/mm + VR*cos(PHI);
-				double Vy = vy/mm + VR*sin(PHI);
-				double Vz = vz/mm + (2.0*G4UniformRand()-1.0)*dvz/mm;
-
-
+				if ( resetVertex || resetBeamSpot) {
+					Vx = rasterx /cm + beamSpot_x /cm;
+					Vy = rastery /cm + beamSpot_y /cm;
+				}
+				if ( resetVertex || resetBeamSpot) {
+					Vz = displaceZ / cm;
+				}
 				beam_vrt = G4ThreeVector(Vx, Vy, Vz);
+
 			} else {
 
 				double Vx, Vy, Vz;
 
 				if(gaussOrFlatV == 1) {
-					Vx  = G4RandGauss::shoot(vx/mm, dvx/mm);
-					Vy  = G4RandGauss::shoot(vy/mm, dvy/mm);
-					Vz  = G4RandGauss::shoot(vz/mm, dvz/mm);
+					Vx  = G4RandGauss::shoot(vx/mm, dvx/mm) + rasterx /cm  + beamSpot_x /cm ;
+					Vy  = G4RandGauss::shoot(vy/mm, dvy/mm) + rastery /cm  + beamSpot_y /cm ;
+					Vz  = G4RandGauss::shoot(vz/mm, dvz/mm) + displaceZ /cm ;
 				} else {
-					Vx = vx/mm + (2.0*G4UniformRand()-1.0)*dvx/mm;
-					Vy = vy/mm + (2.0*G4UniformRand()-1.0)*dvy/mm;
-					Vz = vz/mm + (2.0*G4UniformRand()-1.0)*dvz/mm;
+					Vx = vx/mm + (2.0*G4UniformRand()-1.0)*dvx/mm  + rasterx /cm + beamSpot_x /cm ;
+					Vy = vy/mm + (2.0*G4UniformRand()-1.0)*dvy/mm  + rastery /cm + beamSpot_y /cm ;
+					Vz = vz/mm + (2.0*G4UniformRand()-1.0)*dvz/mm + displaceZ /cm ;
 				}
+				if ( resetVertex || resetBeamSpot) {
+					Vx = rasterx /cm  + beamSpot_x /cm ;
+					Vy = rastery /cm  + beamSpot_y /cm ;
+				}
+				if ( resetVertex || resetBeamSpot) {
+					Vz = displaceZ /cm ;
+				}
+
 				beam_vrt = G4ThreeVector(Vx, Vy, Vz);
 
 			}
@@ -335,9 +359,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 					<< "azimuthal - " << polPhi/deg << " degrees " ;
 				cout << endl;
 			}
-		} else {
+		} else { // internal, cosmic model
 
-			// internal, cosmic model
 			// paper: A. Dar, Phys.Rev.Lett, 51,3,p.227 (1983)
 			bool cosmicNeutrons=false;
 			if(cosmicParticle != "muon") cosmicNeutrons=true;
@@ -352,8 +375,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 			double cosmicVZ = 100000;
 
 			while( (cosmicVX - cosmicTarget.x() )*(cosmicVX - cosmicTarget.x() ) +
-					(cosmicVY - cosmicTarget.y() )*(cosmicVY - cosmicTarget.y() ) +
-					(cosmicVZ - cosmicTarget.z() )*(cosmicVZ - cosmicTarget.z() ) >= cosmicRadius*cosmicRadius ) {
+					 (cosmicVY - cosmicTarget.y() )*(cosmicVY - cosmicTarget.y() ) +
+					 (cosmicVZ - cosmicTarget.z() )*(cosmicVZ - cosmicTarget.z() ) >= cosmicRadius*cosmicRadius ) {
 
 				// point generated inside spherical or cylindrical volume
 				if(cosmicGeo == "sph" || cosmicGeo == "sphere"){
@@ -441,8 +464,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 			particleGun->SetNumberOfParticles(1);
 			particleGun->GeneratePrimaryVertex(anEvent);
 		}
-	} else {
-		// external generator: input file
+	} else { // external generator: input file
+
 
 		// TODO: check beagle getLine is more elegant
 
@@ -528,18 +551,43 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 				double px     = thisParticleInfo.infos[6];
 				double py     = thisParticleInfo.infos[7];
 				double pz     = thisParticleInfo.infos[8];
+
 				// vertex is already received in cm from LUND
 				// need to pass it in cm
-				double Vx     = thisParticleInfo.infos[11] + svx/cm;
-				double Vy     = thisParticleInfo.infos[12] + svy/cm;
-				double Vz     = thisParticleInfo.infos[13] + svz/cm;
+				double Vx     = thisParticleInfo.infos[11] + svx/cm + rasterx/cm + beamSpot_x/cm;
+				double Vy     = thisParticleInfo.infos[12] + svy/cm + rastery/cm + beamSpot_y/cm;
+				double Vz     = thisParticleInfo.infos[13] + svz/cm + displaceZ / cm ;
+				if ( resetVertex || resetBeamSpot) {
+					Vx = rasterx /cm  + beamSpot_x /cm ;
+					Vy = rastery /cm  + beamSpot_y /cm ;
+				}
+				if ( resetVertex || resetBeamSpot) {
+					Vz = displaceZ /cm ;
+				}
+
 				
-				if(PROPAGATE_DVERTEXTIME==0){
-					setParticleFromPars(p, pindex, type, pdef, px, py, pz,  Vx, Vy, Vz, anEvent);   }
+				bool isNan = isnan(p) && isnan(pindex) && isnan(type) && isnan(pdef) && isnan(px) && isnan(py) && isnan(pz) && isnan(Vx) && isnan(Vy) && isnan(Vz);
 				
-				// if this flag is set to 1 updated times are calculated for detached vertex events
-				if(PROPAGATE_DVERTEXTIME==1){
-					setParticleFromParsPropagateTime(p, userInfo, anEvent);  }
+				if (isNan) {
+					cout << " Error: NAN detected: " << endl;
+					cout << "p: " << isnan(p) << endl;
+					cout << "pindex: " << isnan(pindex) << endl;
+					cout << "type: " << isnan(type) << endl;
+					cout << "pdef: " << isnan(pdef) << endl;
+					cout << "px: " << isnan(px) << endl;
+					cout << "py: " << isnan(py) << endl;
+					cout << "pz: " << isnan(pz) << endl;
+					cout << "Vx: " << isnan(Vx) << endl;
+					cout << "Vy: " << isnan(Vy) << endl;
+					cout << "Vz: " << isnan(Vz) << endl;
+				}
+				
+				if(PROPAGATE_DVERTEXTIME == 0) {
+					setParticleFromPars(p, pindex, type, pdef, px, py, pz,  Vx, Vy, Vz, anEvent);
+				} else {
+					// if this flag is set updated times are calculated for detached vertex events
+					setParticleFromParsPropagateTime(p, userInfo, anEvent);
+				}
 			}
 			
 			if(eventIndex <= ntoskip) {
@@ -621,13 +669,22 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 				double px     = thisParticleInfo.infos[7];
 				double py     = thisParticleInfo.infos[8];
 				double pz     = thisParticleInfo.infos[9];
-				// vertex is already received in mm from beagle
-				// need to pass it in cm
-				double Vx     = (thisParticleInfo.infos[12]/cm) + svx/cm;
-				double Vy     = (thisParticleInfo.infos[13]/cm) + svy/cm;
-				double Vz     = (thisParticleInfo.infos[14]/cm) + svz/cm;
+
 				double A      = thisParticleInfo.infos[15];
 				double Z      = thisParticleInfo.infos[16];
+
+				// vertex is already received in cm from LUND
+				// need to pass it in cm
+				double Vx     = thisParticleInfo.infos[12] + svx/cm + rasterx/cm + beamSpot_x/cm;
+				double Vy     = thisParticleInfo.infos[13] + svy/cm + rastery/cm + beamSpot_y/cm;
+				double Vz     = thisParticleInfo.infos[14] + svz/cm ;
+				if ( resetVertex || resetBeamSpot) {
+					Vx = rasterx /cm + beamSpot_x /cm;
+					Vy = rastery /cm + beamSpot_y /cm;
+				}
+				if ( resetVertex || resetBeamSpot) {
+					Vz = displaceZ /cm;
+				}
 
 				setParticleFromPars(p, pindex, type, pdef, px, py, pz,  Vx, Vy, Vz, anEvent, A, Z);
 			}
@@ -678,7 +735,7 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 					{
 						cout << hd_msg << " Particle id " << stdhep_reader->pid(p) << " not found in G4 table." << endl << endl;
 
-						return;
+						cout << "Exiting !" << endl; exit(1);				
 					}
 
 					particleGun->SetParticleDefinition(Particle);
@@ -828,8 +885,9 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 			{
 				L_Mom   = L_mom + (2.0*G4UniformRand()-1.0)*L_dmom;
 				L_Theta = acos(G4UniformRand()*(cos(L_theta/rad-L_dtheta/rad)-cos(L_theta/rad+L_dtheta/rad)) + cos(L_theta/rad+L_dtheta/rad))/rad;
-				if(lumiFlat)
+				if(lumiFlat) {
 					L_Theta = L_theta + (2.0*G4UniformRand()-1.0)*L_dtheta;
+				}
 
 				L_Phi = L_phi + (2.0*G4UniformRand()-1.0)*L_dphi;
 			}
@@ -854,16 +912,15 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 			double lvz = L_vz;
 
 			// spread vertex if requested
-			if(L_dvz > 0)
-			{
+			if(L_dvz > 0) {
 				lvz = L_vz + (2.0*G4UniformRand()-1.0)*L_dvz;
 			}
 
 			particleGun->SetNumberOfParticles(PBUNCH);
 
-			if(b == NBUNCHES-1)
+			if(b == NBUNCHES-1) {
 				particleGun->SetNumberOfParticles(PBUNCH + NREMAINING);
-
+			}
 
 			// cout << " bunch " << b << " " << PBUNCH << endl;
 
@@ -923,9 +980,6 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 
 	}
 
-
-
-
 	if(GEN_VERBOSITY > 5)
 		cout << " Generation done " << endl;
 }
@@ -960,7 +1014,71 @@ void MPrimaryGeneratorAction::setBeam()
 
 	}
 
+	// Getting raster vertex from option value
+	values = get_info(gemcOpt->optMap["RASTER_VERTEX"].args);
+
+	rvdx = get_number(values[0]);
+	rvdy = get_number(values[1]);
+	resetVertex = false;
+	if(values.back().find("reset") != string::npos) {
+		resetVertex = true;
+	}
+	bool isNanVX = isnan(rvdx) && isnan(rvdy) ;
+	
+	if (isNanVX) {
+		cout << " Error: NAN detected for RASTER_VERTEX parameters " << endl;
+		cout << "rvdx: " << isnan(rvdx) << endl;
+		cout << "rvdy: " << isnan(rvdy) << endl;
+	}
+	
+	
+
+
+	// Getting beamspot vertex from option value
+	values = get_info(gemcOpt->optMap["BEAM_SPOT"].args);
+	
+	bssx = get_number(values[0]);
+	bssy = get_number(values[1]);
+	bsdx = get_number(values[2]);
+	bsdy = get_number(values[3]);
+	bsphi = get_number(values[4]);
+	resetBeamSpot = false;
+	if(values.back().find("reset") != string::npos) {
+		resetBeamSpot = true;
+	}
+
+	bool isNanBS = isnan(bssx) && isnan(bssy) && isnan(bsdx) && isnan(bsdy) && isnan(bsphi) ;
+	
+	if (isNanBS) {
+		cout << " Error: NAN detected for BEAM_SPOT parameters " << endl;
+		cout << "bssx: " << isnan(bssx) << endl;
+		cout << "bssy: " << isnan(bssy) << endl;
+		cout << "bsdx: " << isnan(bsdx) << endl;
+		cout << "bsdy: " << isnan(bsdy) << endl;
+		cout << "bsphi: " << isnan(bsphi) << endl;
+	}
+	
+	
+	// Getting vertex z displacement from option value
+	values = get_info(gemcOpt->optMap["RANDOMIZE_LUND_VZ"].args);
+	
+	displaceZs = get_number(values[0]);
+	displaceZd = get_number(values[1]);
+	displaceZvertex = false;
+	if(values.back().find("reset") != string::npos) {
+		displaceZvertex = true;
+	}
+	bool isNanVZD = isnan(displaceZs) && isnan(displaceZd) ;
+	
+	if (isNanVZD) {
+		cout << " Error: NAN detected for RANDOMIZE_LUND_VZ parameters " << endl;
+		cout << "displaceZs: " << isnan(displaceZs) << endl;
+		cout << "displaceZd: " << isnan(displaceZd) << endl;
+	}
+
+	
 	if(input_gen == "gemc_internal") {
+		
 		if(cosmics == "no") {
 			// Getting particle name,  momentum from option value
 			values       = get_info(gemcOpt->optMap["BEAM_P"].args, string(",\""));
@@ -989,10 +1107,8 @@ void MPrimaryGeneratorAction::setBeam()
 					// otherwise it's not found. Need to exit here.
 					cout << hd_msg << " Particle " << pname << " not found in G4 table. Exiting" << endl << endl;
 				}
-				exit(0);
+				exit(1);
 			}
-
-
 
 			// Getting custom beam direction if it's set
 			values = get_info(gemcOpt->optMap["ALIGN_ZAXIS"].args);
@@ -1015,7 +1131,6 @@ void MPrimaryGeneratorAction::setBeam()
 			}
 
 			// Getting vertex from option value
-			
 			values = get_info(gemcOpt->optMap["BEAM_V"].args);
 			units = trimSpacesFromString(values[3]);
 
@@ -1115,7 +1230,7 @@ void MPrimaryGeneratorAction::setBeam()
 		gif.open(trimSpacesFromString(gfilename).c_str());
 		if(!gif) {
 			cerr << hd_msg << " Can't open LUND input file " << trimSpacesFromString(gfilename).c_str() << ". Exiting. " << endl;
-			exit(1);
+			exit(201);
 		}
 	} else if( input_gen.compare(0,6,"BEAGLE")==0 || input_gen.compare(0,6,"beagle")==0 ) {
 		gformat.assign(  input_gen, 0, input_gen.find(",")) ;
@@ -1125,24 +1240,20 @@ void MPrimaryGeneratorAction::setBeam()
 		if(!gif)
 		{
 			cerr << hd_msg << " Can't open BEAGLE input file " << trimSpacesFromString(gfilename).c_str() << ". Exiting. " << endl;
-			exit(1);
+			exit(202);
 		}
 		beagleHeader = 0;
-	}
-
-	else if( input_gen.compare(0,6,"stdhep")==0 || input_gen.compare(0,6,"STDHEP")==0 ||
-			  input_gen.compare(0,6,"StdHep")==0 || input_gen.compare(0,6,"StdHEP")==0 )
-	{
+	} else if( input_gen.compare(0,6,"stdhep")==0 || input_gen.compare(0,6,"STDHEP")==0 ||
+			     input_gen.compare(0,6,"StdHep")==0 || input_gen.compare(0,6,"StdHEP")==0 ) {
 		// StdHep is an (old like LUND) MC generator format in binary form.
 		gformat.assign(  input_gen, 0, input_gen.find(",")) ;
 		gfilename.assign(input_gen,    input_gen.find(",") + 1, input_gen.size()) ;
 		cout << hd_msg << "StdHEP: Opening  " << gformat << " file: " << trimSpacesFromString(gfilename).c_str() << endl;
 		stdhep_reader = new lStdHep(trimSpacesFromString(gfilename).c_str());
 
-		if(!stdhep_reader)
-		{
+		if(!stdhep_reader) {
 			cerr << hd_msg << " Can't open input file " << trimSpacesFromString(gfilename).c_str() << ". Exiting. " << endl;
-			exit(1);
+			exit(203);
 		}
 
 		// For the STEER_BEAM option, we need to have the angles and vertex of the GCARD in BEAM_P and BEAM_V, SPREAD_V
@@ -1168,10 +1279,8 @@ void MPrimaryGeneratorAction::setBeam()
 
 	}
 
-
 	// merging (background) events from LUND format
-	if(background_gen != "no")
-	{
+	if(background_gen != "no") {
 		// file may be already opened cause setBeam is called again in graphic mode
 		if(!bgif.is_open() )
 		{
@@ -1179,7 +1288,7 @@ void MPrimaryGeneratorAction::setBeam()
 			if(!bgif)
 			{
 				cerr << hd_msg << " Can't open background input file >" << trimSpacesFromString(background_gen).c_str() << "<. Exiting. " << endl;
-				exit(1);
+				exit(204);
 			}
 		}
 	}
@@ -1222,7 +1331,7 @@ void MPrimaryGeneratorAction::setBeam()
 		else
 			cout << hd_msg << " Particle " << L_pname << " not found in G4 table. Exiting" << endl << endl;
 
-		exit(0);
+		exit(1);
 	}
 
 	// Getting vertex from option value
@@ -1270,19 +1379,15 @@ void MPrimaryGeneratorAction::setBeam()
 
 	// making sure the particle exists
 	L2_Particle = particleTable->FindParticle(L2_pname);
-	if(!L2_Particle)
-	{
+	if(!L2_Particle) {
 		// it may be the "show_all" option. In this case print all available particle names
-		if(L_pname == "show_all")
-		{
+		if(L_pname == "show_all") {
 			for(int i=0; i<particleTable->entries(); i++)
 				cout << hd_msg << " g4 particle: " << particleTable->GetParticleName(i) << endl;
-		}
-		// otherwise it's not found. Need to exit here.
-		else
+		} else
+			// otherwise it's not found. Need to exit here.
 			cout << hd_msg << " Particle " << L2_pname << " not found in G4 table. Exiting" << endl << endl;
-
-		exit(0);
+		exit(1);
 	}
 
 	// Getting vertex from option value
@@ -1333,16 +1438,34 @@ double MPrimaryGeneratorAction::cosmicNeutBeam(double t, double p)
 
 void MPrimaryGeneratorAction::setParticleFromPars(int p, int pindex, int type, int pdef, double px, double py, double pz,  double Vx, double Vy, double Vz, G4Event* anEvent, int A, int Z) {
 
+	// PDG numbering scheme:
+	// 2021 version: https://pdg.lbl.gov/2021/mcdata/mc_particle_id_contents.html
+	// https://pdg.lbl.gov
+	// Translating from geant3: https://www.star.bnl.gov/public/comp/simu/newsite/gstar/Manual/particle_id.html
+	// 45 (deuteron), 46 (triton), 47 (alpha), 49 (helium3)
+
 	if(type == 1 && pindex == p+1) {
 		// Primary Particle
 
 		if(pdef != 80000) {
-			Particle = particleTable->FindParticle(pdef);
-			if(!Particle)
-			{
-				cout << hd_msg << " Particle id " << pdef << " not found in G4 table." << endl << endl;
+			int redefinedPdef = pdef;
 
-				return;
+			if (pdef == 45 ) {
+				redefinedPdef = 1000010020;  // deuteron
+			} else if (pdef == 46 ) {
+				redefinedPdef = 1000010030;  // triton
+			} else if (pdef == 47 ) {
+				redefinedPdef = 1000020040;  // alpha
+			} else if (pdef == 49 ) {
+				redefinedPdef = 1000020030;  // He3
+			}
+
+			Particle = particleTable->FindParticle(redefinedPdef);
+			if(!Particle) {
+				cout << hd_msg << " Particle id " << redefinedPdef << " not found in G4 table." << endl << endl;
+
+				cout << "Exiting !" << endl;
+				exit(1);
 			}
 		} else {
 			Particle = G4IonTable::GetIonTable()->GetIon(Z, A, 0);
@@ -1367,12 +1490,12 @@ void MPrimaryGeneratorAction::setParticleFromPars(int p, int pindex, int type, i
 
 		// beam polarization only along the beam
 		// only for the first particle
-		if(p==0)
-		{
+		if(p==0) {
 			particleGun->SetParticlePolarization(G4ThreeVector( 0, 0, beamPol ));
 		}
+		
 		if(GEN_VERBOSITY > 3)
-			cout << hd_msg << " Particle Number:  " << p+1 << ", id=" << pdef << " (" << Particle->GetParticleName() << ")"
+			cout << hd_msg << " Particle n. " << p+1 << ", id=" << pdef << " (" << Particle->GetParticleName() << ")"
 			<< "  Vertex=" << beam_vrt/cm << "cm,  momentum=" << pmom/GeV << " GeV" << endl;
 
 		// Primary particle generated int the middle of Time window
@@ -1389,15 +1512,15 @@ void MPrimaryGeneratorAction::setParticleFromPars(int p, int pindex, int type, i
 
 void MPrimaryGeneratorAction::setParticleFromParsPropagateTime(int p, vector<userInforForParticle> Userinfo, G4Event* anEvent, int A, int Z) {
 	
-	int pindex        = Userinfo[p].infos[0];
-	int type		  = Userinfo[p].infos[2];
-	int pdef          = Userinfo[p].infos[3];
-	double px         = Userinfo[p].infos[6];
-	double py         = Userinfo[p].infos[7];
-	double pz         = Userinfo[p].infos[8];
-	double Vx         = Userinfo[p].infos[11];
-	double Vy         = Userinfo[p].infos[12];
-	double Vz         = Userinfo[p].infos[13];
+	int pindex   = Userinfo[p].infos[0];
+	int type		 = Userinfo[p].infos[2];
+	int pdef     = Userinfo[p].infos[3];
+	double px    = Userinfo[p].infos[6];
+	double py    = Userinfo[p].infos[7];
+	double pz    = Userinfo[p].infos[8];
+	double Vx    = Userinfo[p].infos[11];
+	double Vy    = Userinfo[p].infos[12];
+	double Vz    = Userinfo[p].infos[13];
 	//Make a list of particles parents
 	vector<int> parentindex;
 	parentindex.push_back(Userinfo[p].infos[4]);
@@ -1405,12 +1528,25 @@ void MPrimaryGeneratorAction::setParticleFromParsPropagateTime(int p, vector<use
 
 	if(type == 1 && pindex == p+1) {
 		if(pdef != 80000) {
-			Particle = particleTable->FindParticle(pdef);
-			if(!Particle)
-			{
-				cout << hd_msg << " Particle id " << pdef << " not found in G4 table." << endl << endl;
 
-				return;
+			int redefinedPdef = pdef;
+
+			if (pdef == 45 ) {
+				redefinedPdef = 1000010020;  // deuteron
+			} else if (pdef == 46 ) {
+				redefinedPdef = 1000010030;  // triton
+			} else if (pdef == 47 ) {
+				redefinedPdef = 1000020040;  // alpha
+			} else if (pdef == 49 ) {
+				redefinedPdef = 1000020030;  // He3
+			}
+
+			Particle = particleTable->FindParticle(redefinedPdef);
+			if(!Particle) {
+				cout << hd_msg << " Particle id " << redefinedPdef << " not found in G4 table." << endl << endl;
+
+				cout << "Exiting !" << endl;
+				exit(1);
 			}
 		} else {
 			Particle = G4IonTable::GetIonTable()->GetIon(Z, A, 0);
@@ -1435,8 +1571,7 @@ void MPrimaryGeneratorAction::setParticleFromParsPropagateTime(int p, vector<use
 
 		// beam polarization only along the beam
 		// only for the first particle
-		if(p==0)
-		{
+		if(p==0) {
 			particleGun->SetParticlePolarization(G4ThreeVector( 0, 0, beamPol ));
 		}
 		if(GEN_VERBOSITY > 3) {
@@ -1500,10 +1635,9 @@ void MPrimaryGeneratorAction::setParticleFromParsPropagateTime(int p, vector<use
 						double timeoffset2 = Parents_vertex_diff/(beta_parent2*speedoflight);
 						timeoffset += timeoffset2;
 
+					} else {
+						break;
 					}
-
-					else{
-						break; }
 				}
 
 

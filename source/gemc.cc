@@ -16,7 +16,6 @@
 /// - Banks Format.
 /// - Materials.
 /// \section platforms Platforms Supported:
-/// - <i> Windows 7 to come October 2016 </i>
 /// - Linux (32, 64)
 /// - Mac OS X
 /// \section docs Documentation:
@@ -29,7 +28,7 @@
 /// \author \n &copy; Maurizio Ungaro
 /// \author e-mail: ungaro@jlab.org\n\n\n
 
-const char *GEMC_VERSION = "gemc 4.4.2";
+const char *GEMC_VERSION = "gemc 5.1" ;
 
 // G4 headers
 #include "G4RunManager.hh"
@@ -55,7 +54,7 @@ const char *GEMC_VERSION = "gemc 4.4.2";
 #include "outputFactory.h"
 #include "HitProcess.h"
 #include "PhysicsList.h"
-#include "options.h"
+#include "gemcOptions.h"
 #include "dmesg_init.h"
 #include "run_conditions.h"
 #include "fieldFactory.h"
@@ -63,7 +62,7 @@ const char *GEMC_VERSION = "gemc 4.4.2";
 #include "mirrors_factory.h"
 #include "parameter_factory.h"
 #include "string_utilities.h"
-#include "utils.h"
+#include "gemcUtils.h"
 #include "ActionInitialization.h"
 
 // c++ headers
@@ -110,7 +109,6 @@ int main( int argc, char **argv )
 	clock_t startTime = clock();
 	cout << endl;
 	
-	
 	goptions gemcOpt;
 	gemcOpt.setGoptions();
 	gemcOpt.setOptMap(argc, argv);
@@ -130,21 +128,21 @@ int main( int argc, char **argv )
 	
 	
 	// random seed initialization
-	CLHEP::HepRandom::setTheEngine(new CLHEP::MTwistEngine);
+	// notice MTwistEngine cannot print 2 seeds, it only print the whole engine status which is huge
+//	G4Random::setTheEngine(new CLHEP::MTwistEngine);
+	G4Random::setTheEngine(new CLHEP::MixMaxRng);
+
 	G4int seed;
 	
-	if(gemcOpt.optMap["RANDOM"].args=="TIME")
-	{
+	if(gemcOpt.optMap["RANDOM"].args=="TIME") {
 		gemc_splash.message(" Initializing CLHEP Random Engine from local time " \
-							+ stringify((double) time(NULL)) \
+							+ stringify((double) time(nullptr)) \
 							+ ", cpu clock "        \
 							+ stringify((double) clock())    \
 							+ " and process id "    \
 							+ stringify(getpid()) + ".");
-		seed = (G4int) ( (double) time(NULL)- (double) clock()-getpid() );
-	}
-	else
-	{
+		seed = (G4int) ( (double) time(nullptr)- (double) clock()-getpid() );
+	} else {
 		seed = atoi(gemcOpt.optMap["RANDOM"].args.c_str());
 		gemc_splash.message(" Initializing CLHEP Random Engine from user defined seed.");
 	}
@@ -224,11 +222,10 @@ int main( int argc, char **argv )
 	// This solution allowed to avoid setting MAX_FIELD_STEP to a value that would slow down the
 	// simulation by a factor of 5
 	
-	
 	double max_step = gemcOpt.optMap["MAX_FIELD_STEP"].arg;
-	if(max_step != 0)
+	if(max_step != 0) {
 		G4TransportationManager::GetTransportationManager()->GetPropagatorInField()->SetLargestAcceptableStep(max_step);
-	
+	}
 	
 	// User action initialization
 	gemc_splash.message(" Initializing User Actions...");
@@ -239,20 +236,17 @@ int main( int argc, char **argv )
 	gemc_splash.message(" Initializing User Interface...");
 
 	///< Vis Manager
-	G4VisManager *visManager = NULL;
-	if(use_gui)
-	{
-		// G4VisManager* visManager = new G4VisExecutive;
+	G4VisManager *visManager = nullptr;
+	if(use_gui) {
   		// G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
-
 		visManager = new G4VisExecutive("Quiet");
 		visManager->Initialize();
 	}
 
-	G4UIsession *session = NULL;
-	if(use_gui)
+	G4UIsession *session = nullptr;
+	if(use_gui) {
 		session = new G4UIQt(1, argv);
-
+	}
 	
 	
 	// Output File: registering output type, output process factory,
@@ -269,38 +263,39 @@ int main( int argc, char **argv )
 	
 	
 	// registering activated field in the option so they're written out
-	if(ExpHall->activeFields.size())
-	gemcOpt.optMap["ACTIVEFIELDS"].args = "";
+	if(ExpHall->activeFields.size()) {
+		gemcOpt.optMap["ACTIVEFIELDS"].args = "";
+	}
 	
-	for(set<string>::iterator fit = ExpHall->activeFields.begin(); fit != ExpHall->activeFields.end(); fit++)
+	for(set<string>::iterator fit = ExpHall->activeFields.begin(); fit != ExpHall->activeFields.end(); fit++) {
 		gemcOpt.optMap["ACTIVEFIELDS"].args = gemcOpt.optMap["ACTIVEFIELDS"].args + *fit + " ";
-	
-	
-	// Creating the sim_condition map to save to the output
-	gemc_splash.message(" Writing simulation parameters in the output...");
-	
-	// filling gcard option content
-	map<string, string> sim_condition = gemcOpt.getOptMap();
-	// adding detectors conditions to sim_condition
-	mergeMaps(sim_condition, runConds.getDetectorConditionsMap());
-	// adding parameters value to sim_condition
-	mergeMaps(sim_condition, getParametersMap(gParameters));
+	}
 
-	
 	// Bank Map, derived from sensitive detector map
 	gemc_splash.message(" Creating gemc Banks Map...");
 	map<string, gBank> banksMap = read_banks(gemcOpt, runConds.get_systems());
 		
 	// Getting UI manager, restoring G4Out to cout
 	G4UImanager* UImanager = G4UImanager::GetUIpointer();
-	UImanager->SetCoutDestination(NULL);
-
+	UImanager->SetCoutDestination(nullptr);
 
 	// saving simulation condition in the output file
-	if(outContainer.outType != "no")
-	{
+	if(outContainer.outType != "no") {
+		// Creating the sim_condition map to save to the output
+		gemc_splash.message(" Writing simulation parameters in the output...");
+
+		// filling gcard option content
+		map<string, string> sim_condition = gemcOpt.getOptMap();
+		// adding detectors conditions to sim_condition
+		mergeMaps(sim_condition, runConds.getDetectorConditionsMap());
+		// adding parameters value to sim_condition
+		mergeMaps(sim_condition, getParametersMap(gParameters));
+
+		sim_condition["JSON"] = gemcOpt.jSonOptions();
+
 		outputFactory *processOutputFactory  = getOutputFactory(&outputFactoryMap, outContainer.outType);
 		processOutputFactory->recordSimConditions(&outContainer, sim_condition);
+
 		// then deleting process output pointer, not needed anymore
 		delete processOutputFactory;
 	}
@@ -315,9 +310,9 @@ int main( int argc, char **argv )
  	
 	///< passing output process factory to sensitive detectors
 	map<string, sensitiveDetector*>::iterator it;
-	for(it = ExpHall->SeDe_Map.begin(); it != ExpHall->SeDe_Map.end(); it++)
+	for(it = ExpHall->SeDe_Map.begin(); it != ExpHall->SeDe_Map.end(); it++) {
 		it->second->hitProcessMap = &hitProcessMap;
-	
+	}
 	
 
 	
@@ -329,7 +324,7 @@ int main( int argc, char **argv )
 	
 	clock_t start_events;
 
-	int nEventsToProcess = gemcOpt.optMap["N"].arg;
+	long int nEventsToProcess = gemcOpt.optMap["N"].arg;
 
 	// if it is not set explicitely, and it is a file input, then run all the event in the file by default
 	// only in batch mode
@@ -375,7 +370,7 @@ int main( int argc, char **argv )
 				start_events = clock();
 				nEventsToProcess--;
 			}
-			sprintf(command, "/run/beamOn %d", nEventsToProcess);
+			sprintf(command, "/run/beamOn %ld", nEventsToProcess);
 			UImanager->ApplyCommand(command);
 		}
 		
@@ -383,7 +378,7 @@ int main( int argc, char **argv )
 		// deleting runManager is now taken care
 		// in the gemc_quit slot
 		delete visManager;
-		if(session != NULL) delete session;
+		if(session != nullptr) delete session;
 	} else {
 		if(exec_macro != "/control/execute no") UImanager->ApplyCommand(exec_macro.c_str());
 		start_events = clock();
@@ -398,7 +393,7 @@ int main( int argc, char **argv )
 				start_events = clock();
 				nEventsToProcess--;
 			}
-			sprintf(command, "/run/beamOn %d", nEventsToProcess);
+			sprintf(command, "/run/beamOn %ld", nEventsToProcess);
 			UImanager->ApplyCommand(command);
 		}
 	}
@@ -422,11 +417,7 @@ int main( int argc, char **argv )
 
 // introducing OPTICALPHOTONPID here to be semi-transparent to G4 changes
 // this pid changed from 0 to -22 with geant4 10.7
-// keeping it 0 for gemc for gemc 4.4.2 and 5.0
-// int MHit::OPTICALPHOTONPID = -22;
-int MHit::OPTICALPHOTONPID = 0;
-
-
+int MHit::OPTICALPHOTONPID = -22;
 
 
 

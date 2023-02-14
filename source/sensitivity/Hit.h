@@ -64,7 +64,7 @@ private:
 	vector<G4ThreeVector> mvert;    ///< Primary Vertex of the track's mother
 	vector<string> materialName;    ///< Material name
 	vector<int>       processID;    ///< Process that originated this step
-    vector<double>         mgnf;    ///< magnetic field
+	vector<double>         mgnf;    ///< magnetic field
 
 	vector<detector>  Detectors;    ///< Detectors Hit. It might be a vector if multiple detectors have the same identifier
 
@@ -102,8 +102,8 @@ public:
 	inline void SetMgnf(double m)               { mgnf.push_back(m); }
 	inline vector<double> GetMgnf()             { return  mgnf; }
 
-    inline void SetTime(double ctime)           { time.push_back(ctime); }
-    inline vector<double> GetTime()             { return  time; }
+	inline void SetTime(double ctime)           { time.push_back(ctime); }
+	inline vector<double> GetTime()             { return  time; }
 
 	inline void SetMom(G4ThreeVector pxyz)      { mom.push_back(pxyz); }
 	inline G4ThreeVector GetMom()               { return mom[0]; }
@@ -167,8 +167,7 @@ public:
 	inline sensitiveID GetSDID()         { return SID; }
 
 
-	inline void setSignal(map< double, double > VT)
-	{
+	inline void setSignal(map< double, double > VT) {
 		signalT.clear();
 		signalV.clear();
 
@@ -211,6 +210,7 @@ public:
 
 #include "G4THitsCollection.hh"
 typedef G4THitsCollection<MHit> MHitCollection;
+
 
 #endif
 

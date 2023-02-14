@@ -1,8 +1,11 @@
                 ctof  |              bankid  |                                      ctof bank ID  |  400   |                  Di  
-                ctof  |              paddle  |                                     paddle number  |    1   |                  Di  
-                ctof  |                side  |                                       side of PMT  |    2   |                  Di  
-                ctof  |                 ADC  |                                               ADC  |    3   |                  Di  
-                ctof  |                 TDC  |                                               TDC  |    4   |                  Di  
-                ctof  |                ADCu  |                                     ADC Unsmeared  |    5   |                  Di  
-                ctof  |                TDCu  |                                     TDC Unsmeared  |    6   |                  Di  
+                ctof  |              sector  |                                          Always 1  |    1   |                  Di  
+                ctof  |               layer  |                                          Always 1  |    2   |                  Di  
+                ctof  |           component  |                                     paddle number  |    3   |                  Di  
+                ctof  |           ADC_order  |                                       side of PMT  |    4   |                  Di  
+                ctof  |             ADC_ADC  |                                         ADC value  |    5   |                  Di  
+                ctof  |            ADC_time  |                                     tdc*24.0/1000  |    6   |                  Dd  
+                ctof  |             ADC_ped  |                                          pedestal  |    7   |                  Di  
+                ctof  |           TDC_order  |                                   side of PMT + 2  |    8   |                  Di  
+                ctof  |             TDC_TDC  |                                         TDC value  |    9   |                  Di  
                 ctof  |                hitn  |                                        hit number  |   99   |                  Di  

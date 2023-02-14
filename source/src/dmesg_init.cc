@@ -9,7 +9,7 @@
 #include "G4TrajectoryDrawByParticleID.hh"
 
 // gemc headers
-#include "options.h"
+#include "gemcOptions.h"
 #include "dmesg_init.h"
 #include "string_utilities.h"
 
@@ -67,25 +67,19 @@ vector<string> init_dmesg(goptions gemcOpt)
 	commands.push_back("/process/setVerbose 0 all");
 
 	
-	
-	
-	if(OVERL>1)
-		commands.push_back("/geometry/test/grid_test 1");
-	
-	if(OVERL>2)
-		commands.push_back("/geometry/test/cylinder_test 1");
+    // Tell GEANT4 to check for overlaps. This method has changed in GEANT 4.10.0 to check overlap of each
+    // volume with its neighbors for about 10000 points on the surface. This is a fairly time consuming procedure.
+    // if CHECK_OVERLAPS is set to a number larger than 1, use that many points instead.
+	if(OVERL>=1) {
+        if (OVERL > 1) {
+            commands.push_back("/geometry/test/resolution"+ std::to_string(OVERL));
+        }
+        commands.push_back("/geometry/test/run");
+    }
 
-	if(OVERL>3)
-		commands.push_back("/geometry/test/line_test 1");
+	if(DAWN_N>0) {
+		string DN = "/run/beamOn " + to_string(DAWN_N);
 
-
-	if(DAWN_N>0)
-	{
-		char dawn[10];
-		sprintf(dawn, "%d", DAWN_N);
-		string DN = "/run/beamOn ";
-		DN.append(dawn);
-		
 		commands.push_back("/vis/open DAWNFILE");
 		commands.push_back("/vis/drawVolume");
 		commands.push_back("/vis/scene/add/trajectories rich smooth");
@@ -122,6 +116,7 @@ vector<string> init_dvmesg(goptions gemcOpt, G4VisManager *VM)
 		commands.push_back("/vis/open OGLIQt " + gemcOpt.optMap["geometry"].args + newpos);
 	
 
+	commands.push_back("/vis/viewer/set/autoRefresh false");
 	commands.push_back("/vis/viewer/set/culling coveredDaughters true");
 
 
@@ -138,15 +133,14 @@ vector<string> init_dvmesg(goptions gemcOpt, G4VisManager *VM)
 
 		// increasing visualisation storing
 		commands.push_back("/vis/ogl/set/displayListLimit 500000");
-	}
-	else
-	{
+	} else {
 		commands.push_back("/vis/scene/add/trajectories");
 		commands.push_back("/vis/scene/add/hits");
 		commands.push_back("/vis/scene/endOfEventAction accumulate -1");
 	}
 	
-	
+	commands.push_back("/vis/viewer/set/autoRefresh true");
+
 
 	
 	// tracks colors
@@ -163,10 +157,10 @@ vector<string> init_dvmesg(goptions gemcOpt, G4VisManager *VM)
 	gemcColorIDModel->Set("pi+",     "magenta");
 	gemcColorIDModel->Set("pi-",     "yellow");
 	gemcColorIDModel->Set("proton",  G4Colour(0.95, 0.6, 0.3));  // orange
-	
+	gemcColorIDModel->Set("opticalphoton", "white");
+
 	G4ParticleTable *particleTable = G4ParticleTable::GetParticleTable();
-	for(int i=0; i<particleTable->entries(); i++)
-	{
+	for(int i=0; i<particleTable->entries(); i++) {
 		string pname  = particleTable->GetParticleName(i);
 		double charge = particleTable->FindParticle(pname)->GetPDGCharge();
 		string pcolor ;
@@ -175,14 +169,14 @@ vector<string> init_dvmesg(goptions gemcOpt, G4VisManager *VM)
 		   pname !=  "e-"      &&
 		   pname !=  "pi+"     &&
 		   pname !=  "pi-"     &&
-		   pname !=  "proton"    )
-		{
-			if(charge>0)
-				gemcColorIDModel->Set(pname,  "red");
-			if(charge==0)
-				gemcColorIDModel->Set(pname,  "blue");
-			if(charge<0)
+		   pname !=  "proton"    ) {
+			if(charge > 0) {
+				gemcColorIDModel->Set(pname,  "cyan");
+			} else if(charge == 0) {
+				gemcColorIDModel->Set(pname,  "gray");
+			} else if(charge < 0) {
 				gemcColorIDModel->Set(pname,  "green");
+			}
 		}
 	}
 	

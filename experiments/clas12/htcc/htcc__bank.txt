@@ -1,7 +1,11 @@
                 htcc  |              bankid  |                                      htcc bank ID  |  600   |                  Di  
-                htcc  |              sector  |                                     clas12 sector  |    1   |                  Di  
-                htcc  |                ring  |                                       theta index  |    2   |                  Di  
-                htcc  |                half  |                                       half-sector  |    3   |                  Di  
-                htcc  |                nphe  |                          number of photoelectrons  |    4   |                  Di  
-                htcc  |                time  |                           average time of the hit  |    5   |                  Dd  
+                htcc  |              sector  |                                      sector (1-6)  |    1   |                  Di  
+                htcc  |               layer  |                              half sector (1 or 2)  |    2   |                  Di  
+                htcc  |           component  |                                    ring (1,2,3,4)  |    3   |                  Di  
+                htcc  |           ADC_order  |                                          always 0  |    4   |                  Di  
+                htcc  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
+                htcc  |            ADC_time  |                               time from pulse fit  |    6   |                  Dd  
+                htcc  |             ADC_ped  |                      pedestal from pulse analysis  |    7   |                  Di  
+                htcc  |           TDC_order  |                                          always 0  |    8   |                  Di  
+                htcc  |             TDC_TDC  |                                         TDC value  |    9   |                  Di  
                 htcc  |                hitn  |                                        hit number  |   99   |                  Di  

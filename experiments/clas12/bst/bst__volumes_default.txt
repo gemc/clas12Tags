@@ -20,7 +20,7 @@ carbonFiberCu_m1_s1_r1 | carbonFiber_m1_s1_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s1_r1 | carbonFiber_m1_s1_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s1_r1 | sector1_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s1_r1 | busCable_m1_s1_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s1_r1 | busCable_m1_s1_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s1_r1 | busCable_m1_s1_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s1_r1 | sector1_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s1_r1 | sector1_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s1_r1 | pcBoardAndChips_m1_s1_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -50,7 +50,7 @@ carbonFiberCu_m2_s1_r1 | carbonFiber_m2_s1_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s1_r1 | carbonFiber_m2_s1_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s1_r1 | sector1_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s1_r1 | busCable_m2_s1_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s1_r1 | busCable_m2_s1_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s1_r1 | busCable_m2_s1_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s1_r1 | sector1_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s1_r1 | sector1_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s1_r1 | pcBoardAndChips_m2_s1_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -84,7 +84,7 @@ carbonFiberCu_m1_s2_r1 | carbonFiber_m1_s2_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s2_r1 | carbonFiber_m1_s2_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s2_r1 | sector2_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s2_r1 | busCable_m1_s2_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s2_r1 | busCable_m1_s2_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s2_r1 | busCable_m1_s2_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s2_r1 | sector2_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s2_r1 | sector2_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s2_r1 | pcBoardAndChips_m1_s2_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -114,7 +114,7 @@ carbonFiberCu_m2_s2_r1 | carbonFiber_m2_s2_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s2_r1 | carbonFiber_m2_s2_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s2_r1 | sector2_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s2_r1 | busCable_m2_s2_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s2_r1 | busCable_m2_s2_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s2_r1 | busCable_m2_s2_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s2_r1 | sector2_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s2_r1 | sector2_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s2_r1 | pcBoardAndChips_m2_s2_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -148,7 +148,7 @@ carbonFiberCu_m1_s3_r1 | carbonFiber_m1_s3_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s3_r1 | carbonFiber_m1_s3_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s3_r1 | sector3_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s3_r1 | busCable_m1_s3_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s3_r1 | busCable_m1_s3_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s3_r1 | busCable_m1_s3_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s3_r1 | sector3_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s3_r1 | sector3_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s3_r1 | pcBoardAndChips_m1_s3_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -178,7 +178,7 @@ carbonFiberCu_m2_s3_r1 | carbonFiber_m2_s3_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s3_r1 | carbonFiber_m2_s3_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s3_r1 | sector3_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s3_r1 | busCable_m2_s3_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s3_r1 | busCable_m2_s3_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s3_r1 | busCable_m2_s3_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s3_r1 | sector3_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s3_r1 | sector3_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s3_r1 | pcBoardAndChips_m2_s3_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -212,7 +212,7 @@ carbonFiberCu_m1_s4_r1 | carbonFiber_m1_s4_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s4_r1 | carbonFiber_m1_s4_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s4_r1 | sector4_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s4_r1 | busCable_m1_s4_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s4_r1 | busCable_m1_s4_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s4_r1 | busCable_m1_s4_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s4_r1 | sector4_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s4_r1 | sector4_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s4_r1 | pcBoardAndChips_m1_s4_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -242,7 +242,7 @@ carbonFiberCu_m2_s4_r1 | carbonFiber_m2_s4_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s4_r1 | carbonFiber_m2_s4_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s4_r1 | sector4_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s4_r1 | busCable_m2_s4_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s4_r1 | busCable_m2_s4_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s4_r1 | busCable_m2_s4_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s4_r1 | sector4_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s4_r1 | sector4_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s4_r1 | pcBoardAndChips_m2_s4_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -276,7 +276,7 @@ carbonFiberCu_m1_s5_r1 | carbonFiber_m1_s5_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s5_r1 | carbonFiber_m1_s5_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s5_r1 | sector5_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s5_r1 | busCable_m1_s5_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s5_r1 | busCable_m1_s5_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s5_r1 | busCable_m1_s5_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s5_r1 | sector5_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s5_r1 | sector5_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s5_r1 | pcBoardAndChips_m1_s5_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -306,7 +306,7 @@ carbonFiberCu_m2_s5_r1 | carbonFiber_m2_s5_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s5_r1 | carbonFiber_m2_s5_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s5_r1 | sector5_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s5_r1 | busCable_m2_s5_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s5_r1 | busCable_m2_s5_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s5_r1 | busCable_m2_s5_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s5_r1 | sector5_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s5_r1 | sector5_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s5_r1 | pcBoardAndChips_m2_s5_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -340,7 +340,7 @@ carbonFiberCu_m1_s6_r1 | carbonFiber_m1_s6_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s6_r1 | carbonFiber_m1_s6_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s6_r1 | sector6_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s6_r1 | busCable_m1_s6_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s6_r1 | busCable_m1_s6_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s6_r1 | busCable_m1_s6_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s6_r1 | sector6_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s6_r1 | sector6_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s6_r1 | pcBoardAndChips_m1_s6_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -370,7 +370,7 @@ carbonFiberCu_m2_s6_r1 | carbonFiber_m2_s6_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s6_r1 | carbonFiber_m2_s6_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s6_r1 | sector6_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s6_r1 | busCable_m2_s6_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s6_r1 | busCable_m2_s6_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s6_r1 | busCable_m2_s6_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s6_r1 | sector6_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s6_r1 | sector6_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s6_r1 | pcBoardAndChips_m2_s6_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -404,7 +404,7 @@ carbonFiberCu_m1_s7_r1 | carbonFiber_m1_s7_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s7_r1 | carbonFiber_m1_s7_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s7_r1 | sector7_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s7_r1 | busCable_m1_s7_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s7_r1 | busCable_m1_s7_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s7_r1 | busCable_m1_s7_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s7_r1 | sector7_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s7_r1 | sector7_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s7_r1 | pcBoardAndChips_m1_s7_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -434,7 +434,7 @@ carbonFiberCu_m2_s7_r1 | carbonFiber_m2_s7_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s7_r1 | carbonFiber_m2_s7_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s7_r1 | sector7_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s7_r1 | busCable_m2_s7_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s7_r1 | busCable_m2_s7_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s7_r1 | busCable_m2_s7_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s7_r1 | sector7_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s7_r1 | sector7_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s7_r1 | pcBoardAndChips_m2_s7_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -468,7 +468,7 @@ carbonFiberCu_m1_s8_r1 | carbonFiber_m1_s8_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s8_r1 | carbonFiber_m1_s8_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s8_r1 | sector8_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s8_r1 | busCable_m1_s8_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s8_r1 | busCable_m1_s8_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s8_r1 | busCable_m1_s8_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s8_r1 | sector8_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s8_r1 | sector8_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s8_r1 | pcBoardAndChips_m1_s8_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -498,7 +498,7 @@ carbonFiberCu_m2_s8_r1 | carbonFiber_m2_s8_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s8_r1 | carbonFiber_m2_s8_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s8_r1 | sector8_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s8_r1 | busCable_m2_s8_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s8_r1 | busCable_m2_s8_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s8_r1 | busCable_m2_s8_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s8_r1 | sector8_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s8_r1 | sector8_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s8_r1 | pcBoardAndChips_m2_s8_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -532,7 +532,7 @@ carbonFiberCu_m1_s9_r1 | carbonFiber_m1_s9_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s9_r1 | carbonFiber_m1_s9_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s9_r1 | sector9_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s9_r1 | busCable_m1_s9_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s9_r1 | busCable_m1_s9_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s9_r1 | busCable_m1_s9_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s9_r1 | sector9_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s9_r1 | sector9_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s9_r1 | pcBoardAndChips_m1_s9_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -562,7 +562,7 @@ carbonFiberCu_m2_s9_r1 | carbonFiber_m2_s9_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s9_r1 | carbonFiber_m2_s9_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s9_r1 | sector9_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s9_r1 | busCable_m2_s9_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s9_r1 | busCable_m2_s9_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s9_r1 | busCable_m2_s9_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s9_r1 | sector9_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s9_r1 | sector9_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s9_r1 | pcBoardAndChips_m2_s9_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -596,7 +596,7 @@ carbonFiberCu_m1_s10_r1 | carbonFiber_m1_s10_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s10_r1 | carbonFiber_m1_s10_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s10_r1 | sector10_r1 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s10_r1 | busCable_m1_s10_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s10_r1 | busCable_m1_s10_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s10_r1 | busCable_m1_s10_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s10_r1 | sector10_r1 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s10_r1 | sector10_r1 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s10_r1 | pcBoardAndChips_m1_s10_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -626,7 +626,7 @@ carbonFiberCu_m2_s10_r1 | carbonFiber_m2_s10_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s10_r1 | carbonFiber_m2_s10_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s10_r1 | sector10_r1 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s10_r1 | busCable_m2_s10_r1 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s10_r1 | busCable_m2_s10_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s10_r1 | busCable_m2_s10_r1 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s10_r1 | sector10_r1 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s10_r1 | sector10_r1 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s10_r1 | pcBoardAndChips_m2_s10_r1 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -664,7 +664,7 @@ carbonFiberCu_m1_s1_r2 | carbonFiber_m1_s1_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s1_r2 | carbonFiber_m1_s1_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s1_r2 | sector1_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s1_r2 | busCable_m1_s1_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s1_r2 | busCable_m1_s1_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s1_r2 | busCable_m1_s1_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s1_r2 | sector1_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s1_r2 | sector1_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s1_r2 | pcBoardAndChips_m1_s1_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -694,7 +694,7 @@ carbonFiberCu_m2_s1_r2 | carbonFiber_m2_s1_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s1_r2 | carbonFiber_m2_s1_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s1_r2 | sector1_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s1_r2 | busCable_m2_s1_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s1_r2 | busCable_m2_s1_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s1_r2 | busCable_m2_s1_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s1_r2 | sector1_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s1_r2 | sector1_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s1_r2 | pcBoardAndChips_m2_s1_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -728,7 +728,7 @@ carbonFiberCu_m1_s2_r2 | carbonFiber_m1_s2_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s2_r2 | carbonFiber_m1_s2_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s2_r2 | sector2_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s2_r2 | busCable_m1_s2_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s2_r2 | busCable_m1_s2_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s2_r2 | busCable_m1_s2_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s2_r2 | sector2_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s2_r2 | sector2_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s2_r2 | pcBoardAndChips_m1_s2_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -758,7 +758,7 @@ carbonFiberCu_m2_s2_r2 | carbonFiber_m2_s2_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s2_r2 | carbonFiber_m2_s2_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s2_r2 | sector2_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s2_r2 | busCable_m2_s2_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s2_r2 | busCable_m2_s2_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s2_r2 | busCable_m2_s2_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s2_r2 | sector2_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s2_r2 | sector2_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s2_r2 | pcBoardAndChips_m2_s2_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -792,7 +792,7 @@ carbonFiberCu_m1_s3_r2 | carbonFiber_m1_s3_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s3_r2 | carbonFiber_m1_s3_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s3_r2 | sector3_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s3_r2 | busCable_m1_s3_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s3_r2 | busCable_m1_s3_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s3_r2 | busCable_m1_s3_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s3_r2 | sector3_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s3_r2 | sector3_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s3_r2 | pcBoardAndChips_m1_s3_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -822,7 +822,7 @@ carbonFiberCu_m2_s3_r2 | carbonFiber_m2_s3_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s3_r2 | carbonFiber_m2_s3_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s3_r2 | sector3_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s3_r2 | busCable_m2_s3_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s3_r2 | busCable_m2_s3_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s3_r2 | busCable_m2_s3_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s3_r2 | sector3_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s3_r2 | sector3_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s3_r2 | pcBoardAndChips_m2_s3_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -856,7 +856,7 @@ carbonFiberCu_m1_s4_r2 | carbonFiber_m1_s4_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s4_r2 | carbonFiber_m1_s4_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s4_r2 | sector4_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s4_r2 | busCable_m1_s4_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s4_r2 | busCable_m1_s4_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s4_r2 | busCable_m1_s4_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s4_r2 | sector4_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s4_r2 | sector4_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s4_r2 | pcBoardAndChips_m1_s4_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -886,7 +886,7 @@ carbonFiberCu_m2_s4_r2 | carbonFiber_m2_s4_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s4_r2 | carbonFiber_m2_s4_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s4_r2 | sector4_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s4_r2 | busCable_m2_s4_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s4_r2 | busCable_m2_s4_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s4_r2 | busCable_m2_s4_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s4_r2 | sector4_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s4_r2 | sector4_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s4_r2 | pcBoardAndChips_m2_s4_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -920,7 +920,7 @@ carbonFiberCu_m1_s5_r2 | carbonFiber_m1_s5_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s5_r2 | carbonFiber_m1_s5_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s5_r2 | sector5_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s5_r2 | busCable_m1_s5_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s5_r2 | busCable_m1_s5_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s5_r2 | busCable_m1_s5_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s5_r2 | sector5_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s5_r2 | sector5_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s5_r2 | pcBoardAndChips_m1_s5_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -950,7 +950,7 @@ carbonFiberCu_m2_s5_r2 | carbonFiber_m2_s5_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s5_r2 | carbonFiber_m2_s5_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s5_r2 | sector5_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s5_r2 | busCable_m2_s5_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s5_r2 | busCable_m2_s5_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s5_r2 | busCable_m2_s5_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s5_r2 | sector5_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s5_r2 | sector5_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s5_r2 | pcBoardAndChips_m2_s5_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -984,7 +984,7 @@ carbonFiberCu_m1_s6_r2 | carbonFiber_m1_s6_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s6_r2 | carbonFiber_m1_s6_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s6_r2 | sector6_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s6_r2 | busCable_m1_s6_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s6_r2 | busCable_m1_s6_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s6_r2 | busCable_m1_s6_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s6_r2 | sector6_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s6_r2 | sector6_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s6_r2 | pcBoardAndChips_m1_s6_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1014,7 +1014,7 @@ carbonFiberCu_m2_s6_r2 | carbonFiber_m2_s6_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s6_r2 | carbonFiber_m2_s6_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s6_r2 | sector6_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s6_r2 | busCable_m2_s6_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s6_r2 | busCable_m2_s6_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s6_r2 | busCable_m2_s6_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s6_r2 | sector6_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s6_r2 | sector6_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s6_r2 | pcBoardAndChips_m2_s6_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1048,7 +1048,7 @@ carbonFiberCu_m1_s7_r2 | carbonFiber_m1_s7_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s7_r2 | carbonFiber_m1_s7_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s7_r2 | sector7_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s7_r2 | busCable_m1_s7_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s7_r2 | busCable_m1_s7_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s7_r2 | busCable_m1_s7_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s7_r2 | sector7_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s7_r2 | sector7_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s7_r2 | pcBoardAndChips_m1_s7_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1078,7 +1078,7 @@ carbonFiberCu_m2_s7_r2 | carbonFiber_m2_s7_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s7_r2 | carbonFiber_m2_s7_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s7_r2 | sector7_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s7_r2 | busCable_m2_s7_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s7_r2 | busCable_m2_s7_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s7_r2 | busCable_m2_s7_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s7_r2 | sector7_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s7_r2 | sector7_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s7_r2 | pcBoardAndChips_m2_s7_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1112,7 +1112,7 @@ carbonFiberCu_m1_s8_r2 | carbonFiber_m1_s8_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s8_r2 | carbonFiber_m1_s8_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s8_r2 | sector8_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s8_r2 | busCable_m1_s8_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s8_r2 | busCable_m1_s8_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s8_r2 | busCable_m1_s8_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s8_r2 | sector8_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s8_r2 | sector8_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s8_r2 | pcBoardAndChips_m1_s8_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1142,7 +1142,7 @@ carbonFiberCu_m2_s8_r2 | carbonFiber_m2_s8_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s8_r2 | carbonFiber_m2_s8_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s8_r2 | sector8_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s8_r2 | busCable_m2_s8_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s8_r2 | busCable_m2_s8_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s8_r2 | busCable_m2_s8_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s8_r2 | sector8_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s8_r2 | sector8_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s8_r2 | pcBoardAndChips_m2_s8_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1176,7 +1176,7 @@ carbonFiberCu_m1_s9_r2 | carbonFiber_m1_s9_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s9_r2 | carbonFiber_m1_s9_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s9_r2 | sector9_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s9_r2 | busCable_m1_s9_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s9_r2 | busCable_m1_s9_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s9_r2 | busCable_m1_s9_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s9_r2 | sector9_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s9_r2 | sector9_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s9_r2 | pcBoardAndChips_m1_s9_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1206,7 +1206,7 @@ carbonFiberCu_m2_s9_r2 | carbonFiber_m2_s9_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s9_r2 | carbonFiber_m2_s9_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s9_r2 | sector9_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s9_r2 | busCable_m2_s9_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s9_r2 | busCable_m2_s9_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s9_r2 | busCable_m2_s9_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s9_r2 | sector9_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s9_r2 | sector9_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s9_r2 | pcBoardAndChips_m2_s9_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1240,7 +1240,7 @@ carbonFiberCu_m1_s10_r2 | carbonFiber_m1_s10_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s10_r2 | carbonFiber_m1_s10_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s10_r2 | sector10_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s10_r2 | busCable_m1_s10_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s10_r2 | busCable_m1_s10_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s10_r2 | busCable_m1_s10_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s10_r2 | sector10_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s10_r2 | sector10_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s10_r2 | pcBoardAndChips_m1_s10_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1270,7 +1270,7 @@ carbonFiberCu_m2_s10_r2 | carbonFiber_m2_s10_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s10_r2 | carbonFiber_m2_s10_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s10_r2 | sector10_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s10_r2 | busCable_m2_s10_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s10_r2 | busCable_m2_s10_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s10_r2 | busCable_m2_s10_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s10_r2 | sector10_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s10_r2 | sector10_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s10_r2 | pcBoardAndChips_m2_s10_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1304,7 +1304,7 @@ carbonFiberCu_m1_s11_r2 | carbonFiber_m1_s11_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s11_r2 | carbonFiber_m1_s11_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s11_r2 | sector11_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s11_r2 | busCable_m1_s11_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s11_r2 | busCable_m1_s11_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s11_r2 | busCable_m1_s11_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s11_r2 | sector11_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s11_r2 | sector11_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s11_r2 | pcBoardAndChips_m1_s11_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1334,7 +1334,7 @@ carbonFiberCu_m2_s11_r2 | carbonFiber_m2_s11_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s11_r2 | carbonFiber_m2_s11_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s11_r2 | sector11_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s11_r2 | busCable_m2_s11_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s11_r2 | busCable_m2_s11_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s11_r2 | busCable_m2_s11_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s11_r2 | sector11_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s11_r2 | sector11_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s11_r2 | pcBoardAndChips_m2_s11_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1368,7 +1368,7 @@ carbonFiberCu_m1_s12_r2 | carbonFiber_m1_s12_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s12_r2 | carbonFiber_m1_s12_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s12_r2 | sector12_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s12_r2 | busCable_m1_s12_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s12_r2 | busCable_m1_s12_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s12_r2 | busCable_m1_s12_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s12_r2 | sector12_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s12_r2 | sector12_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s12_r2 | pcBoardAndChips_m1_s12_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1398,7 +1398,7 @@ carbonFiberCu_m2_s12_r2 | carbonFiber_m2_s12_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s12_r2 | carbonFiber_m2_s12_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s12_r2 | sector12_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s12_r2 | busCable_m2_s12_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s12_r2 | busCable_m2_s12_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s12_r2 | busCable_m2_s12_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s12_r2 | sector12_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s12_r2 | sector12_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s12_r2 | pcBoardAndChips_m2_s12_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1432,7 +1432,7 @@ carbonFiberCu_m1_s13_r2 | carbonFiber_m1_s13_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s13_r2 | carbonFiber_m1_s13_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s13_r2 | sector13_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s13_r2 | busCable_m1_s13_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s13_r2 | busCable_m1_s13_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s13_r2 | busCable_m1_s13_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s13_r2 | sector13_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s13_r2 | sector13_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s13_r2 | pcBoardAndChips_m1_s13_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1462,7 +1462,7 @@ carbonFiberCu_m2_s13_r2 | carbonFiber_m2_s13_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s13_r2 | carbonFiber_m2_s13_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s13_r2 | sector13_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s13_r2 | busCable_m2_s13_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s13_r2 | busCable_m2_s13_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s13_r2 | busCable_m2_s13_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s13_r2 | sector13_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s13_r2 | sector13_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s13_r2 | pcBoardAndChips_m2_s13_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1496,7 +1496,7 @@ carbonFiberCu_m1_s14_r2 | carbonFiber_m1_s14_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s14_r2 | carbonFiber_m1_s14_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s14_r2 | sector14_r2 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s14_r2 | busCable_m1_s14_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s14_r2 | busCable_m1_s14_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s14_r2 | busCable_m1_s14_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s14_r2 | sector14_r2 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s14_r2 | sector14_r2 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s14_r2 | pcBoardAndChips_m1_s14_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1526,7 +1526,7 @@ carbonFiberCu_m2_s14_r2 | carbonFiber_m2_s14_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s14_r2 | carbonFiber_m2_s14_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s14_r2 | sector14_r2 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s14_r2 | busCable_m2_s14_r2 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s14_r2 | busCable_m2_s14_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s14_r2 | busCable_m2_s14_r2 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s14_r2 | sector14_r2 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s14_r2 | sector14_r2 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s14_r2 | pcBoardAndChips_m2_s14_r2 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1564,7 +1564,7 @@ carbonFiberCu_m1_s1_r3 | carbonFiber_m1_s1_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s1_r3 | carbonFiber_m1_s1_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s1_r3 | sector1_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s1_r3 | busCable_m1_s1_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s1_r3 | busCable_m1_s1_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s1_r3 | busCable_m1_s1_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s1_r3 | sector1_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s1_r3 | sector1_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s1_r3 | pcBoardAndChips_m1_s1_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1594,7 +1594,7 @@ carbonFiberCu_m2_s1_r3 | carbonFiber_m2_s1_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s1_r3 | carbonFiber_m2_s1_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s1_r3 | sector1_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s1_r3 | busCable_m2_s1_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s1_r3 | busCable_m2_s1_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s1_r3 | busCable_m2_s1_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s1_r3 | sector1_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s1_r3 | sector1_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s1_r3 | pcBoardAndChips_m2_s1_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1628,7 +1628,7 @@ carbonFiberCu_m1_s2_r3 | carbonFiber_m1_s2_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s2_r3 | carbonFiber_m1_s2_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s2_r3 | sector2_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s2_r3 | busCable_m1_s2_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s2_r3 | busCable_m1_s2_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s2_r3 | busCable_m1_s2_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s2_r3 | sector2_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s2_r3 | sector2_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s2_r3 | pcBoardAndChips_m1_s2_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1658,7 +1658,7 @@ carbonFiberCu_m2_s2_r3 | carbonFiber_m2_s2_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s2_r3 | carbonFiber_m2_s2_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s2_r3 | sector2_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s2_r3 | busCable_m2_s2_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s2_r3 | busCable_m2_s2_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s2_r3 | busCable_m2_s2_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s2_r3 | sector2_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s2_r3 | sector2_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s2_r3 | pcBoardAndChips_m2_s2_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1692,7 +1692,7 @@ carbonFiberCu_m1_s3_r3 | carbonFiber_m1_s3_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s3_r3 | carbonFiber_m1_s3_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s3_r3 | sector3_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s3_r3 | busCable_m1_s3_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s3_r3 | busCable_m1_s3_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s3_r3 | busCable_m1_s3_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s3_r3 | sector3_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s3_r3 | sector3_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s3_r3 | pcBoardAndChips_m1_s3_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1722,7 +1722,7 @@ carbonFiberCu_m2_s3_r3 | carbonFiber_m2_s3_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s3_r3 | carbonFiber_m2_s3_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s3_r3 | sector3_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s3_r3 | busCable_m2_s3_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s3_r3 | busCable_m2_s3_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s3_r3 | busCable_m2_s3_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s3_r3 | sector3_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s3_r3 | sector3_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s3_r3 | pcBoardAndChips_m2_s3_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1756,7 +1756,7 @@ carbonFiberCu_m1_s4_r3 | carbonFiber_m1_s4_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s4_r3 | carbonFiber_m1_s4_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s4_r3 | sector4_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s4_r3 | busCable_m1_s4_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s4_r3 | busCable_m1_s4_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s4_r3 | busCable_m1_s4_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s4_r3 | sector4_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s4_r3 | sector4_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s4_r3 | pcBoardAndChips_m1_s4_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1786,7 +1786,7 @@ carbonFiberCu_m2_s4_r3 | carbonFiber_m2_s4_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s4_r3 | carbonFiber_m2_s4_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s4_r3 | sector4_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s4_r3 | busCable_m2_s4_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s4_r3 | busCable_m2_s4_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s4_r3 | busCable_m2_s4_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s4_r3 | sector4_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s4_r3 | sector4_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s4_r3 | pcBoardAndChips_m2_s4_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1820,7 +1820,7 @@ carbonFiberCu_m1_s5_r3 | carbonFiber_m1_s5_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s5_r3 | carbonFiber_m1_s5_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s5_r3 | sector5_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s5_r3 | busCable_m1_s5_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s5_r3 | busCable_m1_s5_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s5_r3 | busCable_m1_s5_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s5_r3 | sector5_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s5_r3 | sector5_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s5_r3 | pcBoardAndChips_m1_s5_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1850,7 +1850,7 @@ carbonFiberCu_m2_s5_r3 | carbonFiber_m2_s5_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s5_r3 | carbonFiber_m2_s5_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s5_r3 | sector5_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s5_r3 | busCable_m2_s5_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s5_r3 | busCable_m2_s5_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s5_r3 | busCable_m2_s5_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s5_r3 | sector5_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s5_r3 | sector5_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s5_r3 | pcBoardAndChips_m2_s5_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1884,7 +1884,7 @@ carbonFiberCu_m1_s6_r3 | carbonFiber_m1_s6_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s6_r3 | carbonFiber_m1_s6_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s6_r3 | sector6_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s6_r3 | busCable_m1_s6_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s6_r3 | busCable_m1_s6_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s6_r3 | busCable_m1_s6_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s6_r3 | sector6_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s6_r3 | sector6_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s6_r3 | pcBoardAndChips_m1_s6_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1914,7 +1914,7 @@ carbonFiberCu_m2_s6_r3 | carbonFiber_m2_s6_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s6_r3 | carbonFiber_m2_s6_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s6_r3 | sector6_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s6_r3 | busCable_m2_s6_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s6_r3 | busCable_m2_s6_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s6_r3 | busCable_m2_s6_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s6_r3 | sector6_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s6_r3 | sector6_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s6_r3 | pcBoardAndChips_m2_s6_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1948,7 +1948,7 @@ carbonFiberCu_m1_s7_r3 | carbonFiber_m1_s7_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s7_r3 | carbonFiber_m1_s7_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s7_r3 | sector7_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s7_r3 | busCable_m1_s7_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s7_r3 | busCable_m1_s7_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s7_r3 | busCable_m1_s7_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s7_r3 | sector7_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s7_r3 | sector7_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s7_r3 | pcBoardAndChips_m1_s7_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -1978,7 +1978,7 @@ carbonFiberCu_m2_s7_r3 | carbonFiber_m2_s7_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s7_r3 | carbonFiber_m2_s7_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s7_r3 | sector7_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s7_r3 | busCable_m2_s7_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s7_r3 | busCable_m2_s7_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s7_r3 | busCable_m2_s7_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s7_r3 | sector7_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s7_r3 | sector7_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s7_r3 | pcBoardAndChips_m2_s7_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2012,7 +2012,7 @@ carbonFiberCu_m1_s8_r3 | carbonFiber_m1_s8_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s8_r3 | carbonFiber_m1_s8_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s8_r3 | sector8_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s8_r3 | busCable_m1_s8_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s8_r3 | busCable_m1_s8_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s8_r3 | busCable_m1_s8_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s8_r3 | sector8_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s8_r3 | sector8_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s8_r3 | pcBoardAndChips_m1_s8_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2042,7 +2042,7 @@ carbonFiberCu_m2_s8_r3 | carbonFiber_m2_s8_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s8_r3 | carbonFiber_m2_s8_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s8_r3 | sector8_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s8_r3 | busCable_m2_s8_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s8_r3 | busCable_m2_s8_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s8_r3 | busCable_m2_s8_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s8_r3 | sector8_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s8_r3 | sector8_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s8_r3 | pcBoardAndChips_m2_s8_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2076,7 +2076,7 @@ carbonFiberCu_m1_s9_r3 | carbonFiber_m1_s9_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m1_s9_r3 | carbonFiber_m1_s9_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m1_s9_r3 | sector9_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s9_r3 | busCable_m1_s9_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s9_r3 | busCable_m1_s9_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s9_r3 | busCable_m1_s9_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s9_r3 | sector9_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s9_r3 | sector9_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m1_s9_r3 | pcBoardAndChips_m1_s9_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2106,7 +2106,7 @@ carbonFiberCu_m2_s9_r3 | carbonFiber_m2_s9_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |  
 carbonFiberPk_m2_s9_r3 | carbonFiber_m2_s9_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
  busCable_m2_s9_r3 | sector9_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s9_r3 | busCable_m2_s9_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s9_r3 | busCable_m2_s9_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s9_r3 | busCable_m2_s9_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s9_r3 | sector9_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s9_r3 | sector9_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
   pcBoard_m2_s9_r3 | pcBoardAndChips_m2_s9_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2140,7 +2140,7 @@ carbonFiberCu_m1_s10_r3 | carbonFiber_m1_s10_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s10_r3 | carbonFiber_m1_s10_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s10_r3 | sector10_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s10_r3 | busCable_m1_s10_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s10_r3 | busCable_m1_s10_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s10_r3 | busCable_m1_s10_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s10_r3 | sector10_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s10_r3 | sector10_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s10_r3 | pcBoardAndChips_m1_s10_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2170,7 +2170,7 @@ carbonFiberCu_m2_s10_r3 | carbonFiber_m2_s10_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s10_r3 | carbonFiber_m2_s10_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s10_r3 | sector10_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s10_r3 | busCable_m2_s10_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s10_r3 | busCable_m2_s10_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s10_r3 | busCable_m2_s10_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s10_r3 | sector10_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s10_r3 | sector10_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s10_r3 | pcBoardAndChips_m2_s10_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2204,7 +2204,7 @@ carbonFiberCu_m1_s11_r3 | carbonFiber_m1_s11_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s11_r3 | carbonFiber_m1_s11_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s11_r3 | sector11_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s11_r3 | busCable_m1_s11_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s11_r3 | busCable_m1_s11_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s11_r3 | busCable_m1_s11_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s11_r3 | sector11_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s11_r3 | sector11_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s11_r3 | pcBoardAndChips_m1_s11_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2234,7 +2234,7 @@ carbonFiberCu_m2_s11_r3 | carbonFiber_m2_s11_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s11_r3 | carbonFiber_m2_s11_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s11_r3 | sector11_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s11_r3 | busCable_m2_s11_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s11_r3 | busCable_m2_s11_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s11_r3 | busCable_m2_s11_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s11_r3 | sector11_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s11_r3 | sector11_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s11_r3 | pcBoardAndChips_m2_s11_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2268,7 +2268,7 @@ carbonFiberCu_m1_s12_r3 | carbonFiber_m1_s12_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s12_r3 | carbonFiber_m1_s12_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s12_r3 | sector12_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s12_r3 | busCable_m1_s12_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s12_r3 | busCable_m1_s12_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s12_r3 | busCable_m1_s12_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s12_r3 | sector12_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s12_r3 | sector12_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s12_r3 | pcBoardAndChips_m1_s12_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2298,7 +2298,7 @@ carbonFiberCu_m2_s12_r3 | carbonFiber_m2_s12_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s12_r3 | carbonFiber_m2_s12_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s12_r3 | sector12_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s12_r3 | busCable_m2_s12_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s12_r3 | busCable_m2_s12_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s12_r3 | busCable_m2_s12_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s12_r3 | sector12_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s12_r3 | sector12_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s12_r3 | pcBoardAndChips_m2_s12_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2332,7 +2332,7 @@ carbonFiberCu_m1_s13_r3 | carbonFiber_m1_s13_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s13_r3 | carbonFiber_m1_s13_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s13_r3 | sector13_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s13_r3 | busCable_m1_s13_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s13_r3 | busCable_m1_s13_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s13_r3 | busCable_m1_s13_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s13_r3 | sector13_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s13_r3 | sector13_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s13_r3 | pcBoardAndChips_m1_s13_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2362,7 +2362,7 @@ carbonFiberCu_m2_s13_r3 | carbonFiber_m2_s13_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s13_r3 | carbonFiber_m2_s13_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s13_r3 | sector13_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s13_r3 | busCable_m2_s13_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s13_r3 | busCable_m2_s13_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s13_r3 | busCable_m2_s13_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s13_r3 | sector13_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s13_r3 | sector13_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s13_r3 | pcBoardAndChips_m2_s13_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2396,7 +2396,7 @@ carbonFiberCu_m1_s14_r3 | carbonFiber_m1_s14_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s14_r3 | carbonFiber_m1_s14_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s14_r3 | sector14_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s14_r3 | busCable_m1_s14_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s14_r3 | busCable_m1_s14_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s14_r3 | busCable_m1_s14_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s14_r3 | sector14_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s14_r3 | sector14_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s14_r3 | pcBoardAndChips_m1_s14_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2426,7 +2426,7 @@ carbonFiberCu_m2_s14_r3 | carbonFiber_m2_s14_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s14_r3 | carbonFiber_m2_s14_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s14_r3 | sector14_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s14_r3 | busCable_m2_s14_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s14_r3 | busCable_m2_s14_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s14_r3 | busCable_m2_s14_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s14_r3 | sector14_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s14_r3 | sector14_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s14_r3 | pcBoardAndChips_m2_s14_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2460,7 +2460,7 @@ carbonFiberCu_m1_s15_r3 | carbonFiber_m1_s15_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s15_r3 | carbonFiber_m1_s15_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s15_r3 | sector15_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s15_r3 | busCable_m1_s15_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s15_r3 | busCable_m1_s15_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s15_r3 | busCable_m1_s15_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s15_r3 | sector15_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s15_r3 | sector15_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s15_r3 | pcBoardAndChips_m1_s15_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2490,7 +2490,7 @@ carbonFiberCu_m2_s15_r3 | carbonFiber_m2_s15_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s15_r3 | carbonFiber_m2_s15_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s15_r3 | sector15_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s15_r3 | busCable_m2_s15_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s15_r3 | busCable_m2_s15_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s15_r3 | busCable_m2_s15_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s15_r3 | sector15_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s15_r3 | sector15_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s15_r3 | pcBoardAndChips_m2_s15_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2524,7 +2524,7 @@ carbonFiberCu_m1_s16_r3 | carbonFiber_m1_s16_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s16_r3 | carbonFiber_m1_s16_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s16_r3 | sector16_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s16_r3 | busCable_m1_s16_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s16_r3 | busCable_m1_s16_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s16_r3 | busCable_m1_s16_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s16_r3 | sector16_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s16_r3 | sector16_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s16_r3 | pcBoardAndChips_m1_s16_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2554,7 +2554,7 @@ carbonFiberCu_m2_s16_r3 | carbonFiber_m2_s16_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s16_r3 | carbonFiber_m2_s16_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s16_r3 | sector16_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s16_r3 | busCable_m2_s16_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s16_r3 | busCable_m2_s16_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s16_r3 | busCable_m2_s16_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s16_r3 | sector16_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s16_r3 | sector16_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s16_r3 | pcBoardAndChips_m2_s16_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2588,7 +2588,7 @@ carbonFiberCu_m1_s17_r3 | carbonFiber_m1_s17_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s17_r3 | carbonFiber_m1_s17_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s17_r3 | sector17_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s17_r3 | busCable_m1_s17_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s17_r3 | busCable_m1_s17_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s17_r3 | busCable_m1_s17_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s17_r3 | sector17_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s17_r3 | sector17_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s17_r3 | pcBoardAndChips_m1_s17_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2618,7 +2618,7 @@ carbonFiberCu_m2_s17_r3 | carbonFiber_m2_s17_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s17_r3 | carbonFiber_m2_s17_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s17_r3 | sector17_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s17_r3 | busCable_m2_s17_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s17_r3 | busCable_m2_s17_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s17_r3 | busCable_m2_s17_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s17_r3 | sector17_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s17_r3 | sector17_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s17_r3 | pcBoardAndChips_m2_s17_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2652,7 +2652,7 @@ carbonFiberCu_m1_s18_r3 | carbonFiber_m1_s18_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m1_s18_r3 | carbonFiber_m1_s18_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m1_s18_r3 | sector18_r3 | 0*cm 0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m1_s18_r3 | busCable_m1_s18_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m1_s18_r3 | busCable_m1_s18_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m1_s18_r3 | busCable_m1_s18_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m1_s18_r3 | sector18_r3 | 0*cm 0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m1_s18_r3 | sector18_r3 | 0*cm 0.2081*cm -16.71175*cm | 0 0 0 |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m1_s18_r3 | pcBoardAndChips_m1_s18_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 
@@ -2682,7 +2682,7 @@ carbonFiberCu_m2_s18_r3 | carbonFiber_m2_s18_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |
 carbonFiberPk_m2_s18_r3 | carbonFiber_m2_s18_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0095*cm 17.753*cm  | 
 busCable_m2_s18_r3 | sector18_r3 | 0*cm -0.1479*cm 0.82925*cm | 0 0 0 |      Box | 2.1*cm 0.0039*cm 20.082*cm  | 
 busCableCu_m2_s18_r3 | busCable_m2_s18_r3 | 0*cm 0*cm -17.753*cm | 0 0 0 |      Box | 1.8375*cm 0.0039*cm 2.329*cm  | 
-busCablePk_m2_s18_r3 | busCable_m2_s18_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.0039*cm 17.753*cm  | 
+busCablePk_m2_s18_r3 | busCable_m2_s18_r3 | 0*cm 0*cm 2.329*cm | 0 0 0 |      Box | 2.05*cm 0.00295*cm 17.753*cm  | 
 pitchAdaptor_m2_s18_r3 | sector18_r3 | 0*cm -0.1741*cm -14.40975*cm | 0 0 0 |      Box | 2.075*cm 0.016*cm 0.2*cm  | 
 pcBoardAndChips_m2_s18_r3 | sector18_r3 | 0*cm -0.2081*cm -16.71175*cm | ordered: zyx 180*deg 0*deg 0*deg |      Box | 1.8365*cm 0.05*cm 2.072*cm  | 
  pcBoard_m2_s18_r3 | pcBoardAndChips_m2_s18_r3 | 0*cm -0.025*cm 0*cm | 0 0 0 |      Box | 1.8365*cm 0.025*cm 2.072*cm  | 

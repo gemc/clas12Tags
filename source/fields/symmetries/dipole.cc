@@ -1,6 +1,9 @@
+// this file should be reorganized to split the asciiField and clas12BinField factories
+
 // gemc headers
+#include "gemcUtils.h"
 #include "asciiField.h"
-#include "utils.h"
+#include "clas12BinField.h"
 
 // 1D-dipole field
 // Dependent on 2 cartesian coordinates (longitudinal, transverse)
@@ -8,6 +11,7 @@
 // The values can be loaded from the map in any order
 // as long as their speed is ordered.
 // The values are indexed as B1_2D[longi][transverse]
+
 
 // from fieldFactory:  load field map
 void asciiField::loadFieldMap_Dipole(gMappedField* map, double verbosity)
@@ -151,18 +155,15 @@ void gMappedField::GetFieldValue_Dipole( const double x[3], double *Bfield, int 
 	}
 	
 	// no interpolation
-	if(interpolation == "none")
-	{
+	if(interpolation == "none") {
 		// checking if the point is closer to the top of the cell
 		if( fabs( startMap[0] + IL*cellSize[0] - LC) > fabs( startMap[0] + (IL+1)*cellSize[0] - LC)  ) IL++;
 		if( fabs( startMap[1] + IT*cellSize[1] - TC) > fabs( startMap[1] + (IT+1)*cellSize[1] - TC)  ) IT++;
 
-			 if(symmetry == "dipole-x") Bfield[0] = B1_2D[IL][IT];
+			  if(symmetry == "dipole-x") Bfield[0] = B1_2D[IL][IT];
 		else if(symmetry == "dipole-y") Bfield[1] = B1_2D[IL][IT];
 		else if(symmetry == "dipole-z") Bfield[2] = B1_2D[IL][IT];
-	}
-	else if (interpolation == "linear")
-	{
+	} else if (interpolation == "linear") {
 		// relative positions within cell
 		double xlr = (LC - (startMap[0] + IL*cellSize[0])) / cellSize[0];
 		double xtr = (TC - (startMap[1] + IT*cellSize[1])) / cellSize[1];
@@ -175,9 +176,7 @@ void gMappedField::GetFieldValue_Dipole( const double x[3], double *Bfield, int 
 		     if(symmetry == "dipole-x") Bfield[0] = b1;
 		else if(symmetry == "dipole-y") Bfield[1] = b1;
 		else if(symmetry == "dipole-z") Bfield[2] = b1;
-	}
-	else
-	{
+	} else {
 		cout << "  !! Unkown field interpolation method >" << interpolation << "<" << endl;
 		return;
 	}
@@ -189,8 +188,7 @@ void gMappedField::GetFieldValue_Dipole( const double x[3], double *Bfield, int 
 	// we don't worry about computer speed
 	// if verbosity is set this high
 	// so we can output units as well
-	if(verbosity>3 && FIRST_ONLY != 99)
-	{
+	if(verbosity>3 && FIRST_ONLY != 99) {
 		cout << "  > Track position in magnetic field map, with displacement and rotations (x,y,z)/cm: "
 		<< "("  << x[0]/cm << ", "
 		<< x[1]/cm << ", "

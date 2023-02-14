@@ -1,9 +1,11 @@
                 ltcc  |              bankid  |                                      ltcc bank ID  | 1400   |                  Di  
-                ltcc  |              sector  |                                     clas12 sector  |    1   |                  Di  
-                ltcc  |                side  |                               left or right index  |    2   |                  Di  
-                ltcc  |             segment  |                                           segment  |    3   |                  Di  
-                ltcc  |                 adc  |                                               adc  |    4   |                  Di  
-                ltcc  |                time  |                           average time of the hit  |    5   |                  Dd  
-                ltcc  |                nphe  |                  number of photoelectrons arrived  |    6   |                  Di  
-                ltcc  |               npheD  |                 number of photoelectrons detected  |    7   |                  Di  
+                ltcc  |              sector  |                                      sector (1-6)  |    1   |                  Di  
+                ltcc  |               layer  |                              half sector (1 or 2)  |    2   |                  Di  
+                ltcc  |           component  |                                        pmt (1-18)  |    3   |                  Di  
+                ltcc  |           ADC_order  |                                          always 0  |    4   |                  Di  
+                ltcc  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
+                ltcc  |            ADC_time  |                               time from pulse fit  |    6   |                  Dd  
+                ltcc  |             ADC_ped  |                      pedestal from pulse analysis  |    7   |                  Di  
+                ltcc  |           TDC_order  |                                          always 0  |    8   |                  Di  
+                ltcc  |             TDC_TDC  |                                         TDC value  |    9   |                  Di  
                 ltcc  |                hitn  |                                        hit number  |   99   |                  Di  

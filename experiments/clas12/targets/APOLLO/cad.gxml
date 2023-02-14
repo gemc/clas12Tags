@@ -1,0 +1,7 @@
+<!--Run Group C Polarized Target-->
+<gxml>
+    <volume name="InsertBath_NoVoid_6"      mother="PolTarg" color="ffffff" position="0*mm 0*mm -65*mm" rotation="\
+0*deg 0*deg 0*deg" material="AmmoniaCellWalls"/>
+
+</gxml>
+

@@ -9,9 +9,11 @@ map<string, double> IC_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;
-
-	vector<identifier> identity = aHit->GetId();
 	
+	vector<identifier> identity = aHit->GetId();
+	rejectHitConditions = false;
+	writeHit = true;
+
 	
 	// R.De Vita (April 2009)
 	
@@ -71,7 +73,7 @@ map<string, double> IC_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		double crg=nel*AMP_gain*1.6e-7;
 		// converting to ADC channels
 		ADC= (int) (crg*adc_charge_tochannel);
-
+		
 	}
 	
 	dgtz["hitn"] = hitn;
@@ -80,13 +82,11 @@ map<string, double> IC_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["ADC"]  = ADC;
 	dgtz["TDC"]  = TDC;
 	
-	// decide if write an hit or not
-	writeHit = true;
 	// define conditions to reject hit
 	if(rejectHitConditions) {
 		writeHit = false;
 	}
-
+	
 	return dgtz;
 }
 
@@ -99,15 +99,15 @@ vector<identifier>  IC_HitProcess :: processID(vector<identifier> id, G4Step* aS
 vector<MHit*> IC_HitProcess :: electronicNoise()
 {
 	vector<MHit*> noiseHits;
-
+	
 	// first, identify the cells that would have electronic noise
 	// then instantiate hit with energy E, time T, identifier IDF:
 	//
 	// MHit* thisNoiseHit = new MHit(E, T, IDF, pid);
-
+	
 	// push to noiseHits collection:
 	// noiseHits.push_back(thisNoiseHit)
-
+	
 	return noiseHits;
 }
 
@@ -124,7 +124,7 @@ map< string, vector <int> >  IC_HitProcess :: multiDgt(MHit* aHit, int hitn)
 map< int, vector <double> > IC_HitProcess :: chargeTime(MHit* aHit, int hitn)
 {
 	map< int, vector <double> >  CT;
-
+	
 	return CT;
 }
 
