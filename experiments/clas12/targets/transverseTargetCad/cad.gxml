@@ -9,4 +9,12 @@
 	<volume name="upRing"         mother="root" color="9999aa" position="0*mm 0*mm 0*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
 	<volume name="downRing"       mother="root" color="9999aa" position="0*mm 0*mm 0*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
 
+	<volume name="AdditionalWindows"  mother="root" color="99ffaa" position="0*mm 0*mm 0*mm" rotation="ordered: yxz 270*deg 270*deg 0*deg" material="G4_Al"/>
+	<volume name="BeamPathExitWindow" mother="root" color="99ffaa" position="0*mm 0*mm 0*mm" rotation="ordered: yxz 270*deg 270*deg 0*deg" material="G4_Al"/>
+	<volume name="DownstreamRS"       mother="root" color="99ffaa" position="0*mm 0*mm 0*mm" rotation="ordered: yxz 270*deg 270*deg 0*deg" material="G4_Al"/>
+	<volume name="InnerRSSheet"       mother="root" color="99ffaa" position="0*mm 0*mm 0*mm" rotation="ordered: yxz 270*deg 270*deg 0*deg" material="G4_Al"/>
+	<volume name="InnerRSSheetMIR1"   mother="root" color="99ffaa" position="0*mm 0*mm 0*mm" rotation="ordered: yxz 270*deg 270*deg 0*deg" material="G4_Al"/>
+	<volume name="Pumpline60mm"       mother="root" color="99ffaa" position="0*mm 0*mm 0*mm" rotation="ordered: yxz 270*deg 270*deg 0*deg" material="G4_Al"/>
+	<volume name="UpstreamRS"         mother="root" color="99ffaa" position="0*mm 0*mm 0*mm" rotation="ordered: yxz 270*deg 270*deg 0*deg" material="G4_Al"/>
+
 </gxml>

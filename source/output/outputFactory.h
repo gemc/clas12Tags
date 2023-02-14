@@ -18,9 +18,18 @@
 #include "frequencySyncSignal.h"
 
 // EVIO
+// #include "evioUtil.hxx"
+// #include "evioFileChannel.hxx"
+// using namespace evio;
+// EVIO
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#pragma GCC diagnostic ignored "-Wdeprecated"
 #include "evioUtil.hxx"
 #include "evioFileChannel.hxx"
+#pragma GCC diagnostic pop
 using namespace evio;
+
 
 // geant4
 #include "G4ThreeVector.hh"

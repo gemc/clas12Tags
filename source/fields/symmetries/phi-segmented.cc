@@ -241,11 +241,6 @@ void gMappedField::GetFieldValue_phiSegmented( const double x[3], double *Bfield
 	tI = floor( ( tC   - startMap[1] ) / cellSize[1] );
 	lI = floor( ( lC   - startMap[2] ) / cellSize[2] );
 
-	// checking if the point is closer to the top of the cell
-	if( fabs( startMap[0] + aI*cellSize[0] - aaLC) > fabs( startMap[0] + (aI + 1)*cellSize[0] - aaLC)  ) aI++;
-	if( fabs( startMap[1] + tI*cellSize[1] - tC)   > fabs( startMap[1] + (tI + 1)*cellSize[1] - tC)    ) tI++;
-	if( fabs( startMap[2] + lI*cellSize[2] - lC)   > fabs( startMap[2] + (lI + 1)*cellSize[2] - lC)    ) lI++;
-
 
 	// outside map, returning no field
 	if (aC < startMap[0] || tC < startMap[1] || lC < startMap[2]) return;

@@ -155,7 +155,7 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 
 	trueInfos tInfos(aHit);
-	
+
 	int ndetected;
 	// if anything else than a photon hits the PMT
 	// the nphe is the particle id
@@ -167,12 +167,19 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["nphe"]   = thisPid;
 	dgtz["time"]   = tInfos.time;
 	dgtz["hitn"]   = hitn;
-	
-	
-	// if the particle is not an opticalphoton return bank filled with negative identifiers
-	if(thisPid != 0)
+
+	// return if the particle is not an opticalphoton
+	// notice: the optical photon PID changed from 0 to -22 with 10.7
+	if(thisPid != MHit::OPTICALPHOTONPID) {
+
 		return dgtz;
-	
+
+		dgtz["sector"]    = -idsector;
+		dgtz["layer"]     = -idhalf;
+		dgtz["component"] = -idring;
+
+	}
+
 	// Since the HTCC hit involves a PMT which detects photons with a certain quantum efficiency (QE)
 	// we want to implement QE here in a flexible way:
 	
@@ -194,7 +201,7 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	for(unsigned int s=0; s<tids.size(); s++)
 	{
 		// selecting optical photons
-		if(pids[s] == 0)
+		if(pids[s] == MHit::OPTICALPHOTONPID)
 		{
 			// insert this step into the set of track ids (set can only have unique values).
 			pair< set<int> ::iterator, bool> newtrack = TIDS.insert(tids[s]);
@@ -204,7 +211,7 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			if( newtrack.second ) photon_energies.push_back( Energies[s] );
 		}
 	}
-	
+
 	
 	// here is the fun part: figure out the number of photons we detect based
 	// on the quantum efficiency of the photocathode material, if defined:
@@ -215,12 +222,11 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	G4MaterialPropertyVector* efficiency = NULL;
 	ndetected = 0;
 	bool gotefficiency = false;
-	if( MPT != NULL )
-	{
+	if( MPT != nullptr ) {
 		efficiency = (G4MaterialPropertyVector*) MPT->GetProperty("EFFICIENCY");
-		if( efficiency != NULL ) gotefficiency = true;
+		if( efficiency != nullptr ) gotefficiency = true;
 	}
-	
+
 	for( unsigned int iphoton = 0; iphoton<TIDS.size(); iphoton++ )
 	{
 		//loop over all unique photons contributing to the hit:
@@ -229,9 +235,13 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			// If the material of this detector has a material properties table
 			// with "EFFICIENCY" defined, then "detect" this photon with probability = efficiency
 			bool outofrange = false;
-			if( G4UniformRand() <= efficiency->GetValue( photon_energies[iphoton], outofrange ) )
+			double uniformR = G4UniformRand();
+			double peff = efficiency->GetValue( photon_energies[iphoton], outofrange );
+
+			if(  uniformR <= peff) {
 				ndetected++;
-			
+			}
+
 			if( verbosity > 4 )
 			{
 				cout << log_msg << " Found efficiency definition for material "
@@ -240,17 +250,13 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 				<< ( (G4MaterialPropertyVector*) efficiency )->GetValue( photon_energies[iphoton], outofrange )
 				<< ")" << endl;
 			}
-		}
-		else
-		{
+		} else {
 			// No efficiency definition, "detect" all photons
 			ndetected++;
 		}
 	}
 	
-	if(verbosity>4)
-	{
-		
+	if(verbosity>4) {
 		cout <<  log_msg << " (sector, ring, half)=(" << idsector << ", " << idring << ", " << idhalf << ")"
 		<< " x=" << tInfos.x/cm << " y=" << tInfos.y/cm << " z=" << tInfos.z/cm << endl;
 	}
@@ -401,7 +407,7 @@ map< int, vector <double> > htcc_HitProcess :: chargeTime(MHit* aHit, int hitn)
 	for(unsigned int s=0; s<tids.size(); s++)
 	{
 		// selecting optical photons
-		if(pids[s] == 0)
+		if(pids[s] == MHit::OPTICALPHOTONPID)
 		{
 			// insert this step into the set of track ids (set can only have unique values).
 			pair< set<int> ::iterator, bool> newtrack = TIDS.insert(tids[s]);

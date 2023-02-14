@@ -1,0 +1,13 @@
+                band  |              bankid  |                                      band bank ID  | 2100   |                  Di  
+                band  |              sector  |                                     sector number  |    1   |                  Di  
+                band  |               layer  |                                      layer number  |    2   |                  Di  
+                band  |           component  |                                  component number  |    3   |                  Di  
+                band  |                ADCL  |                                               ADC  |    4   |                  Di  
+                band  |          amplitudeL  |                                         amplitude  |    5   |                  Di  
+                band  |            ADCtimeL  |                                    time from FADC  |    6   |                  Dd  
+                band  |                TDCL  |                                     time from TDC  |    7   |                  Di  
+                band  |                ADCR  |                                               ADC  |    8   |                  Di  
+                band  |          amplitudeR  |                                         amplitude  |    9   |                  Di  
+                band  |            ADCtimeR  |                                    time from FADC  |   10   |                  Dd  
+                band  |                TDCR  |                                     time from TDC  |   11   |                  Di  
+                band  |                hitn  |                                        hit number  |   99   |                  Di  

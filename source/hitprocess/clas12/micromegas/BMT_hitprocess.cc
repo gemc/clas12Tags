@@ -5,6 +5,7 @@
 #include "G4FieldManager.hh"
 #include "G4Field.hh"
 #include "CLHEP/Vector/ThreeVector.h"
+#include "Randomize.hh"
 
 #include <CCDB/Calibration.h>
 #include <CCDB/Model/Assignment.h>
@@ -37,60 +38,47 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	vector<vector<double> > data;
 	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(bmtc.connection));
 	
-	//Load the geometrical constant for each layer
+	// Load the geometrical constant for each layer
 	sprintf(bmtc.database,"/geometry/cvt/mvt/bmt_layer_noshim:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,bmtc.database);
-	
-	for(unsigned row = 0; row < data.size(); row++)
-	{
+
+	for(unsigned row = 0; row < data.size(); row++) {
 		bmtc.AXIS[row] = data[row][1];
 		bmtc.RADIUS[row] = data[row][3];
 		bmtc.ZMIN[row]   = data[row][4];
 		bmtc.ZMAX[row] = data[row][5];
-		bmtc.EDGE1[row][0] = (data[row][6]+120.)*degree;
-		bmtc.EDGE2[row][0] = (data[row][7]+120.)*degree;
-		bmtc.EDGE1[row][1] = (data[row][6])*degree;
-		bmtc.EDGE2[row][1] = (data[row][7])*degree;
-		bmtc.EDGE1[row][2] = (data[row][6]+240.)*degree;
-		bmtc.EDGE2[row][2] = (data[row][7]-120.)*degree;
+		bmtc.EDGE1[row] = (data[row][6]-30)*degree;
+		bmtc.EDGE2[row] = (data[row][7]-30)*degree;
 		bmtc.NSTRIPS[row] = data[row][8];
 		bmtc.hDrift =  data[row][9];
 	}
-	
-	//Load the strip structure of each layer, compute PITCH
-	bmtc.GROUP.resize(bmtc.NLAYERS); //6 Layers
+
+	// Load the strip structure of each layer, compute PITCH
+	bmtc.GROUP.resize(bmtc.NLAYERS); // 6 Layers
 	bmtc.PITCH.resize(bmtc.NLAYERS);
-	
+
 	for (int layer=0; layer<bmtc.NLAYERS;layer++){
 		sprintf(bmtc.database,"/geometry/cvt/mvt/bmt_strip_L%d:%d:%s%s", layer+1, bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 		data.clear(); calib->GetCalib(data,bmtc.database);
-		
+
 		bmtc.GROUP[layer].resize(data.size());
 		bmtc.PITCH[layer].resize(data.size());
 		for(unsigned row = 0; row < data.size(); row++)
 		{
 			bmtc.GROUP[layer][row] = data[row][0];
 			bmtc.PITCH[layer][row] = data[row][1];
-			
+
 			if (bmtc.AXIS[layer]==1) {//Compute angular pitch and redefine the phi angular coverage to be consistent with the pitch
 				bmtc.PITCH[layer][row] = bmtc.PITCH[layer][row]/bmtc.RADIUS[layer]; //Get an angular pitch
 				for (int j = 0; j <bmtc.NSECTORS ; ++j)
 				{
-					if (bmtc.EDGE2[layer][j]>bmtc.EDGE1[layer][j]) {
-						double middle=(bmtc.EDGE1[layer][j]+bmtc.EDGE2[layer][j])/2.;
-						bmtc.EDGE1[layer][j] = middle-bmtc.GROUP[layer][row]*bmtc.PITCH[layer][row]/2.;
-						bmtc.EDGE2[layer][j] = middle+bmtc.GROUP[layer][row]*bmtc.PITCH[layer][row]/2.;
-					}
-					if (bmtc.EDGE2[layer][j]<bmtc.EDGE1[layer][j]) {
-						double middle=(bmtc.EDGE1[layer][j]+bmtc.EDGE2[layer][j]+2*pi)/2.;
-						bmtc.EDGE1[layer][j] = middle-bmtc.GROUP[layer][row]*bmtc.PITCH[layer][row]/2.;
-						bmtc.EDGE2[layer][j] = middle+bmtc.GROUP[layer][row]*bmtc.PITCH[layer][row]/2.;
-						bmtc.EDGE2[layer][j] -=2*pi;
-					}
+					double middle=(bmtc.EDGE1[layer]+bmtc.EDGE2[layer])/2.;
+					bmtc.EDGE1[layer] = middle-bmtc.GROUP[layer][row]*bmtc.PITCH[layer][row]/2.;
+					bmtc.EDGE2[layer] = middle+bmtc.GROUP[layer][row]*bmtc.PITCH[layer][row]/2.;
 				}
 			}
 		}
-		
+
 		for (int j = 0; j <bmtc.NSECTORS ; ++j)
 		{
 			if (bmtc.AXIS[layer]==1) bmtc.HV_DRIFT[layer][j]=1800;
@@ -98,7 +86,7 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 			bmtc.HV_STRIPS[layer][j]=520;
 		}
 	}
-	
+
 	// all dimensions are in mm
 	bmtc.SigmaDrift = 0.036; //mm-1
 	bmtc.hStrip2Det = bmtc.hDrift/2.;
@@ -107,6 +95,12 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	
 	bmtc.Lor_Angle.Initialize(runno);
 
+	// get hit time distribution parameters
+	sprintf(bmtc.database,"/calibration/mvt/bmt_time:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear(); calib->GetCalib(data,bmtc.database);
+	bmtc.Twindow  = data[0][3]*ns;
+	bmtc.Tmean    = data[0][4]*ns;
+	bmtc.Tsigma   = data[0][5]*ns;
 
 	// now connecting to target geometry to get its position
 	sprintf(bmtc.database,"/geometry/target:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
@@ -136,7 +130,8 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		dgtz["strip"]  = strip;
 		dgtz["Edep"]   = totEdep;
 		dgtz["ADC"]    = int(1e6*totEdep/bmtc.w_i);
-		
+		dgtz["time"]   = bmtc.Twindow*G4UniformRand();
+
 		return dgtz;
 	}
 	
@@ -160,11 +155,13 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["sector"] = sector;
 	dgtz["strip"]  = strip;
 	dgtz["Edep"]   = tInfos.eTot;
-	dgtz["ADC"]   = int(1e6*tInfos.eTot/bmtc.w_i);
-	
+	dgtz["ADC"]    = int(1e6*tInfos.eTot/bmtc.w_i);
+	dgtz["time"]   = bmtc.Tmean+bmtc.Tsigma*G4RandGauss::shoot(0., 1.0);
+
 	if (strip==-1) {
-		dgtz["Edep"]  = 0;
-		dgtz["ADC"]   = 0;
+		dgtz["Edep"]   = 0;
+		dgtz["ADC"]    = 0;
+		dgtz["time"]   = 0;
 	}
 	
 	// decide if write an hit or not
@@ -186,13 +183,16 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 	
 	int layer  = yid[0].id;
 	int sector = yid[2].id;
-	G4ThreeVector   xyz  = aStep->GetPostStepPoint()->GetPosition();
-	
+	G4ThreeVector   xyz  = aStep->GetPostStepPoint()->GetPosition();  ///< Global Coordinates of interaction
+	G4ThreeVector  lxyz  = aStep->GetPreStepPoint()->GetTouchableHandle()->GetHistory()->GetTopTransform().TransformPoint(xyz); ///< Local Coordinates of interaction
+	double z0 = bmtc.ZMIN[layer-1]+Detector.dimensions[2];
+	lxyz.setZ(lxyz.z()+z0);
+
 	// if the scale is not set, then use fieldmanager to get the value
 	// if fieldmanager is not found, the field is zero
 	/*	if(bmtc.fieldScale == -1)
 	 {*/
-	const double point[4] = {xyz.x(), xyz.y(), xyz.z() - bmtc.targetZPos, 10};
+	const double point[4] = {xyz.x(), xyz.y(), xyz.z(), 10};
 	double fieldValue[3] = {0, 0, 0};
 	double phi_p=atan2(xyz.y(),xyz.x());
 
@@ -232,7 +232,7 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 	
 	//cout << "resolMM " << layer << " " << xyz.x() << " " << xyz.y() << " " << xyz.z() << " " << depe << " " << aStep->GetTrack()->GetTrackID() << endl;
 	
-	vector<double> multi_hit = bmts.FindStrip(layer, sector, xyz, depe, bmtc); //return strip=-1 and signal -1 if depe<ionization
+	vector<double> multi_hit = bmts.FindStrip(layer, sector, lxyz, depe, bmtc); //return strip=-1 and signal -1 if depe<ionization
 	
 	int n_multi_hits = multi_hit.size()/2;
 	

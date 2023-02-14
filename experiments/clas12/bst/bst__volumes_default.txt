@@ -1,5 +1,12 @@
-               svt |     none | 0*cm 0*cm 0*cm | 0 0 0 |     Tube | 5.87583*cm 13.989852*cm 29.361501*cm 0*rad 360*rad  | 
-           region1 |      svt | 0*cm 0*cm -7.92635*cm | 0 0 0 |     Tube | 6.0064*cm 7.3992*cm 20.91275*cm 0*rad 360*rad  | 
+               svt |     none | 0*cm 0*cm 0*cm | 0 0 0 |     Tube | 5.679969*cm 13.989852*cm 29.361501*cm 0*rad 360*rad  | 
+  faradayCageInner |      svt | 0*cm 0*cm -3.0557505*cm | 0 0 0 |     Tube | 5.69*cm 5.715*cm 26.3057505*cm 0*rad 360*rad  | 
+  faradayCageOuter |      svt | 0*cm 0*cm -3.5557505*cm | 0 0 0 |     Tube | 13.25*cm 13.3*cm 25.8057505*cm 0*rad 360*rad  | 
+    faradayCageCap |      svt | 0*cm 0*cm 22.75*cm | 0 0 0 |     Tube | 5.755*cm 13.2*cm 0.5*cm 0*rad 360*rad  | 
+faradayCageInsulation |      svt | 0*cm 0*cm -3.0557505*cm | 0 0 0 |     Tube | 13.3*cm 13.57*cm 26.3057505*cm 0*rad 360*rad  | 
+           region1 |      svt | 0*cm 0*cm -7.92635*cm | 0 0 0 |     Tube | 5.78*cm 7.3992*cm 20.91275*cm 0*rad 360*rad  | 
+ peek_polyhedra_r1 |  region1 | 0*cm 0*cm 0*cm | 0 0 0 |     Pgon | 0*rad 6.2831853*rad 10*counts 2*counts 0*cm 0*cm 6.44*cm 6.44*cm -0.75*cm 0.75*cm  | 
+      peek_tube_r1 |  region1 | 0*cm 0*cm 0*cm | 0 0 0 |     Tube | 0*cm 5.88*cm 0.825*cm 0*rad 360*rad  | 
+           peek_r1 |  region1 | 0*cm 0*cm 20.16275*cm | 0 0 0 | Operation: peek_polyhedra_r1 - peek_tube_r1 | 0*counts  | 
         sector1_r1 |  region1 | -0*cm -6.7028*cm 0*cm | 0 0 0 |      Box | 2.1*cm 0.2581*cm 20.91275*cm  | 
   heatSinkCu_s1_r1 | sector1_r1 | 0*cm 0.0025*cm -17.64625*cm | 0 0 0 |      Box | 2.035*cm 0.1275*cm 3.2665*cm  | 
 heatSinkRidge_s1_r1 | sector1_r1 | 0*cm 0.149*cm -20.13275*cm | 0 0 0 |      Box | 2.035*cm 0.019*cm 0.78*cm  | 
@@ -640,7 +647,10 @@ epoxyMinorPk_m2_s10_r1 | epoxyAndRailAndPads_m2_s10_r1 | -1.4*cm 0*cm 2.329*cm |
     pad6_m2_s10_r1 | epoxyAndRailAndPads_m2_s10_r1 | -0.6*cm 0.0002*cm -2.3189*cm | ordered: zyx 0*deg 0*deg -90*deg |     Tube | 0*cm 0.15*cm 0.00305*cm 0*rad 360*rad  | 
     pad7_m2_s10_r1 | epoxyAndRailAndPads_m2_s10_r1 | -0.6*cm 0.0002*cm -5.3299*cm | ordered: zyx 0*deg 0*deg -90*deg |     Tube | 0*cm 0.15*cm 0.00305*cm 0*rad 360*rad  | 
     pad8_m2_s10_r1 | epoxyAndRailAndPads_m2_s10_r1 | -0.6*cm 0.0002*cm -9.411*cm | ordered: zyx 0*deg 0*deg -90*deg |     Tube | 0*cm 0.15*cm 0.00305*cm 0*rad 360*rad  | 
-           region2 |      svt | 0*cm 0*cm -3.98175*cm | 0 0 0 |     Tube | 8.7664*cm 10.1592*cm 20.91275*cm 0*rad 360*rad  | 
+           region2 |      svt | 0*cm 0*cm -3.98175*cm | 0 0 0 |     Tube | 8.47*cm 10.1592*cm 20.91275*cm 0*rad 360*rad  | 
+ peek_polyhedra_r2 |  region2 | 0*cm 0*cm 0*cm | 0 0 0 |     Pgon | 0*rad 6.2831853*rad 14*counts 2*counts 0*cm 0*cm 9.2*cm 9.2*cm -0.75*cm 0.75*cm  | 
+      peek_tube_r2 |  region2 | 0*cm 0*cm 0*cm | 0 0 0 |     Tube | 0*cm 8.57*cm 0.825*cm 0*rad 360*rad  | 
+           peek_r2 |  region2 | 0*cm 0*cm 20.16275*cm | 0 0 0 | Operation: peek_polyhedra_r2 - peek_tube_r2 | 0*counts  | 
         sector1_r2 |  region2 | -0*cm -9.4628*cm 0*cm | 0 0 0 |      Box | 2.1*cm 0.2581*cm 20.91275*cm  | 
   heatSinkCu_s1_r2 | sector1_r2 | 0*cm 0.0025*cm -17.64625*cm | 0 0 0 |      Box | 2.035*cm 0.1275*cm 3.2665*cm  | 
 heatSinkRidge_s1_r2 | sector1_r2 | 0*cm 0.149*cm -20.13275*cm | 0 0 0 |      Box | 2.035*cm 0.019*cm 0.78*cm  | 
@@ -1537,7 +1547,10 @@ epoxyMinorPk_m2_s14_r2 | epoxyAndRailAndPads_m2_s14_r2 | -1.4*cm 0*cm 2.329*cm |
     pad6_m2_s14_r2 | epoxyAndRailAndPads_m2_s14_r2 | -0.6*cm 0.0002*cm -2.3189*cm | ordered: zyx 0*deg 0*deg -90*deg |     Tube | 0*cm 0.15*cm 0.00305*cm 0*rad 360*rad  | 
     pad7_m2_s14_r2 | epoxyAndRailAndPads_m2_s14_r2 | -0.6*cm 0.0002*cm -5.3299*cm | ordered: zyx 0*deg 0*deg -90*deg |     Tube | 0*cm 0.15*cm 0.00305*cm 0*rad 360*rad  | 
     pad8_m2_s14_r2 | epoxyAndRailAndPads_m2_s14_r2 | -0.6*cm 0.0002*cm -9.411*cm | ordered: zyx 0*deg 0*deg -90*deg |     Tube | 0*cm 0.15*cm 0.00305*cm 0*rad 360*rad  | 
-           region3 |      svt | 0*cm 0*cm -0.06435*cm | 0 0 0 |     Tube | 11.5099*cm 12.9027*cm 20.91275*cm 0*rad 360*rad  | 
+           region3 |      svt | 0*cm 0*cm -0.06435*cm | 0 0 0 |     Tube | 11.07*cm 12.9027*cm 20.91275*cm 0*rad 360*rad  | 
+ peek_polyhedra_r3 |  region3 | 0*cm 0*cm 0*cm | 0 0 0 |     Pgon | 0*rad 6.2831853*rad 18*counts 2*counts 0*cm 0*cm 11.945*cm 11.945*cm -0.75*cm 0.75*cm  | 
+      peek_tube_r3 |  region3 | 0*cm 0*cm 0*cm | 0 0 0 |     Tube | 0*cm 11.17*cm 0.825*cm 0*rad 360*rad  | 
+           peek_r3 |  region3 | 0*cm 0*cm 20.16275*cm | 0 0 0 | Operation: peek_polyhedra_r3 - peek_tube_r3 | 0*counts  | 
         sector1_r3 |  region3 | -0*cm -12.2063*cm 0*cm | 0 0 0 |      Box | 2.1*cm 0.2581*cm 20.91275*cm  | 
   heatSinkCu_s1_r3 | sector1_r3 | 0*cm 0.0025*cm -17.64625*cm | 0 0 0 |      Box | 2.035*cm 0.1275*cm 3.2665*cm  | 
 heatSinkRidge_s1_r3 | sector1_r3 | 0*cm 0.149*cm -20.13275*cm | 0 0 0 |      Box | 2.035*cm 0.019*cm 0.78*cm  | 

@@ -9,6 +9,7 @@
 //#include "clas12/atof_hitprocess.h"             ///< Alert TOF
 #include "clas12/alert/myatof_hitprocess.h"             ///< Alert TOF
 #include "clas12/alert/ahdc_hitprocess.h"             ///< Alert Drift Chamber
+#include "clas12/band_hitprocess.h"		///< BAND
 #include "clas12/svt/bst_hitprocess.h"          ///< Barrel Silicon Tracker (bst)
 #include "clas12/cnd_hitprocess.h"              ///< Central Neutron Detector
 #include "clas12/ctof_hitprocess.h"             ///< Central TOF
@@ -70,6 +71,7 @@ map<string, HitProcess_Factory> HitProcess_Map(string experiments)
 		{
 			hitMap["myatof"]   = &myatof_HitProcess::createHitClass;
 			hitMap["ahdc"]     = &ahdc_HitProcess::createHitClass;
+			hitMap["band"]	   = &band_HitProcess::createHitClass;
 			hitMap["bmt"]      = &BMT_HitProcess::createHitClass;
 			hitMap["fmt"]      = &FMT_HitProcess::createHitClass;
 			hitMap["ftm"]      = &ftm_HitProcess::createHitClass;

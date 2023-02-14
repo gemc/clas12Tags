@@ -22,7 +22,7 @@
 	<volume name="foamExtended"              mother="target" color="aaffff" rotation="0*deg 180*deg 0*deg" material="rohacell"/>
 
 	<!-- vacuum extension -->
-	<volume name="TargetVacuumWindow50umAl"  mother="target" color="aaaaff" position="0*mm 0*mm 1215*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
-	<volume name="TargetWindowAdapterTorlon" mother="target" color="444444" position="0*mm 0*mm 1215*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+	<volume name="TargetVacuumWindow50umAl"  mother="target" color="aaaaff" position="0*mm 0*mm 1255*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetWindowAdapterTorlon" mother="target" color="444444" position="0*mm 0*mm 1255*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
 
 </gxml>

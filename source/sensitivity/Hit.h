@@ -42,6 +42,8 @@ public:
 
 	G4Colour colour_touch, colour_hit, colour_passby;
 
+	static int OPTICALPHOTONPID;
+
 private:
 	// all these infos are recorded
 	// in each step of the hit
