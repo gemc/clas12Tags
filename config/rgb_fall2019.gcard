@@ -1,7 +1,7 @@
 <gcard>
 	<!-- target. Notice variation give the target type. Can be: lH2, lD2, ND3 -->
 	<detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
-	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lD2"/>
 
 	<!-- central detectors 	-->
 	<detector name="experiments/clas12/bst/bst"               factory="TEXT" variation="default"/>
@@ -34,7 +34,7 @@
 	<detector name="experiments/clas12/ftof/ftof"          factory="TEXT" variation="rga_fall2018"/>
 	<detector name="experiments/clas12/ec/ec"              factory="TEXT" variation="rga_fall2018"/>
 	<detector name="experiments/clas12/pcal/pcal"          factory="TEXT" variation="rga_fall2018"/>
-	<detector name="experiments/clas12/ltcc/ltcc"          factory="TEXT" variation="rga_fall2018"/>
+	<detector name="experiments/clas12/ltcc/ltcc"          factory="TEXT" variation="rgb_winter2019"/>
 	<detector name="experiments/clas12/ltcc/cad_cone/"     factory="CAD"/>
 	<detector name="experiments/clas12/ltcc/cad/"          factory="CAD"/>
 
@@ -100,11 +100,11 @@
 	<detector name="ctof">      <position x="0*cm"     y="0*cm"     z="-3.00*cm"  />  </detector>
 	<detector name="cnd">       <position x="0*cm"     y="0*cm"     z="-3.00*cm"  />  </detector>
 
-	<!-- solenoid volume and field map shifted upstream by 23 mm -->
+	<!-- solenoid volume and field map shifted upstream by 30 mm -->
 	<detector name="solenoid">  <position x="0*cm"  y="0*cm"  z="-3.00*cm"  />  </detector>
 	<option name="DISPLACE_FIELDMAP"     value="clas12-newSolenoid, 0*cm, 0*cm, -3.00*cm" />
 
-	<!--  HTCC shifted upstream by 19.4mm -->
+	<!--  HTCC shifted upstream by 19.4 mm -->
 	<detector name="htccBigGasVolume">     <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
 	<detector name="htccEntryDishVolume">  <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
 	<detector name="htccEntryConeVolume">  <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>

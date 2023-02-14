@@ -72,7 +72,7 @@
 	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_bg" />
 
 	<!--  Do not track staff after the apex -->
-	<option name="MAX_Z_POS" value="8000"/>
+	<option name="MAX_Z_POS" value="9000"/>
 
 	<!--  RF Signal needs event time window defined by LUMI_EVENT -->
 	<option name="LUMI_EVENT"  value="0, 248.5*ns, 4*ns" />
@@ -105,6 +105,10 @@
 	<option name="DISPLACE_FIELDMAP"     value="clas12-newSolenoid, 0*cm, 0*cm, -3.00*cm" />
 
 	<!--  HTCC shifted upstream by 19.4 mm -->
+	<detector name="htccBigGasVolume">     <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
+	<detector name="htccEntryDishVolume">  <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
+	<detector name="htccEntryConeVolume">  <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
+	<detector name="htccEntryDishCone">    <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
 	<detector name="htcc">                 <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
 
 

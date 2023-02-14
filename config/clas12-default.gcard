@@ -72,7 +72,7 @@
 	<option name="DIGITIZATION_VARIATION"  value="default" />
 
 	<!--  Do not track staff after the apex -->
-	<option name="MAX_Z_POS" value="8000"/>
+	<option name="MAX_Z_POS" value="9000"/>
 
 	<!--  RF Signal needs event time window defined by LUMI_EVENT -->
 	<option name="LUMI_EVENT"  value="0, 248.5*ns, 4*ns" />

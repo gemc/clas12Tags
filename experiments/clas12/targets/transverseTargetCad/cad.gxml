@@ -1,0 +1,12 @@
+<gxml>
+
+	<volume name="ladder"         mother="root" color="aaaaff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+	<volume name="ladderSupport"  mother="root" color="aaaaff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+	<volume name="targetFrame"    mother="root" color="444444" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="Kel-F"/>
+	<volume name="downCoils"      mother="root" color="556677" position="0*mm 0*mm 0*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="upCoils"        mother="root" color="556677" position="0*mm 0*mm 0*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="magnetSupport"  mother="root" color="ffaaaa" position="0*mm 0*mm 0*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="upRing"         mother="root" color="9999aa" position="0*mm 0*mm 0*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="downRing"       mother="root" color="9999aa" position="0*mm 0*mm 0*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+
+</gxml>
