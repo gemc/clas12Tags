@@ -1,0 +1,43 @@
+GEMC Future Development
+
+
+
+Wanted features, coming with gemc3
+==================================
+
+- make detector factories external plugins
+
+- rastering option with g4 volumes movements
+
+Code Improvements:
+==================
+
+- physics details choices (disable some physics, etc on the GUI)
+- "ahit" general function to get infos (with auto, c++11) getVector(string), get3Vector(string)
+   check performance hit
+- speed up the search for same identifier
+- add generic "system" that contains a list detectors, sensitive det, materials?
+- optimize eventaction - too many vector<hitOutput> definitions? Can they br grouped?
+- add DEBUG ifdefs for debugging part of code
+- get screen resolution and adjust gui dimensions to that
+- add /tracking/storeTrajectory 4 button
+- add track verbosity output
+- is atof thread safe?
+- move all user actions in their directory:
+  ActionInitialization
+  PrimaryGenerator
+  SteppingAction
+- gemcOptions make it a library, pass it by reference not value!
+- make calls like gemcOpt->get3Vector("BEAM_V")
+- change primaryFlat to thetaGauss thetaUniform cthetaGauss cthetaUniform.
+- add system name to material name
+- sqlite support. Dropdown menu: available systems.
+
+
+
+
+
+
+
+
+

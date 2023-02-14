@@ -1,0 +1,7 @@
+                htcc  |              bankid  |                                      htcc bank ID  |  600   |                  Di  
+                htcc  |              sector  |                                     clas12 sector  |    1   |                  Di  
+                htcc  |                ring  |                                       theta index  |    2   |                  Di  
+                htcc  |                half  |                                       half-sector  |    3   |                  Di  
+                htcc  |                nphe  |                          number of photoelectrons  |    4   |                  Di  
+                htcc  |                time  |                           average time of the hit  |    5   |                  Dd  
+                htcc  |                hitn  |                                        hit number  |   99   |                  Di  

@@ -1,0 +1,2 @@
+        scintillator  |    pcal scintillator material  |     1.032  |         2  |                                          C 9 H 10  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  |   -1  
+           LastaFoam  |              ec foam material  |      0.24  |         4  |   G4_C 0.4045 G4_H 0.0786 G4_N 0.1573 G4_O 0.3596  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  |   -1  

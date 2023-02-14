@@ -1,0 +1,5 @@
+ctof_number_of_bars      |  48       |  counts | Number of Bars for the CTOF detector | Vitaly Baturin | baturin@jlab.org | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12
+bar_top_width            |  1.42     |  inches | Paddle top width                     | Vitaly Baturin | baturin@jlab.org | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12
+bar_bottom_width         |  1.264    |  inches | Paddle bottom width                  | Vitaly Baturin | baturin@jlab.org | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12
+bar_length               |  31.765   |  inches | Paddle length                        | Vitaly Baturin | baturin@jlab.org | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12
+bar_heigth               |  1.19     |  inches | Paddle heigth                        | Vitaly Baturin | baturin@jlab.org | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12

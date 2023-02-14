@@ -1,0 +1,22 @@
+FOR FUN README
+--------------
+
+
+This example imports some atlas experiment components from CAD.
+
+
+Detector Attributes
+-------------------
+
+The cad model attributes are set in cad.gxml. This filename is what gemc will look for when importing cad solids.
+Notice that the HEC is set sensitive, so it will actually record and digitize hits.
+
+
+To Run
+------
+
+execute:
+
+gemc atlas.gcard
+
+

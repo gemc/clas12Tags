@@ -1,0 +1,35 @@
+<gcard>
+
+	<detector name="experiments/clas12/dc/dc" factory="TEXT" variation="default"/>
+
+	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
+
+	<detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
+
+	<detector name="experiments/clas12/ctof/ctof"                factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/ctof/javacad_default/"    factory="CAD"/>
+	<detector name="experiments/clas12/cnd/cnd"                  factory="TEXT" variation="original"/>
+
+	<!--high threshold cherenkov -->
+	<detector name="experiments/clas12/htcc/htcc"      factory="TEXT" variation="original"/>
+
+	<!-- magnets -->
+	<detector name="experiments/clas12/magnets/solenoid" factory="TEXT" variation="original"/>
+
+
+   <option name="geometry" value="1400x1000"/>
+	
+	<option name="BEAM_P"     value="e-, 5.0*GeV, 25*deg, 0*deg"/>
+	<!--	<option name="SPREAD_P"   value="1.0*GeV, 15*deg, 180*deg"/> -->
+	<option name="INTEGRATEDRAW" value="dc"/>
+	
+	<option name="OUTPUT" value="evio, out.ev"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+
+	<option name="PHYSICS" value="FTFP_BERT + STD"/>
+
+<option name="SCALE_FIELD" value="TorusSymmetric, -1"/>
+
+</gcard>

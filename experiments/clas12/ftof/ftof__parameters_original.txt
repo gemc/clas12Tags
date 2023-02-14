@@ -1,0 +1,48 @@
+ftof.panel1A.x.p0   	 | 24.446  	 | inches | panel 1A X position parameter p0   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.x.p1   	 | 5.4146    | inches | panel 1A X position parameter p1   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.z.p0   	 | 286.04  	 | inches | panel 1A Z position parameter p0   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.z.p1   	 | -2.5183   | inches | panel 1A Z position parameter p1   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.ncounters   | 23        | na     | panel 1A number of paddles  in p1a	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.paddle.w    | 2         | inches | panel 1A number paddles thickness	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.paddle.h    | 5.91      | inches | panel 1A number paddles heigth	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p1   	 |  32.3  	 | cm     | panel 1A length paddle 1       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p2   	 |  48.1 	 | cm     | panel 1A length paddle 2       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p3   	 |  64.0 	 | cm     | panel 1A length paddle 3       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p4   	 |  79.8 	 | cm     | panel 1A length paddle 4       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p5   	 |  95.7	 | cm     | panel 1A length paddle 5       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p6   	 | 106.6 	 | cm     | panel 1A length paddle 6       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p7   	 | 122.4	 | cm     | panel 1A length paddle 7       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p8   	 | 138.3 	 | cm     | panel 1A length paddle 8       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p9   	 | 154.1 	 | cm     | panel 1A length paddle 9       	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p10   	 | 170.0 	 | cm     | panel 1A length paddle 10      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p11   	 | 185.8	 | cm     | panel 1A length paddle 11      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p12   	 | 201.7 	 | cm     | panel 1A length paddle 12      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p13   	 | 217.6 	 | cm     | panel 1A length paddle 13      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p14   	 | 233.4 	 | cm     | panel 1A length paddle 14      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p15   	 | 249.3	 | cm     | panel 1A length paddle 15      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p16   	 | 265.1 	 | cm     | panel 1A length paddle 16      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p17   	 | 281.0  	 | cm     | panel 1A length paddle 17      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p18   	 | 296.8 	 | cm     | panel 1A length paddle 18      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p19   	 | 312.7 	 | cm     | panel 1A length paddle 19      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p20   	 | 328.5 	 | cm     | panel 1A length paddle 20      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p21   	 | 344.4  	 | cm     | panel 1A length paddle 21      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p22   	 | 360.2  	 | cm     | panel 1A length paddle 22      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1A.l.p23   	 | 376.1  	 | cm     | panel 1A length paddle 23      	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/
+ftof.panel1B.x.p0   	 | 16.934  	 | inches | panel 1B X position parameter p0   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.x.p1   	 | 2.1837    | inches | panel 1B X position parameter p1   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.z.p0   	 | 282.32  	 | inches | panel 1B Z position parameter p0   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.z.p1   	 | -1.0183   | inches | panel 1B Z position parameter p1   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.l.p0   	 | 10.843  	 | cm     | panel 1B length parameter p0      	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.l.p1   	 | 6.4046    | cm     | panel 1B length parameter p1   	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.ncounters   | 62        | na     | panel 1B number of paddles  in p1a	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.paddle.w    | 2.362     | inches | panel 1B number paddles thickness	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel1B.paddle.h    | 2.362     | inches | panel 1B number paddles heigth	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.x.p0   	     | 145.52  	 | inches | panel 1B X position parameter p0   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.x.p1     	 | 4.6784    | inches | panel 1B X position parameter p1   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.z.p0   	     | 218.27  	 | inches | panel 1B Z position parameter p0   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.z.p1    	 | -7.4289   | inches | panel 1B Z position parameter p1   	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.l.p0    	 | 357.55  	 | cm     | panel 1B length parameter p0      	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.l.p1    	 | 13.73     | cm     | panel 1B length parameter p1   	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.ncounters    | 5         | na     | panel 1B number of paddles  in p1a	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.paddle.w     | 2         | inches | panel 1B number paddles thickness	 |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13
+ftof.panel2.paddle.h     | 8.661     | inches | panel 1B number paddles heigth	     |  carman, guerra | carman@jlab.org, jguerra@jlab.org |  none | none | 6/3/13

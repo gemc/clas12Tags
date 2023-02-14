@@ -1,0 +1,13 @@
+                rich  |              bankid  |                                      rich bank ID  | 1800   |                  Di  
+                rich  |              sector  |                                     clas12 sector  |    1   |                  Di  
+                rich  |                 pmt  |                                        pmt number  |    2   |                  Di  
+                rich  |               pixel  |                                             pixel  |    3   |                  Di  
+                rich  |            nphotons  |                                 number of photons  |    4   |                  Di  
+                rich  |                 npe  |                 number of detected photoelectrons  |    5   |                  Di  
+                rich  |           nphotonsU  |                     number of unconverted photons  |    6   |                  Di  
+                rich  |           nphotonsO  |                 number of out of QE range photons  |    7   |                  Di  
+                rich  |           nphotonsD  |                       number of dead area photons  |    8   |                  Di  
+                rich  |                TDC1  |                                  TDC leading edge  |    9   |                  Di  
+                rich  |                TDC2  |                                 TDC trailing edge  |   10   |                  Di  
+                rich  |                 ADC  |                                        ADC analog  |   11   |                  Di  
+                rich  |                hitn  |                                        hit number  |   99   |                  Di  

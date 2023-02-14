@@ -1,0 +1,8 @@
+                pcal  |              bankid  |                                      pcal bank ID  | 1500   |                  Di  
+                pcal  |              sector  |                                     sector number  |    1   |                  Di  
+                pcal  |              module  |                                     module number  |    2   |                  Di  
+                pcal  |                view  |                                              view  |    3   |                  Di  
+                pcal  |               strip  |                                      strip number  |    4   |                  Di  
+                pcal  |                 ADC  |                                               ADC  |    5   |                  Di  
+                pcal  |                 TDC  |                                               TDC  |    6   |                  Di  
+                pcal  |                hitn  |                                        hit number  |   99   |                  Di  

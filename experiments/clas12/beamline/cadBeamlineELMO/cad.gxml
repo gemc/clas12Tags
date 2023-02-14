@@ -1,0 +1,43 @@
+<!--
+
+ The mesh export presents a small overlap between the flanges of the tagger and torus mount.
+ The position is modified by to produce a little gap
+
+ -->
+
+<gxml>
+    <volume name="innerShieldAndFlange"  color="8899dd" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_W"/>
+    <volume name="outerFlange"           color="999999" position="0*mm 0*mm 1272.77*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="outerMount"            color="aa8888" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="nut1"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut2"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut3"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut4"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut5"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut6"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut7"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut8"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="nut9"                  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Cu"/>
+    <volume name="taggerInnerShield"     color="bb1111" position="0*mm 0*mm 1643.00*mm" rotation="0*deg 180*deg 0*deg" material="G4_W"/>
+    <volume name="cone-tip"              color="bb1111" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_W"/>
+    <volume name="main-cone"             color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_W"/>
+    <volume name="outer-cone"            color="8888ff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_W"/>
+    <volume name="inner-assembly"        color="955600" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="outer-assembly"        color="960096" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="flange-assembly"       color="00d2d2" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="lead-shield"           color="e50000" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Pb"/>
+	<volume name="adjuster1"             color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="adjuster2"             color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="adjuster3"             color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+
+	<volume name="DSShieldFrontLead"        mother="fc" color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Pb"/>
+	<volume name="DSShieldBackLead"         mother="fc" color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Pb"/>
+	<volume name="DSShieldInnerAss"         mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="DSShieldBackAss"          mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="DSShieldFrontAss"         mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="DSShieldBackCover"        mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="DSShieldFrontCover"       mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="DSShieldFlangeAttachment" mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="DSShieldFlange"           mother="fc" color="8899dd" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+
+</gxml>

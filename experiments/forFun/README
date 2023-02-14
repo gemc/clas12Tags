@@ -1,0 +1,36 @@
+FOR FUN README
+--------------
+
+
+This example shows how to import models from several sources and assign color, sensitivity to a CAD import.
+
+It contains the mighty starship enterprise (NCC 1701-A, TOS), imported straight from CAD.
+
+It contain a truck and a dragon, also from CAD.
+
+There sphere in GDML format.
+
+
+Detector Attributes
+-------------------
+
+The cad model attributes are set in cad.gxml. This filename is what gemc will look for when importing cad solids.
+Notice that the dragon is set sensitive, so it will actually record and digitize hits.
+
+Any gdml model's attributes can be set in its corresponding gxml file. In this example in sphere.gxml we set the
+sphere to be made of lead, and pink.
+
+
+
+To Run
+------
+
+execute:
+
+gemc forFun.gcard
+
+
+For fun, put a number between "10" and "50" on the number of events and click "Run" to have the enterprise
+shoot a beam of protons!
+
+

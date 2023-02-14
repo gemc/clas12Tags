@@ -1,0 +1,23 @@
+
+CLAS12 LTCC README
+------------------
+
+TODO: Fix macro so it runs on ROOT6
+
+TODO: Addfocal point spheres for debugging purposes
+
+
+The geometry consists of 36 elliptical mirrors, 36 hyperbolic mirrors
+and 36 PMTs.
+
+The parameters are created by the mirrors.C macro.
+
+In MYSQL mode, before building the geometry one must
+upload the parameters onto the DB.
+
+The commands to build the geometry, banks, hit defs
+and materials are:
+
+upload_parameters.pl config.dat   < only for MYSQL factory
+
+./ltcc.pl config.dat

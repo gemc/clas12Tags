@@ -1,0 +1,32 @@
+<gcard>
+	
+	<detector name="../fc/forwardCarriage"      factory="TEXT" variation="TorusSymmetric"/>
+ 	<detector name="../ftof/ftof"      factory="TEXT" variation="java"/>
+	<detector name="ltcc" factory="TEXT" variation="original"/>
+	<detector name="cad_cone/" factory="CAD"/>
+	<detector name="cad/" factory="CAD"/>
+
+
+	<option name="geometry" value="1400x1200"/>
+
+	<option name="INTEGRATEDRAW"   value="ltcc"/>
+	<option name="RECORD_OPTICALPHOTONS"  value="1"/>
+	<option name="RECORD_PASSBY"   value="1"/>
+
+
+	<option name="BEAM_P"        value="pi-, 6*GeV, 22.5*deg, 0*deg"/>
+	<option name="SPREAD_P"      value="4*GeV, 10*deg, 180*deg"/>
+	<option name="BEAM_V"        value="(0,0,0)cm"/>
+	<option name="SPREAD_V"      value="(0,2.5)cm"/>
+	<option name="SCALE_FIELD" value="clas12-torus-big, -1"/>
+
+<!--
+ <option name="SWITCH_MATERIALTO"  value="C4F10,HTCCgas"/>
+ -->
+
+	<option name="OUTPUT"        value="evio, out.ev"/>
+	
+	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
+
+</gcard>
+

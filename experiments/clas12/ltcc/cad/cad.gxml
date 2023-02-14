@@ -1,0 +1,17 @@
+<gxml>
+	<volume name="S1-BB"       mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg"/>
+	<volume name="S1-BLB"      mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="S1-BRB"      mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="S1-BW"       mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="S1-LW"       mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="S1-RW"       mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="S1-TB"       mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="S1-TLB"      mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="S1-TRB"      mother="fc" color="ccccdd"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 60*deg" />
+	<volume name="NFrame"      mother="fc" color="8888aa"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 120*deg" />
+	<volume name="FrontPlate"  mother="fc" color="8888aa"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 120*deg" />
+	<volume name="Mount"       mother="fc" color="8888aa"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 120*deg" />
+	<volume name="Nose"        mother="fc" color="8888aa"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 120*deg" />
+	<volume name="BottomPlate" mother="fc" color="8888aa"  material="G4_Al"   position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 120*deg" />
+	<volume name="Epoxy"       mother="fc" color="8888aa"  material="G4_CR39" position="0*mm 0*mm 1273.7*mm"  rotation="180*deg 0*deg 120*deg" />
+</gxml>

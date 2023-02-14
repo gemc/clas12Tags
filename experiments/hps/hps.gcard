@@ -1,0 +1,15 @@
+<gcard>
+	<detector name="experiments/hps/hps" factory="TEXT" variation="original"/>
+	<option name="geometry" value="800x600"/>
+	
+
+	<option name="INTEGRATEDRAW" value="flux, ECAL, muon_hodo"/>
+
+	<option name="BEAM_P" value="proton, 1.0*GeV, 90*deg, 10*deg"/>
+
+
+	<option name="OUTPUT" value="evio, out.ev"/>
+	<option name="NO_FIELD" value="all"/>
+
+	<option name="HIT_PROCESS_LIST" value="HPS" />
+</gcard>

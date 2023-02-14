@@ -1,0 +1,1 @@
+            rohacell  |target  rohacell scattering chamber material  |       0.1  |         4  |   G4_C 0.6465 G4_H 0.0784 G4_N 0.0839 G4_O 0.1912  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  |   -1  

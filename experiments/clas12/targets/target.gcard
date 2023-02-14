@@ -1,0 +1,21 @@
+<gcard>
+	<option name="geometry" value="1400x1200"/>
+
+	<!-- other variations include: lH2, lD2, ND3, "elaborate"  -->
+
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2e"/>
+	<detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
+
+	<!-- PolTarg
+	<detector name="target" factory="TEXT" variation="PolTarg"/>
+	<detector name="PolTarg/" factory="CAD"/>
+	-->
+
+	<option name="BEAM_P" value="e-, 11.0*GeV, 0*deg, 0*deg"/>
+	<option name="SPREAD_V" value="(0.01, 0)cm"/>
+	<option name="BEAM_V" value="(0, 0, -4.5)cm"/>
+
+
+	<detector name="target">    <position x="0.0*cm"  y="0.0*cm"  z="-15.0*cm"  />  </detector>
+
+</gcard>

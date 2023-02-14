@@ -1,0 +1,20 @@
+              ft_trk  |              bankid  |                                    ft_trk bank ID  |  700   |                  Di  
+              ft_trk  |              sector  |                                     sector number  |    1   |                  Di  
+              ft_trk  |               layer  |                                      layer number  |    2   |                  Di  
+              ft_trk  |           component  |                                  component number  |    3   |                  Di  
+              ft_trk  |                 adc  |                                               adc  |    4   |                  Di  
+              ft_trk  |                hitn  |                                        hit number  |   99   |                  Di  
+             ft_hodo  |              bankid  |                                   ft_hodo bank ID  |  800   |                  Di  
+             ft_hodo  |              sector  |                                     sector number  |    1   |                  Di  
+             ft_hodo  |               layer  |                                      layer number  |    2   |                  Di  
+             ft_hodo  |           component  |                                  component number  |    3   |                  Di  
+             ft_hodo  |                 adc  |                                               adc  |    4   |                  Di  
+             ft_hodo  |                 tdc  |                                               tdc  |    5   |                  Di  
+             ft_hodo  |                hitn  |                                        hit number  |   99   |                  Di  
+              ft_cal  |              bankid  |                                    ft_cal bank ID  |  900   |                  Di  
+              ft_cal  |              sector  |                                     sector number  |    1   |                  Di  
+              ft_cal  |               layer  |                                      layer number  |    2   |                  Di  
+              ft_cal  |           component  |                                  component number  |    3   |                  Di  
+              ft_cal  |                 adc  |                                               adc  |    4   |                  Di  
+              ft_cal  |                 tdc  |                                               tdc  |    5   |                  Di  
+              ft_cal  |                hitn  |                                        hit number  |   99   |                  Di  

@@ -1,0 +1,13 @@
+<gcard>
+
+	<detector name="cad/" factory="CAD"/>
+
+	<option name="geometry" value="1400x1200"/>
+	
+	<option name="BEAM_P" value="proton, 1.0*GeV, 0*deg, 0*deg"/>
+
+	<option name="SPREAD_V" value="(0.01, 0)cm"/>
+	<option name="BEAM_V" value="(240, 160, -0.3)cm"/>
+
+
+</gcard>

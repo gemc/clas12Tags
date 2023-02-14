@@ -1,0 +1,5 @@
+<gxml>
+
+	<volume name="sphere_vol" color="dd2298" material="G4_Al" position="0*cm -20*cm 0*cm" sensitivity="flux" hitType="flux" identifiers="id manual 2"/>
+
+</gxml>

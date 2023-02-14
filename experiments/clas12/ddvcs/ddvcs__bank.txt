@@ -1,0 +1,12 @@
+              ft_cal  |              bankid  |                                    ft_cal bank ID  | 2100   |                  Di  
+              ft_cal  |                 idx  |                                        idx number  |    1   |                  Di  
+              ft_cal  |                 idy  |                                        idy number  |    2   |                  Di  
+              ft_cal  |                 adc  |                                               adc  |    3   |                  Di  
+              ft_cal  |                 tdc  |                                               tdc  |    4   |                  Di  
+              ft_cal  |                hitn  |                                        hit number  |   99   |                  Di  
+              ft_cal  |              bankid  |                                    ft_cal bank ID  | 2100   |                  Di  
+              ft_cal  |                 idx  |                                        idx number  |    1   |                  Di  
+              ft_cal  |                 idy  |                                        idy number  |    2   |                  Di  
+              ft_cal  |                 adc  |                                               adc  |    3   |                  Di  
+              ft_cal  |                 tdc  |                                               tdc  |    4   |                  Di  
+              ft_cal  |                hitn  |                                        hit number  |   99   |                  Di  

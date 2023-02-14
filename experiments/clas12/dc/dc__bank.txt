@@ -1,0 +1,11 @@
+                  dc  |              bankid  |                                        dc bank ID  | 1300   |                  Di  
+                  dc  |              sector  |                                      sector index  |    1   |                  Di  
+                  dc  |               layer  |                                       layer index  |    2   |                  Di  
+                  dc  |                wire  |                                        wire index  |    3   |                  Di  
+                  dc  |                 tdc  |                                         tdc value  |    4   |                  Di  
+                  dc  |                  LR  |Left/Right: -1 (right) if the track is between the beam and the closest wire  |    5   |                  Di  
+                  dc  |                doca  |2D distance between closest track step to the wire hit  |    6   |                  Dd  
+                  dc  |               sdoca  |                                      smeared doca  |    7   |                  Dd  
+                  dc  |                time  |              doca / drift velocity in each region  |    8   |                  Dd  
+                  dc  |               stime  |             sdoca / drift velocity in each region  |    9   |                  Dd  
+                  dc  |                hitn  |                                        hit number  |   99   |                  Di  

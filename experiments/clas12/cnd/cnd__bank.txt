@@ -1,0 +1,9 @@
+                 cnd  |              bankid  |                                       cnd bank ID  |  300   |                  Di  
+                 cnd  |              sector  |                                     sector number  |    1   |                  Di  
+                 cnd  |               layer  |                                      layer number  |    2   |                  Di  
+                 cnd  |           component  |                                  component number  |    3   |                  Di  
+                 cnd  |                ADCL  |                                          ADC Left  |    4   |                  Di  
+                 cnd  |                ADCR  |                                         ADC Right  |    5   |                  Di  
+                 cnd  |                TDCL  |                                          TDC Left  |    6   |                  Di  
+                 cnd  |                TDCR  |                                         TDC Right  |    7   |                  Di  
+                 cnd  |                hitn  |                                        hit number  |   99   |                  Di  

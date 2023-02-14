@@ -1,0 +1,17 @@
+ECAL | bankid | ECAL bank id | 600 | Di
+ECAL | idx | Horizontal index for crystal | 1 | Di
+ECAL | idy | Vertical index for crystal | 2 | Di
+ECAL | adc | ADC value | 3 | Di
+ECAL | tdc | TDC value  | 4 | Di
+ECAL | hitn | Hit number | 99 | Di
+
+muon_hodo | bankid | muon_hodo bank id | 620 | Di
+muon_hodo | idx | Index of paddle in horizontal direction | 1 | Di
+muon_hodo | idy | Index of paddle in vertical direction | 2 | Di
+muon_hodo | idz | Index of paddle in z-direction, along beam | 3 | Di
+muon_hodo | adcl | ADC value 'left' side | 4 | Di
+muon_hodo | adcr | ADC value 'right' side | 5 | Di
+muon_hodo | tdcl | TDC value 'left' side | 6 | Di
+muon_hodo | tdcr | TDC value 'right' side | 7 | Di
+muon_hodo | hitn | Hit number | 99 | Di
+

@@ -1,0 +1,20 @@
+                rtpc  |              bankid  |                                      rtpc bank ID  | 1700   |                  Di  
+                rtpc  |              Sector  |                                       Sector == 1  |    1   |                  Di  
+                rtpc  |               Layer  |                                        Pad Column  |    2   |                  Di  
+                rtpc  |           Component  |                                           Pad Row  |    3   |                  Di  
+                rtpc  |               Order  |                                        Order == 0  |    4   |                  Di  
+                rtpc  |                Time  |                                         Time [ns]  |    5   |                  Dd  
+                rtpc  |                 ADC  |                                               ADC  |    6   |                  Dd  
+                rtpc  |                 Ped  |                                          Pedestal  |    7   |                  Dd  
+                rtpc  |           TimeShift  |                                   Time Shift [ns]  |    8   |                  Dd  
+                rtpc  |                hitn  |                                        hit number  |   99   |                  Di  
+                rtpc  |              bankid  |                                      rtpc bank ID  | 1700   |                  Di  
+                rtpc  |              Sector  |                                       Sector == 1  |    1   |                  Di  
+                rtpc  |               Layer  |                                        Pad Column  |    2   |                  Di  
+                rtpc  |           Component  |                                           Pad Row  |    3   |                  Di  
+                rtpc  |               Order  |                                        Order == 0  |    4   |                  Di  
+                rtpc  |                Time  |                                         Time [ns]  |    5   |                  Dd  
+                rtpc  |                 ADC  |                                               ADC  |    6   |                  Dd  
+                rtpc  |                 Ped  |                                          Pedestal  |    7   |                  Dd  
+                rtpc  |           TimeShift  |                                   Time Shift [ns]  |    8   |                  Dd  
+                rtpc  |                hitn  |                                        hit number  |   99   |                  Di  

@@ -1,0 +1,9 @@
+                ltcc  |              bankid  |                                      ltcc bank ID  | 1400   |                  Di  
+                ltcc  |              sector  |                                     clas12 sector  |    1   |                  Di  
+                ltcc  |                side  |                               left or right index  |    2   |                  Di  
+                ltcc  |             segment  |                                           segment  |    3   |                  Di  
+                ltcc  |                 adc  |                                               adc  |    4   |                  Di  
+                ltcc  |                time  |                           average time of the hit  |    5   |                  Dd  
+                ltcc  |                nphe  |                  number of photoelectrons arrived  |    6   |                  Di  
+                ltcc  |               npheD  |                 number of photoelectrons detected  |    7   |                  Di  
+                ltcc  |                hitn  |                                        hit number  |   99   |                  Di  

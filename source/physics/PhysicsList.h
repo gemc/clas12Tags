@@ -1,0 +1,83 @@
+#ifndef PHYSICS_LIST_H
+#define PHYSICS_LIST_H 1
+
+// gemc headers
+#include "options.h"
+
+// geant4 headers
+#include "G4VModularPhysicsList.hh"
+#include "G4DecayWithSpin.hh"
+
+// c++ headers
+#include <string>
+using namespace std;
+
+
+// the ingredient list is a combination of names
+// such as "FTFP_BERT + em_opt1 + optical"
+//
+// valid physics ingredients
+// - any G4 phys list
+// - em_std, em_opt1, em_opt2, em_opt3, em_opt4
+// - optical
+class PhysicsList: public G4VModularPhysicsList
+{
+public:
+	
+	PhysicsList(goptions);
+	~PhysicsList();
+
+	void list();
+	
+	vector<string> physIngredients;
+
+	// copy of G4String ss[23] in G4PhysListFactory.cc
+	vector<string> availableHadronicPhysic;
+
+	bool validateIngredients();
+	
+	// SetCuts is required by G4VModularPhysicsList
+	// will actually call the individual particles sets
+	void SetCuts();
+	void SetCutForGamma(double);
+	void SetCutForElectron(double);
+	void SetCutForPositron(double);
+	void SetCutForProton(double);
+
+	
+private:
+
+	double cutForGamma;
+	double cutForElectron;
+	double cutForPositron;
+	double cutForProton;
+
+	goptions gemcOpt;   ///< gemc options map
+
+	double verbosity;
+	string ingredientsList;
+	string hadronicPhys;
+	string photoNuclear;
+	string EMPhys;
+	string opticalPhys;
+	string HPPhys;
+	int    muonRadDecay;
+	
+	vector<G4String> g4HadronicList;
+	vector<G4String> g4EMList;
+
+	// G4VPhysicsConstructors
+	G4VPhysicsConstructor*         g4EMPhysics;
+	G4VPhysicsConstructor*         g4DecayPhys;
+	vector<G4VPhysicsConstructor*> g4HadronicPhysics;
+
+	// build the geant4 physics
+	void cookPhysics();
+	void ConstructParticle();
+	void ConstructProcess();
+
+};
+
+
+
+#endif

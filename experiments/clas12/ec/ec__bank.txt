@@ -1,0 +1,8 @@
+                  ec  |              bankid  |                                        ec bank ID  | 1600   |                  Di  
+                  ec  |              sector  |                                     sector number  |    1   |                  Di  
+                  ec  |               stack  |                                      stack number  |    2   |                  Di  
+                  ec  |                view  |                                              view  |    3   |                  Di  
+                  ec  |               strip  |                                      strip number  |    4   |                  Di  
+                  ec  |                 ADC  |                                          ADC Left  |    5   |                  Di  
+                  ec  |                 TDC  |                                         TDC Right  |    6   |                  Di  
+                  ec  |                hitn  |                                        hit number  |   99   |                  Di  

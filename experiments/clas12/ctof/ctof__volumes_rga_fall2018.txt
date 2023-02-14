@@ -1,0 +1,96 @@
+              sc01 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   1
+              sc02 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   2
+              sc03 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   3
+              sc04 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   4
+              sc05 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   5
+              sc06 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   6
+              sc07 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   7
+              sc08 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   8
+              sc09 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22   9
+              sc10 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  10
+              sc11 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  11
+              sc12 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  12
+              sc13 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  13
+              sc14 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  14
+              sc15 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  15
+              sc16 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  16
+              sc17 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  17
+              sc18 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  18
+              sc19 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  19
+              sc20 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  20
+              sc21 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  21
+              sc22 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  22
+              sc23 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  23
+              sc24 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  24
+              sc25 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  25
+              sc26 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  26
+              sc27 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  27
+              sc28 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  28
+              sc29 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  29
+              sc30 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  30
+              sc31 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  31
+              sc32 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  32
+              sc33 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  33
+              sc34 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  34
+              sc35 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  35
+              sc36 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  36
+              sc37 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  37
+              sc38 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  38
+              sc39 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  39
+              sc40 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  40
+              sc41 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  41
+              sc42 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  42
+              sc43 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  43
+              sc44 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  44
+              sc45 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  45
+              sc46 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  46
+              sc47 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  47
+              sc48 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  |   22  48
+             lgd01 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd02 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd03 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd04 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd05 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd06 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd07 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd08 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd09 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd10 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd11 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd12 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd13 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd14 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd15 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd16 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd17 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd18 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd19 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd20 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd21 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd22 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd23 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd24 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd25 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd26 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd27 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd28 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd29 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd30 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd31 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd32 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd33 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd34 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd35 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd36 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd37 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd38 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd39 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd40 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd41 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd42 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd43 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd44 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd45 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd46 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd47 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 
+             lgd48 |     root | 0*cm 0*cm 124.327*cm | 0*deg 180*deg 97.5*deg |      Stl |  | 

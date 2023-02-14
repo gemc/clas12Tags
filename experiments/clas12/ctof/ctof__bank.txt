@@ -1,0 +1,8 @@
+                ctof  |              bankid  |                                      ctof bank ID  |  400   |                  Di  
+                ctof  |              paddle  |                                     paddle number  |    1   |                  Di  
+                ctof  |                side  |                                       side of PMT  |    2   |                  Di  
+                ctof  |                 ADC  |                                               ADC  |    3   |                  Di  
+                ctof  |                 TDC  |                                               TDC  |    4   |                  Di  
+                ctof  |                ADCu  |                                     ADC Unsmeared  |    5   |                  Di  
+                ctof  |                TDCu  |                                     TDC Unsmeared  |    6   |                  Di  
+                ctof  |                hitn  |                                        hit number  |   99   |                  Di  

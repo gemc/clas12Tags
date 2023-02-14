@@ -1,0 +1,10 @@
+                ftof  |              bankid  |                                      ftof bank ID  | 1000   |                  Di  
+                ftof  |              sector  |                                     sector number  |    1   |                  Di  
+                ftof  |               layer  |                layer number (1: 1A, 2: 1B, 3: 2B)  |    2   |                  Di  
+                ftof  |              paddle  |                                     paddle number  |    3   |                  Di  
+                ftof  |                side  |                        PMT side (0 Left, 1 Right)  |    4   |                  Di  
+                ftof  |                 ADC  |                                               ADC  |    5   |                  Di  
+                ftof  |                 TDC  |                                               TDC  |    6   |                  Di  
+                ftof  |                ADCu  |                                     ADC unsmeared  |    7   |                  Di  
+                ftof  |                TDCu  |                                     TDC unsmeared  |    8   |                  Di  
+                ftof  |                hitn  |                                        hit number  |   99   |                  Di  

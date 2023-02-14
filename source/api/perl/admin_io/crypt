@@ -1,0 +1,48 @@
+#!/bin/csh -f
+
+if($#argv != 2) then
+	echo
+	echo Usage: crypt option passwd
+	echo Where option can be e or d for crypt or de-crypt
+ 	echo hint to passwd: normal
+	echo
+	exit 0
+endif
+
+set action = $1
+set pass   = $2
+
+set opt = ""
+
+# First produce tar file
+set f = system.tar
+
+# encrypt or decrypt tar file
+if($action == "e") then
+	tar cvf $f  --exclude crypt *
+	set in  = $f
+	set out = $f".des"
+endif
+
+if($action == "d") then 
+	set opt = "-d"
+	set in  = $f".des"
+	set out = $f
+endif
+
+openssl des3 -salt $opt -in $in -out $out -k $pass
+
+# deleting everything else
+if($action == "e") then 
+	rm -rf `ls | grep -v crypt | grep -v system.tar.des`
+endif	
+	
+if($action == "d") then 
+	tar xpvf $out
+	rm $f
+	chmod u+x *.pl
+	rm system.tar.des
+endif	
+
+
+

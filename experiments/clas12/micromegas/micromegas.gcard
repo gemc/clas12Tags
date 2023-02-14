@@ -1,0 +1,24 @@
+<gcard>
+
+	<detector name="../targets/target" factory="TEXT" variation="lH2"/>
+	<detector name="../targets/cad/" factory="CAD"/>
+
+
+	<detector name="micromegas" factory="TEXT" variation="michel"/>
+	<detector name="../bst/bst" factory="TEXT" variation="default"/>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+
+	<option name="BEAM_P" value="proton, 1.0*GeV, 90*deg, 10*deg"/>
+
+	<option name="OUTPUT" value="evio, out.ev"/>
+
+	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
+
+
+	<option name="INTEGRATEDRAW" value="bst bmt"/>
+
+
+</gcard>

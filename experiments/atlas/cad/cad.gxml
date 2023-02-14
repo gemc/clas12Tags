@@ -1,0 +1,14 @@
+<gxml>
+
+	<volume name="ForwardShield" color="aa0000" material="G4_Pb"/>
+
+	<volume name="LargeOuterWheel" color="88ff88" material="G4_Pb"/>
+	<volume name="SmallBarrel" color="9999ff" material="G4_Pb"/>
+
+	<volume name="Toroid" color="ffff00" material="G4_Pb"/>
+	<volume name="TRT" color="22ffff" material="G4_Pb"/>
+
+	<volume name="HEC" color="22ff44" material="G4_Al" sensitivity="flux" hitType="flux" identifiers="id manual 1"/>
+
+
+</gxml>

@@ -1,0 +1,13 @@
+<gcard>
+	<detector name="experiments/clas12/ft/ft" factory="TEXT" variation="FTOn"/>
+   <option name="geometry" value="1400x1200"/>
+	
+	<option name="INTEGRATEDRAW" value="ft_cal, ft_hodo, ft_trk"/>
+	
+	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
+	<option name="SPREAD_P"  value="0.0*GeV, 00*deg, 180*deg"/>
+	
+	<option name="OUTPUT" value="evio, out.ev"/>
+	
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+</gcard>

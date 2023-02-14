@@ -1,0 +1,1 @@
+              ft_cal  |forward tagger calorimeter hit definition  |                                 idx idy  | 0.5*MeV   |   50*ns   |    1*cm   |    2*cm   |    1*ns   |    1*ns   |     100   |     -20   |   10*ns  

@@ -1,0 +1,15 @@
+<gcard>
+
+	<option name="geometry" value="1000x800"/>
+
+	<detector name="sphere" factory="GDML"/>
+
+	<detector name="cad/" factory="CAD"/>
+
+	<option name="BEAM_P" value="proton, 1.0*GeV, 4*deg, 0*deg"/>
+
+	<option name="SPREAD_V" value="(0.05, 0)cm"/>
+	<option name="BEAM_V" value="(-5.0, -13.33, -30.2)cm"/>
+
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+ </gcard>

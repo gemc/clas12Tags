@@ -1,0 +1,13 @@
+nregions      |  4         | na |  Number of regions                                                       | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+radius_r1     |  65.125    | mm |  R1 IR - 0.385 subctracted because calculation is from backing structure | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+radius_r2     |  92.785    | mm |  R2 IR - 0.385 subctracted because calculation is from backing structure | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+radius_r3     |  120.205   | mm |  R3 IR - 0.385 subctracted because calculation is from backing structure | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+radius_r4     |  161.115   | mm |  R4 IR - 0.385 subctracted because calculation is from backing structure | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+nsegments_r1  | 10         | na |  Number of Segments in Region 1                | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+nsegments_r2  | 14         | na |  Number of Segments in Region 2                | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+nsegments_r3  | 18         | na |  Number of Segments in Region 3                | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+nsegments_r4  | 24         | na |  Number of Segments in Region 4                | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+starting_z_r1 | -219.856   | mm |  Z starting_point of the sensor in region 1    | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+starting_z_r2 | -180.490   | mm |  Z starting_point of the sensor in region 1    | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+starting_z_r3 | -141.53    | mm |  Z starting_point of the sensor in region 1    | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12
+starting_z_r4 | -83.406    | mm |  Z starting_point of the sensor in region 1    | A. Yegneswaran | yeg@jlab.org | link to pdf drawing | variable name on the drawing | Saptarshi | 12/12/12

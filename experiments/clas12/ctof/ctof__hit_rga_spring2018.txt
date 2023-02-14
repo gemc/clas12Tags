@@ -1,0 +1,1 @@
+                ctof  |          ctof hit definitions  |                              paddle pmt  | 0.5*MeV   |  400*ns   |    2*mm   |    1*cm   |    5*ns   |    8*ns   |     100   |     -20   |   50*ns  

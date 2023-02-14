@@ -1,0 +1,9 @@
+<gxml>
+
+	<volume name="brain" color="8899dd" material="G4_Pb"/>
+	<volume name="heart" color="22dddd" material="G4_Pb"/>
+	<volume name="Lower_GI" color="ff0000" material="G4_Pb"/>
+
+	<volume name="Upper_GI" color="99ff00" material="G4_Pb" sensitivity="flux" hitType="flux" identifiers="id manual 1"/>
+
+</gxml>
