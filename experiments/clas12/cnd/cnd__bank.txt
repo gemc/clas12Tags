@@ -2,7 +2,7 @@
                  cnd  |              sector  |                             CND sector (paddle id  |    1   |                  Di  
                  cnd  |               layer  |                                         CND layer  |    2   |                  Di  
                  cnd  |           component  |                                          always 1  |    3   |                  Di  
-                 cnd  |           ADC_order  |                      0 = direct, 2 = indirect hit  |    4   |                  Di  
+                 cnd  |           ADC_order  |                     0 = left side, 1 = right side  |    4   |                  Di  
                  cnd  |             ADC_ADC  |                                         ADC value  |    5   |                  Di  
                  cnd  |            ADC_time  |                                       same as TDC  |    6   |                  Dd  
                  cnd  |             ADC_ped  |                                          pedestal  |    7   |                  Di  

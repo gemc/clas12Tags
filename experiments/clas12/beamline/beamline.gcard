@@ -7,17 +7,17 @@
 	<detector name="../targets/target"  factory="TEXT" variation="lH2"/>
 
 
-	<!-- Beamline FTOn configuration
+	<!-- Beamline FTOn configuration  -->
 	<detector name="../ft/ft"                 factory="TEXT" variation="FTOn"/>
 	<detector name="../beamline/cadBeamline/" factory="CAD"/>
 	<detector name="../beamline/vacuumLine/"  factory="CAD"/>
 	<detector name="../beamline/beamline"     factory="TEXT" variation="FTOn"/>
-	END of FTOn -->
+<!--	END of FTOn-->
 	
 	<!-- Beamline rghFTOut configuration END of rghFTOut -->
 <!--	<detector name="../beamline/cadBeamline/" factory="CAD"/>-->
 <!--	<detector name="../beamline/vacuumLine/"  factory="CAD"/>-->
-	<detector name="../beamline/beamline"     factory="TEXT" variation="rghFTOut"/>
+<!--	<detector name="../beamline/beamline"     factory="TEXT" variation="rghFTOut"/>-->
 
 
 	<!-- Beamline configuration ELMO:

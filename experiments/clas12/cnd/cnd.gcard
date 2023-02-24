@@ -4,15 +4,38 @@
 
 	<detector name="cnd" factory="TEXT" variation="original"/>
 
+	<!-- target. Notice variation give the target type. Can be: lH2, lD2, ND3 -->
+	<detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
+
+	<!-- central detectors 	-->
+	<detector name="experiments/clas12/bst/bst"               factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/bstShield/bstShield"   factory="TEXT" variation="w51"/>
+	<detector name="experiments/clas12/micromegas/micromegas" factory="TEXT" variation="michel"/>
+	
+	<!--ctof, cad  -->
+	<detector name="experiments/clas12/ctof/ctof"                     factory="TEXT" variation="rga_fall2018"/>
+	<detector name="experiments/clas12/ctof/javacad_rga_fall2018/"    factory="CAD"/>
+	<detector name="experiments/clas12/cnd/cnd"                       factory="TEXT" variation="original"/>
+	
+	<!-- magnets -->
+	<detector name="experiments/clas12/magnets/solenoid" factory="TEXT" variation="original"/>
+
 	<option name="INTEGRATEDRAW" value="cnd"/>
 
-	<option name="BEAM_P"   value="proton, 1.0*GeV, 90*deg, 10*deg"/>
-	<option name="SPREAD_P" value="0.0*GeV, 20*deg, 180*deg"/>
+
+	<!-- CLAS12 Binary Fields from David Heddle cMag  -->
+	<option name="HALL_FIELD"  value="c12BinaryTorusSymmSolenoid2018"/>
 
 
 	<option name="OUTPUT"                  value="hipo, out.hipo"/>
 	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
 	<option name="RUNNO"                   value="11" />
 	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+
+	
+	<option name="BEAM_P"   value="proton, 1.2*GeV, 90*deg, 10*deg"/>
+	<option name="SPREAD_P" value="0.0*GeV, 30*deg, 180*deg"/>
+	
 
 </gcard>
