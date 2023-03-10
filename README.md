@@ -60,13 +60,7 @@ The gcards filenames containting `_binaryField` refers to setups using the `cmag
 
 ### Release notes for previous versions:
 
-<style>
-    .headerless th {
-        display: none;
-    }
-</style>
 
-<div class="headerless">
 
 |               <span>                |                                   |                                   |                                   |
 |:-----------------------------------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
@@ -76,7 +70,6 @@ The gcards filenames containting `_binaryField` refers to setups using the `cmag
 |  [3a.1.0](release_notes/3a.1.0.md)  | [3a.1.0](release_notes/3a.1.0.md) | [3a.0.2](release_notes/3a.0.2.md) | [3a.0.1](release_notes/3a.0.1.md) |
 | [3a.0.0](release_notes/3a.0.0.md)   |                                   |                                   |                                   |
 
-</div>
 
 
 
