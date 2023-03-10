@@ -52,33 +52,42 @@ The configurations in the gcards are detailed <a href="https://github.com/gemc/c
 The gcards filenames containting `_binaryField` refers to setups using the `cmag` binary field maps.
 
 
-### Previous versions (not installed at JLab or on CVMFS)
+### Other availiable tags (not installed at JLab or on CVMFS):
 
 - [5.0](release_notes/5.0.md)
 - [4.4.1](release_notes/4.4.1.md)
 - [4.4.0](release_notes/4.4.0.md)
-- [4.3.2](release_notes/4.3.2.md)
-- [4.3.1](release_notes/4.3.1.md)
-- [4.3.0](release_notes/4.3.0.md)
-- [4a.2.4](release_notes/4a.2.4.md)
-- [4a.2.3](release_notes/4a.2.3.md)
-- [4a.2.2](release_notes/4a.2.2.md)
-- [4a.2.1](release_notes/4a.2.1.md)
-- [4a.2.0](release_notes/4a.2.0.md)
-- [4a.1.0](release_notes/4a.1.0.md)
-- [4a.0.2](release_notes/4a.0.2.md)
-- [4a.0.1](release_notes/4a.0.1.md)
-- [4a.0.0](release_notes/4a.0.0.md)
-- [3a.1.0](release_notes/3a.1.0.md)
-- [3a.0.2](release_notes/3a.0.2.md)
-- [3a.0.1](release_notes/3a.0.1.md)
-- [3a.0.0](release_notes/3a.0.0.md)
+
+### Release notes for previous versions:
+
+<style>
+    .headerless th {
+        display: none;
+    }
+</style>
+
+<div class="headerless">
+
+|               <span>                |                                   |                                   |                                   |
+|:-----------------------------------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
+|   [4.3.2](release_notes/4.3.2.md)   |  [4.3.1](release_notes/4.3.1.md)  |  [4.3.0](release_notes/4.3.0.md)  | [4a.2.4](release_notes/4a.2.4.md) | 
+|  [4a.2.3](release_notes/4a.2.3.md)  | [4a.2.2](release_notes/4a.2.2.md) | [4a.2.1](release_notes/4a.2.1.md) | [4a.2.0](release_notes/4a.2.0.md) | 
+|  [4a.1.0](release_notes/4a.1.0.md)  | [4a.0.2](release_notes/4a.0.2.md) | [4a.0.1](release_notes/4a.0.1.md) | [4a.0.0](release_notes/4a.0.0.md) |
+|  [3a.1.0](release_notes/3a.1.0.md)  | [3a.1.0](release_notes/3a.1.0.md) | [3a.0.2](release_notes/3a.0.2.md) | [3a.0.1](release_notes/3a.0.1.md) |
+| [3a.0.0](release_notes/3a.0.0.md)   |                                   |                                   |                                   |
+
+</div>
+
+
+
+
+### Release 5.2 will include:
+- addressing several warnings in the code :white_check_mark: 
+- added option of choosing the beam particle start time :white_check_mark: 
 
 
 ### Upcoming developments:
-
-- addressing several warnings in the code :white_check_mark: 
-- added option of choosing the beam particle start time :white_check_mark: 
+ 
 - Upgrade geant4 to 10.7.p03 :soon:
 - Raster w/o beam spot :soon:
 
@@ -125,7 +134,7 @@ Load the environment as [described above](#use-gemc-versions-installed-at-jlab-o
 Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags) and unpack it.
 
 ```
-wget https://github.com/gemc/clas12Tags/archive/refs/tags/5.1.tar.gz 
+wget https://github.com/gemc/clas12Tags/archive/refs/tags/5.1.tar.gz
 tar -xvf 5.1.tar.gz
 ```
 
@@ -255,15 +264,16 @@ The other available configuration is "FTOff" (Figure 1, Right): the Forward Tagg
 The simulations in preparation of the first experiment should use the default version FTOn.
 FTOff will be used only by experts for special studies in preparation for the engineering run.
 
-<a href="url"><img src="https://github.com/gemc/clas12Tags/blob/master/ftOn.png" align="left" width="400" ></a>
-<a href="url"><img src="https://github.com/gemc/clas12Tags/blob/master/ftOff.png" align="left" width="400" ></a>
+<a href="url"><img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png" align="left"  width="400" ></a>
+<a href="url"><img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOff.png" align="left" width="400" ></a>
 
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br><br>
-<br>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+
 
 
 ###### Figure 1. Left: FT On configuration: Full, OperationalForward Tagger. Right: FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off.
