@@ -1,28 +1,27 @@
-# The clas12_tags repository
+# The clas12Tags repository
 
 
-The clas12_tags repository maintains a version of gemc dedicated to the JLab CLAS12 experiments, 
+The clas12Tags repository maintains a version of gemc dedicated to the JLab CLAS12 experiments, 
 with the CLAS12 detector geometry and gcards for the various experiment configurations.
 
-It is tagged more frequently than the main gemc repository, as needed by CLAS12 experiments.
+It is tagged more frequently than the main gemc repository - as needed by CLAS12 experiments.
 
 
 ![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector in the simulation. The electron beam is going from left to right.")
 ###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
 
 
-For Q/A on CLAS12 simulations you can use the [CLAS12 Discourse](https://clas12.discourse.group).
-
 
 <br>
 
-## Current versions installed at JLab on /site and on CVMFS: 
+## Clas12Tags versions installed at JLab on /site and on CVMFS: 
 
+<br>
 
 - [5.1](release_notes/5.1.md)
 - [4.4.2](release_notes/4.4.2.md)
 
-To load gemc, set the environment variable SIM_HOME:
+To load gemc, point the environment variable SIM_HOME:
 
 - At JLAB: `/group/clas12/packages/` 
 - On CVMFS: `/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft`
@@ -35,8 +34,7 @@ source $SIM_HOME/setup.csh
 module load clas12
 ```
 
-To load production tag 5.1, in addition to the above:
-
+The above will load gemc/4.4.2 by default. To load production tag 5.1, in addition to the above:
 
 ```
 module switch gemc/5.1
@@ -49,7 +47,9 @@ To run GEMC you can select one of the gcards in $GEMC/../config. For example:
 gemc $GEMC/../config/rga-fall2018.gcard -N=nevents -USE_GUI=0 
 ```
 
-The configurations in the gcards are detailed <a href="https://github.com/gemc/clas12_tags/tree/main/config"> here</a>.
+The configurations in the gcards are detailed <a href="https://github.com/gemc/clas12Tags/tree/main/config"> here</a>.
+
+The gcards filenames containting `_binaryField` refers to setups using the `cmag` binary field maps.
 
 
 ### Previous versions (not installed at JLab or on CVMFS)
@@ -77,7 +77,9 @@ The configurations in the gcards are detailed <a href="https://github.com/gemc/c
 
 ### Upcoming developments:
 
-- Upgrade geant4 to 10.7.p03 
+- addressing several warnings in the code :white_check_mark: 
+- added option of choosing the beam particle start time :white_check_mark: 
+- Upgrade geant4 to 10.7.p03 :soon:
 - Raster w/o beam spot :soon:
 
 <br>
@@ -95,7 +97,7 @@ GEMC simulations can be run on the Open Science Grid (OSG) using the
 
 ## Docker
 
-The clas12_tags are installed on CVMFS. Provided you can mount cvmfs,
+The clas12Tags are installed on CVMFS. Provided you can mount cvmfs,
 you can use the jeffersonlab/clas12software:cvmfs  docker image to run gemc.
 
 
@@ -115,7 +117,35 @@ docker run -it --rm -v /cvmfs:/cvmfs -p 8080:8080 jeffersonlab/clas12software:cv
 <br>
 
 <hr>
+
+## How to get and compile the clas12Tags
+
+Load the environment as [described above](#use-gemc-versions-installed-at-jlab-on-site-and-on-cvmfs-).
+
+Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags) and unpack it.
+
+```
+wget https://github.com/gemc/clas12Tags/archive/refs/tags/5.1.tar.gz 
+tar -xvf 5.1.tar.gz
+```
+
+Then compile gemc:
+
+```
+cd clas12_tags-5.1/source
+scons -jN OPT=1
+```
+
+where N is the number of cores available. 
+
+<br>
+<hr>
+
+# Changing Configurations
+
 ## Magnetic Fields
+
+### ASCII:
 
 You can scale magnetic fields using the SCALE_FIELD option. To do that copy the gcard somewhere first, then modify it. The gcard can work from any location.
 Example on how to run at 80% torus field (inbending) and 60% solenoid field:
@@ -125,6 +155,8 @@ Example on how to run at 80% torus field (inbending) and 60% solenoid field:
  <option name="SCALE_FIELD" value="clas12-newSolenoid, 0.6"/>
 ```
 
+
+
 <br>
 <hr>
 
@@ -132,7 +164,7 @@ Example on how to run at 80% torus field (inbending) and 60% solenoid field:
 
 ## Hydrogen, Deuterium or empty target
 
-By default the target cell is filled with liquid hydrogen by specifying the "lh2" target variation.
+By default, the target cell is filled with liquid hydrogen by specifying the "lh2" target variation.
 To use liquid deuterium instead use the variation "lD2" instead.
 
 To use an empty target instead, use the SWITCH_MATERIALTO option.
@@ -147,6 +179,7 @@ To use an empty target instead, use the SWITCH_MATERIALTO option.
 
 ## Event Vertex
 
+<br>
 While the gcards takes care of the target volumes positions (for example, in rga_spring2019 it is moved upstream by 3cm),
 it is up to the generators and the LUND files to place the event in the correct location.
 
@@ -174,6 +207,7 @@ The <a href="https://github.com/gemc/clas12Tags/tree/master/5.1/config"> surveye
 
 
 ## Removing a detector or a volume
+<br>
 
 You can remove/comment out the ```<detector>``` tag in the gcard to remove a whole system.
 To remove individual elements, use the existance tag in the gcard. For example, to remove the forward micromegas:
@@ -194,22 +228,14 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 ## Detector Sources
 
 
-
-The CLAS12 detector geometry sources are kept in the <a href="https://github.com/gemc/detectors"> detector git repository</a>.
-
-
-The CLAS12 geometry services are kept in the <a href="https://github.com/JeffersonLab/clas12-offline-software/blob/development/common-tools/clas-jcsg/src/main/java/org/jlab/detector/geant4/v2/"> java geant4 factory git repository</a>.
-
 <br>
-<hr>
+
+The CLAS12 detector geometry sources are kept in the 
+<a href="https://github.com/gemc/detectors"> detector git repository</a>.
 
 
-## How to get and compile the clas12Tags
-
-
-#### At Jefferson lab:
-
-#### Using docker
+The CLAS12 geometry services are kept in the 
+<a href="https://github.com/JeffersonLab/clas12-offline-software/blob/development/common-tools/clas-jcsg/src/main/java/org/jlab/detector/geant4/v2/"> java geant4 factory git repository</a>.
 
 <br>
 <hr>
@@ -217,9 +243,11 @@ The CLAS12 geometry services are kept in the <a href="https://github.com/Jeffers
 
 
 
-<br>
+
 
 ## FTOn, FTOff configurations
+
+<br>
 
 The default configuration for the first experiment is with "FTOn" (Figure 1, Left): complete forward tagger is fully operational.
 The other available configuration is "FTOff" (Figure 1, Right): the Forward Tagger tracker is replaced with shielding, and the tungsten cone is moved upstream.
@@ -227,8 +255,8 @@ The other available configuration is "FTOff" (Figure 1, Right): the Forward Tagg
 The simulations in preparation of the first experiment should use the default version FTOn.
 FTOff will be used only by experts for special studies in preparation for the engineering run.
 
-<a href="url"><img src="https://github.com/gemc/clas12_tags/blob/master/ftOn.png" align="left" width="400" ></a>
-<a href="url"><img src="https://github.com/gemc/clas12_tags/blob/master/ftOff.png" align="left" width="400" ></a>
+<a href="url"><img src="https://github.com/gemc/clas12Tags/blob/master/ftOn.png" align="left" width="400" ></a>
+<a href="url"><img src="https://github.com/gemc/clas12Tags/blob/master/ftOff.png" align="left" width="400" ></a>
 
 <br><br>
 <br><br>
