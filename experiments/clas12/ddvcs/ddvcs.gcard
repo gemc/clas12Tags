@@ -32,7 +32,7 @@
 	
 	
 	<!-- CLAS12 Binary Fields from David Heddle cMag  -->
-	<option name="HALL_FIELD"  value="c12BinaryTorusSymmSolenoid2018"/>
+	<option name="HALL_FIELD"  value="c12BinaryTorusFull2021Solenoid2018"/>
 
 
 	<!-- don't track particles beyod certain limits -->

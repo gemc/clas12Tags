@@ -49,7 +49,7 @@
 
 
 	<!-- CLAS12 Binary Fields from David Heddle cMag  -->
-	<option name="HALL_FIELD"  value="c12BinaryTorusSymmSolenoid2018"/>
+	<option name="HALL_FIELD"  value="c12BinaryTorusFull2021Solenoid2018"/>
 
 	<!-- beam conditions -->
 	<option name="BEAM_P"   value="e-, 10.6*GeV, 0.0*deg, 0*deg"/>
