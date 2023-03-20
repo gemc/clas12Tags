@@ -52,9 +52,9 @@ echo FILES CHANGED:
 set i = 1
 foreach file ($sourcesChanged)
 	if ($prompt == "no") then
-		echo source: $sourcesChanged[$i]", destination: "$tagFiles[$i]
+		echo  ../$sourcesChanged[$i]" ../"$tagFiles[$i]
 	else
-		echo Source: $sourcesChanged[$i]", destination: "$tagFiles[$i] ". Resolve diff (y/n)?"
+		echo Source: ../$sourcesChanged[$i]", destination: ../"$tagFiles[$i] ". Resolve diff (y/n)?"
 		set req = $<
 		if ($req == "y") then
 			cp $sourcesChanged[$i] $tagFiles[$i]
