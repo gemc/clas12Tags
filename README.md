@@ -15,6 +15,7 @@ It is tagged more frequently than the main gemc repository - as needed by CLAS12
 
 <br>
 
+- [5.2](release_notes/5.2.md)
 - [5.1](release_notes/5.1.md)
 - [4.4.2](release_notes/4.4.2.md)
 
@@ -32,10 +33,10 @@ source $SIM_HOME/setup.csh
 module load clas12
 ```
 
-The above will load gemc/4.4.2 by default. To load production tag 5.1, in addition to the above:
+The above will load gemc/4.4.2 by default. To load production tag 5.2, in addition to the above:
 
 ```
-module switch gemc/5.1
+module switch gemc/5.2
 ```
 
 To run GEMC you can select one of the gcards in $GEMC/../config. For example:
@@ -64,13 +65,18 @@ The gcards filenames containting `_binaryField` refers to setups using the `cmag
 | [3a.1.0](release_notes/3a.1.0.md) | [3a.1.0](release_notes/3a.1.0.md) | [3a.0.2](release_notes/3a.0.2.md) | [3a.0.1](release_notes/3a.0.1.md) |
 | [3a.0.0](release_notes/3a.0.0.md) |                                   |                                   |                                   |
 
+<br>
 
-### Upcoming developments:
+---
+
+## Upcoming developments:
 
 - Upgrade geant4 to 10.7.p03 :soon:
 - Raster w/o beam spot :soon:
 
 <br>
+
+---
 
 ## Portal to Off-site farms CLAS12 Simulations
 
@@ -78,6 +84,8 @@ GEMC simulations can be run on the Open Science Grid (OSG) using the
 <a href="https://gemc.jlab.org/web_interface/index.php"> CLAS12 Simulation Submission Portal</a>.
 
 <br>
+
+---
 
 ## Docker
 
@@ -102,17 +110,18 @@ docker run -it --rm -v /cvmfs:/cvmfs -p 8080:8080 jeffersonlab/clas12software:cv
 
 Load the environment as [described above](#use-gemc-versions-installed-at-jlab-on-site-and-on-cvmfs-).
 
-Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags) and unpack it.
+Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags) 
+and unpack it (using 5.X as an example):
 
 ```
-wget https://github.com/gemc/clas12Tags/archive/refs/tags/5.1.tar.gz
-tar -xvf 5.1.tar.gz
+wget https://github.com/gemc/clas12Tags/archive/refs/tags/5.X.tar.gz
+tar -xvf 5.X.tar.gz
 ```
 
 Then compile gemc:
 
 ```
-cd clas12_tags-5.1/source
+cd clas12_tags-5.X/source
 scons -jN OPT=1
 ```
 
