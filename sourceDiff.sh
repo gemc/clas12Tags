@@ -1,14 +1,16 @@
 #!/bin/csh -f
 
-# script to show differences between source and a tag source
+# script to show differences between gemc/source and a clas21Tags/source
 #
-# if second option "prompt" is given, then the script will ask for user input
+# the mandatory first option set the tagVersion to make sure it's in gemc.cc
+# if the second option "prompt" is given, then the script will ask for user input
 # to copy each file into the tag
 
 # note:
 # 1. if gemc.cc has differences other than the tag version, it will be considered as well
 # 2. the script will be run one directory up from clas12tags
 set prompt = "no"
+
 
 if( "$1" != "" ) then
 	set tagVersion = $1
@@ -20,6 +22,8 @@ endif
 if( "$2" == "prompt" ) then
 	set prompt = "yes"
 endif
+
+
 
 echo
 echo TAG: $tagVersion
@@ -33,7 +37,7 @@ cd ..
 # diff summary printed on screen. Ignoring objects, moc files, libraries and gemc executable
 echo DIFF OUTPUT:
 echo
-diff -x '*.o' -x 'moc_*.cc' -x '*.a' -x 'gemc' -r -q source clas12Tags/$tagVersion/source | grep -v \.git | grep -v sconsign\.dblite | grep -v gemc\.cc
+diff -x '*.o' -x 'moc_*.cc' -x '*.a' -x 'gemc' -r -q source clas12Tags/source | grep -v \.git | grep -v sconsign\.dblite | grep -v gemc\.cc
 echo
 echo
 
@@ -41,8 +45,8 @@ echo
 # Files source/utilities/options.h and clas12Tags/4.3.1/source/utilities/options.h differ
 # ignoring .o
 
-set sourcesChanged = `diff -x '*.o' -x 'moc_*.cc' -x '*.a' -x 'gemc' -r -q source clas12Tags/$tagVersion/source | grep -v gemc.cc | grep differ | awk '{print $2}'`
-set tagFiles       = `diff -x '*.o' -x 'moc_*.cc' -x '*.a' -x 'gemc' -r -q source clas12Tags/$tagVersion/source | grep -v gemc.cc | grep differ | awk '{print $4}'`
+set sourcesChanged = `diff -x '*.o' -x 'moc_*.cc' -x '*.a' -x 'gemc' -r -q source clas12Tags/source | grep -v gemc.cc | grep differ | awk '{print $2}'`
+set tagFiles       = `diff -x '*.o' -x 'moc_*.cc' -x '*.a' -x 'gemc' -r -q source clas12Tags/source | grep -v gemc.cc | grep differ | awk '{print $4}'`
 
 echo FILES CHANGED:
 set i = 1
@@ -65,24 +69,24 @@ echo
 
 
 # not checking gemc.cc if the version is the only change
-set maincc = `diff source/gemc.cc clas12Tags/$tagVersion/source/gemc.cc | grep -v 32c32 | grep -v GEMC_VERSION | grep -v "\-\-\-" | wc | awk '{print $1}'`
+set maincc = `diff source/gemc.cc clas12Tags/source/gemc.cc | grep -v 32c32 | grep -v GEMC_VERSION | grep -v "\-\-\-" | wc | awk '{print $1}'`
 # if the differentce is NOT GEMC_VERSION (line 32)
 if ("$maincc" != "0") then
 	if ($prompt == "no") then
 		echo FOUND gemc.cc differences other than the tag version: "$maincc"
-		diff source/gemc.cc clas12Tags/$tagVersion/source/gemc.cc | grep -v GEMC\_VERSION
+		diff source/gemc.cc clas12Tags/source/gemc.cc | grep -v GEMC\_VERSION
 	else
 		echo
 		echo "gemc.cc has changes. Resolve (y/n)?"
 		set req = $<
 		if ($req == "y") then
-			cp source/gemc.cc clas12Tags/$tagVersion/source/
+			cp source/gemc.cc clas12Tags/source/
 		endif
 	endif
 endif
 
 # checking that the right version is on gemc.cc
-cd clas12Tags/$tagVersion/source
+cd clas12Tags/source
 set GVERSION = `grep GEMC\_VERSION gemc.cc | grep $tagVersion | wc | awk '{print $1}'`
 if ($GVERSION != "1") then
 	echo gemc tag version is not $tagVersion. Fixing it with
