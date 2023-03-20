@@ -64,19 +64,6 @@ The gcards filenames containting `_binaryField` refers to setups using the `cmag
 | [3a.1.0](release_notes/3a.1.0.md) | [3a.1.0](release_notes/3a.1.0.md) | [3a.0.2](release_notes/3a.0.2.md) | [3a.0.1](release_notes/3a.0.1.md) |
 | [3a.0.0](release_notes/3a.0.0.md) |                                   |                                   |                                   |
 
-### Release 5.2 will include:
-
-- addressing several warnings in the code :white_check_mark:
-- added option of choosing the beam particle start time :white_check_mark:
-- binary magnetic field available configurations:
-
-  - c12BinaryTorusSymm2018Solenoid2018:`Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018`
-  - c12BinaryTorusFull2020Solenoid2018:`Symm_solenoid_r601_phi1_z1201_13June2018 Full_torus_r251_phi181_z251_03March2020`
-  - c12BinaryTorusFull2021Solenoid2018:`Symm_solenoid_r601_phi1_z1201_13June2018 Full_torus_r251_phi181_z251_25Jan2021`
-
-- binary field maps c12BinaryTorusFull2021Solenoid2018 set to be the default.
-- added gcard options for SCALE_FIELD: binary_torus and binary_solenoid to scale the binary field maps.
-- fixed active fields not being written in the hipo output for binary maps
 
 ### Upcoming developments:
 

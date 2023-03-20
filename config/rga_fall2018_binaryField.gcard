@@ -56,10 +56,6 @@
 	<option name="HALL_FIELD"  value="c12BinaryTorusFull2021Solenoid2018"/>
 
 
-
-
-
-
 	<!-- beam conditions -->
 	<option name="BEAM_P"   value="e-, 10.6*GeV, 0.0*deg, 0*deg"/>
 	<option name="BEAM_V"    value="(0, 0, -3)cm"/>

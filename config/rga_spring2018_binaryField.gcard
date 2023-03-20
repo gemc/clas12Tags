@@ -48,8 +48,13 @@
 	<detector name="experiments/clas12/rich_sector4/javacad/" factory="CAD"/>
 
 
-	<!-- CLAS12 Binary Fields from David Heddle cMag  -->
+	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->
+	<option name="SCALE_FIELD" value="binary_torus, -1"/>
+	<option name="SCALE_FIELD" value="binary_solenoid, -1"/>
+
+	<!-- hall field  -->
 	<option name="HALL_FIELD"  value="c12BinaryTorusFull2021Solenoid2018"/>
+
 
 	<!-- beam conditions -->
 	<option name="BEAM_P"   value="e-, 10.6*GeV, 0.0*deg, 0*deg"/>
@@ -112,7 +117,7 @@
 
 	<!-- solenoid volume and field map shifted upstream by 19.4 mm -->
 	<detector name="solenoid">  <position x="0*cm"  y="0*cm"  z="-1.94*cm"  />  </detector>
-	<option name="DISPLACE_FIELDMAP"     value="clas12-newSolenoid, 0*cm, 0*cm, -1.94*cm" />
+	<option name="DISPLACE_FIELDMAP"     value="binary_solenoid, 0*cm, 0*cm, -1.94*cm" />
 
 	<!--  HTCC shifted upstream by 10 mm -->
 	<detector name="htcc">                 <position x="0*cm"  y="0*cm"  z="-1.0*cm"  />  </detector>
