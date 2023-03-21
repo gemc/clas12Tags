@@ -1,10 +1,10 @@
 # https://github.com/pyTooling/Actions/tree/main/releaser
-name: 'workflow'
+name: 'dev release'
 
 on:
   schedule:
     # every day at 1:25 and 13:25
-    - cron: '17 12,13 * * *'
+    - cron: '41 12,13 * * *'
 
 jobs:
   mwe:
