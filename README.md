@@ -220,8 +220,11 @@ and the tungsten cone is moved upstream.
 The simulations in preparation of the first experiment should use the default version FTOn.
 FTOff will be used only by experts for special studies in preparation for the engineering run.
 
-<a href="url"><img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png" align="left"  width="380" ></a>
-<a href="url"><img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOff.png" align="left" width="380" ></a>
+
+| |  |
+|-|--|
+|<img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> |
+
 
 <br/><br/><br/><br/>
 <br/><br/><br/><br/>
