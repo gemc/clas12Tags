@@ -7,13 +7,12 @@ on:
     - cron: '44 * * * *'
 
 jobs:
-  mwe:
+  dev-release:
     runs-on: ubuntu-latest
     steps:
 
     # Clone repository
-    - uses: actions/checkout@v2
-
+    - uses: actions/checkout@v3
 
     # Update tag and pre-release
     # - Update (force-push) tag to the commit that is used in the workflow.
