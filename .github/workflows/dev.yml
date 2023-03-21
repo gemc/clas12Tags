@@ -28,3 +28,4 @@ jobs:
           source/*
           experiments/*
         rm: true
+        tag: dev
