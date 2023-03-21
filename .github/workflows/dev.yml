@@ -3,8 +3,8 @@ name: 'dev release'
 
 on:
   schedule:
-    # every day at 1:25 and 13:25
-    - cron: '41 12,13 * * *'
+    # every day at 1:25 and 13:25 - UTC time zone
+    - cron: '43 16,17 * * *'
 
 jobs:
   mwe:
