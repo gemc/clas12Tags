@@ -1,0 +1,27 @@
+# https://github.com/pyTooling/Actions/tree/main/releaser
+name: 'workflow'
+
+on:
+  schedule:
+    # every day at 1:25 and 13:25
+    - cron: '17 12,13 * * *'
+
+jobs:
+  mwe:
+    runs-on: ubuntu-latest
+    steps:
+
+    # Clone repository
+    - uses: actions/checkout@v2
+
+
+    # Update tag and pre-release
+    # - Update (force-push) tag to the commit that is used in the workflow.
+    # - Upload artifacts defined by the user.
+    - uses: pyTooling/Actions/releaser@r0
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: |
+          config/*
+          source/*
+          experiments/*
