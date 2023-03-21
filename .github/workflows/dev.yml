@@ -1,4 +1,4 @@
-# https://github.com/pyTooling/Actions/tree/main/releaser
+# https://github.com/marketplace/actions/automatic-releases
 name: 'dev release'
 
 on:
@@ -22,6 +22,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "dev"
           prerelease: false
-          title: "Development Build"
-          files: |
-            config/*
+          title: "Development Release"
