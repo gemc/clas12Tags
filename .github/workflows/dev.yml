@@ -3,8 +3,8 @@ name: 'dev release'
 
 on:
   schedule:
-    # every day at 1:25 and 13:25 - UTC time zone
-    - cron: '44 * * * *'
+    # every day at 1:44 and 13:55 - UTC time zone
+    - cron: '44 1,13 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,3 +27,4 @@ jobs:
           config/*
           source/*
           experiments/*
+        rm: true
