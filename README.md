@@ -221,19 +221,10 @@ The simulations in preparation of the first experiment should use the default ve
 FTOff will be used only by experts for special studies in preparation for the engineering run.
 
 
-| |  |
-|-|--|
-|<img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> |
-
-
-<br/><br/><br/><br/>
-<br/><br/><br/><br/>
-<br/><br/><br/><br/>
-<br/><br/><br/><br/>
-<br/><br/><br/><br/>
-<br/><br/><br/><br/>
-
-###### Figure 1. Left: FT On configuration: Full, OperationalForward Tagger. Right: FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off.
+|                                                                              |                                                                                                         |
+|------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/>                            |
+ | FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
 
 <br>
 
