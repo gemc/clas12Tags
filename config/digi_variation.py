@@ -15,5 +15,5 @@ for file in files:
 		for line in lines:
 			if 'DIGITIZATION_VARIATION' in line:
 				variation = line.split('value')[1].split('"')[1]
-				print("        if self.configuration == " + root_filename + ":\n          self.digi_variation = " + variation)
+				print("        if self.configuration == \"" + root_filename + "\":\n          self.digi_variation = \'" + variation + "\'")
 
