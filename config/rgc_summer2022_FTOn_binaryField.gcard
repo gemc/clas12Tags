@@ -27,13 +27,13 @@
 	<detector name="experiments/clas12/magnets/cad/"     factory="CAD" />
 
 
-	<!-- Beamline configuration: ELMO is used -->
-	<detector name="experiments/clas12/beamline/cadBeamlineELMO/" factory="CAD"/>
-	<detector name="experiments/clas12/beamline/vacuumLine/"      factory="CAD"/>
-	<detector name="experiments/clas12/beamline/beamline"         factory="TEXT" variation="ELMO"/>
-	<detector name="connectUpstreamToTorusPipe">
-	 	<existence exist="no" />
-	</detector>
+	<!-- Beamline configuration: FT is used -->
+	<detector name="experiments/clas12/ft/ft"                 factory="TEXT" variation="FTOn"/>
+	<detector name="experiments/clas12/beamline/cadBeamline/" factory="CAD"/>
+	<detector name="experiments/clas12/beamline/vacuumLine/"  factory="CAD"/>
+	<detector name="experiments/clas12/beamline/beamline"     factory="TEXT" variation="FTOn"/>
+
+
 	
 	<!-- forward carriage -->
 	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
@@ -55,6 +55,10 @@
 
 	<!-- hall field  -->
 	<option name="HALL_FIELD"  value="c12BinaryTorusFull2021Solenoid2018"/>
+
+
+
+
 
 
 	<!-- beam conditions -->

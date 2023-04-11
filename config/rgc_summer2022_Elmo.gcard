@@ -7,6 +7,7 @@
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="APOLLOnh3"/>
 
 
+
 	<!-- central detectors 	-->
 	<detector name="experiments/clas12/bst/bst"               factory="TEXT" variation="default"/>
 	<detector name="experiments/clas12/bstShield/bstShield"   factory="TEXT" variation="w51"/>
