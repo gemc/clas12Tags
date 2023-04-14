@@ -25,7 +25,7 @@
 
 
 	<!-- CLAS12 Binary Fields from David Heddle cMag  -->
-	<option name="HALL_FIELD"  value="c12BinaryTorusFull2021Solenoid2018"/>
+	<option name="HALL_FIELD"  value="Symm_solenoid_r601_phi1_z1201_13June2018:Full_torus_r251_phi181_z251_25Jan2021"/>
 
 
 	<option name="OUTPUT"                  value="hipo, out.hipo"/>
