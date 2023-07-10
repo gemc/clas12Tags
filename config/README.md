@@ -1,7 +1,6 @@
 
 
-Run Configurations
-------------------
+## Run Configurations
 
 The **clas12-default** gcard/yaml files provide the configuration with the detectors are at the nominal positions. Even though one is provided, there is no need for a corresponding YAML file.
 
@@ -91,3 +90,8 @@ The RG A and B shifts come from the engineering group survey shown below.
 
 Overlap is detected for volume segment_hyp_s2_2:1
 apparently fully encapsulating volume cyl_mirrors_s2left_2:1          at the same level !
+
+
+## RF Signal:
+
+For JLab, the RF is 1497 / 3 (halls, or 2 if 4 halls) - that is 499 MHz

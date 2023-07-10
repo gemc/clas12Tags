@@ -51,7 +51,7 @@
 	<!--  RF Signal needs event time window defined by LUMI_EVENT.
 	 If Backround is activated make sure to use LUMI_EVENT below instead.-->
 	<option name="LUMI_EVENT"  value="0, 248.5*ns, 4*ns" />
-	<option name="RFSETUP"     value="0.499, 40, 20" />
+	<option name="RFSETUP"     value="4.008, 40, 20" />
 	
 	
 	<!--  beam background. for 250 ns timewindow we have 124,000 e- on
