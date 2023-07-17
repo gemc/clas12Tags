@@ -15,6 +15,7 @@ It is tagged more frequently than the main gemc repository - as needed by CLAS12
 
 <br>
 
+- [5.3](release_notes/5.3.md)
 - [5.2](release_notes/5.2.md)
 - [5.1](release_notes/5.1.md)
 - [4.4.2](release_notes/4.4.2.md)
@@ -33,10 +34,10 @@ source $SIM_HOME/setup.csh
 module load clas12
 ```
 
-The above will load gemc/4.4.2 by default. To load production tag 5.2, in addition to the above:
+The above will load gemc/4.4.2 by default. To load tag 5.3, in addition to the above, use `module switch`:
 
 ```
-module switch gemc/5.2
+module switch gemc/5.3
 ```
 
 To run GEMC you can select one of the gcards in $GEMC/../config. For example:
@@ -49,13 +50,13 @@ The configurations in the gcards are detailed <a href="https://github.com/gemc/c
 
 The gcards filenames containting `_binaryField` refers to setups using the `cmag` binary field maps.
 
-### Other availiable tags (not installed at JLab or on CVMFS):
+### Release notes for tags not installed at JLab or on CVMFS:
 
 - [5.0](release_notes/5.0.md)
 - [4.4.1](release_notes/4.4.1.md)
 - [4.4.0](release_notes/4.4.0.md)
 
-### Release notes for previous versions:
+### Release notes for previous versions, not installed at JLab or on CVMFS:
 
 |              <span>               |                                   |                                   |                                   |
 |:---------------------------------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
@@ -72,8 +73,11 @@ The gcards filenames containting `_binaryField` refers to setups using the `cmag
 ## Upcoming developments:
 
 - Upgrade geant4 to 10.7.p03 :soon:
-- Raster w/o beam spot :soon:
-
+- RF Frequency > RF Period (+fix), read from DB
+- Geometry / Run Number
+- gcards reorganized to new repository
+- RICH digitization (Connor Pecar)
+- 
 <br>
 
 ---
@@ -128,6 +132,30 @@ scons -jN OPT=1
 where N is the number of cores available.
 
 <br>
+
+## How to make changes to the clas12Tags
+
+clas12Tags is a repo with source code and geometry derived from gemc/source.
+Modifications should be made to the gemc/source repo by forking it 
+and making a pull request. 
+
+Note: gemc uses static function to load specific clas12 code (ugly, fixed in gemc3). 
+In particular the BMT and FMT hit processes have these two functions:
+
+```
+bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(-1);
+fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(-1);
+```
+that should be changed to:
+
+```
+bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
+fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(1);
+```
+
+to initialize properly BMT and FMT and avoid seg fault when those 
+detectors are used. This is done in the clas12Tags repo.
+
 
 # Changing Configurations
 
