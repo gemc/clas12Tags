@@ -1,5 +1,5 @@
 # https://github.com/marketplace/actions/automatic-releases
-name: 'dev release'
+name: Dev release
 
 on:
   schedule:
@@ -23,3 +23,7 @@ jobs:
           automatic_release_tag: "dev"
           prerelease: false
           title: "Development Release"
+      - uses: gitboard-io/gitboard-action@main
+        with:
+          username: maureeungaro
+          key: 3d8e9059-a164-4bea-9541-1cb8789d805b

@@ -30,7 +30,7 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 
-while getopts ":hd:" option; do
+while getopts ":hd:t:" option; do
    case $option in
       h)
          Help
@@ -73,8 +73,10 @@ gcards=no
 
 
 # below to be replaced by module load / run gemc
-echo $tag content:
-ls -l /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/fedora36-gcc12/sim/2.4/clas12Tags/$clas12Tag
+echo clas12Tag: $clas12Tag, detector: $detector
+tdir=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/fedora36-gcc12/sim/2.4/clas12Tags/$clas12Tag/experiments/clas12/$detector
+echo $tdir content:
+ls -l $tdir
 
 
 #for jc in $=gcards
