@@ -16,7 +16,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-#    container: jeffersonlab/gemc3:dev-fedora36
+    container: jeffersonlab/cvmfs:fedora36
     strategy:
       fail-fast: false
       matrix:
