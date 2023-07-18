@@ -35,4 +35,3 @@ jobs:
       - name: ${{ matrix.tag }} ${{ matrix.detector }} test
         run: |
           ./ci/detectors_test.sh -t ${{ matrix.tag }} -d ${{ matrix.detector }}
-          
