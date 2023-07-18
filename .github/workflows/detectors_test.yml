@@ -30,6 +30,9 @@ jobs:
 #          - dc
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3.1
+      - name: Checkout
+        uses: actions/checkout@main
       - name: ${{ matrix.tag }} ${{ matrix.detector }} test
         run: |
           ./ci/detectors_test.sh -t ${{ matrix.tag }} -d ${{ matrix.detector }}
+          
