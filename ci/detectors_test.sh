@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 # Purpose:
 # Runs gemc using the gcards inside 'tests' directory (if existing)
