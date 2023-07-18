@@ -7,8 +7,9 @@
 
 
 # Local Container run:
-# docker run -it --rm add cvmfs mount
-# ./ci/tests.sh -d targets -t 5.4
+# docker run -it --rm --platform linux/amd64  -v/cvmfs:/cvmfs jeffersonlab/cvmfs:fedora36 sh
+# git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
+# ./ci/detectors_test.sh -d targets -t 5.2
 
 
 Help()
@@ -75,8 +76,12 @@ gcards=no
 # below to be replaced by module load / run gemc
 echo clas12Tag: $clas12Tag, detector: $detector
 tdir=/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft/fedora36-gcc12/sim/2.4/clas12Tags/$clas12Tag/experiments/clas12/$detector
+
 echo $tdir content:
 ls -l $tdir
+if [[ $? != 0 ]]; then
+	exit $?
+fi
 
 
 #for jc in $=gcards

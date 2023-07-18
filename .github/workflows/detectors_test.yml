@@ -29,7 +29,7 @@ jobs:
           - targets
           - dc
     steps:
-      - uses: cvmfs-contrib/github-action-cvmfs@v3
+      - uses: cvmfs-contrib/github-action-cvmfs@v3.1
       - name: ${{ matrix.tag }} ${{ matrix.detector }} test
         run: |
           ./ci/detectors_test.sh -t ${{ matrix.tag }} -d ${{ matrix.detector }}
