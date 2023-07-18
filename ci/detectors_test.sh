@@ -6,6 +6,8 @@
 # Assumptions: the name 'tests' of the tests directory.
 
 
+# The remote container (for now) is based on fedora 36, so cvmfs action is not available,
+# see https://github.com/cvmfs-contrib/github-action-cvmfs (only ubuntu supported)
 # Local Container run:
 # docker run -it --rm --platform linux/amd64  -v/cvmfs:/cvmfs jeffersonlab/cvmfs:fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags

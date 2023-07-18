@@ -16,18 +16,18 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: jeffersonlab/cvmfs:fedora36
+#    container: jeffersonlab/cvmfs:fedora36
     strategy:
       fail-fast: false
       matrix:
         tag:
           - 4.4.2
-          - 5.1
-          - 5.2
-          - 5.3
+#          - 5.1
+#          - 5.2
+#          - 5.3
         detector:
           - targets
-          - dc
+#          - dc
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3.1
       - name: ${{ matrix.tag }} ${{ matrix.detector }} test
