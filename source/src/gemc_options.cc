@@ -135,7 +135,7 @@ void goptions::setGoptions()
 	optMap["RANDOMIZE_LUND_VZ"].help += "     If the third argument \"reset\" is given, the vertexes are relative to VZ=0 \n";
 	optMap["RANDOMIZE_LUND_VZ"].help += "      example 1: -RANDOMIZE_LUND_VZ=\"-3*cm, 5*cm\" \n";
 	optMap["RANDOMIZE_LUND_VZ"].help += "       This randomizes the z vertex by plus-minus 5cm around the original LUND values and shift it by -3cm \n";
-	optMap["RANDOMIZE_LUND_VZ"].help += "      example 2: -RANDOMIZE_LUND_VZ=\"2*cm, 3*cm, 0.2*cm, 0.1*cm, 22*deg, reset\" \n";
+	optMap["RANDOMIZE_LUND_VZ"].help += "      example 1: -RANDOMIZE_LUND_VZ=\"-3*cm, 5*cm, reset\" \n";
 	optMap["RANDOMIZE_LUND_VZ"].help += "       This randomizes the z vertex by 5cm around vz = 0 and shift it by -3cm \n";
 	optMap["RANDOMIZE_LUND_VZ"].name = "Randomizes the z vertex according to a shift and a flat value";
 	optMap["RANDOMIZE_LUND_VZ"].type = 1;
@@ -725,13 +725,14 @@ void goptions::setGoptions()
 	optMap["RFSETUP"].args = "no";
 	optMap["RFSETUP"].name = "Radio-frequency signal";
 	optMap["RFSETUP"].help = "Radio-frequency signal. This are a minium of 2 parameters for one given RF signal:\n";
-	optMap["RFSETUP"].help += "      1. radioFrequency (GHz)\n";
-	optMap["RFSETUP"].help += "      2. radioInterval (number of bunches)\n";
+	optMap["RFSETUP"].help += "      1. radioFrequency period T (ns). The frequency in GHz is 1/T \n";
+	optMap["RFSETUP"].help += "      2. radioInterval (in number of bunches): distance between RF signals, or pre-scale factor.\n";
 	optMap["RFSETUP"].help += "     Any additional parameter (in ns) will add an RF signal with that time distance from the original.\n";
-	optMap["RFSETUP"].help += "     Example1:  250MHz (0.25 GHz) RF signal, 1 output, output frequency is 50 bunches: \n";
-	optMap["RFSETUP"].help += "      -RFSETUP=\"0.25, 50\" \n";
-	optMap["RFSETUP"].help += "     Example2: two 500MHz (0.5 GHz) RF signals, they are separated by 30 ns and both output frequency is 80 bunches: \n";
-	optMap["RFSETUP"].help += "      -RFSETUP=\"0.5, 80, 30\" \n";
+	optMap["RFSETUP"].help += "     Example1:  4.008 (0.2495 GHz) RF signal, 1 output, output frequency is 50 bunches: \n";
+	optMap["RFSETUP"].help += "      -RFSETUP=\"4.008, 50\" \n";
+	optMap["RFSETUP"].help += "     Example2: two (0.5 GHz) and 2 RF signals, separated by 30 ns and both output frequency is 80 bunches: \n";
+	optMap["RFSETUP"].help += "      -RFSETUP=\"2.004, 80, 30\" \n";
+	optMap["RFSETUP"].help += "     By default the RFSETUP is set to 'clas12': the above constants are to be read from the CCDB database, using as run: RUNNO and as variation the one specified in the option DIGITIZATION_VARIATION.\n";
 	optMap["RFSETUP"].type = 1;
 	optMap["RFSETUP"].ctgr = "control";
 

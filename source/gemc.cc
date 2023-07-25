@@ -28,7 +28,7 @@
 /// \author \n &copy; Maurizio Ungaro
 /// \author e-mail: ungaro@jlab.org\n\n\n
 
-const char *GEMC_VERSION = "gemc 5.3" ;
+const char *GEMC_VERSION = "gemc 5.4" ;
 
 // G4 headers
 #include "G4RunManager.hh"
@@ -417,7 +417,7 @@ int main( int argc, char **argv )
 
 // introducing OPTICALPHOTONPID here to be semi-transparent to G4 changes
 // this pid changed from 0 to -22 with geant4 10.7
-int MHit::OPTICALPHOTONPID = -22;
+int MHit::OPTICALPHOTONPID = 0;
 
 
 

@@ -85,7 +85,7 @@
 
 	<!--  RF Signal needs event time window defined by LUMI_EVENT -->
 	<option name="LUMI_EVENT"  value="0, 248.5*ns, 4*ns" />
-	<option name="RFSETUP"     value="4.008, 40, 20" />
+	<option name="RFSETUP"     value="clas12_ccdb" />
 
 	<!--  Reference position set as target shift below -->
 	<option name="RFSTART"     value="eventVertex, 0, 0, 0.0" />
