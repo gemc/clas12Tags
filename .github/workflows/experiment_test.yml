@@ -26,7 +26,7 @@ jobs:
         run: |
           export JSON=$( ./ci/gcards_to_test.sh )
           echo generate-matrix: $JSON
-          echo "name=matrix::$(  echo "$JSON"    | tr -d '\n' )" >> $GITHUB_OUTPUT
+          echo "matrix=$(  echo "$JSON"    | tr -d '\n' )" >> $GITHUB_OUTPUT
   
 
   test:
@@ -44,5 +44,5 @@ jobs:
       - name: ${{ matrix.detector }} tests
         run: |
           ./ci/experiments_test.sh -t ${{ matrix.gcard }}
-#      - name: Collect Workflow Telemetry
-#        uses: runforesight/workflow-telemetry-action@v1
+      - name: Collect Workflow Telemetry
+        uses: runforesight/workflow-telemetry-action@v1
