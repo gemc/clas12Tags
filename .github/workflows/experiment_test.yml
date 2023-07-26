@@ -16,6 +16,7 @@ on:
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
+    container: jeffersonlab/base:fedora36
     outputs:
       matrix:  ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -23,9 +24,9 @@ jobs:
         uses: actions/checkout@main
       - id: set-matrix
         run: |
-          export JSON=$(    ./ci/gcards_to_test.sh )
-          echo generate-matrix: $JSON,
-          echo "::set-output name=matrix::$(  echo "$JSON"    | tr -d '\n' )"
+          export JSON=$( ./ci/gcards_to_test.sh )
+          echo generate-matrix: $JSON
+          echo "name=matrix::$(  echo "$JSON"    | tr -d '\n' )" >> $GITHUB_OUTPUT
   
 
   test:
