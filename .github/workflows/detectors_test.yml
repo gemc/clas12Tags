@@ -21,10 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         tag:
-          - 4.4.2
-          - 5.1
-          - 5.2
-          - 5.3
+          - 5.4
         detector:
           - targets
 #          - dc
@@ -32,8 +29,8 @@ jobs:
 #      - uses: cvmfs-contrib/github-action-cvmfs@v3.1
       - name: Checkout
         uses: actions/checkout@main
+      - name: Collect Workflow Telemetry
+        uses: runforesight/workflow-telemetry-action@v1
       - name: ${{ matrix.tag }} ${{ matrix.detector }} test
         run: |
           ./ci/detectors_test.sh -t ${{ matrix.tag }} -d ${{ matrix.detector }}
-      - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1

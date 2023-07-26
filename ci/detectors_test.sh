@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 
 # Purpose:
 # Runs gemc using the gcards inside 'tests' directory (if existing)
@@ -8,13 +8,20 @@
 
 # The remote container (for now) is based on fedora 36, so cvmfs action is not available,
 # see https://github.com/cvmfs-contrib/github-action-cvmfs (only ubuntu supported)
-# Local Container run:
+# Mounting cvmfs container run:
 # docker run -it --rm --platform linux/amd64  -v/cvmfs:/cvmfs jeffersonlab/cvmfs:fedora36 sh
-# Remote container run:
+# Full image container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:4.4.2-5.1-5.2-5.3-fedora36-cvmfs sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/detectors_test.sh -d targets -t 5.2
 
+# if we are in the docker container, we need to load the modules
+if [[ -z "${DISTTAG}" ]]; then
+    echo "\nNot in container"
+else
+    echo "\nIn container: ${DISTTAG}"
+    source  /app/localSetup.sh
+fi
 
 Help()
 {
@@ -76,7 +83,7 @@ SetsGcardsToRun () {
 
 # sets the list of gcards to run
 gcards=no
-SetsGcardsToRun
+#SetsGcardsToRun
 
 
 # below to be replaced by module load / run gemc
