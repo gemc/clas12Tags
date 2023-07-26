@@ -17,9 +17,9 @@ for clas12Tag in $validTags; do
   # if $clas12Tags is not dev, gcards are the files in clas12-config/gemc/$clas12Tags/config,
   # otherwise they are in config
   if [[ $clas12Tag != "dev" ]]; then
-    gcards=(${gcards[@]} $(ls clas12-config/gemc/$clas12Tag/*.gcard))
+    gcards=(${gcards[@]} $(ls clas12-config/gemc/$clas12Tag/*.gcard | awk -F\/ '{print $3"/"$4}' ))
   else
-    gcards=(${gcards[@]} $(ls config/*.gcard))
+    gcards=(${gcards[@]} $(ls config/*.gcard | sed s/config/dev/g ))
   fi
 done
 
