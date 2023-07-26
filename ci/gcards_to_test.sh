@@ -11,20 +11,23 @@
 # ./ci/gcards_to_test.sh
 
 validTags=(4.4.2 dev)
-git clone https://github.com/JeffersonLab/clas12-config
+[[ -d  clas12-config ]] && echo clas12-config exist || git clone https://github.com/JeffersonLab/clas12-config
 
-echo "{\"include\":["
 for clas12Tag in $validTags; do
   # if $clas12Tags is not dev, gcards are the files in clas12-config/gemc/$clas12Tags/config,
   # otherwise they are in config
   if [[ $clas12Tag != "dev" ]]; then
-    gcards=($(ls clas12-config/gemc/$clas12Tag/*.gcard))
+    gcards=(${gcards[@]} $(ls clas12-config/gemc/$clas12Tag/*.gcard))
   else
-    gcards=($(ls config/*.gcard))
+    gcards=(${gcards[@]} $(ls config/*.gcard))
   fi
-  for jc in $=gcards; do
-    echo "{\"gcard\": \"$jc\"}"
-  done
 done
 
+
+lastg=${gcards[${#gcards[@]}]}
+
+echo "{\"include\":["
+for jc in $=gcards; do
+  [[ $jc ==  $lastg ]] && echo "{\"gcard\": \"$jc\"}" || echo "{\"gcard\": \"$jc\"},"
+done
 echo "]}"
