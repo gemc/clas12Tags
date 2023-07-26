@@ -33,7 +33,7 @@
 	<option name="BEAM_P"   value="e-, 4*GeV, 20.0*deg, 180*deg"/>
 	<option name="SPREAD_P"   value="1*GeV, 10.0*deg, 30*deg"/>
 
-	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
 	<option name="RECORD_OPTICALPHOTONS"   value="0"/>
 	
 	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>

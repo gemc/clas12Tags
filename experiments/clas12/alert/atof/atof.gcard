@@ -7,7 +7,7 @@
 	<option name="INTEGRATEDRAW" value="myatof"/>
 
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
-	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
 	
 	<option name="BEAM_P" value="proton, 2.0*GeV, 30*deg, 30*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 20*deg, 180*deg, flat"/>

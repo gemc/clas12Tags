@@ -66,8 +66,10 @@
 	<option name="BEAM_V"    value="(0, 0, -3)cm"/>
 	<option name="SPREAD_V"  value="(0.0, 2.5)cm"/>
 
-	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
 	<option name="RECORD_OPTICALPHOTONS"   value="1"/>
+ 	<option name="SKIPREJECTEDHITS"    value="1" />
+ 	<option name="INTEGRATEDRAW"    value="*" />
 
 	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
 
@@ -93,7 +95,6 @@
 	<option name="LUMI_P"         value="e-, 10.6*GeV, 0*deg, 0*deg" />
 	<option name="LUMI_V"         value="(0.0, 0.0, -10)cm" />
 	<option name="LUMI_SPREAD_V"  value="(0.03, 0.03)cm" />
-	<option name="RFSETUP"        value="4.008, 40, 20" />
 	-->
 
 	<!--  RF Signal needs event time window defined by LUMI_EVENT -->

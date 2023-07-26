@@ -16,22 +16,32 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: jeffersonlab/cvmfs:fedora36
+    container: jeffersonlab/gemc:4.4.2-5.1-5.2-5.3-fedora36-cvmfs
     strategy:
       fail-fast: false
       matrix:
+        experiment:
+          - clas12-default
+          - rga-fall2018
+          - rga-spring2018
+          - rga-spring2019
+          - rgb-fall2019
+          - rgb-spring2019
+          - rgc-summer2022_Elmo
+          - rgc-summer2022_FTOn
+          - rgf-sp2020
+          - rgk-fall2018_FTOff
+          - rgk-fall2018_FTOn
         tag:
           - 4.4.2
           - 5.1
           - 5.2
           - 5.3
-        detector:
-          - targets
-#          - dc
+
     steps:
       - uses: cvmfs-contrib/github-action-cvmfs@v3.1
       - name: Checkout
         uses: actions/checkout@main
-      - name: ${{ matrix.tag }} ${{ matrix.detector }} test
+      - name: ${{ matrix.experiment }} test
         run: |
-          ./ci/detectors_test.sh -t ${{ matrix.tag }} -d ${{ matrix.detector }}
+          ./ci/experiments_test.sh -e ${{ matrix.experiment }}

@@ -10,6 +10,8 @@
 # see https://github.com/cvmfs-contrib/github-action-cvmfs (only ubuntu supported)
 # Local Container run:
 # docker run -it --rm --platform linux/amd64  -v/cvmfs:/cvmfs jeffersonlab/cvmfs:fedora36 sh
+# Remote container run:
+# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:4.4.2-5.1-5.2-5.3-fedora36-cvmfs sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/detectors_test.sh -d targets -t 5.2
 
@@ -18,7 +20,7 @@ Help()
 {
 	# Display Help
 	echo
-	echo "Syntax: tests.sh [-h|d]"
+	echo "Syntax: tests.sh [-h|d|t]"
 	echo
 	echo "Options:"
 	echo
@@ -53,26 +55,28 @@ while getopts ":hd:t:" option; do
 done
 
 
-#DetectorDirNotExisting() {
-#	echo "Test Type dir: $example/$testType not existing"
-#	Help
-#	exit 3
-#}
-#
-#SetsGcardsToRun () {
-#	test -d $detector && echo "Detector $detector" || DetectorDirNotExisting
-#
-#	gcards=`ls $detector/tests/*.gcard`
-#
-#	echo
-#	echo "List of gcards in $detector: $=gcards"
-#}
+DetectorDirNotExisting() {
+	echo "Test Type dir: $example/$testType not existing"
+	Help
+	exit 3
+}
+
+
+
+SetsGcardsToRun () {
+	test -d $detector && echo "Detector $detector" || DetectorDirNotExisting
+
+	gcards=`ls $detector/tests/*.gcard`
+
+	echo
+	echo "List of gcards in $detector: $=gcards"
+}
 
 
 
 # sets the list of gcards to run
 gcards=no
-#SetsGcardsToRun
+SetsGcardsToRun
 
 
 # below to be replaced by module load / run gemc
