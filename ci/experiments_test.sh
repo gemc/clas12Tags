@@ -77,6 +77,8 @@ if [[ $tag == "dev" ]]; then
   cd ..
   alias gemc='source/gemc'
 else
+  # need to move 'experiments' otherwise GEMC_DATA_DIR is ignored
+  mv experiments experiments_tmp
   gcard=clas12-config/gemc/$tag/$gcard_root
   module switch gemc/$tag
 fi
@@ -90,7 +92,7 @@ fi
 
 echo "\nGEMC executable: $(which gemc)\n\n"
 echo "Running gemc $clas12Tags for $gcard"
-gemc -BEAM_P="e-, 4*GeV, 20*deg, 25*deg" -SPREAD_P="0*GeV, 10*deg, 180*deg" -USE_GUI=0 -N=100 -PRINT_EVENT=10 $gcard
+gemc -BEAM_P="e-, 4*GeV, 20*deg, 25*deg" -SPREAD_P="0*GeV, 10*deg, 180*deg" -USE_GUI=0 -N=1000 -PRINT_EVENT=10 $gcard
 exitCode=$?
 
 if [[ $exitCode != 0 ]]; then
@@ -98,4 +100,6 @@ if [[ $exitCode != 0 ]]; then
   exit $exitCode
 fi
 
-echo "Done - Success"
+[[ -d experiments_tmp ]] && mv experiments_tmp experiments
+
+echo "Done - Success!"

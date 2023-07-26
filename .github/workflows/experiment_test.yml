@@ -45,7 +45,7 @@ jobs:
         run: |
           ./ci/experiments_test.sh -t ${{ matrix.gcard }}
       - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1
+        uses: runforesight/workflow-telemetry-action@v1.8
       - uses: gitboard-io/gitboard-action@main
         with:
           username: maureeungaro
