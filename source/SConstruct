@@ -13,6 +13,8 @@ env = init_environment("qt5 geant4 clhep evio xercesc ccdb mlibrary cadmesh")
 if env['PLATFORM'] == 'darwin':
 	env.Append(CXXFLAGS='-Wno-absolute-value')
 
+env.Append(CXXFLAGS=['-std=c++11'])
+
 # Materials
 env.Append(CPPPATH = 'materials')
 materials_sources = Split("""
