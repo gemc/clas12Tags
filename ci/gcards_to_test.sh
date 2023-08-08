@@ -10,7 +10,7 @@
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/gcards_to_test.sh
 
-validTags=(4.4.2 dev)
+validTags=(4.4.2 5.2 5.3)
 [[ -d  clas12-config ]] && echo clas12-config exist || git clone https://github.com/JeffersonLab/clas12-config
 
 for clas12Tag in $validTags; do
