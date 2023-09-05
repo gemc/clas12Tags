@@ -13,7 +13,7 @@
 
 	<option name="INTEGRATEDRAW" value="htcc"/>
 	
-	<option name="BEAM_P"   value="geantino, 6.0*GeV, 90*deg, 90*deg"/>
+	<option name="BEAM_P"   value="e-, 6.0*GeV, 20*deg, 90*deg"/>
 
 	<option name="RECORD_OPTICALPHOTONS"   value="1"/>
 	<option name="OUTPUT"                  value="hipo, out.hipo"/>

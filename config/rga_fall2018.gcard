@@ -57,7 +57,7 @@
 	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
 
 	<!-- fields, precise mode -->
-	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
+	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, `¡™`, linear"/>
 	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
 
 

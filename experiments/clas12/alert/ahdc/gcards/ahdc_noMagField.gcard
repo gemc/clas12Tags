@@ -6,7 +6,7 @@
 
 	<!-- <option name="INTEGRATEDRAW" value="ahdc"/>  -->
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
-	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="SAVE_ALL_MOTHERS" value="0"/>
 	
 	<option name="BEAM_P" value="e-, 10.0*GeV, 20*deg, 20*deg"/>
 	<option name="SPREAD_P" value="2.0*GeV, 20*deg, 180*deg, flat"/>

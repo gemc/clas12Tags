@@ -26,7 +26,7 @@
 	<option name="SPREAD_V" value="(0.0, 0)cm"/>
 <!--	<option name="BEAM_V" value="(-3.5, 0, -90)cm"/>-->
 
-	<option name="OUTPUT"                  value="evio, out.evio"/>
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
 	<option name="PHYSICS"                 value="FTFP_BERT + STD"/>
 	<option name="RUNNO"                   value="11" />
 	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />

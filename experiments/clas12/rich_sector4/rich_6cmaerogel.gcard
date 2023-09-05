@@ -30,15 +30,15 @@
 	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
 
 	<!-- beam conditions -->
-	<option name="BEAM_P"   value="e-, 7*GeV, 9.0*deg, 180*deg"/>
+	<option name="BEAM_P"   value="e-, 7*GeV, 14.*deg, 180*deg"/>
 	<option name="SPREAD_P"   value="1*GeV, 0.0*deg, 1*deg"/>
 
 	<option name="SAVE_ALL_MOTHERS" value="0"/>
-	<option name="RECORD_OPTICALPHOTONS"   value="1"/>
+	<option name="RECORD_OPTICALPHOTONS"   value="0"/>
 	
 	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
 	
-	<option name="OUTPUT"   value="hipo, out.hipo"/>
+	<option name="OUTPUT"   value="evio, out.ev"/>
 	
 	<!--  Will print message every 10 events -->
 	<option name="PRINT_EVENT"    value="10" />
@@ -51,7 +51,7 @@
 	<!--  RF Signal needs event time window defined by LUMI_EVENT.
 	 If Backround is activated make sure to use LUMI_EVENT below instead.-->
 	<option name="LUMI_EVENT"  value="0, 248.5*ns, 4*ns" />
-	<option name="RFSETUP"     value="4.008, 40, 20" />
+	<option name="RFSETUP"     value="0.499, 40, 20" />
 	
 	
 	<!--  beam background. for 250 ns timewindow we have 124,000 e- on
