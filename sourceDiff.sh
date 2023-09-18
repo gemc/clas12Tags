@@ -94,35 +94,35 @@ if ($GVERSION != "1") then
 	set newContent2=$tagVersion'"'
 	set newContent="$newContent1$newContent2 ;"
 	echo "$newContent"
-	sed -i '' s/"const char .*"/"$newContent"/ gemc.cc
+	sed -i s/"const char .*"/"$newContent"/ gemc.cc
 endif
 
 echo
 echo changing initializeBMTConstants and initializeFMTConstants to initialize before processID
-sed -i '' s/'initializeBMTConstants(-1)'/'initializeBMTConstants(1)'/ hitprocess/clas12/micromegas/BMT_hitprocess.cc
-sed -i '' s/'initializeFMTConstants(-1)'/'initializeFMTConstants(1)'/ hitprocess/clas12/micromegas/FMT_hitprocess.cc
+sed -i s/'initializeBMTConstants(-1)'/'initializeBMTConstants(1)'/ hitprocess/clas12/micromegas/BMT_hitprocess.cc
+sed -i s/'initializeFMTConstants(-1)'/'initializeFMTConstants(1)'/ hitprocess/clas12/micromegas/FMT_hitprocess.cc
 
 echo removing evio support for clas12tags
-sed -i '' s/'env = init_environment("qt5 geant4 clhep evio xercesc ccdb mlibrary cadmesh hipo c12bfields")'/'env = init_environment("qt5 geant4 clhep xercesc ccdb mlibrary cadmesh hipo c12bfields")'/ SConstruct
-sed -i '' s/'output\/evio_output.cc'/''/ SConstruct
+sed -i s/'env = init_environment("qt5 geant4 clhep evio xercesc ccdb mlibrary cadmesh hipo c12bfields")'/'env = init_environment("qt5 geant4 clhep xercesc ccdb mlibrary cadmesh hipo c12bfields")'/ SConstruct
+sed -i s/'output\/evio_output.cc'/''/ SConstruct
 
-sed -i '' s/'\/\/ EVIO'/''/                                                       output/outputFactory.h
-sed -i '' s/'#pragma GCC diagnostic push'/''/                                     output/outputFactory.h
-sed -i '' s/'#pragma GCC diagnostic ignored "-Wdeprecated-declarations" '/''/     output/outputFactory.h
-sed -i '' s/'#pragma GCC diagnostic ignored "-Wdeprecated"'/''/                   output/outputFactory.h
-sed -i '' s/'#include "evioUtil.hxx"'/''/                                         output/outputFactory.h
-sed -i '' s/'#include "evioFileChannel.hxx"'/''/                                  output/outputFactory.h
-sed -i '' s/'#pragma GCC diagnostic pop'/''/                                      output/outputFactory.h
-sed -i '' s/'using namespace evio;'/''/                                           output/outputFactory.h
-sed -i '' s/'evioFileChannel \*pchan;'/''/                                        output/outputFactory.h
+sed -i s/'\/\/ EVIO'/''/                                                       output/outputFactory.h
+sed -i s/'#pragma GCC diagnostic push'/''/                                     output/outputFactory.h
+sed -i s/'#pragma GCC diagnostic ignored "-Wdeprecated-declarations" '/''/     output/outputFactory.h
+sed -i s/'#pragma GCC diagnostic ignored "-Wdeprecated"'/''/                   output/outputFactory.h
+sed -i s/'#include "evioUtil.hxx"'/''/                                         output/outputFactory.h
+sed -i s/'#include "evioFileChannel.hxx"'/''/                                  output/outputFactory.h
+sed -i s/'#pragma GCC diagnostic pop'/''/                                      output/outputFactory.h
+sed -i s/'using namespace evio;'/''/                                           output/outputFactory.h
+sed -i s/'evioFileChannel \*pchan;'/''/                                        output/outputFactory.h
 
 
-sed -i '' s/'#include "evio_output.h"'/''/                                                               output/outputFactory.cc
-sed -i '' s/'\/\/ EVIO Buffer size set to 30M words'/''/                                                 output/outputFactory.cc
-sed -i '' s/'int evio_buffer = EVIO_BUFFER;'/''/                                                         output/outputFactory.cc
-sed -i '' s/'if(outType == "evio") {'/'{'/                                                               output/outputFactory.cc
-sed -i '' s/'pchan = new evioFileChannel(trimSpacesFromString(outFile).c_str(), "w", evio_buffer);'/''/  output/outputFactory.cc
-sed -i '' s/'pchan->open();'/''/                                                                         output/outputFactory.cc
-sed -i '' s/'outputMap\["evio"\]       = &evio_output::createOutput;'/''/                                output/outputFactory.cc
-sed -i '' s/'pchan->close();'/''/                                                                        output/outputFactory.cc
-sed -i '' s/'delete pchan;'/''/                                                                          output/outputFactory.cc
+sed -i s/'#include "evio_output.h"'/''/                                                               output/outputFactory.cc
+sed -i s/'\/\/ EVIO Buffer size set to 30M words'/''/                                                 output/outputFactory.cc
+sed -i s/'int evio_buffer = EVIO_BUFFER;'/''/                                                         output/outputFactory.cc
+sed -i s/'if(outType == "evio") {'/'{'/                                                               output/outputFactory.cc
+sed -i s/'pchan = new evioFileChannel(trimSpacesFromString(outFile).c_str(), "w", evio_buffer);'/''/  output/outputFactory.cc
+sed -i s/'pchan->open();'/''/                                                                         output/outputFactory.cc
+sed -i s/'outputMap\["evio"\]       = &evio_output::createOutput;'/''/                                output/outputFactory.cc
+sed -i s/'pchan->close();'/''/                                                                        output/outputFactory.cc
+sed -i s/'delete pchan;'/''/                                                                          output/outputFactory.cc
