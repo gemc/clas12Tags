@@ -1,0 +1,8 @@
+# build artifacts, if built while in `./source`
+.sconsign.dblite
+config.log
+.sconf_temp
+*.a
+*.o
+moc_*.cc
+source/gemc
