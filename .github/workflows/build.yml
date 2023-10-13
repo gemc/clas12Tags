@@ -1,0 +1,31 @@
+name: Build
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on all pushes
+  push:
+  pull_request:
+    types:
+      # only run workflow when a commit is pushed to a PR branch
+      # instead of running for all other PR events
+      - synchronize
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:4.4.2-5.1-5.2-5.3-fedora36-cvmfs
+    steps:
+      - uses: actions/checkout@v3
+      - name: build
+        working-directory: source
+        run: |
+          source /app/localSetup.sh
+          scons -j2 OPT=1
+          module switch gemc/5.3 # for dependency files ##### FIXME: switch to gemc/dev and use ubuntu + cvmfs action
+          echo "### GEMC Build Information:" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          ./gemc -USE_GUI=0 >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
