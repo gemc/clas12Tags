@@ -18,11 +18,11 @@ if [[ $# -gt 0 ]]; then
 	prompt="yes"
 fi
 
-ignores="-x .idea -x .git -x .gitignore -x *.o -x moc_*.cc -x *.a -x api -x sconsign.dblite"
+ignores="-x .idea -x .git -x .gitignore -x *.o -x moc_*.cc -x *.a -x api -x .sconsign.dblite"
 
-printf "\nNext release is $red$next_release$reset\n"
-printf "Prompt is $red$prompt$reset\n"
-printf "Ignoring $red$ignores$reset\n\n"
+printf "\nNext release is $yellow$next_release$reset\n"
+printf "Prompt is $yellow$prompt$reset\n"
+printf "Ignoring $yellow$ignores$reset\n\n"
 
 ## diff summary printed on screen. Ignoring objects, moc files, libraries and gemc executable
 diffs=$(diff -rq $=ignores ../source source | sed 's/Files //g' | sed 's/ and / /g' |  sed 's/ differ//g')
@@ -54,7 +54,7 @@ printf "\n- Setting correct version string to $next_release in gemc.cc"
 new_string="const char *GEMC_VERSION = \"gemc $next_release\" ;"
 sed -i 's/const char.*/'$new_string'/' source/gemc.cc
 
-printf "\n- Temporarily fixing OPTICALPHOTONPID. REMOVE THIS WITH THE NEW GEANT4 VERSION"
+printf "\n- Temporarily fixing OPTICALPHOTONPID. $red REMOVE THIS WITH THE NEW GEANT4 VERSION$reset"
 sed -i 's/int MHit::OPTICALPHOTONPID = -22/int MHit::OPTICALPHOTONPID = 0/' source/gemc.cc
 
 printf "\n- Changing initializeBMTConstants and initializeFMTConstants to initialize before processID"
