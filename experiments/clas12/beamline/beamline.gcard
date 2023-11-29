@@ -12,7 +12,7 @@
 	<detector name="../beamline/cadBeamline/" factory="CAD"/>
 	<detector name="../beamline/vacuumLine/"  factory="CAD"/>
 	<detector name="../beamline/beamline"     factory="TEXT" variation="FTOn"/>
-<!--	END of FTOn-->
+    <!--	END of FTOn-->
 	
 	<!-- Beamline rghFTOut configuration END of rghFTOut -->
 <!--	<detector name="../beamline/cadBeamline/" factory="CAD"/>-->
@@ -30,17 +30,12 @@
 		<existence exist="no" />
 	</detector>
 
-	
 	<detector name="ElmoTungstenTip">
 		<existence exist="no" />
 	</detector>
 	End of ELMO  -->
 
-	<detector name="experiments/clas12/htcc/htcc" factory="TEXT" variation="original"/>
-
-
 	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
-
 
 	<option name="OUTPUT"                  value="hipo, out.hipo"/>
 	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
