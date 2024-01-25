@@ -8,7 +8,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  # group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}  # PR triggers only
+  group: ${{ github.workflow }} # all triggers of this workflow (since pushing to `main` is common)
   cancel-in-progress: true
 
 jobs:
