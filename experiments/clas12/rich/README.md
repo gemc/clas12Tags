@@ -16,10 +16,13 @@ Execute with
 ($COATJAVA must be set)
 
 Generates three configurations:
-	  - default: RICH in sector 1 and sector 4, nominal positions
-	  - rga_fall2018: RICH in sector 1, +5cm shift in z
-	  - rgc_summer2022: RICH in sector 1 and sector 4, +5cm shift in z
+
+- default: RICH in sector 1 and sector 4, nominal positions
+- rga_fall2018: RICH in sector 1, +5cm shift in z
+- rgc_summer2022: RICH in sector 1 and sector 4, +5cm shift in z
+
 Cad and geometry files are imported in gcard as:
+
         <detector name="rich"         factory="TEXT" variation="default"/>
         <detector name ="cad_default/"    factory="CAD"/>
 
