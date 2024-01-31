@@ -1,4 +1,4 @@
-name: Detector Tests
+name: Build gemc
 
 # Controls when the workflow will run
 on:
@@ -16,7 +16,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-fedora36 sh
+    container: jeffersonlab/gemc:dev-fedora36
 
     steps:
       - name: Workflow Telemetry
