@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@main
       - name: ${{ matrix.detector }} tests
         run: |
-          ./ci/experiments_test.sh -t ${{ matrix.gcard }}
+          ./ci/experiments_test.sh -g ${{ matrix.gcard }}
       - name: Collect Workflow Telemetry
         uses: runforesight/workflow-telemetry-action@v1.8.7
       - uses: gitboard-io/gitboard-action@main

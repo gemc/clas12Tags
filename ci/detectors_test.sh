@@ -46,7 +46,7 @@ while getopts ":hd:" option; do
          exit
          ;;
       d)
-         detector=$OPTARG
+         detector="experiments/clas12/$OPTARG"
          ;;
       \?) # Invalid option
          echo "Error: Invalid option"
@@ -57,13 +57,14 @@ done
 
 
 DetectorDirNotExisting() {
-	echo "Test Type dir: $example/$testType not existing"
+	echo "Detector dir: $detector not existing"
 	Help
 	exit 3
 }
 
 
-
+# the list of detectors in the yaml file only includes
+# detectors with tests directory
 SetsGcardsToRun () {
 	test -d $detector && echo "Detector $detector" || DetectorDirNotExisting
 
@@ -73,25 +74,17 @@ SetsGcardsToRun () {
 	echo "List of gcards in $detector: $=gcards"
 }
 
-
 SetsGcardsToRun
 
 
 # below to be replaced by module load / run gemc
 echo testing detector: $detector
-tdir=$GEMC_DATA_DIR/experiments/clas12/$detector
-
-echo $tdir content:
-ls -l $tdir
-if [[ $? != 0 ]]; then
-	exit $?
-fi
 
 ./ci/build_gemc.sh
 
 for jc in $=gcards
 do
-	echo "Running gemc test for $detector, test: $jc"
+	echo "Running gemc test for $detector, gcard: $jc"
 	gemc $jc -N=100 -USE_GUI=0 -PRINT_EVENT=10
 	exitCode=$?
 	echo
