@@ -16,7 +16,7 @@ on:
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
-    container: jeffersonlab/base:fedora36
+    container: jeffersonlab/gemc:dev-fedora36 sh
     outputs:
       matrix:  ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -32,7 +32,7 @@ jobs:
   test:
     needs: generate-matrix
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:4.4.2-5.1-5.2-5.3-fedora36-cvmfs
+    container: jeffersonlab/gemc:dev-fedora36 sh
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}

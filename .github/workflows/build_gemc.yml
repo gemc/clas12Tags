@@ -14,24 +14,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-fedora36 sh
-    strategy:
-      fail-fast: false
-      matrix:
-        detector:
-          - targets
-#          - dc
+
     steps:
-#      - uses: cvmfs-contrib/github-action-cvmfs@v3.1
-      - name: Checkout
-        uses: actions/checkout@main
       - name: Workflow Telemetry
         uses: runforesight/workflow-telemetry-action@v1.8.7
-      - name: ${{ matrix.detector }} test
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Build gemc
         run: |
-          ./ci/detectors_test.sh -d ${{ matrix.detector }}
+          ./ci/build_gemc.sh
       - uses: gitboard-io/gitboard-action@main
         with:
           username: maureeungaro

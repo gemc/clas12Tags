@@ -1,5 +1,5 @@
 # https://github.com/marketplace/actions/automatic-releases
-name: Dev release
+name: GitHub Dev Release
 
 on:
   schedule:
