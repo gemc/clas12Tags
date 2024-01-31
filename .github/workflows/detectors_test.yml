@@ -24,7 +24,6 @@ jobs:
           - targets
 #          - dc
     steps:
-#      - uses: cvmfs-contrib/github-action-cvmfs@v3.1
       - name: Checkout
         uses: actions/checkout@main
       - name: Workflow Telemetry
@@ -32,8 +31,5 @@ jobs:
       - name: ${{ matrix.detector }} test
         run: |
           ./ci/detectors_test.sh -d ${{ matrix.detector }}
-      - uses: gitboard-io/gitboard-action@main
-        with:
-          username: maureeungaro
-          key: 3d8e9059-a164-4bea-9541-1cb8789d805b
+
 

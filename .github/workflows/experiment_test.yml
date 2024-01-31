@@ -38,16 +38,13 @@ jobs:
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
 
     steps:
-#      - uses: cvmfs-contrib/github-action-cvmfs@v3.1
       - name: Checkout
         uses: actions/checkout@main
+      - name: Collect Workflow Telemetry
+        uses: runforesight/workflow-telemetry-action@v1.8.7
       - name: ${{ matrix.detector }} tests
         run: |
           ./ci/experiments_test.sh -g ${{ matrix.gcard }}
-      - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1.8.7
-      - uses: gitboard-io/gitboard-action@main
-        with:
-          username: maureeungaro
-          key: 3d8e9059-a164-4bea-9541-1cb8789d805b
+
+
 
