@@ -9,4 +9,4 @@ on:
 
 jobs:
   validation:
-    uses: JeffersonLab/clas12-validation/.github/workflows/ci.yml@main
+    uses: JeffersonLab/clas12-validation/.github/workflows/ci.yml@gemc-5.6
