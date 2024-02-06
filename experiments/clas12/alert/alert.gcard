@@ -1,0 +1,20 @@
+<gcard>
+
+	<!-- Implementation ATOF alone, example -->
+	<detector name="atof/atof" factory="TEXT" variation="default"/>
+	<detector name="ahdc/ahdc" factory="TEXT" variation="default"/>
+
+	<option name="INTEGRATEDRAW" value="*"/>
+
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	
+	<option name="BEAM_P" value="proton, 2.0*GeV, 30*deg, 30*deg"/>
+	<option name="SPREAD_P" value="1.0*GeV, 20*deg, 180*deg, flat"/>
+	
+	<option name="BEAM_V" value="(0, 0, 5.0)cm"/>
+	<option name="SPREAD_V" value="(0.0, 12.0)cm"/>
+	
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+
+</gcard>
