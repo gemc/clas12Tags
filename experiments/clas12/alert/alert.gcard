@@ -1,8 +1,15 @@
 <gcard>
-
-	<!-- Implementation ATOF alone, example -->
+	
+	<!-- target. ALERT target -->
+	<detector name="./ALERT_target/target" factory="TEXT" variation="alert"/>
+		
+	<!-- Implementation ATOF, ahdc -->
 	<detector name="atof/atof" factory="TEXT" variation="default"/>
 	<detector name="ahdc/ahdc" factory="TEXT" variation="default"/>
+	<detector name="./external_shell_nonActif/alertshell" factory="TEXT" variation="original"/>
+
+	<!-- He bag -->
+	<detector name="./He_bag/hebag" factory="TEXT" variation="original"/>
 
 	<option name="INTEGRATEDRAW" value="*"/>
 
