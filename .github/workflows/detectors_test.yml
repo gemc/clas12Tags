@@ -22,7 +22,7 @@ jobs:
       matrix:
         detector:
           - targets
-#          - dc
+          - dc
     steps:
       - name: Checkout
         uses: actions/checkout@main
