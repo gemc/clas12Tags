@@ -11,6 +11,13 @@
 	<!-- He bag -->
 	<detector name="./He_bag/hebag" factory="TEXT" variation="original"/>
 
+	<!-- hall field -->
+	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
+
+	<!-- fields, precise mode -->
+	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
+	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
+
 	<option name="INTEGRATEDRAW" value="*"/>
 
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>

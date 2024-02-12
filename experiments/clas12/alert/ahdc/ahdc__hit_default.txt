@@ -1,2 +1,2 @@
-              alrtdc  |    alert ahdc hit definitions  |               superlayer layer ahdccell  | 0.5*MeV   |  400*ns   |    1*mm   |    1*cm   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  
+              ahdc  |    alert ahdc hit definitions  |               superlayer layer ahdccell  | 0.5*MeV   |  400*ns   |    1*mm   |    1*cm   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  
               myatof  |        myatof hit definitions  |          sector superlayer layer paddle  | 0.5*MeV   |  400*ns   |    1*mm   |    1*cm   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  
