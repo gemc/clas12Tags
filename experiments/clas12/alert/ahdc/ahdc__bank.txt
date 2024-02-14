@@ -1,9 +1,8 @@
-              ahdc  |              bankid  |                                      ahdc bank ID  | 22400   |                  Di  
+              ahdc  |              bankid  |                                      ahdc bank ID  | 22400  |                  Di  
               ahdc  |              sector  |                                          set to 0  |    1   |                  Di  
               ahdc  |               layer  |               hipo layer is superlayer*10 + layer  |    2   |                  Di  
               ahdc  |           component  |                                       wire number  |    3   |                  Di  
-              ahdc  |           ADC_order  |                                          set to 0  |    4   |                  Di  
-              ahdc  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
-              ahdc  |            ADC_time  |                               time from pulse fit  |    6   |                  Dd  
-              ahdc  |             ADC_ped  |pedestal from pulse analysis - currently set to doca  |    7   |                  Di  
+              ahdc  |           TDC_order  |                                          set to 0  |    4   |                  Di  
+              ahdc  |             TDC_TDC  |                       TDC integral from pulse fit  |    5   |                  Di  
+              ahdc  |             TDC_ped  |pedestal from pulse analysis - currently set to doca  |    6   |                  Di  
               ahdc  |                hitn  |                                        hit number  |   99   |                  Di  
