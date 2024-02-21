@@ -28,7 +28,7 @@ map<string, G4Material *> sqlite_materials::initMaterials(runConditions rc, gopt
     map <string, material> mymats;                        // material map
 
     // first check if there's at least one detector with MYSQL factory
-    if (!check_if_factory_is_needed(rc.detectorConditionsMap, "MYSQL"))
+    if (!check_if_factory_is_needed(rc.detectorConditionsMap, "SQLITE"))
         return materialsFromMap(mymats);
 
     // connection to the DB
@@ -58,7 +58,7 @@ map<string, G4Material *> sqlite_materials::initMaterials(runConditions rc, gopt
         // executing query - will exit if not successfull.
         QSqlQuery q;
         if (!q.exec(dbexecute.c_str())) {
-            cout << hd_msg << "  Failed to execute MYSQL query " << dbexecute << ". This is a fatal error. Exiting." << endl;
+            cout << hd_msg << "  Failed to execute SQLITE query " << dbexecute << ". This is a fatal error. Exiting." << endl;
             qDebug() << q.lastError();
             exit(1);
         }
