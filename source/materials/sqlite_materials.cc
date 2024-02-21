@@ -18,12 +18,12 @@ using namespace gstring;
 #include "G4OpBoundaryProcess.hh"
 
 
-map<string, G4Material *> sqlitel_materials::initMaterials(runConditions rc, goptions opts) {
+map<string, G4Material *> sqlite_materials::initMaterials(runConditions rc, goptions opts) {
 
     string hd_msg = opts.optMap["LOG_MSG"].args + " SQLITE Materials Factory: >> ";
     double verbosity = opts.optMap["MATERIAL_VERBOSITY"].arg;
 
-    double runno_arg = gemcOpt.optMap["RUNNO"].arg;
+    double runno_arg = opts.optMap["RUNNO"].arg;
 
     map <string, material> mymats;                        // material map
 
