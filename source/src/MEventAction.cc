@@ -564,7 +564,6 @@ void MEventAction::EndOfEventAction(const G4Event* evt)
             exit(1);
         }
 
-
 		// getting time window
 		string rfsetup_string = to_string(g4rseed) + " " + to_string(gen_action->getTimeWindow()) + " " ;
 		

@@ -11,7 +11,7 @@
 # note: the script is meant to run one directory up from clas12tags
 prompt="no"
 
-next_release=$(ls release_notes | sort -u | tail -1 | awk -F. '{print $1"."$2}')
+next_release=$(ls release_notes | grep '.md' | grep -v all | sort -u | tail -1 | awk -F. '{print $1"."$2}')
 
 # if argument is given, set prompt to yes
 if [[ $# -gt 0 ]]; then
