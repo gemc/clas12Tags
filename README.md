@@ -5,8 +5,9 @@ with the CLAS12 detector geometry and gcards for the various experiment configur
 
 It is tagged more frequently than the main gemc repository - as needed by CLAS12 experiments.
 
-The tags distributed as tarball are the tested. Some versions may be missing because they 
-contain bugs or inacuraccies. The release notes for those versions are kept in [here](release_notes/all_releases.md).
+The tags distributed as tarball and maintained as modules are tested. Some versions may be deleted because they 
+contain bugs or inaccuracies. The release notes for those versions are accumulated in the
+releases notes for each distributed tag.
 
 ![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector in the simulation. The electron beam is going from left to right.")
 
@@ -18,9 +19,7 @@ contain bugs or inacuraccies. The release notes for those versions are kept in [
 
 <br>
 
-- [5.3](release_notes/5.3.md)
-- [5.2](release_notes/5.2.md)
-- [5.1](release_notes/5.1.md)
+- [5.4](release_notes/5.4.md)
 - [4.4.2](release_notes/4.4.2.md)
 
 <br>
