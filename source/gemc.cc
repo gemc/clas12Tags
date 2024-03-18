@@ -28,7 +28,7 @@
 /// \author \n &copy; Maurizio Ungaro
 /// \author e-mail: ungaro@jlab.org\n\n\n
 
-const char *GEMC_VERSION = "gemc 5.7" ;
+const char *GEMC_VERSION = "gemc 5.8" ;
 
 // G4 headers
 #include "G4RunManager.hh"
@@ -147,7 +147,6 @@ int main( int argc, char **argv )
 	
 	CLHEP::HepRandom::setTheSeed(seed);
 	gemc_splash.message(" Seed initialized to: " + stringify(seed));
-    cout << " Seed initialized to " << seed << endl;
 
 	// Construct the default G4 run manager
 	gemc_splash.message(" Instantiating Run Manager...");
@@ -298,7 +297,6 @@ int main( int argc, char **argv )
 		// then deleting process output pointer, not needed anymore
 		delete processOutputFactory;
 	}
-	
 
 	gActions->evtAction->outContainer     = &outContainer;
 	gActions->evtAction->outputFactoryMap = &outputFactoryMap;
@@ -312,9 +310,7 @@ int main( int argc, char **argv )
 	for(it = ExpHall->SeDe_Map.begin(); it != ExpHall->SeDe_Map.end(); it++) {
 		it->second->hitProcessMap = &hitProcessMap;
 	}
-	
 
-	
 	gemc_splash.message(" Executing initial directives...\n");
 	vector<string> init_commands = init_dmesg(gemcOpt);
 	for(unsigned int i=0; i<init_commands.size(); i++)
@@ -408,7 +404,9 @@ int main( int argc, char **argv )
 	cout << " > Total gemc time: " <<  clockAllTaken / (double) CLOCKS_PER_SEC << " seconds. "
 	     << " Events only time: " << clockEventTaken / (double) CLOCKS_PER_SEC << " seconds. " << endl;
 
-	
+    // closing db connection
+    closeGdb();
+
 	delete runManager;
 	return 0;
 }
@@ -416,4 +414,5 @@ int main( int argc, char **argv )
 
 // introducing OPTICALPHOTONPID here to be semi-transparent to G4 changes
 // this pid changed from 0 to -22 with geant4 10.7
+//int MHit::OPTICALPHOTONPID = 0;
 int MHit::OPTICALPHOTONPID = -22;
