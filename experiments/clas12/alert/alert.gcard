@@ -23,11 +23,16 @@
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
 	<option name="SAVE_ALL_MOTHERS" value="0"/>
 	
-	<option name="BEAM_P" value="proton, 2.0*GeV, 30*deg, 30*deg"/>
-	<option name="SPREAD_P" value="1.0*GeV, 20*deg, 180*deg, flat"/>
+	<!-- beam conditions -->
+	<option name="BEAM_P"   value="proton, 160*MeV, 90.0*deg, 0*deg"/>
+ 	<option name="SPREAD_P"  value="90*MeV, 30.0*deg, 180*deg"/>
 	
-	<option name="BEAM_V" value="(0, 0, 5.0)cm"/>
-	<option name="SPREAD_V" value="(0.0, 12.0)cm"/>
+	<option name="BEAM_V"    value="(0, 0, 0)cm"/>
+	<option name="SPREAD_V"  value="(0.0, 15.0)cm"/>
+
+	<!--  Run Number 11, picked up by digitization routines -->
+	<option name="RUNNO"    value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="default" />
 	
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 
