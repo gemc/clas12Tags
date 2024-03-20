@@ -3,14 +3,9 @@
 	<option name="geometry" value="1400x1200"/>
 	<option name="DATABASE" value="../clas12.sqlite"/>
 
-	<!-- TEXT Factory
-	<detector name="forwardCarriage"      factory="TEXT" variation="TorusSymmetric"/>
-	<detector name="../dc/dc"             factory="TEXT" variation="java"/>
-	-->
-
 	<!-- SQLITE Factory. If run_number is not specified, it assumes the default value of -1. run_number is overwritten by RUNNO -->
 	<detector name="forwardCarriage" factory="SQLITE" run_number="12" variation="default"/>
-	<detector name="../ec/ecec"      factory="SQLITE" variation="default"/>
+	<detector name="ec"              factory="SQLITE" variation="default"/>
 
 
 	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->
@@ -33,7 +28,7 @@
 	<option name="RFSETUP"     value="clas12_ccdb" />
 	<option name="RFSTART"     value="eventVertex, 0, 0, -30.0" />
 
-	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="OUTPUT" value="txt, out.txt"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
 
 	<!--  Run Number 11, picked up by digitization routines. This also overwrites run_number entries in <detector> -->
@@ -41,4 +36,3 @@
 	<option name="DIGITIZATION_VARIATION" value="rga_fall2018_mc"/>
 
 </gcard>
-
