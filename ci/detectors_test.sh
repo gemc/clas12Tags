@@ -9,7 +9,7 @@
 # The remote container (for now) is based on fedora 36, so cvmfs action is not available
 # see https://github.com/cvmfs-contrib/github-action-cvmfs (only ubuntu supported)
 # Full image container run:
-# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
+# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-g4v10.7.4-fedora36-cvmfs sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/detectors_test.sh -d targets
 
