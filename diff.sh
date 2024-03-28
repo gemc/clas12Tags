@@ -18,7 +18,7 @@ if [[ $# -gt 0 ]]; then
 	prompt="yes"
 fi
 
-ignores="-x .idea -x .git -x .gitignore -x *.o -x moc_*.cc -x *.a -x api -x .sconsign.dblite"
+ignores="-x .idea -x .git -x .gitignore -x *.o -x moc_*.cc -x *.a -x api -x .sconsign.dblite -x releases"
 
 printf "\nNext release is $yellow$next_release$reset\n"
 printf "Prompt is $yellow$prompt$reset\n"
