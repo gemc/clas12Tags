@@ -16,7 +16,7 @@ on:
 jobs:
   generate-matrix:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-g4v10.7.4-fedora36-cvmfs
+    container: jeffersonlab/gemc:dev-fedora36
     outputs:
       matrix:  ${{ steps.set-matrix.outputs.matrix }}
     steps:
