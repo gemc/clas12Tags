@@ -4,7 +4,7 @@
 
 
 	<detector name="experiments/clas12/ddvcs/ddvcs"     factory="TEXT" variation="newScattChamber"/>
-	<detector name="experiments/clas12/ddvcs/cad/"    factory="CAD"/>
+<!--	<detector name="experiments/clas12/ddvcs/cad/"    factory="CAD"/>-->
 
 	<detector name="experiments/clas12/beamline/vacuumLine/"       factory="CAD"/>
 	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="FTOff"/>
@@ -48,7 +48,7 @@
 	<option name="HALL_MATERIAL" value="Vacuum"/>
 
 
-	<option name="INTEGRATEDRAW" value="ft_cal"/>
+	<option name="INTEGRATEDRAW" value="*"/>
 	<option name="RECORD_PASSBY" value="0"/>
 
 	<option name="BEAM_P"    value="e-, 11*GeV, 0*deg, 0*deg" />
@@ -68,7 +68,7 @@
 	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
 
 
-	<detector name="scatteringChamber">
+	<detector name="al_window_vacuum_entrance">
 		<existence exist="no" />
 	</detector>
 	<detector name="airPipe">
