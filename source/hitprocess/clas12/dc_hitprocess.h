@@ -22,6 +22,7 @@ public:
 	double miniStagger[6];
 	double dcThreshold;
 	int NWIRES;
+	int NLAYERS;
 	double dLayer[6];                              // ~cell size in each superlayer - one of Mac's core parameters
 	
 	// efficiency parameters for each superlayer
@@ -74,7 +75,7 @@ public:
 	};
 	//===> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
 	// (Local wire ID: 0 for 1st, 16th, 32th, 48th, 64th, 80th, 96th wires)
-	
+
 	
 	
 };
@@ -116,7 +117,9 @@ public:
 	double doca_smearing(double x, double beta, int sector, int superlayer);
 	
 	G4ThreeVector psmear(G4ThreeVector p);
-	
+
+        G4ThreeVector wirePosition(int layer, int wire);
+
 private:
 	
 	// constants initialized with initWithRunNumber

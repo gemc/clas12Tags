@@ -22,7 +22,8 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	dcConstants dcc;
 	
 	// used in process ID so defined here
-	dcc.NWIRES = 113;
+	dcc.NWIRES = 112;
+        dcc.NLAYERS = 6;
 	
 	// do not initialize at the beginning, only after the end of the first event,
 	// with the proper run number coming from options or run table
@@ -376,23 +377,62 @@ vector<identifier>  dc_HitProcess :: processID(vector<identifier> id, G4Step* aS
 	G4ThreeVector   xyz    = poststep->GetPosition();                                        ///< Global Coordinates of interaction
 	G4ThreeVector  Lxyz    = prestep->GetTouchableHandle()->GetHistory()                     ///< Local Coordinates of interaction
 	->GetTopTransform().TransformPoint(xyz);
-	
+
+        double zlength = Detector.dimensions[0];
+        double deltaz  = zlength/(3*dcc.NLAYERS+1);
+        double loc_z   = Lxyz.z() + zlength;
+	int ilayer = floor(loc_z/deltaz);   // first find the layer plane (including sense and field)
+
 	double ylength = Detector.dimensions[3];  ///< G4Trap Semilength
-	double deltay  = 2.0*ylength/dcc.NWIRES;
-	double loc_y   = Lxyz.y() + ylength;    ///< Distance from bottom of G4Trap. ministaggger does not affect it since the field/guardwires are fixed.
+	double deltay  = ylength/(2*dcc.NWIRES+1);
+	double loc_y   = Lxyz.y() + ylength;    ///< Distance from bottom of G4Trap. ministaggger does not affect it since the field/guardwires are fixed.	
+	int iwire  = floor(loc_y/deltay);
 	
-	int nwire = (int) floor(loc_y/deltay);
-	
+        // making first guess
+        int nlayer = -1;
+        int nwire = -1;
+
+        if(ilayer==0) {                    //hit is between the first two field wire planes
+            nlayer = 1;
+        }
+        else if(ilayer==3*dcc.NLAYERS) {    //hit is between the last two field wire planes
+            nlayer = ilayer/3;
+        }
+        else if(ilayer%3!=0) {              //hit is between the two field wires around the sense wire
+            nlayer = ilayer/3 + 1;
+        }
+        else {                              //hit is in the ambiguous area
+            int nlayer1 = ilayer/3;
+            int nwire1  = (iwire-nlayer1%2)/2 + 1;
+            int nlayer2 = ilayer/3 + 1;
+            int nwire2  = (iwire-nlayer2%2)/2 + 1;
+
+            double d1 = sqrt(pow(loc_y-(nwire1+0.5*((nlayer1-1)%2))*deltay,2.0)+pow(loc_z-nlayer1*3*deltaz,2.0));
+            double d2 = sqrt(pow(loc_y-(nwire2+0.5*((nlayer2-1)%2))*deltay,2.0)+pow(loc_z-nlayer2*3*deltaz,2.0));
+            
+            if(d1<d2) {
+                nlayer = nlayer1;
+            }
+            else {
+                nlayer = nlayer2;
+            }
+        }
+
+        if(nlayer>0 && nlayer<dcc.NLAYERS+1)
+            nwire = (iwire-nlayer%2)/2 + 1;
+
 	// resetting nwire for extreme cases
-	if(nwire <= 0 )  nwire = 1;
-	if(nwire >= 113) nwire = 112;
+	if(nwire < 1)  nwire = 1;
+	if(nwire > dcc.NWIRES) nwire = 112;
 	
-	// setting wire number
+	// setting layer and wire number
+	yid[2].id = nlayer;
 	yid[3].id = nwire;
+	cout<<"aaa "<< yid[0].id << " " << yid[1].id << " " << yid[2].id << " " << yid[3].id << " " << endl;
 	
 	// checking that the next wire is not the one closer
-	if(fabs( (nwire+1)*deltay - loc_y ) < fabs( nwire*deltay - loc_y ) && nwire != 112 )
-		yid[3].id = nwire + 1;
+//	if(fabs( (nwire+1)*deltay - loc_y ) < fabs( nwire*deltay - loc_y ) && nwire != 112 )
+//		yid[3].id = nwire + 1;
 	
 	// all energy to this wire (no energy sharing)
 	yid[3].id_sharing = 1;
