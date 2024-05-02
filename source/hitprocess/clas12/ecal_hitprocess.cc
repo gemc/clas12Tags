@@ -356,6 +356,14 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// Get scintillator volume x dimension (mm)
 	double pDx2 = aHit->GetDetector().dimensions[5];  ///< G4Trap Semilength.
 	
+	// initialize ADC and TDC
+	double ADC = 0;		
+	double  time_in_ns = 0;
+        double ftime_in_ns = 0;
+	double dtime_in_ns = 0;
+	double ftime_in_ns_res = 0;
+	double dtime_in_ns_res = 0;
+	
 	// Get Total Energy deposited
 	double Etota = 0;
 	double Ttota = 0;
@@ -422,27 +430,6 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double dtres2  = ecc.dtres[sector-1][layer-1][2][0];
 	double dtres3  = ecc.dtres[sector-1][layer-1][3][0];
 
-	/*		
-	for (int is=1; is<7; is++) {
-	  for (int il=1; il<10; il++) {
-	    cout<<is<<" "<<il<<" "<<ecc.ftres[is-1][il-1][0][0]<<" "<<ecc.ftres[is-1][il-1][1][0]<<" "<<ecc.ftres[is-1][il-1][2][0]<<" "<<ecc.ftres[is-1][il-1][3][0]<<endl;
-	  }
-	}
-	
-	for (int is=1; is<7; is++) {
-	  for (int il=1; il<10; il++) {
-	    cout<<is<<" "<<il<<" "<<ecc.dtres[is-1][il-1][0][0]<<" "<<ecc.dtres[is-1][il-1][1][0]<<" "<<ecc.dtres[is-1][il-1][2][0]<<" "<<ecc.dtres[is-1][il-1][3][0]<<endl;
-	  }
-	}
-	
-	for (int is=1; is<7; is++) {
-	  for (int il=1; il<10; il++) {
-	    cout<<is<<" "<<il<<" "<<ecc.deff[is-1][il-1][0][10]<<" "<<ecc.deff[is-1][il-1][1][10]<<" "<<ecc.deff[is-1][il-1][2][10]<<endl;
-	  }
-	}
-	*/
-	
-	
 	for(unsigned int s=0; s<tInfos.nsteps; s++) {
 		if(B>0) {
 			double xlocal = Lpos[s].x();
@@ -467,20 +454,11 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		}
 	}
 	
-	// initialize ADC and TDC
-	double ADC = 0;		
-	double  time_in_ns = 0;
-        double ftime_in_ns = 0;
-	double dtime_in_ns = 0;
-	double ftime_in_ns_res = 0;
-	double dtime_in_ns_res = 0;
-	
-	double ADC_raw   = Etota/1000/ecc.ADC_GeV_to_evio/G;
+	double   ADC_raw = Etota/1000/ecc.ADC_GeV_to_evio/G;
 	double  TIME_raw = tInfos.time+ Ttota/tInfos.nsteps;
 	double FTIME_raw = tInfos.time+FTtota/tInfos.nsteps;
 	double DTIME_raw = tInfos.time+DTtota/tInfos.nsteps;
 		
-	// simulate the adc value.
 	if (Etota > 0) {
 		double EC_npe = G4Poisson(Etota*pmtPEYld); //number of photoelectrons
 		if (EC_npe>0) {
@@ -497,18 +475,6 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 				dtime_in_ns = DTIME_raw + dtim + tgo;
 				ftime_in_ns_res = G4RandGauss::shoot(ftime_in_ns,getTRES(ADC,ftres0,ftres2,ftres3,ftres1));
 				dtime_in_ns_res = G4RandGauss::shoot(dtime_in_ns,getTRES(ADC,dtres0,dtres2,dtres3,dtres1));
-				/*			        				
-				if(sector==5 && ADC>100) {
-				cout << tInfos.time+FTtota/tInfos.nsteps << " " <<  ftim << " " << tgo - FTOFFSET - tmf - fo << endl;
-				cout << tInfos.time+DTtota/tInfos.nsteps << " " <<  dtim << " " << tgo  << endl;
-				if(ADC>10) {
- 				cout << "ECAL sector = "<<sector<<" layer = "<<layer<<" strip = "<<strip<<" ADC="<<ADC<<" ftime_in_ns = "<<ftime_in_ns<<" dtime_in_ns = "<<dtime_in_ns<<endl;
-			        cout << "ECAL sector = "<<sector<<" layer = "<<layer<<" strip = "<<strip<<" ADC="<<ADC<<" ftime_in_ns_res = "<<ftime_in_ns_res<<" dtime_in_ns_res = "<<dtime_in_ns_res<<endl;
-                                cout<<"dtres="<<getTRES(ADC,dtres0,dtres2,dtres3,dtres1)<<" ftres="<<getTRES(ADC,ftres0,ftres2,ftres3,ftres1)<<endl;	
-			       	cout<<"def="<<1/pow(1+def0*exp(-(ADC/10-def1)),def2)<<endl;
-				}
-				}
-				*/
 			}
 		}
 	}
@@ -539,24 +505,14 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		}		
 	}
 
-	if (ecc.outputRAW==0 && def0>0 && dtime_in_ns > 0 && G4UniformRand() > 1/pow(1+def0*exp(-(ADC/10-def1)),def2)) dtime_in_ns = 0; // DSC/TDC thresholds
-	
-	if (ecc.outputRAW==0 && ADC/10 < fthr) {
-	  rejectHitConditions = true; // FADC thresholds
-	}
-
-	//	if(ADC>10) {
-	//cout << "DSC THR "<<dtime_in_ns << endl;
-	//cout << "ADC/10,FADC THR "<<ADC/10<<","<<fthr<<" Reject? "<<rejectHitConditions<<endl;
-	//	}
+	if (ecc.outputRAW==0 && def0>0 && dtime_in_ns > 0 && G4UniformRand() > 1/pow(1+def0*exp(-(ADC/10-def1)),def2)) dtime_in_ns = 0; // DSC/TDC thresholds	
+	if (ecc.outputRAW==0 && ADC/10 < fthr) rejectHitConditions = true; // FADC thresholds
 
 	// EVIO banks record time with offset determined by position of data in capture window.  On forward carriage this is currently
 	// around 7.9 us.  This offset is omitted in the simulation.  Also EVIO TDC time is relative to the trigger time, which is not
 	// simulated at present.
 	
-	//double fadc_time = convert_to_precision(time_in_ns); 
 	double fadc_time = convert_to_precision(ftime_in_ns);
-	//int tdc = time_in_ns/a1;
 	int tdc = dtime_in_ns/da1;
 	
 	dgtz["hitn"]      = hitn;
