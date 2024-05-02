@@ -446,14 +446,14 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			}
 		 	 att   = A*(exp(-latt/B) + D*exp(-latt/E)) + C; //pass2 parameterization
 			 Etota =  Etota + Edep[s]*att;
-			Ttota  =  Ttota + latt/veff;
-			FTtota = FTtota + latt/fveff;
-			DTtota = DTtota + latt/dveff;
+			FTtota = FTtota + latt/fveff; //FADC based timing
+			DTtota = DTtota + latt/dveff; //DSC/TDC based timing
 		} else {
 		         Etota = Etota + Edep[s]; //reported in MeV
 		}
 	}
-	
+
+	//Used if ecc.outputRAW > 0 (no digitization, effieiency or resolution smearing)
 	double   ADC_raw = Etota/1000/ecc.ADC_GeV_to_evio/G;
 	double  TIME_raw = tInfos.time+ Ttota/tInfos.nsteps;
 	double FTIME_raw = tInfos.time+FTtota/tInfos.nsteps;
@@ -505,8 +505,8 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		}		
 	}
 
-	if (ecc.outputRAW==0 && def0>0 && dtime_in_ns > 0 && G4UniformRand() > 1/pow(1+def0*exp(-(ADC/10-def1)),def2)) dtime_in_ns = 0; // DSC/TDC thresholds	
-	if (ecc.outputRAW==0 && ADC/10 < fthr) rejectHitConditions = true; // FADC thresholds
+	if (ecc.outputRAW==0 && def0>0 && dtime_in_ns > 0 && G4UniformRand() > 1/pow(1+def0*exp(-(ADC/10-def1)),def2)) dtime_in_ns = 0; // DSC/TDC threshold	
+	if (ecc.outputRAW==0 && ADC/10 < fthr) rejectHitConditions = true; // FADC threshold
 
 	// EVIO banks record time with offset determined by position of data in capture window.  On forward carriage this is currently
 	// around 7.9 us.  This offset is omitted in the simulation.  Also EVIO TDC time is relative to the trigger time, which is not
