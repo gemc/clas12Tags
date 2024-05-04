@@ -73,19 +73,6 @@ static ecConstants initializeECConstants(int runno, string digiVariation = "defa
 	}
 	
 	// ========== Initialization of timings ===========
-	snprintf(ecc.database, sizeof(ecc.database), "/calibration/ec/timing:%d:%s%s", ecc.runNo, digiVariation.c_str(), timestamp.c_str());
-	data.clear(); calib->GetCalib(data,ecc.database);
-	
-	for(unsigned row = 0; row < data.size(); row++)
-	{
-		isec = data[row][0]; ilay = data[row][1];
-		ecc.timing[isec-1][ilay-1][0].push_back(data[row][3]);
-		ecc.timing[isec-1][ilay-1][1].push_back(data[row][4]);
-		ecc.timing[isec-1][ilay-1][2].push_back(data[row][5]);
-		ecc.timing[isec-1][ilay-1][3].push_back(data[row][6]);
-		ecc.timing[isec-1][ilay-1][4].push_back(data[row][7]);
-	}
-	
 	snprintf(ecc.database, sizeof(ecc.database), "/calibration/ec/ftime:%d:%s%s", ecc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,ecc.database);
 
@@ -152,14 +139,6 @@ static ecConstants initializeECConstants(int runno, string digiVariation = "defa
 	}
 	
 	// ======== Initialization of EC effective velocities ===========
-	snprintf(ecc.database, sizeof(ecc.database), "/calibration/ec/effective_velocity:%d:%s%s", ecc.runNo, digiVariation.c_str(), timestamp.c_str());
-	data.clear(); calib->GetCalib(data,ecc.database);
-	
-	for(unsigned row = 0; row < data.size(); row++)
-	{
-		isec = data[row][0]; ilay = data[row][1];
-		ecc.veff[isec-1][ilay-1].push_back(data[row][3]);
-	}
 	
 	snprintf(ecc.database, sizeof(ecc.database), "/calibration/ec/fveff:%d:%s%s", ecc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,ecc.database);
@@ -322,7 +301,7 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		pmtPEYld  = 11.5 ;
 	}
 
-	double a1   = ecc.timing[sector-1][layer-1][1][strip-1]; // tdc conversion
+	double a1   = ecc.ftime[sector-1][layer-1][1][strip-1]; // tdc conversion
 
 	if(aHit->isBackgroundHit == 1) {
 		
@@ -358,7 +337,6 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 	// initialize ADC and TDC
 	double ADC = 0;		
-	double  time_in_ns = 0;
         double ftime_in_ns = 0;
 	double dtime_in_ns = 0;
 	double ftime_in_ns_res = 0;
@@ -366,7 +344,6 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 	// Get Total Energy deposited
 	double Etota = 0;
-	double Ttota = 0;
 	double FTtota = 0;
 	double DTtota = 0;
 	double latt  = 0;
@@ -381,9 +358,6 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 	double G    = ecc.gain[sector-1][layer-1][strip-1];
 	
-	double a0   = ecc.timing[sector-1][layer-1][0][strip-1];
-	double a2   = ecc.timing[sector-1][layer-1][2][strip-1];
-	
 	double tmf  = ecc.tmf_offset[sector-1][layer-1][strip-1];
 	double fo   = ecc.fadc_offset[sector-1][layer-1][0];
 	double gtw  = ecc.global_time_walk[sector-1][layer-1][0];
@@ -391,7 +365,7 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double FTOFFSET = ecc.fadc_global_offset;	
 	double tgo      = ecc.tdc_global_offset;
 	
-	double fa0   = ecc.ftime[sector-1][layer-1][0][strip-1];
+	double fa0   = ecc.ftime[sector-1][layer-1][0][strip-1]; 
 	double fa2   = ecc.ftime[sector-1][layer-1][2][strip-1];
 	double fa3   = ecc.ftime[sector-1][layer-1][3][strip-1];
 	double fa4   = ecc.ftime[sector-1][layer-1][4][strip-1];
@@ -407,8 +381,7 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double da6   = ecc.dtime[sector-1][layer-1][6][strip-1];
 	double da7   = ecc.dtime[sector-1][layer-1][7][strip-1];
 	double da8   = ecc.dtime[sector-1][layer-1][8][strip-1];
-	
-	double veff  = ecc.veff[sector-1][layer-1][strip-1]*10;
+	;
 	double fveff = ecc.fveff[sector-1][layer-1][strip-1]*10;
 	double dveff = ecc.dveff[sector-1][layer-1][strip-1]*10;
 
@@ -450,7 +423,6 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 
 	//Used if ecc.outputRAW > 0 (no digitization, effieiency or resolution smearing)
 	double   ADC_raw = Etota/1000/ecc.ADC_GeV_to_evio/G;
-	double  TIME_raw = tInfos.time+ Ttota/tInfos.nsteps;
 	double FTIME_raw = tInfos.time+FTtota/tInfos.nsteps;
 	double DTIME_raw = tInfos.time+DTtota/tInfos.nsteps;
 		
@@ -462,10 +434,8 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			if (EC_GeV>0) {
 				ADC = EC_GeV;
 				double radc = sqrt(ADC);
-				double  tim =  a0 + a2/radc;
 				double ftim =  (fa4==0||fa6==0)         ? 0 : fa0 +           fa2+exp(-(radc-fa3)/fa4)+1-exp( (radc-fa5)/fa6);
 				double dtim =  (da4==0||da6==0||da7==0) ? 0 : da0 + gtw/radc +da2+exp(-(radc-da3)/da4)+1-exp(-(da5-radc)/da6)-exp(-(radc-da3*0.95)/da7)*pow(radc,da8);
-				time_in_ns  =  TIME_raw +  tim + tgo;
 				ftime_in_ns = FTIME_raw + ftim + tgo - FTOFFSET - tmf - fo;
 				dtime_in_ns = DTIME_raw + dtim + tgo;
 				ftime_in_ns_res = G4RandGauss::shoot(ftime_in_ns,getTRES(ADC,ftres0,ftres2,ftres3,ftres1));
@@ -486,7 +456,7 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 				ADC = 0;
 				break;
 			case 2:
-				dtime_in_ns = time_in_ns = 0;
+				dtime_in_ns = 0;
 				break;
 			case 3:
 				ADC = ftime_in_ns = 0;
@@ -637,11 +607,14 @@ map< int, vector <double> > ecal_HitProcess :: chargeTime(MHit* aHit, int hitn)
 	vector<G4double> Edep = aHit->GetEdep();
 	vector<G4double> time = aHit->GetTime();
 	
-	double A  = ecc.attlen[sector-1][layer-1][0][strip-1];
-	double B  = ecc.attlen[sector-1][layer-1][1][strip-1]*10.;
-	double C  = ecc.attlen[sector-1][layer-1][2][strip-1];
-	double G  = ecc.gain[sector-1][layer-1][strip-1];
-	double veff  = ecc.veff[sector-1][layer-1][strip-1]*10;
+	double A    = ecc.attlen[sector-1][layer-1][0][strip-1];
+	double B    = ecc.attlen[sector-1][layer-1][1][strip-1]*10.;
+	double C    = ecc.attlen[sector-1][layer-1][2][strip-1];
+	double D    = ecc.attlen[sector-1][layer-1][3][strip-1];
+	double E    = ecc.attlen[sector-1][layer-1][4][strip-1]*10.;
+
+	double G      = ecc.gain[sector-1][layer-1][strip-1];
+	double fveff  = ecc.fveff[sector-1][layer-1][strip-1]*10;
 	
 	for(unsigned int s=0; s<tInfos.nsteps; s++) {
 		if(B>0) {
@@ -659,10 +632,11 @@ map< int, vector <double> > ecal_HitProcess :: chargeTime(MHit* aHit, int hitn)
 					latt = pDx2+xlocal;
 				}
 			}
-			double att   = A*exp(-latt/B)+C;
+
+			double att   = A*(exp(-latt/B) + D*exp(-latt/E)) + C; //pass2 parameterization
 			
 			double stepE = Edep[s]*att;
-			double stepTime = time[s] + latt/veff;
+			double stepTime = time[s] + latt/fveff;
 			
 			// cout<<"time[s] = "<<time[s]<<endl;
 			// cout<<"att time  = "<<latt/ecc.veff<<endl;
