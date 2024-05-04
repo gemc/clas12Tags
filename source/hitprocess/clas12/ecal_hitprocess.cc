@@ -390,7 +390,6 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 	double FTOFFSET = ecc.fadc_global_offset;	
 	double tgo      = ecc.tdc_global_offset;
-	//	tgo = 0;
 	
 	double fa0   = ecc.ftime[sector-1][layer-1][0][strip-1];
 	double fa2   = ecc.ftime[sector-1][layer-1][2][strip-1];
@@ -431,26 +430,22 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double dtres3  = ecc.dtres[sector-1][layer-1][3][0];
 
 	for(unsigned int s=0; s<tInfos.nsteps; s++) {
-		if(B>0) {
-			double xlocal = Lpos[s].x();
-			if(view==1) latt = pDx2 + xlocal;
-			if(view==2) latt = pDx2 + xlocal;
-			if(view==3) {
-				if(layer > 3) {
-					// for ec, it's a minus sign
-					latt = pDx2-xlocal;
-				} else {
-					// for pcal, it's a plus sign
-					latt = pDx2+xlocal;
-				}
-			}
-		 	 att   = A*(exp(-latt/B) + D*exp(-latt/E)) + C; //pass2 parameterization
-			 Etota =  Etota + Edep[s]*att;
-			FTtota = FTtota + latt/fveff; //FADC based timing
-			DTtota = DTtota + latt/dveff; //DSC/TDC based timing
-		} else {
-		         Etota = Etota + Edep[s]; //reported in MeV
+		double xlocal = Lpos[s].x();
+		if(view==1) latt = pDx2 + xlocal;
+		if(view==2) latt = pDx2 + xlocal;
+		if(view==3) {
+			if(layer > 3) {
+			// for ec, it's a minus sign
+			latt = pDx2-xlocal;
+			} else {
+			// for pcal, it's a plus sign
+			latt = pDx2+xlocal;
+			}	
 		}
+		att   = A*(exp(-latt/B) + D*exp(-latt/E)) + C; //pass2 parameterization
+		Etota =  Etota + Edep[s]*att; //reported in MeV
+		FTtota = FTtota + latt/fveff; //FADC based timing
+		DTtota = DTtota + latt/dveff; //DSC/TDC based timing	
 	}
 
 	//Used if ecc.outputRAW > 0 (no digitization, effieiency or resolution smearing)
