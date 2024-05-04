@@ -30,7 +30,6 @@ public:
 	vector<double> gain[nsect][nlayer];
 	
 	//timing: TDC calibration constants
-	vector<double> timing[nsect][nlayer][5];
 	vector<double>  dtime[nsect][nlayer][9];
 	vector<double>  ftime[nsect][nlayer][7];
   
@@ -42,7 +41,6 @@ public:
 	double fadc_global_offset;
 	
 	//veff: effective velocity (cm/ns)
-	vector<double>  veff[nsect][nlayer];
 	vector<double> dveff[nsect][nlayer];
 	vector<double> fveff[nsect][nlayer];
 
@@ -51,7 +49,7 @@ public:
 
         // FADC threshold
         vector<double> fthr[nsect][nlayer];
-
+  
         // Timiing resolution
         vector<double> dtres[nsect][nlayer][4];
         vector<double> ftres[nsect][nlayer][4];
