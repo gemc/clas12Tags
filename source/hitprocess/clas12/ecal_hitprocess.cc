@@ -453,13 +453,13 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			case 0:
 				break;
 			case 1:
-				ADC = 0;
+				ADC = ADC_raw = ftime_in_ns = 0;
 				break;
 			case 2:
-				dtime_in_ns = 0;
+				dtime_in_ns = dtime_in_ns = 0;
 				break;
 			case 3:
-				ADC = ftime_in_ns = 0;
+				ADC = ADC_raw = ftime_in_ns = dtime_in_ns = 0;
 				break;
 				
 			case 5:
