@@ -470,7 +470,7 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		}		
 	}
 
-	if (ecc.outputRAW==0 && def0>0 && dtime_in_ns > 0 && G4UniformRand() > 1/pow(1+def0*exp(-(ADC/10-def1)),def2)) dtime_in_ns = 0; // DSC/TDC threshold	
+	if (ecc.outputRAW==0 && def0>0 && dtime_in_ns > 0 && G4UniformRand() > 1/pow(1+exp(-def0*(ADC/10-def1)),def2)) dtime_in_ns = 0; // DSC/TDC threshold	
 	if (ecc.outputRAW==0 && ADC/10 < fthr) rejectHitConditions = true; // FADC threshold
 
 	// EVIO banks record time with offset determined by position of data in capture window.  On forward carriage this is currently
