@@ -21,8 +21,8 @@ public:
 	//	double driftVelocity[6];
 	double miniStagger[6];
 	double dcThreshold;
-	int NWIRES;
-	int NLAYERS;
+	int NWIRES = 112;
+	int NLAYERS= 6;
 	double dLayer[6];                              // ~cell size in each superlayer - one of Mac's core parameters
 	
 	// efficiency parameters for each superlayer
@@ -118,7 +118,9 @@ public:
 	
 	G4ThreeVector psmear(G4ThreeVector p);
 
-        G4ThreeVector wirePosition(int layer, int wire);
+        G4ThreeVector wireLxyz(int layer, int wire, double dlayer, double dwire);
+
+        double doca(G4ThreeVector pos, int layer, int wire, double dlayer, double dwire);
 
 private:
 	
