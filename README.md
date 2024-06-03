@@ -19,68 +19,36 @@ releases notes for each distributed tag.
 
 <br>
 
-- [5.4](release_notes/5.4.md)
+- [5.9](release_notes/5.9.md)
+- [5.10](release_notes/5.10.md)
 - [4.4.2](release_notes/4.4.2.md)
 
 <br>
 
-To load gemc, point the environment variable SIM_HOME:
+To load gemc through the clas12 environment at JLab:
 
-- At JLAB: `/group/clas12/packages/`
-- On CVMFS: `/cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/soft`
+- tcsh: `source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/setup.csh `
+- bash, zsh: `source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/setup.sh`
 
-Then:
 
-```
-source $SIM_HOME/setup.csh
-module load clas12
-```
-
-The above will load gemc/4.4.2 by default. To load tag 5.3, in addition to the above, use `module switch`:
+To switch to a different version of gemc use `module switch`. For example:
 
 ```
-module switch gemc/5.3
+module switch gemc/5.10
 ```
 
-To run GEMC you can select one of the gcards in $GEMC/../config. For example:
+To run GEMC you can select one of the gcards in the clas12-config installed on cvmfs. For example:
 
 ```
-gemc $GEMC/../config/rga-fall2018.gcard -N=nevents -USE_GUI=0 
+gemc /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/noarch/clas12-config/dev/gemc/rga-fall2018.gcard -N=nevents -USE_GUI=0 
 ```
 
-The configurations in the gcards are detailed <a href="https://github.com/gemc/clas12Tags/tree/main/config"> here</a>.
+Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
 
-The gcards filenames containting `_binaryField` refers to setups using the `cmag` binary field maps.
 
-### Release notes for tags not installed at JLab or on CVMFS:
 
-- [5.0](release_notes/5.0.md)
-- [4.4.1](release_notes/4.4.1.md)
-- [4.4.0](release_notes/4.4.0.md)
 
-### Release notes for previous versions, not installed at JLab or on CVMFS:
 
-|              <span>               |                                   |                                   |                                   |
-|:---------------------------------:|:---------------------------------:|:---------------------------------:|:---------------------------------:|
-|  [4.3.2](release_notes/4.3.2.md)  |  [4.3.1](release_notes/4.3.1.md)  |  [4.3.0](release_notes/4.3.0.md)  | [4a.2.4](release_notes/4a.2.4.md) | 
-| [4a.2.3](release_notes/4a.2.3.md) | [4a.2.2](release_notes/4a.2.2.md) | [4a.2.1](release_notes/4a.2.1.md) | [4a.2.0](release_notes/4a.2.0.md) | 
-| [4a.1.0](release_notes/4a.1.0.md) | [4a.0.2](release_notes/4a.0.2.md) | [4a.0.1](release_notes/4a.0.1.md) | [4a.0.0](release_notes/4a.0.0.md) |
-| [3a.1.0](release_notes/3a.1.0.md) | [3a.1.0](release_notes/3a.1.0.md) | [3a.0.2](release_notes/3a.0.2.md) | [3a.0.1](release_notes/3a.0.1.md) |
-| [3a.0.0](release_notes/3a.0.0.md) |                                   |                                   |                                   |
-
-<br>
-
----
-
-## Upcoming developments:
-
-- Upgrade geant4 to 10.7.p03 :soon:
-- RF Frequency > RF Period (+fix), read from DB
-- Geometry / Run Number
-- gcards reorganized to new repository
-- RICH digitization (Connor Pecar)
-- 
-<br>
 
 ---
 
@@ -92,23 +60,6 @@ GEMC simulations can be run on the Open Science Grid (OSG) using the
 <br>
 
 ---
-
-## Docker
-
-The clas12Tags are installed on CVMFS. Provided you can mount cvmfs,
-you can use the jeffersonlab/clas12software:cvmfs docker image to run gemc.
-
-For example:
-
-```
-docker run -it --rm -v /cvmfs:/cvmfs  jeffersonlab/clas12software:cvmfs  bash
-```
-
-To run it interactively using noVNC:
-
-```
-docker run -it --rm -v /cvmfs:/cvmfs -p 8080:8080 jeffersonlab/clas12software:cvmfs  bash
-```
 
 <br>
 
