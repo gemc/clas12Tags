@@ -14,8 +14,11 @@
 
 	<!-- other variations include: lH2, lD2, ND3, "elaborate"-->
 	<detector name="target" factory="TEXT" variation="lH2"/>
-	<detector name="cad/"   factory="CAD"/>
-	
+	<detector name="cad/" factory="CAD"/>
+
+	<!-- uncomment to change the material of the target -->
+	<!--	<option name="CHANGEVOLUMEMATERIALTO" value="lh2, G4_Galactic"/>-->
+
 
 	<!-- For bst
 	<detector name="experiments/clas12/bst/bst"               factory="TEXT" variation="default"/>
@@ -25,24 +28,24 @@
 	<option name="BEAM_P" value="e-, 11.0*GeV, 20*deg, 50*deg"/>
 	<option name="SPREAD_P" value="2.0*GeV, 20*deg, 20*deg"/>
 	<option name="SPREAD_V" value="(0.0, 0)cm"/>
-<!--	<option name="BEAM_V" value="(-3.5, 0, -90)cm"/>-->
+	<!--	<option name="BEAM_V" value="(-3.5, 0, -90)cm"/>-->
 
-	<option name="OUTPUT"                  value="hipo, out.hipo"/>
-	<option name="PHYSICS"                 value="FTFP_BERT + STD"/>
-	<option name="RUNNO"                   value="11" />
-	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
-	<option name="INTEGRATEDRAW"           value="*" />
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="FTFP_BERT + STD"/>
+	<option name="RUNNO" value="11"/>
+	<option name="DIGITIZATION_VARIATION" value="rga_fall2018_mc"/>
+	<option name="INTEGRATEDRAW" value="*"/>
 
 
-	<option name="RFSETUP"     value="clas12_ccdb" />
-	<option name="RFSTART"     value="eventVertex, 0, 0, -30.0" />
-	<option name="LUMI_EVENT"     value="0, 248.5*ns, 4*ns" />
+	<option name="RFSETUP" value="clas12_ccdb"/>
+	<option name="RFSTART" value="eventVertex, 0, 0, -30.0"/>
+	<option name="LUMI_EVENT" value="0, 248.5*ns, 4*ns"/>
 
 
 	<!--	<option name="RECORD_OPTICALPHOTONS"   value="1"/>-->
 
-<!--	<option name="BEAM_SPOT"  value="0.2*cm, 0.3*cm, 0.05*cm, 0.1*cm, 20*deg"/>-->
-<!--	<option name="RANDOMIZE_LUND_VZ"  value="-3*cm, 2.5*cm, reset"/>-->
-<!--	<option name="HALL_MATERIAL"  value="G4_Galactic"/>-->
+	<!--	<option name="BEAM_SPOT"  value="0.2*cm, 0.3*cm, 0.05*cm, 0.1*cm, 20*deg"/>-->
+	<!--	<option name="RANDOMIZE_LUND_VZ"  value="-3*cm, 2.5*cm, reset"/>-->
+	<!--	<option name="HALL_MATERIAL"  value="G4_Galactic"/>-->
 
 </gcard>
