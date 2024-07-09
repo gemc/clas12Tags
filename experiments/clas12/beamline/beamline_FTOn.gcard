@@ -1,0 +1,23 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	<detector name="../targets/cad/" factory="CAD"/>
+	<detector name="../targets/target" factory="TEXT" variation="lH2"/>
+
+	<!-- Beamline FTOn configuration -->
+	<detector name="../ft/ft" factory="TEXT" variation="FTOn"/>
+	<detector name="cadBeamline/" factory="CAD"/>
+	<detector name="beamline" factory="TEXT" variation="FTOn"/>
+
+	<!-- vacuumline is common to all configurations -->
+	<detector name="../beamline/vacuumLine/" factory="CAD"/>
+
+	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
+
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="RUNNO" value="11"/>
+	<option name="DIGITIZATION_VARIATION" value="rga_fall2018_mc"/>
+
+</gcard>

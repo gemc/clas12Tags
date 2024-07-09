@@ -79,3 +79,25 @@ Use "cadrgm" variation with all solid targets
 <detector name="experiments/clas12/targets/cadrgm/"   factory="CAD"/>
 <detector name="experiments/clas12/targets/target" factory="TEXT" variation="RGM_2_C"/>
 
+## RG-D: May 17th, 2024
+
+Author: Lamiaa El Fassi
+
+Experiment Description: Color Transparency & nTMDs
+
+### Variations: 
+1. Liquid Targets (Standard 5cm liquid cell):
+lD2 - liquid Deuterium
+
+2. Solid Targets:
+lD2CxC - Empty lD2 cell + two 12C foils in the beamline
+lD2CuSn - Empty lD2 cell + 63Cu and 120Sn in series in the beamline
+
+### How to use it in the gcard
+1. For lD2 variations:
+Set it up as in "clas12_lD2-RGD.gcard", and
+shift the target upstream by 50 mm, see  "clas12_lD2-RGD.gcard".
+2. Solid Targets:
+Set it up for lD2CxC/lD2CuSn variation as in "clas12_12C-RGD.gcard/clas12_120Sn-RGD.gcard or clas12_63Cu-RGD.gcard", and 
+shift the whole target assembly upstream by 150 mm to get the two solid foils @ -7.5 cm and -2.5 cm, as the entrance and exit windows for the lD2 case; see the mentioned three solid-foil gcards.
+<detector name="target">    <position x="0.0*cm"  y="0.0*cm"  z="-15.0*cm"  />  </detector>
