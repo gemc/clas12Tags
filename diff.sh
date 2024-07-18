@@ -5,38 +5,45 @@
 # the proper version string in gemc.cc is derived by identifying the
 # last number in the directory release_notes which contains the <tag>.md files
 #
-# if any argument is given, then the script will ask for user input
+# if the prompt argument is given, then the script will ask for user input
 # to copy each file into the tag
 #
-# note: the script is meant to run one directory up from clas12tags
+# if the RELEASE argument is given, the dev.md file will be copied to the next release
 prompt="no"
-
 
 next_release=$(ls release_notes | grep -v dev | grep '.md' | awk -F. '{print $1"."$2}' | sort -V | tail -1)
 
-# if dev.md is different than $next_release.md, then copy dev.md to $next_release.md
-if [[ -f release_notes/dev.md ]]; then
-	if [[ -f release_notes/$next_release.md ]]; then
-		if [[ $(diff release_notes/dev.md release_notes/$next_release.md) ]]; then
-			cp release_notes/dev.md release_notes/$next_release.md
-		fi
-	else
+# check the difference between the dev.md and the next release until the string " # Environment on ifarm / cvmfs" is found
+# if the result is different, print a warning
+string_dev=$(awk '/# Environment on ifarm \/ cvmfs/{exit} {print}' release_notes/dev.md)
+string_next=$(awk '/# Environment on ifarm \/ cvmfs/{exit} {print}' release_notes/$next_release.md)
+differences=$(diff <(echo "$string_dev") <(echo "$string_next"))
+if [[ $differences ]]; then
+	echo
+	echo " > WARNING ############################ "
+	echo " > WARNING: dev.md and $next_release.md are different. Check the differences"
+	echo " > WARNING ############################ "
+fi
+
+# if argument is RELEASE, copy dev.md onto the next release
+if [[ $# -gt 0 ]]; then
+	if [[ $1 == "RELEASE" ]]; then
 		cp release_notes/dev.md release_notes/$next_release.md
+		sed -i 's/dev/'$next_release'/' "release_notes/$next_release.md"
 	fi
 fi
 
-# if argument is given, set prompt to yes
 if [[ $# -gt 0 ]]; then
-	prompt="yes"
+	if [[ $1 == "prompt" ]]; then
+		prompt="yes"
+	fi
 fi
 
 ignores="-x .idea -x .git -x .gitignore -x *.o -x moc_*.cc -x *.a -x api -x .sconsign.dblite -x releases"
 
 printf "\nNext release is $yellow$next_release$reset\n"
-printf "Prompt is $yellow$prompt$reset\n"
 printf "Ignoring $yellow$ignores$reset\n\n"
 
-## diff summary printed on screen. Ignoring objects, moc files, libraries and gemc executable
 diffs=$(diff -rq $=ignores ../source source | sed 's/Files //g' | sed 's/ and / /g' |  sed 's/ differ//g')
 
 # create an array from diffs where the discriminator is carriage return
