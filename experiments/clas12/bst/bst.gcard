@@ -1,36 +1,38 @@
-
 <gcard>
 
 	<option name="geometry" value="1400x1200"/>
-	
-	<detector name="experiments/clas12/bst/bst"                       factory="TEXT" variation="default"/>
-	<detector name="experiments/clas12/micromegas/micromegas"         factory="TEXT" variation="michel"/>
-	<detector name="experiments/clas12/cnd/cnd"                       factory="TEXT" variation="original"/>
-	<detector name="experiments/clas12/ctof/ctof"                     factory="TEXT" variation="rga_fall2018"/>
-	<detector name="experiments/clas12/ctof/javacad_rga_fall2018/"    factory="CAD"/>
 
-	<!--
+	<detector name="experiments/clas12/bst/bst" factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/micromegas/micromegas" factory="TEXT" variation="michel"/>
+	<detector name="experiments/clas12/cnd/cnd" factory="TEXT" variation="original"/>
+	<detector name="experiments/clas12/ctof/ctof" factory="TEXT" variation="rga_fall2018"/>
+	<detector name="experiments/clas12/ctof/javacad_rga_fall2018/" factory="CAD"/>
+
 	<option name="BEAM_P" value="proton, 1*GeV, 80*deg, 0*deg"/>
 	<option name="SPREAD_P" value="0*GeV, 40*deg,180*deg"/>
-   <option name="BEAM_V" value="(0, 0 , 0)mm"/>
-   -->
+	<option name="BEAM_V" value="(0, 0 , 0)mm"/>
 
+	<!--
 	<option name="COSMICRAYS" value="default, 1, 5"/>
 	<option name="COSMICAREA" value="0*cm, 0*cm, 0*cm, 60*cm"/>
+   -->
+
+	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->
+	<option name="SCALE_FIELD" value="binary_torus, -1"/>
+	<option name="SCALE_FIELD" value="binary_solenoid, -1"/>
 
 	<!-- hall field  -->
-	<option name="HALL_FIELD"       value="clas12-newSolenoid"/>
-	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
-	<option name="SCALE_FIELD"      value="clas12-newSolenoid, -1"/>
-
-	<option name="LUMI_EVENT"  value="0, 248.5*ns, 4*ns" />
-	<option name="RFSETUP"     value="clas12_ccdb" />
-	<option name="RFSTART"     value="eventVertex, 0, 0, -30.0" />
+	<option name="HALL_FIELD" value="Symm_solenoid_r601_phi1_z1201_13June2018:Symm_torus_r2501_phi16_z251_24Apr2018"/>
 
 
-	<option name="OUTPUT"                  value="hipo, out.hipo"/>
-	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
-	<option name="RUNNO"                   value="11" />
-	<option name="DIGITIZATION_VARIATION"  value="rga_spring2019_mc" />
+	<option name="LUMI_EVENT" value="0, 248.5*ns, 4*ns"/>
+	<option name="RFSETUP" value="clas12_ccdb"/>
+	<option name="RFSTART" value="eventVertex, 0, 0, -30.0"/>
+
+
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="RUNNO" value="11"/>
+	<option name="DIGITIZATION_VARIATION" value="rga_spring2019_mc"/>
 
 </gcard>
