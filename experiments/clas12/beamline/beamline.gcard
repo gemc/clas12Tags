@@ -6,12 +6,11 @@
 	<detector name="../targets/cad/" factory="CAD"/>
 	<detector name="../targets/target" factory="TEXT" variation="lH2"/>
 
-
 	<!-- Beamline FTOn configuration
 	<detector name="../ft/ft" factory="TEXT" variation="FTOn"/>
 	<detector name="../beamline/cadBeamline/" factory="CAD"/>
 	<detector name="../beamline/beamline" factory="TEXT" variation="FTOn"/>
-END of FTOn-->
+	END of FTOn-->
 
 	<detector name="../ft/ft" factory="TEXT" variation="FTOff"/>
 	<detector name="cadBeamlineFTOFF/" factory="CAD"/>
@@ -21,39 +20,12 @@ END of FTOn-->
 	<!-- vacuumline is common to all configurations -->
 	<detector name="../beamline/vacuumLine/" factory="CAD"/>
 
-
 	<!-- Beamline rghFTOut configuration
 		<detector name="../beamline/cadBeamline/" factory="CAD"/>
 		<detector name="../beamline/vacuumLine/"  factory="CAD"/>
 		<detector name="../beamline/beamline"     factory="TEXT" variation="rghFTOut"/>
 	END of rghFTOut -->
 
-	<!-- Beamline configuration ELMO: Comment out the unused configurations
-	<detector name="transverseTargetMagnets/noWedges/"           factory="CAD" />
- -->
-	<!-- transverse composite hall field
-	<option name="HALL_FIELD"  value="Full_transsolenoid_x161_y161_z321_March2021:Symm_torus_r2501_phi16_z251_24Apr2018"/>
- 	-->
-
-	<!--
-	<detector name="transverseTargetMagnets/forwardWedges/"     factory="CAD" />
-	<detector name="transverseTargetMagnets/midpointWedges/"     factory="CAD" />
-
-	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="transverse"/>
-
-	<detector name="experiments/clas12/beamline/cadBeamlineELMO/" factory="CAD"/>
-	<detector name="experiments/clas12/beamline/vacuumLine/"  factory="CAD"/>
-	<detector name="beamline"     factory="TEXT" variation="ELMO"/>
-	<detector name="connectUpstreamToTorusPipe">
-		<existence exist="no" />
-	</detector>
-
-	<detector name="ElmoTungstenTip">
-		<existence exist="no" />
-	</detector>
-		 -->
-
-	<!-- End of ELMO  -->
 
 	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
 
