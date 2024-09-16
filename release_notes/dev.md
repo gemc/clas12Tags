@@ -9,13 +9,15 @@
 - RTPC hit process improvements (YuchunHung)
 - Fixed CND lightguide lengths and sensitivity/hit type in cndUpstrem (Tyler Kutz)
 - added checking parameter files in GEMC_DATA_DIR, useful for sharing parameters with reconstruction
-- tungsten material update to beamline_W instead of pure W
+- Tungsten material update to beamline_W instead of pure W
 - RGE double target implementation (Antonio Radic and USM Chile) (in progress)
 - DC Geometry changes by Raffaella (in progress)
 - FMT Overlaps fix (#237 fixed)
 - Downstream of the torus beamline CAD geometry implemented (in progress)
-- Several issues with RG-F target #236
-- Remove FC (forward carriage) volume, not necessary. 
+- Several issues with RG-F target #236 (in progress)
+- Remove FC (forward carriage) volume, not necessary (in progress) 
+- Removed duplicated CAD target aluminum windows
+- Added beamline components and adjusted vacuum line downstream of the torus, see CLAS Note 
 
 
 <br/>

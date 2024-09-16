@@ -1,0 +1,16 @@
+<!--
+
+See CLAS note:
+
+-->
+
+<gxml>
+	<volume name="Apex_Shield_Lead_Fill"             mother="fc" color="aaffff"  material="G4_Pb"/>
+	<volume name="Apex_Shield_PCAL_Hub"              mother="fc" color="555555"  material="beamline_CarbonSteel"/>
+	<volume name="Torus_Exit_Shield_Lead_Fill"       mother="fc" color="aaffff"  material="G4_Pb"/>
+	<volume name="Torus_Exit_Shield_Casing"          mother="fc" color="555555"  material="G4_STAINLESS-STEEL"/>
+	<volume name="Downstream_Beam_tube_Segment_1"    mother="fc" color="995599"  material="G4_STAINLESS-STEEL"/>
+	<volume name="Downstream_Beam_tube_Segment_2"    mother="fc" color="995599"  material="G4_STAINLESS-STEEL"/>
+	<volume name="Torus_Beam_Tube_Reducer_2"         mother="fc" color="ffffaa"  material="G4_Al"/>
+
+</gxml>
