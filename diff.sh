@@ -73,6 +73,7 @@ printf "\n- Setting correct version string to $next_release in gemc.cc"
 new_string="const char *GEMC_VERSION = \"gemc $next_release\" ;"
 sed -i 's/const char.*/'$new_string'/' source/gemc.cc
 
-printf "\n- Changing initializeBMTConstants and initializeFMTConstants to initialize before processID"
+printf "\n- Changing initializeBMTConstants, initializeFMTConstants, initializeRTPCConstants to initialize before processID"
 sed -i s/'initializeBMTConstants(-1)'/'initializeBMTConstants(1)'/ source/hitprocess/clas12/micromegas/BMT_hitprocess.cc
 sed -i s/'initializeFMTConstants(-1)'/'initializeFMTConstants(1)'/ source/hitprocess/clas12/micromegas/FMT_hitprocess.cc
+sed -i s/'initializeRTPCConstants(-1)'/'initializeRTPCConstants(11)'/ source/hitprocess/clas12/rtpc_hitprocess.cc

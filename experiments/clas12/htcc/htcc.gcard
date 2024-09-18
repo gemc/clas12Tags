@@ -5,11 +5,7 @@
 	<detector name="./htcc" factory="TEXT" variation="original"/>
 	<detector name="./cad/" factory="CAD"/>
 
-<!--	<detector name="../beamline/cadBeamline/" factory="CAD"/>-->
-<!--	<detector name="../beamline/vacuumLine/"  factory="CAD"/>-->
-<!--	<detector name="../beamline/beamline"     factory="TEXT" variation="FTOn"/>-->
 
-<!--	<detector name="../fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>-->
 
 	<option name="INTEGRATEDRAW" value="htcc"/>
 	
