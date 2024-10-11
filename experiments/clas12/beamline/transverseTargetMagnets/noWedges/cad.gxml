@@ -1,0 +1,11 @@
+<gxml>
+
+	<volume name="TGT-9000-1000-0000m"         mother="root" color="aaaaff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+	<volume name="TGT-9000-1000-0001m"         mother="root" color="aaaaff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+	<volume name="TGT-9000-1000-0002m"         mother="root" color="ffaaaa" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Fe"/>
+	<volume name="TGT-9000-1000-0003m"         mother="root" color="aaaaff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>3
+	<volume name="TGT-9000-1000-0000_MIRm"     mother="root" color="aaaaff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+	<volume name="TGT-9000-1000-0001_MIR1m"    mother="root" color="aaaaff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+	<volume name="TGT-9000-1000-0002_MIR1m"    mother="root" color="ffaaaa" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="G4_Fe"/>
+
+</gxml>

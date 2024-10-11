@@ -517,7 +517,7 @@ void rtpc_HitProcess::initWithRunNumber(int runno)
 
 // this static function will be loaded first thing by the executable
 // setup 11 instead of -1 (in the clas12Tags) because z0, z2, z4 are also used in processID, they need to be loaded first. Moreover, only run 11 in CCDB has appropricate parameters for simulation. 
-rtpcConstants rtpc_HitProcess::rtpcc = initializeRTPCConstants(-1);
+rtpcConstants rtpc_HitProcess::rtpcc = initializeRTPCConstants(11);
 
 // add class and member function which can read constants from ccdb in rtpc_hitprocess.X files for the future needed, but comment out them for now (2023.10.03)
 // 
