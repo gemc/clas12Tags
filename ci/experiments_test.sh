@@ -60,7 +60,7 @@ ExperimentNotExisting() {
 ./ci/build_gemc.sh
 
 
-[[ -d clas12-config ]] && echo clas12-config exist || git clone https://github.com/maureeungaro/clas12-config
+[[ -d clas12-config ]] && echo clas12-config exist || git clone -b dev https://github.com/JeffersonLab/clas12-config
 echo "\nGcard: $gcard\n"
 
 if [[ ! -f "$gcard" ]]; then
