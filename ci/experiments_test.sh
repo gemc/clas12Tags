@@ -1,9 +1,5 @@
 #!/usr/bin/env zsh
 
-# Purpose:
-# Runs gemc using the gcards inside 'tests' directory (if existing)
-# inside each detectors clas12/ subdirs
-# Assumptions: the name 'tests' of the tests directory.
 
 # The remote container (for now) is based on fedora 36, so cvmfs action is not available,
 # see https://github.com/cvmfs-contrib/github-action-cvmfs (only ubuntu supported)
@@ -64,7 +60,7 @@ ExperimentNotExisting() {
 ./ci/build_gemc.sh
 
 
-[[ -d clas12-config ]] && echo clas12-config exist || git clone https://github.com/JeffersonLab/clas12-config
+[[ -d clas12-config ]] && echo clas12-config exist || git clone https://github.com/maureeungaro/clas12-config
 echo "\nGcard: $gcard\n"
 
 if [[ ! -f "$gcard" ]]; then
