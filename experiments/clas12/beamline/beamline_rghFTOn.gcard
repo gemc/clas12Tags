@@ -14,7 +14,6 @@
 	<detector name="cad_downstream_beamline/" factory="CAD"/>
 
 	<detector name="experiments/clas12/magnets/torus"      factory="TEXT" variation="original"/>
-	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
 
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>

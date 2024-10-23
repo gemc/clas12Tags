@@ -1,63 +1,63 @@
 <gxml>
-	<volume name="BoreShield"               mother="fc"   color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="CenterTube"               mother="fc"   color="bb9999" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="DownstreamShieldingPlate" mother="fc"   color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="DownstreamVacuumJacket"   mother="fc"   color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Hub001"                   mother="fc"   color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Plate1"                   mother="fc"   color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Plate2"                   mother="fc"   color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Plate3"                   mother="fc"   color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Plate4"                   mother="fc"   color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Plate5"                   mother="fc"   color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Plate6"                   mother="fc"   color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Shield1"                  mother="fc"   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Shield2"                  mother="fc"   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Shield3"                  mother="fc"   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Shield4"                  mother="fc"   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Shield5"                  mother="fc"   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Shield6"                  mother="fc"   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="Shield7"                  mother="fc"   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="UpstreamShieldingPlate"   mother="fc"   color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="UpstreamVacuumJacket"     mother="fc"   color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="WarmBoreTube"             mother="fc"   color="ff8888" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="coil1"                    mother="fc"   color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="coil2"                    mother="fc"   color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="coil3"                    mother="fc"   color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="coil4"                    mother="fc"   color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="coil5"                    mother="fc"   color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="coil6"                    mother="fc"   color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell1a"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell1b"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell2a"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell2b"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell3a"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell3b"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell4a"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell4b"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell5a"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell5b"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell6a"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="shell6b"                  mother="fc"   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs1r1support"            mother="fc"   color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs2r1support"            mother="fc"   color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs3r1support"            mother="fc"   color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs4r1support"            mother="fc"   color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs5r1support"            mother="fc"   color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs6r1support"            mother="fc"   color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs1r1back"               mother="fc"   color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs2r1back"               mother="fc"   color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs3r1back"               mother="fc"   color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs4r1back"               mother="fc"   color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs5r1back"               mother="fc"   color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-	<volume name="dcs6r1back"               mother="fc"   color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
-        <volume name="DSShieldFrontLead"        mother="fc" color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Pb"/>
-        <volume name="DSShieldBackLead"         mother="fc" color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Pb"/>
-        <volume name="DSShieldInnerAss"         mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-        <volume name="DSShieldBackAss"          mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-        <volume name="DSShieldFrontAss"         mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-        <volume name="DSShieldBackCover"        mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-        <volume name="DSShieldFrontCover"       mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-        <volume name="DSShieldFlangeAttachment" mother="fc" color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-        <volume name="DSShieldFlange"           mother="fc" color="8899dd" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-	<volume name="apex"                     mother="fc"   color="993333" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="BoreShield"                color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="CenterTube"                color="bb9999" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="DownstreamShieldingPlate"  color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="DownstreamVacuumJacket"    color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Hub001"                    color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Plate1"                    color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Plate2"                    color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Plate3"                    color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Plate4"                    color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Plate5"                    color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Plate6"                    color="335533" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Shield1"                   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Shield2"                   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Shield3"                   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Shield4"                   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Shield5"                   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Shield6"                   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="Shield7"                   color="444499" material="beamline_W"               position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="UpstreamShieldingPlate"    color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="UpstreamVacuumJacket"      color="bb9999" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="WarmBoreTube"              color="ff8888" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="coil1"                     color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="coil2"                     color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="coil3"                     color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="coil4"                     color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="coil5"                     color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="coil6"                     color="ffaaaa" material="G4_Cu"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell1a"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell1b"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell2a"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell2b"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell3a"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell3b"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell4a"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell4b"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell5a"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell5b"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell6a"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="shell6b"                   color="9999aa" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs1r1support"             color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs2r1support"             color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs3r1support"             color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs4r1support"             color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs5r1support"             color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs6r1support"             color="ffaaff" material="G4_Al"              position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs1r1back"                color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs2r1back"                color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs3r1back"                color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs4r1back"                color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs5r1back"                color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+	<volume name="dcs6r1back"                color="ffaaff" material="G4_KAPTON"          position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
+    <volume name="DSShieldFrontLead"         color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Pb"/>
+    <volume name="DSShieldBackLead"          color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Pb"/>
+    <volume name="DSShieldInnerAss"          color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="DSShieldBackAss"           color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="DSShieldFrontAss"          color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="DSShieldBackCover"         color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="DSShieldFrontCover"        color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="DSShieldFlangeAttachment"  color="992222" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="DSShieldFlange"            color="8899dd" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+	<volume name="apex"                      color="993333" material="G4_STAINLESS-STEEL" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg"/>
 </gxml>

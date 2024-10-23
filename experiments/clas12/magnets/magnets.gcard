@@ -5,7 +5,6 @@
 	<detector name="cad/" factory="CAD" />
 
 	<detector name="../targets/target"     factory="TEXT" variation="lH2"/>
-	<detector name="../fc/forwardCarriage" factory="TEXT" variation="original"/>
 
 	<option name="NO_FIELD" value="all"/>
 	

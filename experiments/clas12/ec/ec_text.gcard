@@ -4,7 +4,6 @@
 	<option name="DATABASE" value="../clas12.sqlite"/>
 
 	<!-- TEXT Factory -->
-	<detector name="../fc/forwardCarriage" factory="TEXT" variation="default"/>
 	<detector name="ec"                    factory="TEXT" variation="default"/>
 
 	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->

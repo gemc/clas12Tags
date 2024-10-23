@@ -21,9 +21,6 @@
 	</detector>
 
 	<!-- End of ELMO  -->
-
-	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
-
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
 	<option name="RUNNO" value="11"/>

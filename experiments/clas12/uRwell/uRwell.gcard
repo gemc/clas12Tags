@@ -5,7 +5,6 @@
 
 	<detector name="uRwell" factory="TEXT" variation="default_1R"/>
 	<detector name="experiments/clas12/dc/dc" factory="TEXT" variation="default"/>
-	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="default"/>
 
 	<detector name="../magnets/cad/" factory="CAD" />
 

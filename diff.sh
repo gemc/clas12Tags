@@ -69,6 +69,8 @@ for d in $diffs; do
 done
 
 
+
+
 printf "\n- Setting correct version string to $next_release in gemc.cc"
 new_string="const char *GEMC_VERSION = \"gemc $next_release\" ;"
 sed -i 's/const char.*/'$new_string'/' source/gemc.cc

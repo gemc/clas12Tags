@@ -1,2 +1,0 @@
-               dcgas  |                 clas12 dc gas  |    0.0018  |         2  |                   G4_Ar 0.9 G4_CARBON_DIOXIDE 0.1  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  |   -1  
-             W_alloy  |     tungsten alloy 17.6 g/cm3  |      17.6  |         2  |                              G4_Fe 0.08 G4_W 0.92  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  |   -1  

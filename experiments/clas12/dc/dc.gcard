@@ -2,13 +2,8 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-
 	<detector name="dc" factory="TEXT" variation="default"/>
-	<detector name="../fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
-
 	<detector name="../magnets/cad/" factory="CAD" />
-
-
 
 	<option name="BEAM_P"     value="e-, 5.0*GeV, 25*deg, 0*deg"/>
 	<option name="SPREAD_P"   value="1.0*GeV, 15*deg, 180*deg"/> 

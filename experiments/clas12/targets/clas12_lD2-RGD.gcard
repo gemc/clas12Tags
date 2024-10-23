@@ -34,8 +34,7 @@
 	<detector name="experiments/clas12/beamline/cadBeamlineFTOFF/" factory="CAD"/>
 	<detector name="experiments/clas12/beamline/beamline"     factory="TEXT" variation="FTOff"/>
 	
-	<!-- forward carriage -->
-	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
+
 	
 	<detector name="experiments/clas12/dc/dc"              factory="TEXT" variation="default"/>
 	<detector name="experiments/clas12/ec/ec"              factory="TEXT" variation="rga_fall2018"/>
