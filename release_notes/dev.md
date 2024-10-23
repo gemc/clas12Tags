@@ -2,9 +2,9 @@
 
 
 - RG-D Flag Assembly geometry and variations (Lamiaa) 
-- added MIE scattering to api and source code (Connor Pecar)
+- Added MIE scattering to api and source code (Connor Pecar)
 - RICH hit process: PMT quantum efficiencies (Connor Pecar)
-- material database updated with MIE scattering entries (Connor Pecar)
+- Material database updated with MIE scattering entries (Connor Pecar)
 - Updated CAD volumes for RICH, with variations default, rga_fall2018 and rgc_summer2022 (Connor Pecar)
 - Alert hit process improvements (M. Paolone and fizikci0147)
 - RTPC hit process improvements (YuchunHung)
