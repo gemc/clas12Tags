@@ -3,7 +3,7 @@
 # Purpose: compiles gemc and installs it in gemc
 
 # Container run:
-# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-g4v10.7.4-fedora36-cvmfs sh
+# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/build_gemc.sh
 
@@ -34,6 +34,9 @@ cd source
 compileGEMC
 echo "copying gemc to "$GEMC for experiment tests
 cp gemc $GEMC
+# copying executable for artifact retrieval
+cp gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/
 echo
 echo "content of "$GEMC":"
 ls -lrt $GEMC
+

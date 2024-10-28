@@ -22,9 +22,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
       - name: Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v1.8.7
+        uses: runforesight/workflow-telemetry-action@v2.0.0
       - name: Build gemc
         run: |
           ./ci/build_gemc.sh
-
+      - name: Copy gemc binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemc
+          path: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc
 
