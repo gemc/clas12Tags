@@ -34,6 +34,6 @@ jobs:
         with:
           name: gemc
           path: |
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
 

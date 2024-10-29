@@ -1,8 +1,9 @@
-#!/opt/homebrew/Cellar/python@3.11/3.11.10/bin/python3.11
+#!/usr/bin/env python3
 
 import requests
 import subprocess
 import os
+import argparse
 
 # add function to download artifact using curl
 def download_artifact(download_url, token, artifact_name):
@@ -22,13 +23,25 @@ def download_artifact(download_url, token, artifact_name):
 	else:
 		print(f"Failed to download artifact: {result.stderr}")
 
+# Parse the command-line argument for OS type
+parser = argparse.ArgumentParser(description="Specify the OS for selecting the appropriate workflow.")
+parser.add_argument("os_type", choices=["almalinux", "fedora"], help="Specify 'almalinux' or 'fedora'")
+
+args = parser.parse_args()
+
+# Set WORKFLOW_ID based on the argument
+if args.os_type == "almalinux":
+    WORKFLOW_ID = "build_gemc_almalinux.yml"
+elif args.os_type == "fedora":
+    WORKFLOW_ID = "build_gemc_fedora.yml"
+
+
 # Define the variables
 # Use HOME environment variable to get the path
 with open(f"{os.path.expanduser('~')}/.mauri") as f:
 	MAURI = f.read().strip()
 
 REPO = "gemc/clas12Tags"  # e.g., "octocat/Hello-World"
-WORKFLOW_ID = "build_gemc.yml"  # e.g., "build.yml" or the workflow ID number
 
 # Set up the headers for authentication
 headers = {

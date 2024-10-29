@@ -33,4 +33,6 @@ echo "content of "$GEMC":"
 ls -lrt $GEMC
 #
 # copying executable and geometry for artifact retrieval
-cp -r gemc ../experiments /cvmfs/oasis.opensciencegrid.org/jlab/geant4/
+cp -r  ../experiments /cvmfs/oasis.opensciencegrid.org/jlab/geant4/
+mkdir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
+cp gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
