@@ -7,14 +7,7 @@
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/build_gemc.sh
 
-export
-# if we are in the docker container, we need to load the modules
-if [[ -z "${DISTTAG}" ]]; then
-	echo  "\nNot in container"
-else
-	echo  "\nIn container: ${DISTTAG}"
-	source  /etc/profile.d/localSetup.sh
-fi
+source ci/env.sh
 
 function compileGEMC {
 	# getting number of available CPUS
