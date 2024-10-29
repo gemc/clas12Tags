@@ -32,16 +32,15 @@ jobs:
   test:
     needs: generate-matrix
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-fedora36
+    container: jeffersonlab/gemc:gemc-dev-almalinux93
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
-
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Collect Workflow Telemetry
-        uses: runforesight/workflow-telemetry-action@v2.0.0
+#      - name: Collect Workflow Telemetry
+#        uses: runforesight/workflow-telemetry-action@v2.0.0
       - name: ${{ matrix.detector }} tests
         run: |
           ./ci/experiments_test.sh -g ${{ matrix.gcard }}

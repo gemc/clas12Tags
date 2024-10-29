@@ -19,13 +19,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-fedora36
+    container: jeffersonlab/gemc:gemc-dev-almalinux93
 
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Collect Workflow Telemetry
-        uses: catchpoint/workflow-telemetry-action@v2
+#      - name: Collect Workflow Telemetry
+#        uses: catchpoint/workflow-telemetry-action@v2
       - name: Build gemc
         run: |
           ./ci/build_gemc.sh

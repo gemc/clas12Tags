@@ -1,4 +1,4 @@
-name: Detector Tests
+name: Build gemc
 
 # Controls when the workflow will run
 on:
@@ -13,23 +13,25 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  actions: read
+
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:gemc-dev-almalinux93
-    strategy:
-      fail-fast: false
-      matrix:
-        detector:
-          - targets
-          - dc
+    container: jeffersonlab/gemc:gemc-dev-fedora36
+
     steps:
       - name: Checkout
         uses: actions/checkout@main
-#      - name: Workflow Telemetry
-#        uses: runforesight/workflow-telemetry-action@v2.0.0
-      - name: ${{ matrix.detector }} test
+#      - name: Collect Workflow Telemetry
+#        uses: catchpoint/workflow-telemetry-action@v2
+      - name: Build gemc
         run: |
-          ./ci/detectors_test.sh -d ${{ matrix.detector }}
-
+          ./ci/build_gemc.sh
+      - name: Copy gemc binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemc
+          path: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc
 
