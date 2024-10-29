@@ -25,10 +25,12 @@ function compileGEMC {
 
 cd source
 compileGEMC
-echo "copying gemc to "$GEMC for experiment tests
+echo "Copying gemc to "$GEMC/bin for experiment tests
 cp gemc $GEMC/bin
+cp -r ../experiments $GEMC
 echo
 echo "content of "$GEMC":"
 ls -lrt $GEMC
+#
 # copying executable and geometry for artifact retrieval
-cp gemc experiments /cvmfs/oasis.opensciencegrid.org/jlab/geant4/
+cp -r gemc ../experiments /cvmfs/oasis.opensciencegrid.org/jlab/geant4/

@@ -1,6 +1,6 @@
 <gcard>
 
-	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="bonus"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="bonusD2"/>
 
 	<option name="BEAM_P" value="e-, 11.0*GeV, 20*deg, 50*deg"/>
 	<option name="SPREAD_P" value="2.0*GeV, 20*deg, 20*deg"/>
