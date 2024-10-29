@@ -16,7 +16,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:gemc-dev-almalinux93
+    container: jeffersonlab/gemc:dev-almalinux93
     strategy:
       fail-fast: false
       matrix:

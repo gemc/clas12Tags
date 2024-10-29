@@ -19,22 +19,23 @@ releases notes for each distributed tag.
 
 <br>
 
-- [5.9](release_notes/5.9.md)
 - [5.10](release_notes/5.10.md)
 - [4.4.2](release_notes/4.4.2.md)
+- [dev](release_notes/dev.md) : notice this is the development version and may contain bugs.
 
 <br>
 
 To load gemc through the clas12 environment at JLab:
 
-- tcsh: `source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/setup.csh `
-- bash, zsh: `source /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/setup.sh`
-
+```commandline
+module use /scigroup/cvmfs/geant4/modules 
+module load geant4
+```
 
 To switch to a different version of gemc use `module switch`. For example:
 
 ```
-module switch gemc/5.10
+module switch gemc/dev
 ```
 
 To run GEMC you can select one of the gcards in the clas12-config installed on cvmfs. For example:
@@ -44,9 +45,6 @@ gemc /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/noarch/clas12-config/
 ```
 
 Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
-
-
-
 
 
 
@@ -121,8 +119,8 @@ The gcard can work from any location.
 Example on how to run at 80% torus field (inbending) and 60% solenoid field:
 
 ```
-<option name="SCALE_FIELD" value="TorusSymmetric, -0.8"/>
-<option name="SCALE_FIELD" value="clas12-newSolenoid, 0.6"/>
+<option name="SCALE_FIELD" value="binary_torus, -0.8"/>
+<option name="SCALE_FIELD" value="binary_solenoid, 0.6"/>
 ```
 
 <br>
@@ -174,7 +172,6 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-<br>
 
 ## Detector Sources
 

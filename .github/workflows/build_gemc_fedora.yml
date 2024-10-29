@@ -1,4 +1,4 @@
-name: Build gemc
+name: Fedora Build
 
 # Controls when the workflow will run
 on:
@@ -19,7 +19,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:gemc-dev-fedora36
+    container: jeffersonlab/gemc:dev-fedora36
 
     steps:
       - name: Checkout
@@ -33,5 +33,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: gemc
-          path: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc
-
+          path: |
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
