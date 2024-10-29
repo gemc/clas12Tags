@@ -7,12 +7,13 @@
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/detectors_test.sh -d targets
 
+export
 # if we are in the docker container, we need to load the modules
 if [[ -z "${DISTTAG}" ]]; then
 	echo  "\nNot in container"
 else
 	echo  "\nIn container: ${DISTTAG}"
-	source   source /etc/profile.d/localSetup.sh
+	source  /etc/profile.d/localSetup.sh
 fi
 
 Help() {
