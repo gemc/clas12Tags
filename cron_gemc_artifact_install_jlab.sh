@@ -7,13 +7,17 @@ workdir=/work/clas12/ungaro/tmp
 fedoradir=/scigroup/cvmfs/geant4/fedora36-gcc12/clas12Tags/dev/experiments
 almadir=/scigroup/cvmfs/geant4/almalinux9-gcc11/clas12Tags/dev/experiments
 
-
+mkdir -p $workdir
 cd $workdir
 echo
-echo "Cloning clas12Tags repo"
-echo
-git clone https://github.com/gemc/clas12Tags.git
-cd clas12Tags
+echo "Cloning or pulling clas12Tags repo"
+if [ -d clas12Tags ]; then
+  cd clas12Tags
+  git pull
+else
+	git clone https://github.com/gemc/clas12Tags.git
+	cd clas12Tags
+fi
 
 # remove all files in that are not present in the repo
 echo "Removing files not present in $fedoradir"
@@ -50,6 +54,4 @@ cd $almadir/..
 $workdir/clas12Tags/bin/get_last_ci_artifact.py almalinux
 
 echo
-echo Done. Cleaning up and exiting.
-cd $HOME
-rm -rf $workdir/clas12Tags
+echo Done.
