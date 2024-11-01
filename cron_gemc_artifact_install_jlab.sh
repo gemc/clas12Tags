@@ -44,10 +44,10 @@ cp -r experiments/* $almadir
 
 echo "Getting last CI artifact in fedora"
 cd $fedoradir/..
-$workdir/bin/get_last_ci_artifact.py fedora
+$workdir/clas12Tags/bin/get_last_ci_artifact.py fedora
 echo "Getting last CI artifact in almalinux"
 cd $almadir/..
-$workdir/bin/get_last_ci_artifact.py almalinux
+$workdir/clas12Tags/bin/get_last_ci_artifact.py almalinux
 
 echo
 echo Done. Cleaning up and exiting.
