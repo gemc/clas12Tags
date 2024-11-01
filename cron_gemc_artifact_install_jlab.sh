@@ -3,7 +3,7 @@
 # Purpose: Install gemc artifact in JLab's CVMFS
 
 
-workdir=/work/clas12/ungaro
+workdir=/work/clas12/ungaro/tmp
 fedoradir=/scigroup/cvmfs/geant4/fedora36-gcc12/clas12Tags/dev/experiments
 almadir=/scigroup/cvmfs/geant4/almalinux9-gcc11/clas12Tags/dev/experiments
 
@@ -52,4 +52,4 @@ $workdir/clas12Tags/bin/get_last_ci_artifact.py almalinux
 echo
 echo Done. Cleaning up and exiting.
 cd $HOME
-rm -rf $workdir
+rm -rf $workdir/clas12Tags
