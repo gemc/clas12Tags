@@ -9,10 +9,14 @@ almadir=/scigroup/cvmfs/geant4/almalinux9-gcc11/clas12Tags/dev/experiments
 
 
 cd $workdir
+echo
+echo "Cloning clas12Tags repo"
+echo
 git clone https://github.com/gemc/clas12Tags.git
 cd clas12Tags
 
 # remove all files in that are not present in the repo
+echo "Removing files not present in $fedoradir"
 for file in $(find "$fedoradir" -type f); do
   # Get the relative path of the file from the fedoradir directory
   relative_path="${file#$fedoradir/}"
@@ -23,6 +27,7 @@ for file in $(find "$fedoradir" -type f); do
   fi
 done
 
+echo "Removing files not present in $almadir"
 for file in $(find "$almadir" -type f); do
   # Get the relative path of the file from the fedoradir directory
   relative_path="${file#$almadir/}"
@@ -33,10 +38,18 @@ for file in $(find "$almadir" -type f); do
   fi
 done
 
+echo "Copying files to $fedoradir and $almadir"
 cp -r experiments/* $fedoradir
 cp -r experiments/* $almadir
 
+echo "Getting last CI artifact in fedora"
 cd $fedoradir/..
 $workdir/bin/get_last_ci_artifact.py fedora
+echo "Getting last CI artifact in almalinux"
 cd $almadir/..
 $workdir/bin/get_last_ci_artifact.py almalinux
+
+echo
+echo Done. Cleaning up and exiting.
+cd $HOME
+rm -rf $workdir
