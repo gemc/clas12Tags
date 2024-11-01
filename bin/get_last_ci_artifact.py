@@ -18,7 +18,7 @@ def download_artifact(download_url, token, artifact_name):
 		print(f"Artifact {artifact_name} downloaded successfully.")
 		# Unzip the artifact if it's a zip file
 		if filename.endswith('.zip'):
-			unzip_command = f"unzip {filename}"
+			unzip_command = f"unzip -o {filename}"
 			subprocess.run(unzip_command, shell=True)
 	else:
 		print(f"Failed to download artifact: {result.stderr}")
@@ -79,7 +79,7 @@ if runs_response.status_code == 200:
 
 
 			else:
-				print("No artifacts found for the latest workflow run.")
+				print("No artifacts found for the latest workflow run run ID:", latest_run_id)
 		else:
 			print("Failed to get artifacts:", artifacts_response.status_code,
 			      artifacts_response.text)
