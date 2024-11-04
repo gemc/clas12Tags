@@ -17,7 +17,8 @@
 - Removed DSS volumes and vacuum line from PRODUCTION cuts in clas12-config/gemc/dev
 - Significant cleanup on unused geometry files. Note: if someone is still used, please PR the re-activation in gemc/detectors
 - RGE double target implementation (Antonio Radic)
-- Remove FC (forward carriage) volume, not necessary 
+- Remove FC (forward carriage) volume, not necessary
+- Added WF:10 hipo bank, following Nathan's proposal: https://code.jlab.org/baltzell/clas12-wf/-/blob/main/README.md 
 - DC Geometry changes by Raffaella (in progress)
 - Torus + Shielding beamline CAD geometry (in progress) 
 - Several issues with RG-F target #236 (in progress)

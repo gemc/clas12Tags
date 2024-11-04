@@ -64,7 +64,6 @@ if runs_response.status_code == 200:
 		artifacts_url = f"https://api.github.com/repos/{REPO}/actions/runs/{latest_run_id}/artifacts"
 		artifacts_response = requests.get(artifacts_url, headers=headers)
 
-
 		if artifacts_response.status_code == 200:
 			artifacts = artifacts_response.json().get("artifacts", [])
 
@@ -76,7 +75,6 @@ if runs_response.status_code == 200:
 
 				# download the latest artifact
 				download_artifact(latest_artifact["archive_download_url"], MAURI, latest_artifact["name"])
-
 
 			else:
 				print("No artifacts found for the latest workflow run run ID:", latest_run_id)
