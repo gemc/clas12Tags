@@ -10,3 +10,8 @@ on:
 jobs:
   validation:
     uses: JeffersonLab/clas12-validation/.github/workflows/ci.yml@main
+    with:
+      git_upstream: >-
+        {
+          "clas12-config": { "fork": "JeffersonLab/clas12-config", "ref": "dev" }
+        }
