@@ -222,6 +222,11 @@ to:
 <detector name="cadBeamlineFTOFF/" factory="CAD"/>
 ```
 
+## Validation
+
+See [clas12-validation](https://github.com/jeffersonlab/clas12-validation) for validation of the CLAS12 simulation.
+In particular check this validation.yml 
+
 ## Feedback
 
 Please use CLAS12 discourse for feedback on anything clas12tags related:
