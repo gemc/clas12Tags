@@ -17,7 +17,11 @@ jobs:
           "coatjava": "latest",
           "gemc":     "dev"
         }
+      # git_upstream: >-
+      #   {
+      #     "clas12-config": { "fork": "JeffersonLab/clas12-config", "ref": "dev" }
+      #   }
       git_upstream: >-
         {
-          "clas12-config": { "fork": "JeffersonLab/clas12-config", "ref": "dev" }
+          "clas12-config": { "fork": "JeffersonLab/clas12-config", "ref": "respect-version" }
         }
