@@ -1,4 +1,4 @@
-# The clas12Tags repository
+# The clas12Tags repository 
 
 The clas12Tags repository maintains a version of gemc dedicated to the JLab CLAS12 experiments,
 with the CLAS12 detector geometry and gcards for the various experiment configurations.
