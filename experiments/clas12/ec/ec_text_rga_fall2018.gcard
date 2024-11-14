@@ -1,10 +1,10 @@
 <gcard>
 
 	<option name="geometry" value="1400x1200"/>
-	<option name="DATABASE" value="../clas12.sqlite"/>
 
-	<!-- SQLITE Factory. If run_number is not specified, it uses the value of RUNNO. If variation is not specified, it uses 'main' -->
-	<detector name="ec"  factory="SQLITE" variation="default"/>
+
+	<!-- TEXT Factory -->
+	<detector name="ec" factory="TEXT" variation="rga_fall2018"/>
 
 
 

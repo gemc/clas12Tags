@@ -1,2 +1,0 @@
-                 fmt  |                micromegas FMT  |                      layer sector strip  | 2.0*KeV   |  132*ns   |    1*mm   |  100*um   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  
-                 bmt  |                micromegas BMT  |                      layer sector strip  | 2.0*KeV   |  132*ns   |    1*mm   |  100*um   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  

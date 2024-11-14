@@ -4,9 +4,9 @@
 	<option name="DATABASE" value="../clas12.sqlite"/>
 
 	<!-- SQLITE Factory. If run_number is not specified, it uses the value of RUNNO. If variation is not specified, it uses 'main' -->
-	<detector name="ec"  factory="SQLITE" variation="default"/>
-
-
+	<detector name="dc" factory="SQLITE" variation="default"/>
+	<detector name="../magnets/cad/" factory="CAD"/>
+	<detector name="experiments/clas12/beamline/beamline" factory="TEXT" variation="FTOff"/>
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>
@@ -17,7 +17,7 @@
 	<option name="SCALE_FIELD" value="binary_solenoid, -1"/>
 
 	<option name="SAVE_ALL_MOTHERS" value="1"/>
-	<option name="INTEGRATEDRAW" value="ecal"/>
+	<option name="INTEGRATEDRAW" value="dc"/>
 
 	<option name="RUNNO" value="11"/>
 	<option name="OUTPUT" value="hipo, out.hipo"/>
