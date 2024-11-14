@@ -2,8 +2,7 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-	<detector name="../fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
-	<detector name="ltcc"      factory="TEXT" variation="rgm"/>
+	<detector name="ltcc"      factory="TEXT" variation="default"/>
 	<detector name="cad_cone/" factory="CAD"/>
 	<detector name="cad/"      factory="CAD"/>
 
@@ -16,8 +15,13 @@
 	<option name="BEAM_V"        value="(0,0,0)cm"/>
 	<option name="SPREAD_V"      value="(0,2.5)cm"/>
 
-	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
-	<option name="SCALE_FIELD"      value="TorusSymmetric, -1"/>
+	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->
+	<option name="SCALE_FIELD" value="binary_torus, -1"/>
+	<option name="SCALE_FIELD" value="binary_solenoid, -1"/>
+
+	<!-- hall field  -->
+	<option name="HALL_FIELD"  value="Symm_solenoid_r601_phi1_z1201_13June2018:Symm_torus_r2501_phi16_z251_24Apr2018"/>
+
 
 <!--
  <option name="SWITCH_MATERIALTO"  value="C4F10,HTCCgas"/>

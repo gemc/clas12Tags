@@ -1,0 +1,13 @@
+<gxml>
+	<!-- Band -->
+	<volume name="Band" mother="target" color="BB6622" position="0*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="band" identifiers="id manual 3 ID"/>
+	<volume name="Boxes" mother="target" color="893727" position="0*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="G4_Cu" identifiers="id manual 3 ID"/>
+
+	<!-- Targets -->
+	<volume name="Carbon" mother="target" color="191919" position="-0.01*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="G4_C" identifiers="id manual 3 ID"/>
+	<volume name="Aluminum" mother="target" color="848789" position="-0.01*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="G4_Al" identifiers="id manual 3 ID"/>
+	<volume name="Copper" mother="target" color="B87333" position="0*mm 0*mm -328.03*mm" rotation="0*deg 0*deg 240*deg" material="G4_Cu" identifiers="id manual 3 ID"/>
+	<volume name="Tin" mother="target" color="D3D4D5" position="0*mm 0*mm -328.03*mm" rotation="0*deg 0*deg 240*deg" material="G4_Sn" identifiers="id manual 3 ID"/>
+	<volume name="Lead" mother="target" color="6C6C6A" position="0*mm 0*mm -328.03*mm" rotation="0*deg 0*deg 240*deg" material="G4_Pb" identifiers="id manual 3 ID"/>
+
+</gxml>	

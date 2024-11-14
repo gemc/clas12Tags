@@ -1,7 +1,7 @@
 <gcard>
 	
 	<!-- target. ALERT target -->
-	<detector name="./ALERT_target/target" factory="TEXT" variation="alert"/>
+	<detector name="../targets/target" factory="TEXT" variation="alert"/> 
 		
 	<!-- Implementation ATOF, ahdc -->
 	<detector name="atof/atof" factory="TEXT" variation="default"/>
@@ -24,7 +24,7 @@
 	<option name="SAVE_ALL_MOTHERS" value="0"/>
 	
 	<!-- beam conditions -->
-	<option name="BEAM_P"   value="proton, 160*MeV, 90.0*deg, 0*deg"/>
+	<option name="BEAM_P"   value="proton, 2160*MeV, 90.0*deg, 0*deg"/>
  	<option name="SPREAD_P"  value="90*MeV, 30.0*deg, 180*deg"/>
 	
 	<option name="BEAM_V"    value="(0, 0, 0)cm"/>

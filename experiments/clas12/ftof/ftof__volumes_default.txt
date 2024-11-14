@@ -1,4 +1,4 @@
-       ftof_p1a_s1 |       fc | 227.9522006*cm 0*cm 652.1087354*cm | ordered: zyx -90*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   1   1   0
+       ftof_p1a_s1 |     root | 227.9522006*cm 0*cm 652.1087354*cm | ordered: zyx -90*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   1   1   0
 panel1a_sector1_paddle_1 | ftof_p1a_s1 | 0*cm 0*cm -166.6324*cm | 0 0 0 |      Box | 16.15*cm 2.54*cm 7.505*cm  |   11   1   1   1
 panel1a_sector1_paddle_2 | ftof_p1a_s1 | 0*cm 0*cm -151.484*cm | 0 0 0 |      Box | 24.05*cm 2.54*cm 7.505*cm  |   11   1   1   2
 panel1a_sector1_paddle_3 | ftof_p1a_s1 | 0*cm 0*cm -136.3356*cm | 0 0 0 |      Box | 32*cm 2.54*cm 7.505*cm  |   11   1   1   3
@@ -23,7 +23,7 @@ panel1a_sector1_paddle_21 | ftof_p1a_s1 | 0*cm 0*cm 136.3356*cm | 0 0 0 |      B
 panel1a_sector1_paddle_22 | ftof_p1a_s1 | 0*cm 0*cm 151.484*cm | 0 0 0 |      Box | 180.1*cm 2.54*cm 7.505*cm  |   11   1   1  22
 panel1a_sector1_paddle_23 | ftof_p1a_s1 | 0*cm 0*cm 166.6324*cm | 0 0 0 |      Box | 188.05*cm 2.54*cm 7.505*cm  |   11   1   1  23
 ftof_shield_p1a_sector1 | ftof_p1a_s1 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 16.15*cm 196*cm 0.00635*cm 0.00635*cm 174.1374*cm  | 
-       ftof_p1b_s1 |       fc | 218.9945871*cm 0*cm 638.3495944*cm | ordered: zyx -90*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   1   2   0
+       ftof_p1b_s1 |     root | 218.9945871*cm 0*cm 638.3495944*cm | ordered: zyx -90*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   1   2   0
 panel1b_sector1_paddle_1 | ftof_p1b_s1 | 0*cm 0*cm -186.7*cm | 0 0 0 |      Box | 8.635*cm 3*cm 3*cm  |   11   1   2   1
 panel1b_sector1_paddle_2 | ftof_p1b_s1 | 0*cm 0*cm -180.66*cm | 0 0 0 |      Box | 11.81*cm 3*cm 3*cm  |   11   1   2   2
 panel1b_sector1_paddle_3 | ftof_p1b_s1 | 0*cm 0*cm -174.46*cm | 0 0 0 |      Box | 15.04*cm 3*cm 3*cm  |   11   1   2   3
@@ -86,14 +86,14 @@ panel1b_sector1_paddle_59 | ftof_p1b_s1 | 0*cm 0*cm 168.26*cm | 0 0 0 |      Box
 panel1b_sector1_paddle_60 | ftof_p1b_s1 | 0*cm 0*cm 174.3*cm | 0 0 0 |      Box | 197.545*cm 3*cm 3*cm  |   11   1   2  60
 panel1b_sector1_paddle_61 | ftof_p1b_s1 | 0*cm 0*cm 180.5*cm | 0 0 0 |      Box | 200.775*cm 3*cm 3*cm  |   11   1   2  61
 panel1b_sector1_paddle_62 | ftof_p1b_s1 | 0*cm 0*cm 186.54*cm | 0 0 0 |      Box | 203.95*cm 3*cm 3*cm  |   11   1   2  62
-        ftof_p2_s1 |       fc | 407.0721297*cm 0*cm 496.5202621*cm | ordered: zyx -90*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   1   3   0
+        ftof_p2_s1 |     root | 407.0721297*cm 0*cm 496.5202621*cm | ordered: zyx -90*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   1   3   0
 panel2_sector1_paddle_1 | ftof_p2_s1 | 0*cm 0*cm -44.604*cm | 0 0 0 |      Box | 185.65*cm 2.54*cm 11*cm  |   11   1   3   1
 panel2_sector1_paddle_2 | ftof_p2_s1 | 0*cm 0*cm -22.302*cm | 0 0 0 |      Box | 192.5*cm 2.54*cm 11*cm  |   11   1   3   2
 panel2_sector1_paddle_3 | ftof_p2_s1 | 0*cm 0*cm 0*cm | 0 0 0 |      Box | 199.35*cm 2.54*cm 11*cm  |   11   1   3   3
 panel2_sector1_paddle_4 | ftof_p2_s1 | 0*cm 0*cm 22.302*cm | 0 0 0 |      Box | 206.25*cm 2.54*cm 11*cm  |   11   1   3   4
 panel2_sector1_paddle_5 | ftof_p2_s1 | 0*cm 0*cm 44.604*cm | 0 0 0 |      Box | 213.1*cm 2.54*cm 11*cm  |   11   1   3   5
 ftof_shield_p2_sector1 | ftof_p2_s1 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 185.65*cm 219.95*cm 0.00635*cm 0.00635*cm 55.604*cm  | 
-       ftof_p1a_s2 |       fc | 113.9761003*cm 197.4123966*cm 652.1087354*cm | ordered: zyx -150*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   2   1   0
+       ftof_p1a_s2 |     root | 113.9761003*cm 197.4123966*cm 652.1087354*cm | ordered: zyx -150*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   2   1   0
 panel1a_sector2_paddle_1 | ftof_p1a_s2 | 0*cm 0*cm -166.6324*cm | 0 0 0 |      Box | 16.15*cm 2.54*cm 7.505*cm  |   11   2   1   1
 panel1a_sector2_paddle_2 | ftof_p1a_s2 | 0*cm 0*cm -151.484*cm | 0 0 0 |      Box | 24.05*cm 2.54*cm 7.505*cm  |   11   2   1   2
 panel1a_sector2_paddle_3 | ftof_p1a_s2 | 0*cm 0*cm -136.3356*cm | 0 0 0 |      Box | 32*cm 2.54*cm 7.505*cm  |   11   2   1   3
@@ -118,7 +118,7 @@ panel1a_sector2_paddle_21 | ftof_p1a_s2 | 0*cm 0*cm 136.3356*cm | 0 0 0 |      B
 panel1a_sector2_paddle_22 | ftof_p1a_s2 | 0*cm 0*cm 151.484*cm | 0 0 0 |      Box | 180.1*cm 2.54*cm 7.505*cm  |   11   2   1  22
 panel1a_sector2_paddle_23 | ftof_p1a_s2 | 0*cm 0*cm 166.6324*cm | 0 0 0 |      Box | 188.05*cm 2.54*cm 7.505*cm  |   11   2   1  23
 ftof_shield_p1a_sector2 | ftof_p1a_s2 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 16.15*cm 196*cm 0.00635*cm 0.00635*cm 174.1374*cm  | 
-       ftof_p1b_s2 |       fc | 109.4972936*cm 189.6548757*cm 638.3495944*cm | ordered: zyx -150*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   2   2   0
+       ftof_p1b_s2 |     root | 109.4972936*cm 189.6548757*cm 638.3495944*cm | ordered: zyx -150*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   2   2   0
 panel1b_sector2_paddle_1 | ftof_p1b_s2 | 0*cm 0*cm -186.7*cm | 0 0 0 |      Box | 8.635*cm 3*cm 3*cm  |   11   2   2   1
 panel1b_sector2_paddle_2 | ftof_p1b_s2 | 0*cm 0*cm -180.66*cm | 0 0 0 |      Box | 11.81*cm 3*cm 3*cm  |   11   2   2   2
 panel1b_sector2_paddle_3 | ftof_p1b_s2 | 0*cm 0*cm -174.46*cm | 0 0 0 |      Box | 15.04*cm 3*cm 3*cm  |   11   2   2   3
@@ -181,14 +181,14 @@ panel1b_sector2_paddle_59 | ftof_p1b_s2 | 0*cm 0*cm 168.26*cm | 0 0 0 |      Box
 panel1b_sector2_paddle_60 | ftof_p1b_s2 | 0*cm 0*cm 174.3*cm | 0 0 0 |      Box | 197.545*cm 3*cm 3*cm  |   11   2   2  60
 panel1b_sector2_paddle_61 | ftof_p1b_s2 | 0*cm 0*cm 180.5*cm | 0 0 0 |      Box | 200.775*cm 3*cm 3*cm  |   11   2   2  61
 panel1b_sector2_paddle_62 | ftof_p1b_s2 | 0*cm 0*cm 186.54*cm | 0 0 0 |      Box | 203.95*cm 3*cm 3*cm  |   11   2   2  62
-        ftof_p2_s2 |       fc | 203.5360648*cm 352.5348055*cm 496.5202621*cm | ordered: zyx -150*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   2   3   0
+        ftof_p2_s2 |     root | 203.5360648*cm 352.5348055*cm 496.5202621*cm | ordered: zyx -150*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   2   3   0
 panel2_sector2_paddle_1 | ftof_p2_s2 | 0*cm 0*cm -44.604*cm | 0 0 0 |      Box | 185.65*cm 2.54*cm 11*cm  |   11   2   3   1
 panel2_sector2_paddle_2 | ftof_p2_s2 | 0*cm 0*cm -22.302*cm | 0 0 0 |      Box | 192.5*cm 2.54*cm 11*cm  |   11   2   3   2
 panel2_sector2_paddle_3 | ftof_p2_s2 | 0*cm 0*cm 0*cm | 0 0 0 |      Box | 199.35*cm 2.54*cm 11*cm  |   11   2   3   3
 panel2_sector2_paddle_4 | ftof_p2_s2 | 0*cm 0*cm 22.302*cm | 0 0 0 |      Box | 206.25*cm 2.54*cm 11*cm  |   11   2   3   4
 panel2_sector2_paddle_5 | ftof_p2_s2 | 0*cm 0*cm 44.604*cm | 0 0 0 |      Box | 213.1*cm 2.54*cm 11*cm  |   11   2   3   5
 ftof_shield_p2_sector2 | ftof_p2_s2 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 185.65*cm 219.95*cm 0.00635*cm 0.00635*cm 55.604*cm  | 
-       ftof_p1a_s3 |       fc | -113.9761003*cm 197.4123966*cm 652.1087354*cm | ordered: zyx -210*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   3   1   0
+       ftof_p1a_s3 |     root | -113.9761003*cm 197.4123966*cm 652.1087354*cm | ordered: zyx -210*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   3   1   0
 panel1a_sector3_paddle_1 | ftof_p1a_s3 | 0*cm 0*cm -166.6324*cm | 0 0 0 |      Box | 16.15*cm 2.54*cm 7.505*cm  |   11   3   1   1
 panel1a_sector3_paddle_2 | ftof_p1a_s3 | 0*cm 0*cm -151.484*cm | 0 0 0 |      Box | 24.05*cm 2.54*cm 7.505*cm  |   11   3   1   2
 panel1a_sector3_paddle_3 | ftof_p1a_s3 | 0*cm 0*cm -136.3356*cm | 0 0 0 |      Box | 32*cm 2.54*cm 7.505*cm  |   11   3   1   3
@@ -213,7 +213,7 @@ panel1a_sector3_paddle_21 | ftof_p1a_s3 | 0*cm 0*cm 136.3356*cm | 0 0 0 |      B
 panel1a_sector3_paddle_22 | ftof_p1a_s3 | 0*cm 0*cm 151.484*cm | 0 0 0 |      Box | 180.1*cm 2.54*cm 7.505*cm  |   11   3   1  22
 panel1a_sector3_paddle_23 | ftof_p1a_s3 | 0*cm 0*cm 166.6324*cm | 0 0 0 |      Box | 188.05*cm 2.54*cm 7.505*cm  |   11   3   1  23
 ftof_shield_p1a_sector3 | ftof_p1a_s3 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 16.15*cm 196*cm 0.00635*cm 0.00635*cm 174.1374*cm  | 
-       ftof_p1b_s3 |       fc | -109.4972936*cm 189.6548757*cm 638.3495944*cm | ordered: zyx -210*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   3   2   0
+       ftof_p1b_s3 |     root | -109.4972936*cm 189.6548757*cm 638.3495944*cm | ordered: zyx -210*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   3   2   0
 panel1b_sector3_paddle_1 | ftof_p1b_s3 | 0*cm 0*cm -186.7*cm | 0 0 0 |      Box | 8.635*cm 3*cm 3*cm  |   11   3   2   1
 panel1b_sector3_paddle_2 | ftof_p1b_s3 | 0*cm 0*cm -180.66*cm | 0 0 0 |      Box | 11.81*cm 3*cm 3*cm  |   11   3   2   2
 panel1b_sector3_paddle_3 | ftof_p1b_s3 | 0*cm 0*cm -174.46*cm | 0 0 0 |      Box | 15.04*cm 3*cm 3*cm  |   11   3   2   3
@@ -276,14 +276,14 @@ panel1b_sector3_paddle_59 | ftof_p1b_s3 | 0*cm 0*cm 168.26*cm | 0 0 0 |      Box
 panel1b_sector3_paddle_60 | ftof_p1b_s3 | 0*cm 0*cm 174.3*cm | 0 0 0 |      Box | 197.545*cm 3*cm 3*cm  |   11   3   2  60
 panel1b_sector3_paddle_61 | ftof_p1b_s3 | 0*cm 0*cm 180.5*cm | 0 0 0 |      Box | 200.775*cm 3*cm 3*cm  |   11   3   2  61
 panel1b_sector3_paddle_62 | ftof_p1b_s3 | 0*cm 0*cm 186.54*cm | 0 0 0 |      Box | 203.95*cm 3*cm 3*cm  |   11   3   2  62
-        ftof_p2_s3 |       fc | -203.5360648*cm 352.5348055*cm 496.5202621*cm | ordered: zyx -210*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   3   3   0
+        ftof_p2_s3 |     root | -203.5360648*cm 352.5348055*cm 496.5202621*cm | ordered: zyx -210*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   3   3   0
 panel2_sector3_paddle_1 | ftof_p2_s3 | 0*cm 0*cm -44.604*cm | 0 0 0 |      Box | 185.65*cm 2.54*cm 11*cm  |   11   3   3   1
 panel2_sector3_paddle_2 | ftof_p2_s3 | 0*cm 0*cm -22.302*cm | 0 0 0 |      Box | 192.5*cm 2.54*cm 11*cm  |   11   3   3   2
 panel2_sector3_paddle_3 | ftof_p2_s3 | 0*cm 0*cm 0*cm | 0 0 0 |      Box | 199.35*cm 2.54*cm 11*cm  |   11   3   3   3
 panel2_sector3_paddle_4 | ftof_p2_s3 | 0*cm 0*cm 22.302*cm | 0 0 0 |      Box | 206.25*cm 2.54*cm 11*cm  |   11   3   3   4
 panel2_sector3_paddle_5 | ftof_p2_s3 | 0*cm 0*cm 44.604*cm | 0 0 0 |      Box | 213.1*cm 2.54*cm 11*cm  |   11   3   3   5
 ftof_shield_p2_sector3 | ftof_p2_s3 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 185.65*cm 219.95*cm 0.00635*cm 0.00635*cm 55.604*cm  | 
-       ftof_p1a_s4 |       fc | -227.9522006*cm 0*cm 652.1087354*cm | ordered: zyx -270*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   4   1   0
+       ftof_p1a_s4 |     root | -227.9522006*cm 0*cm 652.1087354*cm | ordered: zyx -270*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   4   1   0
 panel1a_sector4_paddle_1 | ftof_p1a_s4 | 0*cm 0*cm -166.6324*cm | 0 0 0 |      Box | 16.15*cm 2.54*cm 7.505*cm  |   11   4   1   1
 panel1a_sector4_paddle_2 | ftof_p1a_s4 | 0*cm 0*cm -151.484*cm | 0 0 0 |      Box | 24.05*cm 2.54*cm 7.505*cm  |   11   4   1   2
 panel1a_sector4_paddle_3 | ftof_p1a_s4 | 0*cm 0*cm -136.3356*cm | 0 0 0 |      Box | 32*cm 2.54*cm 7.505*cm  |   11   4   1   3
@@ -308,7 +308,7 @@ panel1a_sector4_paddle_21 | ftof_p1a_s4 | 0*cm 0*cm 136.3356*cm | 0 0 0 |      B
 panel1a_sector4_paddle_22 | ftof_p1a_s4 | 0*cm 0*cm 151.484*cm | 0 0 0 |      Box | 180.1*cm 2.54*cm 7.505*cm  |   11   4   1  22
 panel1a_sector4_paddle_23 | ftof_p1a_s4 | 0*cm 0*cm 166.6324*cm | 0 0 0 |      Box | 188.05*cm 2.54*cm 7.505*cm  |   11   4   1  23
 ftof_shield_p1a_sector4 | ftof_p1a_s4 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 16.15*cm 196*cm 0.00635*cm 0.00635*cm 174.1374*cm  | 
-       ftof_p1b_s4 |       fc | -218.9945871*cm 0*cm 638.3495944*cm | ordered: zyx -270*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   4   2   0
+       ftof_p1b_s4 |     root | -218.9945871*cm 0*cm 638.3495944*cm | ordered: zyx -270*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   4   2   0
 panel1b_sector4_paddle_1 | ftof_p1b_s4 | 0*cm 0*cm -186.7*cm | 0 0 0 |      Box | 8.635*cm 3*cm 3*cm  |   11   4   2   1
 panel1b_sector4_paddle_2 | ftof_p1b_s4 | 0*cm 0*cm -180.66*cm | 0 0 0 |      Box | 11.81*cm 3*cm 3*cm  |   11   4   2   2
 panel1b_sector4_paddle_3 | ftof_p1b_s4 | 0*cm 0*cm -174.46*cm | 0 0 0 |      Box | 15.04*cm 3*cm 3*cm  |   11   4   2   3
@@ -371,14 +371,14 @@ panel1b_sector4_paddle_59 | ftof_p1b_s4 | 0*cm 0*cm 168.26*cm | 0 0 0 |      Box
 panel1b_sector4_paddle_60 | ftof_p1b_s4 | 0*cm 0*cm 174.3*cm | 0 0 0 |      Box | 197.545*cm 3*cm 3*cm  |   11   4   2  60
 panel1b_sector4_paddle_61 | ftof_p1b_s4 | 0*cm 0*cm 180.5*cm | 0 0 0 |      Box | 200.775*cm 3*cm 3*cm  |   11   4   2  61
 panel1b_sector4_paddle_62 | ftof_p1b_s4 | 0*cm 0*cm 186.54*cm | 0 0 0 |      Box | 203.95*cm 3*cm 3*cm  |   11   4   2  62
-        ftof_p2_s4 |       fc | -407.0721297*cm 0*cm 496.5202621*cm | ordered: zyx -270*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   4   3   0
+        ftof_p2_s4 |     root | -407.0721297*cm 0*cm 496.5202621*cm | ordered: zyx -270*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   4   3   0
 panel2_sector4_paddle_1 | ftof_p2_s4 | 0*cm 0*cm -44.604*cm | 0 0 0 |      Box | 185.65*cm 2.54*cm 11*cm  |   11   4   3   1
 panel2_sector4_paddle_2 | ftof_p2_s4 | 0*cm 0*cm -22.302*cm | 0 0 0 |      Box | 192.5*cm 2.54*cm 11*cm  |   11   4   3   2
 panel2_sector4_paddle_3 | ftof_p2_s4 | 0*cm 0*cm 0*cm | 0 0 0 |      Box | 199.35*cm 2.54*cm 11*cm  |   11   4   3   3
 panel2_sector4_paddle_4 | ftof_p2_s4 | 0*cm 0*cm 22.302*cm | 0 0 0 |      Box | 206.25*cm 2.54*cm 11*cm  |   11   4   3   4
 panel2_sector4_paddle_5 | ftof_p2_s4 | 0*cm 0*cm 44.604*cm | 0 0 0 |      Box | 213.1*cm 2.54*cm 11*cm  |   11   4   3   5
 ftof_shield_p2_sector4 | ftof_p2_s4 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 185.65*cm 219.95*cm 0.00635*cm 0.00635*cm 55.604*cm  | 
-       ftof_p1a_s5 |       fc | -113.9761003*cm -197.4123966*cm 652.1087354*cm | ordered: zyx -330*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   5   1   0
+       ftof_p1a_s5 |     root | -113.9761003*cm -197.4123966*cm 652.1087354*cm | ordered: zyx -330*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   5   1   0
 panel1a_sector5_paddle_1 | ftof_p1a_s5 | 0*cm 0*cm -166.6324*cm | 0 0 0 |      Box | 16.15*cm 2.54*cm 7.505*cm  |   11   5   1   1
 panel1a_sector5_paddle_2 | ftof_p1a_s5 | 0*cm 0*cm -151.484*cm | 0 0 0 |      Box | 24.05*cm 2.54*cm 7.505*cm  |   11   5   1   2
 panel1a_sector5_paddle_3 | ftof_p1a_s5 | 0*cm 0*cm -136.3356*cm | 0 0 0 |      Box | 32*cm 2.54*cm 7.505*cm  |   11   5   1   3
@@ -403,7 +403,7 @@ panel1a_sector5_paddle_21 | ftof_p1a_s5 | 0*cm 0*cm 136.3356*cm | 0 0 0 |      B
 panel1a_sector5_paddle_22 | ftof_p1a_s5 | 0*cm 0*cm 151.484*cm | 0 0 0 |      Box | 180.1*cm 2.54*cm 7.505*cm  |   11   5   1  22
 panel1a_sector5_paddle_23 | ftof_p1a_s5 | 0*cm 0*cm 166.6324*cm | 0 0 0 |      Box | 188.05*cm 2.54*cm 7.505*cm  |   11   5   1  23
 ftof_shield_p1a_sector5 | ftof_p1a_s5 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 16.15*cm 196*cm 0.00635*cm 0.00635*cm 174.1374*cm  | 
-       ftof_p1b_s5 |       fc | -109.4972936*cm -189.6548757*cm 638.3495944*cm | ordered: zyx -330*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   5   2   0
+       ftof_p1b_s5 |     root | -109.4972936*cm -189.6548757*cm 638.3495944*cm | ordered: zyx -330*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   5   2   0
 panel1b_sector5_paddle_1 | ftof_p1b_s5 | 0*cm 0*cm -186.7*cm | 0 0 0 |      Box | 8.635*cm 3*cm 3*cm  |   11   5   2   1
 panel1b_sector5_paddle_2 | ftof_p1b_s5 | 0*cm 0*cm -180.66*cm | 0 0 0 |      Box | 11.81*cm 3*cm 3*cm  |   11   5   2   2
 panel1b_sector5_paddle_3 | ftof_p1b_s5 | 0*cm 0*cm -174.46*cm | 0 0 0 |      Box | 15.04*cm 3*cm 3*cm  |   11   5   2   3
@@ -466,14 +466,14 @@ panel1b_sector5_paddle_59 | ftof_p1b_s5 | 0*cm 0*cm 168.26*cm | 0 0 0 |      Box
 panel1b_sector5_paddle_60 | ftof_p1b_s5 | 0*cm 0*cm 174.3*cm | 0 0 0 |      Box | 197.545*cm 3*cm 3*cm  |   11   5   2  60
 panel1b_sector5_paddle_61 | ftof_p1b_s5 | 0*cm 0*cm 180.5*cm | 0 0 0 |      Box | 200.775*cm 3*cm 3*cm  |   11   5   2  61
 panel1b_sector5_paddle_62 | ftof_p1b_s5 | 0*cm 0*cm 186.54*cm | 0 0 0 |      Box | 203.95*cm 3*cm 3*cm  |   11   5   2  62
-        ftof_p2_s5 |       fc | -203.5360648*cm -352.5348055*cm 496.5202621*cm | ordered: zyx -330*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   5   3   0
+        ftof_p2_s5 |     root | -203.5360648*cm -352.5348055*cm 496.5202621*cm | ordered: zyx -330*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   5   3   0
 panel2_sector5_paddle_1 | ftof_p2_s5 | 0*cm 0*cm -44.604*cm | 0 0 0 |      Box | 185.65*cm 2.54*cm 11*cm  |   11   5   3   1
 panel2_sector5_paddle_2 | ftof_p2_s5 | 0*cm 0*cm -22.302*cm | 0 0 0 |      Box | 192.5*cm 2.54*cm 11*cm  |   11   5   3   2
 panel2_sector5_paddle_3 | ftof_p2_s5 | 0*cm 0*cm 0*cm | 0 0 0 |      Box | 199.35*cm 2.54*cm 11*cm  |   11   5   3   3
 panel2_sector5_paddle_4 | ftof_p2_s5 | 0*cm 0*cm 22.302*cm | 0 0 0 |      Box | 206.25*cm 2.54*cm 11*cm  |   11   5   3   4
 panel2_sector5_paddle_5 | ftof_p2_s5 | 0*cm 0*cm 44.604*cm | 0 0 0 |      Box | 213.1*cm 2.54*cm 11*cm  |   11   5   3   5
 ftof_shield_p2_sector5 | ftof_p2_s5 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 185.65*cm 219.95*cm 0.00635*cm 0.00635*cm 55.604*cm  | 
-       ftof_p1a_s6 |       fc | 113.9761003*cm -197.4123966*cm 652.1087354*cm | ordered: zyx -390*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   6   1   0
+       ftof_p1a_s6 |     root | 113.9761003*cm -197.4123966*cm 652.1087354*cm | ordered: zyx -390*deg 0*deg -115*deg |      Trd | 20.15*cm 200*cm 6.54*cm 6.54*cm 178.1374*cm  |   11   6   1   0
 panel1a_sector6_paddle_1 | ftof_p1a_s6 | 0*cm 0*cm -166.6324*cm | 0 0 0 |      Box | 16.15*cm 2.54*cm 7.505*cm  |   11   6   1   1
 panel1a_sector6_paddle_2 | ftof_p1a_s6 | 0*cm 0*cm -151.484*cm | 0 0 0 |      Box | 24.05*cm 2.54*cm 7.505*cm  |   11   6   1   2
 panel1a_sector6_paddle_3 | ftof_p1a_s6 | 0*cm 0*cm -136.3356*cm | 0 0 0 |      Box | 32*cm 2.54*cm 7.505*cm  |   11   6   1   3
@@ -498,7 +498,7 @@ panel1a_sector6_paddle_21 | ftof_p1a_s6 | 0*cm 0*cm 136.3356*cm | 0 0 0 |      B
 panel1a_sector6_paddle_22 | ftof_p1a_s6 | 0*cm 0*cm 151.484*cm | 0 0 0 |      Box | 180.1*cm 2.54*cm 7.505*cm  |   11   6   1  22
 panel1a_sector6_paddle_23 | ftof_p1a_s6 | 0*cm 0*cm 166.6324*cm | 0 0 0 |      Box | 188.05*cm 2.54*cm 7.505*cm  |   11   6   1  23
 ftof_shield_p1a_sector6 | ftof_p1a_s6 | 0*cm -2.54735*cm 0*cm | 0 0 0 |      Trd | 16.15*cm 196*cm 0.00635*cm 0.00635*cm 174.1374*cm  | 
-       ftof_p1b_s6 |       fc | 109.4972936*cm -189.6548757*cm 638.3495944*cm | ordered: zyx -390*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   6   2   0
+       ftof_p1b_s6 |     root | 109.4972936*cm -189.6548757*cm 638.3495944*cm | ordered: zyx -390*deg 0*deg -115*deg |      Trd | 12.635*cm 211.125*cm 7*cm 7*cm 193.62*cm  |   11   6   2   0
 panel1b_sector6_paddle_1 | ftof_p1b_s6 | 0*cm 0*cm -186.7*cm | 0 0 0 |      Box | 8.635*cm 3*cm 3*cm  |   11   6   2   1
 panel1b_sector6_paddle_2 | ftof_p1b_s6 | 0*cm 0*cm -180.66*cm | 0 0 0 |      Box | 11.81*cm 3*cm 3*cm  |   11   6   2   2
 panel1b_sector6_paddle_3 | ftof_p1b_s6 | 0*cm 0*cm -174.46*cm | 0 0 0 |      Box | 15.04*cm 3*cm 3*cm  |   11   6   2   3
@@ -561,7 +561,7 @@ panel1b_sector6_paddle_59 | ftof_p1b_s6 | 0*cm 0*cm 168.26*cm | 0 0 0 |      Box
 panel1b_sector6_paddle_60 | ftof_p1b_s6 | 0*cm 0*cm 174.3*cm | 0 0 0 |      Box | 197.545*cm 3*cm 3*cm  |   11   6   2  60
 panel1b_sector6_paddle_61 | ftof_p1b_s6 | 0*cm 0*cm 180.5*cm | 0 0 0 |      Box | 200.775*cm 3*cm 3*cm  |   11   6   2  61
 panel1b_sector6_paddle_62 | ftof_p1b_s6 | 0*cm 0*cm 186.54*cm | 0 0 0 |      Box | 203.95*cm 3*cm 3*cm  |   11   6   2  62
-        ftof_p2_s6 |       fc | 203.5360648*cm -352.5348055*cm 496.5202621*cm | ordered: zyx -390*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   6   3   0
+        ftof_p2_s6 |     root | 203.5360648*cm -352.5348055*cm 496.5202621*cm | ordered: zyx -390*deg 0*deg -148.11*deg |      Trd | 189.65*cm 223.95*cm 6.54*cm 6.54*cm 59.604*cm  |   11   6   3   0
 panel2_sector6_paddle_1 | ftof_p2_s6 | 0*cm 0*cm -44.604*cm | 0 0 0 |      Box | 185.65*cm 2.54*cm 11*cm  |   11   6   3   1
 panel2_sector6_paddle_2 | ftof_p2_s6 | 0*cm 0*cm -22.302*cm | 0 0 0 |      Box | 192.5*cm 2.54*cm 11*cm  |   11   6   3   2
 panel2_sector6_paddle_3 | ftof_p2_s6 | 0*cm 0*cm 0*cm | 0 0 0 |      Box | 199.35*cm 2.54*cm 11*cm  |   11   6   3   3

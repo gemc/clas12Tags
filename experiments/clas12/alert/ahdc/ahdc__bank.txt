@@ -1,0 +1,20 @@
+                ahdc  |              bankid  |                                      ahdc bank ID  |22400   |                  Di  
+                ahdc  |              sector  |                                          set to 0  |    1   |                  Di  
+                ahdc  |               layer  |               hipo layer is superlayer*10 + layer  |    2   |                  Di  
+                ahdc  |           component  |                                       wire number  |    3   |                  Di  
+                ahdc  |           ADC_order  |                                          set to 0  |    4   |                  Di  
+                ahdc  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
+                ahdc  |            ADC_time  |                           adc time from pulse fit  |    6   |                  Di  
+                ahdc  |             ADC_ped  |       pedestal from pulse - currently set to doca  |    7   |                  Di  
+                ahdc  |      WF10_timestamp  |                                Hardware Timestamp  |    4   |                  Dl  
+                ahdc  |             WF10_s1  |                                     ADC sample #1  |    5   |                  Di  
+                ahdc  |             WF10_s2  |                                     ADC sample #2  |    6   |                  Di  
+                ahdc  |             WF10_s3  |                                     ADC sample #3  |    7   |                  Di  
+                ahdc  |             WF10_s4  |                                     ADC sample #4  |    8   |                  Di  
+                ahdc  |             WF10_s5  |                                     ADC sample #5  |    9   |                  Di  
+                ahdc  |             WF10_s6  |                                     ADC sample #6  |   10   |                  Di  
+                ahdc  |             WF10_s7  |                                     ADC sample #7  |   11   |                  Di  
+                ahdc  |             WF10_s8  |                                     ADC sample #8  |   12   |                  Di  
+                ahdc  |             WF10_s9  |                                     ADC sample #9  |   13   |                  Di  
+                ahdc  |            WF10_s10  |                                    ADC sample #10  |   14   |                  Di  
+                ahdc  |                hitn  |                                        hit number  |   99   |                  Di  
