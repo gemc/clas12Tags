@@ -11,8 +11,15 @@ jobs:
   validation:
     uses: JeffersonLab/clas12-validation/.github/workflows/ci.yml@main
     with:
+      gemc_version: build
+      config_file_versions: >-
+        {
+          "coatjava": "latest",
+          "gemc":     "dev"
+        }
       git_upstream: >-
         {
           "clas12-config": { "fork": "JeffersonLab/clas12-config", "ref": "dev" },
           "coatjava":      { "fork": "JeffersonLab/coatjava",      "ref": "" }
         }
+
