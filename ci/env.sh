@@ -12,6 +12,8 @@ else
 		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 	fi
 	source  /etc/profile.d/localSetup.sh
+	module load hipo
+	module load ccdb
 	echo
 	export
 fi
