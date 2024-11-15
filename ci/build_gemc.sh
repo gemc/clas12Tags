@@ -27,7 +27,8 @@ cd source
 compileGEMC
 echo "Copying gemc to "$GEMC/bin for experiment tests
 cp gemc $GEMC/bin
-cp -r ../experiments $GEMC
+cd ..
+cp -r experiments $GEMC
 echo
 echo "content of "$GEMC":"
 ls -lrt $GEMC
@@ -40,4 +41,4 @@ cp -r lib /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 # cloning the latest api to source
 git clone https://github.com/gemc/api
 rm -rf api/.git
-cp -r source api /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+cp -r api source /cvmfs/oasis.opensciencegrid.org/jlab/geant4
