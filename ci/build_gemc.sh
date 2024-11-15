@@ -36,7 +36,6 @@ ls -lrt $GEMC
 # copying executable and geometry for artifact retrieval
 mkdir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
 cp gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
-cp -r lib /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 # cloning the latest api to source
 git clone https://github.com/gemc/api
