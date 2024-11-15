@@ -38,8 +38,6 @@ cp gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
 cp -r lib /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 # cloning the latest api to source
-cd source
 git clone https://github.com/gemc/api
 rm -rf api/.git
-cd ..
-cp -r source /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+cp -r source api /cvmfs/oasis.opensciencegrid.org/jlab/geant4

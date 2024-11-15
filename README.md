@@ -19,6 +19,7 @@ releases notes for each distributed tag.
 
 <br>
 
+- [dev](release_notes/5.11.md, use COATJAVA release 11.0.4 )
 - [5.10](release_notes/5.10.md)
 - [4.4.2](release_notes/4.4.2.md)
 - [dev](release_notes/dev.md) : notice this is the development version and may contain bugs.
