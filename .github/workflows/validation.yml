@@ -1,9 +1,8 @@
 name: Validation
 
 on:
-  pull_request:
   push:
-    branches: [ main ]
+    branches: [ '*' ]
     tags: [ '*' ]
   workflow_dispatch:
 
