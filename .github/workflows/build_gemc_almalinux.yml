@@ -19,7 +19,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux93
+    container: jeffersonlab/gemc:dev-almalinux94
 
     steps:
       - name: Checkout
