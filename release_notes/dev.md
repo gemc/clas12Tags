@@ -15,7 +15,7 @@
 - Removed duplicated CAD target aluminum windows
 - Added beamline components and adjusted vacuum line downstream of the torus, see CLAS Note 2024-006
 - Removed DSS volumes and vacuum line from PRODUCTION cuts in clas12-config/gemc/dev
-- Significant cleanup on unused geometry files. Note: if someone is still used, please PR the re-activation in gemc/detectors
+- Significant cleanup on unused geometry files. Note: if some old geometry is still needed, please PR the re-activation in gemc/detectors
 - RGE double target implementation (Antonio Radic)
 - Remove FC (forward carriage) volume, not necessary
 - Added WF:10 hipo bank, following Nathan's proposal: https://code.jlab.org/baltzell/clas12-wf/-/blob/main/README.md 
