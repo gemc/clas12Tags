@@ -2,7 +2,9 @@ name: Validation
 
 on:
   push:
-    branches: [ '*' ]
+    branches:
+      - '*'
+      - '!new_cad_import'
     tags: [ '*' ]
   workflow_dispatch:
 
