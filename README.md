@@ -5,7 +5,7 @@ with the CLAS12 detector geometry and gcards for the various experiment configur
 
 It is tagged more frequently than the main gemc repository - as needed by CLAS12 experiments.
 
-The tags distributed as tarball and maintained as modules are tested. Some versions may be deleted because they 
+The tags distributed as tarball and maintained as modules are tested. Some versions may be deleted because they
 contain bugs or inaccuracies. The release notes for those versions are accumulated in the
 releases notes for each distributed tag.
 
@@ -66,7 +66,7 @@ GEMC simulations can be run on the Open Science Grid (OSG) using the
 
 Load the environment as [described above](#use-gemc-versions-installed-at-jlab-on-site-and-on-cvmfs-).
 
-Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags) 
+Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags)
 and unpack it (using 5.X as an example):
 
 ```
@@ -88,16 +88,17 @@ where N is the number of cores available.
 ## How to make changes to the clas12Tags
 
 clas12Tags is a repo with source code and geometry derived from gemc/source.
-Modifications should be made to the gemc/source repo by forking it 
-and making a pull request. 
+Modifications should be made to the gemc/source repo by forking it
+and making a pull request.
 
-Note: gemc uses static function to load specific clas12 code (ugly, fixed in gemc3). 
+Note: gemc uses static function to load specific clas12 code (ugly, fixed in gemc3).
 In particular the BMT and FMT hit processes have these two functions:
 
 ```
 bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(-1);
 fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(-1);
 ```
+
 that should be changed to:
 
 ```
@@ -105,9 +106,8 @@ bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
 fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(1);
 ```
 
-to initialize properly BMT and FMT and avoid seg fault when those 
+to initialize properly BMT and FMT and avoid seg fault when those
 detectors are used. This is done in the clas12Tags repo.
-
 
 # Changing Configurations
 
@@ -173,7 +173,6 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-
 ## Detector Sources
 
 <br>
@@ -199,11 +198,10 @@ and the tungsten cone is moved upstream.
 The simulations in preparation of the first experiment should use the default version FTOn.
 FTOff will be used only by experts for special studies in preparation for the engineering run.
 
-
 |                                                                              |                                                                                                         |
 |------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/>                            |
- | FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
+| FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
 
 <br>
 
@@ -223,10 +221,24 @@ to:
 <detector name="cadBeamlineFTOFF/" factory="CAD"/>
 ```
 
-## Validation
+### Run numbers vs Run groups
 
-See [clas12-validation](https://github.com/jeffersonlab/clas12-validation) for validation of the CLAS12 simulation.
-In particular check this validation.yml 
+Source: [calcom run groups](https://clasweb.jlab.org/wiki/index.php/CLAS12_Calibration_and_Commissioning)
+
+|                    |               | 
+|--------------------|---------------|
+| rga_spring2018     | 2366-4325     |
+| rga_fall2018       | 4763-5666     |
+| rgk_fall2018_FTOn  | 5681-5749     |
+| rgk_fall2018_FTOff | 5875-6000     |
+| rga_spring2019     | 6608-6783     |
+| rgb_spring2019     | 6132 – 6603   |
+| rgb_fall2019       | 11093 – 11571 |
+| rgf_spring2020     |               |
+| rgm_fall2021       | 15015 - 15884 |
+| rgc_summer2022     | 16042-16755   |
+| rgc_fall2022       | 16843-17408   |
+| rge_spring2024     |               |
 
 ## Feedback
 
