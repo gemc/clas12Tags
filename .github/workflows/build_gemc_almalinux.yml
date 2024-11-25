@@ -30,6 +30,5 @@ jobs:
           name: gemc
           path: |
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/source
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api
 
