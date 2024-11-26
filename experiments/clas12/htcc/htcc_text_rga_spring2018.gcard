@@ -3,9 +3,9 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="./htcc" factory="TEXT" variation="original"/>
+	<detector name="./htcc" factory="TEXT" variation="rga_spring2018"/>
 	<!-- CAD Factory. Volumes parameters come from GXML file, with _<variation> in the filename -->
-	<detector name="./cad/" factory="CAD"  variation="original"/>
+	<detector name="./cad/" factory="CAD"  variation="rga_spring2018"/>
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>

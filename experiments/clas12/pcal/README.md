@@ -21,7 +21,7 @@ This will:
 2. add detector run entries to the ../clas12.sqlite database
 
 
-## Consistency check method 1: compare parameters
+## Geometry comparison:
 
 To compare the two databases (TEXT and SQLITE) the script ` $GEMC/api/perl/db_compare.py` can be used:
 
@@ -37,7 +37,7 @@ $GEMC/api/perl/db_compare.py pcal__geometry_rga_fall2018.txt ../clas12.sqlite pc
 
 
 
-## Consistency check method 2: run gemc with both databases
+## GEMC Output comparison
 
 Run 11:
 
