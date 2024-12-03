@@ -3,8 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<!-- TEXT Factory -->
-	<detector name="ec" factory="TEXT" variation="default"/>
+	<detector name="ec" factory="TEXT"/>
 
 
 

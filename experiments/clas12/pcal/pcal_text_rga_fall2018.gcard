@@ -3,7 +3,6 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<!-- TEXT Factory -->
 	<detector name="pcal"     factory="TEXT" variation="rga_fall2018"/>
 	<detector name="../ec/ec" factory="TEXT" variation="rga_fall2018"/>
 

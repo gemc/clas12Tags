@@ -3,8 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 	<option name="DATABASE" value="../clas12.sqlite"/>
 
-	<!-- SQLITE Factory. If run_number is not specified, it uses the value of RUNNO. If variation is not specified, it uses 'main' -->
-	<detector name="dc" factory="SQLITE" variation="default"/>
+	<detector name="dc" factory="SQLITE"/>
 	<detector name="../magnets/cad/" factory="CAD"/>
 	<detector name="experiments/clas12/beamline/beamline" factory="TEXT" variation="FTOff"/>
 

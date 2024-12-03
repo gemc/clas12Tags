@@ -3,9 +3,8 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<!-- TEXT Factory -->
-	<detector name="dc" factory="TEXT" variation="default"/>
-	<detector name="../magnets/cad/" factory="CAD"/>
+	<detector name="dc" factory="TEXT"/>
+<!--	<detector name="../magnets/cad/" factory="CAD"/>-->
 	<detector name="experiments/clas12/beamline/beamline" factory="TEXT" variation="FTOff"/>
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
