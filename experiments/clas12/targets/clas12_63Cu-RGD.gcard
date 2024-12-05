@@ -5,7 +5,7 @@
 	
 	<!-- RG-D Nuclear-target Assembly; variation can be for the flag assembly: lD2CuSn, lD2CxC -->
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lD2CuSn"/>
-	<detector name="experiments/clas12/targets/flagCad/" factory="CAD"/>
+	<detector name="experiments/clas12/targets/cad_rgd/" factory="CAD"/>
 	
 	<!-- central detectors 	-->
 	

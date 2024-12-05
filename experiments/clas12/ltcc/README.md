@@ -5,7 +5,7 @@
 | original       | 11             | 
 | rga_spring2018 | 3029           | 
 | rga_fall2018   | 4763           | 
-| rgb_spring2019   | 4763           | 
+| rgb_spring2019 | 4763           | 
 | rgb_winter2020 | 4763           | 
 | rga_fall2019   | 4763           | 
 
@@ -65,7 +65,6 @@ CLAS12 LTCC README
 
 TODO: Addfocal point spheres for debugging purposes
 
-
 The geometry consists of 36 elliptical mirrors, 36 hyperbolic mirrors
 and 36 PMTs.
 
@@ -81,8 +80,7 @@ upload_parameters.pl config.dat   < only for MYSQL factory
 
 ./ltcc.pl config.dat
 
-
-
 CAD Notes:
+
 - The frame model is from sector 2. It is rotated in cad.gxml to sector 3.
 - The nose model is from sector 1. It is rotated in cad.gxml to sector 2.

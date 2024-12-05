@@ -1,27 +1,29 @@
 <gcard>
 
-<!-- RGE target -->
-<!-- Liquid target. Variations include: "2cm-lD2", "2cm-lD2-empty"-->
-<detector name="target"             factory="TEXT" variation="2cm-lD2"/>
-<detector name="rge-dt/Sn/"  
-factory="CAD"/>
-<detector name="rge-dt/common/"
-factory="CAD"/>
-<detector name="experiments/clas12/bstShield/bstShield"   factory="TEXT" variation="w51-rge"/>
+	<!-- RGE target -->
+	<!-- Liquid target. Variations include: "2cm-lD2", "2cm-lD2-empty"-->
+	<detector name="target" factory="TEXT" variation="2cm-lD2"/>
+	<detector name="rge-dt/Sn/" factory="CAD"/>
+	<detector name="rge-dt/common/" factory="CAD"/>
+	<detector name="experiments/clas12/bstShield/bstShield" factory="TEXT" variation="w51-rge"/>
 
-<!-- beam conditions -->
-<option name="BEAM_P"   value="e-, 10.0*GeV, 0.0*deg, 0*deg"/>
-<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
-<option name="OUTPUT"   value="hipo, out.hipo"/>
+	<!-- beam conditions -->
+	<option name="BEAM_P" value="e-, 10.0*GeV, 0.0*deg, 0*deg"/>
+	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
 
-<!--  Run Number 11, picked up by digitization routines -->
-<option name="RUNNO"    value="11" />
-<option name="DIGITIZATION_VARIATION"  value="rgc_summer2022_mc" />
-<option name="RFSETUP"     value="clas12_ccdb" />
-<option name="RFSTART"     value="eventVertex, 0, 0, -30.0" />
+	<!--  Run Number 11, picked up by digitization routines -->
+	<option name="RUNNO" value="11"/>
+	<option name="DIGITIZATION_VARIATION" value="rgc_summer2022_mc"/>
+	<option name="RFSETUP" value="clas12_ccdb"/>
+	<option name="RFSTART" value="eventVertex, 0, 0, -30.0"/>
 
-<!--  Target and central detectors are all shifted upstream by 30 mm -->
-<detector name="svt">       <position x="0*cm"     y="0*cm"     z="-3.00*cm"  />  </detector>
-<detector name="bstShield"> <position x="0*cm"     y="0*cm"     z="3.0*cm"  />  </detector>
+	<!--  Target and central detectors are all shifted upstream by 30 mm -->
+	<detector name="svt">
+		<position x="0*cm" y="0*cm" z="-3.00*cm"/>
+	</detector>
+	<detector name="bstShield">
+		<position x="0*cm" y="0*cm" z="3.0*cm"/>
+	</detector>
 
 </gcard>
