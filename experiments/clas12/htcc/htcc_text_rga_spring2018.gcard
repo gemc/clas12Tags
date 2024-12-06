@@ -16,6 +16,6 @@
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT + Optical"/>
 	<option name="RECORD_OPTICALPHOTONS" value="1"/>
-	<option name="DIGITIZATION_VARIATION" value="default"/>
+	<option name="DIGITIZATION_VARIATION" value="rga_spring2018_mc"/>
 	
 </gcard>
