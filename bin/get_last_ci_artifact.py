@@ -5,6 +5,7 @@ import subprocess
 import os
 import argparse
 
+
 # add function to download artifact using curl
 def download_artifact(download_url, token, artifact_name):
 	filename = f"{artifact_name}.zip"
@@ -23,18 +24,20 @@ def download_artifact(download_url, token, artifact_name):
 	else:
 		print(f"Failed to download artifact: {result.stderr}")
 
+
 # Parse the command-line argument for OS type
-parser = argparse.ArgumentParser(description="Specify the OS for selecting the appropriate workflow.")
-parser.add_argument("os_type", choices=["almalinux", "fedora"], help="Specify 'almalinux' or 'fedora'")
+parser = argparse.ArgumentParser(
+	description="Specify the OS for selecting the appropriate workflow.")
+parser.add_argument("os_type", choices=["almalinux", "fedora"],
+                    help="Specify 'almalinux' or 'fedora'")
 
 args = parser.parse_args()
 
 # Set WORKFLOW_ID based on the argument
 if args.os_type == "almalinux":
-    WORKFLOW_ID = "build_gemc_almalinux.yml"
+	WORKFLOW_ID = "build_gemc_almalinux.yml"
 elif args.os_type == "fedora":
-    WORKFLOW_ID = "build_gemc_fedora.yml"
-
+	WORKFLOW_ID = "build_gemc_fedora.yml"
 
 # Define the variables
 # Use HOME environment variable to get the path
@@ -56,9 +59,12 @@ runs_response = requests.get(runs_url, headers=headers)
 if runs_response.status_code == 200:
 	runs = runs_response.json().get("workflow_runs", [])
 
-	if runs:
-		# Get the latest run
-		latest_run_id = runs[0]["id"]
+	# Filter for runs in the 'dev' branch
+	dev_runs = [run for run in runs if run["head_branch"] == "dev"]
+
+	if dev_runs:
+		# Get the latest run on 'dev' branch
+		latest_run_id = dev_runs[0]["id"]
 
 		# Step 2: Get artifacts for the latest run
 		artifacts_url = f"https://api.github.com/repos/{REPO}/actions/runs/{latest_run_id}/artifacts"
@@ -73,15 +79,16 @@ if runs_response.status_code == 200:
 				print("Latest Artifact Name:", latest_artifact["name"])
 				print("Download URL:", latest_artifact["archive_download_url"])
 
-				# download the latest artifact
-				download_artifact(latest_artifact["archive_download_url"], MAURI, latest_artifact["name"])
-
+				# Download the latest artifact
+				download_artifact(latest_artifact["archive_download_url"], MAURI,
+				                  latest_artifact["name"])
 			else:
-				print("No artifacts found for the latest workflow run run ID:", latest_run_id)
+				print("No artifacts found for the latest workflow run on 'dev' branch. Run ID:",
+				      latest_run_id)
 		else:
 			print("Failed to get artifacts:", artifacts_response.status_code,
 			      artifacts_response.text)
 	else:
-		print("No workflow runs found.")
+		print("No workflow runs found for 'dev' branch.")
 else:
 	print("Failed to get workflow runs:", runs_response.status_code, runs_response.text)
