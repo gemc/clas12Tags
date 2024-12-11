@@ -1,17 +1,81 @@
 # The clas12Tags repository
 
-The clas12Tags repository maintains a version of gemc dedicated to the JLab CLAS12 experiments,
-with the CLAS12 detector geometry and gcards for the various experiment configurations.
+The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments at Jefferson Lab, providing:  
+- The CLAS12 detectors geometry database (in the form of ASCII files).  
+- Individual system GCARDS.  
+- A customized version of the GEMC source code tailored specifically for the JLab CLAS12 experiments.  
 
-It is tagged more frequently than the main gemc repository - as needed by CLAS12 experiments.
+This repository is tagged more frequently than:  
+- `gemc/source` (the primary GEMC repository).  
+- `gemc/detectors` (which contains the source code for generating the databases).  
 
-The tags distributed as tarball and maintained as modules are tested. Some versions may be deleted because they 
-contain bugs or inaccuracies. The release notes for those versions are accumulated in the
-releases notes for each distributed tag.
+The increased tagging frequency reflects the more dynamic nature of CLAS12-specific digitization routines and geometry updates compared to the more stable functionality of the GEMC codebase.  
+
 
 ![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector in the simulation. The electron beam is going from left to right.")
 
 ###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
+
+# Creating the CLAS12 detector geometry database
+
+
+
+
+### Pre-requisites  
+
+To set up the environment and run the scripts, ensure the following prerequisites are met:  
+
+1. A working [ceInstall](https://github.com/JeffersonLab/ceInstall) environment.  
+2. **Groovy** installed.  
+3. A [coatjava](https://github.com/JeffersonLab/coatjava) installation, with the `COATJAVA` environment variable set and `$COATJAVA/bin` included in the system `PATH`.  
+4. A copy of the [gemc/api](https://github.com/gemc/api) repository located inside `$GEMC/api`.  
+5. A copy of the [gemc/detectors](https://github.com/gemc/detectors) repository.  
+
+**Note:** At Jefferson Lab, prerequisites [1-4] are satisfied when using 
+the [CLAS12 environment](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Environment_@_JLab), 
+loaded with the command:  
+
+```bash
+module load clas12
+```
+The utility script `clas12/install_coatjava.sh` in the `gemc/detectors` repository can be used to install `coatjava`.
+
+---
+
+### Running the Scripts
+
+The CLAS12 geometry database is generated using PERL scripts in the `gemc/detectors` repository. Each system (represented by a subdirectory within the `clas12` directory) contains a main PERL script for execution, typically named after the subdirectory. For example:  
+- `beamline/beamline.pl`  
+- `ctof/ctof.pl`  
+
+To run a script:  
+1. Change to the corresponding subdirectory.  
+2. Execute the script using the configuration file `config.dat`:  
+
+```bash
+cd beamline
+./beamline.pl config.dat
+```
+
+This will create the ASCII files for the beamline detector 
+for all the variations specified in the main script.
+This command generates the ASCII files for the specified detector system, covering all variations defined in the main script.
+
+#### Additional Components
+
+Some systems include additional components in the repository, such as:  
+- **Beamline:** The `cadBeamline` directory contains STL files derived from CAD models.  
+- **Ctof:** the STL files are not in the repository but are downloaded using the geometry service.
+
+#### Special Cases
+
+Two detectors follow different workflows:  
+1. **Alert Detector**: Instructions for execution are detailed in the `alert/README.md` file.  
+2. **LTCC Detector**: Before running the main script, the following command must be executed to define the mirror parameters:  
+   ```bash
+   root -q -b mirrors.C
+    ```  
+
 
 <br>
 
@@ -19,18 +83,17 @@ releases notes for each distributed tag.
 
 <br>
 
-- [dev](release_notes/5.11.md, use COATJAVA release 11.0.4 )
+- [dev](release_notes/dev.md), use COATJAVA release 11.0.4)
 - [5.10](release_notes/5.10.md)
 - [4.4.2](release_notes/4.4.2.md)
-- [dev](release_notes/dev.md) : notice this is the development version and may contain bugs.
 
 <br>
 
-To load gemc through the clas12 environment at JLab:
+To load the GEMC environment through the clas12 environment at JLab:
 
 ```commandline
-module use /scigroup/cvmfs/geant4/modules 
-module load geant4
+module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
+module load clas12
 ```
 
 To switch to a different version of gemc use `module switch`. For example:
@@ -42,12 +105,13 @@ module switch gemc/dev
 To run GEMC you can select one of the gcards in the clas12-config installed on cvmfs. For example:
 
 ```
-gemc /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/noarch/clas12-config/dev/gemc/rga-fall2018.gcard -N=nevents -USE_GUI=0 
+gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
 ```
 
 Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
 
 
+<br>
 
 ---
 
@@ -66,7 +130,7 @@ GEMC simulations can be run on the Open Science Grid (OSG) using the
 
 Load the environment as [described above](#use-gemc-versions-installed-at-jlab-on-site-and-on-cvmfs-).
 
-Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags) 
+Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags)
 and unpack it (using 5.X as an example):
 
 ```
@@ -88,16 +152,17 @@ where N is the number of cores available.
 ## How to make changes to the clas12Tags
 
 clas12Tags is a repo with source code and geometry derived from gemc/source.
-Modifications should be made to the gemc/source repo by forking it 
-and making a pull request. 
+Modifications should be made to the gemc/source repo by forking it
+and making a pull request.
 
-Note: gemc uses static function to load specific clas12 code (ugly, fixed in gemc3). 
+Note: gemc uses static function to load specific clas12 code (ugly, fixed in gemc3).
 In particular the BMT and FMT hit processes have these two functions:
 
 ```
 bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(-1);
 fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(-1);
 ```
+
 that should be changed to:
 
 ```
@@ -105,9 +170,8 @@ bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
 fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(1);
 ```
 
-to initialize properly BMT and FMT and avoid seg fault when those 
+to initialize properly BMT and FMT and avoid seg fault when those
 detectors are used. This is done in the clas12Tags repo.
-
 
 # Changing Configurations
 
@@ -173,7 +237,6 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-
 ## Detector Sources
 
 <br>
@@ -199,11 +262,10 @@ and the tungsten cone is moved upstream.
 The simulations in preparation of the first experiment should use the default version FTOn.
 FTOff will be used only by experts for special studies in preparation for the engineering run.
 
-
 |                                                                              |                                                                                                         |
 |------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
 | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/>                            |
- | FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
+| FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
 
 <br>
 
@@ -223,10 +285,37 @@ to:
 <detector name="cadBeamlineFTOFF/" factory="CAD"/>
 ```
 
-## Validation
+### Run numbers vs Run groups
 
-See [clas12-validation](https://github.com/jeffersonlab/clas12-validation) for validation of the CLAS12 simulation.
-In particular check this validation.yml 
+Source: [calcom run groups](https://clasweb.jlab.org/wiki/index.php/CLAS12_Calibration_and_Commissioning)
+
+|                    |               | 
+|--------------------|---------------|
+| rga_spring2018     | 3029 - 4326   |
+| rga_fall2018       | 4763-5666     |
+| rga_spring2019     | 6608-6783     |
+|                    |               |
+| rgb_spring2019     | 6150 – 6603   |
+| rgb_fall2019       | 11093 – 11301 |
+| rgb_winter20       | 11323 - 11571 |
+|                    |               |
+| rgc_summer2022     | 16043-16772   |
+| rgc_fall2022       | 16843-17408   |
+| rgc_winter23       | 17471-17811   |
+|                    |               |
+| rgd_fall2023       | 18305 - 19131 |
+|                    |               |
+| rgf_spring2020     | 11620 - 12282 |
+| rgf_summer2020     | 12389 - 12951 |
+|                    |               |
+| rgk_fall2018_FTOn  | 5674 - 5870   |
+| rgk_fall2018_FTOff | 5874-6000     |
+| rgk_winter23       | 19200 - 19260 |
+| rgk_spring24       | 19300 - 19893 |
+|                    |               |
+| rgm_fall2021       | 15016 - 15884 |
+|                    |               |
+| rge_spring2024     |               |
 
 ## Feedback
 
