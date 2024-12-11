@@ -10,8 +10,7 @@
 	<detector name="beamline"                  factory="TEXT" variation="rghFTOut"/>
 	<detector name="cadBeamlineFTOFF/"         factory="CAD"/>
 
-	<!-- Downstream beamline configuration -->
-	<detector name="cad_downstream_beamline/" factory="CAD"/>
+
 
 	<detector name="experiments/clas12/magnets/torus"      factory="TEXT" variation="original"/>
 

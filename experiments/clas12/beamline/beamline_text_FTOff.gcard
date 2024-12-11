@@ -10,9 +10,6 @@
 	<detector name="beamline" factory="TEXT" variation="FTOff"/>
 	<detector name="cad/" factory="CAD" variation="FTOff"/>
 
-	<!-- Downstream beamline configuration -->
-	<detector name="cad_downstream_beamline/" factory="CAD"/>
-
 	<detector name="experiments/clas12/magnets/torus" factory="TEXT" variation="original"/>
 
 	<option name="OUTPUT" value="hipo, out.hipo"/>

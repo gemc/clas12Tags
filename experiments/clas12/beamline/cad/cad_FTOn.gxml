@@ -22,5 +22,13 @@ For the FTON configuration the cone is shifted by -238.8mm
 	<volume name="adjuster1"             color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
 	<volume name="adjuster2"             color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
 	<volume name="adjuster3"             color="22ffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_STAINLESS-STEEL"/>
-	
+
+	<volume name="Apex_Shield_Lead_Fill"             color="aaffff"  material="G4_Pb"/>
+	<volume name="Apex_Shield_PCAL_Hub"              color="555555"  material="beamline_CarbonSteel"/>
+	<volume name="Torus_Exit_Shield_Lead_Fill"       color="aaffff"  material="G4_Pb"/>
+	<volume name="Torus_Exit_Shield_Casing"          color="555555"  material="G4_STAINLESS-STEEL"/>
+	<volume name="Downstream_Beam_tube_Segment_1"    color="995599"  material="G4_STAINLESS-STEEL"/>
+	<volume name="Downstream_Beam_tube_Segment_2"    color="995599"  material="G4_STAINLESS-STEEL"/>
+	<volume name="Torus_Beam_Tube_Reducer_2"         color="ffffaa"  material="G4_Al"/>
+
 </gxml>
