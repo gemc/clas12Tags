@@ -1,17 +1,81 @@
 # The clas12Tags repository
 
-The clas12Tags repository maintains a version of gemc dedicated to the JLab CLAS12 experiments,
-with the CLAS12 detector geometry and gcards for the various experiment configurations.
+The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments at Jefferson Lab, providing:  
+- The CLAS12 detectors geometry database (in the form of ASCII files).  
+- Individual system GCARDS.  
+- A customized version of the GEMC source code tailored specifically for the JLab CLAS12 experiments.  
 
-It is tagged more frequently than the main gemc repository - as needed by CLAS12 experiments.
+This repository is tagged more frequently than:  
+- `gemc/source` (the primary GEMC repository).  
+- `gemc/detectors` (which contains the source code for generating the databases).  
 
-The tags distributed as tarball and maintained as modules are tested. Some versions may be deleted because they
-contain bugs or inaccuracies. The release notes for those versions are accumulated in the
-releases notes for each distributed tag.
+The increased tagging frequency reflects the more dynamic nature of CLAS12-specific digitization routines and geometry updates compared to the more stable functionality of the GEMC codebase.  
+
 
 ![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector in the simulation. The electron beam is going from left to right.")
 
 ###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
+
+# Creating the CLAS12 detector geometry database
+
+
+
+
+### Pre-requisites  
+
+To set up the environment and run the scripts, ensure the following prerequisites are met:  
+
+1. A working [ceInstall](https://github.com/JeffersonLab/ceInstall) environment.  
+2. **Groovy** installed.  
+3. A [coatjava](https://github.com/JeffersonLab/coatjava) installation, with the `COATJAVA` environment variable set and `$COATJAVA/bin` included in the system `PATH`.  
+4. A copy of the [gemc/api](https://github.com/gemc/api) repository located inside `$GEMC/api`.  
+5. A copy of the [gemc/detectors](https://github.com/gemc/detectors) repository.  
+
+**Note:** At Jefferson Lab, prerequisites [1-4] are satisfied when using 
+the [CLAS12 environment](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Environment_@_JLab), 
+loaded with the command:  
+
+```bash
+module load clas12
+```
+The utility script `clas12/install_coatjava.sh` in the `gemc/detectors` repository can be used to install `coatjava`.
+
+---
+
+### Running the Scripts
+
+The CLAS12 geometry database is generated using PERL scripts in the `gemc/detectors` repository. Each system (represented by a subdirectory within the `clas12` directory) contains a main PERL script for execution, typically named after the subdirectory. For example:  
+- `beamline/beamline.pl`  
+- `ctof/ctof.pl`  
+
+To run a script:  
+1. Change to the corresponding subdirectory.  
+2. Execute the script using the configuration file `config.dat`:  
+
+```bash
+cd beamline
+./beamline.pl config.dat
+```
+
+This will create the ASCII files for the beamline detector 
+for all the variations specified in the main script.
+This command generates the ASCII files for the specified detector system, covering all variations defined in the main script.
+
+#### Additional Components
+
+Some systems include additional components in the repository, such as:  
+- **Beamline:** The `cadBeamline` directory contains STL files derived from CAD models.  
+- **Ctof:** the STL files are not in the repository but are downloaded using the geometry service.
+
+#### Special Cases
+
+Two detectors follow different workflows:  
+1. **Alert Detector**: Instructions for execution are detailed in the `alert/README.md` file.  
+2. **LTCC Detector**: Before running the main script, the following command must be executed to define the mirror parameters:  
+   ```bash
+   root -q -b mirrors.C
+    ```  
+
 
 <br>
 
@@ -19,18 +83,17 @@ releases notes for each distributed tag.
 
 <br>
 
-- [dev](release_notes/5.11.md, use COATJAVA release 11.0.4 )
+- [dev](release_notes/dev.md), use COATJAVA release 11.0.4)
 - [5.10](release_notes/5.10.md)
 - [4.4.2](release_notes/4.4.2.md)
-- [dev](release_notes/dev.md) : notice this is the development version and may contain bugs.
 
 <br>
 
-To load gemc through the clas12 environment at JLab:
+To load the GEMC environment through the clas12 environment at JLab:
 
 ```commandline
-module use /scigroup/cvmfs/geant4/modules 
-module load geant4
+module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
+module load clas12
 ```
 
 To switch to a different version of gemc use `module switch`. For example:
@@ -42,12 +105,13 @@ module switch gemc/dev
 To run GEMC you can select one of the gcards in the clas12-config installed on cvmfs. For example:
 
 ```
-gemc /cvmfs/oasis.opensciencegrid.org/jlab/hallb/clas12/sw/noarch/clas12-config/dev/gemc/rga-fall2018.gcard -N=nevents -USE_GUI=0 
+gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
 ```
 
 Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
 
 
+<br>
 
 ---
 
