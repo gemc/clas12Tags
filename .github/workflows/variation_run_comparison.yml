@@ -48,7 +48,7 @@ jobs:
           - htcc
     steps:
       - name: Download ${{ matrix.detector }} artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: logs-${{ matrix.detector }}
           path: /root/logs/logs-${{ matrix.detector }}
