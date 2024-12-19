@@ -78,10 +78,11 @@ digitization_for_run_and_system()  {
 }
 
 cfile=/root/"$system"_comparison.log
-
+echo CFILE: $cfile
 #./ci/build_gemc.sh
 cd experiments/clas12
 touch $cfile
+
 # get the clas12.sqlite file. This will be replaced by the actual file
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
 cd "$system" || DetectorDirNotExisting

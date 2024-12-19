@@ -31,7 +31,7 @@ jobs:
           if [ ! -f comparison.log ]; then
             echo "" > comparison.log
           fi
-          cat ${{ matrix.detector }}_comparison.log >> comparison.log
+          cat /root/${{ matrix.detector }}_comparison.log >> comparison.log
       - name: Upload log
         uses: actions/upload-artifact@v4
         with:
