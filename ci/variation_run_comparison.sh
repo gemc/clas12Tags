@@ -79,6 +79,7 @@ digitization_for_run_and_system()  {
 
 #./ci/build_gemc.sh
 cd experiments/clas12
+touch comparison.log
 # get the clas12.sqlite file. This will be replaced by the actual file
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
 cd "$system" || DetectorDirNotExisting
@@ -93,13 +94,15 @@ for run in $=runs; do
 		echo "Comparing geometry for $system, run: $run, variation: $variation", compare argument: "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		$compare_exe "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		if [ $? -ne 0 ]; then
-			echo "Geometry $system $variation $run : Failed" >>../comparison.log
+			echo "Geometry $system $variation $run : Failed" >> ../comparison.log
 		else
-			echo "Geometry $system $variation $run : Success" >>../comparison.log
+			echo "Geometry $system $variation $run : Success" >> ../comparison.log
 		fi
 	done
 done
 
+echo
+cat ../comparison.log
 echo
 
 summary=$(cat ../comparison.log)
