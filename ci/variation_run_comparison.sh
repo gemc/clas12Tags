@@ -37,8 +37,8 @@ while getopts ":hd:" option; do
 			system="$OPTARG"
 			;;
 		\?) # Invalid option
-			echo   "Error: Invalid option"
-			exit   1
+			echo "Error: Invalid option"
+			exit 1
 			;;
 	esac
 done
@@ -93,15 +93,14 @@ for run in $=runs; do
 		echo "Comparing geometry for $system, run: $run, variation: $variation", compare argument: "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		$compare_exe "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		if [ $? -ne 0 ]; then
-			echo "Geometry $system $variation $run : Failed" >> $GITHUB_OUTPUT
+			echo "Geometry $system $variation $run : Failed" >>../comparison.log
 		else
-			echo "Geometry $system $variation $run : Success" >> $GITHUB_OUTPUT
+			echo "Geometry $system $variation $run : Success" >>../comparison.log
 		fi
 	done
 done
 
 echo
-cd -
 
-
-echo "Done - Success"
+summary=$(cat ../comparison.log)
+echo "summary=$summary" >> $GITHUB_OUTPUT

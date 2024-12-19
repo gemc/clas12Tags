@@ -4,6 +4,9 @@ name: Almalinux Build
 on:
   # Triggers the workflow on all pushes
   push:
+    branches:
+      - '*'
+      - '!new_cad_import'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

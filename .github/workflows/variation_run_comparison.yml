@@ -17,12 +17,20 @@ jobs:
       matrix:
         detector:
           - ec
+          - pcal
+          - dc
+          - ftof
+          - htcc
 
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: ${{ matrix.detector }} test
+      - name: ${{ matrix.detector }} comparison
+        id: comparison
         run: |
           ./ci/variation_run_comparison.sh -d ${{ matrix.detector }}
-
+      - name: Summary
+        run: echo "$summary"
+        env:
+          summary: ${{ steps.comparison.outputs.summary }}
 
