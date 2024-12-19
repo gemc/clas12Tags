@@ -77,8 +77,8 @@ digitization_for_run_and_system()  {
 	fi
 }
 
-cfile=/root/"$system"_comparison.log
-echo CFILE: $cfile
+cfile=/root/logs/"$system"_comparison.log
+mkdir -p /root/logs
 #./ci/build_gemc.sh
 cd experiments/clas12
 touch $cfile
