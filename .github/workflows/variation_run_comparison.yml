@@ -33,7 +33,7 @@ jobs:
           path: /root/logs/
 
 
-summary:
+  summary:
     needs: comparison
     runs-on: ubuntu-latest
     steps:
