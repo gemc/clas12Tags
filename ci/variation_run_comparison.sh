@@ -105,5 +105,5 @@ echo
 cat ../comparison.log
 echo
 
-summary=$(cat ../comparison.log)
+summary=$(cat ../comparison.log | tr -d '\n')
 echo "summary=$summary" >> $GITHUB_OUTPUT
