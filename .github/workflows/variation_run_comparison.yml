@@ -33,44 +33,47 @@ jobs:
           path: /root/logs/
 
 
-  summary:
+summary:
     needs: comparison
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        detector:
-          - dc
-          - ftof
-          - htcc
-
     steps:
-      - name: Download ${{ matrix.detector }} artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: logs-${{ matrix.detector }}
-          path: aggregated_logs/
+      - name: Get Artifact Names from Matrix
+        run: |
+          # Generate a list of detectors from the matrix
+          detectors=(${{ needs.comparison.strategy.matrix.detector }})
+          echo "DETECTORS=${detectors[*]}" >> $GITHUB_ENV
+
+      - name: Download Artifacts Dynamically
+        run: |
+          # Read the detectors from the environment
+          IFS=' ' read -r -a detectors <<< "$DETECTORS"
+          
+          mkdir -p logs/
+
+          # Download each artifact dynamically
+          for detector in "${detectors[@]}"; do
+            echo "Downloading logs for detector: $detector"
+            artifact_name="logs-${detector}"
+            echo "Downloading artifact: $artifact_name"
+            gh run download-artifact --name "$artifact_name" --dir logs/ || echo "Artifact $artifact_name not found."
+          done
 
       - name: Aggregate Logs and Generate Table
         run: |
           # Aggregate all logs into a single file
-          ls -l aggregated_logs
-          cat aggregated_logs/*.log
-          cat aggregated_logs/*.log > comparison.log
+          cat logs/*.log > comparison.log
 
           # Generate the table header
-          table="
-          | Detector | Variation | Run | Status  |
-          |----------|-----------|-----|---------|
-          "
+          echo "| Detector | Variation | Run | Status  |" > summary.md
+          echo "|----------|-----------|-----|---------|" >> summary.md
 
           # Read the aggregated log and append rows to the table
           while IFS=: read -r detector variation run status; do
-            table+="| $detector | $variation | $run | $status |\n"
+            echo "| $detector | $variation | $run | $status |" >> summary.md
           done < comparison.log
 
           # Write the table to the GitHub Actions summary
-          echo -e "$table" >> $GITHUB_STEP_SUMMARY
-
+          cat summary.md >> $GITHUB_STEP_SUMMARY
 
       - name: Display Summary in Logs
         run: cat $GITHUB_STEP_SUMMARY
