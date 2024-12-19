@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: logs-${{ matrix.detector }}
-          path: /root/logs
+          path: /root/logs/
 
     # Output the list of detectors for the summary job
     outputs:
@@ -51,13 +51,14 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: logs-${{ matrix.detector }}
-          path: /root/logs/logs-${{ matrix.detector }}
-
+          path: aggregated_logs/${{ matrix.detector }}.log
 
       - name: Aggregate Logs and Generate Table
         run: |
           # Aggregate all logs into a single file
-          cat /root/logs/*.log > comparison.log
+          ls -l aggregated_logs
+          cat aggregated_logs/*.log
+          cat aggregated_logs/*.log > comparison.log
 
           # Generate the table header
           table="
