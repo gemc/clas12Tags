@@ -1,4 +1,4 @@
-name: TEXT vs SQLITE 
+name: TEXT vs SQLITE
 
 # Controls when the workflow will run
 on:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  comparison:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:

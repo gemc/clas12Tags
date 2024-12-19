@@ -90,8 +90,8 @@ runs=$(runs_for_system)
 for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
 	for variation in $variations; do
-		echo "Comparing geometry for $system, run: $run, variation: $variation"
-		$compare_exe "$system__geometry_$variation.txt"  ../clas12.sqlite "$system"  "$run" default
+		echo "Comparing geometry for $system, run: $run, variation: $variation", compare argument: "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
+		$compare_exe "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		if [ $? -ne 0 ]; then
 			echo "Geometry $system $variation $run : Failed" >> $GITHUB_OUTPUT
 		else
