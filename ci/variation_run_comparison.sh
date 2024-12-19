@@ -52,8 +52,12 @@ DetectorDirNotExisting() {
 # returns runs to test
 runs_for_system() {
 	# if system is ec returns 11 and 3029
-	if [[ $system == "ec" ]]; then
+	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
+	elif [[ $system == "dc" ]]; then
+		echo "11"
+	elif [[ $system == "htcc" ]]; then
+		echo "11 3029 4763"
 	fi
 }
 
@@ -61,9 +65,13 @@ variations_for_run_and_system()  {
 	if [[ $1 == "11" ]]; then
 		echo "default"
 	elif [[ $1 == "3029" ]]; then
-		if [[ $system == "ec" ]]; then
+		if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 			echo "rga_fall2018"
+		elif [[ $system == "htcc" ]]; then
+			echo "rga_spring2018"
 		fi
+	elif [[ $1 == "4763" ]]; then
+			echo "rga_fall2018"
 	fi
 }
 
@@ -97,9 +105,9 @@ for run in $=runs; do
 		echo "Comparing geometry for $system, run: $run, variation: $variation", compare argument: "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		$compare_exe "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		if [ $? -ne 0 ]; then
-			echo "$system:$variation:$run:❌" >> $cfile
+			echo "$system:$variation:$run:❌" >>$cfile
 		else
-			echo "$system:$variation:$run:✅"  >> $cfile
+			echo "$system:$variation:$run:✅" >>$cfile
 		fi
 	done
 done
@@ -107,4 +115,3 @@ done
 echo
 cat $cfile
 echo
-

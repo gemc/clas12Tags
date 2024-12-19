@@ -43,7 +43,7 @@ jobs:
     needs: comparison
     runs-on: ubuntu-latest
     steps:
-      - name: Download logs dynamically based on matrix
+      - name: Download all artifacts
         run: |
           # Get the detectors output from the comparison job
           detectors="${{ needs.comparison.outputs.detectors }}"
@@ -57,9 +57,13 @@ jobs:
           # Loop through detectors and download each artifact dynamically
           for detector in "${detector_array[@]}"; do
             echo "Downloading logs for detector: $detector"
-            actions/download-artifact@v3 --name "logs-$detector" --path "aggregated_logs/$detector"
+            # Use the 'uses' keyword to correctly call the action
+            - uses: actions/download-artifact@v3
+              with:
+                name: "logs-$detector"
+                path: "aggregated_logs/$detector"
           done
-
+          
       - name: Aggregate Logs and Generate Table
         run: |
           # Aggregate all logs into a single file
