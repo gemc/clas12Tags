@@ -8,7 +8,7 @@
 # ./ci/variation_run_comparison.sh -d ec
 
 source ci/env.sh
-compare_exe=api/perl/db_compare.py
+compare_exe=$(pwd)/api/perl/db_compare.py
 
 Help() {
 	# Display Help

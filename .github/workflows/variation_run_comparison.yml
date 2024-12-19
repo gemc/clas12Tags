@@ -1,4 +1,4 @@
-name: Detector Tests
+name: TEXT vs SQLITE 
 
 # Controls when the workflow will run
 on:
