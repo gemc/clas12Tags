@@ -12,7 +12,7 @@ source ci/env.sh
 Help() {
 	# Display Help
 	echo
-	echo "Syntax: tests.sh [-h|g]"
+	echo "Syntax: experiments_test.sh [-h|g]"
 	echo
 	echo "Options:"
 	echo

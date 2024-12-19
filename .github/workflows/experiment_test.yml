@@ -30,7 +30,7 @@ jobs:
   test:
     needs: generate-matrix
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux93
+    container: jeffersonlab/gemc:dev-almalinux94
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}

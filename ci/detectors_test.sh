@@ -12,7 +12,7 @@ source ci/env.sh
 Help() {
 	# Display Help
 	echo
-	echo "Syntax: tests.sh [-h|d]"
+	echo "Syntax: detectors_test.sh [-h|d]"
 	echo
 	echo "Options:"
 	echo
