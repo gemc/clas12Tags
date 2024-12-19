@@ -26,11 +26,42 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
       - name: ${{ matrix.detector }} comparison
-        id: comparison
         run: |
           ./ci/variation_run_comparison.sh -d ${{ matrix.detector }}
-      - name: Summary
-        run: echo "$summary"
-        env:
-          summary: ${{ steps.comparison.outputs.summary }}
+          if [ ! -f comparison.log ]; then
+            echo "" > comparison.log
+          fi
+          cat ${{ matrix.detector }}_comparison.log >> comparison.log
+      - name: Upload log
+        uses: actions/upload-artifact@v4
+        with:
+          name: comparison-log
+          path: comparison.log
 
+  summary:
+    needs: comparison
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download log
+        uses: actions/download-artifact@v3
+        with:
+          name: comparison-log
+
+      - name: Generate Summary Table
+        run: |
+          # Generate the table header
+          table="
+          | System | Variation | Run | Status  |
+          |----------|-----------|-----|---------|
+          "
+
+          # Read the log file and append rows to the table
+          while IFS=: read -r detector variation run status; do
+            table+="| $detector | $variation | $run | $status |\n"
+          done < comparison.log
+
+          # Write the table to the GitHub Actions summary
+          echo -e "$table" >> $GITHUB_STEP_SUMMARY
+
+      - name: Display Summary in Logs
+        run: cat $GITHUB_STEP_SUMMARY
