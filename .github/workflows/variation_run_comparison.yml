@@ -28,10 +28,6 @@ jobs:
       - name: Run ${{ matrix.detector }} comparison
         run: |
           ./ci/variation_run_comparison.sh -d ${{ matrix.detector }}
-          if [ ! -f comparison.log ]; then
-            echo "" > comparison.log
-          fi
-          cat /root/${{ matrix.detector }}_comparison.log >> comparison.log
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
