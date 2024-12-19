@@ -16,7 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - ec
           - pcal
           - dc
           - ftof
@@ -57,13 +56,12 @@ jobs:
           # Loop through detectors and download each artifact dynamically
           for detector in "${detector_array[@]}"; do
             echo "Downloading logs for detector: $detector"
-            # Use the 'uses' keyword to correctly call the action
-            - uses: actions/download-artifact@v3
-              with:
-                name: "logs-$detector"
-                path: "aggregated_logs/$detector"
+            uses: actions/download-artifact@v3
+            with:
+              name: "logs-$detector"
+              path: "aggregated_logs/$detector"
           done
-          
+
       - name: Aggregate Logs and Generate Table
         run: |
           # Aggregate all logs into a single file
