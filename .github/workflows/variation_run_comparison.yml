@@ -34,34 +34,51 @@ jobs:
           name: logs-${{ matrix.detector }}
           path: /root/logs
 
+    # Output the list of detectors for the summary job
+    outputs:
+      detectors: ${{ toJson(matrix.detector) }}
+
+
   summary:
     needs: comparison
     runs-on: ubuntu-latest
     steps:
-      - name: Download logs
-        uses: actions/download-artifact@v3
-        with:
-          name: comparison-logs
-
-      - name: Generate Summary Table
+      - name: Download logs dynamically based on matrix
         run: |
+          # Get the detectors output from the comparison job
+          detectors="${{ needs.comparison.outputs.detectors }}"
           
+          # Convert the string into an array
+          IFS=',' read -r -a detector_array <<< "${detectors}"
+          
+          # Create a directory to store all downloaded logs
+          mkdir -p aggregated_logs
+
+          # Loop through detectors and download each artifact dynamically
+          for detector in "${detector_array[@]}"; do
+            echo "Downloading logs for detector: $detector"
+            actions/download-artifact@v3 --name "logs-$detector" --path "aggregated_logs/$detector"
+          done
+
+      - name: Aggregate Logs and Generate Table
+        run: |
           # Aggregate all logs into a single file
-          cat logs/*.log > comparison.log
-          
+          cat aggregated_logs/*/*.log > comparison.log
+
           # Generate the table header
           table="
-          | System | Variation | Run | Status  |
+          | Detector | Variation | Run | Status  |
           |----------|-----------|-----|---------|
           "
 
-          # Read the log file and append rows to the table
+          # Read the aggregated log and append rows to the table
           while IFS=: read -r detector variation run status; do
             table+="| $detector | $variation | $run | $status |\n"
           done < comparison.log
 
           # Write the table to the GitHub Actions summary
           echo -e "$table" >> $GITHUB_STEP_SUMMARY
+
 
       - name: Display Summary in Logs
         run: cat $GITHUB_STEP_SUMMARY
