@@ -40,29 +40,24 @@ jobs:
   summary:
     needs: comparison
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        detector:
+          - dc
+          - ftof
+          - htcc
     steps:
-      - name: Download all artifacts
-        run: |
-          # Get the detectors output from the comparison job
-          detectors="${{ needs.comparison.outputs.detectors }}"
-          
-          # Convert the string into an array
-          IFS=',' read -r -a detector_array <<< "${detectors}"
-          
-          # Create a directory to store all downloaded logs
-          mkdir -p aggregated_logs
+      - name: Download ${{ matrix.detector }} artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: logs-${{ matrix.detector }}
+          path: /root/logs
 
-          # Loop through detectors and download each artifact dynamically
-          for detector in "${detector_array[@]}"; do
-            echo "Downloading logs for detector: $detector"
-            curl -L "https://github.com/${{ github.repository }}/actions/artifacts/${{ needs.comparison.outputs.detectors }}" -o "aggregated_logs/$detector.log"
-          done
-          ls -l aggregated_logs
 
       - name: Aggregate Logs and Generate Table
         run: |
           # Aggregate all logs into a single file
-          cat aggregated_logs/*.log > comparison.log
+          cat /root/logs/*.log > comparison.log
 
           # Generate the table header
           table="
