@@ -61,7 +61,7 @@ jobs:
       - name: Aggregate Logs and Generate Table
         run: |
           # Aggregate all logs into a single file
-          cat aggregated_logs/*/*.log > comparison.log
+          cat aggregated_logs/*.log > comparison.log
 
           # Generate the table header
           table="
