@@ -16,7 +16,6 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - pcal
           - dc
           - ftof
           - htcc
@@ -56,10 +55,7 @@ jobs:
           # Loop through detectors and download each artifact dynamically
           for detector in "${detector_array[@]}"; do
             echo "Downloading logs for detector: $detector"
-            uses: actions/download-artifact@v3
-            with:
-              name: "logs-$detector"
-              path: "aggregated_logs/$detector"
+            curl -L "https://github.com/${{ github.repository }}/actions/artifacts/${{ needs.comparison.outputs.detectors }}" -o "aggregated_logs/$detector"
           done
 
       - name: Aggregate Logs and Generate Table
