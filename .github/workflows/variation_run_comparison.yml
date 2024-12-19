@@ -34,7 +34,7 @@ jobs:
 
     # Output the list of detectors for the summary job
     outputs:
-      detectors: ${{ toJson(matrix.detector) }}
+      detectors: ${{ toJson(matrix) }}
 
 
   summary:
@@ -55,8 +55,9 @@ jobs:
           # Loop through detectors and download each artifact dynamically
           for detector in "${detector_array[@]}"; do
             echo "Downloading logs for detector: $detector"
-            curl -L "https://github.com/${{ github.repository }}/actions/artifacts/${{ needs.comparison.outputs.detectors }}" -o "aggregated_logs/$detector"
+            curl -L "https://github.com/${{ github.repository }}/actions/artifacts/${{ needs.comparison.outputs.detectors }}" -o "aggregated_logs/$detector.log"
           done
+          ls -l aggregated_logs
 
       - name: Aggregate Logs and Generate Table
         run: |
