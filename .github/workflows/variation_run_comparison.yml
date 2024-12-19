@@ -32,10 +32,6 @@ jobs:
           name: logs-${{ matrix.detector }}
           path: /root/logs/
 
-    # Output the list of detectors for the summary job
-    outputs:
-      detectors: ${{ toJson(matrix) }}
-
 
   summary:
     needs: comparison
@@ -46,6 +42,7 @@ jobs:
           - dc
           - ftof
           - htcc
+
     steps:
       - name: Download ${{ matrix.detector }} artifact
         uses: actions/download-artifact@v4
