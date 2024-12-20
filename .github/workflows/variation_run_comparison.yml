@@ -103,7 +103,7 @@ jobs:
          cat */*output_comparison.log > comparison.log
          echo "| Detector | Geometry Variation | Run | Digitization Variations | Status  |" > Summary.md
          echo "|----------|--------------------|-----|-------------------------|---------|" >> Summary.md
-         while IFS=: read -r detector variation dvariations run pass; do
-           echo "| $detector | $variation | $run | $pass |" >> Summary.md
+         while IFS=: read -r detector variation run dvariations  pass; do
+           echo "| $detector | $variation | $run | $dvariations | $pass |" >> Summary.md
          done < comparison.log
          cat Summary.md >> $GITHUB_STEP_SUMMARY

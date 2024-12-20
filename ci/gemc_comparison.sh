@@ -115,26 +115,38 @@ for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
 	for variation in $variations; do
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var
-		gemc -USE_GUI=0 "$system"_text_"$variation".gcard -N=10 -OUTPUT="hipo, txt_"$run".hipo"           -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
+		gemc -USE_GUI=0 "$system"_text_"$variation".gcard -N=10 -OUTPUT="hipo, txt_"$run".hipo"     -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
-		gemc -USE_GUI=0 "$system"_sqlite.gcard            -N=10 -OUTPUT="hipo, sqlite_sanity_"$run".hipo" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
-		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default
-		gemc -USE_GUI=0 "$system"_sqlite.gcard            -N=10 -OUTPUT="hipo, sqlite_"$run".hipo"        -RANDOM=123 -RUNNO="$run"
+		gemc -USE_GUI=0 "$system"_sqlite.gcard      -N=10 -OUTPUT="hipo, sqlite_sanity_"$run".hipo" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 
-		sanity_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check"  txt_"$run".hipo sqlite_sanity_"$run".hipo | grep "$bank_to_check" | grep \| | awk '{print $6}')
+		compare_result=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" txt_"$run".hipo sqlite_sanity_"$run".hipo)
+		echo Comparison:
+		echo $compare_result
+		sanity_check=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $6}')
 		if [[ $sanity_check = "0" ]]; then
-			echo "$system:$variation:$run:$digi_var/$digi_var:✅" >> $log_file
+			echo "$system:$variation:$run:$digi_var/$digi_var:✅" >>$log_file
 		else
-			echo "$system:$variation:$run:$digi_var/$digi_var:❌" >> $log_file
+			echo "$system:$variation:$run:$digi_var/$digi_var:❌" >>$log_file
 		fi
-		actual_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check"  txt_"$run".hipo sqlite_"$run".hipo | grep "$bank_to_check" | grep \| | awk '{print $6}')
-		if [[ $actual_check = "0" ]]; then
-			echo "$system:$variation:$run:$digi_var/default:✅" >> $log_file
-		else
-			echo "$system:$variation:$run:$digi_var/default:❌" >> $log_file
+
+		if [[ $variation != "default" ]]; then
+			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default
+			gemc -USE_GUI=0 "$system"_sqlite.gcard     -N=10 -OUTPUT="hipo, sqlite_"$run".hipo"        -RANDOM=123 -RUNNO="$run"
+
+			compare_result=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" txt_"$run".hipo sqlite_"$run".hipo)
+			echo Comparison:
+			echo $compare_result
+
+			actual_check=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $6}')
+			if [[ $actual_check = "0" ]]; then
+				echo "$system:$variation:$run:$digi_var/default:✅" >>$log_file
+			else
+				echo "$system:$variation:$run:$digi_var/default:❌" >>$log_file
+			fi
 		fi
 
 	done
+
 done
 
 echo
