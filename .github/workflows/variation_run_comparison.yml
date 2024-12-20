@@ -67,7 +67,7 @@ jobs:
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
-          name: gemclogs-${{ matrix.detector }}
+          name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/
 
   Geometry:

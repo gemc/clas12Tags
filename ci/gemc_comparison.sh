@@ -78,6 +78,19 @@ variations_for_run_and_system()  {
 	fi
 }
 
+bank_to_check=""
+if [[ $system == "ec" ]]; then
+	bank_to_check="EC::adc"
+elif [[ $system == "pcal" ]]; then
+	bank_to_check="PCAL::adc"
+elif [[ $system == "ftof" ]]; then
+	bank_to_check="FTOF::adc"
+elif [[ $system == "dc" ]]; then
+	bank_to_check="DC::tdc"
+elif [[ $system == "htcc" ]]; then
+	bank_to_check="HTCC::adc"
+fi
+
 # build gemc. Not necessary unless something changes in the code
 git branch
 ./ci/build_gemc.sh
@@ -102,19 +115,19 @@ for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
 	for variation in $variations; do
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var
-		gemc -USE_GUI=0 "$system"_text_"$variation".gcard -N=10 -OUTPUT="hipo, txt_"$run".hipo" -RANDOM=123 -RUNNO="$run"  -DIGITIZATION_VARIATION="$digi_var"
+		gemc -USE_GUI=0 "$system"_text_"$variation".gcard -N=10 -OUTPUT="hipo, txt_"$run".hipo"           -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
-		gemc -USE_GUI=0 "$system"_sqlite.gcard.gcard   -N=10 -OUTPUT="hipo, sqlite_sanity_"$run".hipo" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
+		gemc -USE_GUI=0 "$system"_sqlite.gcard            -N=10 -OUTPUT="hipo, sqlite_sanity_"$run".hipo" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default
-		gemc -USE_GUI=0 "$system"_sqlite.gcard.gcard   -N=10 -OUTPUT="hipo, sqlite_"$run".hipo" -RANDOM=123 -RUNNO="$run"
+		gemc -USE_GUI=0 "$system"_sqlite.gcard            -N=10 -OUTPUT="hipo, sqlite_"$run".hipo"        -RANDOM=123 -RUNNO="$run"
 
-		sanity_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "DC::tdc"  txt_"$run".hipo sqlite_sanity_"$run".hipo | grep DC::tdc | grep \| | awk '{print $6}')
+		sanity_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check"  txt_"$run".hipo sqlite_sanity_"$run".hipo | grep "$bank_to_check" | grep \| | awk '{print $6}')
 		if [[ $sanity_check = "0" ]]; then
 			echo "$system:$variation:$run:$digi_var/$digi_var:✅" >> $log_file
 		else
 			echo "$system:$variation:$run:$digi_var/$digi_var:❌" >> $log_file
 		fi
-		actual_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "DC::tdc"  txt_"$run".hipo sqlite_"$run".hipo | grep DC::tdc | grep \| | awk '{print $6}')
+		actual_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check"  txt_"$run".hipo sqlite_"$run".hipo | grep "$bank_to_check" | grep \| | awk '{print $6}')
 		if [[ $actual_check = "0" ]]; then
 			echo "$system:$variation:$run:$digi_var/default:✅" >> $log_file
 		else
