@@ -37,14 +37,9 @@ jobs:
     needs: comparison
     runs-on: ubuntu-latest
     steps:
-      - name: Get Artifact Names from Matrix
-        run: |
-          # Create a space-separated list of detectors from the matrix
-          detectors="${{ needs.comparison.outputs.matrix | join(' ') }}"
-          echo "Detectors from matrix: $detectors"
-          echo "DETECTORS=$detectors" >> $GITHUB_ENV
-
-      - name: Verify DETECTORS Variable
-        run: echo "DETECTORS=$DETECTORS"
-        env:
-          DETECTORS: ${{ env.DETECTORS }}
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: logs-*
+    - run: |
+        ls /root/logs/*
+        ls */root/logs
