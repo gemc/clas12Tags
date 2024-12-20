@@ -101,9 +101,9 @@ jobs:
         run: |
          ls */*output_comparison.log
          cat */*output_comparison.log > comparison.log
-         echo "| Detector | Geometry Variation | Run | Digitization Variations | Status  |" > Summary.md
-         echo "|----------|--------------------|-----|-------------------------|---------|" >> Summary.md
-         while IFS=: read -r detector variation run dvariations  pass; do
-           echo "| $detector | $variation | $run | $dvariations | $pass |" >> Summary.md
+         echo "| Detector | Geometry Variation | Run | Bank | Digitization Variations | Status  |" > Summary.md
+         echo "|----------|--------------------|-----|------|-------------------------|---------|" >> Summary.md
+         while IFS=: read -r detector variation run bank dvariations  pass; do
+           echo "| $detector | $variation | $run | $bank | $dvariations | $pass |" >> Summary.md
          done < comparison.log
          cat Summary.md >> $GITHUB_STEP_SUMMARY
