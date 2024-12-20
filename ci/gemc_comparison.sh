@@ -118,8 +118,8 @@ for run in $=runs; do
 		gcard2="$system"_sqlite.gcard
 		outfile1="txt_"$run".hipo"
 		outfile2="sanity_sqlite_"$run".hipo"
-		output1=" -OUTPUT=hipo, $outfile1"
-		output2=" -OUTPUT=hipo, $outfile2"
+		output1=" -OUTPUT=\"hipo, $outfile1\""
+		output2=" -OUTPUT=\"hipo, $outfile2\""
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var
 		gemc -USE_GUI=0 $gcard1 -N=10 $output1 -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
@@ -130,18 +130,20 @@ for run in $=runs; do
 		echo $compare_result
 		check1=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $4}')
 		check2=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $6}')
+		# remove :: from $bank_to_check
+		bank_to_write=$(echo $bank_to_check | sed 's/::/_/g')
 
 		# if both checks are 0, then the comparison is successful
 		if [[ $check1 = "0" && $check2 = "0" ]]; then
-			echo "$system:$variation:$run:$bank_to_check:$digi_var/default:✅" >>$log_file
+			echo "$system:$variation:$run:$bank_to_write:$digi_var/default:✅" >>$log_file
 		else
-			echo "$system:$variation:$run:$bank_to_check:$digi_var/default:❌" >>$log_file
+			echo "$system:$variation:$run:$bank_to_write:$digi_var/default:❌" >>$log_file
 		fi
 
 		if [[ $digi_var != "default" ]]; then
 			gcard2="$system"_sqlite.gcard
 			outfile2="sqlite_"$run".hipo"
-			output2=" -OUTPUT=hipo, $outfile2"
+			output2=" -OUTPUT=\"hipo, $outfile2\""
 
 			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
 			gemc -USE_GUI=0 $gcard2 -N=10 $output2 -RANDOM=123 -RUNNO="$run"
@@ -154,9 +156,9 @@ for run in $=runs; do
 
 			# if both checks are 0, then the comparison is successful
 			if [[ $check1 = "0" && $check2 = "0" ]]; then
-				echo "$system:$variation:$run:$bank_to_check:$digi_var/default:✅" >>$log_file
+				echo "$system:$variation:$run:$bank_to_write:$digi_var/default:✅" >>$log_file
 			else
-				echo "$system:$variation:$run:$bank_to_check:$digi_var/default:❌" >>$log_file
+				echo "$system:$variation:$run:$bank_to_write:$digi_var/default:❌" >>$log_file
 			fi
 		fi
 
