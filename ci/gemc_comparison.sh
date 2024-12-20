@@ -18,7 +18,7 @@ Help() {
 	echo
 	echo "-h: Print this Help."
 	echo "-d <system>: build gemc and runs it for the system."
-	echo "-v <digitation variation>: sets DIGITIZATION_VARIATION to the value for the comparisons."
+	echo "-v <digitization variation>: sets DIGITIZATION_VARIATION to the value for the comparisons."
 	echo
 }
 
@@ -27,7 +27,7 @@ if [ $# -eq 0 ]; then
 	exit 1
 fi
 
-while getopts ":hd:" option; do
+while getopts ":hd:v:" option; do
 	case $option in
 		h)
 			Help
@@ -90,6 +90,7 @@ touch $log_file
 cd experiments/clas12
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
 wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.tar.gz
+tar -zxpvf j4np-1.1.1.tar.gz
 yum install -y java-latest-openjdk
 cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
@@ -112,8 +113,18 @@ for run in $=runs; do
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default
 		gemc -USE_GUI=0 "$system"_sqlite.gcard.gcard   -N=10 -OUTPUT="hipo, sqlite_"$run".hipo" -RANDOM=123 -RUNNO="$run"
 
-		echo "$system:$variation:$run:$digi_var/$digi_var:✅" >> $log_file
-		echo "$system:$variation:$run:$digi_var/$default:❌" >> $log_file
+		sanity_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "DC::tdc"  txt_"$run".hipo sqlite_sanity_"$run".hipo | grep DC::tdc | grep \| | awk '{print $6}')
+		if [[ $sanity_check = "0" ]]; then
+			echo "$system:$variation:$run:$digi_var/$digi_var:✅" >> $log_file
+		else
+			echo "$system:$variation:$run:$digi_var/$digi_var:❌" >> $log_file
+		fi
+		actual_check=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "DC::tdc"  txt_"$run".hipo sqlite_"$run".hipo | grep DC::tdc | grep \| | awk '{print $6}')
+		if [[ $actual_check = "0" ]]; then
+			echo "$system:$variation:$run:$digi_var/default:✅" >> $log_file
+		else
+			echo "$system:$variation:$run:$digi_var/default:❌" >> $log_file
+		fi
 
 	done
 done
