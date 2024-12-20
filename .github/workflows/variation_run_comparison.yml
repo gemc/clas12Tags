@@ -41,5 +41,4 @@ jobs:
       with:
         pattern: logs-*
     - run: |
-        ls /root/logs/*
-        ls */root/logs
+        ls */*.log
