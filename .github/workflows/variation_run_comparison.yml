@@ -63,7 +63,7 @@ jobs:
         uses: actions/checkout@main
       - name: GEMC ${{ matrix.detector }} Comparison
         run: |
-          ./ci/gemc_comparison.sh.sh -d ${{ matrix.detector }}
+          ./ci/gemc_comparison.sh -d ${{ matrix.detector }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
