@@ -37,8 +37,17 @@ jobs:
     needs: comparison
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v4
-      with:
-        pattern: logs-*
-    - run: |
-        ls */*.log
+      - name: Collect logs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: logs-*
+      - name: Generate Table
+        run: |
+         ls */*.log
+         cat */*.log > comparison.log
+         echo "| Detector | Variation | Run | Status  |" > summary.md
+         echo "|----------|-----------|-----|---------|" >> summary.md
+         while IFS=: read -r detector variation run pass; do
+           echo "| $detector | $variation | $run | $pass |" >> summary.md
+         done < comparison.log
+         cat summary.md >> $GITHUB_STEP_SUMMARY
