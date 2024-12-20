@@ -143,7 +143,7 @@ for run in $=runs; do
 			outfile2="sqlite_"$run".hipo"
 			output2=" -OUTPUT=\"hipo, $outfile2\""
 
-			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation"
+			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default
 			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run"
 
 			compare_result=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2)

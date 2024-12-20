@@ -41,21 +41,21 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-#          - ec
-#          - pcal
-#          - dc
+          - ec
+          - pcal
+          - dc
           - ftof
-#          - htcc
+          - htcc
         variation:
           - default
           - rga_spring2018_mc
           - rga_fall2018_mc
-#          - rga_spring2019_mc
-#          - rgb_fall2019_mc
-#          - rgb_spring2019_mc
-#          - rgc_summer2022_mc
-#          - rgf_spring2020_mc
-#          - rgm_fall2021_mc
+          - rga_spring2019_mc
+          - rgb_fall2019_mc
+          - rgb_spring2019_mc
+          - rgc_summer2022_mc
+          - rgf_spring2020_mc
+          - rgm_fall2021_mc
 
 
     steps:
