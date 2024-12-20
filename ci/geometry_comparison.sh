@@ -5,7 +5,7 @@
 # Container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/variation_run_comparison.sh -d ec
+# ./ci/geometry_comparison.sh -d ec
 
 source ci/env.sh
 compare_exe=$(pwd)/api/perl/db_compare.py

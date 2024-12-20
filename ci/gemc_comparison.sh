@@ -5,7 +5,7 @@
 # Container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/variation_run_comparison.sh -d ec
+# ./ci/gemc_comparison.sh -d ec
 
 source ci/env.sh
 
@@ -78,8 +78,8 @@ variations_for_run_and_system()  {
 	fi
 }
 
-# build gemc
-./ci/build_gemc.sh
+# build gemc. Not necessary unless something changes in the code
+# ./ci/build_gemc.sh
 
 mkdir -p /root/logs
 log_file=/root/logs/"$system"_output_comparison.log
@@ -88,6 +88,7 @@ touch $log_file
 # get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
+#wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.jar
 cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 
