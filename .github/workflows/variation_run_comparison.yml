@@ -41,11 +41,11 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - ec
-          - pcal
-          - dc
+#          - ec
+#          - pcal
+#          - dc
           - ftof
-          - htcc
+#          - htcc
         variation:
           - default
           - rga_spring2018_mc

@@ -79,7 +79,8 @@ variations_for_run_and_system()  {
 }
 
 # build gemc. Not necessary unless something changes in the code
-# ./ci/build_gemc.sh
+git branch
+./ci/build_gemc.sh
 
 mkdir -p /root/logs
 log_file=/root/logs/"$system"_output_comparison.log
@@ -88,7 +89,8 @@ touch $log_file
 # get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
-#wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.jar
+wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.tar.gz
+yum install -y java-latest-openjdk
 cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 
@@ -99,7 +101,6 @@ echo "\n > System: $system"
 
 runs=$(runs_for_system)
 
-digi_variation=$(digitization_variations)
 # geometry comparison
 for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
