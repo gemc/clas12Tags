@@ -45,33 +45,7 @@ jobs:
 
       - name: Download Artifacts Dynamically
         run: |
-          IFS=' ' read -r -a detectors <<< "$DETECTORS"
-          mkdir -p logs/
-          for detector in "${detectors[@]}"; do
-            artifact_name="logs-${detector}"
-            echo "Downloading artifact: $artifact_name"
-            actions/download-artifact --name "$artifact_name" --path "logs/" || echo "Artifact $artifact_name not found, skipping."
-          done
-        shell: bash
-        env:
-          DETECTORS: ${{ needs.comparison.strategy.matrix.detector }}
-
-      - name: Aggregate Logs and Generate Table
-        run: |
-          # Aggregate all logs into a single file
-          cat logs/*.log > comparison.log
-
-          # Generate the table header
-          echo "| Detector | Variation | Run | Status  |" > summary.md
-          echo "|----------|-----------|-----|---------|" >> summary.md
-
-          # Read the aggregated log and append rows to the table
-          while IFS=: read -r detector variation run pass; do
-            echo "| $detector | $variation | $run | $pass |" >> summary.md
-          done < comparison.log
-
-          # Write the table to the GitHub Actions summary
-          cat summary.md >> $GITHUB_STEP_SUMMARY
-
-      - name: Display Summary in Logs
-        run: cat $GITHUB_STEP_SUMMARY
+          # Create a space-separated list of detectors from the matrix
+          detectors="${{ needs.comparison.outputs.matrix | join(' ') }}"
+          echo "Detectors from matrix: $detectors"
+          echo "DETECTORS=$detectors" >> $GITHUB_ENV
