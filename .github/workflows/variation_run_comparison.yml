@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  comparison:
+  Comparison:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -33,8 +33,8 @@ jobs:
           path: /root/logs/
 
 
-  summary:
-    needs: comparison
+  Geometry:
+    needs: Comparison
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -43,11 +43,11 @@ jobs:
           pattern: logs-*
       - name: Generate Table
         run: |
-         ls */*.log
-         cat */*.log > comparison.log
-         echo "| Detector | Variation | Run | Status  |" > summary.md
-         echo "|----------|-----------|-----|---------|" >> summary.md
+         ls */*geo_comparison.log
+         cat */*geo_comparison.log > geo_comparison.log
+         echo "| Detector | Variation | Run | Status  |" > Summary.md
+         echo "|----------|-----------|-----|---------|" >> Summary.md
          while IFS=: read -r detector variation run pass; do
-           echo "| $detector | $variation | $run | $pass |" >> summary.md
-         done < comparison.log
-         cat summary.md >> $GITHUB_STEP_SUMMARY
+           echo "| $detector | $variation | $run | $pass |" >> Summary.md
+         done < geo_comparison.log
+         cat Summary.md >> $GITHUB_STEP_SUMMARY

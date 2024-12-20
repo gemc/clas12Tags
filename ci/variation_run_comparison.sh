@@ -85,11 +85,11 @@ digitization_for_run_and_system()  {
 	fi
 }
 
-cfile=/root/logs/"$system"_comparison.log
+geo_log_file=/root/logs/"$system"_geo_comparison.log
 mkdir -p /root/logs
 #./ci/build_gemc.sh
 cd experiments/clas12
-touch $cfile
+touch $geo_log_file
 
 # get the clas12.sqlite file. This will be replaced by the actual file
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
@@ -105,13 +105,13 @@ for run in $=runs; do
 		echo "Comparing geometry for $system, run: $run, variation: $variation", compare argument: "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		$compare_exe "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
 		if [ $? -ne 0 ]; then
-			echo "$system:$variation:$run:❌" >>$cfile
+			echo "$system:$variation:$run:❌" >>$geo_log_file
 		else
-			echo "$system:$variation:$run:✅" >>$cfile
+			echo "$system:$variation:$run:✅" >>$geo_log_file
 		fi
 	done
 done
 
 echo
-cat $cfile
+cat $geo_log_file
 echo
