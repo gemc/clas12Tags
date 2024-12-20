@@ -39,27 +39,22 @@ jobs:
     steps:
       - name: Get Artifact Names from Matrix
         run: |
-          # Generate a list of detectors from the matrix
-          detectors=(${{ needs.comparison.strategy.matrix.detector }})
-          echo "DETECTORS=${detectors[*]}" >> $GITHUB_ENV
+          # Generate a space-separated list of detectors from the matrix
+          echo "DETECTORS=${{ needs.comparison.strategy.matrix.detector }}" >> $GITHUB_ENV
+
 
       - name: Download Artifacts Dynamically
         run: |
-          # Read the detectors from the environment
           IFS=' ' read -r -a detectors <<< "$DETECTORS"
-          
           mkdir -p logs/
-
-          # Download each artifact dynamically
           for detector in "${detectors[@]}"; do
-            echo "Downloading logs for detector: $detector"
-            # Use actions/download-artifact to retrieve artifacts
-            if actions/download-artifact@v4 --name "$artifact_name" --path "logs/"; then
-              echo "Successfully downloaded artifact: $artifact_name"
-            else
-              echo "Artifact $artifact_name not found, skipping."
-            fi
+            artifact_name="logs-${detector}"
+            echo "Downloading artifact: $artifact_name"
+            actions/download-artifact --name "$artifact_name" --path "logs/" || echo "Artifact $artifact_name not found, skipping."
           done
+        shell: bash
+        env:
+          DETECTORS: ${{ needs.comparison.strategy.matrix.detector }}
 
       - name: Aggregate Logs and Generate Table
         run: |
@@ -71,8 +66,8 @@ jobs:
           echo "|----------|-----------|-----|---------|" >> summary.md
 
           # Read the aggregated log and append rows to the table
-          while IFS=: read -r detector variation run status; do
-            echo "| $detector | $variation | $run | $status |" >> summary.md
+          while IFS=: read -r detector variation run pass; do
+            echo "| $detector | $variation | $run | $pass |" >> summary.md
           done < comparison.log
 
           # Write the table to the GitHub Actions summary
