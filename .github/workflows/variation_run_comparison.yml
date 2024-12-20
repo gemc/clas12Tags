@@ -39,13 +39,12 @@ jobs:
     steps:
       - name: Get Artifact Names from Matrix
         run: |
-          # Generate a space-separated list of detectors from the matrix
-          echo "DETECTORS=${{ needs.comparison.strategy.matrix.detector }}" >> $GITHUB_ENV
-
-
-      - name: Download Artifacts Dynamically
-        run: |
           # Create a space-separated list of detectors from the matrix
           detectors="${{ needs.comparison.outputs.matrix | join(' ') }}"
           echo "Detectors from matrix: $detectors"
           echo "DETECTORS=$detectors" >> $GITHUB_ENV
+
+      - name: Verify DETECTORS Variable
+        run: echo "DETECTORS=$DETECTORS"
+        env:
+          DETECTORS: ${{ env.DETECTORS }}
