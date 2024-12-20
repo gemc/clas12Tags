@@ -25,19 +25,15 @@ function compileGEMC {
 
 cd source
 compileGEMC
-echo "Copying gemc to "$GEMC/bin for experiment tests
+echo "Copying gemc to "$GEMC/bin for CI tests
 cp gemc $GEMC/bin
 cd ..
 cp -r experiments $GEMC
 echo
 echo "content of "$GEMC":"
 ls -lrt $GEMC
-#
-# copying executable and geometry for artifact retrieval
-mkdir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
-cp source/gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
 
-# cloning the latest api to source
-git clone https://github.com/gemc/api
-rm -rf api/.git
-cp -r api source /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+# copying executable and geometry for artifact retrieval
+mkdir -p /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
+cp source/gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
+cp -r api experiments /cvmfs/oasis.opensciencegrid.org/jlab/geant4

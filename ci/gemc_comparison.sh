@@ -8,17 +8,17 @@
 # ./ci/variation_run_comparison.sh -d ec
 
 source ci/env.sh
-compare_exe=$(pwd)/api/perl/db_compare.py
 
 Help() {
 	# Display Help
 	echo
-	echo "Syntax: variation_run_comparison.sh [-h|d]"
+	echo "Syntax: variation_run_comparison.sh [-h|d|v]"
 	echo
 	echo "Options:"
 	echo
 	echo "-h: Print this Help."
-	echo "-d <system>: build geometry and runs and run comparison script for the system."
+	echo "-d <system>: build gemc and runs it for the system."
+	echo "-v <digitation variation>: sets DIGITIZATION_VARIATION to the value for the comparisons."
 	echo
 }
 
@@ -35,6 +35,9 @@ while getopts ":hd:" option; do
 			;;
 		d)
 			system="$OPTARG"
+			;;
+		v)
+			digi_var="$OPTARG"
 			;;
 		\?) # Invalid option
 			echo "Error: Invalid option"
@@ -71,25 +74,22 @@ variations_for_run_and_system()  {
 			echo "rga_spring2018"
 		fi
 	elif [[ $1 == "4763" ]]; then
-			echo "rga_fall2018"
+		echo "rga_fall2018"
 	fi
 }
 
-digitization_for_run_and_system()  {
-	if [[ $1 == "11" ]]; then
-		echo "default"
-	elif [[ $1 == "3029" ]]; then
-		if [[ $system == "ec" ]]; then
-			echo "rga_fall2018_mc"
-		fi
-	fi
-}
+# build gemc
+./ci/build_gemc.sh
 
-geo_log_file=/root/logs/"$system"_geo_comparison.log
 mkdir -p /root/logs
-#./ci/build_gemc.sh
+log_file=/root/logs/"$system"_output_comparison.log
+touch $log_file
+
+# get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12
-touch $geo_log_file
+wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
+cd "$system" || DetectorDirNotExisting
+echo "\n > System: $system"
 
 # get the clas12.sqlite file. This will be replaced by the actual file
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
@@ -98,20 +98,24 @@ echo "\n > System: $system"
 
 runs=$(runs_for_system)
 
-# loop over runs and get the variation
+digi_variation=$(digitization_variations)
+# geometry comparison
 for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
 	for variation in $variations; do
-		echo "Comparing geometry for $system, run: $run, variation: $variation", compare argument: "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
-		$compare_exe "$system"__geometry_"$variation".txt ../clas12.sqlite "$system" "$run" default
-		if [ $? -ne 0 ]; then
-			echo "$system:$variation:$run:❌" >>$geo_log_file
-		else
-			echo "$system:$variation:$run:✅" >>$geo_log_file
-		fi
+		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var
+		gemc -USE_GUI=0 "$system"_text_"$variation".gcard -N=10 -OUTPUT="hipo, txt_"$run".hipo" -RANDOM=123 -RUNNO="$run"  -DIGITIZATION_VARIATION="$digi_var"
+		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
+		gemc -USE_GUI=0 "$system"_sqlite.gcard.gcard   -N=10 -OUTPUT="hipo, sqlite_sanity_"$run".hipo" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
+		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default
+		gemc -USE_GUI=0 "$system"_sqlite.gcard.gcard   -N=10 -OUTPUT="hipo, sqlite_"$run".hipo" -RANDOM=123 -RUNNO="$run"
+
+		echo "$system:$variation:$run:$digi_var/$digi_var:✅" >> $log_file
+		echo "$system:$variation:$run:$digi_var/$default:❌" >> $log_file
+
 	done
 done
 
 echo
-cat $geo_log_file
+cat $log_file
 echo

@@ -9,13 +9,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  Comparison:
+  GeoComparison:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
       fail-fast: false
       matrix:
         detector:
+          - ec
+          - pcal
           - dc
           - ftof
           - htcc
@@ -23,31 +25,85 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Run ${{ matrix.detector }} comparison
+      - name: Geometry ${{ matrix.detector }} Comparison
         run: |
-          ./ci/variation_run_comparison.sh -d ${{ matrix.detector }}
+          ./ci/geometry_comparison.sh -d ${{ matrix.detector }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
-          name: logs-${{ matrix.detector }}
+          name: geologs-${{ matrix.detector }}
           path: /root/logs/
 
+  OutputComparison:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-almalinux94
+    strategy:
+      fail-fast: false
+      matrix:
+        detector:
+          - ec
+          - pcal
+          - dc
+          - ftof
+          - htcc
+        variation:
+          - default
+          - rga_spring2018_mc
+          - rga_fall2018_mc
+#          - rga_spring2019_mc
+#          - rgb_fall2019_mc
+#          - rgb_spring2019_mc
+#          - rgc_summer2022_mc
+#          - rgf_spring2020_mc
+#          - rgm_fall2021_mc
+
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: GEMC ${{ matrix.detector }} Comparison
+        run: |
+          ./ci/gemc_comparison.sh.sh -d ${{ matrix.detector }}
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemclogs-${{ matrix.detector }}
+          path: /root/logs/
 
   Geometry:
-    needs: Comparison
+    needs: GeoComparison
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
         uses: actions/download-artifact@v4
         with:
-          pattern: logs-*
+          pattern: geologs-*
       - name: Generate Table
         run: |
          ls */*geo_comparison.log
-         cat */*geo_comparison.log > geo_comparison.log
-         echo "| Detector | Variation | Run | Status  |" > Summary.md
-         echo "|----------|-----------|-----|---------|" >> Summary.md
+         cat */*geo_comparison.log > comparison.log
+         echo "| Detector | Geometry Variation | Run | Status  |" > Summary.md
+         echo "|----------|--------------------|-----|---------|" >> Summary.md
          while IFS=: read -r detector variation run pass; do
            echo "| $detector | $variation | $run | $pass |" >> Summary.md
-         done < geo_comparison.log
+         done < comparison.log
+         cat Summary.md >> $GITHUB_STEP_SUMMARY
+
+  Digitization:
+    needs: OutputComparison
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect logs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: gemclogs-*
+      - name: Generate Table
+        run: |
+         ls */*output_comparison.log
+         cat */*output_comparison.log > comparison.log
+         echo "| Detector | Geometry Variation | Run | Digitization Variations | Status  |" > Summary.md
+         echo "|----------|--------------------|-----|-------------------------|---------|" >> Summary.md
+         while IFS=: read -r detector variation dvariations run pass; do
+           echo "| $detector | $variation | $run | $pass |" >> Summary.md
+         done < comparison.log
          cat Summary.md >> $GITHUB_STEP_SUMMARY
