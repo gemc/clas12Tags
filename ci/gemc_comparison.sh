@@ -95,11 +95,6 @@ yum install -y java-latest-openjdk
 cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 
-# get the clas12.sqlite file. This will be replaced by the actual file
-wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
-cd "$system" || DetectorDirNotExisting
-echo "\n > System: $system"
-
 runs=$(runs_for_system)
 
 # geometry comparison
