@@ -118,12 +118,10 @@ for run in $=runs; do
 		gcard2="$system"_sqlite.gcard
 		outfile1="txt_"$run".hipo"
 		outfile2="sanity_sqlite_"$run".hipo"
-		output1=" -OUTPUT=\"hipo, $outfile1\""
-		output2=" -OUTPUT=\"hipo, $outfile2\""
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var
-		gemc -USE_GUI=0 $gcard1 -N=10 $output1 -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
+		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
-		gemc -USE_GUI=0 $gcard2 -N=10 $output2 -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
+		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 
 		compare_result=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2)
 		echo Comparison between $outfile1 and $outfile2
@@ -145,8 +143,8 @@ for run in $=runs; do
 			outfile2="sqlite_"$run".hipo"
 			output2=" -OUTPUT=\"hipo, $outfile2\""
 
-			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
-			gemc -USE_GUI=0 $gcard2 -N=10 $output2 -RANDOM=123 -RUNNO="$run"
+			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation"
+			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run"
 
 			compare_result=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2)
 			echo Comparison between $outfile1 and $outfile2
