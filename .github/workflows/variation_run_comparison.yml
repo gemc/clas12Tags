@@ -69,7 +69,7 @@ jobs:
           name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/
 
-  Geometry Summary:
+  GeoResults:
     needs: Geometry
     runs-on: ubuntu-latest
     steps:
@@ -88,7 +88,7 @@ jobs:
          done < comparison.log
          cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  Digitization Summary:
+  DigiResults:
     needs: Digitization
     runs-on: ubuntu-latest
     steps:
