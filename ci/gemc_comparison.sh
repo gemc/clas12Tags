@@ -132,16 +132,19 @@ touch $log_file $log_file_run $log_file_compare
 
 # get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12
-wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
-wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.tar.gz
+# pipe to null to avoid the output of the wget command
+wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite  >/dev/null 2>&1
+wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.tar.gz  >/dev/null 2>&1
 tar -zxpvf j4np-1.1.1.tar.gz
-yum install -y java-latest-openjdk
+yum install -y java-latest-openjdk >/dev/null 2>&1
 cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 echo "\n > DIGITIZATION_VARIATION: $digi_var"
 echo "\n > GEMC: $(which gemc)"
-echo "\n > GEMC compiled on $(date)"
+echo "\n > GEMC compiled on $(date): "
 ls -lt "$(which gemc)"
+echo "\n > GEMC_DATA_DIR set to $GEMC_DATA_DIR with content:"
+ls -lt $GEMC_DATA_DIR
 
 runs=$(runs_for_system)
 
