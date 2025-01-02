@@ -85,6 +85,9 @@ compare_output() {
 	digi_var1=$4
 	digi_var2=$5
 
+	echo
+	echo "Comparing $outfile1 and $outfile2" , digi_var1: $digi_var1, digi_var2: $digi_var2 >>$log_file_compare
+	echo
 	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >>$log_file_compare
 	compare_result=$(cat $log_file_compare)
 	echo Comparison between $outfile1 and $outfile2
@@ -150,26 +153,24 @@ for run in $=runs; do
 		gcard2="$system"_sqlite.gcard
 		outfile1="txt_"$run".hipo"
 		outfile2="sqlite_"$run".hipo"
+		outfile3="sanity_sqlite_"$run".hipo"
 
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
+		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
 
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
-		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default" >>$log_file_run
+		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default"
 
 		compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
 
 		# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
 		if [[ $digi_var != "default" ]]; then
 
-			gcard2="$system"_sqlite.gcard
-			outfile2="sqlite_"$run".hipo"
-			output2=" -OUTPUT=\"hipo, $outfile2\""
 
 			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
+			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" 
 
-			compare_output $bank_to_check $outfile1 $outfile2 $digi_var $digi_var
+			compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
 
 		fi
 
