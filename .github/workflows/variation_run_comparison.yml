@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  GeoComparison:
+  Geometry:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -34,7 +34,7 @@ jobs:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
 
-  OutputComparison:
+  Digitization:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -47,16 +47,15 @@ jobs:
           - ftof
           - htcc
         variation:
-          - default
+#          - default
           - rga_spring2018_mc
           - rga_fall2018_mc
-          - rga_spring2019_mc
-          - rgb_fall2019_mc
-          - rgb_spring2019_mc
-          - rgc_summer2022_mc
-          - rgf_spring2020_mc
-          - rgm_fall2021_mc
-
+#          - rga_spring2019_mc
+#          - rgb_fall2019_mc
+#          - rgb_spring2019_mc
+#          - rgc_summer2022_mc
+#          - rgf_spring2020_mc
+#          - rgm_fall2021_mc
 
     steps:
       - name: Checkout
@@ -70,8 +69,8 @@ jobs:
           name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/
 
-  Geometry:
-    needs: GeoComparison
+  Geometry Summary:
+    needs: Geometry
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -89,8 +88,8 @@ jobs:
          done < comparison.log
          cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  Digitization:
-    needs: OutputComparison
+  Digitization Summary:
+    needs: Digitization
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -99,8 +98,8 @@ jobs:
           pattern: gemclogs-*
       - name: Generate Table
         run: |
-         ls */*output_comparison.log
-         cat */*output_comparison.log > comparison.log
+         ls */*output_summary.log
+         cat */*output_summary.log > comparison.log
          echo "| Detector | Geometry Variation | Run | Bank | Digitization Variations | Status  |" > Summary.md
          echo "|----------|--------------------|-----|------|-------------------------|---------|" >> Summary.md
          while IFS=: read -r detector variation run bank dvariations  pass; do

@@ -1,3 +1,5 @@
+# Coatjava version used for geometry: 11.0.4
+
 # Release notes
 
 
@@ -42,14 +44,14 @@ module switch gemc/dev
 
 gemc -v 
 
-  > gemc version: gemc dev
+  > gemc version: gemc 5.11
 
   > Environment:
 
   > FIELD_DIR: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/noarch/data/magfield
-  > GEMC_DATA_DIR: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/1.1/almalinux9-gcc11/clas12Tags/dev
-  > G4DATA_DIR: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/1.1/almalinux9-gcc11/geant4/10.7.4/data/Geant4-10.7.4/data
+  > GEMC_DATA_DIR: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/clas12Tags/dev
+  > G4DATA_DIR: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/geant4/10.7.4/data/Geant4-10.7.4/data
   > G4_VERSION: 10.7.4
-  > G4INSTALL: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/1.1/almalinux9-gcc11/geant4/10.7.4
+  > G4INSTALL: /cvmfs/oasis.opensciencegrid.org/jlab/geant4/almalinux9-gcc11/geant4/10.7.4
 
 ```

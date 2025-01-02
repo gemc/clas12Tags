@@ -78,6 +78,31 @@ variations_for_run_and_system()  {
 	fi
 }
 
+compare_output() {
+	bank_to_check=$1
+	outfile1=$2
+	outfile2=$3
+	digi_var1=$4
+	digi_var2=$5
+
+	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >>$log_file_compare
+	compare_result=$(cat $log_file_compare)
+	echo Comparison between $outfile1 and $outfile2
+	echo $compare_result
+	check1=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $4}')
+	check2=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $6}')
+
+	# remove :: from $bank_to_check
+	bank_to_write=$(echo $bank_to_check | sed 's/::/_/g')
+
+	# if both checks are 0, then the comparison is successful
+	if [[ $check1 = "0" && $check2 = "0" ]]; then
+		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:✅" >>$log_file
+	else
+		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:❌" >>$log_file
+	fi
+}
+
 bank_to_check=""
 if [[ $system == "ec" ]]; then
 	bank_to_check="EC::adc"
@@ -96,8 +121,10 @@ git branch
 ./ci/build_gemc.sh
 
 mkdir -p /root/logs
-log_file=/root/logs/"$system"_output_comparison.log
-touch $log_file
+log_file=/root/logs/"$system"_output_summary.log
+log_file_run=/root/logs/"$system"_output_run.log
+log_file_compare=/root/logs/"$system"_output_compare.log
+touch $log_file $log_file_run $log_file_compare
 
 # get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12
@@ -114,50 +141,36 @@ runs=$(runs_for_system)
 for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
 	for variation in $variations; do
+
+		# $digi_var can be: default, rga_spring2018_mc, rga_fall2018_mc
+
+		# running gemc with TEXT factory, $digi_var, and compare it with SQLITE factory, default
+
 		gcard1="$system"_text_"$variation".gcard
 		gcard2="$system"_sqlite.gcard
 		outfile1="txt_"$run".hipo"
-		outfile2="sanity_sqlite_"$run".hipo"
-		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var
-		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
-		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var for sanity check
-		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
+		outfile2="sqlite_"$run".hipo"
 
-		compare_result=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2)
-		echo Comparison between $outfile1 and $outfile2
-		echo $compare_result
-		check1=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $4}')
-		check2=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $6}')
-		# remove :: from $bank_to_check
-		bank_to_write=$(echo $bank_to_check | sed 's/::/_/g')
+		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
+		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
-		# if both checks are 0, then the comparison is successful
-		if [[ $check1 = "0" && $check2 = "0" ]]; then
-			echo "$system:$variation:$run:$bank_to_write:$digi_var/default:✅" >>$log_file
-		else
-			echo "$system:$variation:$run:$bank_to_write:$digi_var/default:❌" >>$log_file
-		fi
+		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
+		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default" >>$log_file_run
 
+		compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
+
+		# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
 		if [[ $digi_var != "default" ]]; then
+
 			gcard2="$system"_sqlite.gcard
 			outfile2="sqlite_"$run".hipo"
 			output2=" -OUTPUT=\"hipo, $outfile2\""
 
-			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default
-			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run"
+			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
+			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
-			compare_result=$(../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2)
-			echo Comparison between $outfile1 and $outfile2
-			echo $compare_result
-			check1=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $4}')
-			check2=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $6}')
+			compare_output $bank_to_check $outfile1 $outfile2 $digi_var $digi_var
 
-			# if both checks are 0, then the comparison is successful
-			if [[ $check1 = "0" && $check2 = "0" ]]; then
-				echo "$system:$variation:$run:$bank_to_write:$digi_var/default:✅" >>$log_file
-			else
-				echo "$system:$variation:$run:$bank_to_write:$digi_var/default:❌" >>$log_file
-			fi
 		fi
 
 	done
@@ -165,5 +178,4 @@ for run in $=runs; do
 done
 
 echo
-cat $log_file
 echo
