@@ -88,6 +88,7 @@ compare_output() {
 	echo
 	echo "Comparing $outfile1 and $outfile2" , digi_var1: $digi_var1, digi_var2: $digi_var2 >>$log_file_compare
 	echo
+	echo
 	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >>$log_file_compare
 	compare_result=$(cat $log_file_compare)
 	echo Comparison between $outfile1 and $outfile2
@@ -137,6 +138,10 @@ tar -zxpvf j4np-1.1.1.tar.gz
 yum install -y java-latest-openjdk
 cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
+echo "\n > DIGITIZATION_VARIATION: $digi_var"
+echo "\n > GEMC: $(which gemc)"
+echo "\n > GEMC compiled on $(date)"
+ls -lt "$(which gemc)"
 
 runs=$(runs_for_system)
 
@@ -156,10 +161,10 @@ for run in $=runs; do
 		outfile3="sanity_sqlite_"$run".hipo"
 
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var"
+		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
-		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default"
+		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default">>$log_file_run
 
 		compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
 
@@ -168,7 +173,7 @@ for run in $=runs; do
 
 
 			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" 
+			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var">>$log_file_run
 
 			compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
 
