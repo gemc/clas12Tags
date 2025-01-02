@@ -59,8 +59,9 @@ compare_output() {
 	echo "Comparing $outfile1 and $outfile2" , digi_var1: $digi_var1, digi_var2: $digi_var2 >>$log_file_compare
 	echo
 	echo
-	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >>$log_file_compare
-	compare_result=$(cat $log_file_compare)
+	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >temp_log
+	cat temp_log >> $log_file_compare
+	compare_result=$(cat temp_log | grep "$bank_to_check")
 	echo Comparison between $outfile1 and $outfile2
 	echo $compare_result
 	check1=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $4}')
