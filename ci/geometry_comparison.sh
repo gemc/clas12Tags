@@ -43,37 +43,6 @@ while getopts ":hd:" option; do
 	esac
 done
 
-DetectorDirNotExisting() {
-	echo "System directory: $system not existing"
-	Help
-	exit 3
-}
-
-# returns runs to test
-runs_for_system() {
-	# if system is ec returns 11 and 3029
-	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
-		echo "11 3029"
-	elif [[ $system == "dc" ]]; then
-		echo "11"
-	elif [[ $system == "htcc" ]]; then
-		echo "11 3029 4763"
-	fi
-}
-
-variations_for_run_and_system()  {
-	if [[ $1 == "11" ]]; then
-		echo "default"
-	elif [[ $1 == "3029" ]]; then
-		if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
-			echo "rga_fall2018"
-		elif [[ $system == "htcc" ]]; then
-			echo "rga_spring2018"
-		fi
-	elif [[ $1 == "4763" ]]; then
-			echo "rga_fall2018"
-	fi
-}
 
 mkdir -p /root/logs
 log_file=/root/logs/"$system"_geo_comparison.log
@@ -81,7 +50,7 @@ touch $log_file
 
 # get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12
-wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite
+wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite >/dev/null 2>&1
 cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 

@@ -46,37 +46,7 @@ while getopts ":hd:v:" option; do
 	esac
 done
 
-DetectorDirNotExisting() {
-	echo "System directory: $system not existing"
-	Help
-	exit 3
-}
 
-# returns runs to test
-runs_for_system() {
-	# if system is ec returns 11 and 3029
-	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
-		echo "11 3029"
-	elif [[ $system == "dc" ]]; then
-		echo "11"
-	elif [[ $system == "htcc" ]]; then
-		echo "11 3029 4763"
-	fi
-}
-
-variations_for_run_and_system()  {
-	if [[ $1 == "11" ]]; then
-		echo "default"
-	elif [[ $1 == "3029" ]]; then
-		if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
-			echo "rga_fall2018"
-		elif [[ $system == "htcc" ]]; then
-			echo "rga_spring2018"
-		fi
-	elif [[ $1 == "4763" ]]; then
-		echo "rga_fall2018"
-	fi
-}
 
 compare_output() {
 	bank_to_check=$1
@@ -143,17 +113,15 @@ echo "\n > DIGITIZATION_VARIATION: $digi_var"
 echo "\n > GEMC: $(which gemc)"
 echo "\n > GEMC compiled on $(date): "
 ls -lt "$(which gemc)"
-echo "\n > GEMC_DATA_DIR set to $GEMC_DATA_DIR with content:"
-ls -lt $GEMC_DATA_DIR
+
 
 runs=$(runs_for_system)
 
 # geometry comparison
+# $digi_var can be: default, rga_spring2018_mc, rga_fall2018_mc
 for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
 	for variation in $variations; do
-
-		# $digi_var can be: default, rga_spring2018_mc, rga_fall2018_mc
 
 		# running gemc with TEXT factory, $digi_var, and compare it with SQLITE factory, default
 
