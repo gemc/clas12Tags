@@ -146,7 +146,7 @@ for run in $=runs; do
 
 
 			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-			gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var">>$log_file_run
+			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var">>$log_file_run
 
 			compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
 
