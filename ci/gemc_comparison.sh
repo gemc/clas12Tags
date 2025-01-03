@@ -54,9 +54,11 @@ compare_output() {
 	outfile2=$3
 	digi_var1=$4
 	digi_var2=$5
+	geometry_variation=$6
 
 	echo
-	echo "Comparing $outfile1 and $outfile2" , digi_var1: $digi_var1, digi_var2: $digi_var2 >>$log_file_compare
+	echo "Comparing $outfile1 and $outfile2" for geometry variation: $geometry_variation, digi_var1: $digi_var1, digi_var2: $digi_var2 
+	echo "Comparing $outfile1 and $outfile2" for geometry variation: $geometry_variation, digi_var1: $digi_var1, digi_var2: $digi_var2 >>$log_file_compare
 	echo
 	echo
 	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >temp_log
