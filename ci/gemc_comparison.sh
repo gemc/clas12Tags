@@ -81,10 +81,8 @@ compare_output() {
 }
 
 bank_to_check=""
-if [[ $system == "ec" ]]; then
-	bank_to_check="EC::adc"
-elif [[ $system == "pcal" ]]; then
-	bank_to_check="PCAL::adc"
+if [[ $system == "ec" || $system == "pcal" ]]; then
+	bank_to_check="ECAL::adc"
 elif [[ $system == "ftof" ]]; then
 	bank_to_check="FTOF::adc"
 elif [[ $system == "dc" ]]; then
@@ -119,6 +117,7 @@ ls -lt "$(which gemc)"
 
 
 runs=$(runs_for_system)
+nevents=100
 
 # geometry comparison
 # $digi_var can be: default, rga_spring2018_mc, rga_fall2018_mc
@@ -135,10 +134,10 @@ for run in $=runs; do
 		outfile3="sanity_sqlite_"$run".hipo"
 
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-		gemc -USE_GUI=0 $gcard1 -N=10 -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
+		gemc -USE_GUI=0 $gcard1 -N=$nevents -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
-		gemc -USE_GUI=0 $gcard2 -N=10 -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default">>$log_file_run
+		gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default">>$log_file_run
 
 		compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
 
