@@ -1,4 +1,4 @@
-# Coatjava version used for geometry: 11.0.4
+# Coatjava version used for geometry: 11.1.0
 
 # Release notes
 
