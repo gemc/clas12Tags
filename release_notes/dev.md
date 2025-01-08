@@ -21,7 +21,7 @@
 - Added WF:10 hipo bank, following Nathan's proposal: https://code.jlab.org/baltzell/clas12-wf/-/blob/main/README.md 
 - DC Geometry / Digitization use of hexagonal cells (Raffaella) 
 - Added CI builds for both alma and fedora
-
+- Fixed  fixed airPipe / HTCC cone overlap mentioned in #21
 
 - Torus + Shielding beamline CAD geometry (in progress) 
 - Several issues with RG-F target #236 (in progress)
