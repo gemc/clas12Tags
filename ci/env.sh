@@ -5,16 +5,15 @@
 export
 # if we are in the docker container, we need to load the modules
 if [[ -z "${AUTOBUILD}" ]]; then
-	echo  "\nNot in container"
+	echo "\nNot in container"
 else
-	echo  "\nIn docker container."
+	echo "\nIn docker container."
 	if [[ -n "${GITHUB_WORKFLOW}" ]]; then
 		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 	fi
-	source  /etc/profile.d/localSetup.sh
+	source /etc/profile.d/localSetup.sh
 	module load hipo
 	module load ccdb
 	echo
 	export
 fi
-
