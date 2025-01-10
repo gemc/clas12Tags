@@ -22,8 +22,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-#      - name: Collect Workflow Telemetry
-#        uses: catchpoint/workflow-telemetry-action@v2
       - name: Build gemc
         run: |
           ./ci/build_gemc.sh

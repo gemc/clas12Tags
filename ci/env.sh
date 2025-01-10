@@ -46,14 +46,15 @@ else
 		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 	fi
 	source /etc/profile.d/localSetup.sh
+	module switch gemc/dev
 	module load hipo
 	module load ccdb
 	echo
-	if [[ -n "${GITHUB_REF}" ]]; then
-		if [[ "${GITHUB_REF}" == "refs/heads/dev" || "${GITHUB_REF}" == "refs/heads/new_cad_import" ]]; then
-			echo "GITHUB_REF: ${GITHUB_REF}"
-			module switch gemc/dev
-		fi
-	fi
+#	if [[ -n "${GITHUB_REF}" ]]; then
+#		echo "GITHUB_REF: ${GITHUB_REF}"
+#		if [[ "${GITHUB_REF}" == "refs/heads/main" || "${GITHUB_REF}" == "refs/heads/new_cad_import" ]]; then
+#			module switch gemc/dev
+#		fi
+#	fi
 	export
 fi

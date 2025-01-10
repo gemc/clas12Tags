@@ -24,8 +24,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-#      - name: Workflow Telemetry
-#        uses: runforesight/workflow-telemetry-action@v2.0.0
       - name: ${{ matrix.detector }} test
         run: |
           ./ci/detectors_test.sh -d ${{ matrix.detector }}

@@ -25,7 +25,7 @@ function compileGEMC {
 
 cd source
 compileGEMC
-echo "Copying gemc to "$GEMC/bin for CI tests
+echo "Copying gemc to "$GEMC/bin for CI
 cp gemc $GEMC/bin
 cd ..
 cp -r experiments $GEMC
