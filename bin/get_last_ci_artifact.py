@@ -59,12 +59,12 @@ runs_response = requests.get(runs_url, headers=headers)
 if runs_response.status_code == 200:
 	runs = runs_response.json().get("workflow_runs", [])
 
-	# Filter for runs in the 'dev' branch
-	dev_runs = [run for run in runs if run["head_branch"] == "dev"]
+	# Filter for runs in the 'main' branch
+	main_runs = [run for run in runs if run["head_branch"] == "main"]
 
-	if dev_runs:
-		# Get the latest run on 'dev' branch
-		latest_run_id = dev_runs[0]["id"]
+	if main_runs:
+		# Get the latest run on 'main' branch
+		latest_run_id = main_runs[0]["id"]
 
 		# Step 2: Get artifacts for the latest run
 		artifacts_url = f"https://api.github.com/repos/{REPO}/actions/runs/{latest_run_id}/artifacts"
@@ -83,12 +83,12 @@ if runs_response.status_code == 200:
 				download_artifact(latest_artifact["archive_download_url"], MAURI,
 				                  latest_artifact["name"])
 			else:
-				print("No artifacts found for the latest workflow run on 'dev' branch. Run ID:",
+				print("No artifacts found for the latest workflow run on 'main' branch. Run ID:",
 				      latest_run_id)
 		else:
 			print("Failed to get artifacts:", artifacts_response.status_code,
 			      artifacts_response.text)
 	else:
-		print("No workflow runs found for 'dev' branch.")
+		print("No workflow runs found for 'main' branch.")
 else:
 	print("Failed to get workflow runs:", runs_response.status_code, runs_response.text)
