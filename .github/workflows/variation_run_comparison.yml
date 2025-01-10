@@ -21,6 +21,7 @@ jobs:
           - dc
           - ftof
           - htcc
+          - ctof
 
     steps:
       - name: Checkout
@@ -46,6 +47,8 @@ jobs:
           - dc
           - ftof
           - htcc
+          - ctof
+
         variation:
           - default
           - rga_spring2018_mc
