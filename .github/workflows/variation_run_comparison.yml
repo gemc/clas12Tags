@@ -35,7 +35,7 @@ jobs:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
 
-  Digitization:
+  Run:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -92,7 +92,7 @@ jobs:
          cat Summary.md >> $GITHUB_STEP_SUMMARY
 
   DigiResults:
-    needs: Digitization
+    needs: Run
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
