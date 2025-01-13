@@ -57,14 +57,14 @@ compare_output() {
 	geometry_variation=$6
 
 	echo
-	echo "Comparing $outfile1 and $outfile2" for geometry variation: $geometry_variation, digi_var1: $digi_var1, digi_var2: $digi_var2 
-	echo "Comparing $outfile1 and $outfile2" for geometry variation: $geometry_variation, digi_var1: $digi_var1, digi_var2: $digi_var2 >>$log_file_compare
+	echo "Comparing file $outfile1 with $outfile2" for geometry variation: $geometry_variation, digi_var1: $digi_var1, digi_var2: $digi_var2
+	echo "Comparing file $outfile1 with $outfile2" for geometry variation: $geometry_variation, digi_var1: $digi_var1, digi_var2: $digi_var2 >>$log_file_compare
 	echo
 	echo
 	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >temp_log
 	cat temp_log >> $log_file_compare
 	compare_result=$(cat temp_log | grep "$bank_to_check")
-	echo Comparison between $outfile1 and $outfile2
+	echo Comparison between files $outfile1 and $outfile2
 	echo $compare_result
 	check1=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $4}')
 	check2=$(echo $compare_result | grep "$bank_to_check" | grep \| | awk '{print $6}')
@@ -89,6 +89,18 @@ elif [[ $system == "dc" ]]; then
 	bank_to_check="DC::tdc"
 elif [[ $system == "htcc" ]]; then
 	bank_to_check="HTCC::adc"
+elif [[ $system == "ctof" ]]; then
+	bank_to_check="CTOF::adc"
+elif [[ $system == "cnd" ]]; then
+	bank_to_check="CND::adc"
+elif [[ $system == "bst" ]]; then
+	bank_to_check="BST::adc"
+elif [[ $system == "bmt" ]]; then
+	bank_to_check="BMT::adc"
+elif [[ $system == "ltcc" ]]; then
+	bank_to_check="LTCC::adc"
+elif [[ $system == "rich" ]]; then
+	bank_to_check="RICH::adc"
 fi
 
 # build gemc. Not necessary unless something changes in the code

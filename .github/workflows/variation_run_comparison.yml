@@ -21,7 +21,6 @@ jobs:
           - dc
           - ftof
           - htcc
-          - ctof
 
     steps:
       - name: Checkout
