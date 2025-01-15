@@ -14,7 +14,7 @@ runs_for_system() {
 		echo "11 3029"
 	elif [[ $system == "dc" ]]; then
 		echo "11"
-	elif [[ $system == "htcc" || $system == "ctof" ]]; then
+	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" ]]; then
 		echo "11 3029 4763"
 	fi
 }
@@ -25,7 +25,7 @@ variations_for_run_and_system()  {
 	elif [[ $1 == "3029" ]]; then
 		if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 			echo "rga_fall2018"
-		elif [[ $system == "htcc" || $system == "ctof" ]]; then
+		elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" ]]; then
 			echo "rga_spring2018"
 		fi
 	elif [[ $1 == "4763" ]]; then
@@ -34,9 +34,9 @@ variations_for_run_and_system()  {
 }
 
 
-# Purpose: show clean environment, source local setup if in CI
-
+# show environment
 export
+
 # if we are in the docker container, we need to load the modules
 if [[ -z "${AUTOBUILD}" ]]; then
 	echo "\nNot in container"
