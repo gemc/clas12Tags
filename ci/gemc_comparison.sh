@@ -129,7 +129,7 @@ ls -lt "$(which gemc)"
 
 
 runs=$(runs_for_system)
-nevents=100
+nevents=200
 
 # geometry comparison
 # $digi_var can be: default, rga_spring2018_mc, rga_fall2018_mc

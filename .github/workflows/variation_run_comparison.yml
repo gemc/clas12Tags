@@ -21,6 +21,7 @@ jobs:
           - dc
           - ftof
           - htcc
+          - cnd
 
     steps:
       - name: Checkout
@@ -47,6 +48,7 @@ jobs:
           - ftof
           - htcc
           - ctof
+          - cnd
 
         variation:
           - default

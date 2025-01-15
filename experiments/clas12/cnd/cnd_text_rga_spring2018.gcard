@@ -3,19 +3,17 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="ctof"          factory="TEXT" variation="rga_fall2018"/>
-	<detector name="cad/"          factory="CAD"  variation="rga_fall2018"/>
-	<detector name="cad_upstream/" factory="CAD"  variation="rga_fall2018"/>
+	<detector name="cnd"          factory="TEXT" variation="rga_spring2018"/>
 
 	<option name="BEAM_P" value="proton, 1.0*GeV, 90*deg, 10*deg"/>
 	<option name="SPREAD_P"  value="0.0*GeV, 40*deg, 180*deg"/>
 
 	<option name="SAVE_ALL_MOTHERS" value="1"/>
-	<option name="INTEGRATEDRAW" value="ctof"/>
+	<option name="INTEGRATEDRAW" value="cnd"/>
 
 	<option name="RUNNO" value="11"/>
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
-	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
-	
+	<option name="DIGITIZATION_VARIATION"  value="rga_spring2018_mc" />
+
 </gcard>
