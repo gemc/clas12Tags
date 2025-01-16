@@ -169,4 +169,6 @@ for run in $=runs; do
 done
 
 echo
+echo Final hipo files:
 echo
+ls -l *.hipo
