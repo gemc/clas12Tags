@@ -15,10 +15,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Report Runs and Variations
+      - name: Report
         run: |
           ./ci/report_runs_and_variations.sh  > Summary.md
-         cat Summary.md >> $GITHUB_STEP_SUMMARY
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
 
   Geometry:
     runs-on: ubuntu-latest
@@ -27,12 +27,12 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-#          - ec
-#          - pcal
-#          - dc
-#          - ftof
-#          - htcc
-#          - cnd
+          #          - ec
+          #          - pcal
+          #          - dc
+          #          - ftof
+          #          - htcc
+          #          - cnd
           - bst
 
     steps:
@@ -96,14 +96,14 @@ jobs:
           pattern: geologs-*
       - name: Generate Table
         run: |
-         ls */*geo_comparison.log
-         cat */*geo_comparison.log > comparison.log
-         echo "| Detector | Geometry Variation | Run | Status  |" > Summary.md
-         echo "|----------|--------------------|-----|---------|" >> Summary.md
-         while IFS=: read -r detector variation run pass; do
-           echo "| $detector | $variation | $run | $pass |" >> Summary.md
-         done < comparison.log
-         cat Summary.md >> $GITHUB_STEP_SUMMARY
+          ls */*geo_comparison.log
+          cat */*geo_comparison.log > comparison.log
+          echo "| Detector | Geometry Variation | Run | Status  |" > Summary.md
+          echo "|----------|--------------------|-----|---------|" >> Summary.md
+          while IFS=: read -r detector variation run pass; do
+            echo "| $detector | $variation | $run | $pass |" >> Summary.md
+          done < comparison.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
 
   DigiResults:
     needs: Run
@@ -115,11 +115,11 @@ jobs:
           pattern: gemclogs-*
       - name: Generate Table
         run: |
-         ls */*output_summary.log
-         cat */*output_summary.log > comparison.log
-         echo "| Detector | Geometry Variation | Run | Bank | Digitization Variations | Status  |" > Summary.md
-         echo "|----------|--------------------|-----|------|-------------------------|---------|" >> Summary.md
-         while IFS=: read -r detector variation run bank dvariations  pass; do
-           echo "| $detector | $variation | $run | $bank | $dvariations | $pass |" >> Summary.md
-         done < comparison.log
-         cat Summary.md >> $GITHUB_STEP_SUMMARY
+          ls */*output_summary.log
+          cat */*output_summary.log > comparison.log
+          echo "| Detector | Geometry Variation | Run | Bank | Digitization Variations | Status  |" > Summary.md
+          echo "|----------|--------------------|-----|------|-------------------------|---------|" >> Summary.md
+          while IFS=: read -r detector variation run bank dvariations  pass; do
+            echo "| $detector | $variation | $run | $bank | $dvariations | $pass |" >> Summary.md
+          done < comparison.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
