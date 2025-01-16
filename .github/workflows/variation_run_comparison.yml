@@ -21,6 +21,7 @@ jobs:
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
   Geometry:
+    needs: Report
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -48,6 +49,7 @@ jobs:
           path: /root/logs/
 
   Run:
+    needs: Report
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
