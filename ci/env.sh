@@ -12,7 +12,7 @@ runs_for_system() {
 	# if system is ec returns 11 and 3029
 	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
-	elif [[ $system == "dc" ]]; then
+	elif [[ $system == "dc" || $system == "bst" ]]; then
 		echo "11"
 	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" ]]; then
 		echo "11 3029 4763"
