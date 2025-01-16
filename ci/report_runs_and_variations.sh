@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 
 runs=(11 3029 4763)
+geo_variations=(default rga_spring2018 rga_fall2018)
+
 variations=(default
 			rga_spring2018_mc
 			rga_fall2018_mc
@@ -12,10 +14,12 @@ variations=(default
 			rgm_fall2021_mc)
 
 
-echo "| Run |"
-echo "| --- |"
+echo "Geometry Variation | Run |"
+echo "| --- | --- |"
 for run in $=runs; do
-	echo "| $run |"
+	for variation in $=variations; do
+		echo "| $variation | $run |"
+	done
 done
 
 echo
