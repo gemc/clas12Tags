@@ -9,6 +9,17 @@ on:
   workflow_dispatch:
 
 jobs:
+
+  Report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Report Runs and Variations
+        run: |
+          ./ci/report_runs_and_variations.sh  > Summary.md
+         cat Summary.md >> $GITHUB_STEP_SUMMARY
+
   Geometry:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -16,12 +27,12 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - ec
-          - pcal
-          - dc
-          - ftof
-          - htcc
-          - cnd
+#          - ec
+#          - pcal
+#          - dc
+#          - ftof
+#          - htcc
+#          - cnd
           - bst
 
     steps:
