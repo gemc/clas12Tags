@@ -16,18 +16,18 @@ variations=(default
 
 echo "Geometry Variation | Run |"
 echo "| --- | --- |"
-for run in $=runs; do
-	for variation in $=variations; do
-		echo "| $variation | $run |"
-	done
+
+for i in {1..$#runs}; do
+	echo "| $geo_variations[$i] | $runs[$i] |"
 done
+
 
 echo
 echo "<br/>"
 echo
 
-echo "| Variation |"
-echo "| --- |"
+echo "| Digitization Variation |"
+echo "| :---: |"
 for variation in $=variations; do
 	echo "| $variation |"
 done
