@@ -22,6 +22,7 @@ jobs:
           - ftof
           - htcc
           - cnd
+          - bst
 
     steps:
       - name: Checkout
@@ -42,13 +43,14 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - ec
-          - pcal
-          - dc
-          - ftof
-          - htcc
-          - ctof
+#          - ec
+#          - pcal
+#          - dc
+#          - ftof
+#          - htcc
+#          - ctof
           - cnd
+          - bst
 
         variation:
           - default
