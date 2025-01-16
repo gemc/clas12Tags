@@ -27,7 +27,7 @@ echo "<br/>"
 echo
 
 echo "| Digitization Variation |"
-echo "| :---: |"
+echo "| --- |"
 for variation in $=variations; do
 	echo "| $variation |"
 done

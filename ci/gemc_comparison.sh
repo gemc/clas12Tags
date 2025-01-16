@@ -171,9 +171,9 @@ echo
 ls -l *.hipo
 echo
 echo
+
 # if "❌" is found in the log file, fail CI
-summarize_log() {
-	if grep -q "❌" $log_file; then
-		exit 1
-	fi
-}
+if grep -q "❌" $log_file; then
+	exit 1
+fi
+
