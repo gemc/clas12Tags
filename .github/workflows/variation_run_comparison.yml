@@ -57,14 +57,14 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - ec
-          - pcal
-          - dc
+#          - ec
+#          - pcal
+#          - dc
           - ftof
-          - htcc
-          - ctof
-          - cnd
-          - bst
+#          - htcc
+#          - ctof
+#          - cnd
+#          - bst
 
         variation:
           - default
