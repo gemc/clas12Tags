@@ -80,9 +80,9 @@ compare_output() {
 
 summarize_log() {
 	if grep -q "❌" $log_file_detail; then
-		echo "$system:$digi_var:✅" >> $log_file_summary"
+		echo "$system:$digi_var:✅" >> $log_file_summary
 	else
-		echo "$system:$digi_var:❌" >> $log_file_summary"
+		echo "$system:$digi_var:❌" >> $log_file_summary
 	fi
 }
 
@@ -166,7 +166,6 @@ for run in $=runs; do
 			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
 			compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
-
 		fi
 
 	done
@@ -180,10 +179,13 @@ ls -l *.hipo
 echo
 echo
 
-cat $log_file_details
-echo
-echo
-cat $log_file_summary
+echo Content of $log_file_detail:
+cat $log_file_detail
 echo
 echo
 summarize_log
+echo
+echo Content of $log_file_summary:
+cat $log_file_summary
+echo
+echo
