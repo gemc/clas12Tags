@@ -46,8 +46,6 @@ while getopts ":hd:v:" option; do
 	esac
 done
 
-
-
 compare_output() {
 	bank_to_check=$1
 	outfile1=$2
@@ -62,7 +60,7 @@ compare_output() {
 	echo
 	echo
 	../j4np-1.1.1/bin/j4np.sh h5u -compare -b "$bank_to_check" $outfile1 $outfile2 >temp_log
-	cat temp_log >> $log_file_compare
+	cat temp_log >>$log_file_compare
 	compare_result=$(cat temp_log | grep "$bank_to_check")
 	echo Comparison between files $outfile1 and $outfile2
 	echo $compare_result
@@ -74,19 +72,17 @@ compare_output() {
 
 	# if both checks are 0, then the comparison is successful
 	if [[ $check1 = "0" && $check2 = "0" ]]; then
-		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:✅" >>$log_file
+		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:✅" >>$log_file_detail
 	else
-		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:❌" >>$log_file
+		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:❌" >>$log_file_detail
 	fi
 }
 
-# if "❌" is found in the log file, the comparison failed, otherwise it passed
 summarize_log() {
-	log_summary=$1
-	if grep -q "❌" $log_file; then
-		echo "$system:$digi_var1:✅" > $log_summary"
+	if grep -q "❌" $log_file_detail; then
+		echo "$system:$digi_var1:✅" >> $log_file_summary"
 	else
-		echo "$system:$digi_var1:✅" > $log_summary"
+		echo "$system:$digi_var1:✅" >> $log_file_summary"
 	fi
 }
 
@@ -118,11 +114,11 @@ git branch
 ./ci/build_gemc.sh
 
 mkdir -p /root/logs
-log_file=/root/logs/"$system"_output_details.log
 log_file_run=/root/logs/"$system"_output_run.log
 log_file_compare=/root/logs/"$system"_output_compare.log
-log_summary_file=/root/logs/"$system"_output_summary.log
-touch $log_file $log_file_run $log_file_compare $log_summary_file
+log_file_detail=/root/logs/"$system"_output_details.log
+log_file_summary=/root/logs/"$system"_output_summary.log
+touch  $log_file_run $log_file_compare $log_file_detail $log_file_summary
 
 # get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12
@@ -137,7 +133,6 @@ echo "\n > DIGITIZATION_VARIATION: $digi_var"
 echo "\n > GEMC: $(which gemc)"
 echo "\n > GEMC compiled on $(date): "
 ls -lt "$(which gemc)"
-
 
 runs=$(runs_for_system)
 nevents=200
@@ -160,16 +155,15 @@ for run in $=runs; do
 		gemc -USE_GUI=0 $gcard1 -N=$nevents -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
-		gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default">>$log_file_run
+		gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default" >>$log_file_run
 
 		compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
 
 		# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
 		if [[ $digi_var != "default" ]]; then
 
-
 			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var">>$log_file_run
+			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
 			compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
 
@@ -183,6 +177,7 @@ echo
 echo Final hipo files:
 echo
 ls -l *.hipo
-log
+echo
+echo
 
-summarize_log $log_summary_file
+summarize_log
