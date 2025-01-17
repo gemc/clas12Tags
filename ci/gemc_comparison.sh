@@ -80,9 +80,9 @@ compare_output() {
 
 summarize_log() {
 	if grep -q "❌" $log_file_detail; then
-		echo "$system:$digi_var1:✅" >> $log_file_summary"
+		echo "$system:$digi_var:✅" >> $log_file_summary"
 	else
-		echo "$system:$digi_var1:✅" >> $log_file_summary"
+		echo "$system:$digi_var:❌" >> $log_file_summary"
 	fi
 }
 
@@ -180,4 +180,10 @@ ls -l *.hipo
 echo
 echo
 
+cat $log_file_details
+echo
+echo
+cat $log_file_summary
+echo
+echo
 summarize_log
