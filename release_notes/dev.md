@@ -3,11 +3,15 @@
 
 # Release notes
 
+- New Cad import mechanism
+- Ci includes comparison between TEXT and SQLITE geometry and output
 
 
 
 - Torus + Shielding beamline CAD geometry (in progress) 
 - Several issues with RG-F target #236 (in progress)
+- DC v2
+- 
 
 
 

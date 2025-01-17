@@ -1,8 +1,8 @@
-ahdc.superlayer0.layer0.ncomponents | 47| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
-ahdc.superlayer1.layer0.ncomponents | 56| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
-ahdc.superlayer1.layer1.ncomponents | 56| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
-ahdc.superlayer2.layer0.ncomponents | 72| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
-ahdc.superlayer2.layer1.ncomponents | 72| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
-ahdc.superlayer3.layer0.ncomponents | 87| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
-ahdc.superlayer3.layer1.ncomponents | 87| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
-ahdc.superlayer4.layer0.ncomponents | 99| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer1.layer1.ncomponents | 47| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer2.layer1.ncomponents | 56| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer2.layer2.ncomponents | 56| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer3.layer1.ncomponents | 72| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer3.layer2.ncomponents | 72| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer4.layer1.ncomponents | 87| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer4.layer2.ncomponents | 87| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 
+ahdc.superlayer5.layer1.ncomponents | 99| na | number of counters in panel | sergeyeva | sergeyeva@ipno.in2p3.fr | none | none | 05 June 2020 

@@ -1,7 +1,7 @@
 <gcard>
 	
 	<!-- target. ALERT target -->
-	<detector name="../targets/target" factory="TEXT" variation="alert"/> 
+	<detector name="../targets/target" factory="TEXT" variation="alertH2"/> 
 		
 	<!-- Implementation ATOF, ahdc -->
 	<detector name="atof/atof" factory="TEXT" variation="default"/>
