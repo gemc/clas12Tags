@@ -168,7 +168,18 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 		ctc.tdcconv[isec - 1][ilay - 1][1].push_back(data[row][4]);
 	}
 	
-	
+        snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/fadc_offset:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+        cout << "CTOF:Getting adc_offsets" << endl;
+        data.clear();
+        calib->GetCalib(data, ctc.database);
+        for (unsigned row = 0; row < data.size(); row++) {
+                isec = data[row][0];
+                ilay = data[row][1];
+                //        istr = data[row][2];
+                ctc.adcoffset[isec - 1][ilay - 1][0].push_back(data[row][3]);
+                ctc.adcoffset[isec - 1][ilay - 1][1].push_back(data[row][4]);
+        }
+
 	snprintf(ctc.database, sizeof(ctc.database),  "/geometry/ctof/ctof:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
 	cout << "CTOF:Getting geometry" << endl;
 	data.clear();
@@ -264,6 +275,7 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 	
 	// TDC conversion factors
 	double tdcconv = ctc.tdcconv[sector - 1][layer - 1][side][paddle - 1];
+	double adcoffset  = ctc.adcoffset[sector - 1][layer - 1][side][paddle - 1];
 	double time_in_ns = 0;
 
 	if(aHit->isBackgroundHit == 1) {
@@ -279,7 +291,7 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 		dgtz["component"] = paddle;
 		dgtz["ADC_order"] = side;
 		dgtz["ADC_ADC"]   = (int) adc;
-		dgtz["ADC_time"]  = convert_to_precision(stepTime);
+		dgtz["ADC_time"]  = convert_to_precision(stepTime - adcoffset);
 		dgtz["ADC_ped"]   = 0;
 		
 		dgtz["TDC_order"] = side + 2;
@@ -388,7 +400,7 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 	}
 	
 	// standardizing fadc time and tdc info
-	double fadc_time = convert_to_precision(time_in_ns);
+	double fadc_time = convert_to_precision(time_in_ns - adcoffset);
 
 	
 	dgtz["hitn"]      = hitn;
