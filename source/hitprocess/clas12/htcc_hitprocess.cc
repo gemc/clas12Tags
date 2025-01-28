@@ -52,8 +52,16 @@ static htccConstants initializeHTCCConstants(int runno, string digiVariation = "
 			isec   = data[row][0]; ilay   = data[row][1];
 			htccc.status[isec-1][ilay-1].push_back(data[row][3]);
 		}
+        }
 
-    }
+	cout<<"HTCC:Getting gain"<<endl;
+	snprintf(htccc.database, sizeof(htccc.database), "/calibration/htcc/gain:%d:%s%s", htccc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear() ; calib->GetCalib(data,htccc.database);
+	for(unsigned row = 0; row < data.size(); row++) {
+		isec   = data[row][0]; ilay   = data[row][1];
+		htccc.gain[isec-1][ilay-1].push_back(data[row][3]);
+	}
+
 	cout<<"HTCC:Getting mc_gain"<<endl;
 	snprintf(htccc.database, sizeof(htccc.database), "/calibration/htcc/mc_gain:%d:%s%s", htccc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear() ; calib->GetCalib(data,htccc.database);
@@ -287,7 +295,7 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		}
 	}
 	
-	double adc  = 100 * G4RandGauss::shoot(ndetected*htccc.mc_gain[idsector-1][idhalf-1][idring-1], ndetected*htccc.mc_smear[idsector-1][idhalf-1][idring-1]);
+	double adc  = htccc.gain[idsector-1][idhalf-1][idring-1] * G4RandGauss::shoot(ndetected*htccc.mc_gain[idsector-1][idhalf-1][idring-1], ndetected*htccc.mc_smear[idsector-1][idhalf-1][idring-1]);
     time_in_ns = tInfos.time + htccc.tshift[idsector-1][idhalf-1][idring-1];
 
 	double fadc_time = convert_to_precision(time_in_ns);
