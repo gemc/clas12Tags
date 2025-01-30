@@ -5,7 +5,7 @@
 # Container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/gemc_comparison.sh -d ec
+# ./ci/gemc_comparison.sh -d ec -v default
 
 source ci/env.sh
 
@@ -79,7 +79,7 @@ compare_output() {
 }
 
 summarize_log() {
-	if grep -q "❌" $log_file_detail; then
+	if grep -q "✅" $log_file_detail; then
 		echo "$system:$digi_var:✅" >> $log_file_summary
 	else
 		echo "$system:$digi_var:❌" >> $log_file_summary
