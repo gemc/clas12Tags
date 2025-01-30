@@ -1,0 +1,23 @@
+<!--
+Transversely Polarized He-3 Target
+ -->
+
+<gxml>
+
+    <volume name="unit_HD"      mother="hdIce_mother"	color="aa0000" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="solidHD"/>
+    <volume name="unit_SS"      mother="hdIce_mother"    color="aaffff" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="unit_Cu"      mother="hdIce_mother"	color="aaffff" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_Cu"/>
+    <volume name="unit_PCTFE"      mother="hdIce_mother"	color="aaffff" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="Kel-F"/>
+    <volume name="unit_Cu70Ni30"      mother="hdIce_mother"	color="aaffff" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="Cu70Ni30"/>
+    <volume name="LHeCan_Cu"      mother="hdIce_mother"	color="00aa00" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_Cu"/>
+    <volume name="LHeCan_Nylon"      mother="hdIce_mother"	color="00aa00" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_NYLON-6-6"/>
+    <volume name="LHeCan_SS"      mother="hdIce_mother"  color="00aa00" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="LHeCan_Al"      mother="hdIce_mother"	color="00aa00" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+    <volume name="LHeCan_PCTFE"      mother="hdIce_mother"	color="00aa00" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="Kel-F"/>
+    <volume name="80KCan_Al"      mother="hdIce_mother"	color="0000aa" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+    <volume name="80KCan_SS"      mother="hdIce_mother"	color="0000aa" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="superinsulation_mylar"      mother="hdIce_mother"	color="fc7f03" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_MYLAR"/>
+    <volume name="VacTube_SS"      mother="hdIce_mother"	color="ffffff" position="0*mm 0*mm 1297.52*mm" rotation="0*deg 0*deg 0*deg" material="G4_STAINLESS-STEEL"/>
+    <volume name="mgb2cylinder_mgb2"      mother="hdIce_mother"	color="c57742" position="0*mm 0*mm -2101.33*mm" rotation="0*deg 0*deg 0*deg" material="MgB2"/>
+
+</gxml>

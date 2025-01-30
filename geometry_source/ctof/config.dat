@@ -1,0 +1,9 @@
+# Detector name and variation
+detector_name: ctof
+comment: CLAS12 Central Time-Of-Flight detector
+
+# MYSQL server / SQLITE file
+dbhost: ../clas12.sqlite
+
+# Verbosity controls the perl script output
+verbosity: 0

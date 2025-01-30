@@ -1,0 +1,27 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	<detector name="experiments/clas12/targets/cad/" factory="CAD"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
+
+	<!-- Beamline FTOn configuration -->
+	<detector name="experiments/clas12/ft/ft" factory="TEXT" variation="FTOn"/>
+	<detector name="beamline" factory="TEXT" variation="FTOn"/>
+	<detector name="cad/" factory="CAD" variation="FTOn"/>
+
+	<detector name="experiments/clas12/magnets/torus" factory="TEXT" variation="original"/>
+
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="RUNNO" value="11"/>
+
+	<option name="BEAM_P" value="e-, 10.0*GeV, 0*deg, 0*deg"/>
+	<option name="RUNNO" value="11"/>
+
+	<!--  Target and central detectors are all shifted upstream by 30 mm until this shift is implemented in the geometry itself-->
+	<detector name="target">
+		<position x="0*cm" y="0*cm" z="-3.00*cm"/>
+	</detector>
+
+</gcard>

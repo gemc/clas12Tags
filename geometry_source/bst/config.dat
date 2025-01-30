@@ -1,0 +1,9 @@
+# Detector name and variation
+detector_name: bst
+comment: CLAS12 Barrel Silicon Tracker
+
+# MYSQL server / SQLITE file
+dbhost: ../clas12.sqlite
+
+# Verbosity controls the perl script output
+verbosity: 0

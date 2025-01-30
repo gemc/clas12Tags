@@ -1,0 +1,11 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+    	<detector name="beampipeUpstream" factory="TEXT" variation="original"/>
+
+	<!--  Target and central detectors are all shifted upstream by 30 mm, and shifted in (x,y) to match RGB target -->
+	<detector name="beampipeUpstream">    <position x="0.12*cm"  y="0.11*cm"  z="-3.00*cm"  />
+
+
+</gcard>

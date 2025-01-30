@@ -1,0 +1,955 @@
+ltcc.elpars.s1.p0   	 | -6.07734e-05  	 | cm | ellipse segment 1 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s1.p1   	 | -3.00933e-05  	 | cm | ellipse segment 1 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s1.p2   	 | 4.85191e-06   	 | cm | ellipse segment 1 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s1.p3   	 | -0.00268426   	 | cm | ellipse segment 1 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s1.p4   	 | 0.0128265     	 | cm | ellipse segment 1 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s2.p0   	 | -6.21478e-05  	 | cm | ellipse segment 2 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s2.p1   	 | -3.13212e-05  	 | cm | ellipse segment 2 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s2.p2   	 | 8.40123e-06   	 | cm | ellipse segment 2 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s2.p3   	 | -0.00417624   	 | cm | ellipse segment 2 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s2.p4   	 | 0.0133521     	 | cm | ellipse segment 2 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s3.p0   	 | -5.52904e-05  	 | cm | ellipse segment 3 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s3.p1   	 | -2.73017e-05  	 | cm | ellipse segment 3 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s3.p2   	 | 3.70513e-06   	 | cm | ellipse segment 3 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s3.p3   	 | 0.000265759   	 | cm | ellipse segment 3 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s3.p4   	 | 0.0112389     	 | cm | ellipse segment 3 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s4.p0   	 | -5.42301e-05  	 | cm | ellipse segment 4 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s4.p1   	 | -2.69015e-05  	 | cm | ellipse segment 4 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s4.p2   	 | 4.72291e-06   	 | cm | ellipse segment 4 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s4.p3   	 | 0.000473399   	 | cm | ellipse segment 4 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s4.p4   	 | 0.0109471     	 | cm | ellipse segment 4 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s5.p0   	 | -5.33406e-05  	 | cm | ellipse segment 5 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s5.p1   	 | -2.64747e-05  	 | cm | ellipse segment 5 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s5.p2   	 | 4.75509e-06   	 | cm | ellipse segment 5 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s5.p3   	 | 0.00138842    	 | cm | ellipse segment 5 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s5.p4   	 | 0.0106098     	 | cm | ellipse segment 5 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s6.p0   	 | -5.25814e-05  	 | cm | ellipse segment 6 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s6.p1   	 | -2.61792e-05  	 | cm | ellipse segment 6 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s6.p2   	 | 5.27066e-06   	 | cm | ellipse segment 6 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s6.p3   	 | 0.00192065    	 | cm | ellipse segment 6 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s6.p4   	 | 0.0103313     	 | cm | ellipse segment 6 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s7.p0   	 | -5.19903e-05  	 | cm | ellipse segment 7 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s7.p1   	 | -2.60496e-05  	 | cm | ellipse segment 7 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s7.p2   	 | 6.22257e-06   	 | cm | ellipse segment 7 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s7.p3   	 | 0.00208948    	 | cm | ellipse segment 7 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s7.p4   	 | 0.010154      	 | cm | ellipse segment 7 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s8.p0   	 | -5.16205e-05  	 | cm | ellipse segment 8 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s8.p1   	 | -2.60372e-05  	 | cm | ellipse segment 8 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s8.p2   	 | 7.08625e-06   	 | cm | ellipse segment 8 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s8.p3   	 | 0.00224042    	 | cm | ellipse segment 8 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s8.p4   	 | 0.0100442     	 | cm | ellipse segment 8 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s9.p0   	 | -5.17189e-05  	 | cm | ellipse segment 9 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s9.p1   	 | -2.63355e-05  	 | cm | ellipse segment 9 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s9.p2   	 | 8.22158e-06   	 | cm | ellipse segment 9 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s9.p3   	 | 0.00226902    	 | cm | ellipse segment 9 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s9.p4   	 | 0.0101098     	 | cm | ellipse segment 9 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s10.p0   	 | -5.18218e-05  	 | cm | ellipse segment 10 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s10.p1   	 | -2.67373e-05  	 | cm | ellipse segment 10 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s10.p2   	 | 9.58745e-06   	 | cm | ellipse segment 10 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s10.p3   	 | 0.00211638    	 | cm | ellipse segment 10 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s10.p4   	 | 0.010234      	 | cm | ellipse segment 10 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s11.p0   	 | -5.22649e-05  	 | cm | ellipse segment 11 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s11.p1   	 | -2.77278e-05  	 | cm | ellipse segment 11 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s11.p2   	 | 1.20682e-05   	 | cm | ellipse segment 11 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s11.p3   	 | 0.00108827    	 | cm | ellipse segment 11 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s11.p4   	 | 0.0107193     	 | cm | ellipse segment 11 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s12.p0   	 | -4.06857e-05  	 | cm | ellipse segment 12 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s12.p1   	 | -2.29985e-05  	 | cm | ellipse segment 12 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s12.p2   	 | 7.53921e-06   	 | cm | ellipse segment 12 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s12.p3   	 | 0.00243073    	 | cm | ellipse segment 12 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s12.p4   	 | 0.00842896    	 | cm | ellipse segment 12 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s13.p0   	 | -4.08461e-05  	 | cm | ellipse segment 13 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s13.p1   	 | -2.36557e-05  	 | cm | ellipse segment 13 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s13.p2   	 | 9.14327e-06   	 | cm | ellipse segment 13 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s13.p3   	 | 0.00181416    	 | cm | ellipse segment 13 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s13.p4   	 | 0.00875535    	 | cm | ellipse segment 13 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s14.p0   	 | -3.40675e-05  	 | cm | ellipse segment 14 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s14.p1   	 | -2.09321e-05  	 | cm | ellipse segment 14 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s14.p2   	 | 6.8259e-06    	 | cm | ellipse segment 14 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s14.p3   	 | 0.00244342    	 | cm | ellipse segment 14 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s14.p4   	 | 0.00747227    	 | cm | ellipse segment 14 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s15.p0   	 | -3.35596e-05  	 | cm | ellipse segment 15 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s15.p1   	 | -2.09809e-05  	 | cm | ellipse segment 15 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s15.p2   	 | 7.56747e-06   	 | cm | ellipse segment 15 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s15.p3   	 | 0.00235741    	 | cm | ellipse segment 15 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s15.p4   	 | 0.00737846    	 | cm | ellipse segment 15 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s16.p0   	 | -3.30814e-05  	 | cm | ellipse segment 16 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s16.p1   	 | -2.10872e-05  	 | cm | ellipse segment 16 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s16.p2   	 | 8.28864e-06   	 | cm | ellipse segment 16 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s16.p3   	 | 0.00227955    	 | cm | ellipse segment 16 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s16.p4   	 | 0.00730823    	 | cm | ellipse segment 16 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s17.p0   	 | -3.26912e-05  	 | cm | ellipse segment 17 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s17.p1   	 | -2.13048e-05  	 | cm | ellipse segment 17 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s17.p2   	 | 9.03084e-06   	 | cm | ellipse segment 17 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s17.p3   	 | 0.00222705    	 | cm | ellipse segment 17 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s17.p4   	 | 0.00728417    	 | cm | ellipse segment 17 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s18.p0   	 | -3.23277e-05  	 | cm | ellipse segment 18 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s18.p1   	 | -2.13806e-05  	 | cm | ellipse segment 18 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s18.p2   	 | 9.47105e-06   	 | cm | ellipse segment 18 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s18.p3   	 | 0.0023352     	 | cm | ellipse segment 18 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.elpars.s18.p4   	 | 0.00717209    	 | cm | ellipse segment 18 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s1.p0   	 | -3.76954e-07  	 | cm | hyperbola segment 1 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s1.p1   	 | 5.21353e-06   	 | cm | hyperbola segment 1 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s1.p2   	 | 3.03694e-06   	 | cm | hyperbola segment 1 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s1.p3   	 | -0.00130977   	 | cm | hyperbola segment 1 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s1.p4   	 | -0.00456754   	 | cm | hyperbola segment 1 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s2.p0   	 | 3.10674e-07   	 | cm | hyperbola segment 2 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s2.p1   	 | 5.25898e-06   	 | cm | hyperbola segment 2 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s2.p2   	 | 3.94401e-06   	 | cm | hyperbola segment 2 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s2.p3   	 | -0.00170457   	 | cm | hyperbola segment 2 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s2.p4   	 | -0.00458697   	 | cm | hyperbola segment 2 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s3.p0   	 | -2.15946e-08  	 | cm | hyperbola segment 3 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s3.p1   	 | 5.29689e-06   	 | cm | hyperbola segment 3 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s3.p2   	 | 2.93432e-06   	 | cm | hyperbola segment 3 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s3.p3   	 | -0.00125264   	 | cm | hyperbola segment 3 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s3.p4   	 | -0.00460386   	 | cm | hyperbola segment 3 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s4.p0   	 | -2.24985e-08  	 | cm | hyperbola segment 4 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s4.p1   	 | 5.31663e-06   	 | cm | hyperbola segment 4 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s4.p2   	 | 2.93845e-06   	 | cm | hyperbola segment 4 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s4.p3   	 | -0.00124537   	 | cm | hyperbola segment 4 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s4.p4   	 | -0.00461291   	 | cm | hyperbola segment 4 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s5.p0   	 | -1.87594e-07  	 | cm | hyperbola segment 5 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s5.p1   	 | 5.38276e-06   	 | cm | hyperbola segment 5 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s5.p2   	 | 2.16734e-06   	 | cm | hyperbola segment 5 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s5.p3   	 | -0.00090054   	 | cm | hyperbola segment 5 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s5.p4   	 | -0.00464199   	 | cm | hyperbola segment 5 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s6.p0   	 | -2.53168e-07  	 | cm | hyperbola segment 6 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s6.p1   	 | 5.45022e-06   	 | cm | hyperbola segment 6 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s6.p2   	 | 1.77761e-06   	 | cm | hyperbola segment 6 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s6.p3   	 | -0.000722411  	 | cm | hyperbola segment 6 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s6.p4   	 | -0.0046716    	 | cm | hyperbola segment 6 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s7.p0   	 | -2.03336e-07  	 | cm | hyperbola segment 7 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s7.p1   	 | 5.47357e-06   	 | cm | hyperbola segment 7 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s7.p2   	 | 2.16347e-06   	 | cm | hyperbola segment 7 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s7.p3   	 | -0.000877684  	 | cm | hyperbola segment 7 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s7.p4   	 | -0.00468251   	 | cm | hyperbola segment 7 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s8.p0   	 | -2.27563e-07  	 | cm | hyperbola segment 8 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s8.p1   	 | 5.48681e-06   	 | cm | hyperbola segment 8 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s8.p2   	 | 2.03129e-06   	 | cm | hyperbola segment 8 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s8.p3   	 | -0.000814602  	 | cm | hyperbola segment 8 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s8.p4   	 | -0.00468898   	 | cm | hyperbola segment 8 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s9.p0   	 | -2.93311e-07  	 | cm | hyperbola segment 9 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s9.p1   	 | 5.60236e-06   	 | cm | hyperbola segment 9 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s9.p2   	 | 1.62631e-06   	 | cm | hyperbola segment 9 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s9.p3   	 | -0.000629634  	 | cm | hyperbola segment 9 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s9.p4   	 | -0.00473892   	 | cm | hyperbola segment 9 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s10.p0   	 | -1.9518e-07   	 | cm | hyperbola segment 10 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s10.p1   	 | 5.54807e-06   	 | cm | hyperbola segment 10 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s10.p2   	 | 2.28186e-06   	 | cm | hyperbola segment 10 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s10.p3   	 | -0.000903269  	 | cm | hyperbola segment 10 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s10.p4   	 | -0.00471717   	 | cm | hyperbola segment 10 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s11.p0   	 | -1.55773e-07  	 | cm | hyperbola segment 11 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s11.p1   	 | 5.66802e-06   	 | cm | hyperbola segment 11 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s11.p2   	 | 1.98603e-06   	 | cm | hyperbola segment 11 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s11.p3   	 | -0.000780576  	 | cm | hyperbola segment 11 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s11.p4   	 | -0.00476721   	 | cm | hyperbola segment 11 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s12.p0   	 | -1.62667e-07  	 | cm | hyperbola segment 12 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s12.p1   	 | 5.62561e-06   	 | cm | hyperbola segment 12 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s12.p2   	 | 2.47583e-06   	 | cm | hyperbola segment 12 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s12.p3   	 | -0.000967816  	 | cm | hyperbola segment 12 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s12.p4   	 | -0.00475213   	 | cm | hyperbola segment 12 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s13.p0   	 | -1.52641e-07  	 | cm | hyperbola segment 13 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s13.p1   	 | 5.73017e-06   	 | cm | hyperbola segment 13 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s13.p2   	 | 2.16406e-06   	 | cm | hyperbola segment 13 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s13.p3   	 | -0.000837387  	 | cm | hyperbola segment 13 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s13.p4   	 | -0.00479567   	 | cm | hyperbola segment 13 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s14.p0   	 | -2.47566e-07  	 | cm | hyperbola segment 14 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s14.p1   	 | 5.62821e-06   	 | cm | hyperbola segment 14 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s14.p2   	 | 2.59149e-06   	 | cm | hyperbola segment 14 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s14.p3   	 | -0.000982322  	 | cm | hyperbola segment 14 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s14.p4   	 | -0.00475937   	 | cm | hyperbola segment 14 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s15.p0   	 | -2.89539e-07  	 | cm | hyperbola segment 15 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s15.p1   	 | 5.73097e-06   	 | cm | hyperbola segment 15 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s15.p2   	 | 2.43239e-06   	 | cm | hyperbola segment 15 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s15.p3   	 | -0.000897333  	 | cm | hyperbola segment 15 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s15.p4   	 | -0.00480488   	 | cm | hyperbola segment 15 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s16.p0   	 | -2.35105e-07  	 | cm | hyperbola segment 16 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s16.p1   	 | 5.7069e-06    	 | cm | hyperbola segment 16 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s16.p2   	 | 2.69628e-06   	 | cm | hyperbola segment 16 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s16.p3   	 | -0.0010007    	 | cm | hyperbola segment 16 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s16.p4   	 | -0.00479742   	 | cm | hyperbola segment 16 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s17.p0   	 | -2.35939e-07  	 | cm | hyperbola segment 17 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s17.p1   	 | 5.75779e-06   	 | cm | hyperbola segment 17 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s17.p2   	 | 2.70055e-06   	 | cm | hyperbola segment 17 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s17.p3   	 | -0.000989029  	 | cm | hyperbola segment 17 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s17.p4   	 | -0.00482148   	 | cm | hyperbola segment 17 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s18.p0   	 | -2.42776e-07  	 | cm | hyperbola segment 18 parameter p0   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s18.p1   	 | 5.8195e-06    	 | cm | hyperbola segment 18 parameter p1   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s18.p2   	 | 2.72727e-06   	 | cm | hyperbola segment 18 parameter p2   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s18.p3   	 | -0.000984389  	 | cm | hyperbola segment 18 parameter p3   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hypars.s18.p4   	 | -0.00485016   	 | cm | hyperbola segment 18 parameter p4   	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s1_x12	 | 8.57          	 | cm | ellipse span point 1 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s1_y12	 | 493.141       	 | cm | ellipse span point 1 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s2_x12	 | 18.21         	 | cm | ellipse span point 2 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s2_y12	 | 490.035       	 | cm | ellipse span point 2 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s3_x12	 | 27.95         	 | cm | ellipse span point 3 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s3_y12	 | 487.844       	 | cm | ellipse span point 3 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s4_x12	 | 37.49         	 | cm | ellipse span point 4 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s4_y12	 | 485.59        	 | cm | ellipse span point 4 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s5_x12	 | 46.82         	 | cm | ellipse span point 5 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s5_y12	 | 483.264       	 | cm | ellipse span point 5 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s6_x12	 | 56.16         	 | cm | ellipse span point 6 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s6_y12	 | 480.788       	 | cm | ellipse span point 6 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s7_x12	 | 65.25         	 | cm | ellipse span point 7 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s7_y12	 | 478.748       	 | cm | ellipse span point 7 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s8_x12	 | 73.41         	 | cm | ellipse span point 8 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s8_y12	 | 477.093       	 | cm | ellipse span point 8 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s9_x12	 | 81.85         	 | cm | ellipse span point 9 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s9_y12	 | 476.331       	 | cm | ellipse span point 9 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s10_x12	 | 90.31         	 | cm | ellipse span point 10 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s10_y12	 | 475.576       	 | cm | ellipse span point 10 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s11_x12	 | 97.89         	 | cm | ellipse span point 11 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s11_y12	 | 475.166       	 | cm | ellipse span point 11 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s12_x12	 | 105.86        	 | cm | ellipse span point 12 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s12_y12	 | 474.623       	 | cm | ellipse span point 12 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s13_x12	 | 99.79         	 | cm | ellipse span point 13 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s13_y12	 | 477.27        	 | cm | ellipse span point 13 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s14_x12	 | 109.77        	 | cm | ellipse span point 14 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s14_y12	 | 478.423       	 | cm | ellipse span point 14 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s15_x12	 | 118.7         	 | cm | ellipse span point 15 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s15_y12	 | 475.399       	 | cm | ellipse span point 15 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s16_x12	 | 126.87        	 | cm | ellipse span point 16 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s16_y12	 | 472.409       	 | cm | ellipse span point 16 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s17_x12	 | 134.47        	 | cm | ellipse span point 17 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s17_y12	 | 469.691       	 | cm | ellipse span point 17 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s18_x12	 | 142.2         	 | cm | ellipse span point 18 parameter x12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s18_y12	 | 466.46        	 | cm | ellipse span point 18 parameter y12	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s1_x21	 | 27.021        	 | cm | hyperbola edge points  1 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s1_y21	 | 427.8         	 | cm | hyperbola edge points  1 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s2_x21	 | 34.117        	 | cm | hyperbola edge points  2 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s2_y21	 | 425.4         	 | cm | hyperbola edge points  2 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s3_x21	 | 41.189        	 | cm | hyperbola edge points  3 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s3_y21	 | 423           	 | cm | hyperbola edge points  3 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s4_x21	 | 48.156        	 | cm | hyperbola edge points  4 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s4_y21	 | 420.4         	 | cm | hyperbola edge points  4 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s5_x21	 | 55.087        	 | cm | hyperbola edge points  5 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s5_y21	 | 417.8         	 | cm | hyperbola edge points  5 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s6_x21	 | 61.858        	 | cm | hyperbola edge points  6 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s6_y21	 | 414.67        	 | cm | hyperbola edge points  6 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s7_x21	 | 68.609        	 | cm | hyperbola edge points  7 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s7_y21	 | 410.6         	 | cm | hyperbola edge points  7 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s8_x21	 | 75.332        	 | cm | hyperbola edge points  8 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s8_y21	 | 409.68        	 | cm | hyperbola edge points  8 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s9_x21	 | 82.021        	 | cm | hyperbola edge points  9 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s9_y21	 | 406.81        	 | cm | hyperbola edge points  9 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s10_x21	 | 88.586        	 | cm | hyperbola edge points  10 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s10_y21	 | 404           	 | cm | hyperbola edge points  10 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s11_x21	 | 95.375        	 | cm | hyperbola edge points  11 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s11_y21	 | 399           	 | cm | hyperbola edge points  11 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s12_x21	 | 102.018       	 | cm | hyperbola edge points  12 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s12_y21	 | 397.9         	 | cm | hyperbola edge points  12 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s13_x21	 | 108.881       	 | cm | hyperbola edge points  13 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s13_y21	 | 394.4         	 | cm | hyperbola edge points  13 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s14_x21	 | 116.02        	 | cm | hyperbola edge points  14 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s14_y21	 | 390.5         	 | cm | hyperbola edge points  14 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s15_x21	 | 123.124       	 | cm | hyperbola edge points  15 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s15_y21	 | 385.8         	 | cm | hyperbola edge points  15 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s16_x21	 | 129.805       	 | cm | hyperbola edge points  16 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s16_y21	 | 380.37        	 | cm | hyperbola edge points  16 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s17_x21	 | 136.186       	 | cm | hyperbola edge points  17 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s17_y21	 | 375.17        	 | cm | hyperbola edge points  17 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s18_x21	 | 142.191       	 | cm | hyperbola edge points  18 parameter x21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s18_y21	 | 370.7         	 | cm | hyperbola edge points  18 parameter y21	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s1_xmin	 | 0             	 | degrees | yperbola x minimum of mirror 1 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s2_xmin	 | 0             	 | degrees | yperbola x minimum of mirror 2 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s3_xmin	 | 6.7           	 | degrees | yperbola x minimum of mirror 3 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s4_xmin	 | 12.7          	 | degrees | yperbola x minimum of mirror 4 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s5_xmin	 | 20.6          	 | degrees | yperbola x minimum of mirror 5 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s6_xmin	 | 27.3          	 | degrees | yperbola x minimum of mirror 6 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s7_xmin	 | 33.2          	 | degrees | yperbola x minimum of mirror 7 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s8_xmin	 | 37.7          	 | degrees | yperbola x minimum of mirror 8 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s9_xmin	 | 44            	 | degrees | yperbola x minimum of mirror 9 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s10_xmin	 | 45.2          	 | degrees | yperbola x minimum of mirror 10 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s11_xmin	 | 49            	 | degrees | yperbola x minimum of mirror 11 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s12_xmin	 | 51.7          	 | degrees | yperbola x minimum of mirror 12 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s13_xmin	 | 55.8          	 | degrees | yperbola x minimum of mirror 13 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s14_xmin	 | 59.6          	 | degrees | yperbola x minimum of mirror 14 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s15_xmin	 | 63.1          	 | degrees | yperbola x minimum of mirror 15 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s16_xmin	 | 64.8          	 | degrees | yperbola x minimum of mirror 16 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s17_xmin	 | 68            	 | degrees | yperbola x minimum of mirror 17 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s18_xmin	 | 75.6          	 | degrees | yperbola x minimum of mirror 18 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s1_x11	 | 2.395         	 | cm | PMT, ell. edges 1 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s1_y11	 | 493.552       	 | cm | PMT, ell. edges 1 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s2_x11	 | 10.457        	 | cm | PMT, ell. edges 2 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s2_y11	 | 491.283       	 | cm | PMT, ell. edges 2 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s3_x11	 | 18.579        	 | cm | PMT, ell. edges 3 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s3_y11	 | 486.884       	 | cm | PMT, ell. edges 3 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s4_x11	 | 26.646        	 | cm | PMT, ell. edges 4 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s4_y11	 | 483.772       	 | cm | PMT, ell. edges 4 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s5_x11	 | 34.641        	 | cm | PMT, ell. edges 5 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s5_y11	 | 479.522       	 | cm | PMT, ell. edges 5 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s6_x11	 | 42.545        	 | cm | PMT, ell. edges 6 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s6_y11	 | 475.046       	 | cm | PMT, ell. edges 6 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s7_x11	 | 50.375        	 | cm | PMT, ell. edges 7 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s7_y11	 | 471.254       	 | cm | PMT, ell. edges 7 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s8_x11	 | 57.583        	 | cm | PMT, ell. edges 8 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s8_y11	 | 467.854       	 | cm | PMT, ell. edges 8 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s9_x11	 | 64.916        	 | cm | PMT, ell. edges 9 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s9_y11	 | 465.462       	 | cm | PMT, ell. edges 9 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s10_x11	 | 72.313        	 | cm | PMT, ell. edges 10 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s10_y11	 | 463.461       	 | cm | PMT, ell. edges 10 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s11_x11	 | 76.656        	 | cm | PMT, ell. edges 11 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s11_y11	 | 464.269       	 | cm | PMT, ell. edges 11 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s12_x11	 | 84.331        	 | cm | PMT, ell. edges 12 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s12_y11	 | 460.85        	 | cm | PMT, ell. edges 12 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s13_x11	 | 89.271        	 | cm | PMT, ell. edges 13 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s13_y11	 | 461.68        	 | cm | PMT, ell. edges 13 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s14_x11	 | 97.541        	 | cm | PMT, ell. edges 14 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s14_y11	 | 460.678       	 | cm | PMT, ell. edges 14 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s15_x11	 | 105.755       	 | cm | PMT, ell. edges 15 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s15_y11	 | 456.161       	 | cm | PMT, ell. edges 15 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s16_x11	 | 113.812       	 | cm | PMT, ell. edges 16 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s16_y11	 | 451.584       	 | cm | PMT, ell. edges 16 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s17_x11	 | 122.365       	 | cm | PMT, ell. edges 17 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s17_y11	 | 446.927       	 | cm | PMT, ell. edges 17 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s18_x11	 | 129.85        	 | cm | PMT, ell. edges 18 parameter x11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s18_y11	 | 441.409       	 | cm | PMT, ell. edges 18 parameter y11	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s1_theta	 | 7.72          	 | degrees | ell. theta at midline of mirror 1 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s2_theta	 | 9.44          	 | degrees | ell. theta at midline of mirror 2 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s3_theta	 | 11.17         	 | degrees | ell. theta at midline of mirror 3 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s4_theta	 | 12.93         	 | degrees | ell. theta at midline of mirror 4 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s5_theta	 | 14.69         	 | degrees | ell. theta at midline of mirror 5 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s6_theta	 | 16.47         	 | degrees | ell. theta at midline of mirror 6 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s7_theta	 | 18.29         	 | degrees | ell. theta at midline of mirror 7 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s8_theta	 | 20.15         	 | degrees | ell. theta at midline of mirror 8 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s9_theta	 | 22.03         	 | degrees | ell. theta at midline of mirror 9 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s10_theta	 | 24            	 | degrees | ell. theta at midline of mirror 10 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s11_theta	 | 26.04         	 | degrees | ell. theta at midline of mirror 11 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s12_theta	 | 28.18         	 | degrees | ell. theta at midline of mirror 12 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s13_theta	 | 30.48         	 | degrees | ell. theta at midline of mirror 13 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s14_theta	 | 32.94         	 | degrees | ell. theta at midline of mirror 14 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s15_theta	 | 35.44         	 | degrees | ell. theta at midline of mirror 15 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s16_theta	 | 37.97         	 | degrees | ell. theta at midline of mirror 16 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s17_theta	 | 40.51         	 | degrees | ell. theta at midline of mirror 17 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.s18_theta	 | 43.11         	 | degrees | ell. theta at midline of mirror 18 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s1_width	 | 8             	 | cm | width of ell. mirror  1 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s2_width	 | 8             	 | cm | width of ell. mirror  2 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s3_width	 | 8             	 | cm | width of ell. mirror  3 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s4_width	 | 8             	 | cm | width of ell. mirror  4 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s5_width	 | 8             	 | cm | width of ell. mirror  5 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s6_width	 | 8             	 | cm | width of ell. mirror  6 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s7_width	 | 8             	 | cm | width of ell. mirror  7 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s8_width	 | 8             	 | cm | width of ell. mirror  8 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s9_width	 | 8             	 | cm | width of ell. mirror  9 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s10_width	 | 9.25          	 | cm | width of ell. mirror  10 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s11_width	 | 9.25          	 | cm | width of ell. mirror  11 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s12_width	 | 9.25          	 | cm | width of ell. mirror  12 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s13_width	 | 9.25          	 | cm | width of ell. mirror  13 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s14_width	 | 11            	 | cm | width of ell. mirror  14 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s15_width	 | 11            	 | cm | width of ell. mirror  15 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s16_width	 | 11            	 | cm | width of ell. mirror  16 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s17_width	 | 11            	 | cm | width of ell. mirror  17 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.el.s18_width	 | 11            	 | cm | width of ell. mirror  18 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s1_width	 | 6.75          	 | cm | width of hyp. mirror  1 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s2_width	 | 6.75          	 | cm | width of hyp. mirror  2 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s3_width	 | 6.75          	 | cm | width of hyp. mirror  3 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s4_width	 | 6.75          	 | cm | width of hyp. mirror  4 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s5_width	 | 6.75          	 | cm | width of hyp. mirror  5 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s6_width	 | 6.75          	 | cm | width of hyp. mirror  6 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s7_width	 | 8             	 | cm | width of hyp. mirror  7 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s8_width	 | 8             	 | cm | width of hyp. mirror  8 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s9_width	 | 8             	 | cm | width of hyp. mirror  9 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s10_width	 | 8             	 | cm | width of hyp. mirror  10 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s11_width	 | 8             	 | cm | width of hyp. mirror  11 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s12_width	 | 9.25          	 | cm | width of hyp. mirror  12 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s13_width	 | 9.25          	 | cm | width of hyp. mirror  13 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s14_width	 | 9.25          	 | cm | width of hyp. mirror  14 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s15_width	 | 9.25          	 | cm | width of hyp. mirror  15 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s16_width	 | 9.25          	 | cm | width of hyp. mirror  16 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s17_width	 | 9.25          	 | cm | width of hyp. mirror  17 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.hy.s18_width	 | 9.25          	 | cm | width of hyp. mirror  18 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s1_pmt0x	 | 17.36         	 | cm | PMT center for 1, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s1_pmt0y	 | 461.71        	 | cm | PMT center for 1, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s2_pmt0x	 | 25.42         	 | cm | PMT center for 2, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s2_pmt0y	 | 458.69        	 | cm | PMT center for 2, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s3_pmt0x	 | 33.54         	 | cm | PMT center for 3, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s3_pmt0y	 | 456.66        	 | cm | PMT center for 3, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s4_pmt0x	 | 41.61         	 | cm | PMT center for 4, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s4_pmt0y	 | 454.56        	 | cm | PMT center for 4, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s5_pmt0x	 | 49.6          	 | cm | PMT center for 5, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s5_pmt0y	 | 452.46        	 | cm | PMT center for 5, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s6_pmt0x	 | 57.51         	 | cm | PMT center for 6, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s6_pmt0y	 | 450.29        	 | cm | PMT center for 6, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s7_pmt0x	 | 65.34         	 | cm | PMT center for 7, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s7_pmt0y	 | 447.55        	 | cm | PMT center for 7, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s8_pmt0x	 | 72.76         	 | cm | PMT center for 8, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s8_pmt0y	 | 445.13        	 | cm | PMT center for 8, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s9_pmt0x	 | 80.32         	 | cm | PMT center for 9, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s9_pmt0y	 | 444.06        	 | cm | PMT center for 9, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s10_pmt0x	 | 87.93         	 | cm | PMT center for 10, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s10_pmt0y	 | 442.32        	 | cm | PMT center for 10, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s11_pmt0x	 | 95.28         	 | cm | PMT center for 11, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s11_pmt0y	 | 442.97        	 | cm | PMT center for 11, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s12_pmt0x	 | 103.2         	 | cm | PMT center for 12, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s12_pmt0y	 | 441.12        	 | cm | PMT center for 12, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s13_pmt0x	 | 113.55        	 | cm | PMT center for 13, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s13_pmt0y	 | 446.19        	 | cm | PMT center for 13, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s14_pmt0x	 | 122.17        	 | cm | PMT center for 14, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s14_pmt0y	 | 443.75        	 | cm | PMT center for 14, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s15_pmt0x	 | 130.72        	 | cm | PMT center for 15, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s15_pmt0y	 | 441.72        	 | cm | PMT center for 15, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s16_pmt0x	 | 139.1         	 | cm | PMT center for 16, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s16_pmt0y	 | 440.17        	 | cm | PMT center for 16, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s17_pmt0x	 | 147.66        	 | cm | PMT center for 17, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s17_pmt0y	 | 438.5         	 | cm | PMT center for 17, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s18_pmt0x	 | 155.46        	 | cm | PMT center for 18, coordinate  pmt0x	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s18_pmt0y	 | 436.86        	 | cm | PMT center for 18, coordinate  pmt0y	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s1_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  1 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s2_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  2 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s3_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  3 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s4_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  4 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s5_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  5 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s6_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  6 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s7_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  7 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s8_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  8 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s9_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  9 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s10_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  10 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s11_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  11 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s12_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  12 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s13_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  13 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s14_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  14 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s15_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  15 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s16_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  16 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s17_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  17 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.pmt.s18_radius	 | 5.5           	 | cm | PMT Radius (all PMTs are 5')  18 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s1_angle	 | 30.8          	 | degrees | Winston Cone Angle  1 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s2_angle	 | 30.37         	 | degrees | Winston Cone Angle  2 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s3_angle	 | 30.08         	 | degrees | Winston Cone Angle  3 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s4_angle	 | 29.77         	 | degrees | Winston Cone Angle  4 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s5_angle	 | 29.43         	 | degrees | Winston Cone Angle  5 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s6_angle	 | 29.08         	 | degrees | Winston Cone Angle  6 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s7_angle	 | 28.69         	 | degrees | Winston Cone Angle  7 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s8_angle	 | 28.34         	 | degrees | Winston Cone Angle  8 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s9_angle	 | 27.96         	 | degrees | Winston Cone Angle  9 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s10_angle	 | 27.52         	 | degrees | Winston Cone Angle  10 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s11_angle	 | 27.19         	 | degrees | Winston Cone Angle  11 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s12_angle	 | 26.63         	 | degrees | Winston Cone Angle  12 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s13_angle	 | 24            	 | degrees | Winston Cone Angle  13 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s14_angle	 | 24            	 | degrees | Winston Cone Angle  14 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s15_angle	 | 27.26         	 | degrees | Winston Cone Angle  15 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s16_angle	 | 26.26         	 | degrees | Winston Cone Angle  16 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s17_angle	 | 26.68         	 | degrees | Winston Cone Angle  17 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.wc.s18_angle	 | 26.74         	 | degrees | Winston Cone Angle  18 	 |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12
+ltcc.cyl.s1_router	 | 6.3           	 | cm | cylindrical mirror outer radius  1 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s2_router	 | 6.3           	 | cm | cylindrical mirror outer radius  2 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s3_router	 | 6.3           	 | cm | cylindrical mirror outer radius  3 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s4_router	 | 6.3           	 | cm | cylindrical mirror outer radius  4 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s5_router	 | 6.3           	 | cm | cylindrical mirror outer radius  5 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s6_router	 | 6.3           	 | cm | cylindrical mirror outer radius  6 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s7_router	 | 6.3           	 | cm | cylindrical mirror outer radius  7 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s8_router	 | 6.3           	 | cm | cylindrical mirror outer radius  8 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s9_router	 | 6.3           	 | cm | cylindrical mirror outer radius  9 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s10_router	 | 6.3           	 | cm | cylindrical mirror outer radius  10 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s11_router	 | 6.8           	 | cm | cylindrical mirror outer radius  11 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s12_router	 | 6.8           	 | cm | cylindrical mirror outer radius  12 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s13_router	 | 7.495         	 | cm | cylindrical mirror outer radius  13 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s14_router	 | 7.495         	 | cm | cylindrical mirror outer radius  14 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s15_router	 | 7.495         	 | cm | cylindrical mirror outer radius  15 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s16_router	 | 7.495         	 | cm | cylindrical mirror outer radius  16 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s17_router	 | 7.495         	 | cm | cylindrical mirror outer radius  17 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.cyl.s18_router	 | 7.495         	 | cm | cylindrical mirror outer radius  18 	 |  duran | bduran@jlab.org |  none | none | 3/2/17
+ltcc.shield.s1_dx	 | 7.395         	 | cm | shield dimensions for 1, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_dy	 | 7.7           	 | cm | shield dimensions for 1, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_dz	 | 11            	 | cm | shield dimensions for 1, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_zangle 	 | 30.8          	 | degrees | shield z angle for 1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_dx	 | 7.395         	 | cm | shield dimensions for 2, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_dy	 | 7.7           	 | cm | shield dimensions for 2, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_dz	 | 11            	 | cm | shield dimensions for 2, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_zangle 	 | 30.37         	 | degrees | shield z angle for 2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_dx	 | 7.395         	 | cm | shield dimensions for 3, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_dy	 | 7.7           	 | cm | shield dimensions for 3, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_dz	 | 11            	 | cm | shield dimensions for 3, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_zangle 	 | 30.08         	 | degrees | shield z angle for 3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_dx	 | 7.395         	 | cm | shield dimensions for 4, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_dy	 | 7.7           	 | cm | shield dimensions for 4, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_dz	 | 11            	 | cm | shield dimensions for 4, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_zangle 	 | 29.77         	 | degrees | shield z angle for 4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_dx	 | 7.395         	 | cm | shield dimensions for 5, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_dy	 | 7.7           	 | cm | shield dimensions for 5, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_dz	 | 11            	 | cm | shield dimensions for 5, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_zangle 	 | 29.43         	 | degrees | shield z angle for 5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_dx	 | 7.395         	 | cm | shield dimensions for 6, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_dy	 | 7.7           	 | cm | shield dimensions for 6, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_dz	 | 11            	 | cm | shield dimensions for 6, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_zangle 	 | 29.08         	 | degrees | shield z angle for 6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_dx	 | 7.395         	 | cm | shield dimensions for 7, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_dy	 | 7.7           	 | cm | shield dimensions for 7, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_dz	 | 11            	 | cm | shield dimensions for 7, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_zangle 	 | 28.69         	 | degrees | shield z angle for 7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_dx	 | 7.395         	 | cm | shield dimensions for 8, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_dy	 | 7.7           	 | cm | shield dimensions for 8, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_dz	 | 11            	 | cm | shield dimensions for 8, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_zangle 	 | 28.34         	 | degrees | shield z angle for 8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_dx	 | 7.395         	 | cm | shield dimensions for 9, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_dy	 | 7.7           	 | cm | shield dimensions for 9, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_dz	 | 11            	 | cm | shield dimensions for 9, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_zangle 	 | 27.96         	 | degrees | shield z angle for 9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_dx	 | 7.395         	 | cm | shield dimensions for 10, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_dy	 | 7.7           	 | cm | shield dimensions for 10, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_dz	 | 11            	 | cm | shield dimensions for 10, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_zangle 	 | 27.52         	 | degrees | shield z angle for 10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_dx	 | 8.665         	 | cm | shield dimensions for 11, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_dy	 | 8             	 | cm | shield dimensions for 11, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_dz	 | 16.13         	 | cm | shield dimensions for 11, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_zangle 	 | 27.19         	 | degrees | shield z angle for 11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_dx	 | 8.665         	 | cm | shield dimensions for 12, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_dy	 | 8             	 | cm | shield dimensions for 12, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_dz	 | 16.13         	 | cm | shield dimensions for 12, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_zangle 	 | 26.63         	 | degrees | shield z angle for 12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_dx	 | 9             	 | cm | shield dimensions for 13, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_dy	 | 9             	 | cm | shield dimensions for 13, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_dz	 | 17            	 | cm | shield dimensions for 13, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_zangle 	 | 25.99         	 | degrees | shield z angle for 13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_dx	 | 9             	 | cm | shield dimensions for 14, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_dy	 | 9             	 | cm | shield dimensions for 14, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_dz	 | 17            	 | cm | shield dimensions for 14, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_zangle 	 | 25.26         	 | degrees | shield z angle for 14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_dx	 | 9             	 | cm | shield dimensions for 15, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_dy	 | 9             	 | cm | shield dimensions for 15, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_dz	 | 17            	 | cm | shield dimensions for 15, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_zangle 	 | 24.47         	 | degrees | shield z angle for 15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_dx	 | 9             	 | cm | shield dimensions for 16, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_dy	 | 9             	 | cm | shield dimensions for 16, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_dz	 | 17            	 | cm | shield dimensions for 16, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_zangle 	 | 23.63         	 | degrees | shield z angle for 16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_dx	 | 9             	 | cm | shield dimensions for 17, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_dy	 | 9             	 | cm | shield dimensions for 17, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_dz	 | 17            	 | cm | shield dimensions for 17, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_zangle 	 | 22.68         	 | degrees | shield z angle for 17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_dx	 | 9             	 | cm | shield dimensions for 18, coordinate  dx	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_dy	 | 9             	 | cm | shield dimensions for 18, coordinate  dy	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_dz	 | 17            	 | cm | shield dimensions for 18, coordinate  dz	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_zangle 	 | 21.74         	 | degrees | shield z angle for 18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_shift	 | 8.59          	 | cm | shield shift in z direction  1 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s2_shift	 | 8.59          	 | cm | shield shift in z direction  2 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s3_shift	 | 8.59          	 | cm | shield shift in z direction  3 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s4_shift	 | 8.59          	 | cm | shield shift in z direction  4 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s5_shift	 | 8.59          	 | cm | shield shift in z direction  5 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s6_shift	 | 8.59          	 | cm | shield shift in z direction  6 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s7_shift	 | 8.59          	 | cm | shield shift in z direction  7 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s8_shift	 | 8.59          	 | cm | shield shift in z direction  8 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s9_shift	 | 8.59          	 | cm | shield shift in z direction  9 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s10_shift	 | 8.59          	 | cm | shield shift in z direction  10 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s11_shift	 | 8             	 | cm | shield shift in z direction  11 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s12_shift	 | 8             	 | cm | shield shift in z direction  12 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s13_shift	 | 10.94         	 | cm | shield shift in z direction  13 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s14_shift	 | 10.94         	 | cm | shield shift in z direction  14 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s15_shift	 | 10.94         	 | cm | shield shift in z direction  15 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s16_shift	 | 10.94         	 | cm | shield shift in z direction  16 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s17_shift	 | 10.94         	 | cm | shield shift in z direction  17 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.shield.s18_shift	 | 10.94         	 | cm | shield shift in z direction  18 	 |  duran | bduran@jlab.org |  none | none | 1/22/16
+ltcc.cyl.s1_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  1 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s2_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  2 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s3_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  3 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s4_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  4 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s5_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  5 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s6_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  6 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s7_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  7 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s8_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  8 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s9_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  9 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s10_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  10 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s11_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  11 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s12_leftAngle	 | -85           	 | cm | cylindrical mirror(left) rotation around z  12 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s13_leftAngle	 | -100          	 | cm | cylindrical mirror(left) rotation around z  13 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s14_leftAngle	 | -100          	 | cm | cylindrical mirror(left) rotation around z  14 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s15_leftAngle	 | -100          	 | cm | cylindrical mirror(left) rotation around z  15 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s16_leftAngle	 | -100          	 | cm | cylindrical mirror(left) rotation around z  16 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s17_leftAngle	 | -100          	 | cm | cylindrical mirror(left) rotation around z  17 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s18_leftAngle	 | -100          	 | cm | cylindrical mirror(left) rotation around z  18 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s1_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  1 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s2_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  2 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s3_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  3 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s4_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  4 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s5_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  5 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s6_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  6 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s7_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  7 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s8_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  8 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s9_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  9 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s10_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  10 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s11_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  11 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s12_rightAngle	 | 20            	 | cm | cylindrical mirror(right) rotation around z  12 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s13_rightAngle	 | 35            	 | cm | cylindrical mirror(right) rotation around z  13 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s14_rightAngle	 | 35            	 | cm | cylindrical mirror(right) rotation around z  14 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s15_rightAngle	 | 35            	 | cm | cylindrical mirror(right) rotation around z  15 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s16_rightAngle	 | 35            	 | cm | cylindrical mirror(right) rotation around z  16 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s17_rightAngle	 | 35            	 | cm | cylindrical mirror(right) rotation around z  17 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.cyl.s18_rightAngle	 | 35            	 | cm | cylindrical mirror(right) rotation around z  18 	 |  duran | bduran@jlab.org |  none | none | 2/19/16
+ltcc.pmt.s1_x	 | 17.36         	 | cm | pmt positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s1_y	 | 62.0225       	 | cm | pmt positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s1_z	 | 457.525       	 | cm | pmt positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s2_x	 | 25.42         	 | cm | pmt positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s2_y	 | 75.2319       	 | cm | pmt positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s2_z	 | 452.478       	 | cm | pmt positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s3_x	 | 33.54         	 | cm | pmt positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s3_y	 | 88.4645       	 | cm | pmt positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s3_z	 | 448.009       	 | cm | pmt positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s4_x	 | 41.61         	 | cm | pmt positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s4_y	 | 101.713       	 | cm | pmt positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s4_z	 | 443.034       	 | cm | pmt positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s5_x	 | 49.6          	 | cm | pmt positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s5_y	 | 114.739       	 | cm | pmt positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s5_z	 | 437.67        	 | cm | pmt positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s6_x	 | 57.51         	 | cm | pmt positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s6_y	 | 127.663       	 | cm | pmt positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s6_z	 | 431.814       	 | cm | pmt positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s7_x	 | 65.34         	 | cm | pmt positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s7_y	 | 140.453       	 | cm | pmt positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s7_z	 | 424.94        	 | cm | pmt positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s8_x	 | 72.76         	 | cm | pmt positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s8_y	 | 153.338       	 | cm | pmt positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s8_z	 | 417.885       	 | cm | pmt positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s9_x	 | 80.32         	 | cm | pmt positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s9_y	 | 166.563       	 | cm | pmt positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s9_z	 | 411.638       	 | cm | pmt positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s10_x	 | 87.93         	 | cm | pmt positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s10_y	 | 179.908       	 | cm | pmt positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s10_z	 | 404.079       	 | cm | pmt positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s11_x	 | 95.28         	 | cm | pmt positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s11_y	 | 194.463       	 | cm | pmt positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s11_z	 | 398.003       	 | cm | pmt positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s12_x	 | 103.2         	 | cm | pmt positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s12_y	 | 208.316       	 | cm | pmt positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s12_z	 | 388.833       	 | cm | pmt positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s13_x	 | 113.55        	 | cm | pmt positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s13_y	 | 226.324       	 | cm | pmt positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s13_z	 | 384.529       	 | cm | pmt positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s14_x	 | 122.17        	 | cm | pmt positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s14_y	 | 241.294       	 | cm | pmt positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s14_z	 | 372.413       	 | cm | pmt positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s15_x	 | 130.72        	 | cm | pmt positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s15_y	 | 256.131       	 | cm | pmt positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s15_z	 | 359.88        	 | cm | pmt positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s16_x	 | 139.1         	 | cm | pmt positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s16_y	 | 270.814       	 | cm | pmt positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s16_z	 | 347.001       	 | cm | pmt positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s17_x	 | 147.66        	 | cm | pmt positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s17_y	 | 284.841       	 | cm | pmt positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s17_z	 | 333.388       	 | cm | pmt positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s18_x	 | 155.46        	 | cm | pmt positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s18_y	 | 298.551       	 | cm | pmt positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.pmt.s18_z	 | 318.927       	 | cm | pmt positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_xR	 | 12.9616       	 | cm | shield positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_yR	 | 61.0313       	 | cm | shield positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_zR	 | 450.214       	 | cm | shield positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_xL	 | -12.9616      	 | cm | shield positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_yL	 | 61.0313       	 | cm | shield positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s1_zL	 | 450.214       	 | cm | shield positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_xR	 | 21.077        	 | cm | shield positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_yR	 | 74.0163       	 | cm | shield positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_zR	 | 445.167       	 | cm | shield positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_xL	 | -21.077       	 | cm | shield positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_yL	 | 74.0163       	 | cm | shield positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s2_zL	 | 445.167       	 | cm | shield positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_xR	 | 29.2346       	 | cm | shield positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_yR	 | 87.0245       	 | cm | shield positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_zR	 | 440.717       	 | cm | shield positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_xL	 | -29.2346      	 | cm | shield positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_yL	 | 87.0245       	 | cm | shield positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s3_zL	 | 440.717       	 | cm | shield positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_xR	 | 37.3449       	 | cm | shield positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_yR	 | 100.044       	 | cm | shield positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_zR	 | 435.767       	 | cm | shield positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_xL	 | -37.3449      	 | cm | shield positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_yL	 | 100.044       	 | cm | shield positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s4_zL	 | 435.767       	 | cm | shield positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_xR	 | 45.3792       	 | cm | shield positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_yR	 | 112.842       	 | cm | shield positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_zR	 | 430.433       	 | cm | shield positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_xL	 | -45.3792      	 | cm | shield positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_yL	 | 112.842       	 | cm | shield positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s5_zL	 | 430.433       	 | cm | shield positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_xR	 | 53.335        	 | cm | shield positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_yR	 | 125.535       	 | cm | shield positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_zR	 | 424.615       	 | cm | shield positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_xL	 | -53.335       	 | cm | shield positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_yL	 | 125.535       	 | cm | shield positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s6_zL	 | 424.615       	 | cm | shield positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_xR	 | 61.2162       	 | cm | shield positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_yR	 | 138.088       	 | cm | shield positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_zR	 | 417.785       	 | cm | shield positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_xL	 | -61.2162      	 | cm | shield positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_yL	 | 138.088       	 | cm | shield positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s7_zL	 | 417.785       	 | cm | shield positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_xR	 | 68.6823       	 | cm | shield positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_yR	 | 150.734       	 | cm | shield positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_zR	 | 410.788       	 | cm | shield positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_xL	 | -68.6823      	 | cm | shield positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_yL	 | 150.734       	 | cm | shield positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s8_zL	 | 410.788       	 | cm | shield positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_xR	 | 76.2925       	 | cm | shield positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_yR	 | 163.717       	 | cm | shield positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_zR	 | 404.605       	 | cm | shield positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_xL	 | -76.2925      	 | cm | shield positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_yL	 | 163.717       	 | cm | shield positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s9_zL	 | 404.605       	 | cm | shield positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_xR	 | 83.9609       	 | cm | shield positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_yR	 | 176.809       	 | cm | shield positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_zR	 | 397.12        	 | cm | shield positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_xL	 | -83.9609      	 | cm | shield positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_yL	 | 176.809       	 | cm | shield positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s10_zL	 | 397.12        	 | cm | shield positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_xR	 | 91.6245       	 | cm | shield positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_yR	 | 191.339       	 | cm | shield positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_zR	 | 391.61        	 | cm | shield positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_xL	 | -91.6245      	 | cm | shield positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_yL	 | 191.339       	 | cm | shield positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s11_zL	 | 391.61        	 | cm | shield positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_xR	 | 99.6142       	 | cm | shield positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_yR	 | 204.939       	 | cm | shield positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_zR	 | 382.53        	 | cm | shield positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_xL	 | -99.6142      	 | cm | shield positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_yL	 | 204.939       	 | cm | shield positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s12_zL	 | 382.53        	 | cm | shield positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_xR	 | 109.1         	 | cm | shield positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_yR	 | 221.255       	 | cm | shield positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_zR	 | 375.916       	 | cm | shield positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_xL	 | -109.1        	 | cm | shield positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_yL	 | 221.255       	 | cm | shield positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s13_zL	 | 375.916       	 | cm | shield positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_xR	 | 117.72        	 | cm | shield positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_yR	 | 235.859       	 | cm | shield positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_zR	 | 364.025       	 | cm | shield positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_xL	 | -117.72       	 | cm | shield positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_yL	 | 235.859       	 | cm | shield positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s14_zL	 | 364.025       	 | cm | shield positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_xR	 | 125.709       	 | cm | shield positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_yR	 | 250.492       	 | cm | shield positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_zR	 | 351.956       	 | cm | shield positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_xL	 | -125.709      	 | cm | shield positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_yL	 | 250.492       	 | cm | shield positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s15_zL	 | 351.956       	 | cm | shield positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_xR	 | 134.26        	 | cm | shield positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_yR	 | 264.778       	 | cm | shield positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_zR	 | 339.266       	 | cm | shield positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_xL	 | -134.26       	 | cm | shield positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_yL	 | 264.778       	 | cm | shield positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s16_zL	 | 339.266       	 | cm | shield positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_xR	 | 142.748       	 | cm | shield positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_yR	 | 278.491       	 | cm | shield positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_zR	 | 325.956       	 | cm | shield positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_xL	 | -142.748      	 | cm | shield positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_yL	 | 278.491       	 | cm | shield positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s17_zL	 | 325.956       	 | cm | shield positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_xR	 | 150.538       	 | cm | shield positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_yR	 | 291.874       	 | cm | shield positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_zR	 | 311.794       	 | cm | shield positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_xL	 | -150.538      	 | cm | shield positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_yL	 | 291.874       	 | cm | shield positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.shield.s18_zL	 | 311.794       	 | cm | shield positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s1_xR	 | 6.40228       	 | cm | mirror positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s1_yR	 | 59.5532       	 | cm | mirror positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s1_zR	 | 439.31        	 | cm | mirror positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s1_xL	 | -6.40228      	 | cm | mirror positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s1_yL	 | 59.5532       	 | cm | mirror positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s1_zL	 | 439.31        	 | cm | mirror positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s2_xR	 | 14.6005       	 | cm | mirror positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s2_yR	 | 72.2036       	 | cm | mirror positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s2_zR	 | 434.265       	 | cm | mirror positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s2_xL	 | -14.6005      	 | cm | mirror positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s2_yL	 | 72.2036       	 | cm | mirror positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s2_zL	 | 434.265       	 | cm | mirror positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s3_xR	 | 22.8141       	 | cm | mirror positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s3_yR	 | 84.8772       	 | cm | mirror positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s3_zR	 | 429.842       	 | cm | mirror positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s3_xL	 | -22.8141      	 | cm | mirror positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s3_yL	 | 84.8772       	 | cm | mirror positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s3_zL	 | 429.842       	 | cm | mirror positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s4_xR	 | 30.9845       	 | cm | mirror positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s4_yR	 | 97.556        	 | cm | mirror positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s4_zR	 | 424.93        	 | cm | mirror positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s4_xL	 | -30.9845      	 | cm | mirror positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s4_yL	 | 97.556        	 | cm | mirror positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s4_zL	 | 424.93        	 | cm | mirror positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s5_xR	 | 39.0849       	 | cm | mirror positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s5_yR	 | 110.012       	 | cm | mirror positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s5_zR	 | 419.641       	 | cm | mirror positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s5_xL	 | -39.0849      	 | cm | mirror positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s5_yL	 | 110.012       	 | cm | mirror positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s5_zL	 | 419.641       	 | cm | mirror positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s6_xR	 | 47.109        	 | cm | mirror positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s6_yR	 | 122.361       	 | cm | mirror positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s6_zR	 | 413.879       	 | cm | mirror positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s6_xL	 | -47.109       	 | cm | mirror positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s6_yL	 | 122.361       	 | cm | mirror positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s6_zL	 | 413.879       	 | cm | mirror positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s7_xR	 | 55.0665       	 | cm | mirror positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s7_yR	 | 134.562       	 | cm | mirror positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s7_zR	 | 407.116       	 | cm | mirror positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s7_xL	 | -55.0665      	 | cm | mirror positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s7_yL	 | 134.562       	 | cm | mirror positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s7_zL	 | 407.116       	 | cm | mirror positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s8_xR	 | 62.6014       	 | cm | mirror positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s8_yR	 | 146.85        	 | cm | mirror positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s8_zR	 | 400.203       	 | cm | mirror positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s8_xL	 | -62.6014      	 | cm | mirror positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s8_yL	 | 146.85        	 | cm | mirror positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s8_zL	 | 400.203       	 | cm | mirror positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s9_xR	 | 70.2865       	 | cm | mirror positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s9_yR	 | 159.473       	 | cm | mirror positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s9_zR	 | 394.116       	 | cm | mirror positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s9_xL	 | -70.2865      	 | cm | mirror positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s9_yL	 | 159.473       	 | cm | mirror positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s9_zL	 | 394.116       	 | cm | mirror positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s10_xR	 | 78.042        	 | cm | mirror positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s10_yR	 | 172.188       	 | cm | mirror positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s10_zR	 | 386.742       	 | cm | mirror positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s10_xL	 | -78.042       	 | cm | mirror positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s10_yL	 | 172.188       	 | cm | mirror positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s10_zL	 | 386.742       	 | cm | mirror positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s11_xR	 | 83.628        	 | cm | mirror positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s11_yR	 | 184.506       	 | cm | mirror positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s11_zR	 | 377.623       	 | cm | mirror positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s11_xL	 | -83.628       	 | cm | mirror positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s11_yL	 | 184.506       	 | cm | mirror positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s11_zL	 | 377.623       	 | cm | mirror positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s12_xR	 | 91.7702       	 | cm | mirror positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s12_yR	 | 197.551       	 | cm | mirror positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s12_zR	 | 368.74        	 | cm | mirror positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s12_xL	 | -91.7702      	 | cm | mirror positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s12_yL	 | 197.551       	 | cm | mirror positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s12_zL	 | 368.74        	 | cm | mirror positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s13_xR	 | 101.389       	 | cm | mirror positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s13_yR	 | 212.469       	 | cm | mirror positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s13_zR	 | 360.989       	 | cm | mirror positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s13_xL	 | -101.389      	 | cm | mirror positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s13_yL	 | 212.469       	 | cm | mirror positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s13_zL	 | 360.989       	 | cm | mirror positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s14_xR	 | 110.009       	 | cm | mirror positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s14_yR	 | 226.441       	 | cm | mirror positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s14_zR	 | 349.489       	 | cm | mirror positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s14_xL	 | -110.009      	 | cm | mirror positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s14_yL	 | 226.441       	 | cm | mirror positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s14_zL	 | 349.489       	 | cm | mirror positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s15_xR	 | 117.025       	 | cm | mirror positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s15_yR	 | 240.719       	 | cm | mirror positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s15_zR	 | 338.225       	 | cm | mirror positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s15_xL	 | -117.025      	 | cm | mirror positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s15_yL	 | 240.719       	 | cm | mirror positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s15_zL	 | 338.225       	 | cm | mirror positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s16_xR	 | 125.871       	 | cm | mirror positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s16_yR	 | 254.317       	 | cm | mirror positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s16_zR	 | 325.862       	 | cm | mirror positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s16_xL	 | -125.871      	 | cm | mirror positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s16_yL	 | 254.317       	 | cm | mirror positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s16_zL	 | 325.862       	 | cm | mirror positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s17_xR	 | 134.235       	 | cm | mirror positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s17_yR	 | 267.487       	 | cm | mirror positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s17_zR	 | 313.076       	 | cm | mirror positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s17_xL	 | -134.235      	 | cm | mirror positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s17_yL	 | 267.487       	 | cm | mirror positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s17_zL	 | 313.076       	 | cm | mirror positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s18_xR	 | 142.007       	 | cm | mirror positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s18_yR	 | 280.302       	 | cm | mirror positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s18_zR	 | 299.433       	 | cm | mirror positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s18_xL	 | -142.007      	 | cm | mirror positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s18_yL	 | 280.302       	 | cm | mirror positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.mirror.s18_zL	 | 299.433       	 | cm | mirror positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s1_xR	 | 0.390826      	 | cm | wc positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s1_yR	 | 58.2255       	 | cm | wc positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s1_zR	 | 446.167       	 | cm | wc positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s1_xL	 | -9.5397       	 | cm | wc positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s1_yL	 | 51.2011       	 | cm | wc positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s1_zL	 | 441.615       	 | cm | wc positions  1	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s2_xR	 | 8.55429       	 | cm | wc positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s2_yR	 | 71.0102       	 | cm | wc positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s2_zR	 | 441.116       	 | cm | wc positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s2_xL	 | -17.7847      	 | cm | wc positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s2_yL	 | 63.9387       	 | cm | wc positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s2_zL	 | 436.808       	 | cm | wc positions  2	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s3_xR	 | 16.7449       	 | cm | wc positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s3_yR	 | 83.8417       	 | cm | wc positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s3_zR	 | 436.698       	 | cm | wc positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s3_xL	 | -26.0299      	 | cm | wc positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s3_yL	 | 76.7026       	 | cm | wc positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s3_zL	 | 432.626       	 | cm | wc positions  3	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s4_xR	 | 24.8912       	 | cm | wc positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s4_yR	 | 96.6779       	 | cm | wc positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s4_zR	 | 431.786       	 | cm | wc positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s4_xL	 | -34.2342      	 | cm | wc positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s4_yL	 | 89.4814       	 | cm | wc positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s4_zL	 | 427.955       	 | cm | wc positions  4	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s5_xR	 | 32.9657       	 | cm | wc positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s5_yR	 | 109.286       	 | cm | wc positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s5_zR	 | 426.492       	 | cm | wc positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s5_xL	 | -42.3719      	 | cm | wc positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s5_yL	 | 102.046       	 | cm | wc positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s5_zL	 | 422.904       	 | cm | wc positions  5	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s6_xR	 | 40.9637       	 | cm | wc positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s6_yR	 | 121.785       	 | cm | wc positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s6_zR	 | 420.721       	 | cm | wc positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s6_xL	 | -50.4345      	 | cm | wc positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s6_yL	 | 114.512       	 | cm | wc positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s6_zL	 | 417.379       	 | cm | wc positions  6	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s7_xR	 | 48.8928       	 | cm | wc positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s7_yR	 | 134.133       	 | cm | wc positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s7_zR	 | 413.943       	 | cm | wc positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s7_xL	 | -58.435       	 | cm | wc positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s7_yL	 | 126.842       	 | cm | wc positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s7_zL	 | 410.853       	 | cm | wc positions  7	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s8_xR	 | 56.4029       	 | cm | wc positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s8_yR	 | 146.578       	 | cm | wc positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s8_zR	 | 407.016       	 | cm | wc positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s8_xL	 | -66.0086      	 | cm | wc positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s8_yL	 | 139.268       	 | cm | wc positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s8_zL	 | 404.18        	 | cm | wc positions  8	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s9_xR	 | 64.0618       	 | cm | wc positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s9_yR	 | 159.355       	 | cm | wc positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s9_zR	 | 400.91        	 | cm | wc positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s9_xL	 | -73.7359      	 | cm | wc positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s9_yL	 | 152.04        	 | cm | wc positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s9_zL	 | 398.33        	 | cm | wc positions  9	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s10_xR	 | 71.7877       	 | cm | wc positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s10_yR	 | 172.222       	 | cm | wc positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s10_zR	 | 393.509       	 | cm | wc positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s10_xL	 | -81.5403      	 | cm | wc positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s10_yL	 | 164.921       	 | cm | wc positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s10_zL	 | 391.198       	 | cm | wc positions  10	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s11_xR	 | 76.6113       	 | cm | wc positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s11_yR	 | 184.572       	 | cm | wc positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s11_zR	 | 384.362       	 | cm | wc positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s11_xL	 | -87.2134      	 | cm | wc positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s11_yL	 | 176.68        	 | cm | wc positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s11_zL	 | 382.156       	 | cm | wc positions  11	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s12_xR	 | 84.7201       	 | cm | wc positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s12_yR	 | 197.753       	 | cm | wc positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s12_zR	 | 375.441       	 | cm | wc positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s12_xL	 | -95.4279      	 | cm | wc positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s12_yL	 | 189.923       	 | cm | wc positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s12_zL	 | 373.545       	 | cm | wc positions  12	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s13_xR	 | 93.0427       	 | cm | wc positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s13_yR	 | 212.743       	 | cm | wc positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s13_zR	 | 368.448       	 | cm | wc positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s13_xL	 | -105.689      	 | cm | wc positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s13_yL	 | 204.072       	 | cm | wc positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s13_zL	 | 367.019       	 | cm | wc positions  13	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s14_xR	 | 101.705       	 | cm | wc positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s14_yR	 | 226.915       	 | cm | wc positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s14_zR	 | 356.985       	 | cm | wc positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s14_xL	 | -114.428      	 | cm | wc positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s14_yL	 | 218.32        	 | cm | wc positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s14_zL	 | 355.804       	 | cm | wc positions  14	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s15_xR	 | 109.153       	 | cm | wc positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s15_yR	 | 241.659       	 | cm | wc positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s15_zR	 | 346.131       	 | cm | wc positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s15_xL	 | -121.613      	 | cm | wc positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s15_yL	 | 232.739       	 | cm | wc positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s15_zL	 | 344.6         	 | cm | wc positions  15	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s16_xR	 | 117.929       	 | cm | wc positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s16_yR	 | 255.386       	 | cm | wc positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s16_zR	 | 333.682       	 | cm | wc positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s16_xL	 | -130.582      	 | cm | wc positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s16_yL	 | 246.68        	 | cm | wc positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s16_zL	 | 332.559       	 | cm | wc positions  16	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s17_xR	 | 126.403       	 | cm | wc positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s17_yR	 | 268.793       	 | cm | wc positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s17_zR	 | 320.971       	 | cm | wc positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s17_xL	 | -139.1        	 | cm | wc positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s17_yL	 | 260.134       	 | cm | wc positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s17_zL	 | 319.977       	 | cm | wc positions  17	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s18_xR	 | 134.244       	 | cm | wc positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s18_yR	 | 281.829       	 | cm | wc positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s18_zR	 | 307.356       	 | cm | wc positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s18_xL	 | -147.019      	 | cm | wc positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s18_yL	 | 273.266       	 | cm | wc positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+ltcc.wc.s18_zL	 | 306.556       	 | cm | wc positions  18	 |  duran, joosten | bduran@jlab.org, sjjooste@jlab.org |  none | none | 10/20/16
+nmirrors | 	 18 |  na | number of mirrors on one side |  vlassov, ungaro | vlassov@jlab.org, ungaro@jlab.org |  none | none | 3/10/12

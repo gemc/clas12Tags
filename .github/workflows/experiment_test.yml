@@ -2,11 +2,10 @@ name: Experiments Tests
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on all pushes except to branch new_cad_import
+  # Triggers the workflow on all pushes
   push:
     branches:
       - '*'
-      - '!new_cad_import'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:

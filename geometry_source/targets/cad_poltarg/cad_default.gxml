@@ -1,0 +1,14 @@
+<!--
+Run Group C Polarized Target
+ -->
+
+<gxml>
+
+    <!--volume name="InsertBath_6"      mother="PolTarg" color="ffffff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="AmmoniaCellWalls"/-->
+    <!--volume name="LHeVolume_29"      mother="PolTarg" color="0000ff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="lHeCoolant"/-->
+    <volume name="InsertBath_NoVoid_6"      mother="PolTarg" color="ffffff" position="0*mm 0*mm -94*mm" rotation="0*deg 0*deg 0*deg" material="AmmoniaCellWalls"/>
+    <!--volume name="LHeVolume_NoVoid_29"      mother="PolTarg" color="0000ff" position="0*mm 0*mm 0*mm" rotation="0*deg 0*deg 0*deg" material="lHeCoolant"/-->
+
+
+
+</gxml>

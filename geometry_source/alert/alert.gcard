@@ -1,0 +1,39 @@
+<gcard>
+	
+	<!-- target. ALERT target -->
+	<detector name="../targets/target" factory="TEXT" variation="alertH2"/> 
+		
+	<!-- Implementation ATOF, ahdc -->
+	<detector name="atof/atof" factory="TEXT" variation="default"/>
+	<detector name="ahdc/ahdc" factory="TEXT" variation="default"/>
+	<detector name="./external_shell_nonActif/alertshell" factory="TEXT" variation="original"/>
+
+	<!-- He bag -->
+	<detector name="./He_bag/hebag" factory="TEXT" variation="original"/>
+
+	<!-- hall field -->
+	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
+
+	<!-- fields, precise mode -->
+	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
+	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
+
+	<option name="INTEGRATEDRAW" value="*"/>
+
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	
+	<!-- beam conditions -->
+	<option name="BEAM_P"   value="proton, 2160*MeV, 90.0*deg, 0*deg"/>
+ 	<option name="SPREAD_P"  value="90*MeV, 30.0*deg, 180*deg"/>
+	
+	<option name="BEAM_V"    value="(0, 0, 0)cm"/>
+	<option name="SPREAD_V"  value="(0.0, 15.0)cm"/>
+
+	<!--  Run Number 11, picked up by digitization routines -->
+	<option name="RUNNO"    value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="default" />
+	
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+
+</gcard>

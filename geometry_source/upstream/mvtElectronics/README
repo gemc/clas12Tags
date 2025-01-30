@@ -1,0 +1,10 @@
+
+CLAS12 MVT ELECTRONICS README
+
+--------------------------------------------------
+
+The geometry defines the MVT electronics racks and electronics cards.
+
+The commands to build the geometry and materials are:
+
+perl mvtElectronics.pl config.dat

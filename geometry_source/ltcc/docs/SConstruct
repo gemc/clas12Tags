@@ -1,0 +1,13 @@
+import os
+from util import scanFiles
+env = Environment(ENV=os.environ)
+
+pdf = env.PDF(target  = 'ngammas_study.pdf',  source = 'ngammas_study.tex')
+html = env.Command('ngammas_study.html', 'ngammas_study.tex', "go_htlatex $SOURCE");
+
+Depends(html, pdf)
+
+cleans = scanFiles('.', accept=["ngammas_study*", "*.aux"], reject=[".tex"])
+#rint "to remove: ", cleans;
+
+Clean('ngammas_study.tex.html', cleans)

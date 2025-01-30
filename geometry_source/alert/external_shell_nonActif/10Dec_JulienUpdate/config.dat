@@ -1,0 +1,24 @@
+# Configuration file for ALERT (from RTPC example)
+
+# Detector name and variation
+detector_name: alertshell
+variation:     original
+
+# Factory can be MYQL or TEXT
+factory:       TEXT 
+
+# run ranges and variation will apply to geometry, materials and parameters
+rmin:       1
+rmax:       10000
+
+# MYSQL server and databse if MYSQL factory is selected
+dbhost: clasdb.jlab.org
+
+# Comments/Description
+comment:	geometry for non active ALERT shell to estimate material budget impact on forward reconstruction resolution
+
+# Verbosity controls the perl script output
+ verbosity: 0
+
+
+

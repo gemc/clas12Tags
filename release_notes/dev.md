@@ -3,10 +3,6 @@
 
 # Release notes
 
-- Added api files from gemc/api 
-- New Cad import mechanism
-- Ci includes comparison between TEXT and SQLITE geometry and output
-
 
 
 

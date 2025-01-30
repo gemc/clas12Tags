@@ -1,0 +1,28 @@
+#
+# Values taken from HTCC Shield Study drawing
+# Jan 14, 2015
+# 
+
+/vis/geometry/set/forceSolid all -1 1
+/vis/viewer/addCutawayPlane 0 0 0 mm 1 0 0
+
+/vis/scene/add/arrow 0 -400 0 0 0 0 mm
+/vis/scene/add/text  0 -450 0 mm 16 0 0 Target
+
+/vis/scene/add/arrow 0 -400 2269 0 0 2269 mm
+/vis/scene/add/text  0 -450 2269 mm 16 0 0 FT flange
+
+/vis/scene/add/arrow 0 -400 2763 0 0 2763 mm
+/vis/scene/add/text  0 -450 2753 mm 16 0 0 Torus Begins
+
+/vis/scene/add/arrow 0 -400 1760 0 0 1760 mm
+/vis/scene/add/text  0 -450 1760 mm 16 0 0 FT Begins
+
+/vis/scene/add/arrow 0 400 385 0 0 385 mm
+/vis/scene/add/text  0 450 385 mm 16 0 0 HTCC Moller Cup Begins
+
+/vis/scene/add/arrow 0 400 4912 0 0 4912 mm
+/vis/scene/add/text  0 450 4912 mm 16 0 0 Rear Torus Hub
+
+/vis/scene/add/arrow 0 400 1530 0 0 1530 mm
+/vis/scene/add/text  0 450 1530 mm 16 0 0 HTCC Moller Cup Ends

@@ -3,8 +3,7 @@ name: Validation
 on:
   push:
     branches:
-      - '*'
-      - '!new_cad_import'
+      - '!main'
     tags: [ '*' ]
 
   # Allows you to run this workflow manually from the Actions tab

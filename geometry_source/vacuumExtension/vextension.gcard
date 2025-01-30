@@ -1,0 +1,42 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	<!-- target. Notice variation give the target type. Can be: lH2, lD2, ND3 -->
+	<detector name="experiments/clas12/targets/cade/" factory="CAD"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2e"/>
+
+	<detector name="experiments/clas12/beamline/beamline" factory="TEXT" variation="FTOn"/>
+	<detector name="experiments/clas12/beamline/cadBeamline/" factory="CAD"/>
+	<detector name="experiments/clas12/beamline/vacuumline/" factory="CAD"/>
+
+	<detector name="experiments/clas12/htcc/htcc" factory="TEXT" variation="default"/>
+
+	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="original"/>
+
+	<!-- central detectors  -->
+	<detector name="experiments/clas12/bst/bst"  factory="TEXT" variation="default"/>
+
+
+	<option name="BEAM_P" value="e-, 2.0*GeV, 20*deg, 10*deg"/>
+	<option name="NO_FIELD" value="all"/>
+
+	<detector name="airPipe">
+			<existence exist="no" />
+	</detector>
+ 
+
+	<option name="SCALE_FIELD" value="clas12-newSolenoid, -1"/>
+	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
+	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
+	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
+
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="FTFP_BERT + STD"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+	<option name="RECORD_OPTICALPHOTONS"   value="1"/>
+
+
+</gcard>
+

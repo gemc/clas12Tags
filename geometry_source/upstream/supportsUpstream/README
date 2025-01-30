@@ -1,0 +1,10 @@
+
+CLAS12 UPSTREAM SUPPORTS README
+
+--------------------------------------------------
+
+The geometry defines the support pipes for the MVT and SVT.
+
+The commands to build the geometry and materials are:
+
+perl supportsUpstream.pl config.dat

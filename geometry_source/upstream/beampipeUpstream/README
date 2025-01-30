@@ -1,0 +1,10 @@
+
+CLAS12 UPSTREAM BEAMPIPE README
+
+--------------------------------------------------
+
+The geometry defines the beampipe upstream of the target.
+
+The commands to build the geometry and materials are:
+
+perl beampipeUpstream.pl config.dat

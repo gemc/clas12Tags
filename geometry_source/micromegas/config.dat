@@ -1,0 +1,23 @@
+# Configuration file for micromegas
+
+# Detector name and variation
+detector_name: micromegas
+variation:     michel
+
+# Factory can be MYQL or TEXT
+factory:       TEXT
+
+# run ranges and variation will apply to geometry, materials and parameters
+rmin:       1
+rmax:       10000
+
+# MYSQL server and databse if MYSQL factory is selected
+dbhost: localhost
+
+# Comments/Description
+comment:       This is the first implementation of the micromegas
+
+# Verbosity controls the perl script output
+verbosity: 0
+
+

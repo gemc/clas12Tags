@@ -1,0 +1,299 @@
+par_RichBox_dz            |   634.81   |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_dx1           |   135      |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_dx2           |   2090.22  |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_dx3           |   135      |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_dx4           |   2090.22  |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_dy1           |   1882.49  |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_dy2           |   1882.49  |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_alp1          |   0        |  deg |   rotation entrance window		       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_alp2          |   0        |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_th            |   -25      |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_ph            |   90       |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_RichBox_x             |   0        |  mm  |   descr x						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_y             |   1706.145  |  mm  |   descr y 							                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_z             |   5705.13  |  mm  |   descr z						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_RichBox_the           |   25.0     |  deg |   descr thea						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_phi           |   180.0    |  deg |   descr phi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBox_psi           |   90.0     |  deg |   descr psi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_RichBox_y_offset      |   284.31   |  mm  |  offset of the box base with respect to the beamline              |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_SteelPlate_y          |   0.0      |  mm  |  y-width of the steel plate on the beam line					                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+old_par_RichBox_dz        |   627.18   |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_dx1       |   175      |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_dx2       |   2107.275 |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_dx3       |   175      |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_dx4       |   2107.275 |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_dy1       |   1882.7   |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_dy2       |   1882.7   |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_alp1      |   0        |  deg |   rotation entrance window		       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_alp2      |   0        |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_th        |   -25  |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_ph        |   90       |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+old_par_RichBox_x         |   0        |  mm  |   descr x						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_y         |   1874.64  |  mm  |   descr y 							                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_z         |   5436.68  |  mm  |   descr z						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+old_par_RichBox_the       |   25.0     |  deg |   descr thea						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_phi       |   180.0    |  deg |   descr phi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+old_par_RichBox_psi       |   90.0     |  deg |   descr psi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+old_par_RichBox_y_offset  |   259.08   |  mm  |  offset of the box base with respect to the beamline              |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+old_par_SteelPlate_y      |   25.4  |  mm  |   	y-width of the steel plate on the beam line					                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_EntrancePanel_dz      |     0.8      |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_th      |  0     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_ph      |  0          |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_dx1     |      150     |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_dx2     |  1704.7375   |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_dx3     |      150     |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_dx4     |  1704.7375   |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_dy1     |  1500        |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_dy2     |  1500        |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_alp1    |  0           |  deg |   rotation entrance window	       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_EntrancePanel_alp2    |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_FrontalSystemBottom_dz      |  45      |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_th      |  0       |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_ph      |  0       |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_dx1     | 119.685 |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_dx2     | 540.885 |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_dx3     | 119.685 |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_dx4     | 540.885 |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_dy1     | 402.5   |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_dy2     | 402.5   |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_alp1    |  0       |  deg |   rotation entrance window	       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_alp2    |  0      |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_FrontalSystemBottom_x      |     0.0    |  mm  |   center of mass coordinate x      |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_y      | -1139.92   |  mm  |   center of mass coordinate y      |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemBottom_z      |  -516.52   |  mm  |   center of mass coordinate z      |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_FrontalSystemTop_dz      |  45     |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_th      |  0      |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_ph      |  0      |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_dx1     |  542.98 |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_dx2     |  860.58 |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_dx3     |  542.98 |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_dx4     |  860.58 |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_dy1     |  303.5  |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_dy2     |  303.5  |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_alp1    |  0      |  deg |   rotation entrance window	       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_alp2    |  0      |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_FrontalSystemTop_x      |     0.0    |  mm  |   center of mass coordinate x      |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_y      |  -429.92   |  mm  |   center of mass coordinate y      |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalSystemTop_z      |  -516.52   |  mm  |   center of mass coordinate z      |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_FrontalMirrorFrameWidth     |   2    |  mm | Width along all the directions of the frame containing the frontal mirror (both for the top and the bottom part)    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_FrontalMirror_dz      |     0.8      |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_th      |  0     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_ph      |  0          |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_dx1     |      118.6     |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_dx2     |   855  |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_dx3     |      118.6     |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_dx4     |   855  |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_dy1     |   720   |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_dy2     |   720   |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_alp1    |  0           |  deg |   rotation entrance window	       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_alp2    |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_FrontalMirror_offset  |   10    |  mm |  frontal mirror offset with respect to the entrance panel              |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_BottomMirror_dx      |     116        |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_BottomMirror_dy      |     1.6  |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_BottomMirror_dz      |     478.5      |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_BottomMirror_honeycomb  |     10  |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_BottomMirror_x_lab    |    0.0     |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_BottomMirror_y_lab    |  397.68    |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_BottomMirror_z_lab    | 5940.41    |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+spar_BottomMirror_x       | 0.0    |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+spar_BottomMirror_y       | -1310.065    |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+spar_BottomMirror_z       |  713.78   |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_SphericalMirror_rmin      |    2700  |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_SphericalMirror_rmax      |    2701  |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_SphericalMirror_phimin    |   330  |  deg  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_SphericalMirror_deltaphi  |    60  |  deg  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_SphericalMirror_thetamin  |    35  |  deg  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_SphericalMirror_deltatheta  |  14    |  deg  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_LateralMirror_dy      |     10     |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_LateralMirror_dz      |     1215   |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_LateralMirror_dx      |     627.18 |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_LateralMirror_alpha   |     0    |  deg  |  Angle between y-axis and by the plane joining the centre of the  z-x faces at -dy and +dy	|  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_LateralMirror_theta   |    22.0 |  deg  | Polar angle of the line joining the centres of the faces at -dz and +dz in z	   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_LateralMirror_phi     |     0 |  deg  |   Azimuthal angle of the line joining the centres of the faces at -dz and +dz in z |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_AerogelVolume_dx      |    1300      |  mm  | half x-size of an aerogel tile                              |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_AerogelVolume_dy      |    1126      |  mm  | half x-size of an aerogel tile                              |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_AerogelTile_dx         |    100      |  mm  | half x-size of an aerogel tile                                |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_AerogelTile_dy         |    100      |  mm  | half y-size of an aerogel tile                                |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_AerogelTile_dz         |    10       |  mm  | half z-size of an aerogel tile                                |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_AerogelOffset_dx       |    10       |  mm  | y-offset at the center of the aerogel tile for the mirrors    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_AerogelOffset_dy       |    10       |  mm  | x-offset at the center of the aerogel tile for the mirrors    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_AerogelTileSeparation  |   0.25      |  mm  |                                                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_TopPanel_dz            | 576.5        |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_th            |  0     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_ph            |  0     |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_dx1           |  1656.5      |  mm  |   half width entrance surface - top    		    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_dx2           |  1656.5      |  mm  |   half width entrance surface - bottom                        |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_dx3           |  2038.5      |  mm  |   half width rear surface - top 		    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_dx4           |  2038.5      |  mm  |   half width rear surface - bottom		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_dy1           |  12.5        |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_dy2           |  12.5        |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_alp1          |  0           |  deg |   rotation entrance windo		       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_alp2          |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_theta         |  -10.03     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_TopPanel_phi           |  180     |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_InnerTopPanel_dz       | 400        |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_th       |  0     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_ph       |  0     |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_dx1      |  1554      |  mm  |   half width entrance surface - top    		    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_dx2      |  1554      |  mm  |   half width entrance surface - bottom                        |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_dx3      |  1800      |  mm  |   half width rear surface - top 		    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_dx4      |  1800      |  mm  |   half width rear surface - bottom		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_dy1      |  13.5        |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_dy2      |  13.5        |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_alp1     |  0           |  deg |   rotation entrance windo		       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_alp2     |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_theta    |  -10.03     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_InnerTopPanel_phi      |  180     |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+
+par_PMTPanel_dz      |     0.7      |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_th      |   0   |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_ph      |   0 |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_dx1     |      150     |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_dx2     |   835   |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_dx3     |      150     |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_dx4     |  835   |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_dy1     |  635        |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_dy2     |  635        |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_alp1    |  0           |  deg |   rotation entrance window	       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPanel_alp2    |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_ExitPanel_dz      |     0.7      |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_th      |  -6.6338     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_ph      |  90          |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_dx1     |      755     |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_dx2     |   1930   |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_dx3     |      755     |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_dx4     |  1930   |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_dy1     |  1122.5        |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_dy2     |  1122.5        |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_alp1    |  0           |  deg |   rotation entrance window	       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_ExitPanel_alp2    |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTCase_dx           |    26      |  mm  | half x-size of the PMT case                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTCase_dy           |    26      |  mm  | half y-size of the PMT case                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTCase_dz           |    13.5    |  mm  | half z-size of the PMT case                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTCase_width        |    1.0     |  mm  | width of the pmt aluminum case                        |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTWindow_dz         |    0.75    |  mm  | half z-size of the PMT Window                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTPhotocatode_dx    |    24.5    |  mm  | half x-size of the PMT Photocatode                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPhotocatode_dy    |    24.5    |  mm  | half y-size of the PMT Photocatode                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTPhotocatode_dz    |    0.05    |  mm  | half z-size of the PMT Photocatode                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTSocket_dz         |    1       |  mm  | half z-size of the PMT socket                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTOffsetFromBox_y   | 127.43     |  mm  | y-offset at the center of the aerogel tile for the mirrors    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTOffsetFromBox_z   | 449.12     |  mm  | y-offset at the center of the aerogel tile for the mirrors    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTFirstRaw_y        | -1931.23 |  mm  | y value of the PMTs in the first raw - center of mass - as calculated through M. Mirazita code  |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTFirstRaw_z        |  474.10  |  mm  | z value of the PMTs in the first raw - center of mass - as calculated through M. Mirazita code  |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_PMTDistanceFromAerogel_z |  968.14 |  mm  | y-offset at the center of the aerogel tile for the mirrors    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTOffsetFromPanel   |    20       |  mm  | y-offset at the center of the aerogel tile for the mirrors    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PMTSeparation        |    1.0      |  mm  | x-offset at the center of the aerogel tile for the mirrors    |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_RichGap_dz            | 520.         |  mm  |   descr                                                  |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichGap_dx1           | 163.221      |  mm  |   half width entrance window close to beam pipe          |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichGap_dx2           | 1787.71      |  mm  |   half width entrance window maximum radiu			   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichGap_dx3           | 194.716      |  mm  |   half width rear window close to beam pip			   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichGap_dx4           | 2132.67      |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichGap_dy1           | 1564.87      |  mm  |   half heigth entrance window				               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichGap_dy2           | 1866.83      |  mm  |   half heigth rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PreMirror_carbon_dz   | 1.0          |  mm  |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PreMirror_glass_dz    | 0.5	         |  mm  |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PreMirror_aero_dz     | 50.	         |  mm  |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PreMirror_alp1        | 0	         |  mm  |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PreMirror_alp2        | 0	         |  mm  |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PreMirror_x           | 0	         |  mm  |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PreMirror_ph          | 90	         |  deg |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_trapp_dz              |    492.      |  mm  |   generic description                         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_trapp_dx1             |    163.221   |  mm  |  half width entrance windw close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_trapp_dx2             |    1796.99   |  mm  |  half width entrance windw maximum radius     		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_trapp_dx3             |    192.866   |  mm  |  half width rear window cose to beam pipe     		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_trapp_dx4             |    2123.38   |  mm  |  half width rear window mximum radius         		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_trapp_dy1             |    1573.82   |  mm  |  half heigth entrance winow                   		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_trapp_dy2             |    1859.67   |  mm  |  half heigth rear window                       		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_PostPlane_dz          |       1.0    |  mm  |  Postplane                                    		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+
+par_RichBoxMarcoC_dz            |  581.595     |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_dx1           |  161.658     |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_dx2           |  1828.15     |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_dx3           |  196.245     |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_dx4           |  2219.29     |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_dy1           |  1592.43     |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_dy2           |  1933.13     |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_alp1          |  0           |  deg |   rotation entrance window		       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_alp2          |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_th            |  -6.6338     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_ph            |  90          |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_x             |  0           |  mm  |   descr x						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_y             |  1874.64     |  mm  |   descr y 							                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_z             |  5436.68     |  mm  |   descr z						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_the           |  25.0        |  deg |   descr thea						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_phi           |  180.0       |  deg |   descr phi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxMarcoC_psi           |  90.0        |  deg |   descr psi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_RichBoxDario_dz            |  627.18         |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_dx1           |  135     |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_dx2           |  2090.22     |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_dx3           |  135     |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_dx4           |  1707.99     |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_dy1           |  1517.185     |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_dy2           |  1882.7     |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_alp1          |  0           |  deg |   rotation entrance window		       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_alp2          |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_th            |  -6.6338     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_ph            |  90          |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_x             |  0           |  mm  |   descr x						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_y             |  1874.64     |  mm  |   descr y 							                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_z             |  5436.68     |  mm  |   descr z						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_the           |  25.0        |  deg |   descr thea						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_phi           |  180.0       |  deg |   descr phi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxDario_psi           |  90.0        |  deg |   descr psi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+
+par_RichBoxBackup_dz            |  525         |  mm  |   half depth                                             |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_th            |  -6.6338     |  deg |   central axis inclination                               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_ph            |  90          |  deg |   central axis inclination is a rotation around x axis   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_dx1           |  161.658     |  mm  |   half width entrance window close to beam pipe 		   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_dx2           |  1810.67     |  mm  |   half width entrance window maximum radiu		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_dx3           |  193.181     |  mm  |   half width rear window close to beam pipe		       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_dx4           |  2163.75     |  mm  |   half width rear window maximum radius		           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_dy1           |  1575.72     |  mm  |   half heigth entrance window		         	           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_dy2           |  1882.98     |  mm  |   half heigth rear window 			                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_alp1          |  0           |  deg |   rotation entrance window		       		               |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_alp2          |  0           |  deg |   rotation rear window				                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_x             |  0           |  mm  |   descr x						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_y             |  1874.64     |  mm  |   descr y 							                   |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_z             |  5436.68     |  mm  |   descr z						                           |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_the           |  25.0        |  deg |   descr thea						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_phi           |  180.0       |  deg |   descr phi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+par_RichBoxBackup_psi           |  90.0        |  deg |   descr psi						                       |  Silvia Pisano   |  pisanos@jlab.org     |  none  | none | 09/01/14
+

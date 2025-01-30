@@ -1,0 +1,2 @@
+/vis/scene/add/axes 0 0 0 10 cm
+/vis/viewer/set/lineSegmentsPerCircle 100
