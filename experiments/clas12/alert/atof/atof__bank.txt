@@ -1,9 +1,8 @@
                 atof  |              bankid  |                                      atof bank ID  |22500   |                  Di  
-                atof  |              sector  |                                           sector   |    1   |                  Di  
-                atof  |               layer  |               hipo layer is superlayer*10 + layer  |    2   |                  Di  
-                atof  |           component  |                                     paddle number  |    3   |                  Di  
-                atof  |           ADC_order  |long paddles: 0/1 = Front/Back. Top paddles: set to 0  |    4   |                  Di  
-                atof  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
-                atof  |            ADC_time  |                               time from pulse fit  |    6   |                  Dd  
-                atof  |             ADC_ped  |                      pedestal from pulse analysis  |    7   |                  Di  
+                atof  |              sector  |                                       atof sector  |    1   |                  Di  
+                atof  |               layer  |                     wedge+bar (quarter of sector)  |    2   |                  Di  
+                atof  |           component  |              z slice 0 to 9 for wedge, 10 for bar  |    3   |                  Di  
+                atof  |           TDC_order  |      order 0/1 for up/downstream bar, 0 for wedge  |    4   |                  Di  
+                atof  |             TDC_TDC  |                                               TDC  |    5   |                  Di  
+                atof  |             TDC_ToT  |                                               ToT  |    6   |                  Di  
                 atof  |                hitn  |                                        hit number  |   99   |                  Di  

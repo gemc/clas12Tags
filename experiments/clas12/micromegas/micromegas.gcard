@@ -2,7 +2,7 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-	<detector name="micromegas" factory="TEXT" variation="michel_9mmcopper"/>
+	<detector name="micromegas" factory="TEXT" variation="michel"/>
 
 	<option name="BEAM_P" value="proton, 1.0*GeV, 90*deg, 90*deg"/>
 	<option name="SPREAD_P" value="0*GeV, 20*deg,180*deg"/>

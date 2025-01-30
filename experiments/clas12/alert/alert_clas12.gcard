@@ -1,0 +1,92 @@
+<gcard>
+	
+	<!-- target. ALERT target -->
+	<!-- Standard 4He -->
+	<!-- <detector name="../targets/target" factory="TEXT" variation="alert"/> -->
+	<!-- Standard D2 -->
+	<detector name="../targets/target" factory="TEXT" variation="alertD2"/> 
+		
+	<!-- Implementation ATOF, ahdc -->
+	<detector name="atof/atof" factory="TEXT" variation="default"/>
+	<detector name="ahdc/ahdc" factory="TEXT" variation="default"/>
+	<detector name="./external_shell_nonActif/alertshell" factory="TEXT" variation="original"/>
+
+	<!-- He bag -->
+	<detector name="./He_bag/hebag" factory="TEXT" variation="original"/>
+
+	<!--ctof, cad -->
+	<!-- <detector name="experiments/clas12/ctof/ctof"                factory="TEXT" variation="default"/> -->
+	<!-- <detector name="experiments/clas12/ctof/javacad_default/"    factory="CAD"/> -->
+	<!-- <detector name="experiments/clas12/cnd/cnd"                  factory="TEXT" variation="original"/> -->
+
+	<!--high threshold cherenkov -->
+	<detector name="experiments/clas12/htcc/htcc"      factory="TEXT" variation="original"/>
+
+	<!-- magnets -->
+	<detector name="experiments/clas12/magnets/solenoid" factory="TEXT" variation="original"/>
+	<detector name="experiments/clas12/magnets/cad/"     factory="CAD" />
+
+
+	<!-- Beamline configuration: FT is used -->
+	<detector name="experiments/clas12/beamline/vacuumLine/"       factory="CAD"/>
+	
+	<!-- FToff config -->
+	<!-- <detector name="experiments/clas12/ft/ft"                      factory="TEXT" variation="FTOff"/> -->
+	<!-- <detector name="experiments/clas12/beamline/cadBeamlineFTOFF/" factory="CAD"/> -->
+	<!-- <detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="FTOff"/> -->
+	
+	<!-- FTon config -->
+	<detector name="experiments/clas12/ft/ft"                      factory="TEXT" variation="FTOn"/>
+	<detector name="experiments/clas12/beamline/cadBeamline/"    factory="CAD"/>
+	<detector name="../beamline/beamline"                          factory="TEXT" variation="FTALERT"/>
+	
+	<!-- <detector name="airPipe">  -->
+	<!-- 	<existence exist="no" />  -->
+	<!-- </detector> -->
+
+	<!-- forward carriage -->
+	<detector name="experiments/clas12/fc/forwardCarriage" factory="TEXT" variation="TorusSymmetric"/>
+	<detector name="experiments/clas12/dc/dc"              factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/ftof/ftof"          factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/ec/ec"              factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/pcal/pcal"          factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/ltcc/ltcc"          factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/ltcc/cad_cone/"     factory="CAD"/>
+	<detector name="experiments/clas12/ltcc/cad/"          factory="CAD"/>
+	
+	<!-- hall field -->
+	<option name="HALL_FIELD"  value="clas12-newSolenoid"/>
+
+	<!-- fields, precise mode -->
+	<option name="FIELD_PROPERTIES" value="TorusSymmetric,     2*mm, G4ClassicalRK4, linear"/>
+	<option name="FIELD_PROPERTIES" value="clas12-newSolenoid, 1*mm, G4ClassicalRK4, linear"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	<!-- <option name="RECORD_OPTICALPHOTONS"   value="1"/> -->
+	<!-- <option name="INTEGRATEDRAW" value="ahdc, atof, bst, ctof, htcc, ft_cal, ft_hodo, dc, ec, ftof, pcal, flux"/> -->
+	<!-- <option name="RECORD_PASSBY" value="1"/> -->
+	<!-- <option name="MAX_FIELD_STEP" value="10" /> -->
+	
+	<option name="PHYSICS" value="FTFP_BERT + STD + Optical"/>
+
+	<!-- <option name="OUTPUT"   value="evio, alert_simulation.ev"/> -->
+
+	<option name="INTEGRATEDRAW" value="*"/>
+
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="SAVE_ALL_MOTHERS" value="0"/>
+	
+	<!-- beam conditions -->
+	<option name="BEAM_P"   value="proton, 160*MeV, 90.0*deg, 0*deg"/>
+ 	<option name="SPREAD_P"  value="90*MeV, 30.0*deg, 180*deg"/>
+	
+	<option name="BEAM_V"    value="(0, 0, 0)cm"/>
+	<option name="SPREAD_V"  value="(0.0, 15.0)cm"/>
+
+	<!--  Run Number 11, picked up by digitization routines -->
+	<option name="RUNNO"    value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="default" />
+	
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+
+</gcard>
