@@ -19,7 +19,7 @@ githubRepo="https://github.com/JeffersonLab/coatjava"
 
 REPO="JeffersonLab/coatjava"
 LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r .tag_name)
-echo "Latest Coatjave release tag: $LATEST_RELEASE"
+echo "Latest Coatjava release tag: $LATEST_RELEASE"
 
 # if the argument '-d' is given, set USEDEVEL="yes"
 # if the -g option is given, set the github url accordingly

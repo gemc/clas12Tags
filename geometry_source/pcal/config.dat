@@ -3,7 +3,7 @@ detector_name: pcal
 comment: CLAS12 Pre-shower calorimeter detector
 
 # MYSQL server / SQLITE file
-dbhost: ../clas12.sqlite
+dbhost: ../../clas12.sqlite
 
 # Verbosity controls the perl script output
 verbosity: 0

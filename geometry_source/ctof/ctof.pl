@@ -115,6 +115,7 @@ use File::Path qw(make_path remove_tree);
 # Copy STL files from javacad_default to cad_ctof
 my $javacad_default = 'javacad_default';
 my $javacad_default_upstream = 'javacad_default_upstream';
+
 my $cad_ctof = 'cad';
 my $cad_ctof_upstream = 'cad_upstream';
 

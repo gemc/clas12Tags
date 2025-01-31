@@ -1,95 +1,87 @@
 # The clas12Tags repository
 
-The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments at Jefferson Lab, providing:  
-- The CLAS12 detectors geometry database (in the form of ASCII files).  
-- Individual system GCARDS.  
-- A customized version of the GEMC source code tailored specifically for the JLab CLAS12 experiments.  
-
-This repository is tagged more frequently than:  
-- `gemc/source` (the primary GEMC repository).  
-- `gemc/detectors` (which contains the source code for generating the databases).  
-
-The increased tagging frequency reflects the more dynamic nature of CLAS12-specific digitization routines and geometry updates compared to the more stable functionality of the GEMC codebase.  
+The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments 
+at Jefferson Lab, providing:  
+- The CLAS12 detectors geometry database (in the form of ASCII files and a SQLITE database).  
+- Individual system steering cards (GCARDS)
+- A customized version of the GEMC source code tailored specifically for the JLab CLAS12 experiments.
+- The CLAS12 geometry source code.
 
 
-![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector in the simulation. The electron beam is going from left to right.")
+![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
 
 ###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
 
-# Creating the CLAS12 detector geometry database
+---
+
+## How to create the CLAS12 detector geometry database
+
+You will need:
+
+- `java (openjdk >= 17)` and `groovy` installed to run the coatjava geometry service.
+- gemc environment, loaded either with `module load clas12` or `module load gemc`.
+
+The script `run_geometry.sh` will create an individual detector geometry or all of them:
 
 
-
-
-### Pre-requisites  
-
-To set up the environment and run the scripts, ensure the following prerequisites are met:  
-
-1. A working [ceInstall](https://github.com/JeffersonLab/ceInstall) environment.  
-2. **Groovy** installed.  
-3. A [coatjava](https://github.com/JeffersonLab/coatjava) installation, with the `COATJAVA` environment variable set and `$COATJAVA/bin` included in the system `PATH`.  
-4. A copy of the [gemc/api](https://github.com/gemc/api) repository located inside `$GEMC/api`.  
-5. A copy of the [gemc/detectors](https://github.com/gemc/detectors) repository.  
-
-**Note:** At Jefferson Lab, prerequisites [1-4] are satisfied when using 
-the [CLAS12 environment](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Environment_@_JLab), 
-loaded with the command:  
-
-```bash
-module load clas12
 ```
-The utility script `clas12/install_coatjava.sh` in the `gemc/detectors` repository can be used to install `coatjava`.
+Usage: run_geometry.sh [detector]
+Creates the geometry for the given detector
+If no detector is given, all detectors will be run
+
+All detectors: 
+
+alert band beamline bst bstShield cnd ctof dc ddvcs ec fluxDets 
+ft ftof ftofShield htcc ltcc magnets micromegas pcal rich 
+rtpc targets uRwell upstream
+```
+
+The script will install (if not present) the latest tagged coatjava in the directory 
+`geometry_source` and run the geometry service for the requested detector(s).
 
 ---
 
-### Running the Scripts
+## How compile the source code
 
-The CLAS12 geometry database is generated using PERL scripts in the `gemc/detectors` repository. Each system (represented by a subdirectory within the `clas12` directory) contains a main PERL script for execution, typically named after the subdirectory. For example:  
-- `beamline/beamline.pl`  
-- `ctof/ctof.pl`  
+You will need:
 
-To run a script:  
-1. Change to the corresponding subdirectory.  
-2. Execute the script using the configuration file `config.dat`:  
+- gemc environment, loaded either with `module load clas12` or `module load gemc`.
+- scons
 
-```bash
-cd beamline
-./beamline.pl config.dat
+Run scons in the `source` directory:
+
+```
+cd source
+scons -jN OPT=1
 ```
 
-This will create the ASCII files for the beamline detector 
-for all the variations specified in the main script.
-This command generates the ASCII files for the specified detector system, covering all variations defined in the main script.
-
-#### Additional Components
-
-Some systems include additional components in the repository, such as:  
-- **Beamline:** The `cadBeamline` directory contains STL files derived from CAD models.  
-- **Ctof:** the STL files are not in the repository but are downloaded using the geometry service.
-
-#### Special Cases
-
-Two detectors follow different workflows:  
-1. **Alert Detector**: Instructions for execution are detailed in the `alert/README.md` file.  
-2. **LTCC Detector**: Before running the main script, the following command must be executed to define the mirror parameters:  
-   ```bash
-   root -q -b mirrors.C
-    ```  
+where N is the number of cores available.
 
 
-<br>
+---
 
-## Clas12Tags versions installed at JLab on /site and on CVMFS:
 
-<br>
+## Release workflow
 
-- [dev](release_notes/dev.md), use COATJAVA release 11.0.4)
+Please make a pull requests with changes pertaining to the directories:
+
+- **geometry_source**: for changes to the geometry source code.
+- **source**: for changes to the GEMC source code.
+
+The changes will be reviewed and merged into the main branch. 
+A nightly build and a cronjob ensure the latest version of the code and geometry is available on cvmfs.
+
+## Use at JLab:
+
+The following releases of Clas12Tags are installed on CVMFS:
+
+- [dev](release_notes/dev.md) (tagged nightly)
+- [5.11](release_notes/5.11.md)
 - [5.10](release_notes/5.10.md)
 - [4.4.2](release_notes/4.4.2.md)
 
-<br>
 
-To load the GEMC environment through the clas12 environment at JLab:
+To load the GEMC environment at JLab:
 
 ```commandline
 module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
@@ -111,7 +103,6 @@ gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2
 Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
 
 
-<br>
 
 ---
 
@@ -120,109 +111,64 @@ Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/
 GEMC simulations can be run on the Open Science Grid (OSG) using the
 <a href="https://gemc.jlab.org/web_interface/index.php"> CLAS12 Simulation Submission Portal</a>.
 
-<br>
 
 ---
 
-<br>
 
-## How to get and compile the clas12Tags
+## FTOn, FTOff configurations
 
-Load the environment as [described above](#use-gemc-versions-installed-at-jlab-on-site-and-on-cvmfs-).
 
-Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags)
-and unpack it (using 5.X as an example):
+The default configuration for the first experiment is with "FTOn" (Figure 1, Left): complete forward tagger is fully
+operational.
+The other available configuration is "FTOff" (Figure 1, Right): the Forward Tagger tracker is replaced with shielding,
+and the tungsten cone is moved upstream.
 
-```
-wget https://github.com/gemc/clas12Tags/archive/refs/tags/5.X.tar.gz
-tar -xvf 5.X.tar.gz
-```
 
-Then compile gemc:
 
-```
-cd clas12_tags-5.X/source
-scons -jN OPT=1
-```
-
-where N is the number of cores available.
+|                                                                              |                                                                                                         |
+|------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/>                            |
+| FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
 
 <br>
 
-## How to make changes to the clas12Tags
-
-clas12Tags is a repo with source code and geometry derived from gemc/source.
-Modifications should be made to the gemc/source repo by forking it
-and making a pull request.
-
-Note: gemc uses static function to load specific clas12 code (ugly, fixed in gemc3).
-In particular the BMT and FMT hit processes have these two functions:
+To change configuration from FTOn to FTOff, replace the keywords and variations from:
 
 ```
-bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(-1);
-fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(-1);
+	<detector name="experiments/clas12/ft/ft"                      factory="TEXT" variation="FTOn"/>
+	<detector name="experiments/clas12/beamline/cad/"              factory="CAD"  variation="FTOn"/>
+	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="FTOn"/>
 ```
 
-that should be changed to:
+to:
 
 ```
-bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
-fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(1);
+	<detector name="experiments/clas12/ft/ft"                      factory="TEXT" variation="FTOff"/>
+	<detector name="experiments/clas12/beamline/cad/"              factory="CAD"  variation="FTOff"/>
+	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="FTOff"/>
 ```
 
-to initialize properly BMT and FMT and avoid seg fault when those
-detectors are used. This is done in the clas12Tags repo.
 
-# Changing Configurations
 
-## Magnetic Fields
+### Changing a material 
 
-### ASCII:
-
-You can scale magnetic fields using the SCALE_FIELD option. To do that copy the gcard somewhere first, then modify it.
-The gcard can work from any location.
-Example on how to run at 80% torus field (inbending) and 60% solenoid field:
-
-```
-<option name="SCALE_FIELD" value="binary_torus, -0.8"/>
-<option name="SCALE_FIELD" value="binary_solenoid, 0.6"/>
-```
-
-<br>
-
-## Hydrogen, Deuterium or empty target
-
-By default, the target cell is filled with liquid hydrogen by specifying the "lh2" target variation.
-To use liquid deuterium instead use the variation "lD2" instead.
-
-To use an empty target instead, use the SWITCH_MATERIALTO option.
+The option `SWITCH_MATERIALTO` can be used to change a material of a volume
+For example, to change the `G4_lH2` to vacuum:
 
 ```
 <option name="SWITCH_MATERIALTO" value="G4_lH2, G4_Galactic"/>
 ```
 
+The option `CHANGEVOLUMEMATERIALTO` can be used to change the material of a volume. 
+For example, to change the target cell `lh2` material from LH2 to a vacuum:
+
+```
+<option name="CHANGEVOLUMEMATERIALTO" value="lh2, G4_Galactic"/>
+```
 <br>
 
-## Event Vertex
 
-<br>
-While the gcards takes care of the target volumes positions (for example, in rga_spring2019 it is moved upstream by 3cm),
-it is up to the generators and the LUND files to place the event in the correct location.
-
-The <a href="https://github.com/gemc/clas12Tags/tree/master/5.1/config"> surveyed target positions</a> are listed
-below:<br>
-
-- rga_spring2018</b>: -1.94cm
-- rga_fall2018</b>:  -3.0cm
-- rgk_fall2018_FTOn</b>:  -3.0cm
-- rgk_fall2018_FTOff</b>:  -3.0cm
-- rgb_spring2019</b>: -3.0cm
-- rga_spring2019</b>: -3.0cm
-- rgb_fall2019</b>:   -3.0cm
-
-<br>
-
-## Removing a detector or a volume
+### Removing a detector or a volume
 
 <br>
 
@@ -237,55 +183,9 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-## Detector Sources
 
-<br>
 
-The CLAS12 detector geometry sources are kept in the
-<a href="https://github.com/gemc/detectors"> detector git repository</a>.
-
-The CLAS12 geometry services are kept in the
-<a href="https://github.com/JeffersonLab/clas12-offline-software/blob/development/common-tools/clas-jcsg/src/main/java/org/jlab/detector/geant4/v2/">
-java geant4 factory git repository</a>.
-
-<br>
-
-## FTOn, FTOff configurations
-
-<br>
-
-The default configuration for the first experiment is with "FTOn" (Figure 1, Left): complete forward tagger is fully
-operational.
-The other available configuration is "FTOff" (Figure 1, Right): the Forward Tagger tracker is replaced with shielding,
-and the tungsten cone is moved upstream.
-
-The simulations in preparation of the first experiment should use the default version FTOn.
-FTOff will be used only by experts for special studies in preparation for the engineering run.
-
-|                                                                              |                                                                                                         |
-|------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/>                            |
-| FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
-
-<br>
-
-To change configuration from FTOn to FTOff, replace the keywords and variations from:
-
-```
-<detector name="ft" factory="TEXT" variation="FTOn"/>
-<detector name="beamline" factory="TEXT" variation="FTOn"/>
-<detector name="cadBeamline/" factory="CAD"/>
-```
-
-to:
-
-```
-<detector name="ft" factory="TEXT" variation="FTOff"/>
-<detector name="beamline" factory="TEXT" variation="FTOff"/>
-<detector name="cadBeamlineFTOFF/" factory="CAD"/>
-```
-
-### Run numbers vs Run groups
+## Run numbers vs Run groups
 
 Source: [calcom run groups](https://clasweb.jlab.org/wiki/index.php/CLAS12_Calibration_and_Commissioning)
 
