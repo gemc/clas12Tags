@@ -21,11 +21,11 @@ You will need:
 - `java (openjdk >= 17)` and `groovy` installed to run the coatjava geometry service.
 - gemc environment, loaded either with `module load clas12` or `module load gemc`.
 
-The script `run_geometry.sh` will create an individual detector geometry or all of them:
+The script `create_geometry.sh` will create an individual detector geometry or all of them:
 
 
 ```
-Usage: run_geometry.sh [detector]
+Usage: create_geometry.sh [detector]
 Creates the geometry for the given detector
 If no detector is given, all detectors will be run
 
@@ -38,6 +38,13 @@ rtpc targets uRwell upstream
 
 The script will install (if not present) the latest tagged coatjava in the directory 
 `geometry_source` and run the geometry service for the requested detector(s).
+
+Examples:
+
+```
+./create_geometry.sh cnd : creates the CND geometry ASCII database, updates the SQLITE database
+./create_geometry.sh : creates all the CLAS12 detectors, updates the SQLITE database
+```
 
 ---
 

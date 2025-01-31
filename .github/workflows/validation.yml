@@ -3,7 +3,7 @@ name: Validation
 on:
   push:
     branches:
-      - '!main'
+      - '*'
     tags: [ '*' ]
 
   # Allows you to run this workflow manually from the Actions tab
