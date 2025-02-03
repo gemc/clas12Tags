@@ -17,7 +17,7 @@ jobs:
       gemc_version: build
       config_file_versions: >-
         {
-          "coatjava": "latest",
+          "coatjava": "dc-tdigi-unc",
           "gemc":     "dev"
         }
       git_upstream: >-

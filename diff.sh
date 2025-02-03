@@ -12,7 +12,7 @@
 prompt="no"
 
 next_release=$(ls release_notes | grep -v dev | grep '.md' | awk -F. '{print $1"."$2}' | sort -V | tail -1)
-
+next_release="dev"
 # check the difference between the dev.md and the next release until the string " # Environment on ifarm / cvmfs" is found
 # if the result is different, print a warning
 string_dev=$(awk '/# Environment on ifarm \/ cvmfs/{exit} {print}' release_notes/dev.md)

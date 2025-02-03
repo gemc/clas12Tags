@@ -1,8 +1,10 @@
 .DS_Store
 *.hipo
-geometry_source/*/*__geometry_*.txt
-geometry_source/*/*__bank.txt
-geometry_source/*/*__materials_*.txt
-geometry_source/*/*__hit_*.txt
-geometry_source/*/*__mirrors_*.txt
-geometry_source/*/*__volumes_*.txt
+*__geometry_*.txt
+*__bank.txt
+*__materials_*.txt
+*__hit_*.txt
+*__mirrors_*.txt
+*__volumes_*.txt
+*.o
+moc*.cc
