@@ -17,12 +17,12 @@ jobs:
       gemc_version: build
       config_file_versions: >-
         {
-          "coatjava": "dc-tdigi-unc",
+          "coatjava": "latest",
           "gemc":     "dev"
         }
       git_upstream: >-
         {
           "clas12-config": { "fork": "JeffersonLab/clas12-config", "ref": "dev" },
-          "coatjava":      { "fork": "JeffersonLab/coatjava",      "ref": "" }
+          "coatjava":      { "fork": "JeffersonLab/coatjava",      "ref": "dc-tdigi-unc" }
         }
 
