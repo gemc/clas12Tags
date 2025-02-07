@@ -11,7 +11,7 @@
 	<detector name="../bst/bst"               factory="TEXT" variation="java"/>
 	<detector name="../bstShield/bstShield"   factory="TEXT" variation="w51"/>
 
-	<detector name="../micromegas/micromegas" factory="TEXT" variation="michel"/>
+	<detector name="../micromegas/micromegas" factory="TEXT" variation="rga_spring2018"/>
 
 	<!--ctof, cad  -->
 	<detector name="../ctof/ctof"      factory="TEXT" variation="cad"/>
