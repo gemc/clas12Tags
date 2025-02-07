@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 
 use strict;
+use warnings;
 use lib ("$ENV{GEMC}/api/perl");
 use utils;
 use parameters;
@@ -16,8 +17,8 @@ use Math::Trig;
 sub help() {
     print "\n Usage: \n";
     print "   micromegas.pl <configuration filename>\n";
-    print "   Will create the micromegas using the variation specified in the configuration file\n";
-    print "   Note: The passport and .visa files must be present to connect to MYSQL. \n\n";
+    print "   Will create the CLAS12 Micromegas BMT and FMT geometries, materials, bank and hit definitions\n";
+    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
     exit;
 }
 
@@ -30,76 +31,63 @@ if (scalar @ARGV != 1) {
 
 # Loading configuration file and parameters
 our %configuration = load_configuration($ARGV[0]);
-our %parameters = get_parameters(%configuration);
+$configuration{"variation"} = "rga_spring2018";
+our %parameters ;
 
-
-# materials
+# import scripts
 require "./materials.pl";
 require "./bank.pl";
 require "./hit.pl";
 require "./bmt.pl";
 require "./fmt.pl";
 
-# bank definitions commong to all variations
+
+# subroutines create_system with arguments (variation, run number)
+sub create_system {
+
+    my $variation = shift;
+    my $runNumber = shift;
+
+    %parameters = get_parameters(%configuration);
+
+    # materials, hits
+    materials();
+    define_hit();
+    load_parameters_bmt();
+    define_bmt();
+    load_parameters_fmt();
+    define_fmt();
+}
+
+
+# TEXT Factory
+$configuration{"factory"} = "TEXT";
 define_bank();
 
+my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021", "michel_9mmcopper");
+my $runNumber = 11;
 
-# all the scripts must be run for every configuration
-my @allConfs = ("michel", "rgf_spring2020", "slim", "michel_9mmcopper", "michel_200umcopper", "michel_600umcopper");
-#my @allConfs = ("michel", "rgf_spring2020", "slim", "michel_9mmcopper", "michel_200umcopper", "michel_600umcopper");
-
-foreach my $conf (@allConfs) {
-    $configuration{"variation"} = $conf;
-
-
-    # hits
-    define_hit();
-
-    # if ($configuration{"variation"} eq "michel"
-    #     || $configuration{"variation"} eq "michel_9mmcopper"
-    #     || $configuration{"variation"} eq "michel_200umcopper"
-    #     || $configuration{"variation"} eq "michel_600umcopper") {
-
-    if ($configuration{"variation"} eq "michel"
-        || $configuration{"variation"} eq "michel_9mmcopper") {
-
-        %parameters = get_parameters(%configuration);
-
-        # geometry
-        define_bmt();
-        define_fmt();
-
-
-        # materials
-        materials();
-
-    }
-    elsif ($configuration{"variation"} eq "rgf_spring2020") {
-
-        # loading pars according to variation
-        %parameters = get_parameters(%configuration);
-
-        # geometry
-        define_fmt();
-
-        # materials
-        materials();
-
-    }
-    elsif ($configuration{"variation"} eq "slim") {
-
-        # loading pars according to variation
-        %parameters = get_parameters(%configuration);
-
-
-        # geometry
-        define_bmt();
-        define_fmt();
-
-        # materials
-        materials();
-
-    }
+foreach my $variation (@variations) {
+    $configuration{"variation"} = $variation;
+    create_system($variation, $runNumber);
 }
+
+# SQLITE Factory
+$configuration{"factory"} = "SQLITE";
+define_bank();
+upload_parameters(\%configuration, "micromegas__parameters_rga_spring2018.txt", "micromegas", "default", 3029);
+upload_parameters(\%configuration, "micromegas__parameters_rgf_spring2020.txt", "micromegas", "default", 11620);
+upload_parameters(\%configuration, "micromegas__parameters_rgm_winter2021.txt", "micromegas", "default", 15016);
+upload_parameters(\%configuration, "micromegas__parameters_michel_9mmcopper.txt", "micromegas", "default", 30000);
+
+my $variation = "default";
+my @runs = (3029, 11620, 15016, 30000);
+
+foreach my $run (@runs) {
+    $configuration{"variation"} = $variation;
+    $configuration{"run_number"} = $run;
+    create_system($variation, $run);
+}
+
 
 

@@ -29,13 +29,14 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          #          - ec
-          #          - pcal
-          #          - dc
-          #          - ftof
-          #          - htcc
-          #          - cnd
+          - ec
+          - pcal
+          - dc
+          - ftof
+          - htcc
+          - cnd
           - bst
+          - micromegas
 
     steps:
       - name: Checkout
@@ -59,13 +60,15 @@ jobs:
         detector:
 #          - ec
 #          - pcal
-#          - dc
+          - dc
           - ftof
+          - micromegas
 #          - htcc
 #          - ctof
 #          - cnd
 #          - bst
 
+        # obtained with
         variation:
           - default
           - rga_spring2018_mc

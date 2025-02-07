@@ -18,7 +18,7 @@ sub help() {
     print "\n Usage: \n";
     print "   bst.pl <configuration filename>\n";
     print "   Will create the CLAS12 BST geometry, materials, bank and hit definitions\n";
-    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../clas12.sqlite\n";
+    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
     exit;
 }
 

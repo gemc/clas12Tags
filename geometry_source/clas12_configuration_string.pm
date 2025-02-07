@@ -1,7 +1,6 @@
 package clas12_configuration_string;
 require Exporter;
 
-
 @ISA = qw(Exporter);
 @EXPORT = qw(clas12_configuration_string);
 
@@ -19,6 +18,15 @@ sub clas12_configuration_string {
     }
     elsif ($varia eq "rga_fall2018" || $runno eq 4763) {
         return "rga_fall2018";
+    }
+    elsif ($varia eq "rgf_spring2020" || $runno eq 11620) {
+        return "rgf_spring2020";
+    }
+    elsif ($varia eq "rgm_winter2021" || $runno eq 15016) {
+        return "rgm_winter2021";
+    }
+    elsif ($varia eq "michel_9mmcopper" || $runno eq 30000) {
+        return "michel_9mmcopper";
     }
     else {
         return "default";

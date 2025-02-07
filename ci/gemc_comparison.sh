@@ -86,6 +86,7 @@ summarize_log() {
 	fi
 }
 
+# bank_to_check comma separated list, no spaces
 bank_to_check=""
 if [[ $system == "ec" || $system == "pcal" ]]; then
 	bank_to_check="ECAL::adc"
@@ -107,6 +108,8 @@ elif [[ $system == "ltcc" ]]; then
 	bank_to_check="LTCC::adc"
 elif [[ $system == "rich" ]]; then
 	bank_to_check="RICH::adc"
+elif [[ $system == "micromegas" ]]; then
+	bank_to_check="BMT::adc,FMT::adc"
 fi
 
 # build gemc. Not necessary unless something changes in the code

@@ -17,7 +17,7 @@ our %configuration = load_configuration($ARGV[0]);
 sub materials
 {
 	
-	if( $configuration{"variation"} eq "michel") {
+	if( $configuration{"variation"} eq "rga_spring2018") {
 	
 		print "Materials: configuration ", $configuration{"variation"}, "\n";
 

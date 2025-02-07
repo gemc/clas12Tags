@@ -17,8 +17,14 @@ To build the geometry:
 This will:
 
 1. create the text based DB geometry files, with variation in the filenames
-2. add detector run entries to the ../clas12.sqlite database
+2. add detector run entries to the ../../clas12.sqlite database
 
+
+## Geometry comparison:
+
+Not applicable to CTOF as the geant4 geometry is empty.
+
+<br/>
 
 
 ## GEMC Output comparison

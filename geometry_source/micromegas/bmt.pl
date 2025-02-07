@@ -1,6 +1,9 @@
 # use strict;
 use warnings;
 
+use lib ("../");
+use clas12_configuration_string;
+
 our %configuration;
 our %parameters;
 
@@ -10,77 +13,132 @@ my $envelope = 'BMT';
 
 # All dimensions in mm
 
-my @radius = ();
-my @starting_point = ();
-my @Dz_halflength = ();
-my @starting_theta = ();
-my @Inactivtheta = ();
-my @dtheta = ();
-my @dtheta_start = ();
 
-my $bmt_ir = $parameters{"BMT_mothervol_InnerRadius"};   # 140
-my $bmt_or = $parameters{"BMT_mothervol_OutRadius"};     # 240
-my $bmt_dz = $parameters{"BMT_mothervol_HalfLength"};    # 385
-my $bmt_z = $parameters{"FMT_mothervol_zmin"} - $bmt_dz; # = 298.3 - 385  = -86.7 mm, MV center relative to CLAS center
-my $bmt_zpcb = $parameters{"BMT_endPCB_zpos"} - $bmt_z;  # = 290.3 + 86.7 = 377.0 mm, end pcb in MV frame
+# Declare global variables
+our ($bmt_ir, $bmt_or, $bmt_dz, $bmt_z, $bmt_zpcb);
+our ($nlayer, $ntile);
+our @radius;
+our @starting_point;
+our @Dz_halflength;
+our @starting_theta;
+our ($Coverlay_Width, $CuGround_Width, $PCB_Width, $CuStrips_Width, $KaptonStrips_Width);
+our ($ResistStrips_Width, $Gas1_Width, $Mesh_Width, $Gas2_Width);
+our ($DriftCuElectrode_Width, $DriftCuElectrode6C_Width, $DriftKapton_Width, $DriftCuGround_Width);
+our $Dtheta;
 
-my $nlayer = $parameters{"BMT_nlayer"};
-my $ntile = $parameters{"BMT_ntile"};
+our @SL_ir;
+our @SL_or;
+our $SL_dz;
+our $SL_z;
 
-$radius[0] = $parameters{"BMT_radius_layer1"};
-$radius[1] = $parameters{"BMT_radius_layer2"};
-$radius[2] = $parameters{"BMT_radius_layer3"};
-$radius[3] = $parameters{"BMT_radius_layer4"};
-$radius[4] = $parameters{"BMT_radius_layer5"};
-$radius[5] = $parameters{"BMT_radius_layer6"};
+sub load_parameters_bmt {
+    $bmt_ir = $parameters{"BMT_mothervol_InnerRadius"};   # 140
+    $bmt_or = $parameters{"BMT_mothervol_OutRadius"};     # 240
+    $bmt_dz = $parameters{"BMT_mothervol_HalfLength"};    # 385
+    $bmt_z = $parameters{"FMT_mothervol_zmin"} - $bmt_dz; # = 298.3 - 385  = -86.7 mm, MV center relative to CLAS center
+    $bmt_zpcb = $parameters{"BMT_endPCB_zpos"} - $bmt_z;  # = 290.3 + 86.7 = 377.0 mm, end pcb in MV frame
 
-$starting_point[0] = $parameters{"BMT_zpos_layer1"};
-$starting_point[1] = $parameters{"BMT_zpos_layer2"};
-$starting_point[2] = $parameters{"BMT_zpos_layer3"};
-$starting_point[3] = $parameters{"BMT_zpos_layer4"};
-$starting_point[4] = $parameters{"BMT_zpos_layer5"};
-$starting_point[5] = $parameters{"BMT_zpos_layer6"};
+    $nlayer = $parameters{"BMT_nlayer"};
+    $ntile = $parameters{"BMT_ntile"};
 
-$Dz_halflength[0] = 0.5 * $parameters{"BMT_zlength_layer1"};
-$Dz_halflength[1] = 0.5 * $parameters{"BMT_zlength_layer2"};
-$Dz_halflength[2] = 0.5 * $parameters{"BMT_zlength_layer3"};
-$Dz_halflength[3] = 0.5 * $parameters{"BMT_zlength_layer4"};
-$Dz_halflength[4] = 0.5 * $parameters{"BMT_zlength_layer5"};
-$Dz_halflength[5] = 0.5 * $parameters{"BMT_zlength_layer6"};
+    # Initialize arrays
+    @radius = (
+        $parameters{"BMT_radius_layer1"},
+        $parameters{"BMT_radius_layer2"},
+        $parameters{"BMT_radius_layer3"},
+        $parameters{"BMT_radius_layer4"},
+        $parameters{"BMT_radius_layer5"},
+        $parameters{"BMT_radius_layer6"}
+    );
 
-$starting_theta[0] = $parameters{"BMT_theta_layer1"};
-$starting_theta[1] = $parameters{"BMT_theta_layer2"};
-$starting_theta[2] = $parameters{"BMT_theta_layer3"};
-$starting_theta[3] = $parameters{"BMT_theta_layer4"};
-$starting_theta[4] = $parameters{"BMT_theta_layer5"};
-$starting_theta[5] = $parameters{"BMT_theta_layer6"};
+    @starting_point = (
+        $parameters{"BMT_zpos_layer1"},
+        $parameters{"BMT_zpos_layer2"},
+        $parameters{"BMT_zpos_layer3"},
+        $parameters{"BMT_zpos_layer4"},
+        $parameters{"BMT_zpos_layer5"},
+        $parameters{"BMT_zpos_layer6"}
+    );
 
-my $Coverlay_Width = $parameters{"BMT_Coverlay_width"};
-my $CuGround_Width = 0.132 * $parameters{"BMT_CuGround_width"};
-#0.082 from gerber : 1 - 4.6*4.6/(4.6+0.2)*(4.6+0.2) = 0.082 for Z-layers
-#0.056 + 0.126 (return strips) for C-layers
-#since this is a small contribution, we adopt a mean value of 0.132
-my $PCB_Width = $parameters{"BMT_PCBGround_width"};
-my $CuStrips_Width = $parameters{"BMT_CuStrips_width"};
-#opacity taken into account in the density of the material
-my $KaptonStrips_Width = $parameters{"BMT_KaptonStrips_width"};
-my $ResistStrips_Width = $parameters{"BMT_ResistStrips_width"};
-#opacity taken into account in the density of the material
-my $Gas1_Width = $parameters{"BMT_Gas1_width"};
-my $Mesh_Width = $parameters{"BMT_Mesh_width"};
-#opacity taken into account in the density of the material
-my $Gas2_Width = $parameters{"BMT_Gas2_width"};
-my $DriftCuElectrode_Width = 0.024 * $parameters{"BMT_DriftCuElectrode_width"};
-#0.024 from gerber : 1 - 10*10/(10+0.12)*(10+0.12) = 0.024
-my $DriftCuElectrode6C_Width = $parameters{"BMT_DriftCuElectrode_width"};
-#for layer 6C, the Cu electrode is not a mesh
-my $DriftKapton_Width = $parameters{"BMT_DriftKapton_width"};
-my $DriftCuGround_Width = 0.082 * $parameters{"BMT_DriftCuGround_width"};
-#0.082 from gerber : 1 - 4.6*4.6/(4.6+0.2)*(4.6+0.2) = 0.082
+    @Dz_halflength = (
+        0.5 * $parameters{"BMT_zlength_layer1"},
+        0.5 * $parameters{"BMT_zlength_layer2"},
+        0.5 * $parameters{"BMT_zlength_layer3"},
+        0.5 * $parameters{"BMT_zlength_layer4"},
+        0.5 * $parameters{"BMT_zlength_layer5"},
+        0.5 * $parameters{"BMT_zlength_layer6"}
+    );
 
-my $Dtheta = 360.0 / $ntile; # rotation angle for other tiles
+    @starting_theta = (
+        $parameters{"BMT_theta_layer1"},
+        $parameters{"BMT_theta_layer2"},
+        $parameters{"BMT_theta_layer3"},
+        $parameters{"BMT_theta_layer4"},
+        $parameters{"BMT_theta_layer5"},
+        $parameters{"BMT_theta_layer6"}
+    );
 
-#$Inactivtheta[0]	 = (20/$radius[0])*(180./3.14159265358); 
+    # Assign material thickness values
+    $Coverlay_Width = $parameters{"BMT_Coverlay_width"};
+    $CuGround_Width = 0.132 * $parameters{"BMT_CuGround_width"};
+    #0.082 from gerber : 1 - 4.6*4.6/(4.6+0.2)*(4.6+0.2) = 0.082 for Z-layers
+    #0.056 + 0.126 (return strips) for C-layers
+    #since this is a small contribution, we adopt a mean value of 0.132
+
+    $PCB_Width = $parameters{"BMT_PCBGround_width"};
+    $CuStrips_Width = $parameters{"BMT_CuStrips_width"};
+    #opacity taken into account in the density of the material
+    $KaptonStrips_Width = $parameters{"BMT_KaptonStrips_width"};
+    $ResistStrips_Width = $parameters{"BMT_ResistStrips_width"};
+    #opacity taken into account in the density of the material
+    $Gas1_Width = $parameters{"BMT_Gas1_width"};
+    $Mesh_Width = $parameters{"BMT_Mesh_width"};
+    #opacity taken into account in the density of the material
+    $Gas2_Width = $parameters{"BMT_Gas2_width"};
+
+    $DriftCuElectrode_Width = 0.024 * $parameters{"BMT_DriftCuElectrode_width"};
+    #0.024 from gerber : 1 - 10*10/(10+0.12)*(10+0.12) = 0.024
+
+    $DriftCuElectrode6C_Width = $parameters{"BMT_DriftCuElectrode_width"};
+    #for layer 6C, the Cu electrode is not a mesh
+
+    $DriftKapton_Width = $parameters{"BMT_DriftKapton_width"};
+
+    $DriftCuGround_Width = 0.082 * $parameters{"BMT_DriftCuGround_width"};
+    #0.082 from gerber : 1 - 4.6*4.6/(4.6+0.2)*(4.6+0.2) = 0.082
+
+    $Dtheta = 360.0 / $ntile; # rotation angle for other tiles
+
+
+    for (my $l = 0; $l < $nlayer; $l++) {
+        $Inactivtheta[$l] = (24.7 / $radius[$l]) * (180. / $pi);
+        #  (24.7 = 120°*radius-ZA on drawings - MG notebook p. 152)
+    }
+
+    $dtheta[0] = $Dtheta - $Inactivtheta[0]; # angle covered by one tile (active area) (in degrees)
+    $dtheta[1] = $Dtheta - $Inactivtheta[1];
+    $dtheta[2] = $Dtheta - $Inactivtheta[2];
+    $dtheta[3] = $Dtheta - $Inactivtheta[3];
+    $dtheta[4] = $Dtheta - $Inactivtheta[4];
+    $dtheta[5] = $Dtheta - $Inactivtheta[5];
+
+    $dtheta_start[0] = $Inactivtheta[0] / 2.0; # slight rotation to keep symmetry.
+    $dtheta_start[1] = $Inactivtheta[1] / 2.0;
+    $dtheta_start[2] = $Inactivtheta[2] / 2.0;
+    $dtheta_start[3] = $Inactivtheta[3] / 2.0;
+    $dtheta_start[4] = $Inactivtheta[4] / 2.0;
+    $dtheta_start[5] = $Inactivtheta[5] / 2.0;
+
+    @SL_ir = ($radius[0] - 1.0, $radius[1] - 1.0, $radius[2] - 1.0, $radius[3] - 1.0, $radius[4] - 1.0, $radius[5] - 1.0);
+    @SL_or = ($radius[0] + 5.0, $radius[1] + 5.0, $radius[2] + 5.0, $radius[3] + 5.0, $radius[4] + 5.0, $radius[5] + 5.0);
+    #my $SL_dz = $bmt_dz;
+    $SL_dz = 295.0;
+    $SL_z = -$bmt_z; # center of superlayer wrt BMT  mother volume
+
+}
+
+
+#$Inactivtheta[0]	 = (20/$radius[0])*(180./3.14159265358);
 # = 7.863 not in activ area (in degrees) (20 mm taken by mechanics)
 #$Inactivtheta[1]	 = (20/$radius[1])*(180./3.14159265358); # = 7.129
 #$Inactivtheta[2]	 = (20/$radius[2])*(180./3.14159265358); # = 6.521
@@ -88,24 +146,6 @@ my $Dtheta = 360.0 / $ntile; # rotation angle for other tiles
 #$Inactivtheta[4]	 = (20/$radius[4])*(180./3.14159265358); # = 5.570
 #$Inactivtheta[5]	 = (20/$radius[5])*(180./3.14159265358); # = 5.191
 
-for (my $l = 0; $l < $nlayer; $l++) {
-    $Inactivtheta[$l] = (24.7 / $radius[$l]) * (180. / $pi);
-    #  (24.7 = 120°*radius-ZA on drawings - MG notebook p. 152)
-}
-
-$dtheta[0] = $Dtheta - $Inactivtheta[0]; # angle covered by one tile (active area) (in degrees)
-$dtheta[1] = $Dtheta - $Inactivtheta[1];
-$dtheta[2] = $Dtheta - $Inactivtheta[2];
-$dtheta[3] = $Dtheta - $Inactivtheta[3];
-$dtheta[4] = $Dtheta - $Inactivtheta[4];
-$dtheta[5] = $Dtheta - $Inactivtheta[5];
-
-$dtheta_start[0] = $Inactivtheta[0] / 2.0; # slight rotation to keep symmetry.
-$dtheta_start[1] = $Inactivtheta[1] / 2.0;
-$dtheta_start[2] = $Inactivtheta[2] / 2.0;
-$dtheta_start[3] = $Inactivtheta[3] / 2.0;
-$dtheta_start[4] = $Inactivtheta[4] / 2.0;
-$dtheta_start[5] = $Inactivtheta[5] / 2.0;
 
 # materials
 my $air_material = 'myAir';
@@ -171,81 +211,64 @@ sub rot {
     return "0*deg 0*deg $theta_rot*deg";
 }
 
-my @SL_ir = ($radius[0] - 1.0, $radius[1] - 1.0, $radius[2] - 1.0, $radius[3] - 1.0, $radius[4] - 1.0, $radius[5] - 1.0);
-my @SL_or = ($radius[0] + 5.0, $radius[1] + 5.0, $radius[2] + 5.0, $radius[3] + 5.0, $radius[4] + 5.0, $radius[5] + 5.0);
-#my $SL_dz = $bmt_dz;
-my $SL_dz = 295.0;
-my $SL_z = -$bmt_z; # center of superlayer wrt BMT  mother volume
-
-sub define_bmt
-{
-	# sixth layer goes from 5mu to 9mu, layers 1-5 scaler accordingly
-	if( $configuration{"variation"} eq "michel_9mmcopper" ) {
-		# update on 2024/12/16: request to test 9microns for all layers
-		$DriftCuElectrode_Width = 0.00012*9/5;
-		$DriftCuElectrode_Width = 0.009;
-		$DriftCuElectrode6C_Width = 0.009;
-	}
-
-
-    if ($configuration{"variation"} eq "michel_200umcopper") {
-        $DriftCuElectrode_Width = 0.02;
-        $DriftCuElectrode6C_Width = 0.02;
+sub define_bmt {
+    my $configuration_string = clas12_configuration_string(\%configuration);
+    if ($configuration_string eq "rgf_spring2020") {
+        # do not proceed with BMT geometry
+        return;
     }
-    if ($configuration{"variation"} eq "michel_600umcopper") {
-        $DriftCuElectrode_Width = 0.06;
-        $DriftCuElectrode6C_Width = 0.06;
+
+    # sixth layer goes from 5mu to 9mu, layers 1-5 scaler accordingly
+    if ($configuration_string eq "michel_9mmcopper") {
+        # update on 2024/12/16: request to test 9microns for all layers
+        $DriftCuElectrode_Width = 0.00012 * 9 / 5;
+        $DriftCuElectrode_Width = 0.009;
+        $DriftCuElectrode6C_Width = 0.009;
     }
+
     print "BMT: DriftCuElectrode_Width = $DriftCuElectrode_Width \n";
     print "BMT: DriftCuElectrode6C_Width = $DriftCuElectrode6C_Width \n";
 
-    if ($configuration{"variation"} eq "michel"
-        || $configuration{"variation"} eq "slim"
-        || $configuration{"variation"} eq "michel_9mmcopper"
-        || $configuration{"variation"} eq "michel_200umcopper"
-        || $configuration{"variation"} eq "michel_600umcopper") {
+    make_bmt();
+    #	make_sl(1);
+    #	make_sl(2);
+    #	make_sl(3);
+    #	make_sl(4);
+    #	make_sl(5);
+    #	make_sl(6);
 
-        make_bmt();
-        #	make_sl(1);
-        #	make_sl(2);
-        #	make_sl(3);
-        #	make_sl(4);
-        #	make_sl(5);
-        #	make_sl(6);
-
-        # Active zones (Remi's tables):
-        for (my $l = 0; $l < $nlayer; $l++) {
-            place_coverlay($l);
-            place_cuGround($l);
-            place_pcb($l);
-            place_Strips($l);
-            place_Kapton($l);
-            place_Resist($l);
-            place_Gas1($l);
-            place_Mesh($l);
-            place_Gas2($l);
-            place_driftCuElectrode($l);
-            place_driftKapton($l);
-            place_driftCuGround($l);
-        }
-
-        # detector frame (Sedi drawings):
-        place_straightC(); # drawing 6 2075 DM- 1500 201 & 202
-        place_Arc1onPCB(); #                         211
-        place_Arc2onPCB(); #                         211
-        place_Arc3onPCB(); #                         207
-        place_Arc4onPCB(); #                         207
-
-        # supporting structure (SIS drawings):
-        place_innertube();        # drawing 71 2075 DM- 1302 001
-        place_stiffeners();       #                          005
-        place_arcs();             #                          007
-        place_cover();            #                          008
-        place_rods();             #                          010 & 011
-        place_overcover();        #                          013
-        place_forwardinterface(); #                          003
-        place_closingplate();     #                          004
+    # Active zones (Remi's tables):
+    for (my $l = 0; $l < $nlayer; $l++) {
+        place_coverlay($l);
+        place_cuGround($l);
+        place_pcb($l);
+        place_Strips($l);
+        place_Kapton($l);
+        place_Resist($l);
+        place_Gas1($l);
+        place_Mesh($l);
+        place_Gas2($l);
+        place_driftCuElectrode($l);
+        place_driftKapton($l);
+        place_driftCuGround($l);
     }
+
+    # detector frame (Sedi drawings):
+    place_straightC(); # drawing 6 2075 DM- 1500 201 & 202
+    place_Arc1onPCB(); #                         211
+    place_Arc2onPCB(); #                         211
+    place_Arc3onPCB(); #                         207
+    place_Arc4onPCB(); #                         207
+
+    # supporting structure (SIS drawings):
+    place_innertube();        # drawing 71 2075 DM- 1302 001
+    place_stiffeners();       #                          005
+    place_arcs();             #                          007
+    place_cover();            #                          008
+    place_rods();             #                          010 & 011
+    place_overcover();        #                          013
+    place_forwardinterface(); #                          003
+    place_closingplate();     #                          004
 }
 
 sub make_bmt {

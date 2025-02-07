@@ -1,78 +1,84 @@
 # use strict;
 use warnings;
 
+use lib ("../");
+use clas12_configuration_string;
+
 our %configuration;
 our %parameters;
 
 # FMT is a Tube containing all SLs
 my $envelope = 'FMT';
 
+
+# Declare global variables
 # All dimensions in mm
+our @starting_point = ();
+our ($fmt_dz, $fmt_starting, $fmt_zmin);
+our ($Det_RMin, $Det_RMax, $Act_RMin, $Act_RMax);
+our ($innerFR4_RMax, $outerFR4_RMin, $innerPhRes_RMax, $outerPhRes_RMin);
+our ($innerPeek_RMin, $innerPeek_RMax, $outerPeek_RMin, $outerPeek_RMax);
+our ($innerRohacell_RMin, $innerRohacell_RMax, $outerRohacell_RMin, $outerRohacell_RMax);
+our ($CuGround_Dz, $PCBGround_Dz, $Rohacell_Dz, $PCBDetector_Dz, $Strips_Dz);
+our ($Kapton_Dz, $ResistStrips_Dz, $PhRes128_Dz, $Mesh_Dz, $PhRes64_Dz, $Peek_Dz);
+our ($DriftCuElectrode_Dz, $DriftPCB_Dz, $DriftCuGround_Dz);
+our ($RotDisks, $RotSpacers);
 
-my @starting_point = ();
+sub load_parameters_fmt {
 
-my $fmt_ir = $parameters{"FMT_mothervol_InnerRadius"};
-my $fmt_or = $parameters{"FMT_mothervol_OutRadius"};
-my $nlayer = $parameters{"FMT_nlayer"};
-$starting_point[0] = $parameters{"FMT_zpos_layer1"};
-$starting_point[1] = $parameters{"FMT_zpos_layer2"};
-$starting_point[2] = $parameters{"FMT_zpos_layer3"};
-$starting_point[3] = $parameters{"FMT_zpos_layer4"};
-$starting_point[4] = $parameters{"FMT_zpos_layer5"};
-$starting_point[5] = $parameters{"FMT_zpos_layer6"};
+    $starting_point[0] = $parameters{"FMT_zpos_layer1"};
+    $starting_point[1] = $parameters{"FMT_zpos_layer2"};
+    $starting_point[2] = $parameters{"FMT_zpos_layer3"};
+    $starting_point[3] = $parameters{"FMT_zpos_layer4"};
+    $starting_point[4] = $parameters{"FMT_zpos_layer5"};
+    $starting_point[5] = $parameters{"FMT_zpos_layer6"};
 
-# should be FMT_mothervol_zmin + 2 mm (FMT support thickness upstream of D1)
-# then nominally, interdisks space = 11.9 mm except between D3 and D4 13.9 mm.
+    # should be FMT_mothervol_zmin + 2 mm (FMT support thickness upstream of D1)
+    # then nominally, interdisks space = 11.9 mm except between D3 and D4 13.9 mm.
+    # Mother volume zmin = BMT MV zmax = end of BMT closing plate
+    # Mother volume zmax to take into account innerscrews extension downstream D6 (about 3.5 mm) >= FMT_zpos_layer6 + 7.6 + 3.5
 
+    $fmt_dz = ($parameters{"FMT_mothervol_zmax"} - $parameters{"FMT_mothervol_zmin"}) / 2.0 + 1.9;
+    $fmt_starting = ($parameters{"FMT_mothervol_zmax"} + $parameters{"FMT_mothervol_zmin"}) / 2.0;
+    $fmt_zmin = $parameters{"FMT_mothervol_zmin"};
 
+    $Det_RMin = $parameters{"FMT_DetInnerRadius"};
+    $Det_RMax = $parameters{"FMT_DetOuterRadius"};
+    $Act_RMin = $parameters{"FMT_ActInnerRadius"};
+    $Act_RMax = $parameters{"FMT_ActOuterRadius"};
+    $innerFR4_RMax = $parameters{"FMT_innerFR4OuterRadius"};
+    $outerFR4_RMin = $parameters{"FMT_outerFR4InnerRadius"};
+    $innerPhRes_RMax = $parameters{"FMT_innerPhResistOuterRadius"};
+    $outerPhRes_RMin = $parameters{"FMT_outerPhResistInnerRadius"};
+    $innerPeek_RMin = $parameters{"FMT_innerPEEKInnerRadius"};
+    $innerPeek_RMax = $parameters{"FMT_innerPEEKOuterRadius"};
+    $outerPeek_RMin = $parameters{"FMT_outerPEEKInnerRadius"};
+    $outerPeek_RMax = $parameters{"FMT_outerPEEKOuterRadius"};
 
-# Mother volume zmin = BMT MV zmax = end of BMT closing plate
-# Mother volume zmax to take into account innerscrews extension downstream D6 (about 3.5 mm) >= FMT_zpos_layer6 + 7.6 + 3.5
-# Mother volume half-length and middle position: 
-my $fmt_dz = ($parameters{"FMT_mothervol_zmax"} - $parameters{"FMT_mothervol_zmin"}) / 2.0 + 1.9;
-my $fmt_starting = ($parameters{"FMT_mothervol_zmax"} + $parameters{"FMT_mothervol_zmin"}) / 2.0;
-my $fmt_zmin = $parameters{"FMT_mothervol_zmin"};
+    $innerRohacell_RMin = 0.0;
+    $innerRohacell_RMax = 0.0;
+    $outerRohacell_RMin = 0.0;
+    $outerRohacell_RMax = 0.0;
 
-#my $Dtheta              = 60.0; # rotation angle of each disk wrt to the preceding one
+    $CuGround_Dz = 0.5 * $parameters{"FMT_CuGround_Dz"};
+    $PCBGround_Dz = 0.5 * $parameters{"FMT_PCBGround_Dz"};
+    $Rohacell_Dz = 0.5 * $parameters{"FMT_Rohacell_Dz"};
+    $PCBDetector_Dz = 0.5 * $parameters{"FMT_PCBDetector_Dz"};
+    $Strips_Dz = 0.5 * $parameters{"FMT_Strips_Dz"};
+    $Kapton_Dz = 0.5 * $parameters{"FMT_Kapton_Dz"};
+    $ResistStrips_Dz = 0.5 * $parameters{"FMT_ResistStrips_Dz"};
+    $PhRes128_Dz = 0.5 * $parameters{"FMT_PhotoResist128_Dz"};
+    $Mesh_Dz = 0.5 * $parameters{"FMT_Mesh_Dz"};
+    $PhRes64_Dz = 0.5 * $parameters{"FMT_PhotoResist64_Dz"};
+    $Peek_Dz = 0.5 * $parameters{"FMT_Peek_Dz"};
+    $DriftCuElectrode_Dz = 0.5 * $parameters{"FMT_DriftCuElectrode_Dz"};
+    $DriftPCB_Dz = 0.5 * $parameters{"FMT_DriftPCB_Dz"};
+    $DriftCuGround_Dz = 0.5 * $parameters{"FMT_DriftCuGround_Dz"};
 
+    $RotDisks = $parameters{"FMT_overall_disks_rotation"};
+    $RotSpacers = $parameters{"FMT_overall_spacers_rotation"};
+}
 
-my $Det_RMin = $parameters{"FMT_DetInnerRadius"};
-my $Det_RMax = $parameters{"FMT_DetOuterRadius"};
-my $Act_RMin = $parameters{"FMT_ActInnerRadius"};
-my $Act_RMax = $parameters{"FMT_ActOuterRadius"};
-my $innerFR4_RMax = $parameters{"FMT_innerFR4OuterRadius"};
-my $outerFR4_RMin = $parameters{"FMT_outerFR4InnerRadius"};
-my $innerPhRes_RMax = $parameters{"FMT_innerPhResistOuterRadius"};
-my $outerPhRes_RMin = $parameters{"FMT_outerPhResistInnerRadius"};
-my $innerPeek_RMin = $parameters{"FMT_innerPEEKInnerRadius"};
-my $innerPeek_RMax = $parameters{"FMT_innerPEEKOuterRadius"};
-my $outerPeek_RMin = $parameters{"FMT_outerPEEKInnerRadius"};
-my $outerPeek_RMax = $parameters{"FMT_outerPEEKOuterRadius"};
-
-my $innerRohacell_RMin = 0.0;
-my $innerRohacell_RMax = 0.0;
-my $outerRohacell_RMin = 0.0;
-my $outerRohacell_RMax = 0.0;
-
-my $CuGround_Dz = 0.5 * $parameters{"FMT_CuGround_Dz"};         # half width
-my $PCBGround_Dz = 0.5 * $parameters{"FMT_PCBGround_Dz"};       # half width
-my $Rohacell_Dz = 0.5 * $parameters{"FMT_Rohacell_Dz"};         # half width
-my $PCBDetector_Dz = 0.5 * $parameters{"FMT_PCBDetector_Dz"};   # half width
-my $Strips_Dz = 0.5 * $parameters{"FMT_Strips_Dz"};             # half width
-my $Kapton_Dz = 0.5 * $parameters{"FMT_Kapton_Dz"};             # half width
-my $ResistStrips_Dz = 0.5 * $parameters{"FMT_ResistStrips_Dz"}; # half width
-# my $Gas1_Dz 		= 0.5*$parameters{"FMT_Gas1_Dz"}; # = $PhRes128_Dz
-my $PhRes128_Dz = 0.5 * $parameters{"FMT_PhotoResist128_Dz"}; # half width
-my $Mesh_Dz = 0.5 * $parameters{"FMT_Mesh_Dz"};               # half width
-my $PhRes64_Dz = 0.5 * $parameters{"FMT_PhotoResist64_Dz"};   # half width
-# my $Gas2_Dz 		= 0.5*$parameters{"FMT_Gas2_Dz"}; # = $Peek_Dz
-my $Peek_Dz = 0.5 * $parameters{"FMT_Peek_Dz"};                         # half width
-my $DriftCuElectrode_Dz = 0.5 * $parameters{"FMT_DriftCuElectrode_Dz"}; # half width
-my $DriftPCB_Dz = 0.5 * $parameters{"FMT_DriftPCB_Dz"};                 # half width
-my $DriftCuGround_Dz = 0.5 * $parameters{"FMT_DriftCuGround_Dz"};       # half width
-
-my $RotDisks = $parameters{"FMT_overall_disks_rotation"};     # nominal = 60°;
-my $RotSpacers = $parameters{"FMT_overall_spacers_rotation"}; # nominal = 0°; if not 0, alignment with BMT interface to be revised
 
 # G4 materials
 my $peek_material = 'myPeek';
@@ -115,8 +121,6 @@ my $resist_color = '000000';
 my $rohacell_color = '00ff00'; # green
 my $spacer_color = '666600';
 my $strips_color = '353540';
-#myGlue
-#my $drift_color      = 'fff600';
 
 $pi = 3.141592653589793238;
 
@@ -144,15 +148,16 @@ sub rot_support {
 
 sub define_fmt {
 
-    print "Number of layers: ", $nlayer, " ", $configuration{"variation"}, " First Layer zstart: ", $starting_point[0], "\n";
+    my $nlayer = $parameters{"FMT_nlayer"};
 
-    if ($configuration{"variation"} eq "michel"
-        || $configuration{"variation"} eq "slim"
-        || $configuration{"variation"} eq "michel_9mmcopper"
-        || $configuration{"variation"} eq "michel_200umcopper"
-        || $configuration{"variation"} eq "michel_600umcopper") {
+    my $configuration_string = clas12_configuration_string(\%configuration);
 
-        make_fmt();
+    print "Number of layers: ", $nlayer, "  Configuration: ", $configuration_string, " First Layer zstart: ", $starting_point[0], "\n";
+
+    make_fmt();
+
+    if ($configuration_string eq "rga_spring2018" || $configuration_string eq "michel_9mmcopper") {
+
 
         for (my $l = 0; $l < $nlayer; $l++) {
             place_cuground($l);
@@ -186,7 +191,8 @@ sub define_fmt {
         }
 
     }
-    elsif ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    elsif ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
+
         $DriftCuElectrode_Dz = 0.5 * $parameters{"FMTSlim_DriftCuElectrode_Dz"}; # half width of slim version
         $DriftCuGround_Dz = 0.5 * $parameters{"FMTSlim_DriftCuElectrode_Dz"};    # half width of slim version
         $DriftPCB_Dz = 0.5 * $parameters{"FMTSlim_DriftKapton_Dz"};              # half width of slim version
@@ -195,8 +201,6 @@ sub define_fmt {
         $innerRohacell_RMax = $parameters{"FMT_innerROHACELLOuterRadius"};
         $outerRohacell_RMin = $parameters{"FMT_outerROHACELLInnerRadius"};
         $outerRohacell_RMax = $parameters{"FMT_outerROHACELLOuterRadius"};
-
-        make_fmt();
 
         for ($l = 0; $l < $nlayer; $l++) {
             place_cuground($l);
@@ -228,12 +232,16 @@ sub define_fmt {
             if ($l == 0 || $l == 1) {place_supports1245($l);}
             if ($l < 2) {place_spacers($l);}
         }
-
     }
 
 }
 
 sub make_fmt {
+    my $fmt_ir = $parameters{"FMT_mothervol_InnerRadius"};
+    my $fmt_or = $parameters{"FMT_mothervol_OutRadius"};
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $zpos = $fmt_starting;
 
     my %detector = init_det();
@@ -255,7 +263,7 @@ sub make_fmt {
 
     print_det(\%configuration, \%detector);
 
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
 
         my $pvc_supportIR = 240; # mm
         my $pvc_supportOR = 245; # mm
@@ -790,6 +798,9 @@ sub place_outerPhRes64 {
 }
 
 sub place_innerpeek {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -801,7 +812,7 @@ sub place_innerpeek {
     my $tpos = "0*mm 0*mm";
     my $PRMin = $innerPeek_RMin;
     my $PRMax = $innerPeek_RMax;
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
         $PRMax = $innerRohacell_RMax;
     }
     my $PDz = $Peek_Dz;
@@ -816,7 +827,7 @@ sub place_innerpeek {
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm 0*deg 360*deg";
     $detector{"material"} = $peek_material;
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
         $detector{"material"} = $flangerohacell_material;
     }
     $detector{"mfield"} = "no";
@@ -868,6 +879,8 @@ sub place_gas2 {
 }
 
 sub place_outerpeek {
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -879,7 +892,7 @@ sub place_outerpeek {
     my $tpos = "0*mm 0*mm";
     my $PRMin = $outerPeek_RMin;
     my $PRMax = $outerPeek_RMax;
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
         $PRMin = $outerRohacell_RMin;
     }
     my $PDz = $Peek_Dz;
@@ -894,7 +907,7 @@ sub place_outerpeek {
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm 0*deg 360*deg";
     $detector{"material"} = $alu_material;
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
         $detector{"material"} = $flangerohacell_material;
     }
     $detector{"mfield"} = "no";
@@ -909,6 +922,8 @@ sub place_outerpeek {
 }
 
 sub place_driftcuelectrode {
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -933,7 +948,7 @@ sub place_driftcuelectrode {
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm 0*deg 360*deg";
     $detector{"material"} = $copper_material;
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
         $detector{"material"} = $slimelec_material;
     }
     $detector{"mfield"} = "no";
@@ -946,6 +961,9 @@ sub place_driftcuelectrode {
 }
 
 sub place_driftpcb {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -970,7 +988,7 @@ sub place_driftpcb {
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm 0*deg 360*deg";
     $detector{"material"} = $pcb_material;
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
         $detector{"material"} = $kapton_material;
     }
     $detector{"mfield"} = "no";
@@ -983,6 +1001,9 @@ sub place_driftpcb {
 }
 
 sub place_driftcuground {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -1007,7 +1028,7 @@ sub place_driftcuground {
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm 0*deg 360*deg";
     $detector{"material"} = $copper_material;
-    if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
         $detector{"material"} = $slimground_material;
     }
     $detector{"mfield"} = "no";
@@ -1020,6 +1041,9 @@ sub place_driftcuground {
 }
 
 sub place_hvcovers {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -1060,7 +1084,7 @@ sub place_hvcovers {
             $detector{"type"} = "Tube";
             $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm $Stheta*deg $Dtheta*deg";
             $detector{"material"} = $alu_material;
-            if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+            if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
                 $detector{"material"} = $peek_material;
             }
             $detector{"mfield"} = "no";
@@ -1213,7 +1237,11 @@ sub place_cables
         }
     }
 }
+
 sub place_innerscrews {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -1257,7 +1285,7 @@ sub place_innerscrews {
             $detector{"type"} = "Tube";
             $detector{"dimensions"} = "0.0*mm $PRadius*mm $PDz*mm 0.0*deg 360.0*deg";
             $detector{"material"} = $innerscrew_material;
-            if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+            if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
                 $detector{"material"} = $epoxy_material;
             }
             $detector{"mfield"} = "no";
@@ -1273,6 +1301,9 @@ sub place_innerscrews {
 }
 
 sub place_supports36 {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -1315,7 +1346,7 @@ sub place_supports36 {
             $detector{"type"} = "Tube";
             $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm $Stheta*deg $Dtheta*deg";
             $detector{"material"} = $alu_material;
-            if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+            if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
                 $detector{"material"} = $peek_material;
             }
             $detector{"mfield"} = "no";
@@ -1331,6 +1362,9 @@ sub place_supports36 {
 }
 
 sub place_supports1245 {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my $l = shift;
     my $layer_no = $l + 1;
 
@@ -1379,7 +1413,7 @@ sub place_supports1245 {
             $detector{"type"} = "Tube";
             $detector{"dimensions"} = "$PRMin*mm $PRMax*mm $PDz*mm $Stheta*deg $Dtheta*deg";
             $detector{"material"} = $alu_material;
-            if ($configuration{"variation"} eq "rgf_spring2020" || $configuration{"variation"} eq "slim") {
+            if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgm_winter2021") {
                 $detector{"material"} = $peek_material;
             }
             $detector{"mfield"} = "no";

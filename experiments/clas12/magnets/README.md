@@ -1,1 +1,0 @@
-# CLAS12 Magnets
