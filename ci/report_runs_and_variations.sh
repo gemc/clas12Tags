@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
-runs=(11 3029 4763)
-geo_variations=(default rga_spring2018 rga_fall2018)
+runs=(               11           3029         4763          11620          15016)
+geo_variations=(default rga_spring2018 rga_fall2018 rgf_spring2020 rgm_winter2021)
 
 variations=(default
 			rga_spring2018_mc
