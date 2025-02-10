@@ -325,7 +325,6 @@ sub build_cones {
 
                     }
                 }
-
             }
         }
     }
