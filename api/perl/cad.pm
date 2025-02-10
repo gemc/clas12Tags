@@ -34,26 +34,26 @@ sub print_cad {
     my %configuration = %{+shift};
     my %cad = %{+shift};
 
-    my $system = $configuration{"detector_name"}."_cad";
+    my $system = $configuration{"detector_name"} . "_cad";
     my $varia = $configuration{"variation"};
     my $runno = $configuration{"run_number"};
 
     # converting the hash maps in local variables
     # (this is necessary to parse the MYSQL command)
 
-    my $lname = trim($cad{"name"});
-    my $lcad_subdir = trim($cad{"cad_subdir"});
-    my $lsensitivity = trim($cad{"sensitivity"});
-    my $lhit_type = trim($cad{"hit_type"});
-    my $lidentifiers = trim($cad{"identifiers"});
-    my $lvisible = trim($cad{"visible"});
-    my $lstyle = trim($cad{"style"});
-    my $lposition = trim($cad{"position"});
-    my $lrotation = trim($cad{"rotation"});
-    my $lmfield = trim($cad{"mfield"});
-    my $lmother = trim($cad{"mother"});
-    my $lmaterial = trim($cad{"material"});
-    my $lcolor = trim($cad{"color"});
+    my $lname = trim($cad{"name"}, "name");
+    my $lcad_subdir = trim($cad{"cad_subdir"}, "cad_subdir");
+    my $lsensitivity = trim($cad{"sensitivity"}, "sensitivity");
+    my $lhit_type = trim($cad{"hit_type"}, "hit_type");
+    my $lidentifiers = trim($cad{"identifiers"}, "identifiers");
+    my $lvisible = trim($cad{"visible"}, "visible");
+    my $lstyle = trim($cad{"style"}, "style");
+    my $lposition = trim($cad{"position"}, "position");
+    my $lrotation = trim($cad{"rotation"}, "rotation");
+    my $lmfield = trim($cad{"mfield"}, "mfield");
+    my $lmother = trim($cad{"mother"}, "mother");
+    my $lmaterial = trim($cad{"material"}, "material");
+    my $lcolor = trim($cad{"color"}, "color");
 
 
     # after perl 5.10 once can use "state" to use a static variable`

@@ -1,6 +1,5 @@
 #!/usr/bin/env zsh
 
-
 DetectorDirNotExisting() {
 	echo "System directory: $system not existing"
 	Help
@@ -17,6 +16,8 @@ runs_for_system() {
 		echo "11 3029 4763"
 	elif [[ $system == "micromegas" ]]; then
 		echo "3029 11620 15016"
+	elif [[ $system == "ltcc" ]]; then
+		echo "11 3029 4763 6150 11323 15016"
 	fi
 }
 
@@ -30,14 +31,17 @@ variations_for_run_and_system()  {
 			echo "rga_spring2018"
 		fi
 	elif [[ $1 == "4763" ]]; then
-			echo "rga_fall2018"
+		echo "rga_fall2018"
+	elif [[ $1 == "6150" ]]; then
+		echo "rgb_spring2019"
+	elif   [[ $1 == "11323" ]]; then
+		echo "rgb_winter2020"
 	elif [[ $1 == "11620" ]]; then
-			echo "rgf_spring2020"
+		echo "rgf_spring2020"
 	elif [[ $1 == "15016" ]]; then
-			echo "rgm_winter2021"
+		echo "rgm_winter2021"
 	fi
 }
-
 
 # show environment
 export

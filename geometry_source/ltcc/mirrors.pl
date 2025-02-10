@@ -1,6 +1,9 @@
 use strict;
 use warnings;
 
+use lib ("../");
+use clas12_configuration_string;
+
 our %configuration;
 
 # Table of optical photon energies (wavelengths) from 170-650 nm:

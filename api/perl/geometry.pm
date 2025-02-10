@@ -45,24 +45,25 @@ sub print_det {
     # converting the hash maps in local variables
     # (this is necessary to parse the MYSQL command)
 
-    my $lname = trim($det{"name"});
-    my $lmother = trim($det{"mother"});
-    my $ldescription = trim($det{"description"});
-    my $lpos = trim($det{"pos"});
-    my $lrotation = trim($det{"rotation"});
-    my $lcolor = trim($det{"color"});
-    my $ltype = trim($det{"type"});
-    my $ldimensions = trim($det{"dimensions"});
-    my $lmaterial = trim($det{"material"});
-    my $lmfield = trim($det{"mfield"});
-    my $lncopy = trim($det{"ncopy"});
-    my $lpMany = trim($det{"pMany"});
-    my $lexist = trim($det{"exist"});
-    my $lvisible = trim($det{"visible"});
-    my $lstyle = trim($det{"style"});
-    my $lsensitivity = trim($det{"sensitivity"});
-    my $lhit_type = trim($det{"hit_type"});
-    my $lidentifiers = trim($det{"identifiers"});
+    my $lname = trim($det{"name"}, "name");
+    my $lmother = trim($det{"mother"}, "mother");
+    my $ldescription = trim($det{"description"}, "description");
+    my $lpos = trim($det{"pos"}, "pos");
+    my $lrotation = trim($det{"rotation"}, "rotation");
+    my $lcolor = trim($det{"color"}, "color");
+    my $ltype = trim($det{"type"}, "type");
+    my $ldimensions = trim($det{"dimensions"}, "dimensions");
+    my $lmaterial = trim($det{"material"}, "material");
+    my $lmfield = trim($det{"mfield"}, "mfield");
+    my $lncopy = trim($det{"ncopy"}, "ncopy");
+    my $lpMany = trim($det{"pMany"}, "pMany");
+    my $lexist = trim($det{"exist"}, "exist");
+    my $lvisible = trim($det{"visible"}, "visible");
+    my $lstyle = trim($det{"style"}, "style");
+    my $lsensitivity = trim($det{"sensitivity"}, "sensitivity");
+    my $lhit_type = trim($det{"hit_type"}, "hit_type");
+    my $lidentifiers = trim($det{"identifiers"}, "identifiers");
+
 
     # after 5.10 once can use "state" to use a static variable`
     state $counter_text = 0;

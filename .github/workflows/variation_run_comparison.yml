@@ -37,6 +37,7 @@ jobs:
           - cnd
           - bst
           - micromegas
+          - ltcc
 
     steps:
       - name: Checkout
@@ -61,14 +62,14 @@ jobs:
 #          - ec
 #          - pcal
           - dc
-          - ftof
           - micromegas
+          - ltcc
 #          - htcc
 #          - ctof
 #          - cnd
 #          - bst
 
-        # obtained with
+        # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' * | sort -u
         variation:
           - default
           - rga_spring2018_mc

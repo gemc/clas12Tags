@@ -160,15 +160,18 @@ for run in $=runs; do
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
 		gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default" >>$log_file_run
 
-		for bank_to_check in $=banks_to_check; do
-			compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
+		# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
+		if [[ $digi_var != "default" ]]; then
 
+			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
+			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
+		fi
+
+		for bank_to_check in $=banks_to_check; do
+			echo "Comparing bank $bank_to_check for files: $outfile1 and $outfile2 for variations $digi_var default"
+			compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
 			# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
 			if [[ $digi_var != "default" ]]; then
-
-				echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-				gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
-
 				compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
 			fi
 		done

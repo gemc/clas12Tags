@@ -30,15 +30,19 @@ sub cnumber {
 
 # Remove leading and trailing whitespaces from a string
 sub trim {
-    my $string = shift;
+    my ($string, $key) = @_;  # Accept key for debugging
+    $string //= "";  # Default to empty string if undefined
+
     if ($string eq "") {
-        print " Attention: trying to trim un-initialized string in >" . $string . "<\n";
+        print "Attention: uninitialized or empty string for key: $key\n";
         return "";
     }
+
     $string =~ s/^\s+//;
     $string =~ s/\s+$//;
     return $string;
 }
+
 
 sub trimall {
     my $string = shift;

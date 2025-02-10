@@ -75,9 +75,6 @@ sub create_system {
     buildShields();         # Shields
     buildMirrorsSurfaces(); # mirrors surfaces
 
-    if ($configuration{"factory"} eq "SQLITE") {
-        define_cads();
-    }
 }
 
 # sectors 1 2 3 4 5 6 presence
@@ -88,7 +85,7 @@ our @rga_fall2018_sectorsPresence = (0, 0, 1, 0, 1, 0);
 our @rga_fall2018_materials = ("na", "na", "C4F10", "na", "N2", "na");
 
 our @rgb_spring2019_sectorsPresence = (0, 0, 1, 0, 1, 0);
-our @rgb_spring2019_materials = ("na", "na", "C4F10", "no", "C4F10", "na");
+our @rgb_spring2019_materials = ("na", "na", "C4F10", "na", "C4F10", "na");
 
 our @rgb_winter2020_sectorsPresence = (0, 0, 1, 0, 1, 0);
 our @rgb_winter2020_materials = ("na", "na", "C4F10", "na", "C4F10", "na");
@@ -100,10 +97,50 @@ our @rgm_winter2021_materials = ("na", "N2", "N2", "na", "N2", "N2");
 $configuration{"factory"} = "TEXT";
 define_bank();
 
-my @variations = ("rga_spring2018", "rga_fall2018",  "rgb_spring2019", "rgb_winter2020", "rgm_winter2021", "default");
+my @variations = ("default", "rga_spring2018", "rga_fall2018",  "rgb_spring2019", "rgb_winter2020", "rgm_winter2021");
 my $runNumber = 11;
 
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
 }
+
+# SQLITE Factory
+$configuration{"factory"} = "SQLITE";
+define_bank();
+
+
+my $variation = "default";
+my @runs = (11, 3029, 4763, 6150, 11323, 15016);
+
+foreach my $run (@runs) {
+    $configuration{"variation"} = $variation;
+    $configuration{"run_number"} = $run;
+    create_system($variation, $run);
+}
+
+
+
+
+# port gxml to sqlite
+require "../gxml_to_sqlite.pl";
+my $cad_ltcc = 'cad';
+
+$configuration{"run_number"} = 11;
+process_gxml("$cad_ltcc/cad_default.gxml", $cad_ltcc);
+
+$configuration{"run_number"} = 3029;
+process_gxml("$cad_ltcc/cad_rga_spring2018.gxml", $cad_ltcc);
+
+$configuration{"run_number"} = 4763;
+process_gxml("$cad_ltcc/cad_rga_fall2018.gxml", $cad_ltcc);
+
+$configuration{"run_number"} = 6150;
+process_gxml("$cad_ltcc/cad_rgb_spring2019.gxml", $cad_ltcc);
+
+$configuration{"run_number"} = 11323;
+process_gxml("$cad_ltcc/cad_rgb_winter2020.gxml", $cad_ltcc);
+
+$configuration{"run_number"} = 15016;
+process_gxml("$cad_ltcc/cad_rgm_winter2021.gxml", $cad_ltcc);
+

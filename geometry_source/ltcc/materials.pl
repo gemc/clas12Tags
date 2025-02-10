@@ -162,7 +162,6 @@ sub materials
 {
 	# ltcc gas is C4F10 with optical properties
 
-
 	my %mat = init_mat();
 	$mat{"name"}          = "C4F10";
 	$mat{"description"}   = "clas12 ltcc gas";
@@ -220,6 +219,17 @@ sub materials
 	$mat{"efficiency"}   = arrayToString(@qeLTCCpmt);
 	$mat{"indexOfRefraction"} = arrayToString(@rindexLTCCpmt);
 	print_mat(\%configuration, \%mat);
+
+	$mat{"name"}          = "ltcc_WC_material";
+	$mat{"description"}   = "Nickel Iron Molybdenum Alloy Properties (Theoretical)";
+	$mat{"density"}       = "8.75";
+	$mat{"ncomponents"}   = "3";
+	$mat{"components"}    = "G4_Ni 0.85 G4_Mo 0.04 G4_Fe 0.11";
+	print_mat(\%configuration, \%mat);
+
+
+
+
 
 }
 
