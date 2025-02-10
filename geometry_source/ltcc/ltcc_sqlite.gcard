@@ -1,10 +1,10 @@
 <gcard>
 
 	<option name="geometry" value="1400x1200"/>
+	<option name="DATABASE" value="../clas12.sqlite"/>
 
-
-	<detector name="ltcc" factory="TEXT" variation="rgb_spring2019"/>
-	<detector name="cad/" factory="CAD"  variation="rgb_spring2019"/>
+	<detector name="ltcc" factory="SQLITE"/>
+	<detector name="cad/" factory="SQLITECAD"/>
 
 	<option name="BEAM_P" value="e-, 8.0*GeV, 15*deg, 60*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>
@@ -16,7 +16,7 @@
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT + Optical"/>
 	<option name="RECORD_OPTICALPHOTONS" value="1"/>
-	<option name="DIGITIZATION_VARIATION" value="rga_spring2019_mc"/>
+
 	<option name="RECORD_PASSBY" value="1"/>
 
 	<!-- Hall Field. torus -1 means e- INBENDING  -->
@@ -28,6 +28,4 @@
 			value="frame1_s2 frame1_s5 frame1_s6 frame2_s2 frame2_s5 frame2_s6 frame3_s2 frame3_s5 frame3_s6 frame4_s2 frame4_s5 frame4_s6 frame5_s2 frame5_s5 frame5_s6 frame6_s2 frame6_s5 frame6_s6 frame7_s2 frame7_s5 frame7_s6 frame8_s2 frame8_s5 frame8_s6 frame9_s2 frame9_s5 frame9_s6 20"/>
 
 </gcard>
-
-
 

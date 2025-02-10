@@ -2,7 +2,8 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-	<detector name="ltcc" factory="TEXT" variation="default"/>
+
+	<detector name="ltcc" factory="TEXT"/>
 	<detector name="cad/" factory="CAD"/>
 
 	<option name="BEAM_P" value="e-, 8.0*GeV, 15*deg, 60*deg"/>
@@ -15,7 +16,6 @@
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT + Optical"/>
 	<option name="RECORD_OPTICALPHOTONS" value="1"/>
-	<option name="DIGITIZATION_VARIATION" value="rga_fall2018_mc"/>
 
 	<option name="RECORD_PASSBY" value="1"/>
 
