@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+# notice personal access token (classic) MAURI must be updated if it expires
+# - public repo scope is enough
 
 import requests
 import subprocess

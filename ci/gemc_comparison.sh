@@ -80,14 +80,14 @@ compare_output() {
 
 summarize_log() {
 	if grep -q "❌" $log_file_detail; then
-		echo "$system:$digi_var:❌" >> $log_file_summary
+		echo "$system:$digi_var:❌" >>$log_file_summary
 	else
-		echo "$system:$digi_var:✅" >> $log_file_summary
+		echo "$system:$digi_var:✅" >>$log_file_summary
 	fi
 }
 
 # bank_to_check comma separated list, no spaces
-bank_to_check=""
+banks_to_check=""
 if [[ $system == "ec" || $system == "pcal" ]]; then
 	bank_to_check="ECAL::adc"
 elif [[ $system == "ftof" ]]; then
@@ -109,7 +109,7 @@ elif [[ $system == "ltcc" ]]; then
 elif [[ $system == "rich" ]]; then
 	bank_to_check="RICH::adc"
 elif [[ $system == "micromegas" ]]; then
-	bank_to_check="BMT::adc,FMT::adc"
+	bank_to_check="BMT::adc FMT::adc"
 fi
 
 # build gemc. Not necessary unless something changes in the code
@@ -160,16 +160,18 @@ for run in $=runs; do
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
 		gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default" >>$log_file_run
 
-		compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
+		for bank_to_check in $=banks_to_check; do
+			compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
 
-		# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
-		if [[ $digi_var != "default" ]]; then
+			# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
+			if [[ $digi_var != "default" ]]; then
 
-			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
-			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
+				echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
+				gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
-			compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
-		fi
+				compare_output $bank_to_check $outfile1 $outfile3 $digi_var $digi_var
+			fi
+		done
 
 	done
 

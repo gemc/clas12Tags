@@ -33,11 +33,11 @@ our $SL_z;
 
 sub load_parameters_bmt {
 
-    $bmt_ir = $parameters{"BMT_mothervol_InnerRadius"};   # 140
-    $bmt_or = $parameters{"BMT_mothervol_OutRadius"};     # 240
-    $bmt_dz = $parameters{"BMT_mothervol_HalfLength"};    # 385
-    $bmt_z = $parameters{"FMT_mothervol_zmin"} - $bmt_dz; # = 298.3 - 385  = -86.7 mm, MV center relative to CLAS center
-    $bmt_zpcb = $parameters{"BMT_endPCB_zpos"} - $bmt_z;  # = 290.3 + 86.7 = 377.0 mm, end pcb in MV frame
+    $bmt_ir = $parameters{"BMT_mothervol_InnerRadius"};
+    $bmt_or = $parameters{"BMT_mothervol_OutRadius"};
+    $bmt_dz = $parameters{"BMT_mothervol_HalfLength"};
+    $bmt_z = $parameters{"FMT_mothervol_zmin"} - $bmt_dz;
+    $bmt_zpcb = $parameters{"BMT_endPCB_zpos"} - $bmt_z;
 
     $nlayer = $parameters{"BMT_nlayer"};
     $ntile = $parameters{"BMT_ntile"};

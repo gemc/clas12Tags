@@ -1,6 +1,8 @@
 #!/bin/zsh
 
 # Purpose: Install gemc artifact in JLab's CVMFS
+# To be run as the following cron:
+# 03  6  *  *  *  $HOME/tmp/clas12Tags/bin/cron_gemc_artifact_install_jlab.sh   > $HOME/tmp/clas12Tags/log_install.log
 
 workdir=/work/clas12/ungaro/tmp
 fedoradir=/scigroup/cvmfs/geant4/fedora36-gcc12/clas12Tags/dev/experiments

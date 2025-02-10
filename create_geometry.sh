@@ -40,7 +40,6 @@ function copyFilesAndCadDirsTo() {
 	destination=$1
 	rm -rf $destination
 	mkdir -p $destination
-	cp README* "$destination/"
 	cp *.txt "$destination/"
 	cp *.gcard "$destination/"
 
