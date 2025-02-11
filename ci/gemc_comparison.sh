@@ -89,27 +89,27 @@ summarize_log() {
 # bank_to_check comma separated list, no spaces
 banks_to_check=""
 if [[ $system == "ec" || $system == "pcal" ]]; then
-	bank_to_check="ECAL::adc"
+	banks_to_check="ECAL::adc"
 elif [[ $system == "ftof" ]]; then
-	bank_to_check="FTOF::adc"
+	banks_to_check="FTOF::adc"
 elif [[ $system == "dc" ]]; then
-	bank_to_check="DC::tdc"
+	banks_to_check="DC::tdc"
 elif [[ $system == "htcc" ]]; then
-	bank_to_check="HTCC::adc"
+	banks_to_check="HTCC::adc"
 elif [[ $system == "ctof" ]]; then
-	bank_to_check="CTOF::adc"
+	banks_to_check="CTOF::adc"
 elif [[ $system == "cnd" ]]; then
-	bank_to_check="CND::adc"
-elif [[ $system == "bst" ]]; then
-	bank_to_check="BST::adc"
+	banks_to_check="CND::adc"
+elif [[ banks_to_check == "bst" ]]; then
+	banks_to_check="BST::adc"
 elif [[ $system == "bmt" ]]; then
-	bank_to_check="BMT::adc"
+	banks_to_check="BMT::adc"
 elif [[ $system == "ltcc" ]]; then
-	bank_to_check="LTCC::adc"
+	banks_to_check="LTCC::adc"
 elif [[ $system == "rich" ]]; then
-	bank_to_check="RICH::adc"
+	banks_to_check="RICH::adc"
 elif [[ $system == "micromegas" ]]; then
-	bank_to_check="BMT::adc FMT::adc"
+	banks_to_check="BMT::adc FMT::adc"
 fi
 
 # build gemc. Not necessary unless something changes in the code
