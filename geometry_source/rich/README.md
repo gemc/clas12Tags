@@ -1,4 +1,4 @@
-# CLAS12 RICH gemc geometry
+# Geometry 
 
 RICH geometry constructed as a combination of stl (stored in coatjava) and geant4 volumes.
 
@@ -11,19 +11,30 @@ Additional material budget: mirror support, wrapping, etc.
 geant4 volumes:
 PMTs and spherical Mirrors
 
-Execute with
-./rich.pl config.dat
-($COATJAVA must be set)
+# Run Configurations
 
-Generates three configurations:
+| variation      | SQL / CCDB Run | 
+|----------------|----------------|
+| default        | 11             | 
+| rga_fall2018   | 3029           | 
+| rgc_summer2022 | 16043           | 
 
-- default: RICH in sector 1 and sector 4, nominal positions
-- rga_fall2018: RICH in sector 1, +5cm shift in z
-- rgc_summer2022: RICH in sector 1 and sector 4, +5cm shift in z
+To build the geometry:
 
-Cad and geometry files are imported in gcard as:
+````./rich.pl config.dat````
 
-        <detector name="rich"         factory="TEXT" variation="default"/>
-        <detector name ="cad_default/"    factory="CAD"/>
+This will:
 
- 
+1. create the text based DB geometry files, with variation in the filenames
+2. add detector run entries to the ../../clas12.sqlite database
+
+
+## Geometry comparison:
+
+To compare the two databases (TEXT and SQLITE) the script ` $GEMC/api/perl/db_compare.py` can be used:
+
+````
+$GEMC/api/perl/db_compare.py rich__geometry_default.txt          ../../clas12.sqlite rich  11   default
+$GEMC/api/perl/db_compare.py rich__geometry_rga_fall2018.txt     ../../clas12.sqlite rich  3029 default
+$GEMC/api/perl/db_compare.py rich__geometry_rgc_summer2022.txt   ../../clas12.sqlite rich  16043 default
+````

@@ -7,13 +7,11 @@ import java.nio.file.Files;
 
 RICHGeant4Factory factory = new RICHGeant4Factory();
 
-
-
 def variation = args[0];
 int nmodules = (args[1]).toInteger();
 
 def name = sprintf("rich__volumes_%s.txt", [variation]);
-System.out.print("making volumes and copying stls, variation: ");
+System.out.print("\n\n > Making volumes and copying stls, variation: ");
 System.out.println(variation);
 
 def outFile = new File(name);

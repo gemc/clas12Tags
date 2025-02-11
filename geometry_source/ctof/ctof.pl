@@ -63,7 +63,6 @@ sub create_system {
         }
 
         system(join(' ', "groovy -cp '../*:..' factory.groovy --variation $variation --runnumber $runNumber", $javaCadDir));
-        #  system(join(' ', "groovy -cp '../*:..' factory.groovy --variation $variation --runnumber $runNumber", $javaCadDir));
         our @volumes = get_volumes(%configuration);
 
         coatjava::makeCTOF($javaCadDir);

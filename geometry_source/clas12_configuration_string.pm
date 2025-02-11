@@ -33,6 +33,9 @@ sub clas12_configuration_string {
     elsif ($varia eq "rgm_winter2021" || $runno eq 15016) {
         return "rgm_winter2021";
     }
+    elsif ($varia eq "rgc_summer2022" || $runno eq 16043) {
+        return "rgc_summer2022";
+    }
     elsif ($varia eq "michel_9mmcopper" || $runno eq 30000) {
         return "michel_9mmcopper";
     }

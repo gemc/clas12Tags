@@ -33,11 +33,13 @@ jobs:
           - pcal
           - dc
           - ftof
-          - htcc
+          - ctof
           - cnd
           - bst
+          - htcc
           - micromegas
           - ltcc
+          - rich
 
     steps:
       - name: Checkout
@@ -59,17 +61,18 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-#          - ec
-#          - pcal
+          - ec
+          - pcal
           - dc
+          - ftof
+          - ctof
+          - cnd
+          - bst
+          - htcc
           - micromegas
           - ltcc
-#          - htcc
-#          - ctof
-#          - cnd
-#          - bst
-
-        # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' * | sort -u
+          - rich
+        # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
           - default
           - rga_spring2018_mc

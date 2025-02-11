@@ -18,6 +18,8 @@ runs_for_system() {
 		echo "3029 11620 15016"
 	elif [[ $system == "ltcc" ]]; then
 		echo "11 3029 4763 6150 11323 15016"
+	elif [[ $system == "rich" ]]; then
+		echo "11 3029 16043"
 	fi
 }
 
@@ -40,6 +42,8 @@ variations_for_run_and_system()  {
 		echo "rgf_spring2020"
 	elif [[ $1 == "15016" ]]; then
 		echo "rgm_winter2021"
+	elif [[ $1 == "16043" ]]; then
+		echo "rgc_summer2022"
 	fi
 }
 

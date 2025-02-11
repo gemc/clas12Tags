@@ -79,10 +79,10 @@ compare_output() {
 }
 
 summarize_log() {
-	if grep -q "❌" $log_file_detail; then
-		echo "$system:$digi_var:❌" >>$log_file_summary
-	else
-		echo "$system:$digi_var:✅" >>$log_file_summary
+	if  grep -q "❌" "$log_file_detail"; then
+		echo     "$system:$digi_var:❌" >>"$log_file_summary"
+	elif  grep -q "✅" "$log_file_detail"; then
+		echo     "$system:$digi_var:✅" >>"$log_file_summary"
 	fi
 }
 
@@ -134,8 +134,7 @@ cd "$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 echo "\n > DIGITIZATION_VARIATION: $digi_var"
 echo "\n > GEMC: $(which gemc)"
-echo "\n > GEMC compiled on $(date): "
-ls -lt "$(which gemc)"
+echo "\n > GEMC compiled on $(date): location: $(which gemc)"
 
 runs=$(runs_for_system)
 nevents=200
@@ -166,6 +165,9 @@ for run in $=runs; do
 			echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
 			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 		fi
+
+		echo "\n\nContent of directory after running gemc: ">>$log_file_run
+		ls -l>>$log_file_run
 
 		for bank_to_check in $=banks_to_check; do
 			echo "Comparing bank $bank_to_check for files: $outfile1 and $outfile2 for variations $digi_var default"
