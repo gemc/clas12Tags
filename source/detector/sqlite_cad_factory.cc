@@ -84,38 +84,40 @@ map <string, detector> sqlitecad_det_factory::loadDetectors() {
 
             string filename = checkFormat(cad_subdir + "/" + name);
 
-            gt.add_data(q.value(0));                        // 1 name
-            gt.add_data(mother);                            // 2 mother volume
-            gt.add_data((string) " cadImported");                    // 3 description
-            gt.add_data(position);                          // 4 position
-            gt.add_data(rotation);                          // 5 rotation
-            gt.add_data(color);                             // 6 color
-            gt.add_data((string) "cadImport");              // 7 type
-            gt.add_data((string) "0");                      // 8 dimensions
-            gt.add_data(material);                          // 9 material is aluminum by defaul
-            gt.add_data(mfield);                            // 10 magnetic field
-            gt.add_data((string) "0");                      // 11 copy number
-            gt.add_data((string) "0");                      // 12 pmany
-            gt.add_data((string) "1");                      // 13 activation flag
-            gt.add_data(visible);                           // 14 visibility
-            gt.add_data(style);                             // 15 style
-            gt.add_data(sensitivity);                       // 16 sensitivity
-            gt.add_data(hit_type);                          // 17 hit_type
-            gt.add_data(identifiers);                       // 18 identifiers
-            gt.add_data(dname);                             // 19 system is dname (can be a path)
-            gt.add_data((string) "CAD");                    // 20 factory
-            gt.add_data(filename);                          // 21 variation is the full filename
-            gt.add_data(stringify(run_number));             // 22 run number
+			if(filename != "na") {
+				gt.add_data(q.value(0));                        // 1 name
+				gt.add_data(mother);                            // 2 mother volume
+				gt.add_data((string) " cadImported");                    // 3 description
+				gt.add_data(position);                          // 4 position
+				gt.add_data(rotation);                          // 5 rotation
+				gt.add_data(color);                             // 6 color
+				gt.add_data((string) "cadImport");              // 7 type
+				gt.add_data((string) "0");                      // 8 dimensions
+				gt.add_data(material);                          // 9 material is aluminum by defaul
+				gt.add_data(mfield);                            // 10 magnetic field
+				gt.add_data((string) "0");                      // 11 copy number
+				gt.add_data((string) "0");                      // 12 pmany
+				gt.add_data((string) "1");                      // 13 activation flag
+				gt.add_data(visible);                           // 14 visibility
+				gt.add_data(style);                             // 15 style
+				gt.add_data(sensitivity);                       // 16 sensitivity
+				gt.add_data(hit_type);                          // 17 hit_type
+				gt.add_data(identifiers);                       // 18 identifiers
+				gt.add_data(dname);                             // 19 system is dname (can be a path)
+				gt.add_data((string) "CAD");                    // 20 factory
+				gt.add_data(filename);                          // 21 variation is the full filename
+				gt.add_data(stringify(run_number));             // 22 run number
 
-            // big warning if detector already exist
-            // detector is NOT loaded if already existing
-            if (dets.find(gt.data[0]) != dets.end()) {
-                cout << endl << " *** WARNING! A detector >" << gt.data[0] << " exists already. Keeping original, not loading this instance. " << endl << endl;
-            } else {
-                dets[gt.data[0]] = get_detector(gt, gemcOpt, RC);
+				// big warning if detector already exist
+				// detector is NOT loaded if already existing
+				if (dets.find(gt.data[0]) != dets.end()) {
+					cout << endl << " *** WARNING! A detector >" << gt.data[0] << " exists already. Keeping original, not loading this instance. " << endl << endl;
+				} else {
+					dets[gt.data[0]] = get_detector(gt, gemcOpt, RC);
+				}
+
+				if (verbosity > 2) { cout << get_detector(gt, gemcOpt, RC); }
             }
-
-            if (verbosity > 2) { cout << get_detector(gt, gemcOpt, RC); }
         }
 
         for (const auto &dd: dets) {

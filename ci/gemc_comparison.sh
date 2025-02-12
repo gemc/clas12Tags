@@ -112,9 +112,25 @@ elif [[ $system == "micromegas" ]]; then
 	banks_to_check="BMT::adc FMT::adc"
 fi
 
-# build gemc. Not necessary unless something changes in the code
-git branch
-./ci/build_gemc.sh
+# build gemc.
+# git branch
+# ./ci/build_gemc.sh
+
+
+
+# get the clas12.sqlite file. This will be replaced by the actual file
+#cd experiments/clas12
+# pipe to null to avoid the output of the wget command
+# wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite  >/dev/null 2>&1
+#wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.tar.gz  >/dev/null 2>&1
+#tar -zxpvf j4np-1.1.1.tar.gz
+#yum install -y java-latest-openjdk >/dev/null 2>&1
+
+cd "$system" || DetectorDirNotExisting
+echo "\n > System: $system"
+echo "\n > DIGITIZATION_VARIATION: $digi_var"
+echo "\n > GEMC: $(which gemc)"
+echo "\n > GEMC compiled on $(date): location: $(which gemc)"
 
 mkdir -p /root/logs
 log_file_run=/root/logs/"$system"_output_run.log
@@ -123,18 +139,6 @@ log_file_detail=/root/logs/"$system"_output_details.log
 log_file_summary=/root/logs/"$system"_output_summary.log
 touch  $log_file_run $log_file_compare $log_file_detail $log_file_summary
 
-# get the clas12.sqlite file. This will be replaced by the actual file
-cd experiments/clas12
-# pipe to null to avoid the output of the wget command
-wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite  >/dev/null 2>&1
-wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.tar.gz  >/dev/null 2>&1
-tar -zxpvf j4np-1.1.1.tar.gz
-yum install -y java-latest-openjdk >/dev/null 2>&1
-cd "$system" || DetectorDirNotExisting
-echo "\n > System: $system"
-echo "\n > DIGITIZATION_VARIATION: $digi_var"
-echo "\n > GEMC: $(which gemc)"
-echo "\n > GEMC compiled on $(date): location: $(which gemc)"
 
 runs=$(runs_for_system)
 nevents=200

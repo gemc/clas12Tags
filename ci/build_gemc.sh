@@ -37,3 +37,5 @@ ls -lrt $GEMC
 mkdir -p /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
 cp source/gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
 
+cd ../experiments/clas12
+wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite  >/dev/null 2>&1

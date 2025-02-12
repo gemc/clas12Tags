@@ -61,15 +61,15 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - ec
-          - pcal
+          #          - ec
+          #          - pcal
           - dc
-          - ftof
-          - ctof
-          - cnd
-          - bst
-          - htcc
-          - micromegas
+          #          - ftof
+          #          - ctof
+          #          - cnd
+          #          - bst
+          #          - htcc
+          #          - micromegas
           - ltcc
           - rich
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
@@ -87,6 +87,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+      - name: Build GEMC
+        run: |
+          ./ci/build_gemc.sh
+      - name: Install Software
+        run: |
+          ./ci/install_comparison_software.sh
       - name: GEMC ${{ matrix.detector }} Comparison
         run: |
           ./ci/gemc_comparison.sh -d ${{ matrix.detector }} -v ${{ matrix.variation }}
@@ -133,7 +139,7 @@ jobs:
             echo "| $detector | $variation | $run | $bank | $dvariations | $pass |" >> Summary.md
           done < comparison.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
-      - name: Summary Table
+      - name: Summary Digitization Table
         run: |
           ls */*output_summary.log
           cat */*output_summary.log > comparison.log
@@ -142,4 +148,18 @@ jobs:
           while IFS=: read -r detector dvariations  pass; do
             echo "| $detector | $dvariations | $pass |" >> Summary.md
           done < comparison.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
+      - name: Summary Detector Table
+        run: |
+          ls */*output_summary.log
+          detectors=$( cat */*_output_summary.log | awk -F: '{print $1}' | sort -u)
+          echo "| Detector | Status  |" > Summary.md
+          echo "|----------|---------|" >> Summary.md
+          for detector in $detectors; do
+            if grep $detector | grep -q "❌" */*output_summary.log; then
+                echo "| $detector | ❌ |" >> Summary.md
+            elif grep $detector | grep -q "✅" */*output_summary.log; then
+                echo "| $detector | ✅ |" >> Summary.md
+            fi
+          done
           cat Summary.md >> $GITHUB_STEP_SUMMARY
