@@ -112,21 +112,7 @@ elif [[ $system == "micromegas" ]]; then
 	banks_to_check="BMT::adc FMT::adc"
 fi
 
-# build gemc.
-# git branch
-# ./ci/build_gemc.sh
-
-
-
-# get the clas12.sqlite file. This will be replaced by the actual file
-#cd experiments/clas12
-# pipe to null to avoid the output of the wget command
-# wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite  >/dev/null 2>&1
-#wget https://userweb.jlab.org/~ungaro/tmp/j4np-1.1.1.tar.gz  >/dev/null 2>&1
-#tar -zxpvf j4np-1.1.1.tar.gz
-#yum install -y java-latest-openjdk >/dev/null 2>&1
-
-cd "$system" || DetectorDirNotExisting
+cd "experiments/clas12/$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 echo "\n > DIGITIZATION_VARIATION: $digi_var"
 echo "\n > GEMC: $(which gemc)"

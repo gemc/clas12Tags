@@ -2,7 +2,6 @@
 
 DetectorDirNotExisting() {
 	echo "System directory: $system not existing"
-	Help
 	exit 3
 }
 
