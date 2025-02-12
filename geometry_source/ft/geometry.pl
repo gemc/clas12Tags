@@ -1253,14 +1253,6 @@ sub make_ft_cal
 }
 
 
-
-sub make_ft_pipe
-{
-	make_ft_cal_mother_volume();
-	make_ft_cal_beamline();
-}
-
-
 sub make_ft_hodo
 {
 	my %detector = init_det();
@@ -2283,6 +2275,10 @@ sub make_ft_trk_fee_boxes
 
 sub make_ft_trk
 {
+
+    if ($configuration{"variation"} eq "FTOff") {
+		return;
+	}
 	make_ft_trk_mother();
 	for(my $l = 0; $l < $nlayer; $l++)
 	{

@@ -8,3 +8,8 @@ geometry_source/**/*__mirrors_*.txt
 geometry_source/**/*__volumes_*.txt
 source/**/*.o
 source/**/moc*.cc
+geometry_source/coatjava*
+geometry_source/coat-libs*
+source/.sconsign.dblite
+clas12.sqlite
+.idea

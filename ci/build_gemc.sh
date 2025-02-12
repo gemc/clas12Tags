@@ -30,12 +30,14 @@ cp gemc $GEMC/bin
 cd ..
 cp -r experiments $GEMC
 echo
-echo "content of "$GEMC":"
+echo "Content of "$GEMC":"
 ls -lrt $GEMC
 
 # copying executable and geometry for artifact retrieval
 mkdir -p /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
 cp source/gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
 
-cd ../experiments/clas12
+cd experiments/clas12
 wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite  >/dev/null 2>&1
+echo "Content of `pwd`:"
+ls -lrt
