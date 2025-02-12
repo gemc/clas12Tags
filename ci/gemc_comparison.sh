@@ -107,7 +107,7 @@ elif [[ $system == "bmt" ]]; then
 elif [[ $system == "ltcc" ]]; then
 	banks_to_check="LTCC::adc"
 elif [[ $system == "rich" ]]; then
-	banks_to_check="RICH::adc"
+	banks_to_check="RICH::tdc"
 elif [[ $system == "micromegas" ]]; then
 	banks_to_check="BMT::adc FMT::adc"
 fi
