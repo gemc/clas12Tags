@@ -64,24 +64,24 @@ jobs:
           #          - ec
           #          - pcal
           - dc
-          #          - ftof
-          #          - ctof
-          #          - cnd
-          #          - bst
-          #          - htcc
-          #          - micromegas
+            #          - ftof
+            #          - ctof
+            #          - cnd
+            #          - bst
+            #          - htcc
+            - micromegas
           # - ltcc
           - rich
           - ft
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
           - default
-#          - rga_spring2018_mc
+          #          - rga_spring2018_mc
           - rga_fall2018_mc
-#          - rga_spring2019_mc
+          #          - rga_spring2019_mc
           - rgb_fall2019_mc
-#          - rgb_spring2019_mc
-#          - rgc_summer2022_mc
+          #          - rgb_spring2019_mc
+          #          - rgc_summer2022_mc
           - rgf_spring2020_mc
           - rgm_fall2021_mc
 
