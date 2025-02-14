@@ -50,9 +50,9 @@ HipoSchema::HipoSchema() {
     fmtADCSchema = hipo::schema("FMT::adc", 20800, 11);
     ftcalADCSchema = hipo::schema("FTCAL::adc", 21000, 11);
     fthodoADCSchema = hipo::schema("FTHODO::adc", 21100, 11);
+    ftrkTDCSchema = hipo::schema("FTTRK::adc", 21300, 11);
     ftofADCSchema = hipo::schema("FTOF::adc", 21200, 11);
     ftofTDCSchema = hipo::schema("FTOF::tdc", 21200, 12);
-    ftrkTDCSchema = hipo::schema("FTTRK::adc", 21300, 11);
     htccADCSchema = hipo::schema("HTCC::adc", 21500, 11);
     htccTDCSchema = hipo::schema("HTCC::tdc", 21500, 12);
     ltccADCSchema = hipo::schema("LTCC::adc", 21600, 11);

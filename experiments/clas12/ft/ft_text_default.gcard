@@ -3,13 +3,13 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="cnd"  factory="TEXT" variation="default"/>
+	<detector name="ft" factory="TEXT"/>
 
-	<option name="BEAM_P" value="proton, 1.0*GeV, 90*deg, 10*deg"/>
-	<option name="SPREAD_P"  value="0.0*GeV, 40*deg, 180*deg"/>
+	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
+	<option name="SPREAD_P"  value="0.0*GeV, 00*deg, 180*deg"/>
 
 	<option name="SAVE_ALL_MOTHERS" value="1"/>
-	<option name="INTEGRATEDRAW" value="cnd"/>
+	<option name="INTEGRATEDRAW" value="ft_cal, ft_hodo, ft_trk"/>
 
 	<option name="RUNNO" value="11"/>
 	<option name="OUTPUT" value="hipo, out.hipo"/>

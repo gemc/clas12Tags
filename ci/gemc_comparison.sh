@@ -109,7 +109,9 @@ elif [[ $system == "ltcc" ]]; then
 elif [[ $system == "rich" ]]; then
 	banks_to_check="RICH::tdc"
 elif [[ $system == "micromegas" ]]; then
-	banks_to_check="BMT::adc FMT::adc"
+	banks_to_check="BMT::adc,FMT::adc"
+elif [[ $system == "ft" ]]; then
+	banks_to_check="FTCAL::adc,FTHODO::adc,FTTRK::adc"
 fi
 
 cd "experiments/clas12/$system" || DetectorDirNotExisting

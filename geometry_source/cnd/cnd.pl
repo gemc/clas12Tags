@@ -43,17 +43,11 @@ require "./geometry.pl";
 # subroutines create_system with arguments (variation, run number)
 sub create_system {
 
-    # my $variation = shift;
-    # my $runNumber = shift;
-
-    # materials, hits
     materials();
     define_hit();
     makeCND();
 
 }
-
-# materials
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";

@@ -21,8 +21,20 @@ sub clas12_configuration_string {
     elsif ($varia eq "rga_fall2018" || $runno eq 4763) {
         return "rga_fall2018";
     }
+    elsif ($varia eq "rga_spring2019" || $runno eq 6608) {
+        return "rga_spring2019";
+    }
+    elsif ($varia eq "rgk_fall2018" || $runno eq 5674) {
+        return "rgk_fall2018";
+    }
+    elsif ($varia eq "rgk_winter2018" || $runno eq 5874) {
+        return "rgk_winter2018";
+    }
     elsif ($varia eq "rgb_spring2019" || $runno eq 6150) {
         return "rgb_spring2019";
+    }
+    elsif ($varia eq "rgb_fall2019" || $runno eq 11093) {
+        return "rgb_fall2019";
     }
     elsif ($varia eq "rgb_winter2020" || $runno eq 11323) {
         return "rgb_winter2020";
@@ -35,6 +47,9 @@ sub clas12_configuration_string {
     }
     elsif ($varia eq "rgc_summer2022" || $runno eq 16043) {
         return "rgc_summer2022";
+    }
+    elsif ($varia eq "rge_spring2024" || $runno eq 20000) {
+        return "rge_spring2024";
     }
     elsif ($varia eq "michel_9mmcopper" || $runno eq 30000) {
         return "michel_9mmcopper";
