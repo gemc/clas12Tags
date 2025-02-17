@@ -10,8 +10,9 @@ use hit;
 use bank;
 use math;
 use materials;
-
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
 sub help() {
@@ -59,14 +60,14 @@ sub create_system {
     define_fmt();
 }
 
+my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021", "michel_9mmcopper");
+my @runs = clas12_runs(@variations);
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
 
-my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021", "michel_9mmcopper");
 my $runNumber = 11;
-
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
@@ -81,8 +82,6 @@ upload_parameters(\%configuration, "micromegas__parameters_rgm_winter2021.txt", 
 upload_parameters(\%configuration, "micromegas__parameters_michel_9mmcopper.txt", "micromegas", "default", 30000);
 
 my $variation = "default";
-my @runs = (3029, 11620, 15016, 30000);
-
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;
     $configuration{"run_number"} = $run;

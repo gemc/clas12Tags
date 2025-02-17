@@ -10,6 +10,8 @@ use hit;
 use bank;
 use materials;
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
 sub help() {
@@ -55,14 +57,14 @@ sub create_system {
     coatjava::make_pb();
 }
 
+my @variations = ("default", "rga_fall2018");
+my @runs = clas12_runs(@variations);
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
 
-my @variations = ("default", "rga_fall2018");
 my $runNumber = 11;
-
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
@@ -76,8 +78,6 @@ upload_parameters(\%configuration, "ftof__parameters_default.txt", "ftof", "defa
 upload_parameters(\%configuration, "ftof__parameters_rga_fall2018.txt", "ftof", "default", 3029);
 
 my $variation = "default";
-my @runs = (11, 3029);
-
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;
     $configuration{"run_number"} = $run;

@@ -12,7 +12,6 @@ use math;
 use materials;
 use POSIX;
 use File::Copy;
-
 use lib ("../");
 use clas12_configuration_string;
 
@@ -111,10 +110,13 @@ sub create_system {
 }
 
 
+my @variations = sort keys %conf_module_pos;
+my @runs = clas12_runs(@variations);
+
+
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
-
-my @variations = sort keys %conf_module_pos;
+define_bank();
 
 my $runNumber = 11;
 foreach my $variation (@variations) {
@@ -128,14 +130,11 @@ $configuration{"factory"} = "SQLITE";
 define_bank();
 
 my $variation = "default";
-my @runs = (11, 3029, 16043);
-
 foreach my $run (@runs) {
     $configuration{"variation"}  = $variation;
     $configuration{"run_number"} = $run;
     create_system($variation, $run);
 }
-
 
 
 use File::Copy;

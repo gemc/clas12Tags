@@ -3,7 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="cnd"          factory="TEXT" variation="default"/>
+	<detector name="cnd"  factory="TEXT" variation="default"/>
 
 	<option name="BEAM_P" value="proton, 1.0*GeV, 90*deg, 10*deg"/>
 	<option name="SPREAD_P"  value="0.0*GeV, 40*deg, 180*deg"/>

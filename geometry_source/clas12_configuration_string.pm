@@ -2,7 +2,7 @@ package clas12_configuration_string;
 require Exporter;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(clas12_configuration_string);
+@EXPORT = qw(clas12_configuration_string clas12_runs);
 
 
 # Initialize hash maps
@@ -57,6 +57,66 @@ sub clas12_configuration_string {
     else {
         return "default";
     }
+}
+
+# return an array of runs given as input an array of @variations
+sub clas12_runs {
+    my @variations = @_;
+    my @runs = ();
+    foreach my $var (@variations) {
+        if ($var eq "default") {
+            push(@runs, 11);
+        }
+        elsif ($var eq "rga_spring2018") {
+            push(@runs, 3029);
+        }
+        elsif ($var eq "rga_fall2018") {
+            push(@runs, 4763);
+        }
+        elsif ($var eq "rga_spring2019") {
+            push(@runs, 6608);
+        }
+        elsif ($var eq "rgk_fall2018") {
+            push(@runs, 5674);
+        }
+        elsif ($var eq "rgk_winter2018") {
+            push(@runs, 5874);
+        }
+        elsif ($var eq "rgb_spring2019") {
+            push(@runs, 6150);
+        }
+        elsif ($var eq "rgb_fall2019") {
+            push(@runs, 11093);
+        }
+        elsif ($var eq "rgb_winter2020") {
+            push(@runs, 11323);
+        }
+        elsif ($var eq "rgf_spring2020") {
+            push(@runs, 11620);
+        }
+        elsif ($var eq "rgm_winter2021") {
+            push(@runs, 15016);
+        }
+        elsif ($var eq "rgc_summer2022") {
+            push(@runs, 16043);
+        }
+        elsif ($var eq "rge_spring2024") {
+            push(@runs, 20000);
+        }
+        elsif ($var eq "michel_9mmcopper") {
+            push(@runs, 100000);
+        }
+        elsif ($var eq "ddvcs") {
+            push(@runs, 200000);
+        }
+    }
+
+    print " > Running variations and runs:\n";
+    for (my $i = 0; $i < @variations; $i++) {
+        print "   - $variations[$i] -> $runs[$i]\n";
+    }
+    print("\n");
+    return @runs;
 }
 
 1;

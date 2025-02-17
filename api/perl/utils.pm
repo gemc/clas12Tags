@@ -89,7 +89,10 @@ sub load_configuration {
     # Printing out the configuration to double check that all mandatory values exist
     if ($configuration{"verbosity"} > -1) {
         print "\n  * Loading configuration from ", $file, ":\n";
+        print "   > Factory:       ", $configuration{"factory"}, "\n";
         print "   > Detector Name: ", $configuration{"detector_name"}, "\n";
+        print "   > Variation:     ", $configuration{"variation"}, "\n";
+        print "   > Run Number:    ", $configuration{"run_number"}, "\n";
         if ($configuration{"dbhost"} ne "none") {
             print "   > DB Server:     ", $configuration{"dbhost"}, "\n";
         }
@@ -97,15 +100,6 @@ sub load_configuration {
         print "   > Verbosity:     ", $configuration{"verbosity"}, "\n\n";
     }
 
-    if ($configuration{"factory"} eq "MYSQL") {
-
-        my $dbh = open_db(%configuration);
-        my $table = $configuration{"detector_name"} . "__geometry";
-        my $varia = $configuration{"variation"};
-        $configuration{"this_geo_id"} = get_last_id($dbh, $table, $varia) + 1;
-        $dbh->disconnect();
-
-    }
     print "\n";
     return %configuration;
 }

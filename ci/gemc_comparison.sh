@@ -116,9 +116,10 @@ fi
 
 cd "experiments/clas12/$system" || DetectorDirNotExisting
 echo "\n > System: $system"
-echo "\n > DIGITIZATION_VARIATION: $digi_var"
-echo "\n > GEMC: $(which gemc)"
-echo "\n > GEMC compiled on $(date): location: $(which gemc)"
+echo " > DIGITIZATION_VARIATION: $digi_var"
+echo " > GEMC: $(which gemc)"
+echo " > GEMC compiled on $(date)"
+echo " > Location: $(which gemc)"
 
 mkdir -p /root/logs
 log_file_run=/root/logs/"$system"_output_run.log

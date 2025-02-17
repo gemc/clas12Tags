@@ -10,8 +10,10 @@ use hit;
 use bank;
 use math;
 use materials;
-
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
+
 
 # Help Message
 sub help() {
@@ -58,15 +60,15 @@ sub create_system {
 
     coatjava::makeBST();
 }
+my @variations = ("default");
+my @runs = clas12_runs(@variations);
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
 
 # keeping one variation only until coatjava implements shifts / rotations in CCDB
-my @variations = ("default");
 my $runNumber = 11;
-
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
@@ -78,8 +80,6 @@ define_bank();
 upload_parameters(\%configuration, "bst__parameters_default.txt", "bst", "default", 11);
 
 my $variation = "default";
-my @runs = (11);
-
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;
     $configuration{"run_number"} = $run;

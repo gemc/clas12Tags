@@ -11,6 +11,8 @@ use bank;
 use math;
 use materials;
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
 sub help() {
@@ -77,14 +79,15 @@ sub create_system {
     }
 }
 
+my @variations = ("default",  "ddvcs");
+my @runs = clas12_runs(@variations);
+
+
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
 
-#my @variations = ("default");
-my @variations = ("default",  "ddvcs");
 my $runNumber = 11;
-
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
@@ -96,8 +99,6 @@ $configuration{"factory"} = "SQLITE";
 define_bank();
 
 my $variation = "default";
-my @runs = (11);
-
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;
     $configuration{"run_number"} = $run;

@@ -10,6 +10,8 @@ use hit;
 use bank;
 use materials;
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
 sub help() {
@@ -53,13 +55,13 @@ sub create_system {
     coatjava::makePCAL();
 }
 
+my @variations = ("default", "rga_fall2018");
+my @runs = clas12_runs(@variations);
+
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 
-
-my @variations = ("default", "rga_fall2018");
 my $runNumber = 11;
-
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
@@ -68,10 +70,7 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 
-
 my $variation = "default";
-my @runs = (11, 3029);
-
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;
     $configuration{"run_number"} = $run;

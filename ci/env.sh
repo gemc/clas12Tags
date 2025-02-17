@@ -69,5 +69,4 @@ else
 	module load hipo
 	module load ccdb
 	echo
-	export
 fi

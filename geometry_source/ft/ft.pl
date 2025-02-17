@@ -10,8 +10,9 @@ use hit;
 use bank;
 use math;
 use materials;
-
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
 sub help() {
@@ -48,11 +49,14 @@ sub create_system {
 
 }
 
+my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rge_spring2024");
+my @runs = clas12_runs(@variations);
+
+
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_banks();
 
-my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rge_spring2024");
 my $runNumber = 11;
 
 foreach my $variation (@variations) {
@@ -65,7 +69,6 @@ $configuration{"factory"} = "SQLITE";
 define_banks();
 
 my $variation = "default";
-my @runs = (11, 5874, 4763, 6150, 11620, 16043, 20000);
 
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;
