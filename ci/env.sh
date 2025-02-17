@@ -53,7 +53,7 @@ variations_for_run_and_system()  {
 }
 
 # show environment
-export
+# export
 
 # if we are in the docker container, we need to load the modules
 if [[ -z "${AUTOBUILD}" ]]; then
