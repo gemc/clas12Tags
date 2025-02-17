@@ -44,7 +44,9 @@ sensitiveDetector::sensitiveDetector(G4String name, goptions opt, string factory
 	}
 	
 	SDID = sensitiveID(HCname, gemcOpt, factory, variation, system, run);
-	
+	if (verbosity > 3) {
+		cout << SDID << endl;
+	}
 }
 
 sensitiveDetector::~sensitiveDetector(){}
