@@ -28,16 +28,3 @@ $GEMC/api/perl/db_compare.py cnd__geometry_rga_fall2018.txt   ../../clas12.sqlit
 ````
 
 
-## GEMC Output comparison
-
-Run 11:
-
-```
-gemc -USE_GUI=0 cnd_sqlite.gcard       -N=10 -OUTPUT="hipo, sql_11.hipo" -RANDOM=123 -RUNNO=11  
-gemc -USE_GUI=0 cnd_text_default.gcard -N=10 -OUTPUT="hipo, txt_11.hipo" -RANDOM=123 -RUNNO=11  
-```
-
-
-<br/>
-
----

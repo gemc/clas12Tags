@@ -61,7 +61,7 @@ require "./mirrors.pl";
 # hash of variations and sector positions of modules
 my %conf_module_pos = (
     "default"        => [ 4, 1 ],
-    "rga_spring2018"   => [ 4 ],
+    "rga_spring2018" => [ 4 ],
     "rgc_summer2022" => [ 4, 1 ],
 );
 
@@ -73,9 +73,6 @@ sub create_system {
     # forcing $configuration variation to be the same as the one in the loop
     # otherwise for SQLITE we'd call the geometry service with the wrong variation
     my $variation = clas12_configuration_string(\%configuration);
-    my $sectors_ref = $conf_module_pos{$variation};
-    $configuration{"variation"} = $variation;
-
     my $coatjava_variation = $variation;
 
     # for rich, rga_fall2018 applies also to spring
@@ -83,12 +80,18 @@ sub create_system {
         $coatjava_variation = "rga_fall2018";
     }
 
+    my $sectors_ref = $conf_module_pos{$variation};
+
     # Dereference the array reference to get the array
     my @sectors = @{$sectors_ref};
     my $nmodules = scalar @sectors;
 
     system(join(' ', 'groovy -cp "../*:.." factory.groovy', $variation, ' ', $nmodules));
     our @volumes = get_volumes(%configuration);
+
+    if ($configuration{"factory"} eq "SQLITE") {
+        $configuration{"variation"} = "default";
+    }
 
     define_MAPMT();
     define_CFRP();
@@ -99,16 +102,14 @@ sub create_system {
         my $module = $i + 1;
         my $sector = $sectors[$i];
 
-        define_aerogels($module);      #was sector
-        buildMirrorsSurfaces($module); #was sector
+        define_aerogels($module);
+        buildMirrorsSurfaces($module);
         makeRICHtext($module, $sector);
     }
 }
 
-
 my @variations = sort keys %conf_module_pos;
 my @runs = clas12_runs(@variations);
-
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
@@ -120,18 +121,16 @@ foreach my $variation (@variations) {
     create_system($variation, $runNumber);
 }
 
-
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
 
 my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"}  = $variation;
+    $configuration{"variation"} = $variation;
     $configuration{"run_number"} = $run;
     create_system($variation, $run);
 }
-
 
 use File::Copy;
 use File::Path qw(make_path remove_tree);
@@ -153,7 +152,7 @@ while (my $file = readdir($dh)) {
 closedir($dh);
 
 # Copy specific GXML files
-copy("$javacad_default/cad.gxml",   "$cad/cad_default.gxml") or die "Copy failed: $!";
+copy("$javacad_default/cad.gxml", "$cad/cad_default.gxml") or die "Copy failed: $!";
 copy("cad_rgc_summer2022/cad.gxml", "$cad/cad_rgc_summer2022.gxml") or die "Copy failed: $!";
 copy("cad_rga_spring2018/cad.gxml", "$cad/cad_rga_spring2018.gxml") or die "Copy failed: $!";
 

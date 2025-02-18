@@ -70,7 +70,7 @@ jobs:
             #          - cnd
             #          - bst
             #          - htcc
-          - micromegas
+          #- micromegas
           # - ltcc
           - rich
           - ft

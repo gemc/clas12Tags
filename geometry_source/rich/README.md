@@ -16,8 +16,8 @@ PMTs and spherical Mirrors
 | variation      | SQL / CCDB Run | 
 |----------------|----------------|
 | default        | 11             | 
-| rga_fall2018   | 3029           | 
-| rgc_summer2022 | 16043           | 
+| rga_spring2018 | 3029           | 
+| rgc_summer2022 | 16043          | 
 
 To build the geometry:
 
@@ -35,6 +35,6 @@ To compare the two databases (TEXT and SQLITE) the script ` $GEMC/api/perl/db_co
 
 ````
 $GEMC/api/perl/db_compare.py rich__geometry_default.txt          ../../clas12.sqlite rich  11   default
-$GEMC/api/perl/db_compare.py rich__geometry_rga_fall2018.txt     ../../clas12.sqlite rich  3029 default
+$GEMC/api/perl/db_compare.py rich__geometry_rga_spring2018.txt   ../../clas12.sqlite rich  3029 default
 $GEMC/api/perl/db_compare.py rich__geometry_rgc_summer2022.txt   ../../clas12.sqlite rich  16043 default
 ````
