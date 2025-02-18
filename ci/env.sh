@@ -20,7 +20,7 @@ runs_for_system() {
 	elif [[ $system == "rich" ]]; then
 		echo "11 3029 16043"
 	elif [[ $system == "ft" ]]; then
-		echo "11 5874 4763 6150 11620 16043 20000"
+		echo "11 5874 6150 11620 16043 20000"
 	fi
 }
 
@@ -28,18 +28,14 @@ variations_for_run_and_system()  {
 	if [[ $1 == "11" ]]; then
 		echo "default"
 	elif [[ $1 == "3029" ]]; then
-		if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
-			echo "rga_fall2018"
-		else
-			echo "rga_spring2018"
-		fi
+		echo "rga_spring2018"
 	elif [[ $1 == "4763" ]]; then
 		echo "rga_fall2018"
 	elif [[ $1 == "5874" ]]; then
 		echo "rgk_winter2018"
 	elif [[ $1 == "6150" ]]; then
 		echo "rgb_spring2019"
-	elif   [[ $1 == "11323" ]]; then
+	elif [[ $1 == "11323" ]]; then
 		echo "rgb_winter2020"
 	elif [[ $1 == "11620" ]]; then
 		echo "rgf_spring2020"

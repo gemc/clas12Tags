@@ -55,7 +55,7 @@ sub create_system {
     coatjava::makeEC();
 }
 
-my @variations = ("default", "rga_fall2018");
+my @variations = ("default", "rga_spring2018");
 my @runs = clas12_runs(@variations);
 
 # TEXT Factory

@@ -61,7 +61,7 @@ require "./mirrors.pl";
 # hash of variations and sector positions of modules
 my %conf_module_pos = (
     "default"        => [ 4, 1 ],
-    "rga_fall2018"   => [ 4 ],
+    "rga_spring2018"   => [ 4 ],
     "rgc_summer2022" => [ 4, 1 ],
 );
 
@@ -73,26 +73,22 @@ sub create_system {
     # forcing $configuration variation to be the same as the one in the loop
     # otherwise for SQLITE we'd call the geometry service with the wrong variation
     my $variation = clas12_configuration_string(\%configuration);
+    my $sectors_ref = $conf_module_pos{$variation};
+    $configuration{"variation"} = $variation;
+
+    my $coatjava_variation = $variation;
 
     # for rich, rga_fall2018 applies also to spring
     if ($variation eq "rga_spring2018") {
-        $variation = "rga_fall2018";
+        $coatjava_variation = "rga_fall2018";
     }
 
-    $configuration{"variation"} = $variation;
-
-    my $sectors_ref = $conf_module_pos{$variation};
     # Dereference the array reference to get the array
     my @sectors = @{$sectors_ref};
-
     my $nmodules = scalar @sectors;
 
     system(join(' ', 'groovy -cp "../*:.." factory.groovy', $variation, ' ', $nmodules));
     our @volumes = get_volumes(%configuration);
-
-    if ($configuration{"factory"} eq "SQLITE") {
-        $configuration{"variation"} = "default";
-    }
 
     define_MAPMT();
     define_CFRP();
@@ -157,15 +153,15 @@ while (my $file = readdir($dh)) {
 closedir($dh);
 
 # Copy specific GXML files
-copy("$javacad_default/cad.gxml", "$cad/cad_default.gxml") or die "Copy failed: $!";
+copy("$javacad_default/cad.gxml",   "$cad/cad_default.gxml") or die "Copy failed: $!";
 copy("cad_rgc_summer2022/cad.gxml", "$cad/cad_rgc_summer2022.gxml") or die "Copy failed: $!";
-copy("cad_rga_fall2018/cad.gxml", "$cad/cad_rga_fall2018.gxml") or die "Copy failed: $!";
+copy("cad_rga_spring2018/cad.gxml", "$cad/cad_rga_spring2018.gxml") or die "Copy failed: $!";
 
 
 # Remove javacad directories created with the geometry service
 remove_tree($javacad_default);
 remove_tree('cad_rgc_summer2022');
-remove_tree('cad_rga_fall2018');
+remove_tree('cad_rga_spring2018');
 
 
 # port gxml to sqlite
@@ -175,7 +171,7 @@ $configuration{"run_number"} = 11;
 process_gxml("$cad/cad_default.gxml", $cad);
 
 $configuration{"run_number"} = 3029;
-process_gxml("$cad/cad_rga_fall2018.gxml", $cad);
+process_gxml("$cad/cad_rga_spring2018.gxml", $cad);
 
 $configuration{"run_number"} = 16043;
 process_gxml("$cad/cad_rgc_summer2022.gxml", $cad);

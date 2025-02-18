@@ -1,5 +1,5 @@
 <gxml>
-	<volume name="AaRICH_m1" color="444444" material="Air_Opt" position="0*cm 0*cm 5*cm" rotation="0 0 0*deg" mother="root" />
+	<volume name="AaRICH_m1" color="444444" material="Air_Opt" position="0*cm 0*cm 0*cm" rotation="0 0 0*deg" mother="root" />
 	<volume name="TedlarWrapping_m1" color="444444" material="G4_AIR" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" />
 	<volume name="Aluminum_m1" color="4444ff" material="G4_Al" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" />
 	<volume name="CFRP_m1" color="44ff44" material="CarbonFiber" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" />
