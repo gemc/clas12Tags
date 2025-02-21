@@ -115,12 +115,12 @@ sub print_det {
         my $dbh = open_db(%configuration);
         my $system = $configuration{"detector_name"};
 
-        # first time this module is run, delete everything in geometry table for this variation, system and run number
+        # first time this module is run, delete everything in geometry table for this system
         if ($counter_sqlite == 0 || $this_variation ne $varia) {
             my $sql = "DELETE FROM geometry WHERE system = ?";
+            print "   > Deleting all volumes for system $system \n";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
-            print "   > Deleted all volumes for system $system \n";
             $counter_sqlite = 1;
             $this_variation = $varia;
         }

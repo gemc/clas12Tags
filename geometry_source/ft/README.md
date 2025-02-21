@@ -1,9 +1,10 @@
 # Geometry
 
 The geometry consists of:
-LeadTungsten calorimeter 
-Scintillation hodoscope
-Micromegas tracker 
+
+- LeadTungsten calorimeter (FT_CAL)  
+- Scintillation hodoscope (FT_HODO)
+- Micromegas forward tracker (FT_TRK) 
 
 
 

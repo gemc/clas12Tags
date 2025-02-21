@@ -21,6 +21,8 @@ runs_for_system() {
 		echo "11 3029 16043"
 	elif [[ $system == "ft" ]]; then
 		echo "11 5874 6150 11620 16043 20000"
+	elif [[ $system == "beamline" ]]; then
+		echo "11 5874 6150 11620 16043 16843 20000"
 	fi
 }
 
@@ -43,6 +45,8 @@ variations_for_run_and_system()  {
 		echo "rgm_winter2021"
 	elif [[ $1 == "16043" ]]; then
 		echo "rgc_summer2022"
+	elif [[ $1 == "16843" ]]; then
+		echo "rgc_fall2022"
 	elif [[ $1 == "20000" ]]; then
 		echo "rge_spring2024"
 	fi

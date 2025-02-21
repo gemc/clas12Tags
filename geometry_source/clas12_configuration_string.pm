@@ -51,72 +51,46 @@ sub clas12_configuration_string {
     elsif ($varia eq "rge_spring2024" || $runno eq 20000) {
         return "rge_spring2024";
     }
-    elsif ($varia eq "michel_9mmcopper" || $runno eq 30000) {
-        return "michel_9mmcopper";
-    }
+    # if no run is found, return the variation itself
     else {
-        return "default";
+        return $varia;
     }
 }
-
-# return an array of runs given as input an array of @variations
+# Return an array of runs given an array of @variations
 sub clas12_runs {
     my @variations = @_;
-    my @runs = ();
-    foreach my $var (@variations) {
-        if ($var eq "default") {
-            push(@runs, 11);
-        }
-        elsif ($var eq "rga_spring2018") {
-            push(@runs, 3029);
-        }
-        elsif ($var eq "rga_fall2018") {
-            push(@runs, 4763);
-        }
-        elsif ($var eq "rga_spring2019") {
-            push(@runs, 6608);
-        }
-        elsif ($var eq "rgk_fall2018") {
-            push(@runs, 5674);
-        }
-        elsif ($var eq "rgk_winter2018") {
-            push(@runs, 5874);
-        }
-        elsif ($var eq "rgb_spring2019") {
-            push(@runs, 6150);
-        }
-        elsif ($var eq "rgb_fall2019") {
-            push(@runs, 11093);
-        }
-        elsif ($var eq "rgb_winter2020") {
-            push(@runs, 11323);
-        }
-        elsif ($var eq "rgf_spring2020") {
-            push(@runs, 11620);
-        }
-        elsif ($var eq "rgm_winter2021") {
-            push(@runs, 15016);
-        }
-        elsif ($var eq "rgc_summer2022") {
-            push(@runs, 16043);
-        }
-        elsif ($var eq "rge_spring2024") {
-            push(@runs, 20000);
-        }
-        elsif ($var eq "michel_9mmcopper") {
-            push(@runs, 100000);
-        }
-        elsif ($var eq "ddvcs") {
-            push(@runs, 200000);
-        }
-    }
+    my @runs = map { clas12_run($_) } @variations;
 
     print " > Running variations and runs:\n";
     for (my $i = 0; $i < @variations; $i++) {
         print "   - $variations[$i] -> $runs[$i]\n";
     }
-    print("\n");
+    print "\n";
+
     return @runs;
+}
+
+# Return the corresponding run number for a given variation
+sub clas12_run {
+    my %variation_to_run = (
+        "default"          => 11,
+        "rga_spring2018"   => 3029,
+        "rga_fall2018"     => 4763,
+        "rga_spring2019"   => 6608,
+        "rgk_fall2018"     => 5674,
+        "rgk_winter2018"   => 5874,
+        "rgb_spring2019"   => 6150,
+        "rgb_fall2019"     => 11093,
+        "rgb_winter2020"   => 11323,
+        "rgf_spring2020"   => 11620,
+        "rgm_winter2021"   => 15016,
+        "rgc_summer2022"   => 16043,
+        "rgc_fall2022"     => 16843,
+        "rge_spring2024"   => 20000,
+        "rgd_spring2025"   => 21000
+    );
+
+    return $variation_to_run{$_[0]} // 0;
 }
 
 1;

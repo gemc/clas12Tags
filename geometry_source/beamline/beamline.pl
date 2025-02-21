@@ -1,76 +1,83 @@
 #!/usr/bin/perl -w
 
-
 use strict;
+use warnings;
 use lib ("$ENV{GEMC}/api/perl");
 use utils;
 use parameters;
 use geometry;
 use math;
 use materials;
-
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
-sub help()
-{
-	print "\n Usage: \n";
-	print "   beamline.pl <configuration filename>\n";
-	print "   Will create the CLAS12 beamline and materials\n";
-	print "   Note: The passport and .visa files must be present if connecting to MYSQL. \n\n";
-	exit;
+sub help() {
+    print "\n Usage: \n";
+    print "   beamline.pl <configuration filename>\n";
+    print "   Will create the CLAS12 beamline and materials\n";
+    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
+    exit;
 }
 
 # Make sure the argument list is correct
-if( scalar @ARGV != 1)
-{
-	help();
-	exit;
+if (scalar @ARGV != 1) {
+    help();
+    exit;
 }
 
 # Loading configuration file and parameters
 our %configuration = load_configuration($ARGV[0]);
-
-
-# Global pars - these should be read by the load_parameters from file or DB
 
 # General:
 our $inches = 25.4;
 
 # materials
 require "./materials.pl";
-
-# vacuum line throughout the shields, torus and downstream
 require "./vacuumLine.pl";
 require "./ELMOline.pl";
 require "./rghline.pl";
 require "./transverseUpstreamBeampipe.pl";
 
-# require "./torusShielding.pl";
+sub create_system {
+    my $variation = clas12_configuration_string(\%configuration);
 
-my @allConfs = ("FTOn", "FTALERT" , "FTOff", "ELMO", "rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
+    if ($variation eq "rgc_fall2022") {
+        ELMOline();
+    }
+    elsif ($variation eq "TransverseUpstreamBeampipe") {
+        transverseUpstreamBeampipe();
+    }
+    elsif ($variation eq "rghFTOut" || $configuration{"variation"} eq "rghFTOn") {
+        rghline();
+    }
+    else {
+        vacuumLine();
+    }
 
-foreach my $conf ( @allConfs ) {
-
-	$configuration{"variation"} = $conf ;
-
-	# materials
-	materials();
-
-	# vacuum line throughout the shields, torus and downstream
-	# temp includes the torus back nose
-	if( $configuration{"variation"} eq "FTOff" or $configuration{"variation"} eq "FTOn" or $configuration{"variation"} eq "FTALERT") {
-		vacuumLine();
-	} elsif( $configuration{"variation"} eq "ELMO") {
-		ELMOline();
-	} elsif( $configuration{"variation"} eq "TransverseUpstreamBeampipe") {
-		transverseUpstreamBeampipe();
-	} elsif( $configuration{"variation"} eq "rghFTOut" or $configuration{"variation"} eq "rghFTOn") {
-		rghline();
-	}
-
-	# torusShield();
+    materials();
 }
 
+my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rgc_fall2022", "rge_spring2024", "rgd_spring2025");
+my @runs = clas12_runs(@variations);
 
+my @custom_variations = ("rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
+
+# TEXT Factory, include extra variations
+$configuration{"factory"} = "TEXT";
+my $runNumber = 11;
+foreach my $variation (@variations, @custom_variations) {
+    $configuration{"variation"} = $variation;
+    create_system($variation, $runNumber);
+}
+
+# SQLITE Factory
+$configuration{"factory"} = "SQLITE";
+my $variation = "default";
+foreach my $run (@runs) {
+    $configuration{"variation"} = $variation;
+    $configuration{"run_number"} = $run;
+    create_system($variation, $run);
+}
 

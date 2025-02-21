@@ -114,7 +114,6 @@ my @runs = clas12_runs(@variations);
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
-
 my $runNumber = 11;
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
@@ -124,7 +123,6 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-
 my $variation = "default";
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;

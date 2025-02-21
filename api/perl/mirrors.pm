@@ -211,12 +211,12 @@ sub print_mir {
     if ($configuration{"factory"} eq "SQLITE") {
         my $dbh = open_db(%configuration);
 
-        # first time this module is run, delete everything in geometry table for this variation, system and run number
+        # first time this module is run, delete everything in mirrors table for this system
         if ($counter_sqlite == 0 || $this_variation ne $varia) {
             my $sql = "DELETE FROM mirrors WHERE system = ?";
+            print "   > Deleting all mirrors for system $system \n";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
-            print "   > Deleted all mirrors for system $system \n";
             $counter_sqlite = 1;
             $this_variation = $varia;
         }

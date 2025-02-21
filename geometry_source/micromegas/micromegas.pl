@@ -60,15 +60,17 @@ sub create_system {
     define_fmt();
 }
 
-my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021", "michel_9mmcopper");
+my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021");
 my @runs = clas12_runs(@variations);
+
+my @custom_variations = ("michel_9mmcopper");
+
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
-
 my $runNumber = 11;
-foreach my $variation (@variations) {
+foreach my $variation (@variations, @custom_variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
 }

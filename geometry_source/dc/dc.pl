@@ -79,16 +79,17 @@ sub create_system {
     }
 }
 
-my @variations = ("default",  "ddvcs");
+my @variations = ("default");
 my @runs = clas12_runs(@variations);
+
+my @custom_variations = ("ddvcs");
 
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
-
 my $runNumber = 11;
-foreach my $variation (@variations) {
+foreach my $variation (@variations, @custom_variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
 }
@@ -97,7 +98,6 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-
 my $variation = "default";
 foreach my $run (@runs) {
     $configuration{"variation"} = $variation;

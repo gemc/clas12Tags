@@ -63,7 +63,6 @@ my @runs = clas12_runs(@variations);
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
-
 my $runNumber = 11;
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
