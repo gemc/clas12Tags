@@ -1,0 +1,20 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<detector name="experiments/clas12/targets/cad/" factory="CAD"/>
+	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
+
+	<!-- FT/Beamline configuration -->
+	<detector name="experiments/clas12/ft/ft"              factory="TEXT" variation="rgb_spring2019"/>
+	<detector name="experiments/clas12/beamline/cad/"      factory="CAD"  variation="rgb_spring2019"/>
+	<detector name="experiments/clas12/beamline/beamline"  factory="TEXT" variation="rgb_spring2019"/>
+	
+
+	<!--  Target and central detectors are all shifted upstream by 30 mm until this shift is implemented in the geometry itself-->
+	<detector name="target">
+		<position x="0*cm" y="0*cm" z="-3.00*cm"/>
+	</detector>
+
+</gcard>

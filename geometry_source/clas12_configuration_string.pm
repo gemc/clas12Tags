@@ -48,6 +48,9 @@ sub clas12_configuration_string {
     elsif ($varia eq "rgc_summer2022" || $runno eq 16043) {
         return "rgc_summer2022";
     }
+    elsif ($varia eq "rgc_fall2022" || $runno eq 16843) {
+        return "rgc_fall2022";
+    }
     elsif ($varia eq "rge_spring2024" || $runno eq 20000) {
         return "rge_spring2024";
     }

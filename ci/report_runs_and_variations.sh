@@ -17,9 +17,19 @@ geo_runs=(
     [rgc_summer2022]=16043
 )
 
-# Array of digitization variations
-# Notice this
-variations=$(awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u)
+# Array of digitization variations, obtained locally with:
+# awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
+dvariations=(
+	default
+	rga_fall2018_mc
+	rga_spring2018_mc
+	rga_spring2019_mc
+	rgb_fall2019_mc
+	rgb_spring2019_mc
+	rgc_summer2022_mc
+	rgf_spring2020_mc
+	rgm_fall2021_mc
+)
 
 # Print header for geometry variations
 echo "Geometry Variation | Run |"
@@ -35,9 +45,9 @@ echo "<br/>"
 echo
 
 # Print header for digitization variations
-echo "| Digitization Variations |"
+echo "| Digitization Variation |"
 echo "| --- |"
 
-for variation in $=variations; do
+for variation in $=dvariations; do
     echo "| $variation |"
 done
