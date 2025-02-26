@@ -35,22 +35,38 @@ variations_for_run_and_system()  {
 		echo "rga_spring2018"
 	elif [[ $1 == "4763" ]]; then
 		echo "rga_fall2018"
-	elif [[ $1 == "5874" ]]; then
-		echo "rgk_winter2018"
+	elif [[ $1 == "6608" ]]; then
+		echo "rga_spring2019"
 	elif [[ $1 == "6150" ]]; then
 		echo "rgb_spring2019"
+	elif [[ $1 == "11093" ]]; then
+		echo "rgb_fall2019"
 	elif [[ $1 == "11323" ]]; then
 		echo "rgb_winter2020"
-	elif [[ $1 == "11620" ]]; then
-		echo "rgf_spring2020"
-	elif [[ $1 == "15016" ]]; then
-		echo "rgm_winter2021"
 	elif [[ $1 == "16043" ]]; then
 		echo "rgc_summer2022"
 	elif [[ $1 == "16843" ]]; then
 		echo "rgc_fall2022"
+	elif [[ $1 == "17471" ]]; then
+		echo "rgc_winter2023"
+	elif [[ $1 == "18305" ]]; then
+		echo "rgd_fall2023"
 	elif [[ $1 == "20000" ]]; then
 		echo "rge_spring2024"
+	elif [[ $1 == "11620" ]]; then
+		echo "rgf_spring2020"
+	elif [[ $1 == "12389" ]]; then
+		echo "rgf_summer2020"
+	elif [[ $1 == "5674" ]]; then
+		echo "rgk_fall2018"
+	elif [[ $1 == "5874" ]]; then
+		echo "rgk_winter2018"
+	elif [[ $1 == "19200" ]]; then
+		echo "rgk_winter2023"
+	elif [[ $1 == "19300" ]]; then
+		echo "rgk_spring2024"
+	elif [[ $1 == "15016" ]]; then
+		echo "rgm_winter2021"
 	fi
 }
 

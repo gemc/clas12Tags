@@ -13,7 +13,7 @@
 [[ -d clas12-config  ]] && echo clas12-config exist || git clone -b dev https://github.com/JeffersonLab/clas12-config
 
 # gcards is an array containing the list of files in clas12-config/gemc/dev
-gcards=($(ls clas12-config/gemc/dev))
+gcards=($(ls clas12-config/gemc/dev | grep -v sqlite))
 
 # lastg is last element of the array
 lastg=${gcards[-1]}

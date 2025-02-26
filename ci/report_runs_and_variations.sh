@@ -12,9 +12,19 @@ geo_runs=(
     [rgb_spring2019]=6150
     [rgb_fall2019]=11093
     [rgb_winter2020]=11323
-    [rgf_spring2020]=11620
-    [rgm_winter2021]=15016
     [rgc_summer2022]=16043
+    [rgc_fall2022]=16843
+    [rgc_winter2023]=17471
+    [rgd_fall2023]=18305
+    [rg3_spring2024]=20000
+    [rgf_spring2020]=11620
+    [rgf_summer2020]=12389
+    [rgk_fall2018]=5674
+    [rgk_winter2018]=5874
+    [rgk_winter2022]=19200
+    [rgk_spring2024]=19300
+    [rgm_winter2021]=15016
+
 )
 
 # Array of digitization variations, obtained locally with:
@@ -45,7 +55,7 @@ echo "<br/>"
 echo
 
 # Print header for digitization variations
-echo "| Digitization Variation |"
+echo "| Digitization Variations |"
 echo "| --- |"
 
 for variation in $=dvariations; do
