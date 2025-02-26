@@ -9,8 +9,10 @@ DetectorDirNotExisting() {
 runs_for_system() {
 	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
-	elif [[ $system == "dc" || $system == "bst" ]]; then
+	elif [[ $system == "dc" ]]; then
 		echo "11"
+	elif [[ $system == "bst" ]]; then
+		echo "11 20000"
 	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "micromegas" ]]; then

@@ -36,7 +36,7 @@ map <string, detector> sqlitecad_det_factory::loadDetectors() {
 
         // if run number is -1, the detector is not in the DB. exit with error
         if (run_number == -1) {
-            cout << hd_msg << " !!! Detector \"" << dname << "\" not found in the SQLITE CAD database for run number <" << run_number << ">. Exiting." << endl;
+            cout << hd_msg << " !!! Detector \"" << dname << "\" not found in the SQLITE CAD database for reuested run number <" << run << ">. Exiting." << endl;
             exit(1);
         }
 

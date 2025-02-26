@@ -7,9 +7,9 @@
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
 
 	<!-- FT/Beamline configuration -->
-	<detector name="experiments/clas12/ft/ft"              factory="TEXT"/>
-	<detector name="experiments/clas12/beamline/cad/"      factory="CAD"  />
-	<detector name="experiments/clas12/beamline/beamline"  factory="TEXT" />
+	<detector name="ft"             factory="SQLITE"/>
+	<detector name="beamline_cad/"  factory="SQLITECAD"/>
+	<detector name="beamline"       factory="SQLITE"/>
 
 
 

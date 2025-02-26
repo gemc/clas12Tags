@@ -40,6 +40,7 @@ require "./materials.pl";
 require "./bank.pl";
 require "./hit.pl";
 require "./geometry_java.pl";
+require "./bstShield.pl";
 
 
 # subroutines create_system with arguments (variation, run number)
@@ -59,8 +60,10 @@ sub create_system {
     our @volumes = get_volumes(%configuration);
 
     coatjava::makeBST();
+    make_bst_shield();
+
 }
-my @variations = ("default");
+my @variations = ("default", "rge_spring2024");
 my @runs = clas12_runs(@variations);
 
 # TEXT Factory
@@ -78,6 +81,7 @@ foreach my $variation (@variations) {
 $configuration{"factory"} = "SQLITE";
 define_bank();
 upload_parameters(\%configuration, "bst__parameters_default.txt", "bst", "default", 11);
+upload_parameters(\%configuration, "bst__parameters_rge_spring2024.txt", "bst", "default", 20000);
 
 my $variation = "default";
 foreach my $run (@runs) {

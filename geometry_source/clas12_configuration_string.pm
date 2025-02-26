@@ -2,7 +2,7 @@ package clas12_configuration_string;
 require Exporter;
 
 @ISA = qw(Exporter);
-@EXPORT = qw(clas12_configuration_string clas12_runs);
+@EXPORT = qw(clas12_configuration_string clas12_runs clas12_run);
 
 
 # Initialize hash maps
