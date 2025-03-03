@@ -3,7 +3,6 @@ use warnings;
 
 our %configuration;
 
-my $rmin = 51;
 my $rmin_rge = 52.1;
 my $length = 180;
 my $pos = "0*mm 0*mm -50*mm";
@@ -15,6 +14,8 @@ my $HSlength = 270.0;
 my $HSpos = "0*mm 0*mm -10*mm";
 
 sub make_bst_shield() {
+    my $rmin = 51;
+
     my $variation = clas12_configuration_string(\%configuration);
 
     my %detector = init_det();
@@ -25,18 +26,15 @@ sub make_bst_shield() {
     $detector{"color"} = "88aaff";
     $detector{"type"} = "Tube";
     $detector{"pos"} = $pos;
+    $detector{"material"} = "beamline_W";
 
     my $rmax = 0;
 
-    if ($variation ne "rge_spring2024") {
-        $rmax = $rmin + 0.051;
-        $detector{"material"} = "beamline_W";
-    }
-    else {
+    if ($variation eq "rge_spring2024") {
         $rmin = $rmin_rge;
-        $rmax = $rmin + 0.051;
-        $detector{"material"} = "beamline_W";
     }
+
+    $rmax = $rmin + 0.051;
 
     my $dimen = "$rmin*mm $rmax*mm $length*mm 0*deg 360*deg";
 

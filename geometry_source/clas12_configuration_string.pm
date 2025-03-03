@@ -54,6 +54,7 @@ sub clas12_configuration_string {
     elsif ($varia eq "rge_spring2024" || $runno eq 20000) {
         return "rge_spring2024";
     }
+
     # if no run is found, return the variation itself
     else {
         return $varia;

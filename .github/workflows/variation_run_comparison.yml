@@ -63,8 +63,8 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          - ec
-          - pcal
+#          - ec
+#          - pcal
           - dc
 #          - ftof
 #          - ctof

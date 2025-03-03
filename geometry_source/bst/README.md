@@ -12,7 +12,7 @@ Notice: rge_spring2024 is added because the bst shield radius is larger.
 
 # Geometry
 
-The geometry consists of 3(4) barrela of modules, 
+The geometry consists of 3(4) barrel of modules, 
 each with 3 silicon sensors.
 
 

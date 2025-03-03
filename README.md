@@ -14,7 +14,7 @@ at Jefferson Lab, providing:
 
 ---
 
-## How to create the CLAS12 detector geometry database
+## Pre-requisites
 
 You will need:
 
@@ -28,6 +28,8 @@ module switch gemc/dev
 ```
 
 On a local installation you can use `module load gemc/dev` instead.
+
+## How to create the CLAS12 detector geometry database
 
 
 Clone the clas12Tag repository:
