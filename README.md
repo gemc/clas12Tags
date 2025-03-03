@@ -65,8 +65,16 @@ Examples:
 
 ### Create a single detector geometry in the `geometry_source` directory:
 
-Change directory to detector of interest inside `geometry_source`. For ftof:
+The script above installs coatjava. If you didn't run it, 
+you need to install coatjava manually:
 
+
+```
+cd geometry_source 
+./install_coatjava.sh -l
+```
+
+Change directory to detector of interest inside `geometry_source`. For example ftof:
 
 ```
 cd geometry_source/ftof
