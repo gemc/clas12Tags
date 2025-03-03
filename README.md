@@ -19,10 +19,27 @@ at Jefferson Lab, providing:
 You will need:
 
 - `java (openjdk >= 17)` and `groovy` installed to run the coatjava geometry service.
-- gemc environment, loaded either with `module load clas12` or `module load gemc`.
+- gemc environment.
+
+The above requirements are met  at JLab by executing `module load clas12`. 
+On a local installation you can use `module load gemc` instead.
+
+
+Clone the clas12Tag repository:
+
+```
+git clone https://github.com/gemc/clas12Tags
+cd clas12Tags
+```
+
+At this point you can either install the 
+geometry database for a single detector or all of them into the `experiments` 
+directory, or create a single detector geometry inside the `geometry_source` 
+directory for debugging purposes.
+
+### Install geometry database into the `experiments` directory:
 
 The script `create_geometry.sh` will create an individual detector geometry or all of them:
-
 
 ```
 Usage: create_geometry.sh [detector]
@@ -45,6 +62,31 @@ Examples:
 ./create_geometry.sh cnd : creates the CND geometry ASCII database, updates the SQLITE database
 ./create_geometry.sh : creates all the CLAS12 detectors, updates the SQLITE database
 ```
+
+### Create a single detector geometry in the `geometry_source` directory:
+
+Change directory to detector of interest inside `geometry_source`. For ftof:
+
+
+```
+cd geometry_source/ftof
+```
+
+If not already present, create the SQLITE databse:
+
+```
+$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite
+```
+
+Run the geometry script to create the ASCII and SQLITE databases:
+
+```
+./ftof.pl config.dat
+```
+
+You will see in the local directory the ASCII databases (geometry and materials txt files), 
+and the SQLITE database `clas12.sqlite` will be updated with the new detector.
+
 
 ---
 
