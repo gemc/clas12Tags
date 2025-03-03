@@ -21,8 +21,13 @@ You will need:
 - `java (openjdk >= 17)` and `groovy` installed to run the coatjava geometry service.
 - gemc environment.
 
-The above requirements are met  at JLab by executing `module load clas12`. 
-On a local installation you can use `module load gemc` instead.
+The above requirements are met  at JLab by executing 
+```
+module load clas12
+module switch gemc/dev
+```
+
+On a local installation you can use `module load gemc/dev` instead.
 
 
 Clone the clas12Tag repository:
