@@ -1,0 +1,16 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<detector name="solenoid"                  factory="TEXT"/>
+	<detector name="cad/"                      factory="CAD" />
+	<detector name="experiments/clas12/ft/ft"  factory="TEXT"/>
+
+	<option name="NO_FIELD" value="all"/>
+	
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="RUNNO" value="11"/>
+
+</gcard>
+

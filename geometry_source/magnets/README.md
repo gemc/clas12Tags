@@ -14,9 +14,7 @@ The torus magnets has a CAD model that is imported in gemc and a Geant4 native v
 
 To build the geometry:
 
-./beamline.pl config.dat
-
-
+./magnets.pl config.dat
 
 
 ## Geometry comparison:

@@ -22,5 +22,4 @@
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
 
-
 </gcard>
