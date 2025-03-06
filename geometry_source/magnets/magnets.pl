@@ -37,15 +37,16 @@ require "./torus.pl";
 # between the first system and subsequent systems (
 system('rm *.txt');
 
-# all the scripts must be run for every configuration
-my @variations = ("default");
+my @variations = ("default", "rga_spring2018", "rga_fall2018");
 my @runs = clas12_runs(@variations);
 
 sub create_system {
     my $variation = shift;
     my $runNumber = shift;
     my $factory   = shift;
-    makeTorus($variation, $runNumber, $factory);
+    # only make torus for default variation
+    makeTorus($variation, $runNumber, $factory) if $variation eq "default";
+
     makeSolenoid($variation, $runNumber, $factory);
 }
 
@@ -64,7 +65,4 @@ foreach my $run (@runs) {
 
 # port gxml to sqlite
 require "../gxml_to_sqlite.pl";
-foreach my $variation (@variations) {
-    $configuration{"run_number"} = clas12_run($variation);
-    process_gxml("cad/cad_$variation.gxml", "cad");
-}
+process_gxml("cad/cad_default.gxml", "cad");

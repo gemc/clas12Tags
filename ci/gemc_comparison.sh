@@ -110,7 +110,7 @@ elif [[ $system == "rich" ]]; then
 	banks_to_check="RICH::tdc"
 elif [[ $system == "micromegas" ]]; then
 	banks_to_check="BMT::adc FMT::adc"
-elif [[ $system == "ft" || $system == "beamline" || $system = "magnets"]]; then
+elif [[ $system == "ft" || $system == "beamline" || $system = "magnets" ]]; then
 	banks_to_check="FTCAL::adc FTHODO::adc FTTRK::adc"
 fi
 

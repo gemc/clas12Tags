@@ -13,7 +13,7 @@ runs_for_system() {
 		echo "11"
 	elif [[ $system == "bst" ]]; then
 		echo "11 20000"
-	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" ]]; then
+	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" || $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "micromegas" ]]; then
 		echo "3029 11620 15016"
