@@ -4,7 +4,8 @@
 
 
 	<detector name="dc" factory="TEXT"/>
-	<detector name="experiments/clas12/beamline/beamline" factory="TEXT" variation="FTOff"/>
+	<detector name="experiments/clas12/beamline/cad/"     factory="CAD"  />
+	<detector name="experiments/clas12/beamline/beamline" factory="TEXT"/>
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>
@@ -20,6 +21,5 @@
 	<option name="RUNNO" value="11"/>
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
-	<option name="DIGITIZATION_VARIATION" value="default"/>
-
+	
 </gcard>
