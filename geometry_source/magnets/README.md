@@ -1,1 +1,29 @@
 # CLAS12 Magnets
+
+
+The solenoid is created using Geant4 native volumes. 
+The torus magnets has a CAD model that is imported in gemc and a Geant4 native volumes version as well.
+
+
+# Run Configurations
+
+| variation        | SQL / CCDB Run | 
+|------------------|----------------|
+| default          | 11             | 
+
+
+To build the geometry:
+
+./beamline.pl config.dat
+
+
+
+
+## Geometry comparison:
+
+To compare the two databases (TEXT and SQLITE) the script ` $GEMC/api/perl/db_compare.py` can be used:
+
+````
+$GEMC/api/perl/db_compare.py torus__geometry_default.txt        ../../clas12.sqlite torus  11   default
+$GEMC/api/perl/db_compare.py solenoid__geometry_default.txt     ../../clas12.sqlite solenoid  11   default
+```

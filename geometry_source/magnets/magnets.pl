@@ -1,54 +1,70 @@
 #!/usr/bin/perl -w
 
 use strict;
+use warnings;
 use lib ("$ENV{GEMC}/api/perl");
 use utils;
 use parameters;
 use geometry;
 use materials;
-
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
-sub help()
-{
-	print "\n Usage: \n";
-	print "   magnets.pl \n";
- 	print "   Will create the CLAS12 Torus and Solenoid geometry and materials\n";
- 	print "   Note: The passport and .visa files must be present if connecting to MYSQL. \n\n";
-	exit;
+sub help() {
+    print "\n Usage: \n";
+    print "   magnets.pl \n";
+    print "   Will create the CLAS12 Torus and Solenoid geometry\n";
+    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
+    exit;
 }
 
 # Make sure the argument list is correct
-if( scalar @ARGV != 0 && scalar @ARGV != 1)
-{
-	help();
-	exit;
+if (scalar @ARGV != 0 && scalar @ARGV != 1) {
+    help();
+    exit;
 }
 
+# Loading configuration file and parameters
+our %configuration = load_configuration($ARGV[0]);
 
-# solenoid geometry
+
 require "./solenoid.pl";
-
-# torus geometry
 require "./torus.pl";
 
-
-# all the scripts must be run for every configuration
-my @allConfs = ("original");
-
-# manually removing the txt files as the scripts are not meant to produce 2 different
-# systems
+# manually removing the txt files because the api does not have the capability to distinguish
+# between the first system and subsequent systems (
 system('rm *.txt');
 
+# all the scripts must be run for every configuration
+my @variations = ("default");
+my @runs = clas12_runs(@variations);
 
-# the configuration here is passed as an argument
-foreach my $conf ( @allConfs )
-{
-	# geometry
-	makeTorus($conf);
-	makeSolenoid($conf);
-	
+sub create_system {
+    my $variation = shift;
+    my $runNumber = shift;
+    my $factory   = shift;
+    makeTorus($variation, $runNumber, $factory);
+    makeSolenoid($variation, $runNumber, $factory);
+}
+
+# TEXT Factory, include extra variations
+my $runNumber = 11;
+foreach my $variation (@variations) {
+    create_system($variation, $runNumber, "TEXT");
+}
+
+# SQLITE Factory
+my $variation = "default";
+foreach my $run (@runs) {
+    create_system($variation, $runNumber, "SQLITE");
 }
 
 
+# port gxml to sqlite
+require "../gxml_to_sqlite.pl";
+foreach my $variation (@variations) {
+    $configuration{"run_number"} = clas12_run($variation);
+    process_gxml("cad/cad_$variation.gxml", "cad");
+}

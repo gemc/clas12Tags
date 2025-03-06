@@ -1,10 +1,7 @@
 use strict;
 use warnings;
 
-
-# Loading configuration file from argument
-my %configuration = load_configuration("config_solenoid.dat");
-
+our %configuration;
 
 my $nplanes = 14;
 
@@ -40,9 +37,11 @@ my $zstart    = -898.093 ;             # z coordinate of border
 
 sub makeSolenoid
 {
-	$configuration{"variation"} = shift ;
+    $configuration{"variation"} = shift;
+    $configuration{"run_number"} = shift;
+    $configuration{"factory"} = shift;
+    $configuration{"detector_name"} = "solenoid";
 
-	
 	my $dimensions = "0.0*deg 360.0*deg $nplanes*counts";
 	for(my $i = 0; $i <$nplanes ; $i++)
 	{

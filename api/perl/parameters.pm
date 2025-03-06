@@ -113,15 +113,19 @@ sub upload_parameter {
     state $counter_mysql = 0;
     state $counter_sqlite = 0;
     state $this_variation = "";
+    state $state_system = "";
 
     # TEXT Factory
     if ($configuration{"factory"} eq "TEXT" || $this_variation ne $varia) {
         my $file = $configuration{"detector_name"} . "__parameters_" . $varia . ".txt";
-        if ($counter_text == 0) {
+        my $system = $configuration{"detector_name"};
+
+        if ($counter_text == 0 || $this_variation ne $varia || $system ne $state_system) {
             `rm -f $file`;
             print "Overwriting if existing: ", $file, "\n";
             $counter_text = 1;
             $this_variation = $varia;
+            $state_system = $system;
         }
 
         open(my $info, ">>$file");
@@ -149,13 +153,14 @@ sub upload_parameter {
         my $system = $configuration{"detector_name"};
 
         # first time this module is run, delete everything in geometry table for this variation, system and run number
-        if ($counter_sqlite == 0 || $this_variation ne $varia) {
+        if ($counter_sqlite == 0 || $this_variation ne $varia || $system ne $state_system) {
             my $sql = "DELETE FROM parameters WHERE system = ? and variation = ? and run = ?";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
             print "   > Deleted all parameters for system $system \n";
             $counter_sqlite = 1;
             $this_variation = $varia;
+            $state_system = $system;
         }
 
         my $mnames_string = "system, variation, run, parameter_name, value, unit, description, authors, emails, document, variable_name, drawing_author, document_date";

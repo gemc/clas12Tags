@@ -65,21 +65,24 @@ sub print_det {
     my $lidentifiers = trim($det{"identifiers"}, "identifiers");
 
 
-    # after 5.10 once can use "state" to use a static variable`
+    # after 5.10 one can use "state" to use a static variable`
     state $counter_text = 0;
     state $counter_mysql = 0;
     state $counter_sqlite = 0;
     state $this_variation = "";
+    state $state_system = "";
 
     # TEXT Factory
     if ($configuration{"factory"} eq "TEXT") {
+        my $system = $configuration{"detector_name"};
 
         my $file = $configuration{"detector_name"} . "__geometry_" . $varia . ".txt";
-        if ($counter_text == 0 || $this_variation ne $varia) {
+        if ($counter_text == 0 || $this_variation ne $varia || $system ne $state_system) {
             `rm -f $file`;
             print "Overwriting if existing: ", $file, "\n";
             $counter_text = 1;
             $this_variation = $varia;
+            $state_system = $system;
         }
 
         open(my $info, ">>", $file) or die "Could not open file '$file': $!";
@@ -116,13 +119,14 @@ sub print_det {
         my $system = $configuration{"detector_name"};
 
         # first time this module is run, delete everything in geometry table for this system
-        if ($counter_sqlite == 0 || $this_variation ne $varia) {
+        if ($counter_sqlite == 0 || $this_variation ne $varia || $system ne $state_system) {
             my $sql = "DELETE FROM geometry WHERE system = ?";
             print "   > Deleting all volumes for system $system \n";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
             $counter_sqlite = 1;
             $this_variation = $varia;
+            $state_system = $system;
         }
 
         my $names_string = "system, variation, run, name, mother, description, pos, rot, col, type, dimensions, material, magfield, ncopy, pMany, exist, visible, style, sensitivity, hitType, identity";

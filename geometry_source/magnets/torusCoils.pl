@@ -22,8 +22,6 @@ my $vacuumJacketThickness = 12.7;   # M. Zarecky email. The walls are 12.7, the 
 # Since the hexagon and parallelepids are similar, they can be built in the same routines
 
 
-
-
 sub makeHexagons
 {
 	

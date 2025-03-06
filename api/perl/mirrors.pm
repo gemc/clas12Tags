@@ -147,16 +147,20 @@ sub print_mir {
     state $counter_mysql = 0;
     state $counter_sqlite = 0;
     state $this_variation = "";
+    state $state_system = "";
 
     # TEXT Factory
     if ($configuration{"factory"} eq "TEXT") {
         my $file = $configuration{"detector_name"} . "__mirrors_" . $varia . ".txt";
+        my $system = $configuration{"detector_name"};
 
         if ($counter_text == 0 || $this_variation ne $varia) {
             `rm -f $file`;
             print "Overwriting if existing: ", $file, "\n";
             $counter_text = 1;
             $this_variation = $varia;
+            $state_system = $system;
+
         }
 
         open(my $info, ">>$file");
@@ -210,15 +214,17 @@ sub print_mir {
     # SQLITE Factory
     if ($configuration{"factory"} eq "SQLITE") {
         my $dbh = open_db(%configuration);
+        my $system = $configuration{"detector_name"};
 
         # first time this module is run, delete everything in mirrors table for this system
-        if ($counter_sqlite == 0 || $this_variation ne $varia) {
+        if ($counter_sqlite == 0 || $this_variation ne $varia || $system ne $state_system) {
             my $sql = "DELETE FROM mirrors WHERE system = ?";
             print "   > Deleting all mirrors for system $system \n";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
             $counter_sqlite = 1;
             $this_variation = $varia;
+            $state_system = $system;
         }
 
         my $mnames_string = "system, variation, run, name, description, type, finish, model, border, mat_opt_props, photon_energy, refraction_index, reflectivity, efficiency, specular_lobe, specular_spike, backscatter, sigma_alpha";
