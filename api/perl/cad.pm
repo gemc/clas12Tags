@@ -20,8 +20,8 @@ sub init_cad {
     $cad{"identifiers"} = "no";
     $cad{"visible"} = 1;
     $cad{"style"} = 1;
-    $cad{"position"} = "0*mm, 0*mm, 0*mm";
-    $cad{"rotation"} = "0*deg, 0*deg, 0*deg";
+    $cad{"position"} = "0*mm 0*mm 0*mm";
+    $cad{"rotation"} = "0*deg 0*deg 0*deg";
     $cad{"mfield"} = "no";
     $cad{"mother"} = "root";
     $cad{"color"} = "778899";

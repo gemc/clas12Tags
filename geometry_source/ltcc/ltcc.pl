@@ -120,23 +120,22 @@ foreach my $run (@runs) {
 
 # port gxml to sqlite
 require "../gxml_to_sqlite.pl";
-my $cad_ltcc = 'cad';
 
 $configuration{"run_number"} = 11;
-process_gxml("$cad_ltcc/cad_default.gxml", $cad_ltcc);
+process_gxml("cad/cad_default.gxml", "experiments/clas12/ltcc/cad");
 
 $configuration{"run_number"} = 3029;
-process_gxml("$cad_ltcc/cad_rga_spring2018.gxml", $cad_ltcc);
+process_gxml("cad/cad_rga_spring2018.gxml", "experiments/clas12/ltcc/cad");
 
 $configuration{"run_number"} = 4763;
-process_gxml("$cad_ltcc/cad_rga_fall2018.gxml", $cad_ltcc);
+process_gxml("cad/cad_rga_fall2018.gxml", "experiments/clas12/ltcc/cad");
 
 $configuration{"run_number"} = 6150;
-process_gxml("$cad_ltcc/cad_rgb_spring2019.gxml", $cad_ltcc);
+process_gxml("cad/cad_rgb_spring2019.gxml", "experiments/clas12/ltcc/cad");
 
 $configuration{"run_number"} = 11323;
-process_gxml("$cad_ltcc/cad_rgb_winter2020.gxml", $cad_ltcc);
+process_gxml("cad/cad_rgb_winter2020.gxml", "experiments/clas12/ltcc/cad");
 
 $configuration{"run_number"} = 15016;
-process_gxml("$cad_ltcc/cad_rgm_winter2021.gxml", $cad_ltcc);
+process_gxml("cad/cad_rgm_winter2021.gxml", "experiments/clas12/ltcc/cad");
 

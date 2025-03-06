@@ -86,5 +86,5 @@ foreach my $run (@runs) {
 require "../gxml_to_sqlite.pl";
 foreach my $variation (@variations) {
     $configuration{"run_number"} = clas12_run($variation);
-    process_gxml("cad/cad_$variation.gxml", "cad");
+    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/beamline/cad");
 }

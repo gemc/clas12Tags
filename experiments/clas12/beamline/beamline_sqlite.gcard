@@ -7,9 +7,9 @@
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
 
 	<!-- FT/Beamline configuration -->
-	<detector name="ft"             factory="SQLITE"/>
-	<detector name="beamline_cad/"  factory="SQLITECAD"/>
-	<detector name="beamline"       factory="SQLITE"/>
+	<detector name="ft"            factory="SQLITE"/>
+	<detector name="beamline_cad"  factory="SQLITECAD"/>
+	<detector name="beamline"      factory="SQLITE"/>
 
 	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
 	<option name="SPREAD_P" value="0.0*GeV, 00*deg, 180*deg"/>

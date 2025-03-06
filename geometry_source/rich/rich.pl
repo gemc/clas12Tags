@@ -138,21 +138,20 @@ make_path('cad');
 
 # Copy STL files from javacad_default to cad
 my $javacad_default = 'cad_default';
-my $cad = 'cad';
 
 # Copy all STL files from the other variations to the cad directory
 opendir(my $dh, $javacad_default) or die "Cannot open directory $javacad_default: $!";
 while (my $file = readdir($dh)) {
     if ($file =~ /\.stl$/) {
-        copy("$javacad_default/$file", "$cad/$file") or die "Copy failed: $!";
+        copy("$javacad_default/$file", "cad/$file") or die "Copy failed: $!";
     }
 }
 closedir($dh);
 
 # Copy specific GXML files
-copy("$javacad_default/cad.gxml", "$cad/cad_default.gxml") or die "Copy failed: $!";
-copy("cad_rgc_summer2022/cad.gxml", "$cad/cad_rgc_summer2022.gxml") or die "Copy failed: $!";
-copy("cad_rga_spring2018/cad.gxml", "$cad/cad_rga_spring2018.gxml") or die "Copy failed: $!";
+copy("$javacad_default/cad.gxml",   "cad/cad_default.gxml") or die "Copy failed: $!";
+copy("cad_rgc_summer2022/cad.gxml", "cad/cad_rgc_summer2022.gxml") or die "Copy failed: $!";
+copy("cad_rga_spring2018/cad.gxml", "cad/cad_rga_spring2018.gxml") or die "Copy failed: $!";
 
 
 # Remove javacad directories created with the geometry service
@@ -165,11 +164,11 @@ remove_tree('cad_rga_spring2018');
 require "../gxml_to_sqlite.pl";
 
 $configuration{"run_number"} = 11;
-process_gxml("$cad/cad_default.gxml", $cad);
+process_gxml("cad/cad_default.gxml", "rich/cad");
 
 $configuration{"run_number"} = 3029;
-process_gxml("$cad/cad_rga_spring2018.gxml", $cad);
+process_gxml("cad/cad_rga_spring2018.gxml", "experiments/clas12/rich/cad");
 
 $configuration{"run_number"} = 16043;
-process_gxml("$cad/cad_rgc_summer2022.gxml", $cad);
+process_gxml("cad/cad_rgc_summer2022.gxml", "experiments/clas12/rich/cad");
 
