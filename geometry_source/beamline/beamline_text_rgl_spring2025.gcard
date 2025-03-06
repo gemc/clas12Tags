@@ -11,10 +11,14 @@
 	<detector name="experiments/clas12/beamline/cad/"      factory="CAD"  variation="rgl_spring2025"/>
 	<detector name="experiments/clas12/beamline/beamline"  factory="TEXT" variation="rgl_spring2025"/>
 
+	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
+	<option name="SPREAD_P" value="0.0*GeV, 00*deg, 180*deg"/>
 
-	<!--  Target and central detectors are all shifted upstream by 30 mm until this shift is implemented in the geometry itself-->
-	<detector name="target">
-		<position x="0*cm" y="0*cm" z="-3.00*cm"/>
-	</detector>
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="INTEGRATEDRAW" value="ft_cal, ft_hodo, ft_trk"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
 
 </gcard>

@@ -14,6 +14,5 @@
 	<option name="RUNNO" value="11"/>
 	<option name="OUTPUT" value="hipo, out.hipo"/>
 	<option name="PHYSICS" value="STD + FTFP_BERT"/>
-	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
 
 </gcard>
