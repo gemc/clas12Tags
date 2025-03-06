@@ -91,7 +91,7 @@ sub clas12_run {
         "rgc_summer2022"   => 16043,
         "rgc_fall2022"     => 16843,
         "rge_spring2024"   => 20000,
-        "rgd_spring2025"   => 21000
+        "rgl_spring2025"   => 21000
     );
 
     return $variation_to_run{$_[0]} // 0;

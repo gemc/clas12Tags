@@ -16,7 +16,6 @@ geo_runs=(
     [rgc_fall2022]=16843
     [rgc_winter2023]=17471
     [rgd_fall2023]=18305
-    [rgd_spring2025]=21000
     [rge_spring2024]=20000
     [rgf_spring2020]=11620
     [rgf_summer2020]=12389
@@ -24,6 +23,7 @@ geo_runs=(
     [rgk_winter2018]=5874
     [rgk_winter2022]=19200
     [rgk_spring2024]=19300
+    [rgl_spring2025]=21000
     [rgm_winter2021]=15016
 
 )

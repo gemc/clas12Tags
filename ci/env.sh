@@ -51,8 +51,6 @@ variations_for_run_and_system()  {
 		echo "rgc_winter2023"
 	elif [[ $1 == "18305" ]]; then
 		echo "rgd_fall2023"
-	elif [[ $1 == "21000" ]]; then
-		echo "rgd_spring2025"
 	elif [[ $1 == "20000" ]]; then
 		echo "rge_spring2024"
 	elif [[ $1 == "11620" ]]; then
@@ -67,6 +65,8 @@ variations_for_run_and_system()  {
 		echo "rgk_winter2023"
 	elif [[ $1 == "19300" ]]; then
 		echo "rgk_spring2024"
+	elif [[ $1 == "21000" ]]; then
+		echo "rgl_spring2025"
 	elif [[ $1 == "15016" ]]; then
 		echo "rgm_winter2021"
 	fi
