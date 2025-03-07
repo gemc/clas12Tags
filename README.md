@@ -170,6 +170,31 @@ Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/
 
 ---
 
+
+## Docker Images
+
+Docker images for Almalinux, Fedora and Ubuntu based OS systems 
+are available on [DockerHub](https://hub.docker.com/repository/docker/jeffersonlab/gemc/general).
+
+- dev-ubuntu24
+- dev-fedora36
+- dev-almalinux94
+
+To run the docker image (for example dev-fedora):
+
+```
+docker run -it --rm jeffersonlab/gemc:dev-fedora36 bash
+```
+
+On MacOS the additional option `--platform linux/amd64` is needed:
+
+```
+docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 bash
+```
+
+---
+
+
 ## Portal to Off-site farms CLAS12 Simulations
 
 GEMC simulations can be run on the Open Science Grid (OSG) using the
