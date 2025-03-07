@@ -162,9 +162,9 @@ jobs:
           echo "| Detector | Status  |" > Summary.md
           echo "|----------|---------|" >> Summary.md
           for detector in $detectors; do
-            if grep -q $detector | grep -q "❌" */*output_summary.log; then
+            if grep "❌" */*output_summary.log | grep -q $detector ; then
                 echo "| $detector | ❌ |" >> Summary.md
-            elif grep -q $detector | grep -q "✅" */*output_summary.log; then
+            elif grep "✅" */*output_summary.log | grep -q $detector; then
                 echo "| $detector | ✅ |" >> Summary.md
             fi
           done

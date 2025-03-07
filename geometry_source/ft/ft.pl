@@ -49,7 +49,7 @@ sub create_system {
 
 }
 
-my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rge_spring2024");
+my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rge_spring2024", "rgl_spring2025");
 my @runs = clas12_runs(@variations);
 
 
