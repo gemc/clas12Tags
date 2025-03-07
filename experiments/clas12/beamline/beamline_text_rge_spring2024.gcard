@@ -7,12 +7,12 @@
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
 
 	<!-- FT/Beamline configuration -->
-	<detector name="experiments/clas12/ft/ft"              factory="TEXT"/>
+	<detector name="experiments/clas12/ft/ft"              factory="TEXT" variation="rge_spring2024"/>
 	<detector name="experiments/clas12/beamline/cad/"      factory="CAD"  variation="rge_spring2024"/>
 	<detector name="experiments/clas12/beamline/beamline"  factory="TEXT" variation="rge_spring2024"/>
 
 	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
-	<option name="SPREAD_P" value="0.0*GeV, 00*deg, 180*deg"/>
+	<option name="SPREAD_P" value="0.0*GeV, 10*deg, 180*deg"/>
 
 	<option name="SAVE_ALL_MOTHERS" value="1"/>
 	<option name="INTEGRATEDRAW" value="ft_cal, ft_hodo, ft_trk"/>

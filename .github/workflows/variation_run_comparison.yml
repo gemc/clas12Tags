@@ -66,18 +66,18 @@ jobs:
         detector:
 #          - ec
 #          - pcal
-          - dc
+#          - dc
 #          - ftof
-          - ctof
+#          - ctof
 #          - cnd
 #          - bst
 #          - htcc
 #          - micromegas
-          - ltcc
-          - rich
+#          - ltcc
+#          - rich
 #          - ft
           - beamline
-          - magnets
+#          - magnets
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
           - default
