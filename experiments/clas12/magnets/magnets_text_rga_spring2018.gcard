@@ -5,7 +5,7 @@
 
 	<detector name="solenoid"                  factory="TEXT" variation="rga_spring2018"/>
 	<detector name="cad/"                      factory="CAD"/>
-	<detector name="experiments/clas12/ft/ft"  factory="TEXT" variation="rga_spring2018"/>
+	<detector name="experiments/clas12/ft/ft"  factory="TEXT"/>
 
 	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
 	<option name="SPREAD_P" value="0.0*GeV, 00*deg, 180*deg"/>

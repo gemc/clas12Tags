@@ -3,11 +3,11 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="experiments/clas12/targets/cad/" factory="CAD"/>
+	<detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
 	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lH2"/>
 
 	<!-- FT/Beamline configuration -->
-	<detector name="experiments/clas12/ft/ft"              factory="TEXT" variation="rge_spring2024"/>
+	<detector name="experiments/clas12/ft/ft"              factory="TEXT"/>
 	<detector name="experiments/clas12/beamline/cad/"      factory="CAD"  variation="rge_spring2024"/>
 	<detector name="experiments/clas12/beamline/beamline"  factory="TEXT" variation="rge_spring2024"/>
 
