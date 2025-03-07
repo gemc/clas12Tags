@@ -65,4 +65,7 @@ foreach my $run (@runs) {
 
 # port gxml to sqlite
 require "../gxml_to_sqlite.pl";
-process_gxml("cad/cad_default.gxml", "experiments/clas12/cad");
+foreach my $variation (@variations) {
+    $configuration{"run_number"} = clas12_run($variation);
+    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/magnets/cad");
+}

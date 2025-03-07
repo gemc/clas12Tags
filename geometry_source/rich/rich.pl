@@ -163,12 +163,7 @@ remove_tree('cad_rga_spring2018');
 # port gxml to sqlite
 require "../gxml_to_sqlite.pl";
 
-$configuration{"run_number"} = 11;
-process_gxml("cad/cad_default.gxml", "rich/cad");
-
-$configuration{"run_number"} = 3029;
-process_gxml("cad/cad_rga_spring2018.gxml", "experiments/clas12/rich/cad");
-
-$configuration{"run_number"} = 16043;
-process_gxml("cad/cad_rgc_summer2022.gxml", "experiments/clas12/rich/cad");
-
+foreach my $variation (@variations) {
+    $configuration{"run_number"} = clas12_run($variation);
+    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/rich/cad");
+}

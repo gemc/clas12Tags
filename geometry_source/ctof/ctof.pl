@@ -156,15 +156,9 @@ if (!-d "cad" || !-d "cad_upstream") {
 # port gxml to sqlite
 require "../gxml_to_sqlite.pl";
 
-$configuration{"run_number"} = 11;
-process_gxml("cad/cad_default.gxml", "experiments/clas12/ctof/cad");
-process_gxml("cad_upstream/cad_default.gxml", "experiments/clas12/ctof/cad_upstream");
-
-$configuration{"run_number"} = 3029;
-process_gxml("cad/cad_rga_spring2018.gxml", "experiments/clas12/ctof/cad");
-process_gxml("cad_upstream/cad_rga_spring2018.gxml", "experiments/clas12/cad/cad_upstream");
-
-$configuration{"run_number"} = 4763;
-process_gxml("cad/cad_rga_fall2018.gxml", "experiments/clas12/ctof/cad");
-process_gxml("cad_upstream/cad_rga_fall2018.gxml", "experiments/clas12/cad/cad_upstream");
+foreach my $variation (@variations) {
+    $configuration{"run_number"} = clas12_run($variation);
+    process_gxml("cad/cad_$variation.gxml",          "experiments/clas12/ctof/cad");
+    process_gxml("cad_upstream/cad_$variation.gxml", "experiments/clas12/ctof/cad_upstream");
+}
 

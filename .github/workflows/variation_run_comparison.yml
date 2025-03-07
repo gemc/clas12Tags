@@ -68,15 +68,15 @@ jobs:
 #          - pcal
           - dc
 #          - ftof
-#          - ctof
+          - ctof
 #          - cnd
 #          - bst
 #          - htcc
 #          - micromegas
-#          - ltcc
-#          - rich
+          - ltcc
+          - rich
 #          - ft
-#          - beamline
+          - beamline
           - magnets
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
@@ -162,9 +162,9 @@ jobs:
           echo "| Detector | Status  |" > Summary.md
           echo "|----------|---------|" >> Summary.md
           for detector in $detectors; do
-            if grep $detector | grep -q "❌" */*output_summary.log; then
+            if grep -q $detector | grep -q "❌" */*output_summary.log; then
                 echo "| $detector | ❌ |" >> Summary.md
-            elif grep $detector | grep -q "✅" */*output_summary.log; then
+            elif grep -q $detector | grep -q "✅" */*output_summary.log; then
                 echo "| $detector | ✅ |" >> Summary.md
             fi
           done
