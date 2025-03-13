@@ -3,7 +3,7 @@
 //============================================================
 import org.jlab.geom.base.*;
 import org.jlab.clasrec.utils.*;
-import org.jlab.detector.geant4.v2.RECOIL.*;
+import org.jlab.detector.geant4.v2.recoil.*;
 import org.jlab.detector.base.*;
 
 import GeoArgParse
