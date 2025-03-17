@@ -361,7 +361,7 @@ sub place_innerFR4 {
 
     my $z = $starting_point[$l] - $fmt_starting + 2 * $CuGround_Dz + 2 * $PCBGround_Dz + $Rohacell_Dz;
     my $vname = "FMT_innerFR4";
-    my $descriptio = "Inner FR4, Layer $layer_no, ";
+    my $descriptio = "Inner FR4, Layer $layer_no, ";3
 
 
     # names

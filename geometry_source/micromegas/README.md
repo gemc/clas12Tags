@@ -11,6 +11,11 @@ The geometry consists of central barrel (BMT) and a forward one (FMT) of microme
 | rgm_winter2021   | 15016          | 
 | michel_9mmcopper | 30000          | 
 
+
+rga_spring2018:  BMT, 6 FMT layers
+rgf_spring2020:  no BMT, 3 FMT layers
+rgm_winter2021:  BMT, 3 FMT layers
+
 To build the geometry:
 
 ````./micromegas.pl config.dat````
