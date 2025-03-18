@@ -69,6 +69,7 @@ sub makeFlux {
 
         # disk at the end of scattering chamber
         my $outer_radius = 100;
+        $inner_radius = 58;
         $length = 1;
         $zpos = 500;
 
@@ -79,7 +80,7 @@ sub makeFlux {
         $detector{"pos"} = "0.0*cm 0.0*cm $zpos*mm";
         $detector{"color"} = "aa0088";
         $detector{"type"} = "Tube";
-        $detector{"dimensions"} = "0*mm $outer_radius*mm " . ($length / 2) . "*mm 0.*deg 360.*deg";
+        $detector{"dimensions"} = "$inner_radius*mm $outer_radius*mm " . ($length / 2) . "*mm 0.*deg 360.*deg";
         $detector{"material"} = $material;
         $detector{"style"} = 1;
         $detector{"sensitivity"} = "flux";

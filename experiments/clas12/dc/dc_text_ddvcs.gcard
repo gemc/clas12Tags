@@ -4,7 +4,7 @@
 
 
 	<detector name="dc" factory="TEXT" variation="ddvcs"/>
-	<detector name="experiments/clas12/beamline/beamline" factory="TEXT" variation="FTOff"/>
+	<detector name="experiments/clas12/beamline/beamline"  factory="TEXT" variation="rgk_winter2018"/>
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>

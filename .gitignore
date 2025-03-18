@@ -6,6 +6,7 @@ geometry_source/**/*__materials_*.txt
 geometry_source/**/*__hit_*.txt
 geometry_source/**/*__mirrors_*.txt
 geometry_source/**/*__volumes_*.txt
+bin/gemc
 source/**/*.o
 source/**/moc*.cc
 geometry_source/coatjava*
