@@ -1,5 +1,5 @@
 //============================================================
-// This script prints volumes for RECOIL detector
+// This script prints volumes for RECOIL TOF detector
 //============================================================
 import org.jlab.geom.base.*;
 import org.jlab.clasrec.utils.*;
