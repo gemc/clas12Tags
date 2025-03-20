@@ -66,7 +66,10 @@ sub make_bar
     $detector{"material"} = "scintillator";
     $detector{"style"}    = 0;
     $detector{"visible"}  = 1;
-
+    $detector{"sensitivity"} = "recoil_tof";
+    $detector{"hit_type"} = "recoil_tof";
+    # set the identifiers
+    $detector{"identifiers"}  = "sector manual $iSector row manual $iRow column manual $iCol order manual 0";
     print_det(\%main::configuration, \%detector);
         
 }

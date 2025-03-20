@@ -6,8 +6,8 @@
 	<detector name="recoil_tof" factory="TEXT" variation="default"/>
 	
 
-	<option name="BEAM_P"     value="e-, 5.0*GeV, 25*deg, 0*deg"/>
-	<option name="SPREAD_P"   value="1.0*GeV, 15*deg, 180*deg"/> 
+	<option name="BEAM_P"     value="e-, 5.0*GeV, 50*deg, 0*deg"/>
+	<option name="SPREAD_P"   value="1.0*GeV, 5*deg, 0*deg"/> 
 	<option name="INTEGRATEDRAW" value="dc"/>
 
 	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->

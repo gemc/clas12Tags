@@ -67,6 +67,7 @@ HipoSchema::HipoSchema() {
     helONLINESchema = hipo::schema("HEL::online", 22000, 13);
     urwellADCSchema = hipo::schema("URWELL::adc", 22300, 11);
     recoilADCSchema   = hipo::schema("RECOIL::adc",  22600, 11);
+    recoiltofTDCSchema = hipo::schema("RECOILTOF::tdc", 22700, 12);
     rawADCSchema = hipo::schema("RAW::adc", 20000, 11);
     rawTDCSchema = hipo::schema("RAW::tdc", 20000, 12);
     rawSCALERSchema = hipo::schema("RAW::scaler", 20000, 13);
@@ -146,6 +147,7 @@ HipoSchema::HipoSchema() {
 
     urwellADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
     recoilADCSchema.parse(  "sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+    recoiltofTDCSchema.parse("sector/B, row/B, column/B, order/B, TDC/I, ToT/I");
 
     rawADCSchema.parse("crate/B, slot/B, channel/S, order/B, ADC/I, time/F, ped/S");
     rawTDCSchema.parse("crate/B, slot/B, channel/S, order/B, TDC/I");
@@ -201,6 +203,7 @@ HipoSchema::HipoSchema() {
     schemasToLoad["RASTER::adc"] = rasterADCSchema;
     schemasToLoad["URWELL::adc"] = urwellADCSchema;
     schemasToLoad["RECOIL::adc"]  = recoilADCSchema;
+    schemasToLoad["RECOILTOF::tdc"]  = recoiltofTDCSchema;
 
     cout << " Done defining Hipo4 schemas." << endl;
 
@@ -241,7 +244,7 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
 
 
     if (type == 0) {  // non adc detectors:
-        if (schemaName == "dc" || schemaName == "rich" || schemaName == "atof") {
+        if (schemaName == "dc" || schemaName == "rich" || schemaName == "atof" || schemaName == "recoil_tof") {
             return false;
         }
     } else if (type == 1) { // non tdc detectors
@@ -252,7 +255,7 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
         if (schemaName == "atof" || schemaName == "band" || schemaName == "bmt" || schemaName == "fmt" || schemaName == "ftm"
             || schemaName == "dc" || schemaName == "bst" || schemaName == "cnd" || schemaName == "ctof" || schemaName == "ecal"
             || schemaName == "ftof" || schemaName == "ft_cal" || schemaName == "ft_hodo" || schemaName == "ft_trk"
-            || schemaName == "htcc" || schemaName == "ltcc" || schemaName == "rich" || schemaName == "rtpc" || schemaName == "urwell" || schemaName == "recoil" || schemaName == "flux") {
+            || schemaName == "htcc" || schemaName == "ltcc" || schemaName == "rich" || schemaName == "rtpc" || schemaName == "urwell" || schemaName == "recoil" || schemaName == "recoil_tof" || schemaName == "flux") {
             return false;
         }
     }
