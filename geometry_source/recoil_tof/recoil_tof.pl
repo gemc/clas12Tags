@@ -39,10 +39,10 @@ our %configuration = load_configuration($ARGV[0]);
 require "./materials.pl";
 
 # banks definitions
-#require "./bank.pl";
+require "./bank.pl";
 
 # hits definitions
-#require "./hit.pl";
+require "./hit.pl";
 
 #system("which run-groovy");
 
@@ -58,7 +58,7 @@ require "./geometry_java.pl";
 my @allConfs = ("default");
 
 # bank definitions common to all variations
-#define_bank();
+define_banks();
 
 #foreach my $conf ( @allConfs ){
 for(my $ii=0; $ii<=$#allConfs; $ii++){
