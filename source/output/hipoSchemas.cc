@@ -231,6 +231,8 @@ hipo::schema HipoSchema::getSchema(string schemaName, int type) {
         return fthodoADCSchema;
     } else if (schemaName == "ft_trk") {
         return ftrkTDCSchema;
+    } else if (schemaName == "recoil_tof") {
+        return recoiltofTDCSchema;
     } else {
         if (non_registered_detectors(schemaName, type)) {
             cout << " SCHEMA " << schemaName << " " << " not found for type " << type << " = " << schemaType << endl;
