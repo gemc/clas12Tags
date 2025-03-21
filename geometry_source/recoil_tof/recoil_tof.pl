@@ -75,7 +75,7 @@ for(my $ii=0; $ii<=$#allConfs; $ii++){
 	materials();
 
 	# hits
-        #define_hit();
+        define_hit();
 	
 
 	# sensitive geometry
