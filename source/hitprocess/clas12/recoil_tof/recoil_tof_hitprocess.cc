@@ -45,7 +45,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	int recoil_tof_row        = identity[1].id; 
 	int recoil_tof_column     = identity[2].id;
 	int recoil_tof_order      = identity[3].id;
-
+	cout << "sector " << recoil_tof_sector << " row "<< recoil_tof_row << " column " << recoil_tof_column << " order " << recoil_tof_order << endl; 
 	double time_to_tdc = 1./0.015625;
 	
 	if(aHit->isBackgroundHit == 1) {
@@ -68,6 +68,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	
 	double length = aHit->GetDetector().dimensions[1]; // half length of bar along y direction
 	double thickness = 2 * aHit->GetDetector().dimensions[2]; // thickness of bar
+	cout << "half length = " << length << " mm " << "thickness = " << thickness << " mm" << endl;
 	
 	vector<G4double>      Edep  = aHit->GetEdep();
 	vector<G4ThreeVector> Lpos  = aHit->GetLPos(); // local position at each step
@@ -92,15 +93,15 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	double E_tot_Front = 0.0;
 	double E_tot_Back = 0.0;
 		
-	double attlength = 160.0; // EJ-204 160 cm
+	double attlength = 1600.0; // here in mm! because all lengths from the volume are in mm!! EJ-204 160 cm
 	double pmtPEYld = 10400.0; // EJ-204 10400 (photons / [1MeV*e-])
 	double dEdxMIP = 1.956; // energy deposited by MIP per cm of scintillator material, to be adapted for SiPM case, it is a function of ?
 	
 	//Variables for tdc calculation (time)
 	double EtimesTime_Front=0.0;
 	double EtimesTime_Back=0.0;
-	double  v_eff_Front = 20.0; // cm/ns! CND v_eff = 16 cm/ns
-	double  v_eff_Back = 20.0;
+	double  v_eff_Front = 200.0; // mm/ns! CND v_eff = 16 cm/ns
+	double  v_eff_Back = 200.0;
 
 	/*
 	double dist_h_SiPMFront =0.0;
@@ -131,7 +132,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		EtimesTime_Front = EtimesTime_Front + (times[s] + dFront/v_eff_Front)*e_Front;
 		EtimesTime_Back = EtimesTime_Back + (times[s] + dBack/v_eff_Back)*e_Back;
 			
-		//cout << "Distance from hit to Front SIPM, to Back SiPM (mm): " << dFront << ", "<< dBack << endl;
+		cout << "Distance from hit to Front SIPM, to Back SiPM (mm): " << dFront << ", "<< dBack << endl;
 		/*
 		  if ( dist_h_SiPMFront <= dFront )
 		  {
@@ -168,8 +169,8 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		double nphe_bck = G4Poisson(E_tot_Back*pmtPEYld);
 		double energy_bck = nphe_bck/pmtPEYld;	
 
-		adc_front = energy_fr *adc_CC_front *(1/(dEdxMIP * thickness)); // thickness in X direction
-		adc_back = energy_bck *adc_CC_back *(1/(dEdxMIP * thickness));
+		adc_front = energy_fr *adc_CC_front *(1/(dEdxMIP * thickness * 0.1)); // thickness (mm -> cm) in X direction
+		adc_back = energy_bck *adc_CC_back *(1/(dEdxMIP * thickness * 0.1));
 		
 		
 		time_front = EtimesTime_Front/E_tot_Front;
@@ -191,6 +192,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	    adc = adc_back;
 	    time = tdc_back;
 	  }
+	cout << "sector " << recoil_tof_sector << " row "<< recoil_tof_row << " column " << recoil_tof_column << " order " << recoil_tof_order << endl;
 	
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = recoil_tof_sector; //Sector ranges from 1 to 2                                                           
