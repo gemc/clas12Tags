@@ -741,7 +741,7 @@ void hipo_output::writeG4DgtIntegrated(outputContainer *output, vector <hitOutpu
 
                             // sector, layer, component are common in adc/tdc so their names are w/o prefix
                             // sector, layers are "Bytes"
-                            if (bname == "sector" || bname == "layer" || bname == "order") {
+                            if (bname == "sector" || bname == "layer" || bname == "order" || bname == "row" || bname == "column") {
                                 detectorTDCBank.putByte(bname.c_str(), nh, thisVar.second);
                             } else if (bname == "component") {
                                 detectorTDCBank.putShort(bname.c_str(), nh, thisVar.second);
