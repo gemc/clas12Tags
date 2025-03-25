@@ -45,7 +45,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	int recoil_tof_row        = identity[1].id; 
 	int recoil_tof_column     = identity[2].id;
 	int recoil_tof_order      = identity[3].id;
-	cout << "sector " << recoil_tof_sector << " row "<< recoil_tof_row << " column " << recoil_tof_column << " order " << recoil_tof_order << endl; 
+	//cout << "sector " << recoil_tof_sector << " row "<< recoil_tof_row << " column " << recoil_tof_column << " order " << recoil_tof_order << endl; 
 	double time_to_tdc = 1./0.015625;
 	
 	if(aHit->isBackgroundHit == 1) {
@@ -68,7 +68,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	
 	double length = aHit->GetDetector().dimensions[1]; // half length of bar along y direction
 	double thickness = 2 * aHit->GetDetector().dimensions[2]; // thickness of bar
-	cout << "half length = " << length << " mm " << "thickness = " << thickness << " mm" << endl;
+	//cout << "half length = " << length << " mm " << "thickness = " << thickness << " mm" << endl;
 	
 	vector<G4double>      Edep  = aHit->GetEdep();
 	vector<G4ThreeVector> Lpos  = aHit->GetLPos(); // local position at each step
@@ -118,8 +118,8 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		LposY = Lpos[s].y();
 		LposZ = Lpos[s].z();
 		
-		dFront = length - LposZ;
-		dBack = length + LposZ;
+		dFront = length - LposY;
+		dBack = length + LposY;
 		e_Front = Edep[s] *exp(-dFront/attlength); // value for just one step, in MeV!
 		e_Back = Edep[s] *exp(-dBack/attlength);
 		E_tot_Front = E_tot_Front + e_Front; // to sum over all the steps of the hit
@@ -132,7 +132,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		EtimesTime_Front = EtimesTime_Front + (times[s] + dFront/v_eff_Front)*e_Front;
 		EtimesTime_Back = EtimesTime_Back + (times[s] + dBack/v_eff_Back)*e_Back;
 			
-		cout << "Distance from hit to Front SIPM, to Back SiPM (mm): " << dFront << ", "<< dBack << endl;
+		//cout << "Distance from hit to Front SIPM, to Back SiPM (mm): " << dFront << ", "<< dBack << endl;
 		/*
 		  if ( dist_h_SiPMFront <= dFront )
 		  {
@@ -169,7 +169,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		double nphe_bck = G4Poisson(E_tot_Back*pmtPEYld);
 		double energy_bck = nphe_bck/pmtPEYld;	
 
-		adc_front = energy_fr *adc_CC_front *(1/(dEdxMIP * thickness * 0.1)); // thickness (mm -> cm) in X direction
+		adc_front = energy_fr *adc_CC_front *(1/(dEdxMIP * thickness * 0.1)); // thickness of bar (mm -> cm) 
 		adc_back = energy_bck *adc_CC_back *(1/(dEdxMIP * thickness * 0.1));
 		
 		
@@ -192,7 +192,7 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	    adc = adc_back;
 	    time = tdc_back;
 	  }
-	cout << "sector " << recoil_tof_sector << " row "<< recoil_tof_row << " column " << recoil_tof_column << " order " << recoil_tof_order << endl;
+
 	
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = recoil_tof_sector; //Sector ranges from 1 to 2                                                           
