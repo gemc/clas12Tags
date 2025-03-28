@@ -158,7 +158,10 @@ map<string, double> recoil_tof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	double tdc_back = 0.00000;
 	double time_front = 0.00000;
 	double time_back = 0.00000;
-	double sigma_time = 0.1; // in ns! 100 ps = 0.1 ns
+	double sigma_time = 0.00000; // in ns! 100 ps = 0.1 ns
+
+	if(recoil_tof_row == 3) sigma_time = 0.05; // better time resolution for shorter bars
+	else sigma_time = 0.1;
 	
 	///////ALL OF THIS PART WILL NEED TO BE UPDATED WITH ACTUAL CALIBRATION	
 	if ((E_tot_Front > 0.0) || (E_tot_Back > 0.0)) 
