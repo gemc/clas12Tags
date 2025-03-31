@@ -6,7 +6,7 @@
                 ahdc  |             ADC_ADC  |ADC integral from pulse fit - currently set to adcMax  |    5   |                  Di  
                 ahdc  |            ADC_time  |                time of the max ADC over the pulse  |    6   |                  Dd  
                 ahdc  |             ADC_ped  |pedestal from pulse analysis - currently set to noise level  |    7   |                  Di  
-                ahdc  |     WF136_timestamp  |                                Hardware Timestamp  |   14   |                  Dl  
+                ahdc  |        WF_timestamp  |                                Hardware Timestamp  |   14   |                  Dl  
                 ahdc  |            wf136_s1  |                                      ADC sample 1  |   15   |                  Di  
                 ahdc  |            wf136_s2  |                                      ADC sample 2  |   16   |                  Di  
                 ahdc  |            wf136_s3  |                                      ADC sample 3  |   17   |                  Di  
@@ -71,76 +71,5 @@
                 ahdc  |           wf136_s62  |                                     ADC sample 62  |   76   |                  Di  
                 ahdc  |           wf136_s63  |                                     ADC sample 63  |   77   |                  Di  
                 ahdc  |           wf136_s64  |                                     ADC sample 64  |   78   |                  Di  
-                ahdc  |           wf136_s65  |                                     ADC sample 65  |   79   |                  Di  
-                ahdc  |           wf136_s66  |                                     ADC sample 66  |   80   |                  Di  
-                ahdc  |           wf136_s67  |                                     ADC sample 67  |   81   |                  Di  
-                ahdc  |           wf136_s68  |                                     ADC sample 68  |   82   |                  Di  
-                ahdc  |           wf136_s69  |                                     ADC sample 69  |   83   |                  Di  
-                ahdc  |           wf136_s70  |                                     ADC sample 70  |   84   |                  Di  
-                ahdc  |           wf136_s71  |                                     ADC sample 71  |   85   |                  Di  
-                ahdc  |           wf136_s72  |                                     ADC sample 72  |   86   |                  Di  
-                ahdc  |           wf136_s73  |                                     ADC sample 73  |   87   |                  Di  
-                ahdc  |           wf136_s74  |                                     ADC sample 74  |   88   |                  Di  
-                ahdc  |           wf136_s75  |                                     ADC sample 75  |   89   |                  Di  
-                ahdc  |           wf136_s76  |                                     ADC sample 76  |   90   |                  Di  
-                ahdc  |           wf136_s77  |                                     ADC sample 77  |   91   |                  Di  
-                ahdc  |           wf136_s78  |                                     ADC sample 78  |   92   |                  Di  
-                ahdc  |           wf136_s79  |                                     ADC sample 79  |   93   |                  Di  
-                ahdc  |           wf136_s80  |                                     ADC sample 80  |   94   |                  Di  
-                ahdc  |           wf136_s81  |                                     ADC sample 81  |   95   |                  Di  
-                ahdc  |           wf136_s82  |                                     ADC sample 82  |   96   |                  Di  
-                ahdc  |           wf136_s83  |                                     ADC sample 83  |   97   |                  Di  
-                ahdc  |           wf136_s84  |                                     ADC sample 84  |   98   |                  Di  
-                ahdc  |           wf136_s85  |                                     ADC sample 85  |   99   |                  Di  
-                ahdc  |           wf136_s86  |                                     ADC sample 86  |  100   |                  Di  
-                ahdc  |           wf136_s87  |                                     ADC sample 87  |  101   |                  Di  
-                ahdc  |           wf136_s88  |                                     ADC sample 88  |  102   |                  Di  
-                ahdc  |           wf136_s89  |                                     ADC sample 89  |  103   |                  Di  
-                ahdc  |           wf136_s90  |                                     ADC sample 90  |  104   |                  Di  
-                ahdc  |           wf136_s91  |                                     ADC sample 91  |  105   |                  Di  
-                ahdc  |           wf136_s92  |                                     ADC sample 92  |  106   |                  Di  
-                ahdc  |           wf136_s93  |                                     ADC sample 93  |  107   |                  Di  
-                ahdc  |           wf136_s94  |                                     ADC sample 94  |  108   |                  Di  
-                ahdc  |           wf136_s95  |                                     ADC sample 95  |  109   |                  Di  
-                ahdc  |           wf136_s96  |                                     ADC sample 96  |  110   |                  Di  
-                ahdc  |           wf136_s97  |                                     ADC sample 97  |  111   |                  Di  
-                ahdc  |           wf136_s98  |                                     ADC sample 98  |  112   |                  Di  
-                ahdc  |           wf136_s99  |                                     ADC sample 99  |  113   |                  Di  
-                ahdc  |          wf136_s100  |                                    ADC sample 100  |  114   |                  Di  
-                ahdc  |          wf136_s101  |                                    ADC sample 101  |  115   |                  Di  
-                ahdc  |          wf136_s102  |                                    ADC sample 102  |  116   |                  Di  
-                ahdc  |          wf136_s103  |                                    ADC sample 103  |  117   |                  Di  
-                ahdc  |          wf136_s104  |                                    ADC sample 104  |  118   |                  Di  
-                ahdc  |          wf136_s105  |                                    ADC sample 105  |  119   |                  Di  
-                ahdc  |          wf136_s106  |                                    ADC sample 106  |  120   |                  Di  
-                ahdc  |          wf136_s107  |                                    ADC sample 107  |  121   |                  Di  
-                ahdc  |          wf136_s108  |                                    ADC sample 108  |  122   |                  Di  
-                ahdc  |          wf136_s109  |                                    ADC sample 109  |  123   |                  Di  
-                ahdc  |          wf136_s110  |                                    ADC sample 110  |  124   |                  Di  
-                ahdc  |          wf136_s111  |                                    ADC sample 111  |  125   |                  Di  
-                ahdc  |          wf136_s112  |                                    ADC sample 112  |  126   |                  Di  
-                ahdc  |          wf136_s113  |                                    ADC sample 113  |  127   |                  Di  
-                ahdc  |          wf136_s114  |                                    ADC sample 114  |  128   |                  Di  
-                ahdc  |          wf136_s115  |                                    ADC sample 115  |  129   |                  Di  
-                ahdc  |          wf136_s116  |                                    ADC sample 116  |  130   |                  Di  
-                ahdc  |          wf136_s117  |                                    ADC sample 117  |  131   |                  Di  
-                ahdc  |          wf136_s118  |                                    ADC sample 118  |  132   |                  Di  
-                ahdc  |          wf136_s119  |                                    ADC sample 119  |  133   |                  Di  
-                ahdc  |          wf136_s120  |                                    ADC sample 120  |  134   |                  Di  
-                ahdc  |          wf136_s121  |                                    ADC sample 121  |  135   |                  Di  
-                ahdc  |          wf136_s122  |                                    ADC sample 122  |  136   |                  Di  
-                ahdc  |          wf136_s123  |                                    ADC sample 123  |  137   |                  Di  
-                ahdc  |          wf136_s124  |                                    ADC sample 124  |  138   |                  Di  
-                ahdc  |          wf136_s125  |                                    ADC sample 125  |  139   |                  Di  
-                ahdc  |          wf136_s126  |                                    ADC sample 126  |  140   |                  Di  
-                ahdc  |          wf136_s127  |                                    ADC sample 127  |  141   |                  Di  
-                ahdc  |          wf136_s128  |                                    ADC sample 128  |  142   |                  Di  
-                ahdc  |          wf136_s129  |                                    ADC sample 129  |  143   |                  Di  
-                ahdc  |          wf136_s130  |                                    ADC sample 130  |  144   |                  Di  
-                ahdc  |          wf136_s131  |                                    ADC sample 131  |  145   |                  Di  
-                ahdc  |          wf136_s132  |                                    ADC sample 132  |  146   |                  Di  
-                ahdc  |          wf136_s133  |                                    ADC sample 133  |  147   |                  Di  
-                ahdc  |          wf136_s134  |                                    ADC sample 134  |  148   |                  Di  
-                ahdc  |          wf136_s135  |                                    ADC sample 135  |  149   |                  Di  
-                ahdc  |          wf136_s136  |                                    ADC sample 136  |  150   |                  Di  
+                ahdc  |             WF_time  |                          for fine time correction  |   79   |                  Di
                 ahdc  |                hitn  |                                        hit number  |  199   |                  Di  

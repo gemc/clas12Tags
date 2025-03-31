@@ -33,7 +33,7 @@ HipoSchema::HipoSchema() {
     // detectors
     alertAhdcTDCSchema = hipo::schema("AHDC::tdc", 22400, 12);
     alertAhdcADCSchema = hipo::schema("AHDC::adc", 22400, 11);
-    alertAhdcWF136Schema = hipo::schema("AHDC::wf:136", 22400, 13);
+    alertAhdcWFSchema = hipo::schema("AHDC::wf", 22400, 10);
     alertAtofTDCSchema = hipo::schema("ATOF::tdc", 22500, 12);
     bandADCSchema = hipo::schema("BAND::adc", 22100, 11);
     bandTDCSchema = hipo::schema("BAND::tdc", 22100, 12);
@@ -99,12 +99,13 @@ HipoSchema::HipoSchema() {
     // detectors
     alertAhdcADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S, integral/I, timestamp/L");
     alertAhdcTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I, ped/S");
-    //alertAhdcWF136Schema.parse("sector/B, layer/B, component/S, order/B, timestamp/F, s1/S, s2/S, s3/S, s4/S, s5/S, s6/S, s7/S, s8/S, s9/S, s10/S");
-    std::string wf_string = "sector/B, layer/B, component/S, order/B, timestamp/F";
-    for (int itr=0; itr<136; itr++){
+    //alertAhdcWFSchema.parse("sector/B, layer/B, component/S, order/B, timestamp/F, s1/S, s2/S, s3/S, s4/S, s5/S, s6/S, s7/S, s8/S, s9/S, s10/S");
+    std::string wf_string = "sector/B, layer/B, component/S, order/B, timestamp/L";
+    for (int itr=0; itr<64; itr++){
         wf_string = wf_string + ", s" + to_string(itr+1) + "/S";
     }
-    alertAhdcWF136Schema.parse(wf_string.c_str());
+    wf_string = wf_string + ", time/I"
+    alertAhdcWFSchema.parse(wf_string.c_str());
     alertAtofTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I, ToT/I");
 
     bandADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, amplitude/I, time/F, ped/S");
@@ -170,7 +171,7 @@ HipoSchema::HipoSchema() {
 
     // The names corresponds to the hit process routine names, capitalized
     schemasToLoad["AHDC::adc"] = alertAhdcADCSchema;
-    schemasToLoad["AHDC::wf:136"] = alertAhdcWF136Schema;
+    schemasToLoad["AHDC::wf"]  = alertAhdcWFSchema;
     schemasToLoad["AHDC::tdc"] = alertAhdcTDCSchema;
     schemasToLoad["ATOF::tdc"] = alertAtofTDCSchema;
     schemasToLoad["BAND::adc"] = bandADCSchema;
@@ -214,7 +215,7 @@ hipo::schema HipoSchema::getSchema(string schemaName, int type) {
     string schemaType;
     if (type == 0) schemaType = "adc";
     if (type == 1) schemaType = "tdc";
-    if (type == 2) schemaType = "wf:136";
+    if (type == 2) schemaType = "wf";
 
     string toUpperS = schemaName;
     transform(toUpperS.begin(), toUpperS.end(), toUpperS.begin(), ::toupper);
@@ -248,7 +249,7 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
         if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || schemaName == "urwell" || schemaName == "recoil" || schemaName == "flux") {
             return false;
         }
-    } else if (type == 2) { // non wf:10 detectors
+    } else if (type == 2) { // non wf detectors
         if (schemaName == "atof" || schemaName == "band" || schemaName == "bmt" || schemaName == "fmt" || schemaName == "ftm"
             || schemaName == "dc" || schemaName == "bst" || schemaName == "cnd" || schemaName == "ctof" || schemaName == "ecal"
             || schemaName == "ftof" || schemaName == "ft_cal" || schemaName == "ft_hodo" || schemaName == "ft_trk"

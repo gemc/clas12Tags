@@ -96,11 +96,11 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	dgtz["TDC_order"] = 0;
 	dgtz["TDC_TDC"]   = 0;
 
-	// WF:136
-	dgtz["WF136_timestamp"] = 0;
+	// WF
+	dgtz["WF_timestamp"] = 0;
 
-	for(unsigned t=0; t<136; t++) {
-		string dname = "WF136_s" + to_string(t+1);
+	for(unsigned t=0; t<64; t++) {
+		string dname = "WF_s" + to_string(t+1);
 		dgtz[dname] = Signal->GetDgtz().at(t);
 	}
 	delete Signal;
