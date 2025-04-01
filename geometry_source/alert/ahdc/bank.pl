@@ -45,11 +45,12 @@ sub define_ahdc_bank
 	insert_bank_variable(\%configuration, $bankname, "ADC_time" ,    6, "Dd", "time of the max ADC over the pulse");
 	insert_bank_variable(\%configuration, $bankname, "ADC_ped" ,     7, "Di", "pedestal from pulse analysis - currently set to noise level");
 
-	insert_bank_variable(\%configuration, $bankname, "WF136_timestamp", 14, "Dl", "Hardware Timestamp");
-	for my $itr (1..136) {
-		my $entry = "wf136_s$itr";
+	insert_bank_variable(\%configuration, $bankname, "WF_timestamp", 14, "Dl", "Hardware Timestamp");
+	for my $itr (1..64) {
+		my $entry = "wf_s$itr";
 		insert_bank_variable(\%configuration, $bankname, $entry,$itr+14, "Di", "ADC sample $itr");
 	}
+        insert_bank_variable(\%configuration, $bankname, "WF_time", 79, "Di", "for fine time correction");
 	insert_bank_variable(\%configuration, $bankname, "hitn", 199, "Di", "hit number");
 
 	
