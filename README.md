@@ -32,7 +32,7 @@ On a local installation you can use `module load gemc/dev` instead.
 ## How to create the CLAS12 detector geometry database
 
 
-Clone the clas12Tag repository:
+Clone the clas12Tags repository:
 
 ```
 git clone https://github.com/gemc/clas12Tags
@@ -87,7 +87,7 @@ Change directory to detector of interest inside `geometry_source`. For example f
 cd geometry_source/ftof
 ```
 
-If not already present, create the SQLITE databse:
+If not already present, create the SQLITE database:
 
 ```
 $GEMC/api/perl/sqlite.py -n ../../clas12.sqlite
