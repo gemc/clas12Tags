@@ -99,12 +99,11 @@ HipoSchema::HipoSchema() {
     // detectors
     alertAhdcADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S, integral/I, timestamp/L");
     alertAhdcTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I, ped/S");
-    //alertAhdcWFSchema.parse("sector/B, layer/B, component/S, order/B, timestamp/F, s1/S, s2/S, s3/S, s4/S, s5/S, s6/S, s7/S, s8/S, s9/S, s10/S");
     std::string wf_string = "sector/B, layer/B, component/S, order/B, timestamp/L";
     for (int itr=0; itr<64; itr++){
         wf_string = wf_string + ", s" + to_string(itr+1) + "/S";
     }
-    wf_string = wf_string + ", time/I"
+    wf_string = wf_string + ", time/I";
     alertAhdcWFSchema.parse(wf_string.c_str());
     alertAtofTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I, ToT/I");
 
