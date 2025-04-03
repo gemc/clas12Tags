@@ -23,7 +23,7 @@ jobs:
           ./ci/report_runs_and_variations.sh  > Summary.md
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  Geometry:
+  TXTSQLGeoComparison:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -58,7 +58,7 @@ jobs:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
 
-  Run:
+  TXTSQLRunGemc:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -110,8 +110,8 @@ jobs:
           name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/
 
-  GeoResults:
-    needs: Geometry
+  TXTSQLGeoResults:
+    needs: TXTSQLGeoComparison
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -129,8 +129,8 @@ jobs:
           done < comparison.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  DigiResults:
-    needs: Run
+  TXTSQLDigiResults:
+    needs: TXTSQLRunGemc
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -171,3 +171,20 @@ jobs:
             fi
           done
           cat Summary.md >> $GITHUB_STEP_SUMMARY
+          
+
+  txt-sql-final:
+    needs:
+      - TXTSQLGeoResults
+      - TXTSQLRunGemc
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

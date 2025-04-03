@@ -14,7 +14,7 @@ permissions:
   actions: read
 
 jobs:
-  build:
+  build-on-fedora:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-fedora36
 

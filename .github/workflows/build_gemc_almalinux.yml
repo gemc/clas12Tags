@@ -14,7 +14,7 @@ permissions:
   actions: read
 
 jobs:
-  build:
+  build-on-almalinux:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
 
