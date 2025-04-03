@@ -13,8 +13,11 @@
 	-->
 
 	<!-- other variations include: lH2, lD2, ND3, "elaborate"-->
-	<detector name="target" factory="TEXT" variation="lH2"/>
-	<detector name="cad/" factory="CAD"/>
+<!--	<detector name="target" factory="TEXT" variation="lH2"/>-->
+<!--	<detector name="cad/" factory="CAD"/>-->
+
+		<detector name="target" factory="TEXT" variation="RGM_2_C"/>
+	<detector name="cad_rgm/" factory="CAD"/>
 
 	<!-- uncomment to change the material of the target -->
 	<!--	<option name="CHANGEVOLUMEMATERIALTO" value="lh2, G4_Galactic"/>-->
