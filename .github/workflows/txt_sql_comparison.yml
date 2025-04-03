@@ -1,6 +1,6 @@
 name: TEXT vs SQLITE
 
- # Triggers the workflow on all pushes to main and all pull requests
+# Triggers the workflow on all pushes to main and all pull requests
 on:
   pull_request:
   push:
@@ -23,7 +23,7 @@ jobs:
           ./ci/report_runs_and_variations.sh  > Summary.md
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  TXTSQLGeoComparison:
+  txt-sql-geo-compare:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -58,7 +58,7 @@ jobs:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
 
-  TXTSQLRunGemc:
+  txt-sql-run-compare:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -66,20 +66,20 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-#          - ec
-#          - pcal
-#          - dc
-#          - ftof
-#          - ctof
-#          - cnd
-#          - bst
-#          - htcc
-#          - micromegas
-#          - ltcc
-#          - rich
-#          - ft
+          #          - ec
+          #          - pcal
+          #          - dc
+          #          - ftof
+          #          - ctof
+          #          - cnd
+          #          - bst
+          #          - htcc
+          #          - micromegas
+          #          - ltcc
+          #          - rich
+          #          - ft
           - beamline
-#          - magnets
+        #          - magnets
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
           - default
@@ -110,8 +110,8 @@ jobs:
           name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/
 
-  TXTSQLGeoResults:
-    needs: TXTSQLGeoComparison
+  txt-sql-geo-result:
+    needs: txt-sql-geo-compare
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -129,8 +129,8 @@ jobs:
           done < comparison.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  TXTSQLDigiResults:
-    needs: TXTSQLRunGemc
+  txt-sql-run-result:
+    needs: txt-sql-run-compare
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -171,12 +171,12 @@ jobs:
             fi
           done
           cat Summary.md >> $GITHUB_STEP_SUMMARY
-          
+  
 
   txt-sql-final:
     needs:
-      - TXTSQLGeoResults
-      - TXTSQLRunGemc
+      - txt-sql-geo-result
+      - txt-sql-run-result
     runs-on: ubuntu-latest
     steps:
       - name: fail
