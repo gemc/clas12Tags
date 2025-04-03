@@ -62,7 +62,7 @@ sub create_system {
 my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rgc_fall2022", "rge_spring2024", "rgl_spring2025");
 my @runs = clas12_runs(@variations);
 
-my @custom_variations = ("rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
+my @custom_variations = ("ddvcs", "rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
 
 # TEXT Factory, include extra variations
 $configuration{"factory"} = "TEXT";

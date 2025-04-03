@@ -24,7 +24,7 @@ sub vacuumLine() {
 
 
     my $shieldStart = 963; # start of vacuum pipe is 1mm downstream of target vac extension
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024") {
+    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024" || $variation eq "ddvcs") {
         $shieldStart = 503; # 46 cm shift
     }
 
@@ -125,11 +125,15 @@ sub vacuumLine() {
 
     # vacuum line al window
     $zpos = 962.5;
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024") {
+    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024" || $variation eq "ddvcs") {
         $zpos = 502.5; # 46 cm shift
     }
 
     my $radius = 30;
+    if ($variation eq "ddvcs") {
+        $radius = 28.52;
+    }
+
     my $thickness = 0.0375;
     %detector = init_det();
     $detector{"name"} = "al_window_vacuum_entrance";
@@ -153,7 +157,7 @@ sub vacuumLine() {
     # the end of the line coordinate is eyeballed
     # b
     my @iradius_vbeam = (33.274, 33.274, 32.2, 32.2, 59.8, 59.8, 63.7);
-    my @z_plane_vbeam = ($torusStart, $mediumPipeEnd, $mediumPipeEnd, $mediumPipeEnd + $connectThickness, $bigPipeBegins, $pipeEnds, 13900);
+    my @z_plane_vbeam = ($torusStart, $mediumPipeEnd, $mediumPipeEnd, $mediumPipeEnd + $connectThickness, $bigPipeBegins, $pipeEnds, 10000);
 
     %detector = init_det();
     $detector{"name"} = "beam_vacuum";
@@ -177,7 +181,7 @@ sub vacuumLine() {
     my $gapZpos = 283;
     my $gapLength = 295;
 
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024") {
+    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024" || $variation eq "ddvcs") {
         $gapLength = 86.5;
     }
 
