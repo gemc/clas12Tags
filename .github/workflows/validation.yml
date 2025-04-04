@@ -1,4 +1,7 @@
 name: Validation
+permissions:
+  contents: write
+  pull-requests: write
 
  # Triggers the workflow on all pushes to main and all pull requests
 on:
