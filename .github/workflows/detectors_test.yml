@@ -2,11 +2,11 @@ name: Detector Tests
 permissions:
   contents: read
   pull-requests: write
-  security-events: write
 
  # Triggers the workflow on all pushes to main and all pull requests
 on:
   pull_request:
+  merge_request:
   push:
     branches: [ main ]
     tags: [ '*' ]
@@ -30,20 +30,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ matrix.language }}
-
       - name: ${{ matrix.detector }} test
         run: |
           ./ci/detectors_test.sh -d ${{ matrix.detector }}
-
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v2
-        with:
-          # Generate category based on matrix values for better organization of results
-          category: "/language:${{matrix.language}}/detector:${{matrix.detector}}"
 
   detectors-test-final:
     needs:

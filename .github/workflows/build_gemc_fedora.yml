@@ -6,6 +6,7 @@ permissions:
  # Triggers the workflow on all pushes to main and all pull requests
 on:
   pull_request:
+  merge_request:
   push:
     branches: [ main ]
     tags: [ '*' ]

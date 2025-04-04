@@ -1,11 +1,12 @@
-name: TEXT vs SQLITE
+name: ascii vs sqlite
 permissions:
   contents: read
   pull-requests: write
 
-# Triggers the workflow on all pushes to main and all pull requests
+ # Triggers the workflow on all pushes to main and all pull requests
 on:
   pull_request:
+  merge_request:
   push:
     branches: [ main ]
     tags: [ '*' ]
@@ -14,7 +15,6 @@ on:
   workflow_dispatch:
 
 jobs:
-
   Notary:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
