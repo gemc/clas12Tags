@@ -19,13 +19,14 @@ sub materials
 
             %mat = init_mat();
         $mat{"name"}          = "ddvcs_shield_mat";
-        $mat{"description"}   = "ddvcs shield material"};
+        $mat{"description"}   = "ddvcs shield material";
         $mat{"density"}       = "11.34";
         $mat{"ncomponents"}   = "1";
         $mat{"components"}    = "G4_Pb";
         print_mat(\%configuration, \%mat);
 
 	# rohacell
+        %mat = init_mat();
 	$mat{"name"}          = "rohacell";
 	$mat{"description"}   = "target  rohacell scattering chamber material";
 	$mat{"density"}       = "0.1";  # 100 mg/cm3
