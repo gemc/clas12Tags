@@ -49,7 +49,7 @@ sub buildBigCone_motherVolume
     my $Y=0.;
     my $Z=0.;
     $detector{"pos"}         =  "$X*mm $Y*mm $Z*mm ";
-    $detector{"material"}    = "ddvcs_W";
+    $detector{"material"}    = "ddvcs_shield_mat";
     $detector{"style"}       = "1";
     print_det(\%configuration, \%detector);
 
