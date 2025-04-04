@@ -88,3 +88,4 @@ foreach my $variation (@variations) {
     $configuration{"run_number"} = clas12_run($variation);
     process_gxml("cad/cad_$variation.gxml", "experiments/clas12/beamline/cad");
 }
+process_gxml("cad/cad_ddvcs.gxml", "experiments/clas12/beamline/cad");
