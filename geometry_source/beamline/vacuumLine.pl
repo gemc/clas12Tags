@@ -24,7 +24,7 @@ sub vacuumLine() {
 
 
     my $shieldStart = 963; # start of vacuum pipe is 1mm downstream of target vac extension
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024") {
+    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024" || $variation eq "ddvcs") {
         $shieldStart = 503; # 46 cm shift
     }
 
@@ -125,11 +125,15 @@ sub vacuumLine() {
 
     # vacuum line al window
     $zpos = 962.5;
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024") {
+    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024" || $variation eq "ddvcs") {
         $zpos = 502.5; # 46 cm shift
     }
 
     my $radius = 30;
+    if ($variation eq "ddvcs") {
+        $radius = 28.52;
+    }
+
     my $thickness = 0.0375;
     %detector = init_det();
     $detector{"name"} = "al_window_vacuum_entrance";
@@ -153,7 +157,7 @@ sub vacuumLine() {
     # the end of the line coordinate is eyeballed
     # b
     my @iradius_vbeam = (33.274, 33.274, 32.2, 32.2, 59.8, 59.8, 63.7);
-    my @z_plane_vbeam = ($torusStart, $mediumPipeEnd, $mediumPipeEnd, $mediumPipeEnd + $connectThickness, $bigPipeBegins, $pipeEnds, 13900);
+    my @z_plane_vbeam = ($torusStart, $mediumPipeEnd, $mediumPipeEnd, $mediumPipeEnd + $connectThickness, $bigPipeBegins, $pipeEnds, 10000);
 
     %detector = init_det();
     $detector{"name"} = "beam_vacuum";
@@ -184,41 +188,41 @@ sub vacuumLine() {
     my $gapLengthm = $gapLength + 1;
     my $ztart = $gapZpos;
 
+    if ($variation ne "ddvcs") {
+        # airpipes to account for change in volume size from target to "root" within a magnetic field
+        #
+        #
+        my @oradius_airpipe = (20, 30);
+        my @z_plane_airpipe = (0, 2 * $gapLength);
 
-    # airpipes to account for change in volume size from target to "root" within a magnetic field
-    #
-    #
-    my @oradius_airpipe = (20, 30);
-    my @z_plane_airpipe = (0, 2 * $gapLength);
+        %detector = init_det();
+        $detector{"name"} = "airPipe";
+        $detector{"mother"} = "root";
+        $detector{"description"} = "airgap between target and shield to limit e- steps";
+        $detector{"color"} = "aaffff";
+        $detector{"pos"} = "0*mm 0*mm $ztart*mm";
+        $detector{"type"} = "Polycone";
+        $dimen = "0.0*deg 360*deg 2*counts";
+        for (my $i = 0; $i < 2; $i++) {$dimen = $dimen . " 0.0*mm";}
+        for (my $i = 0; $i < 2; $i++) {$dimen = $dimen . " $oradius_airpipe[$i]*mm";}
+        for (my $i = 0; $i < 2; $i++) {$dimen = $dimen . " $z_plane_airpipe[$i]*mm";}
+        $detector{"dimensions"} = $dimen;
+        $detector{"style"} = 1;
+        $detector{"material"} = "G4_AIR";
+        print_det(\%configuration, \%detector);
 
-    %detector = init_det();
-    $detector{"name"} = "airPipe";
-    $detector{"mother"} = "root";
-    $detector{"description"} = "airgap between target and shield to limit e- steps";
-    $detector{"color"} = "aaffff";
-    $detector{"pos"} = "0*mm 0*mm $ztart*mm";
-    $detector{"type"} = "Polycone";
-    $dimen = "0.0*deg 360*deg 2*counts";
-    for (my $i = 0; $i < 2; $i++) {$dimen = $dimen . " 0.0*mm";}
-    for (my $i = 0; $i < 2; $i++) {$dimen = $dimen . " $oradius_airpipe[$i]*mm";}
-    for (my $i = 0; $i < 2; $i++) {$dimen = $dimen . " $z_plane_airpipe[$i]*mm";}
-    $detector{"dimensions"} = $dimen;
-    $detector{"style"} = 1;
-    $detector{"material"} = "G4_AIR";
-    print_det(\%configuration, \%detector);
-
-    my $innerAirpipeDimension = $gapLength - 0.2;
-    %detector = init_det();
-    $detector{"name"} = "airPipe2";
-    $detector{"mother"} = "airPipe";
-    $detector{"description"} = "airgap between target and shield to limit e- steps";
-    $detector{"color"} = "aaffff";
-    $detector{"type"} = "Tube";
-    $detector{"pos"} = "0*mm 0*mm  $innerAirpipeDimension*mm";
-    $detector{"dimensions"} = "0*mm 10*mm $innerAirpipeDimension*mm 0*deg 360*deg";
-    $detector{"style"} = 1;
-    $detector{"material"} = "G4_AIR";
-    print_det(\%configuration, \%detector);
-
+        my $innerAirpipeDimension = $gapLength - 0.2;
+        %detector = init_det();
+        $detector{"name"} = "airPipe2";
+        $detector{"mother"} = "airPipe";
+        $detector{"description"} = "airgap between target and shield to limit e- steps";
+        $detector{"color"} = "aaffff";
+        $detector{"type"} = "Tube";
+        $detector{"pos"} = "0*mm 0*mm  $innerAirpipeDimension*mm";
+        $detector{"dimensions"} = "0*mm 10*mm $innerAirpipeDimension*mm 0*deg 360*deg";
+        $detector{"style"} = 1;
+        $detector{"material"} = "G4_AIR";
+        print_det(\%configuration, \%detector);
+    }
 }
 

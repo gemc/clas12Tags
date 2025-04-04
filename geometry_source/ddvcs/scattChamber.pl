@@ -14,7 +14,7 @@ sub make_scatt_chambers
 	my $nplanes = 4;
 
 	my @zpos       = ( -115.0,  340.0, 370.0, 490.0 );
-	my @oradius    = (   50.0,   50.0,  30.0,  30.0 );
+	my @oradius    = (   50.0,   50.0,  26.0,  26.0 );
 	my @iradius    = (    0.0,    0.0,   0.0,   0.0 );
 	my @t_oradius  =  (   0.0,    0.0,   0.0,   0.0 );
 
@@ -47,9 +47,7 @@ sub make_scatt_chambers
 	$dimen = "0.0*deg 360*deg $nplanes*counts";
 	for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $iradius[$i]*mm";}
 	for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $oradius[$i]*mm";}
-	for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $zpos[$i]*mm";}
-
-	
+	for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $zpos[$i]*mm";}	
         %detector = init_det();
         $detector{"name"}        = "scattChamber";
         $detector{"mother"}      = "target";
@@ -60,11 +58,26 @@ sub make_scatt_chambers
         $detector{"material"}    = "rohacell";
         print_det(\%configuration, \%detector);
 	
-		
+	$dimen = "0.0*deg 360*deg 2*counts";
+        my $s_iradius = $oradius[0] + 0.1;
+        my $s_oradius = $oradius[0] + 0.2;
+	for(my $i = 0; $i <2; $i++) {$dimen = $dimen ." $s_iradius*mm";}
+	for(my $i = 0; $i <2; $i++) {$dimen = $dimen ." $s_oradius*mm";}
+	for(my $i = 0; $i <2; $i++) {$dimen = $dimen ." $zpos[$i]*mm";}
+        %detector = init_det();
+        $detector{"name"}        = "scattChamberShield";
+        $detector{"mother"}      = "target";
+        $detector{"description"} = "ddvcs scatt chambers W shield";
+        $detector{"color"}       = "aaaaaa";
+        $detector{"type"}        = "Polycone";
+        $detector{"dimensions"}  = $dimen;
+        $detector{"material"}    = "G4_W";
+        print_det(\%configuration, \%detector);
+			
 
 	$nplanes = 5;
 	my @oradiusT  =  (   2.5,  10.3,  7.3,  5.0,  2.5);
-	my @z_planeT  =  ( -24.2, -21.2, 22.5, 23.5, 24.5);
+	my @z_planeT  =  ( -74.2, -71.2, 72.5, 73.5, 74.5);
 	
 	# actual target
 	%detector = init_det();
