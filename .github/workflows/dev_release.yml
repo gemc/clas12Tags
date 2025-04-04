@@ -1,5 +1,8 @@
 # https://github.com/marketplace/actions/automatic-releases
 name: GitHub Dev Release
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   schedule:

@@ -1,6 +1,9 @@
 name: TEXT vs SQLITE
+permissions:
+  contents: read
+  pull-requests: write
 
- # Triggers the workflow on all pushes to main and all pull requests
+# Triggers the workflow on all pushes to main and all pull requests
 on:
   pull_request:
   push:
@@ -23,7 +26,7 @@ jobs:
           ./ci/report_runs_and_variations.sh  > Summary.md
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  Geometry:
+  txt-sql-geo-compare:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -58,7 +61,7 @@ jobs:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
 
-  Run:
+  txt-sql-run-compare:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -66,20 +69,20 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-#          - ec
-#          - pcal
-#          - dc
-#          - ftof
-#          - ctof
-#          - cnd
-#          - bst
-#          - htcc
-#          - micromegas
-#          - ltcc
-#          - rich
-#          - ft
+          #          - ec
+          #          - pcal
+          #          - dc
+          #          - ftof
+          #          - ctof
+          #          - cnd
+          #          - bst
+          #          - htcc
+          #          - micromegas
+          #          - ltcc
+          #          - rich
+          #          - ft
           - beamline
-#          - magnets
+        #          - magnets
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
           - default
@@ -110,8 +113,8 @@ jobs:
           name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/
 
-  GeoResults:
-    needs: Geometry
+  txt-sql-geo-result:
+    needs: txt-sql-geo-compare
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -129,8 +132,8 @@ jobs:
           done < comparison.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  DigiResults:
-    needs: Run
+  txt-sql-run-result:
+    needs: txt-sql-run-compare
     runs-on: ubuntu-latest
     steps:
       - name: Collect logs
@@ -171,3 +174,20 @@ jobs:
             fi
           done
           cat Summary.md >> $GITHUB_STEP_SUMMARY
+  
+
+  txt-sql-final:
+    needs:
+      - txt-sql-geo-result
+      - txt-sql-run-result
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0
