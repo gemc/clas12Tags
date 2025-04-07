@@ -48,13 +48,35 @@ void asciiField::loadFieldMap_Dipole(gMappedField *map, double verbosity) {
 	string tmp;
 	FILE *fp = fopen(map->identifier.c_str(), "r");
 
-	// ignoring header
-	while (tmp != "</mfield>") {
-		if (fscanf(fp, "%s", ctmp) != 0) {
-			tmp = string(ctmp);
+	// Loop until "</mfield>" is read or an error/EOF occurs
+	while (true) { // Use a loop that breaks internally for cleaner logic
+		int items_read = fscanf(fp, "%s", ctmp);
+
+		if (items_read == 1) {
+			// Successfully read one string
+			tmp = std::string(ctmp);
+			if (tmp == "</mfield>") {
+				// Found the desired end tag, exit the loop normally
+				break;
+			}
+			// Optional: Process the string 'tmp' here if needed within the loop
+			// std::cout << "Read: " << tmp << std::endl;
+
 		} else {
-			// reached end of header
-			cout << " Reading Map data..." << endl;
+			// fscanf did not return 1. This means error, EOF, or matching failure (0).
+			if (feof(fp)) {
+				// Reached End Of File before finding "</mfield>"
+				fprintf(stderr, "Warning: Reached EOF before finding </mfield> tag.\n");
+			} else if (ferror(fp)) {
+				// A read error occurred
+				perror("Error reading file"); // Prints the system error message
+			} else {
+				// fscanf returned 0 - unexpected for %s unless input format is strange
+				fprintf(stderr, "Warning: fscanf failed to match input (returned 0).\n");
+			}
+			// In any error/EOF case, we should stop processing.
+			tmp = ""; // Clear tmp to indicate failure or incomplete state if needed after loop
+			break; // Exit the loop
 		}
 	}
 
