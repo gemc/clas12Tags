@@ -67,8 +67,13 @@ void asciiField::loadFieldMap_phiSegmented(gMappedField* map, double verbosity)
 	// ignoring header
 	while(tmp != "</mfield>")
 	{
-		if(fscanf(fp, "%s", ctmp) != 0)
+		if(fscanf(fp, "%s", ctmp) != 0) {
 			tmp = string(ctmp);
+		} else {
+			// reached end of header
+			cout << " Reading Map data..." << endl;
+		}
+
 	}
 
 	// now reading map
@@ -76,7 +81,10 @@ void asciiField::loadFieldMap_phiSegmented(gMappedField* map, double verbosity)
 	for(int i1 = 0; i1<np_1 ; i1++) {
 		for(int i2 = 0; i2<np_2 ; i2++) {
 			for(int i3 = 0; i3<np_3 ; i3++) {
-				if(fscanf(fp, "%lg %lg %lg %lg %lg %lg", &d1, &d2, &d3, &b1, &b2, &b3) !=0 ) {
+
+
+				int items_read = fscanf(fp, "%lg %lg %lg %lg %lg %lg", &d1, &d2, &d3, &b1, &b2, &b3);
+				if (items_read == 6) {
 
 					d1 *= unit1;
 					d2 *= unit2;
@@ -159,7 +167,7 @@ void asciiField::loadFieldMap_phiSegmented(gMappedField* map, double verbosity)
 						t1 = (unsigned) floor( ( d2 - min2 + cell2/2 ) / ( cell2 ) ) ;
 						t2 = (unsigned) floor( ( d1 - min1 + cell1/2 ) / ( cell1 ) ) ;
 						t3 = (unsigned) floor( ( d3 - min3 + cell3/2 ) / ( cell3 ) ) ;
-						
+
 						map->B1_3D[t2][t1][t3] = b1;
 						map->B2_3D[t2][t1][t3] = b2;
 						map->B3_3D[t2][t1][t3] = b3;
@@ -171,6 +179,14 @@ void asciiField::loadFieldMap_phiSegmented(gMappedField* map, double verbosity)
 						cout << ",  array sizes = ("  << np_1 << ", " << np_2 << ", " << np_3 << ") " << endl;
 					}
 
+				} else {
+					if (feof(fp)) {
+						cout << " Warning: Reached end-of-file while trying to read data." << endl;
+					} else if (ferror(fp)) {
+						cout << " Error: An error occurred while reading the file." << endl;
+					} else {
+						cout << "  !! Error:  reading field map, not enough values in line " << i1 << " " << i2 << endl;
+					}
 				}
 			}
 		}
@@ -366,5 +382,5 @@ void gMappedField::GetFieldValue_phiSegmented( const double x[3], double *Bfield
 
 		cout << endl;
 	}
-	
+
 }
