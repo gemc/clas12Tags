@@ -1,4 +1,4 @@
-name: ascii vs sqlite
+name: Ascii vs Sqlite
 permissions:
   contents: read
   pull-requests: write
