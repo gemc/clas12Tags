@@ -25,10 +25,10 @@ our %configuration = load_configuration($ARGV[0]);
 sub buildBigCone_motherVolume
 {
  
-    my $nplanes = 6;
-    my @bcone_iradius = (489, 380, 402, 104, 120, 153 );
-    my @bcone_oradius = (490, 544, 584, 704, 798, 153.1 );
-    my @bcone_zpos_root = (584, 649, 696, 840, 951, 1251);
+    my $nplanes = 7;
+    my @bcone_iradius = (302, 402, 98.8, 105.2, 105.2, 113.3, 150 );
+    my @bcone_oradius = (457, 614, 740, 784, 798, 798, 150.1 );
+    my @bcone_zpos_root = (520, 696, 837, 888, 888, 951, 1251);
     
     
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
@@ -49,7 +49,7 @@ sub buildBigCone_motherVolume
     my $Y=0.;
     my $Z=0.;
     $detector{"pos"}         =  "$X*mm $Y*mm $Z*mm ";
-    $detector{"material"}    = "beamline_W";
+    $detector{"material"}    = "ddvcs_shield_mat";
     $detector{"style"}       = "1";
     print_det(\%configuration, \%detector);
 
@@ -59,9 +59,9 @@ sub buildMollerCone
 {
  
     my $nplanes = 5;
-    my @cone_iradius = (38.1, 38.1, 38.1, 38.1, 38.1 );
-    my @cone_oradius = (42.8, 153, 153, 111, 111 );
-    my @cone_zpos_root = (381, 1280, 1310, 1380, 2750);
+    my @cone_iradius = (32.1, 32.1, 35.1, 35.1, 35.1 );
+    my @cone_oradius = (42.8, 149, 149, 111, 111 );
+    my @cone_zpos_root = (381, 1251, 2280, 2280, 2750);
     
     
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
