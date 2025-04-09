@@ -46,7 +46,7 @@ sub define_ahdc_bank
 	insert_bank_variable(\%configuration, $bankname, "ADC_ped" ,     7, "Di", "pedestal from pulse analysis - currently set to noise level");
 
 	insert_bank_variable(\%configuration, $bankname, "WF_timestamp", 14, "Dl", "Hardware Timestamp");
-	for my $itr (1..64) {
+	for my $itr (1..30) {
 		my $entry = "wf_s$itr";
 		insert_bank_variable(\%configuration, $bankname, $entry,$itr+14, "Di", "ADC sample $itr");
 	}
