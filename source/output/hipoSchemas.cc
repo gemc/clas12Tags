@@ -100,7 +100,7 @@ HipoSchema::HipoSchema() {
     alertAhdcADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S, integral/I, timestamp/L");
     alertAhdcTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I, ped/S");
     std::string wf_string = "sector/B, layer/B, component/S, order/B, timestamp/L";
-    for (int itr=0; itr<64; itr++){
+    for (int itr=0; itr<30; itr++){
         wf_string = wf_string + ", s" + to_string(itr+1) + "/S";
     }
     wf_string = wf_string + ", time/I";

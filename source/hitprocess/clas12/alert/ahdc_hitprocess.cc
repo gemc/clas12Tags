@@ -99,7 +99,7 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	// WF
 	dgtz["WF_timestamp"] = 0;
 
-	for(unsigned t=0; t<64; t++) {
+	for(unsigned t=0; t<30; t++) {
 		string dname = "WF_s" + to_string(t+1);
 		dgtz[dname] = Signal->GetDgtz().at(t);
 	}
