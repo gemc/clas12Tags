@@ -49,13 +49,21 @@ cp -r experiments/* $almadir
 
 echo "Getting last CI artifact in fedora"
 cd $fedoradir/..
-pwd
+echo "Current dir: " $(pwd)
 $workdir/clas12Tags/bin/get_last_ci_artifact.py fedora
+# remove gemc.zip if it exists
+if [ -f gemc.zip ]; then
+	rm gemc.zip
+fi
+
 echo "Getting last CI artifact in almalinux"
 cd $almadir/..
-pwd
-rm gemc.zip
+echo "Current dir: " $(pwd)
 $workdir/clas12Tags/bin/get_last_ci_artifact.py almalinux
+# remove gemc.zip if it exists
+if [ -f gemc.zip ]; then
+	rm gemc.zip
+fi
+
 echo
-echo Done.
-rm gemc.zip
+echo Done!
