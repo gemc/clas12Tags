@@ -30,7 +30,10 @@ jobs:
         uses: actions/checkout@main
       - id: set-matrix
         run: |
-          export JSON=$( ./ci/gcards_to_test.sh )
+          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
+          echo "Current Working Directory: $(pwd)"
+          echo "Listing Workspace Root ($GITHUB_WORKSPACE):"
+          export JSON=$( $GITHUB_WORKSPACE/ci/gcards_to_test.sh )
           echo generate-matrix: $JSON
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
