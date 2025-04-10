@@ -15,6 +15,7 @@ on:
   workflow_dispatch:
 
   # Allows this workflow to be called by other workflows
+  # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
   workflow_call:
 
 jobs:
@@ -50,6 +51,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
       - name: ${{ matrix.detector }} tests
         run: |
           ./ci/experiments_test.sh -g ${{ matrix.gcard }}
