@@ -306,6 +306,18 @@ Source: [calcom run groups](https://clasweb.jlab.org/wiki/index.php/CLAS12_Calib
 |                    |               |
 | rge_spring2024     |               |
 
+
+## Validation
+
+[![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml)
+[![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml)
+[![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
+[![Detector Tests](https://github.com/gemc/clas12Tags/actions/workflows/detectors_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/detectors_test.yml)
+[![Detector Tests](https://github.com/gemc/clas12Tags/actions/workflows/detectors_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/detectors_test.yml)
+[![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
+[![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
+
+
 ## Feedback
 
 Please use CLAS12 discourse for feedback on anything clas12tags related:

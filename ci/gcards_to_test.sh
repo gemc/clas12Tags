@@ -20,9 +20,6 @@ lastg=${gcards[-1]}
 
 echo "{\"include\":["
 for jc in $=gcards; do
-	# if jc is not 'ddvcs.gcard' echo yes
-	if [[ $jc != "ddvcs.gcard" ]]; then
-		[[ $jc == $lastg ]] && echo "{\"gcard\": \"$jc\"}" || echo "{\"gcard\": \"$jc\"},"
-	fi
+	[[ $jc == $lastg ]] && echo "{\"gcard\": \"$jc\"}" || echo "{\"gcard\": \"$jc\"},"
 done
 echo "]}"
