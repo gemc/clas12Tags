@@ -17,8 +17,7 @@ Help() {
 	echo "Options:"
 	echo
 	echo "-h: Print this Help."
-	echo "-d <system>: build gemc and runs it for the system."
-	echo "-v <digitization variation>: sets DIGITIZATION_VARIATION to the value for the comparisons."
+	echo "-g <gcard>: build gemc and runs it for the 2 gcards in clas12-config main and dev branches."
 	echo
 }
 
@@ -33,11 +32,8 @@ while getopts ":hd:v:" option; do
 			Help
 			exit
 			;;
-		d)
-			system="$OPTARG"
-			;;
-		v)
-			digi_var="$OPTARG"
+		g)
+			gcard="$OPTARG"
 			;;
 		\?) # Invalid option
 			echo "Error: Invalid option"
@@ -87,32 +83,11 @@ summarize_log() {
 }
 
 # bank_to_check space separated list
-banks_to_check=""
-if [[ $system == "ec" || $system == "pcal" ]]; then
-	banks_to_check="ECAL::adc"
-elif [[ $system == "ftof" ]]; then
-	banks_to_check="FTOF::adc"
-elif [[ $system == "dc" ]]; then
-	banks_to_check="DC::tdc"
-elif [[ $system == "htcc" ]]; then
-	banks_to_check="HTCC::adc"
-elif [[ $system == "ctof" ]]; then
-	banks_to_check="CTOF::adc"
-elif [[ $system == "cnd" ]]; then
-	banks_to_check="CND::adc"
-elif [[ banks_to_check == "bst" ]]; then
-	banks_to_check="BST::adc"
-elif [[ $system == "bmt" ]]; then
-	banks_to_check="BMT::adc"
-elif [[ $system == "ltcc" ]]; then
-	banks_to_check="LTCC::adc"
-elif [[ $system == "rich" ]]; then
-	banks_to_check="RICH::tdc"
-elif [[ $system == "micromegas" ]]; then
-	banks_to_check="BMT::adc FMT::adc"
-elif [[ $system == "ft" || $system == "beamline" || $system = "magnets" ]]; then
-	banks_to_check="FTCAL::adc FTHODO::adc FTTRK::adc"
-fi
+banks_to_check="FTCAL::adc DC::tdc ECAL::adc FTOF::adc HTCC::adc BMT::adc FMT::adc CTOF::adc CND::adc BST::adc LTCC::adc RICH::tdc"
+
+[[ -d clas12-config-dev  ]]  && echo clas12-config-dev exist  || git clone -b dev https://github.com/JeffersonLab/clas12-config clas12-config-dev
+[[ -d clas12-config-main  ]] && echo clas12-config-main exist || git clone -b main https://github.com/JeffersonLab/clas12-config clas12-config-main
+
 
 cd "experiments/clas12/$system" || DetectorDirNotExisting
 echo "\n > System: $system"

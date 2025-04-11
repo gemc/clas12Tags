@@ -1,61 +1,77 @@
 #!/usr/bin/perl -w
 
 use strict;
+use warnings;
 use lib ("$ENV{GEMC}/api/perl");
 use utils;
 use parameters;
 use geometry;
+use hit;
+use bank;
+use math;
 use materials;
-
 use Math::Trig;
+use lib ("../");
+use clas12_configuration_string;
 
 # Help Message
-sub help()
-{
-	print "\n Usage: \n";
-	print "   targets.pl <configuration filename>\n";
- 	print "   Will create the CLAS12 targets geometry, materials, both original and elaborate versions\n";
- 	print "   Note: The passport and .visa files must be present if connecting to MYSQL. \n\n";
-	exit;
+sub help() {
+    print "\n Usage: \n";
+    print "   targets.pl <configuration filename>\n";
+    print "   Will create the CLAS12 targets geometry, materials, both original and elaborate versions\n";
+    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
+    exit;
 }
 
 # Make sure the argument list is correct
-if( scalar @ARGV != 1)
-{
-	help();
-	exit;
+if (scalar @ARGV != 1) {
+    help();
+    exit;
 }
 
 # Loading configuration file and parameters
 our %configuration = load_configuration($ARGV[0]);
+our %parameters ;
 
 
-# materials
+# import scripts
 require "./materials.pl";
-
-# sensitive geometry
 require "./geometry.pl";
-require "./apollo.pl";
+#
+# require "./apollo.pl";
 
+# subroutines create_system with arguments (variation, run number)
+sub create_system {
 
-# all the scripts must be run for every configuration
-my @allConfs = ("lH2", "lD2", "lHe", "ND3", "PolTarg", "APOLLOnh3", "APOLLOnd3", "lH2e", "bonusD2", "bonusH2", "bonusHe", "pbTest", "hdIce", "longitudinal", "transverse", "RGM_2_C", "RGM_2_Sn", "RGM_8_C_S", "RGM_8_C_L", "RGM_8_Sn_S", "RGM_8_Sn_L", "RGM_Ca", "alertD2", "alertH2", "alertHe", "lD2CxC", "lD2CuSn", "2cm-lD2", "2cm-lD2-empty");
+    my $variation = shift;
+    my $runNumber = shift;
 
+    %parameters = get_parameters(%configuration);
 
-foreach my $conf ( @allConfs )
-{
-	$configuration{"variation"} = $conf ;
-	
-	# materials
-	materials();
-		
-	# geometry
-	if( $configuration{"variation"} eq "APOLLOnh3" || $configuration{"variation"} eq "APOLLOnd3") {
-	    apollo();
-	}
-	else {
-	  build_targets();
-	}
+    build_target();
 }
 
+my @variations = ("default", "rga_spring2018", "rga_fall2018");
+my @runs = clas12_runs(@variations);
 
+my @custom_variations = ("pbTest");
+
+# TEXT Factory
+$configuration{"factory"} = "TEXT";
+my $runNumber = 11;
+foreach my $variation (@variations, @custom_variations) {
+    $configuration{"variation"} = $variation;
+    create_system($variation, $runNumber);
+}
+# SQLITE Factory
+$configuration{"factory"} = "SQLITE";
+my $system = $configuration{'detector_name'};
+foreach my $variation (@variations) {
+    my $runNumber = clas12_run($variation);
+    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+}
+foreach my $variation (@custom_variations) {
+    my $i = 0;
+    my $runNumber = 50000 + $i++;
+    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+}

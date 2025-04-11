@@ -1,0 +1,76 @@
+name: Clas12-config Dev Main Comparison
+permissions:
+  contents: read
+  pull-requests: write
+
+ # Triggers the workflow on all pushes to main and all pull requests
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Allows this workflow to be called by other workflows
+  # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
+  workflow_call:
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-fedora36
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: Creates list of gcards
+        uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
+      - id: set-matrix
+        run: |
+          echo "Current Working Directory: $(pwd)"
+          echo "Content: $(ls -l)"
+          export JSON=$( ./ci/gcards_dev_main.sh )
+          echo generate-matrix: $JSON
+          echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
+
+#  gcards-dev-main-comparison:
+#    needs: generate-matrix
+#    runs-on: ubuntu-latest
+#    container: jeffersonlab/gemc:dev-almalinux94
+#    strategy:
+#      fail-fast: false
+#      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+#    # Skip this entire job if the commit was made by the merge queue bot
+#    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@main
+#        with:
+#          repository: ${{ 'gemc/clas12Tags' }}
+#      - name: ${{ matrix.detector }} tests
+#        run: |
+#          ./ci/experiments_test.sh -g ${{ matrix.gcard }}
+#
+#  gcards-dev-main-comparison-final:
+#    needs:
+#      - generate-matrix
+#      - gcards-dev-main-comparison
+#    runs-on: ubuntu-latest
+#    # Skip this entire job if the commit was made by the merge queue bot
+#    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+#    steps:
+#      - name: fail
+#        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+#        run: |
+#          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+#          exit 1
+#      - name: pass
+#        run: |
+#          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+#          exit 0

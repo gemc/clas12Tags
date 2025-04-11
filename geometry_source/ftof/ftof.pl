@@ -73,8 +73,11 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-upload_parameters(\%configuration, "ftof__parameters_default.txt", "ftof", "default", 11);
-upload_parameters(\%configuration, "ftof__parameters_rga_spring2018.txt", "ftof", "default", 3029);
+foreach my $variation (@variations) {
+    my $runNumber = clas12_run($variation);
+    my $system = $configuration{'detector_name'};
+    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+}
 
 my $variation = "default";
 foreach my $run (@runs) {
