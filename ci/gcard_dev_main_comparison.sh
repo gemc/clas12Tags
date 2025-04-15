@@ -67,9 +67,9 @@ compare_output() {
 
 	# if both checks are 0, then the comparison is successful
 	if [[ $check1 = "0" && $check2 = "0" ]]; then
-		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:✅" >>$log_file_detail
+		echo "$experiment:✅" >>$log_file_detail
 	else
-		echo "$system:$variation:$run:$bank_to_write:$digi_var1/$digi_var2:❌" >>$log_file_detail
+		echo "$experiment:❌" >>$log_file_detail
 	fi
 }
 

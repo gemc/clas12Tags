@@ -54,7 +54,7 @@ sub create_system {
 my @variations = ("default", "rga_spring2018", "rga_fall2018");
 my @runs = clas12_runs(@variations);
 
-my @custom_variations = ("pbTest");
+my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse");
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
@@ -63,6 +63,7 @@ foreach my $variation (@variations, @custom_variations) {
     $configuration{"variation"} = $variation;
     create_system($variation, $runNumber);
 }
+
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 my $system = $configuration{'detector_name'};

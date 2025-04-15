@@ -4,8 +4,7 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(clas12_configuration_string clas12_runs clas12_run);
 
-my @custom_variations = ("pbTest", "ddvcs", "rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
-
+my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse", "ddvcs", "rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
 
 # Initialize hash maps
 sub clas12_configuration_string {

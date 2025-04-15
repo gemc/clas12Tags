@@ -59,13 +59,13 @@ jobs:
       - name: Install Software
         run: |
           ./ci/install_comparison_software.sh
-      - name: ${{ matrix.detector }} tests
+      - name: ${{ matrix.gcard }} tests
         run: |
           ./ci/gcard_dev_main_comparison.sh -g ${{ matrix.gcard }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
-          name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
+          name: gemclogs-${{ matrix.gcard }}
           path: /root/logs/
 
   gcards-dev-main-comparison-result:
@@ -88,7 +88,6 @@ jobs:
             echo "| $gcard | $pass |" >> Summary.md
           done < comparison.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
-
 
   gcards-dev-main-comparison-result-final:
     needs:
