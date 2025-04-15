@@ -53,6 +53,12 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: ${{ 'gemc/clas12Tags' }}
+      - name: Build GEMC
+        run: |
+          ./ci/build_gemc.sh
+      - name: Install Software
+        run: |
+          ./ci/install_comparison_software.sh
       - name: ${{ matrix.detector }} tests
         run: |
           ./ci/gcard_dev_main_comparison.sh -g ${{ matrix.gcard }}
