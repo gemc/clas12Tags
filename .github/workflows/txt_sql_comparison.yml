@@ -75,7 +75,7 @@ jobs:
         detector:
           #          - ec
           #          - pcal
-          #          - dc
+          - dc
           #          - ftof
           #          - ctof
           #          - cnd
@@ -112,7 +112,7 @@ jobs:
           ./ci/install_comparison_software.sh
       - name: GEMC ${{ matrix.detector }} Comparison
         run: |
-          ./ci/gemc_comparison.sh -d ${{ matrix.detector }} -v ${{ matrix.variation }}
+          ./ci/detector_sqlite_dev_comparison.sh -d ${{ matrix.detector }} -v ${{ matrix.variation }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:

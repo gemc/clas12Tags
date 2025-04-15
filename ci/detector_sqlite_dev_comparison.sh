@@ -5,7 +5,7 @@
 # Container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/gemc_comparison.sh -d ec -v default
+# ./ci/detector_sqlite_dev_comparison.sh -d ec -v default
 
 source ci/env.sh
 
@@ -17,7 +17,8 @@ Help() {
 	echo "Options:"
 	echo
 	echo "-h: Print this Help."
-	echo "-g <gcard>: build gemc and runs it for the 2 gcards in clas12-config main and dev branches."
+	echo "-d <system>: build gemc and runs it for the system."
+	echo "-v <digitization variation>: sets DIGITIZATION_VARIATION to the value for the comparisons."
 	echo
 }
 
@@ -32,8 +33,11 @@ while getopts ":hd:v:" option; do
 			Help
 			exit
 			;;
-		g)
-			gcard="$OPTARG"
+		d)
+			system="$OPTARG"
+			;;
+		v)
+			digi_var="$OPTARG"
 			;;
 		\?) # Invalid option
 			echo "Error: Invalid option"
@@ -83,18 +87,39 @@ summarize_log() {
 }
 
 # bank_to_check space separated list
-banks_to_check="FTCAL::adc DC::tdc ECAL::adc FTOF::adc HTCC::adc BMT::adc FMT::adc CTOF::adc CND::adc BST::adc LTCC::adc RICH::tdc"
-
-[[ -d clas12-config-dev  ]]  && echo clas12-config-dev exist  || git clone -b dev https://github.com/JeffersonLab/clas12-config clas12-config-dev
-[[ -d clas12-config-main  ]] && echo clas12-config-main exist || git clone -b main https://github.com/JeffersonLab/clas12-config clas12-config-main
-
+banks_to_check=""
+if [[ $system == "ec" || $system == "pcal" ]]; then
+	banks_to_check="ECAL::adc"
+elif [[ $system == "ftof" ]]; then
+	banks_to_check="FTOF::adc"
+elif [[ $system == "dc" ]]; then
+	banks_to_check="DC::tdc"
+elif [[ $system == "htcc" ]]; then
+	banks_to_check="HTCC::adc"
+elif [[ $system == "ctof" ]]; then
+	banks_to_check="CTOF::adc"
+elif [[ $system == "cnd" ]]; then
+	banks_to_check="CND::adc"
+elif [[ banks_to_check == "bst" ]]; then
+	banks_to_check="BST::adc"
+elif [[ $system == "bmt" ]]; then
+	banks_to_check="BMT::adc"
+elif [[ $system == "ltcc" ]]; then
+	banks_to_check="LTCC::adc"
+elif [[ $system == "rich" ]]; then
+	banks_to_check="RICH::tdc"
+elif [[ $system == "micromegas" ]]; then
+	banks_to_check="BMT::adc FMT::adc"
+elif [[ $system == "ft" || $system == "beamline" || $system = "magnets" ]]; then
+	banks_to_check="FTCAL::adc FTHODO::adc FTTRK::adc"
+fi
 
 cd "experiments/clas12/$system" || DetectorDirNotExisting
 echo "\n > System: $system"
 echo " > DIGITIZATION_VARIATION: $digi_var"
 echo " > GEMC: $(which gemc)"
 echo " > GEMC compiled on $(date)"
-echo " > Location: $(which gemc)"
+echo
 
 mkdir -p /root/logs
 log_file_run=/root/logs/"$system"_output_run.log
@@ -107,7 +132,7 @@ touch  $log_file_run $log_file_compare $log_file_detail $log_file_summary
 runs=$(runs_for_system)
 nevents=200
 
-# geometry comparison
+# digitization output comparison
 # $digi_var can be: default, rga_spring2018_mc, rga_fall2018_mc
 for run in $=runs; do
 	variations=$(variations_for_run_and_system $run)
@@ -121,11 +146,14 @@ for run in $=runs; do
 		outfile2="sqlite_"$run".hipo"
 		outfile3="sanity_sqlite_"$run".hipo"
 
+		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation digi_variation: $digi_var to log $log_file_run"
 		echo "Running gemc from ASCII DB for $system, run: $run, geometry variation: $variation", digi_variation: $digi_var >>$log_file_run
 		gemc -USE_GUI=0 $gcard1 -N=$nevents -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 
+		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation, digi_variation: default to log $log_file_run"
 		echo "Running gemc from SQLITE DB for $system, run: $run, geometry variation: $variation", digi_variation: default >>$log_file_run
 		gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="default" >>$log_file_run
+		echo
 
 		# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
 		if [[ $digi_var != "default" ]]; then
@@ -134,11 +162,15 @@ for run in $=runs; do
 			gemc -USE_GUI=0 $gcard2 -N=$nevents -OUTPUT="hipo, $outfile3" -RANDOM=123 -RUNNO="$run" -DIGITIZATION_VARIATION="$digi_var" >>$log_file_run
 		fi
 
+		echo "\n\nContent of directory after running gemc: "
 		echo "\n\nContent of directory after running gemc: ">>$log_file_run
+		ls -l
 		ls -l>>$log_file_run
+		echo
 
 		for bank_to_check in $=banks_to_check; do
 			echo "Comparing bank $bank_to_check for files: $outfile1 and $outfile2 for variations $digi_var default"
+			echo "Comparing bank $bank_to_check for files: $outfile1 and $outfile2 for variations $digi_var default">>$log_file_run
 			compare_output $bank_to_check $outfile1 $outfile2 $digi_var default
 			# sanity check: running gemc with SQLITE factory, same variation as TEXT factory
 			if [[ $digi_var != "default" ]]; then

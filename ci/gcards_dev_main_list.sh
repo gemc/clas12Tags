@@ -8,7 +8,7 @@
 # Container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/gcards_to_test.sh
+# ./ci/gcards_devconfig_list.sh
 
 [[ -d clas12-config-dev  ]]  && echo clas12-config-dev exist  || git clone -b dev https://github.com/JeffersonLab/clas12-config clas12-config-dev
 [[ -d clas12-config-main  ]] && echo clas12-config-main exist || git clone -b main https://github.com/JeffersonLab/clas12-config clas12-config-main

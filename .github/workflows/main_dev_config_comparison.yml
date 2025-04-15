@@ -1,4 +1,4 @@
-name: Clas12-config Dev Main Comparison
+name: GCards Dev Main Comparison
 permissions:
   contents: read
   pull-requests: write
@@ -35,42 +35,68 @@ jobs:
         run: |
           echo "Current Working Directory: $(pwd)"
           echo "Content: $(ls -l)"
-          export JSON=$( ./ci/gcards_dev_main.sh )
+          export JSON=$( ./ci/gcards_dev_main_list.sh )
           echo generate-matrix: $JSON
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
-#  gcards-dev-main-comparison:
-#    needs: generate-matrix
-#    runs-on: ubuntu-latest
-#    container: jeffersonlab/gemc:dev-almalinux94
-#    strategy:
-#      fail-fast: false
-#      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
-#    # Skip this entire job if the commit was made by the merge queue bot
-#    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@main
-#        with:
-#          repository: ${{ 'gemc/clas12Tags' }}
-#      - name: ${{ matrix.detector }} tests
-#        run: |
-#          ./ci/experiments_test.sh -g ${{ matrix.gcard }}
-#
-#  gcards-dev-main-comparison-final:
-#    needs:
-#      - generate-matrix
-#      - gcards-dev-main-comparison
-#    runs-on: ubuntu-latest
-#    # Skip this entire job if the commit was made by the merge queue bot
-#    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
-#    steps:
-#      - name: fail
-#        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
-#        run: |
-#          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
-#          exit 1
-#      - name: pass
-#        run: |
-#          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
-#          exit 0
+  gcards-dev-main-comparison:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-almalinux94
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
+      - name: ${{ matrix.detector }} tests
+        run: |
+          ./ci/gcard_dev_main_comparison.sh -g ${{ matrix.gcard }}
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
+          path: /root/logs/
+
+  gcards-dev-main-comparison-result:
+    needs: gcards-dev-main-comparison
+    runs-on: ubuntu-latest
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: Collect logs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: gemclogs-*
+      - name: Detailed Table
+        run: |
+          ls */*output_details.log
+          cat */*output_details.log > comparison.log
+          echo "| GCard | Status  |" > Summary.md
+          echo "|-------|---------|" >> Summary.md
+          while IFS=: read -r gcard pass; do
+            echo "| $gcard | $pass |" >> Summary.md
+          done < comparison.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
+
+
+  gcards-dev-main-comparison-result-final:
+    needs:
+      - gcards-dev-main-comparison-result
+    runs-on: ubuntu-latest
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

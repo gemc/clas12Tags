@@ -5,14 +5,14 @@
 # Container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/experiments_test.sh
+# ./ci/gcard_run_test.sh
 
 source ci/env.sh
 
 Help() {
 	# Display Help
 	echo
-	echo "Syntax: experiments_test.sh [-h|g]"
+	echo "Syntax: gcard_run_test.sh [-h|g]"
 	echo
 	echo "Options:"
 	echo
