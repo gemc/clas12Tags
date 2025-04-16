@@ -82,8 +82,18 @@ jobs:
         run: |
           ls */*output_details.log
           cat */*output_details.log > comparison.log
+          echo "| GCard | Bank | Status  |" > Summary.md
+          echo "|-------|---------|---------|" >> Summary.md
+          while IFS=: read -r gcard bank pass; do
+            echo "| $gcard | $bank | $pass |" >> Summary.md
+          done < comparison.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
+      - name: Summary Table
+        run: |
+          ls */*output_summary.log
+          cat */*output_summary.log > comparison.log
           echo "| GCard | Status  |" > Summary.md
-          echo "|-------|---------|" >> Summary.md
+          echo "|----------|---------|" >> Summary.md
           while IFS=: read -r gcard pass; do
             echo "| $gcard | $pass |" >> Summary.md
           done < comparison.log
