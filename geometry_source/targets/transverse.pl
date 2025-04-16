@@ -77,4 +77,53 @@ sub build_transverse {
 
 }
 
+sub build_transverse_mats {
+    #CTFE = C_2ClF_3
+    %mat = init_mat();
+    my $my_density = 2.135; # 2 C, 3 F, 1 Cl
+    my $C_mass_fraction = 2 * 12 / (2 * 12 + 3 * 19 + 35);
+    my $F_mass_fraction = 3 * 19 / (2 * 12 + 3 * 19 + 35);
+    my $Cl_mass_fraction = 35 / (2 * 12 + 3 * 19 + 35);
+    $mat{"name"} = "Kel-F";
+    $mat{"description"} = "Kel-F PCTFE target walls C_2ClF_3";
+    $mat{"density"} = $my_density;
+    $mat{"ncomponents"} = "3";
+    $mat{"components"} = "G4_C $C_mass_fraction G4_Cl $Cl_mass_fraction G4_F $F_mass_fraction";
+    print_mat(\%configuration, \%mat);
+
+
+    # lHe coolant
+    %mat = init_mat();
+    $mat{"name"} = "lHeCoolant";
+    $mat{"description"} = "liquid He coolant for the polarized target cell";
+    $mat{"density"} = "0.147"; # 0.145 g/cm3 <—————————————
+    $mat{"ncomponents"} = "1";
+    $mat{"components"} = "G4_He 1";
+    print_mat(\%configuration, \%mat);
+
+    # NH3
+    %mat = init_mat();
+    my $NH3_density = 0.867;
+    my $N_mass_fraction = 15 / 18;
+    my $H_mass_fraction = 3 / 18;
+    $mat{"name"} = "NH3";
+    $mat{"description"} = "NH3 material";
+    $mat{"density"} = $NH3_density;
+    $mat{"ncomponents"} = "2";
+    $mat{"components"} = "G4_N $N_mass_fraction G4_H $H_mass_fraction";
+    print_mat(\%configuration, \%mat);
+
+    # NH3 target with lHe3 coolant
+    %mat = init_mat();
+    my $NH3trg_density = 0.6 * 0.867 + 0.4 * 0.145; # 60% of NH3 and 40% of liquid-helium
+    my $NH3_mass_fraction = 0.6 * 0.867 / $NH3trg_density;
+    my $lHe_mass_fraction = 0.4 * 0.145 / $NH3trg_density;
+    $mat{"name"} = "NH3target";
+    $mat{"description"} = "solid NH3 target";
+    $mat{"density"} = $NH3trg_density;
+    $mat{"ncomponents"} = "2";
+    $mat{"components"} = "NH3 $NH3_mass_fraction lHeCoolant $lHe_mass_fraction";
+    print_mat(\%configuration, \%mat);
+}
+
 1;

@@ -101,4 +101,34 @@ sub build_ND3 {
 
 }
 
+sub build_ND3_mats {
+    #my %mat = init_mat();
+    #$mat{"name"}          = "solidND3";
+    #$mat{"description"}   = "solid ND3 target";
+    #$mat{"density"}       = "1.007";  # 1.007 g/cm3
+    #$mat{"ncomponents"}   = "1";
+    #$mat{"components"}    = "ND3 1";
+    #print_mat(\%configuration, \%mat);
+
+    my %mat = init_mat();
+    $mat{"name"} = "lHe";
+    $mat{"description"} = "liquid helium";
+    $mat{"density"} = "0.145"; # 0.145 g/cm3 <—————————————
+    $mat{"ncomponents"} = "1";
+    $mat{"components"} = "G4_He 1";
+    print_mat(\%configuration, \%mat);
+
+    %mat = init_mat();
+    my $my_density = 0.6 * 1.007 + 0.4 * 0.145; # 60% of ND3 and 40% of liquid-helium
+    my $ND3_mass_fraction = 0.6 * 1.007 / $my_density;
+    my $lHe_mass_fraction = 0.4 * 0.145 / $my_density;
+    $mat{"name"} = "solidND3";
+    $mat{"description"} = "solid ND3 target";
+    $mat{"density"} = $my_density;
+    $mat{"ncomponents"} = "2";
+    $mat{"components"} = "ND3 $ND3_mass_fraction lHe $lHe_mass_fraction";
+    print_mat(\%configuration, \%mat);
+
+}
+
 1;

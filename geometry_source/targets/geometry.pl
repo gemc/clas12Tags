@@ -9,12 +9,13 @@ our %parameters;
 
 our $target_zpos;
 
-# variations scripts
+# various targets
 require "./pbtest.pl";
 require "./ND3.pl";
 require "./hdice.pl";
 require "./longitudinal.pl";
 require "./transverse.pl";
+require "./liquid_standards.pl";
 
 sub load_target_parameters {
 
@@ -42,6 +43,14 @@ sub build_target {
     elsif ($configuration_string eq "transverse") {
         build_transverse();
     }
+    elsif ($configuration_string eq "default"
+        or $configuration_string eq "rga_spring2018"
+        or $configuration_string eq "rga_fall2018"
+        or $configuration_string eq "rgb_spring2019") {
+        build_liquid_standards();
+    }
+
+
 }
 
 1;

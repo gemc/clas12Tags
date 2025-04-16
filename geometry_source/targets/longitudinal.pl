@@ -5,8 +5,6 @@ use lib ("../");
 use clas12_configuration_string;
 
 our %configuration;
-our %parameters;
-
 our $target_zpos;
 
 sub build_longitudinal {
@@ -57,6 +55,16 @@ sub build_longitudinal {
     $detector{"style"} = "1";
     print_det(\%configuration, \%detector);
 
+}
+
+sub build_longitudinal_mats {
+		%mat = init_mat();
+		$mat{"name"}          = "polarizedHe3";
+		$mat{"description"}   = "polarizedHe3 target";
+		$mat{"density"}        = "0.000748";
+		$mat{"ncomponents"}   = "1";
+		$mat{"components"}    = "helium3Gas 1";
+		print_mat(\%configuration, \%mat);
 }
 
 1;

@@ -31,14 +31,12 @@ if (scalar @ARGV != 1) {
 
 # Loading configuration file and parameters
 our %configuration = load_configuration($ARGV[0]);
-our %parameters ;
+our %parameters;
 
 
 # import scripts
-require "./materials.pl";
 require "./geometry.pl";
-#
-# require "./apollo.pl";
+require "./materials.pl";
 
 # subroutines create_system with arguments (variation, run number)
 sub create_system {
@@ -49,12 +47,19 @@ sub create_system {
     %parameters = get_parameters(%configuration);
 
     build_target();
+    build_materials();
 }
 
-my @variations = ("default", "rga_spring2018", "rga_fall2018");
+my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgb_spring2019");
 my @runs = clas12_runs(@variations);
 
 my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse");
+
+# list of original variations:
+# lH2, lD2, lHe, ND3, PolTarg, APOLLOnh3, APOLLOnd3, lH2e,
+# bonusD2, bonusH2, bonusHe, pbTest, hdIce, longitudinal, transverse,
+# RGM_2_C, RGM_2_Sn, RGM_8_C_S, RGM_8_C_L, RGM_8_Sn_S, RGM_8_Sn_L, RGM_Ca,
+# alertD2, alertH2, alertHe, lD2CxC, lD2CuSn, 2cm-lD2, 2cm-lD2-empty
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
@@ -69,10 +74,27 @@ $configuration{"factory"} = "SQLITE";
 my $system = $configuration{'detector_name'};
 foreach my $variation (@variations) {
     my $runNumber = clas12_run($variation);
-    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+    upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $runNumber);
 }
+
+my $i = 0;
 foreach my $variation (@custom_variations) {
-    my $i = 0;
     my $runNumber = 50000 + $i++;
-    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+    upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $runNumber);
 }
+
+my $variation = "default";
+foreach my $run (@runs) {
+    $configuration{"variation"} = $variation;
+    $configuration{"run_number"} = $run;
+    create_system($variation, $run);
+}
+
+# port gxml to sqlite
+require "../gxml_to_sqlite.pl";
+
+foreach my $variation (@variations) {
+    $configuration{"run_number"} = clas12_run($variation);
+    process_gxml("cad/cad_$variation.gxml",  "experiments/clas12/targets/cad");
+}
+
