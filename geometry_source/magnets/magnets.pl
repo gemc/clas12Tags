@@ -34,7 +34,7 @@ require "./solenoid.pl";
 require "./torus.pl";
 
 # manually removing the txt files because the api does not have the capability to distinguish
-# between the first system and subsequent systems (
+# between the first system and subsequent systems
 system('rm *.txt');
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018");
@@ -44,8 +44,10 @@ sub create_system {
     my $variation = shift;
     my $runNumber = shift;
     my $factory   = shift;
-    # only make torus for default variation
-    makeTorus($variation, $runNumber, $factory) if $variation eq "default";
+    # only make torus for default variation. We actually do not use this, but
+    # if enable this will trigger deletion of all solenoid volumes in the SQLITE due to API
+    # probably not worth fix this perl API for it.
+    # makeTorus($variation, $runNumber, $factory) if $variation eq "default";
 
     makeSolenoid($variation, $runNumber, $factory);
 }
@@ -53,13 +55,14 @@ sub create_system {
 # TEXT Factory, include extra variations
 my $runNumber = 11;
 foreach my $variation (@variations) {
+    $configuration{"variation"} = $variation;
     create_system($variation, $runNumber, "TEXT");
 }
 
 # SQLITE Factory
 my $variation = "default";
 foreach my $run (@runs) {
-    create_system($variation, $runNumber, "SQLITE");
+    create_system($variation, $run, "SQLITE");
 }
 
 

@@ -20,7 +20,6 @@ require "./torusCoils.pl";
 
 # building the torus
 sub makeTorus {
-    $configuration{"variation"} = shift;
     $configuration{"run_number"} = shift;
     $configuration{"factory"} = shift;
     $configuration{"detector_name"} = "torus";

@@ -80,7 +80,7 @@ define_bank();
 foreach my $variation (@variations) {
     my $runNumber = clas12_run($variation);
     my $system = $configuration{'detector_name'};
-    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "default", $runNumber);
 }
 upload_parameters(\%configuration, "micromegas__parameters_michel_9mmcopper.txt", "micromegas", "default", 30000);
 

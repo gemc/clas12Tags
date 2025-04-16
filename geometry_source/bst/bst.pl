@@ -83,7 +83,7 @@ define_bank();
 foreach my $variation (@variations) {
     my $runNumber = clas12_run($variation);
     my $system = $configuration{'detector_name'};
-    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "default", $runNumber);
 }
 my $variation = "default";
 foreach my $run (@runs) {

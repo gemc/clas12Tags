@@ -30,6 +30,7 @@ if (scalar @ARGV != 1) {
 
 # Loading configuration file
 our %configuration = load_configuration($ARGV[0]);
+ our %parameters;
 
 # import scripts
 require "./materials.pl";
@@ -50,7 +51,7 @@ sub create_system {
     system("groovy -cp '../*:..' factory.groovy --variation $variation --runnumber $runNumber");
 
     # Global pars - these should be read by the load_parameters from file or DB
-    our %parameters = get_parameters(%configuration);
+    %parameters = get_parameters(%configuration);
     our @volumes = get_volumes(%configuration);
 
     coatjava::makeFTOF();
@@ -76,7 +77,7 @@ define_bank();
 foreach my $variation (@variations) {
     my $runNumber = clas12_run($variation);
     my $system = $configuration{'detector_name'};
-    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "$variation", $runNumber);
+    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "default", $runNumber);
 }
 
 my $variation = "default";
