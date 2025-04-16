@@ -1,7 +1,7 @@
 <gcard>
 
 	<!-- Implementation ahdc, example -->
-	<detector name="ahdc" factory="TEXT" variation="default"/>
+	<detector name="ahdc" factory="TEXT" />
 	<option name="INTEGRATEDRAW" value="*"/>
 
 	<!-- <option name="INTEGRATEDRAW" value="ahdc"/>  -->
