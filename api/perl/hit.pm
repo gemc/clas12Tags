@@ -94,7 +94,7 @@ sub print_hit {
             my $sql = "DELETE FROM hits WHERE system = ?";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
-            print "   > Deleted all hits for system $system \n";
+            print "   > Deleting all hits for system $system \n";
             $counter_sqlite = 1;
             $this_variation = $varia;
             $state_system = $system;
