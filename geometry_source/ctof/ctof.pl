@@ -44,7 +44,7 @@ require "./geometry_java.pl";
 
 # all STL files are the same, the only difference is the gxml file
 # here we copy the run 11 files to cad and cad_upstream directories
-sub copy_11_files {
+sub copy_run11_files {
     opendir(my $dh, 'javacad_11') or die "Cannot open directory 'javacad_11': $!";
     while (my $file = readdir($dh)) {
         if ($file =~ /\.stl$/) {
@@ -75,8 +75,7 @@ sub create_system {
 
     # 4/17/2025 we create the cad volumes using the /CTOFGeant4Factory.java at
     # https://github.com/JeffersonLab/coatjava/blob/development/common-tools/clas-jcsg/src/main/java/org/jlab/detector/geant4/v2/CTOFGeant4Factory.java
-    # that factory reads from /geometry/shifts/solenoid/ but that offset is rewritten in the factory.groovy which need to be fixed to read run numbers
-    # instead of variations
+    # that factory reads from /geometry/shifts/solenoid/ but that offset is rewritten for the light guides in the factory.groovy
     if ($configuration{"factory"} eq "TEXT") {
         # create an empty ctof__geometry_variation.txt so the banks are correctly loaded
         my $filename = "ctof__geometry_$variation.txt";
@@ -86,7 +85,7 @@ sub create_system {
         print "File '$filename' has been re-created and is now empty.\n";
     }
 
-    # if directory does not exist, create it
+    # this will overwrite ctof__volumes_default but we don't care as it's a transient file
     if ($configuration{"factory"} eq "SQLITE") {
 
         if (!-d $javaCadDir) {
@@ -132,7 +131,7 @@ foreach my $run (@runs) {
     create_system($variation, $run);
 }
 
-copy_11_files();
+copy_run11_files();
 
 foreach my $run (@runs) {
     my $variation = clas12_variation($run);
