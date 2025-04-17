@@ -31,6 +31,7 @@ elif [[ $1 == "-g" ]]; then
 	USEDEVEL="yes"
 elif [[ $1 == "-t" ]]; then
 	COATJAVA_TAG=$2
+	echo "Using coatjava tag $COATJAVA_TAG"
 	USEDEVEL="no"
 	tag_gz="https://github.com/JeffersonLab/coatjava/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
 elif [[ $1 == "-l" ]]; then
