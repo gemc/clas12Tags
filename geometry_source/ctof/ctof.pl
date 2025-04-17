@@ -53,19 +53,10 @@ sub create_system {
     materials();
     define_hit();
 
-    # if directory does not exist, create it
-    if (!-d "cad" || !-d "cad_upstream") {
-        if ($configuration{"factory"} eq "SQLITE") {
-            my $variation_string = clas12_configuration_string(\%configuration);
-            $javaCadDir = "javacad_$variation_string";
-        }
-
-        system(join(' ', "groovy -cp '../*:..' factory.groovy --variation $variation --runnumber $runNumber", $javaCadDir));
-        our @volumes = get_volumes(%configuration);
-
-        coatjava::makeCTOF($javaCadDir);
-    }
-
+    # 4/17/2025 we create the cad volumes using the /CTOFGeant4Factory.java at
+    # https://github.com/JeffersonLab/coatjava/blob/development/common-tools/clas-jcsg/src/main/java/org/jlab/detector/geant4/v2/CTOFGeant4Factory.java
+    # that factory reads from /geometry/shifts/solenoid/ but that offset is rewritten in the factory.groovy which need to be fixed to read run numbers
+    # instead of variations
     if ($configuration{"factory"} eq "TEXT") {
         # create an empty ctof__geometry_variation.txt so the banks are correctly loaded
         my $filename = "ctof__geometry_$variation.txt";
@@ -73,7 +64,20 @@ sub create_system {
         open(my $fh, '>', $filename) or die "Could not create file: $filename";
         close($fh);
         print "File '$filename' has been re-created and is now empty.\n";
+
+        system(join(' ', "groovy -cp '../*:..' factory.groovy --variation $variation --runnumber $runNumber", $javaCadDir));
+        our @volumes = get_volumes(%configuration);
+
+        coatjava::makeCTOF($javaCadDir);
+
     }
+
+    # if directory does not exist, create it
+    if ($configuration{"factory"} eq "SQLITE") {
+        my $variation_string = clas12_configuration_string(\%configuration);
+        $javaCadDir = "javacad_$variation_string";
+    }
+
 }
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018");
@@ -89,59 +93,46 @@ foreach my $variation (@variations) {
 }
 
 
-# SQLITE Factory
-$configuration{"factory"} = "SQLITE";
-define_bank();
-my $variation = "default";
-foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
-    $configuration{"run_number"} = $run;
-    create_system($variation, $run);
-}
-
-
 # Handling directory changes
-
 use File::Copy;
 use File::Path qw(make_path remove_tree);
 
+if (-d "cad" || -d "cad_upstream") {
+    
+    remove_tree('cad');
+    remove_tree('cad_upstream');
 
-# Copy STL files from javacad_default to cad_ctof
-my $javacad_default = 'javacad_default';
-my $javacad_default_upstream = 'javacad_default_upstream';
-
-if (!-d "cad" || !-d "cad_upstream") {
     make_path('cad');
     make_path('cad_upstream');
 
-    opendir(my $dh, $javacad_default) or die "Cannot open directory $javacad_default: $!";
+    opendir(my $dh, 'javacad_default') or die "Cannot open directory 'javacad_default': $!";
     while (my $file = readdir($dh)) {
         if ($file =~ /\.stl$/) {
-            copy("$javacad_default/$file", "cad/$file") or die "Copy failed: $!";
+            copy("javacad_default/$file", "cad/$file") or die "Copy failed: $!";
         }
     }
     closedir($dh);
 
     # Copy STL files from javacad_default_upstream to cad_ctof_upstream
 
-    opendir($dh, $javacad_default_upstream) or die "Cannot open directory $javacad_default_upstream: $!";
+    opendir($dh, 'javacad_default_upstream') or die "Cannot open directory 'javacad_default_upstream': $!";
     while (my $file = readdir($dh)) {
         if ($file =~ /\.stl$/) {
-            copy("$javacad_default_upstream/$file", "cad_upstream/$file") or die "Copy failed: $!";
+            copy("javacad_default_upstream/$file", "cad_upstream/$file") or die "Copy failed: $!";
         }
     }
     closedir($dh);
     # Copy specific GXML files
-    copy("$javacad_default/cad.gxml", "cad/cad_default.gxml") or die "Copy failed: $!";
+    copy("javacad_default/cad.gxml", "cad/cad_default.gxml") or die "Copy failed: $!";
     copy("javacad_rga_spring2018/cad.gxml", "cad/cad_rga_spring2018.gxml") or die "Copy failed: $!";
     copy("javacad_rga_fall2018/cad.gxml", "cad/cad_rga_fall2018.gxml") or die "Copy failed: $!";
-    copy("$javacad_default_upstream/cad.gxml", "cad_upstream/cad_default.gxml") or die "Copy failed: $!";
+    copy("javacad_default_upstream/cad.gxml", "cad_upstream/cad_default.gxml") or die "Copy failed: $!";
     copy("javacad_rga_spring2018_upstream/cad.gxml", "cad_upstream/cad_rga_spring2018.gxml") or die "Copy failed: $!";
     copy("javacad_rga_fall2018_upstream/cad.gxml", "cad_upstream/cad_rga_fall2018.gxml") or die "Copy failed: $!";
 
     # Remove javacad directories created with the geometry service
-    remove_tree($javacad_default);
-    remove_tree($javacad_default_upstream);
+    remove_tree('javacad_default');
+    remove_tree('javacad_default_upstream');
     remove_tree('javacad_rga_spring2018');
     remove_tree('javacad_rga_fall2018');
     remove_tree('javacad_rga_spring2018_upstream');
@@ -153,12 +144,22 @@ if (!-d "cad" || !-d "cad_upstream") {
 }
 
 
+# SQLITE Factory
+$configuration{"factory"} = "SQLITE";
+define_bank();
+my $variation = "default";
+foreach my $run (@runs) {
+    $configuration{"variation"} = $variation;
+    $configuration{"run_number"} = $run;
+    create_system($variation, $run);
+}
+
 # port gxml to sqlite
 require "../gxml_to_sqlite.pl";
 
 foreach my $variation (@variations) {
     $configuration{"run_number"} = clas12_run($variation);
-    process_gxml("cad/cad_$variation.gxml",          "experiments/clas12/ctof/cad");
+    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/ctof/cad");
     process_gxml("cad_upstream/cad_$variation.gxml", "experiments/clas12/ctof/cad_upstream");
 }
 
