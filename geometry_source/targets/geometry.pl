@@ -16,6 +16,7 @@ require "./hdice.pl";
 require "./longitudinal.pl";
 require "./transverse.pl";
 require "./liquid_standards.pl";
+require "./bonus.pl";
 
 sub load_target_parameters {
 
@@ -50,6 +51,9 @@ sub build_target {
         or $configuration_string eq "rga_spring2019"
         or $configuration_string eq "rgb_fall2019") {
         build_liquid_standards();
+    }
+    elsif ($configuration_string eq "rgf_spring2020") {
+        build_bonus_targets();
     }
 
 }

@@ -129,9 +129,23 @@ sub build_liquid_standard_cell {
         or $configuration_string eq "rgb_fall2019") {
         $detector{"material"} = "LD2";
     }
+    elsif ($configuration_string eq "tbd"){
+        $detector{"material"} = "lHeTarget";
+    }
 
     $detector{"style"} = 1;
     print_det(\%configuration, \%detector);
+}
+
+sub build_liquid_standards_mats {
+	# lHe target
+	my %mat = init_mat();
+	$mat{"name"}          = "lHeTarget";
+	$mat{"description"}   = "liquid He target";
+	$mat{"density"}       = "0.125";  # 0.125 g/cm3 <—————————————
+	$mat{"ncomponents"}   = "1";
+	$mat{"components"}    = "G4_He 1";
+	print_mat(\%configuration, \%mat);
 }
 
 sub build_liquid_standards {
