@@ -2,8 +2,8 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-	<detector name="target" factory="TEXT"                variation="transverse"/>
-	<detector name="cad_longitudinal/"                    factory="CAD"/>
+	<detector name="target" factory="TEXT" variation="transverse"/>
+	<detector name="cad_longitudinal/" factory="CAD"/>
 
 
 
