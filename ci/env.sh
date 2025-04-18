@@ -7,6 +7,9 @@ DetectorDirNotExisting() {
 
 # returns runs to test
 runs_for_system() {
+	rgm_runs="15016 15043 15108 15165 15178 15318 15356 15434 15458 15534 15566 15637 15643 15671 15732 15733 15734"
+	rgm_runs="15016"
+
 	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
 	elif [[ $system == "dc" ]]; then
@@ -25,6 +28,10 @@ runs_for_system() {
 		echo "11 5874 6150 11620 16043 20000"
 	elif [[ $system == "beamline" ]]; then
 		echo "11 5874 6150 11620 16043 16843 20000 21000"
+	elif [[ $system == "magnets" ]]; then
+		echo "11 3029 4763"
+	elif [[ $system == "targets" ]]; then
+		echo "11 3029 4763 6150 6608 11093 $rgm_runs"
 	fi
 }
 
@@ -68,7 +75,7 @@ variations_for_run_and_system()  {
 	elif [[ $1 == "21000" ]]; then
 		echo "rgl_spring2025"
 	elif [[ $1 == "15016" ]]; then
-		echo "rgm_winter2021"
+		echo "rgm_fall2021_H"
 	fi
 }
 
