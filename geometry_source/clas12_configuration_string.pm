@@ -4,9 +4,10 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(clas12_configuration_string clas12_runs clas12_run clas12_variation);
 
-my @custom_variations = (
+my %custom_variations = map {$_ => 1} (
     "pbtest", "ND3", "hdice", "longitudinal", "transverse", "ddvcs",
-    "rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe"
+    "rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe",
+    "michel_9mmcopper"
 );
 
 # Centralized mapping
@@ -36,24 +37,27 @@ my %variation_to_run = (
 my %run_to_variation = reverse %variation_to_run;
 
 sub clas12_configuration_string {
+
     my %configuration = %{+shift};
     my $varia = $configuration{"variation"};
     my $runno = $configuration{"run_number"};
+
+
+    # Check if the input variation is a known custom variation
+    if (exists $custom_variations{$varia}) {
+        return $varia;
+    }
 
     # Check if variation exists in the map
     if (exists $variation_to_run{$varia}) {
         return $varia;
     }
 
-    # Check if run number matches a known variation
-    if (exists $run_to_variation{$runno}) {
+    # Check if the run number maps to a known variation
+    if (defined $runno && exists $run_to_variation{$runno}) {
         return $run_to_variation{$runno};
     }
 
-    # Check for custom variations
-    if (grep {$_ eq $varia} @custom_variations) {
-        return $varia;
-    }
 
     # Default fallback
     return $varia;

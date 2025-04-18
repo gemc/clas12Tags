@@ -75,7 +75,7 @@ variations_for_run_and_system()  {
 	elif [[ $1 == "21000" ]]; then
 		echo "rgl_spring2025"
 	elif [[ $1 == "15016" ]]; then
-		echo "rgm_fall2021_H"
+		echo "rgm_winter2021"
 	fi
 }
 

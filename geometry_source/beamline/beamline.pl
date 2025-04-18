@@ -49,7 +49,7 @@ sub create_system {
     elsif ($variation eq "TransverseUpstreamBeampipe") {
         transverseUpstreamBeampipe();
     }
-    elsif ($variation eq "rghFTOut" || $configuration{"variation"} eq "rghFTOn") {
+    elsif ($variation eq "rghFTOut" || $variation eq "rghFTOn") {
         rghline();
     }
     else {

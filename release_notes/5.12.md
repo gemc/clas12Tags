@@ -1,4 +1,4 @@
-## Based on Coatjava Release 11.1.2
+## Based on Coatjava Release 12.0.4t
 
 
 # Release notes
