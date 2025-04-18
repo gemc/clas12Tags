@@ -161,7 +161,7 @@ remove_tree('cad_rga_spring2018');
 
 
 # port gxml to sqlite
-require "../gxml_to_sqlite.pl";
+require "gxml_to_sqlite.pl";
 
 foreach my $variation (@variations) {
     $configuration{"run_number"} = clas12_run($variation);

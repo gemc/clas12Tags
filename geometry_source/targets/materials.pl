@@ -1,4 +1,4 @@
-# use strict;
+use strict;
 use warnings;
 
 use lib ("../");
@@ -8,7 +8,6 @@ our %configuration;
 our %parameters;
 
 sub build_materials {
-
 
     my $configuration_string = clas12_configuration_string(\%configuration);
 
@@ -21,9 +20,9 @@ sub build_materials {
     elsif ($configuration_string eq "transverse") {
         build_transverse_mats();
     }
-    
+
     # common to all
-    # rohacell
+
     my %mat = init_mat();
     $mat{"name"} = "rohacell";
     $mat{"description"} = "target rohacell scattering chamber material";
@@ -32,8 +31,6 @@ sub build_materials {
     $mat{"components"} = "G4_C 0.6465 G4_H 0.0784 G4_N 0.0839 G4_O 0.1912";
     print_mat(\%configuration, \%mat);
 
-
-    # epoxy
     %mat = init_mat();
     $mat{"name"} = "epoxy";
     $mat{"description"} = "epoxy glue 1.16 g/cm3";
@@ -42,8 +39,6 @@ sub build_materials {
     $mat{"components"} = "H 32 N 2 O 4 C 15";
     print_mat(\%configuration, \%mat);
 
-
-    # carbon fiber
     %mat = init_mat();
     $mat{"name"} = "carbonFiber";
     $mat{"description"} = "ft carbon fiber material is epoxy and carbon - 1.75g/cm3";

@@ -1,4 +1,4 @@
-# use strict;
+use strict;
 use warnings;
 
 use lib ("../");
@@ -46,10 +46,11 @@ sub build_target {
     elsif ($configuration_string eq "default"
         or $configuration_string eq "rga_spring2018"
         or $configuration_string eq "rga_fall2018"
-        or $configuration_string eq "rgb_spring2019") {
+        or $configuration_string eq "rgb_spring2019"
+        or $configuration_string eq "rga_spring2019"
+        or $configuration_string eq "rgb_fall2019") {
         build_liquid_standards();
     }
-
 
 }
 

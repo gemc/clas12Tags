@@ -50,7 +50,7 @@ sub create_system {
     build_materials();
 }
 
-my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgb_spring2019");
+my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgb_spring2019", "rga_spring2019", "rgb_fall2019");
 my @runs = clas12_runs(@variations);
 
 my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse");
@@ -91,9 +91,10 @@ foreach my $run (@runs) {
 }
 
 # port gxml to sqlite
-require "../gxml_to_sqlite.pl";
+require "gxml_to_sqlite.pl";
 
-foreach my $variation (@variations) {
+# default is the same for rga/rgb
+foreach my $variation ("default") {
     $configuration{"run_number"} = clas12_run($variation);
     process_gxml("cad/cad_$variation.gxml",  "experiments/clas12/targets/cad");
 }

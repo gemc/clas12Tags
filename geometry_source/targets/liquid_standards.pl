@@ -32,7 +32,7 @@ sub build_liquid_standard_container {
     print_det(\%configuration, \%detector);
 
     # upstream al window. zpos comes from engineering model, has the shift of 1273.27 mm + 30 due to the new engineering center
-    my $eng_shift = 1303.27 ;
+    my $eng_shift = 1303.27;
     my $zpos = $eng_shift - 1328.27;
     my $radius = 4.9;
     my $thickness = 0.015;
@@ -121,10 +121,12 @@ sub build_liquid_standard_cell {
 
     if ($configuration_string eq "default"
         or $configuration_string eq "rga_spring2018"
-        or $configuration_string eq "rga_fall2018") {
+        or $configuration_string eq "rga_fall2018"
+        or $configuration_string eq "rga_spring2019") {
         $detector{"material"} = "G4_lH2";
     }
-    elsif($configuration_string eq "rgb_spring2019") {
+    elsif ($configuration_string eq "rgb_spring2019"
+        or $configuration_string eq "rgb_fall2019") {
         $detector{"material"} = "LD2";
     }
 
