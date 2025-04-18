@@ -171,7 +171,7 @@ public String gemcString(int superlayer, int layer, Component comp) {
 		String type = "G4GenericTrap"
         	str.append(String.format("| %8s |", type));
 		// to add the half-length in Z axis, coatjava class dimensions are in mm!		
-		str.append(String.format(" %8.4f*mm ", comp.getLine().midpoint().z()));
+		str.append(String.format(" %8.4f*mm ", (comp.getLine().end().z()-comp.getLine().origin().z())/2));
 		// need to be corrected according to geant4 volume definition 
 		if (isubcell==1)
 		{
