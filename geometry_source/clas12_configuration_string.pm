@@ -48,16 +48,18 @@ sub clas12_configuration_string {
         return $varia;
     }
 
+    # Check if the run number maps to a known variation
+    if (defined $runno && exists $run_to_variation{$runno}) {
+        # if variation is default but run number is not 11, return the map value
+        if ($varia eq "default" && $runno != 11) {
+            return $run_to_variation{$runno};
+        }
+    }
+
     # Check if variation exists in the map
     if (exists $variation_to_run{$varia}) {
         return $varia;
     }
-
-    # Check if the run number maps to a known variation
-    if (defined $runno && exists $run_to_variation{$runno}) {
-        return $run_to_variation{$runno};
-    }
-
 
     # Default fallback
     return $varia;
