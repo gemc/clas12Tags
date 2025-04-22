@@ -19,7 +19,7 @@ runs_for_system() {
 	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" || $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "micromegas" ]]; then
-		echo "3029 11620 15016"
+		echo "11 11620 15016"
 	elif [[ $system == "ltcc" ]]; then
 		echo "11 3029 4763 6150 11323 15016"
 	elif [[ $system == "rich" ]]; then

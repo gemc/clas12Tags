@@ -59,7 +59,7 @@ sub create_system {
     define_fmt();
 }
 
-my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021");
+my @variations = ("default", "rgf_spring2020", "rgm_winter2021");
 my @runs = clas12_runs(@variations);
 
 my @custom_variations = ("michel_9mmcopper");
