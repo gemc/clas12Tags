@@ -45,15 +45,10 @@ function copyFilesAndCadDirsTo() {
 
 	cadDirs=$(find_subdirs_with_file)
 	for cadDir in $=cadDirs; do
-		echo Copying CAD Subdirs: $cadDir
-		# copy $cadDir preserving full path. coreutils provides gcp
-		gcp -r --parents "$cadDir" "$destination/"
+		echo Copying CAD Subdirs: $cadDir to $destination
+		# copy $cadDir preserving full path. Notice it needs the relative path.
+		rsync -aR "./$cadDir" "$destination/"
 	done
-
-	# if dir tests exists, copy it
-	if [ -d tests ]; then
-		cp -r tests "$destination/"
-	fi
 }
 
 

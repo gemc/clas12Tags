@@ -1,4 +1,4 @@
-name: Almalinux Build
+name: Ubuntu Build
 permissions:
   contents: read
   pull-requests: write
@@ -17,7 +17,7 @@ on:
 jobs:
   build-on-almalinux:
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux94
+    container: jeffersonlab/gemc:dev-ubuntu24
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
