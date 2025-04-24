@@ -8,7 +8,6 @@ DetectorDirNotExisting() {
 # returns runs to test
 runs_for_system() {
 	rgm_runs="15016 15043 15108 15165 15178 15318 15356 15434 15458 15534 15566 15637 15643 15671 15732 15733 15734"
-	rgm_runs="15016"
 
 	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
@@ -74,8 +73,22 @@ variations_for_run_and_system()  {
 		echo "rgk_spring2024"
 	elif [[ $1 == "21000" ]]; then
 		echo "rgl_spring2025"
-	elif [[ $1 == "15016" ]]; then
-		echo "rgm_winter2021"
+	elif [[ $1 == "15016" || $1 == "15534" ]]; then
+		echo "rgm_fall2021_H"
+	elif [[ $1 == "15043" || $1 == "15434" || $1 == "15566" ]]; then
+		echo "rgm_fall2021_D"
+	elif [[ $1 == "15108" || $1 == "15458" ]]; then
+		echo "rgm_fall2021_He"
+	elif [[ $1 == "15178" || $1 == "15643" || $1 == "15733" || $1 == "15766" || $1 == "15778" ]]; then
+		echo "rgm_fall2021_C"
+	elif [[ $1 == "22000"]]; then
+		echo "rgm_fall2021_Cx4"
+	elif [[ $1 == "15356" || $1 == "15829" ]]; then
+		echo "rgm_fall2021_Ca"
+	elif [[ $1 == "15318" || $1 == "15804" ]]; then
+		echo "rgm_fall2021_Sn"
+	elif [[ $1 == "15807"]]; then
+		echo "rgm_fall2021_Snx4"
 	fi
 }
 
