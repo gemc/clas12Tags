@@ -81,13 +81,13 @@ variations_for_run_and_system()  {
 		echo "rgm_fall2021_He"
 	elif [[ $1 == "15178" || $1 == "15643" || $1 == "15733" || $1 == "15766" || $1 == "15778" ]]; then
 		echo "rgm_fall2021_C"
-	elif [[ $1 == "22000"]]; then
+	elif [[ $1 == "22000" ]]; then
 		echo "rgm_fall2021_Cx4"
 	elif [[ $1 == "15356" || $1 == "15829" ]]; then
 		echo "rgm_fall2021_Ca"
 	elif [[ $1 == "15318" || $1 == "15804" ]]; then
 		echo "rgm_fall2021_Sn"
-	elif [[ $1 == "15807"]]; then
+	elif [[ $1 == "15807" ]]; then
 		echo "rgm_fall2021_Snx4"
 	fi
 }
