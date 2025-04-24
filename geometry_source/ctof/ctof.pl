@@ -124,19 +124,22 @@ make_path('cad_upstream');
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 copy_run11_files();
 
 foreach my $run (@runs) {
+
     my $variation = clas12_variation($run);
+
+    print("hello $variation run $run\n");
+
     copy("javacad_$run/cad.gxml", "cad/cad_$variation.gxml") or die "Copy failed: $!";
-    copy("javacad_$run"."_upstream/cad.gxml", "cad_upstream/cad_$variation.gxml") or die "Copy failed: $!";
+    copy("javacad_$run" . "_upstream/cad.gxml", "cad_upstream/cad_$variation.gxml") or die "Copy failed: $!";
 }
 
 # port gxml to sqlite
@@ -149,5 +152,5 @@ foreach my $variation (@variations) {
 }
 
 # Use glob to expand javacad* into actual paths
-my @dirs = glob("javacad*");
-remove_tree(@dirs);
+my @dirs_cleanup = glob("javacad*");
+remove_tree(@dirs_cleanup);

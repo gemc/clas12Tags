@@ -2,7 +2,7 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-	<detector name="target" factory="TEXT" variation="rgf_spring2020"/>
+	<detector name="target" factory="TEXT" variation="rgm_fall2021_Cx4"/>
 
 
 

@@ -84,11 +84,10 @@ foreach my $variation (@variations) {
 }
 upload_parameters(\%configuration, "micromegas__parameters_michel_9mmcopper.txt", "micromegas", "default", 30000);
 
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 

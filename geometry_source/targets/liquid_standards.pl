@@ -150,7 +150,7 @@ sub build_liquid_standards_mats {
 
 sub build_liquid_standards {
 
-    print("   - target_zpos for $configuration{'variation'}: $target_zpos\n");
+    print("Target_zpos for $configuration{'factory'}/$configuration{'variation'}/$configuration{'run_number'}  : $target_zpos\n");
 
     build_liquid_standard_container();
     build_liquid_standard_cell();

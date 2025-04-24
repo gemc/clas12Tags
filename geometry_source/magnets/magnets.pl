@@ -60,9 +60,9 @@ foreach my $variation (@variations) {
 }
 
 # SQLITE Factory
-my $variation = "default";
 foreach my $run (@runs) {
-    create_system($variation, $run, "SQLITE");
+    $configuration{"variation"} = "default";
+    create_system("default", $run);
 }
 
 

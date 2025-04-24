@@ -15,7 +15,7 @@ sub build_transverse {
     #	OD: 29.0
     #	Al foils: 25 um thick
 
-    print("   - target_zpos for $configuration{'variation'}: $target_zpos\n");
+    print("Target_zpos for $configuration{'factory'}/$configuration{'variation'}/$configuration{'run_number'}  : $target_zpos\n");
     my %detector = init_det();
 
     my $ttlength = 14.2; # half length
