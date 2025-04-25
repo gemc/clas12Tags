@@ -129,7 +129,7 @@ sub build_liquid_standard_cell {
         or $configuration_string eq "rgb_fall2019") {
         $detector{"material"} = "LD2";
     }
-    elsif ($configuration_string eq "tbd"){
+    elsif ($configuration_string eq "rgm_fall2021_He"){
         $detector{"material"} = "lHeTarget";
     }
 
