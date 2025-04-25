@@ -49,6 +49,8 @@ ExperimentNotExisting() {
 	exit 3
 }
 
+echo "Running on branch: $BRANCH_NAME"
+
 ./ci/build_gemc.sh
 
 [[ -d clas12-config ]] && echo clas12-config exist || git clone -b dev https://github.com/JeffersonLab/clas12-config

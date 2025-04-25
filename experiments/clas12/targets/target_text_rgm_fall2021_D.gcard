@@ -2,7 +2,8 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-	<detector name="target" factory="TEXT" variation="rgm_fall2021_D"/>
+	<detector name="target" factory="TEXT" variation="rgb_fall2019"/>
+	<detector name="experiments/clas12/targets/cad/"      factory="CAD"/>
 
 
 

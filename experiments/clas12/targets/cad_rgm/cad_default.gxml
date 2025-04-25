@@ -1,12 +1,3 @@
-<!--
-
- The mesh export presents a small overlap between the flanges of the tagger and torus mount.
- The position is modified by to produce a little gap
-
- For the FTON configurration the cone is shifted by -238.8mm
-
- -->
-
 <gxml>
 
 	<!-- upstream of the target -->

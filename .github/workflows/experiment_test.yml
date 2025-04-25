@@ -17,8 +17,20 @@ on:
   # Allows this workflow to be called by other workflows
   # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
   workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
 
 jobs:
+  detect-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set effective branch
+        id: vars
+        run: |
+          echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
+
   generate-matrix:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-fedora36
@@ -54,6 +66,8 @@ jobs:
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: ${{ matrix.gcard }} tests
+        env:
+          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           ./ci/gcard_run_test.sh -g ${{ matrix.gcard }}
 
