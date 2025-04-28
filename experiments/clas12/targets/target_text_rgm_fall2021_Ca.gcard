@@ -3,7 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 
 	<detector name="target" factory="TEXT" variation="rgm_fall2021_Ca"/>
-	<detector name="experiments/clas12/targets/cad_rgm/"   factory="CAD"/>
+	<detector name="cad/" factory="CAD" variation="rgm"/>
 
 
 
