@@ -50,7 +50,7 @@ touch $log_file
 
 # get the clas12.sqlite file. This will be replaced by the actual file
 cd experiments/clas12/"$system" || DetectorDirNotExisting
-echo 
+echo
 echo " > System: $system"
 
 runs=$(runs_for_system)

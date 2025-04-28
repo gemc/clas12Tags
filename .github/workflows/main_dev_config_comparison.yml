@@ -39,7 +39,7 @@ jobs:
           echo generate-matrix: $JSON
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
-  gcards-dev-main-comparison:
+  compare:
     needs: generate-matrix
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -68,8 +68,8 @@ jobs:
           name: gemclogs-${{ matrix.gcard }}
           path: /root/logs/
 
-  gcards-dev-main-comparison-result:
-    needs: gcards-dev-main-comparison
+  compare-result:
+    needs: compare
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
@@ -99,9 +99,9 @@ jobs:
           done < comparison.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  gcards-dev-main-comparison-result-final:
+  compare-result-final:
     needs:
-      - gcards-dev-main-comparison-result
+      - compare-result
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
