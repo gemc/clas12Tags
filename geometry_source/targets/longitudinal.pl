@@ -55,6 +55,8 @@ sub build_longitudinal {
     $detector{"style"} = "1";
     print_det(\%configuration, \%detector);
 
+    build_longitudinal_mats();
+
 }
 
 sub build_longitudinal_mats {

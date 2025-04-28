@@ -48,7 +48,8 @@ sub build_target {
         or $configuration_string eq "rga_fall2018"
         or $configuration_string eq "rgb_spring2019"
         or $configuration_string eq "rga_spring2019"
-        or $configuration_string eq "rgb_fall2019") {
+        or $configuration_string eq "rgb_fall2019"
+        or $configuration_string eq "rgm_fall2021_He") {
         build_liquid_standards();
     }
     elsif ($configuration_string eq "rgf_spring2020") {
