@@ -115,11 +115,10 @@ elif [[ $system == "ft" || $system == "beamline" || $system = "magnets" ]]; then
 fi
 
 cd "experiments/clas12/$system" || DetectorDirNotExisting
-echo "\n > System: $system"
-echo " > DIGITIZATION_VARIATION: $digi_var"
-echo " > GEMC: $(which gemc)"
-echo " > GEMC compiled on $(date)"
 echo
+echo " > System: $system"
+echo " > DIGITIZATION_VARIATION: $digi_var"
+
 
 mkdir -p /root/logs
 log_file_run=/root/logs/"$system"_output_run.log

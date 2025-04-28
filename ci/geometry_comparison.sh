@@ -49,10 +49,9 @@ log_file=/root/logs/"$system"_geo_comparison.log
 touch $log_file
 
 # get the clas12.sqlite file. This will be replaced by the actual file
-cd experiments/clas12
-wget https://userweb.jlab.org/~ungaro/tmp/clas12.sqlite >/dev/null 2>&1
-cd "$system" || DetectorDirNotExisting
-echo "\n > System: $system"
+cd experiments/clas12/"$system" || DetectorDirNotExisting
+echo 
+echo " > System: $system"
 
 runs=$(runs_for_system)
 

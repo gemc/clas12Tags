@@ -65,6 +65,9 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: ${{ 'gemc/clas12Tags' }}
+      - name: Build GEMC
+        run: |
+          ./ci/build_gemc.sh
       - name: ${{ matrix.gcard }} tests
         env:
           BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}

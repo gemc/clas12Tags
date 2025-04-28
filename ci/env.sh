@@ -5,6 +5,17 @@ DetectorDirNotExisting() {
 	exit 3
 }
 
+log_gemc_info() {
+
+	echo "\n > GCard: $gcard"
+	echo " > GEMC: $(which gemc) "
+	echo " > GEMC compiled on $(date)"
+	echo " > GEMC Version: $(gemc --version)"
+	echo " > Content of $GEMC dir:"
+	echo " > GEMC_DATA_DIR: $GEMC_DATA_DIR top level content: $(ls -l $GEMC_DATA_DIR) \n\n"
+
+}
+
 # returns runs to test
 runs_for_system() {
 	rgm_runs="15016 15043 15108 15165 15178 15318 15356 15434 15458 15534 15566 15637 15643 15671 15732 15733 15734"

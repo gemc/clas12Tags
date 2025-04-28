@@ -87,11 +87,6 @@ banks_to_check="FTCAL::adc DC::tdc ECAL::adc FTOF::adc HTCC::adc BMT::adc FMT::a
 [[ -d clas12-config-dev  ]]  && echo clas12-config-dev exist  || git clone -b dev https://github.com/JeffersonLab/clas12-config clas12-config-dev
 [[ -d clas12-config-main  ]] && echo clas12-config-main exist || git clone -b main https://github.com/JeffersonLab/clas12-config clas12-config-main
 
-echo "\n > GCard: $gcard"
-echo " > GEMC: $(which gemc)"
-echo " > GEMC compiled on $(date)"
-echo
-
 mkdir -p /root/logs
 experiment=$(echo $gcard | sed 's/.gcard//g')
 log_file_run=/root/logs/"$experiment"_output_run.log

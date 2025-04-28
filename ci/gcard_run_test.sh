@@ -51,21 +51,14 @@ ExperimentNotExisting() {
 
 echo "Running on branch: $BRANCH_NAME"
 
-./ci/build_gemc.sh
-
 [[ -d clas12-config ]] && echo clas12-config exist || git clone -b dev https://github.com/JeffersonLab/clas12-config
-echo "\nGcard: $gcard\n"
+echo " > Gcard: $gcard\n"
 
 if [[ ! -f "$gcard" ]]; then
 	ExperimentNotExisting $gcard
 fi
 
-echo
-echo "GEMC executable: $(which gemc)\n"
-gemc -v
-echo "GEMC_DATA_DIR: $GEMC_DATA_DIR top level content: $(ls -l $GEMC_DATA_DIR) \n\n"
-
-echo "Running gemc with $gcard"
+echo "Running gemc with options:  -BEAM_P=\"e-, 4*GeV, 60*deg, 25*deg\" -SPREAD_P=\"0*GeV, 40*deg, 180*deg\" -USE_GUI=0 -N=1000 -PRINT_EVENT=10 $gcard"
 gemc -BEAM_P="e-, 4*GeV, 60*deg, 25*deg" -SPREAD_P="0*GeV, 40*deg, 180*deg" -USE_GUI=0 -N=1000 -PRINT_EVENT=10 $gcard
 exitCode=$?
 

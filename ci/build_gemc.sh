@@ -38,15 +38,12 @@ function create_geo_dbs {
 
 compile_gemc
 create_geo_dbs
+log_gemc_info
 
-echo
-echo "Content of $GEMC dir:"
-ls -lrt $GEMC
-echo
 echo "Content of artifacts dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4"
 ls -lrt /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
-echo "Content of artifacts dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12"
+echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12"
 ls -lrt -R /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12
 
 # copying executable, api and sqlite database for artifact retrieval
