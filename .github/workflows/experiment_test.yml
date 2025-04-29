@@ -17,8 +17,20 @@ on:
   # Allows this workflow to be called by other workflows
   # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
   workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
 
 jobs:
+  detect-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set effective branch
+        id: vars
+        run: |
+          echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
+
   generate-matrix:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-fedora36
@@ -39,7 +51,7 @@ jobs:
           echo generate-matrix: $JSON
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
-  dev-gcards-test:
+  test:
     needs: generate-matrix
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -53,14 +65,19 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: ${{ 'gemc/clas12Tags' }}
-      - name: ${{ matrix.detector }} tests
+      - name: Build GEMC
+        run: |
+          ./ci/build_gemc.sh
+      - name: ${{ matrix.gcard }} tests
+        env:
+          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           ./ci/gcard_run_test.sh -g ${{ matrix.gcard }}
 
   dev-gcards-test-final:
     needs:
       - generate-matrix
-      - dev-gcards-test
+      - test
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'

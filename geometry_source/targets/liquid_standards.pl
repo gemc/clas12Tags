@@ -129,28 +129,33 @@ sub build_liquid_standard_cell {
         or $configuration_string eq "rgb_fall2019") {
         $detector{"material"} = "LD2";
     }
-    elsif ($configuration_string eq "tbd"){
+    elsif ($configuration_string eq "rgm_fall2021_He") {
         $detector{"material"} = "lHeTarget";
     }
 
     $detector{"style"} = 1;
     print_det(\%configuration, \%detector);
+
+    if ($configuration_string eq "rgm_fall2021_He") {
+        build_liquid_He_mat();
+    }
+
 }
 
-sub build_liquid_standards_mats {
-	# lHe target
-	my %mat = init_mat();
-	$mat{"name"}          = "lHeTarget";
-	$mat{"description"}   = "liquid He target";
-	$mat{"density"}       = "0.125";  # 0.125 g/cm3 <—————————————
-	$mat{"ncomponents"}   = "1";
-	$mat{"components"}    = "G4_He 1";
-	print_mat(\%configuration, \%mat);
+sub build_liquid_He_mat {
+    # lHe target
+    my %mat = init_mat();
+    $mat{"name"} = "lHeTarget";
+    $mat{"description"} = "liquid He target";
+    $mat{"density"} = "0.125"; # 0.125 g/cm3 <—————————————
+    $mat{"ncomponents"} = "1";
+    $mat{"components"} = "G4_He 1";
+    print_mat(\%configuration, \%mat);
 }
 
 sub build_liquid_standards {
 
-    print("   - target_zpos for $configuration{'variation'}: $target_zpos\n");
+    print("Target_zpos for $configuration{'factory'}/$configuration{'variation'}/$configuration{'run_number'}  : $target_zpos\n");
 
     build_liquid_standard_container();
     build_liquid_standard_cell();

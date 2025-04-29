@@ -59,7 +59,7 @@ sub create_system {
     define_fmt();
 }
 
-my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021");
+my @variations = ("default", "rgf_spring2020", "rgm_winter2021");
 my @runs = clas12_runs(@variations);
 
 my @custom_variations = ("michel_9mmcopper");
@@ -84,11 +84,10 @@ foreach my $variation (@variations) {
 }
 upload_parameters(\%configuration, "micromegas__parameters_michel_9mmcopper.txt", "micromegas", "default", 30000);
 
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 

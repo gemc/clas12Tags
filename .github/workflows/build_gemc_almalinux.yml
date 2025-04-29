@@ -27,12 +27,12 @@ jobs:
         run: |
           ./ci/build_gemc.sh
           echo "github.event.head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
-      - name: Copy gemc binary
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: gemc
           path: |
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/clas12.sqlite
 

@@ -8,7 +8,7 @@ our %configuration;
 our $target_zpos;
 
 sub build_longitudinal {
-    print("   - target_zpos for $configuration{'variation'}: $target_zpos\n");
+    print("Target_zpos for $configuration{'factory'}/$configuration{'variation'}/$configuration{'run_number'}  : $target_zpos\n");
     my %detector = init_det();
 
     my $nplanes = 4;
@@ -54,6 +54,8 @@ sub build_longitudinal {
     $detector{"material"} = "G4_Al";
     $detector{"style"} = "1";
     print_det(\%configuration, \%detector);
+
+    build_longitudinal_mats();
 
 }
 

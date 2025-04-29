@@ -10,7 +10,7 @@ our %parameters;
 our $target_zpos;
 
 sub build_ND3 {
-    print("   - target_zpos for $configuration{'variation'}: $target_zpos\n");
+    print("Target_zpos for $configuration{'factory'}/$configuration{'variation'}/$configuration{'run_number'}  : $target_zpos\n");
     my %detector = init_det();
 
     # vacuum container

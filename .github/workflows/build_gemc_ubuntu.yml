@@ -1,0 +1,38 @@
+name: Ubuntu Build
+permissions:
+  contents: read
+  pull-requests: write
+
+  # Triggers the workflow on all pushes to main, all pull and merge requests
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build-on-ubuntu:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-ubuntu24
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Build gemc
+        run: |
+          ./ci/build_gemc.sh
+          echo "github.event.head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemc
+          path: |
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/clas12.sqlite
+

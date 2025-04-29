@@ -74,11 +74,10 @@ foreach my $variation (@variations, @custom_variations) {
 
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 

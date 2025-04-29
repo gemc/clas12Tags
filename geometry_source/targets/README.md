@@ -43,41 +43,47 @@ Author: Justin Estee
 
 Experiment Description: Short Range Correlations & Electrons for Neutrinos experiment 
 
+RCDB for RGM: 
 
-### Variations: 
-Liquid Targets (Standard 5cm liquid cell)
-lH2 - liquid Hydrogen
-lD2 - liquid Deuterium
-lHe - liquid Helium
-
-Solid Targets
-RGM_2_C - single foil carbon target in beamline
-RGM_2_Sn - single foil tin target in beamline
-
-RGM_8_C_L - 4-foil carbon target in beamline. Large carbon target option.
-RGM_8_Sn_L - 4-foil tin target in beamline. Large tin target option.
-
-RGM_8_C_S - 4-foil carbon target in beamline. Small carbon target option.
-RGM_8_Sn_S - 4-foil tin target in beamline. Small tin target option.
-
-RGM_Ca - Calcium target cell
-
-Scattering chamber variations
-cad - standard scattering chamber and liquid cell target wall entrance and exit material
-cadrgm - standard scattering chamber without liquid cell wall and upstream window, only downstream window and pipe included (use with solid targets)
-### Files used
+https://clasweb.jlab.org/rcdb/runs/search?runFrom=15015&runTo=15884&q=event_count%3E100000+and+run_start_time
 
 
-### How to use it in the gcard
-Liquid Targets
+## Variations: 
+
+### Liquid Targets (Standard 5cm liquid cell)
+
+- lH2: liquid Hydrogen
+- lD2: liquid Deuterium
+- lHe: liquid Helium
+
+### Solid Targets
+
+- **RGM_2_Sn**: single foil tin target in beamline > **rgm_fall2021_Sn**
+- **RGM_2_C**: single foil carbon target in beamline > **rgm_fall2021_C**
+- **RGM_8_C_L**: 4-foil carbon target in beamline. Large carbon target option. > **rgm_fall2021_Cx4**
+- **RGM_8_Sn_L**: 4-foil tin target in beamline. Large tin target option. > **rgm_fall2021_Snx4**
+- **RGM_8_C_S**: 4-foil carbon target in beamline. Small carbon target option. > ???? 
+- **RGM_8_Sn_S**: 4-foil tin target in beamline. Small tin target option. > ????
+- **RGM_Ca**: Calcium target cell > **rgm_fall2021_Ca** (in DB there's 40Ca and 48Ca)
+
+### Scattering chamber CAD directories
+
+- cad: standard scattering chamber and liquid cell target wall entrance and exit material
+- cad_rgm - standard scattering chamber without liquid cell wall and upstream window, only downstream window and pipe included (use with solid targets)
+
+
+## How to use it in the gcard
+### Liquid Targets
 Use "cad" variation with all liquid targets
 <detector name="experiments/clas12/targets/cad/"   factory="CAD"/>
-<detector name="experiments/clas12/targets/target" factory="TEXT" variation="lD2"/>
+<detector name="experiments/clas12/targets/target" factory="TEXT" variation="rga_spring2019"/>
 
-Solid Targets
+### Solid Targets
+
 Use "cadrgm" variation with all solid targets
 <detector name="experiments/clas12/targets/cadrgm/"   factory="CAD"/>
-<detector name="experiments/clas12/targets/target" factory="TEXT" variation="RGM_2_C"/>
+<detector name="experiments/clas12/targets/target" factory="TEXT" variation="rgm_fall2021_C"/>
+
 
 ## RG-D: May 17th, 2024
 

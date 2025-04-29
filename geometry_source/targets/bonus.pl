@@ -11,6 +11,9 @@ our $target_zpos;
 my $target_length = 256.56;
 
 sub build_bonus_container {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my %detector = init_det();
 
     # bonus root volume
@@ -52,7 +55,7 @@ sub build_bonus_container {
     %detector = init_det();
     $detector{"name"} = "target";
     $detector{"mother"} = "root";
-    $detector{"description"} = "BONuS12 RTPC gaseous $thisVariation Target";
+    $detector{"description"} = "BONuS12 RTPC gaseous $configuration_string Target";
     $detector{"color"} = "fad1a0";
     $detector{"type"} = "Operation:@ targetStraw + targetEndCap";
     $detector{"dimensions"} = "0";
@@ -122,7 +125,7 @@ sub build_bonus_cell_gas_volume {
     %detector = init_det();
     $detector{"name"} = "TargetGas";
     $detector{"mother"} = "target";
-    $detector{"description"} = "5.6 atm $thisVariation target gas";
+    $detector{"description"} = "5.6 atm $configuration_string target gas";
     $detector{"color"} = "72d3fa";
     $detector{"type"} = "Tube";
     $detector{"pos"} = "0*mm 0*mm 0*mm";
@@ -171,7 +174,7 @@ sub build_bonus_mats {
 
 sub build_bonus_targets {
 
-    print("   - target_zpos for $configuration{'variation'}: $target_zpos\n");
+    print("Target_zpos for $configuration{'factory'}/$configuration{'variation'}/$configuration{'run_number'}  : $target_zpos\n");
 
     build_bonus_container();
     build_bonus_cell_gas_volume();

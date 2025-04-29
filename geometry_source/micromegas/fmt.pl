@@ -156,7 +156,7 @@ sub define_fmt {
 
     make_fmt();
 
-    if ($configuration_string eq "rga_spring2018" || $configuration_string eq "michel_9mmcopper") {
+    if ($configuration_string eq "default" || $configuration_string eq "michel_9mmcopper") {
 
 
         for (my $l = 0; $l < $nlayer; $l++) {

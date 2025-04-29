@@ -74,17 +74,17 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
+my $system = $configuration{'detector_name'};
 foreach my $variation (@variations) {
-    my $runNumber = clas12_run($variation);
-    my $system = $configuration{'detector_name'};
-    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "default", $runNumber);
+    foreach my $run (clas12_runs_for_variations($variation)) {
+        upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $run);
+    }
 }
 
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 

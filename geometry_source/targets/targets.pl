@@ -51,7 +51,7 @@ sub create_system {
 }
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgb_spring2019", "rga_spring2019", "rgb_fall2019", "rgf_spring2020",
-    "rgm_fall2021_Sn");
+    "rgm_fall2021_He", "rgm_fall2021_C", "rgm_fall2021_Sn",  "rgm_fall2021_Cx4", "rgm_fall2021_Snx4", "rgm_fall2021_Ca", );
 
 my @runs = clas12_runs(@variations);
 
@@ -75,21 +75,21 @@ foreach my $variation (@variations, @custom_variations) {
 $configuration{"factory"} = "SQLITE";
 my $system = $configuration{'detector_name'};
 foreach my $variation (@variations) {
-    my $runNumber = clas12_run($variation);
-    upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $runNumber);
+    foreach my $run (clas12_runs_for_variations($variation)) {
+        upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $run);
+    }
 }
 
 my $i = 0;
 foreach my $variation (@custom_variations) {
-    my $runNumber = 50000 + $i++;
-    upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $runNumber);
+    my $run = 50000 + $i++;
+    upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $run);
 }
 
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 # port gxml to sqlite
