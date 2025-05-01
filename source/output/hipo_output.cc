@@ -792,9 +792,9 @@ void hipo_output::writeG4DgtIntegrated(outputContainer *output, vector <hitOutpu
                                 detectorWFBank.putLong("timestamp", nh, thisVar.second);
                             } else {
                                 // all other ADC vars must begin with "ADC_"
-                                if (bname.find("WF_s") == 0) {
+                                if (bname.find("wf_s") == 0) {
                                     // sample number is the string following "WF_s" converted to int
-                                    int sample_value = stoi(bname.substr(7));
+                                    int sample_value = stoi(bname.substr(4));
                                     string wfname = "s" + to_string(sample_value);
                                     detectorWFBank.putShort(wfname.c_str(), nh, thisVar.second);
                                 }
