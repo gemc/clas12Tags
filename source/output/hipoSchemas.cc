@@ -169,7 +169,7 @@ HipoSchema::HipoSchema() {
     schemasToLoad["FLUX::adc"] = fluxADCSchema;
 
     // The names corresponds to the hit process routine names, capitalized
-    schemasToLoad["AHDC::adc"] = alertAhdcADCSchema;
+    // schemasToLoad["AHDC::adc"] = alertAhdcADCSchema;
     schemasToLoad["AHDC::wf"]  = alertAhdcWFSchema;
     schemasToLoad["AHDC::tdc"] = alertAhdcTDCSchema;
     schemasToLoad["ATOF::tdc"] = alertAtofTDCSchema;
@@ -241,7 +241,7 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
 
 
     if (type == 0) {  // non adc detectors:
-        if (schemaName == "dc" || schemaName == "rich" || schemaName == "atof") {
+        if (schemaName == "dc" || schemaName == "rich" || schemaName == "atof" || schemaName == "ahdc") {
             return false;
         }
     } else if (type == 1) { // non tdc detectors
