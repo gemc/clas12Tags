@@ -64,13 +64,13 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		dgtz["sector"]    = sector;
 		dgtz["layer"]     = layer;
 		dgtz["component"] = component;
-		dgtz["ADC_order"] = 1;
-		dgtz["ADC_ADC"]   = (int) totEdep;
-		dgtz["ADC_time"]  = tdc;
-		dgtz["ADC_ped"]   = 0;
-		
-		dgtz["TDC_order"] = 0;
-		dgtz["TDC_TDC"]   = tdc;
+		// dgtz["ADC_order"] = 1;
+		// dgtz["ADC_ADC"]   = (int) totEdep;
+		// dgtz["ADC_time"]  = tdc;
+		// dgtz["ADC_ped"]   = 0;
+ 
+		// dgtz["TDC_order"] = 0;
+		// dgtz["TDC_TDC"]   = tdc;
 
 		return dgtz;
 
@@ -87,14 +87,14 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	dgtz["component"] = component;
 
 	// adc
-	dgtz["ADC_order"] = 1;
-	dgtz["ADC_ADC"]   = (int) output["adcMax"];
-	dgtz["ADC_time"]  = output["timeMax"];
-	dgtz["ADC_ped"]   = (int) output["adcOffset"];
+	// dgtz["ADC_order"] = 1;
+	// dgtz["ADC_ADC"]   = (int) output["adcMax"];
+	// dgtz["ADC_time"]  = output["timeMax"];
+	// dgtz["ADC_ped"]   = (int) output["adcOffset"];
 
 	// tdc
-	dgtz["TDC_order"] = 0;
-	dgtz["TDC_TDC"]   = 0;
+	// dgtz["TDC_order"] = 0;
+	// dgtz["TDC_TDC"]   = 0;
 
 	// WF
 	dgtz["WF_timestamp"] = 0;
