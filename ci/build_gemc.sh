@@ -30,7 +30,7 @@ function compile_gemc {
 function create_geo_dbs {
 	./create_geometry.sh
 	echo "Copying experiments ASCII DB and sqlite file to $GEMC for CI"
-	cp -r experiments clas12.sqlite $GEMC
+	cp -r experiments clas12.sqlite /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 	echo
 	echo "Changes:"
 	git branch ; git status -s
@@ -43,8 +43,8 @@ log_gemc_info
 echo "Content of artifacts dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4"
 ls -lrt /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
-echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12"
-ls -lrt -R /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12
+echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments"
+ls -lrt -R /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
 
 # copying executable, api and sqlite database for artifact retrieval
 # the experiment dir is synced with the bin/cron_gemc_artifact_install_jlab.sh

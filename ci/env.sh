@@ -13,7 +13,6 @@ log_gemc_info() {
 	echo " > GEMC Version: $(gemc --version)"
 	echo " > Content of $GEMC dir:"
 	echo " > GEMC_DATA_DIR: $GEMC_DATA_DIR top level content: $(ls -l $GEMC_DATA_DIR) \n\n"
-
 }
 
 # returns runs to test
@@ -91,6 +90,8 @@ variations_for_run_and_system()  {
 	elif [[ $1 == "15108" || $1 == "15458" ]]; then
 		echo "rgm_fall2021_He"
 	elif [[ $1 == "15178" || $1 == "15643" || $1 == "15733" || $1 == "15766" || $1 == "15778" ]]; then
+		echo "rgm_fall2021_C"
+	elif [[ $1 == "18305" ]]; then
 		echo "rgm_fall2021_C"
 	elif [[ $1 == "22000" ]]; then
 		echo "rgm_fall2021_Cx4"

@@ -33,7 +33,8 @@ my %variation_to_runs = (
     "rgm_fall2021_Snx4" => [ 15807 ],
     "rgc_summer2022"    => [ 16043 ],
     "rgc_fall2022"      => [ 16843 ],
-    "rgc_winter2023"    => [ 17471 ],
+    "rgc_winter2023"    => [ 18305 ],
+    "rgd_fall2023"      => [ 17471 ],
     "rge_spring2024"    => [ 20000 ],
     "rgl_spring2025"    => [ 21000 ]
 );
