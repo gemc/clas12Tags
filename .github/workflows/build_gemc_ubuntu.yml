@@ -25,8 +25,8 @@ jobs:
         uses: actions/checkout@main
       - name: Build gemc
         run: |
-          echo "github.event.head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
           ./ci/build_gemc.sh
+          echo "github.event.head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -35,4 +35,5 @@ jobs:
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/clas12.sqlite
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
 

@@ -15,7 +15,7 @@ function compile_gemc {
 	copt=" -j"$(getconf _NPROCESSORS_ONLN)" OPT=1"
 	echo
 	echo Compiling GEMC with options: "$copt"
-	scons SHOWENV=1 SHOWBUILD=1 $copt
+	scons SHOWENV=1 SHOWBUILD=1 $copt > gemc_build.log 2>&1
 	# checking existence of executable
 	ls gemc
 	if [ $? -ne 0 ]; then
@@ -28,9 +28,9 @@ function compile_gemc {
 }
 
 function create_geo_dbs {
-	./create_geometry.sh
+	./create_geometry.sh > geo_build.log 2>&1
 	echo "Copying experiments ASCII DB and sqlite file to $GEMC for CI"
-	cp -r experiments clas12.sqlite /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+	cp -r experiments clas12.sqlite gemc_build.log geo_build.log build_coatjava.log /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 	echo
 	echo "Changes:"
 	git branch ; git status -s
@@ -43,8 +43,8 @@ log_gemc_info
 echo "Content of artifacts dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4"
 ls -lrt /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
-echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments"
-ls -lrt -R /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
+echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12"
+ls -lrt -R /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12
 
 # copying executable, api and sqlite database for artifact retrieval
 # the experiment dir is synced with the bin/cron_gemc_artifact_install_jlab.sh
