@@ -75,5 +75,5 @@ fi
 
 cd $src_dir
 ./build-coatjava.sh > ../build_coatjava.log 2>&1
-cp coatjava/lib/clas/* .. 
+cp coatjava/lib/clas/* ..
 cp -r coatjava ../$install_dir

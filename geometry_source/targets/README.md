@@ -26,16 +26,10 @@ Author: Yu-Chun Hung
 Experiment Description: Measure the structure function F2 of the neutron by 
 tagging the spectator proton in the RTPC detector. Deuterium, hydrogen, and helium gas are used at 5.6 atm pressure.
 
-### Variations: bonusD2, bounsH2, bonusHe
 
-### Files used: 
+## RGC: Summer 2022
 
-### How to use it in the gcard
-1. Set up the target with bonusD2 variations:
-<detector name="experiments/clas12/targets/target" factory="TEXT" variation="bonusD2"/>
-2. Shift the target position by 30 mm
-<detector name="target">    <position x="0*cm"  y="0*cm"  z="-3.00*cm"  />  </detector>
-
+Apollo Polarized Targets
 
 ## RGM: Sept 20 2022
 

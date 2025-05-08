@@ -14,6 +14,10 @@ at Jefferson Lab, providing:
 
 ---
 
+[GEMC Documentation Page](https://gemc.jlab.org/gemc/html/index.html)
+
+---
+
 ## Pre-requisites
 
 You will need:

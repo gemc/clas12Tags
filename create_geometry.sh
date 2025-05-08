@@ -64,7 +64,6 @@ if [ ! -d "coatjava" ]; then
 	./install_coatjava.sh -l
 fi
 
-
 # if an argument is given, check that its inside all_dets
 if [[ $# -gt 0 ]]; then
 	if [[ ! " $all_dets " =~ " $1 " ]]; then
