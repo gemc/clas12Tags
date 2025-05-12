@@ -1,4 +1,4 @@
-# The clas12Tags repository
+# The clas12Tags repository 
 
 The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments 
 at Jefferson Lab, providing:  
