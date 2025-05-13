@@ -64,7 +64,8 @@ sub create_system {
         make_plates();
     }
     elsif ($variation eq "ddvcs") {
-        system("groovy -cp '../*:..' factory.groovy --variation default --runnumber $runNumber");
+        system("groovy -cp '/Users/devita/NetBeansProjects/coatjava/coatjava/lib/clas/*:..' factory.groovy --variation default --runnumber $runNumber");
+#        system("/Users/devita/NetBeansProjects/coatjava/coatjava/bin/run-groovy factory.groovy --variation default --runnumber $runNumber");
         copy("dc__volumes_default.txt", "dc__volumes_ddvcs.txt") or die "Copy failed: $!";
 
         our @volumes = get_volumes(%configuration);
@@ -73,7 +74,7 @@ sub create_system {
         make_region3_back_shield();
     }
     else {
-        system("groovy -cp '../*:..' factory.groovy --variation $variation --runnumber $runNumber");
+        system("groovy -cp '/Users/devita/NetBeansProjects/coatjava/coatjava/lib/clas/*:..' factory.groovy --variation default --runnumber $runNumber");
         our @volumes = get_volumes(%configuration);
         coatjava::makeDC();
     }
