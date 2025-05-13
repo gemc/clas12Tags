@@ -10,19 +10,12 @@ our $microgap;
 
 sub make_scatt_chambers
 {
-	my $rohacell_thickness = 6;
 	my $nplanes = 4;
 
-	my @zpos       = ( -115.0,  340.0, 370.0, 490.0 );
+	my @zpos       = ( -115.0,  260.0, 290.0, 390.0 );
 	my @oradius    = (   50.0,   50.0,  26.0,  26.0 );
-	my @iradius    = (    0.0,    0.0,   0.0,   0.0 );
-	my @t_oradius  =  (   0.0,    0.0,   0.0,   0.0 );
-
-	for(my $i = 0; $i <$nplanes; $i++) {
-		$iradius[$i]   = $oradius[$i] - $rohacell_thickness;
-		$t_oradius[$i] = $oradius[$i] + $rohacell_thickness;
-	}
-	
+	my @iradius    = (   44.0,   44.0,  22.0,  22.0 );
+	my @t_oradius  =  (  56.0,   56.0,  26.0,  26.0 );
 	
 	my @z_plane    =  ( $zpos[0] - 1, $zpos[1], $zpos[2], $zpos[3] + 1 );
 	
@@ -77,7 +70,7 @@ sub make_scatt_chambers
 
 	$nplanes = 5;
 	my @oradiusT  =  (   2.5,  10.3,  7.3,  5.0,  2.5);
-	my @z_planeT  =  ( -74.2, -71.2, 72.5, 73.5, 74.5);
+	my @z_planeT  =  ( -24.2, -21.2, 22.5, 23.5, 24.5);
 	
 	# actual target
 	%detector = init_det();
@@ -97,8 +90,8 @@ sub make_scatt_chambers
 	
 	# 50 microns exit / entry windows
 	
-	my $wzpos = $zpos[3]  - 1;
-	my $worad = $oradius[3] - 7;
+	my $wzpos = $zpos[3] + 0.1;
+	my $worad = $oradius[3] - 2;
 	
 	%detector = init_det();
 	$detector{"name"}        = "scattChamberExitWindow";

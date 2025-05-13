@@ -25,10 +25,10 @@ our %configuration = load_configuration($ARGV[0]);
 sub buildBigCone_motherVolume
 {
  
-    my $nplanes = 7;
-    my @bcone_iradius = (302, 402, 98.8, 105.2, 105.2, 113.3, 150 );
-    my @bcone_oradius = (457, 614, 740, 784, 798, 798, 150.1 );
-    my @bcone_zpos_root = (520, 696, 837, 888, 888, 951, 1251);
+    my $nplanes = 9;
+    my @bcone_iradius = (302, 402, 98.8, 105.2, 105.2, 113.3, 134.8, 150, 150);
+    my @bcone_oradius = (457, 614, 740, 784, 798, 798, 882.5, 627.9, 150.1 );
+    my @bcone_zpos_root = (520, 696, 837, 888, 888, 951, 1132.3, 1251, 1473.8);
     
     
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
@@ -59,9 +59,9 @@ sub buildMollerCone
 {
  
     my $nplanes = 5;
-    my @cone_iradius = (32.1, 32.1, 35.1, 35.1, 35.1 );
-    my @cone_oradius = (42.8, 149, 149, 111, 111 );
-    my @cone_zpos_root = (381, 1251, 2280, 2280, 2750);
+    my @cone_iradius = (26.1, 26.1, 33.1, 33.1, 33.1 );
+    my @cone_oradius = (30.6, 149, 149, 111, 111 );
+    my @cone_zpos_root = (300, 1251, 2280, 2380, 2750);
     
     
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
