@@ -1,0 +1,90 @@
+name: GCards Tests
+permissions:
+  contents: read
+  pull-requests: write
+
+ # Triggers the workflow on all pushes to main and all pull requests
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Allows this workflow to be called by other workflows
+  # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
+  workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
+
+jobs:
+  detect-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set effective branch
+        id: vars
+        run: |
+          echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
+
+
+  test:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-almalinux94
+    strategy:
+      fail-fast: false
+      matrix:
+        ntracks:
+          - 01
+          - 02
+          - 03
+          - 05
+          - 10
+          - 15
+          - 20
+
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
+      - name: Build GEMC
+        run: |
+          ./ci/build_gemc.sh
+      - name: ${{ matrix.ntracks }} test
+        env:
+          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
+        run: |
+          ./ci/lund_run_test.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: tracklogs-${{ matrix.ntracks }}
+          path: /root/logs/
+
+  test-result:
+    needs: test
+    runs-on: ubuntu-latest
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: Collect logs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: tracklogs-*
+      - name: Generate Table
+        run: |
+          ls */*tracks.log
+          cat */*tracks.log > ntracks.log
+          echo "| N tracks | Total Time | " > Summary.md
+          echo "|----------|------------|" >> Summary.md
+          while IFS=: read -r ntracks time; do
+            echo "| $ntracks | $time |" >> Summary.md
+          done < ntracks.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY

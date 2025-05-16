@@ -64,7 +64,7 @@ https://clasweb.jlab.org/rcdb/runs/search?runFrom=15015&runTo=15884&q=event_coun
 
 - cad: standard scattering chamber and liquid cell target wall entrance and exit material
 - cad_rgm - standard scattering chamber without liquid cell wall and upstream window, only downstream window and pipe included (use with solid targets)
-
+- cad_poltar - deprecated on 5/8/2025.
 
 ## How to use it in the gcard
 ### Liquid Targets
@@ -134,7 +134,7 @@ Change solid target in "clas12-RGE.gcard" by choosing a subdirectory that contai
 
 ### gcard name format:
 Format of the included gcards for RGE have the following format:
-
+1
 clas12-RGE_[liquid-target]-[solid-target]-[magnetic-field].gcard
 
 Where [magnetic-field] corresponds to Inbending (In), Outbending (Out), or Zero field (Zero).
