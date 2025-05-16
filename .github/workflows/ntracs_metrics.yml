@@ -39,13 +39,13 @@ jobs:
       fail-fast: false
       matrix:
         ntracks:
-          - 01
-          - 02
-          - 03
-          - 05
-          - 10
-          - 15
-          - 20
+          - '01'
+          - '02'
+          - '03'
+          - '05'
+          - '10'
+          - '15'
+          - '20'
 
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
@@ -82,9 +82,11 @@ jobs:
         run: |
           ls */*tracks.log
           cat */*tracks.log > ntracks.log
-          echo "| N tracks | Total Time | " > Summary.md
-          echo "|----------|------------|" >> Summary.md
+          echo "| N tracks | Total Time | Time Per Track |" > Summary.md
+          echo "|----------|------------|----------------|" >> Summary.md
           while IFS=: read -r ntracks time; do
-            echo "| $ntracks | $time |" >> Summary.md
+            # calculate time per track
+            time1t=$(echo "scale=2; $time / $ntracks" | bc)
+            echo "| $ntracks | $time | $ntracks |" >> Summary.md
           done < ntracks.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY

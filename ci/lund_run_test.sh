@@ -79,7 +79,7 @@ mkdir -p /root/logs
 log_file=/root/logs/"$ntracks"_tracks.log
 touch $log_file
 
-grep "Events only time:" gemc.log | cut -d':' -f3 > $log_file
+grep "Events only time:" gemc.log | cut -d':' -f3  | cut -w -f2 > $log_file
 
 echo
 cat $log_file
