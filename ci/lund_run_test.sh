@@ -37,7 +37,7 @@ while getopts ":hg:l:" option; do
 			gcard="clas12-config/gemc/dev/$OPTARG"
 			;;
 		l)
-			lund="ci/generated_events/$OPTARG"
+			ntracks="$OPTARG"
 			;;		\?) # Invalid option
 			echo "Error: Invalid option"
 			exit 1
@@ -62,8 +62,8 @@ if [[ ! -f "$gcard" ]]; then
 fi
 
 nevents=200
-lund_file=$lund"_tracks.dat"
-echo "Generating file events.dat from lund file: $lund_file"
+lund_file="ci/generated_events/"$ntracks"_tracks.dat"
+echo "Generating file events.dat with $nevents events from lund file: $lund_file"
 ./ci/generated_events/randomize_particles.py --nevents $nevents -o events.dat --theta-min 7 --theta-max 120 --seed 123 $lund_file
 
 echo "Running gemc with options:  -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard"
@@ -76,7 +76,7 @@ if [[ $exitCode != 0 ]]; then
 fi
 
 mkdir -p /root/logs
-log_file=/root/logs/"$lund"_tracks.log
+log_file=/root/logs/"$ntracks"_tracks.log
 touch $log_file
 
 grep "Events only time:" gemc.log | cut -d':' -f3 > $log_file
