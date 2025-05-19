@@ -82,11 +82,11 @@ jobs:
         run: |
           ls */*tracks.log
           cat */*tracks.log > ntracks.log
-          echo "| N tracks | Total Time | Time Per Track |" > Summary.md
-          echo "|----------|------------|----------------|" >> Summary.md
-          while IFS=: read -r ntracks time; do
+          echo "| N. Events | N tracks | Total Time | Time / Track / event|" > Summary.md
+          echo "|-----------|----------|------------|---------------------|" >> Summary.md
+          while IFS=: read -r nevents ntracks time; do
             # calculate time per track
-            time1t=$(echo "scale=2; $time / $ntracks" | bc)
-            echo "| $ntracks | $time | $ntracks |" >> Summary.md
+            time1t=$(echo "scale=2; $time / ($ntracks * $nevents)" | bc)
+            echo "| $nevents | $ntracks | $time | $ntracks |" >> Summary.md
           done < ntracks.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
