@@ -62,12 +62,16 @@ if [[ ! -f "$gcard" ]]; then
 fi
 
 nevents=200
+mkdir -p /root/logs
+log_file=/root/logs/"$ntracks"_tracks.log
+gemc_log=/root/logs/gemc.log
+
 lund_file="ci/generated_events/"$ntracks"_tracks.dat"
 echo "Generating file events.dat with $nevents events from lund file: $lund_file"
 ./ci/generated_events/randomize_particles.py --nevents $nevents -o events.dat --theta-min 7 --theta-max 120 --seed 123 $lund_file
 
 echo "Running gemc with options:  -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard"
-gemc -INPUT_GEN_FILE="lund, events.dat"  -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard > gemc.log
+gemc -INPUT_GEN_FILE="lund, events.dat"  -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard > $gemc_log
 exitCode=$?
 
 if [[ $exitCode != 0 ]]; then
@@ -75,12 +79,8 @@ if [[ $exitCode != 0 ]]; then
 	exit $exitCode
 fi
 
-mkdir -p /root/logs
-mv gemc.log /root/logs/
-log_file=/root/logs/"$ntracks"_tracks.log
-touch $log_file
 
-printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" gemc.log | cut -d':' -f3 | cut -d' ' -f2)" > $log_file
+printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" $gemc_log | cut -d':' -f3 | cut -d' ' -f2)" > $log_file
 
 echo
 cat $log_file
