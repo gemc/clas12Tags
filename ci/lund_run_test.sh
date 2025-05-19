@@ -76,10 +76,11 @@ if [[ $exitCode != 0 ]]; then
 fi
 
 mkdir -p /root/logs
+mv gemc.log /root/logs/
 log_file=/root/logs/"$ntracks"_tracks.log
 touch $log_file
 
-grep "Events only time:" gemc.log | cut -d':' -f3  | cut -d' ' -f2 > $log_file
+grep "Events only time:" gemc.log | cut -d':' -f3  | awk '{print " '$nt' $1"}' > $log_file
 
 echo
 cat $log_file
