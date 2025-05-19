@@ -4,12 +4,17 @@ permissions:
   pull-requests: write
 
  # Triggers the workflow on all pushes to main and all pull requests
+#on:
+#  pull_request:
+#  merge_group:
+#  push:
+#    branches: [ main ]
+#    tags: [ '*' ]
+
 on:
-  pull_request:
-  merge_group:
-  push:
-    branches: [ main ]
-    tags: [ '*' ]
+  schedule:
+    # every day at 2:44
+    - cron: '44 2 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -77,19 +82,19 @@ jobs:
       fail-fast: false
       matrix:
         detector:
-          #          - ec
-          #          - pcal
+          - ec
+          - pcal
           - dc
           - ftof
-          #          - ctof
-          #          - cnd
-          #          - bst
-          #          - htcc
-          #          - micromegas
-          #          - ltcc
-          #          - rich
-          #          - ft
-          # - beamline
+          - ctof
+          - cnd
+          - bst
+          - htcc
+          - micromegas
+          - ltcc
+          - rich
+          - ft
+          - beamline
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
           - default
