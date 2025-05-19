@@ -70,8 +70,11 @@ lund_file="ci/generated_events/"$ntracks"_tracks.dat"
 echo "Generating file events.dat with $nevents events from lund file: $lund_file"
 ./ci/generated_events/randomize_particles.py --nevents $nevents -o events.dat --theta-min 7 --theta-max 120 --seed 123 $lund_file
 
+# same options as on OSG
 echo "Running gemc with options:  -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard"
-gemc -INPUT_GEN_FILE="lund, events.dat"  -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard > $gemc_log
+gemc -INPUT_GEN_FILE="lund, events.dat"  -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10  -RANDOMIZE_LUND_VZ='-1.94*cm, 2.5*cm, reset ' \
+     -BEAM_SPOT='0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset ' -RASTER_VERTEX='0.0*cm, 0.0*cm, reset '  \
+     -SCALE_FIELD='binary_torus, -1.00'   -SCALE_FIELD='binary_solenoid, -1.00' -INTEGRATEDRAW='*' $gcard > $gemc_log
 exitCode=$?
 
 if [[ $exitCode != 0 ]]; then
