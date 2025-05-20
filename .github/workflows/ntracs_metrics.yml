@@ -11,6 +11,11 @@ on:
     branches: [ main ]
     tags: [ '*' ]
 
+#on:
+#  schedule:
+#    # every day at 4:44
+#    - cron: '44 4 * * *'
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -46,6 +51,7 @@ jobs:
           - '10'
           - '15'
           - '20'
+          - 'clasdis'
 
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
@@ -80,16 +86,15 @@ jobs:
           pattern: tracklogs-*
       - name: Generate Table
         run: |
-          ls */*tracks.log
           cat */*tracks.log > ntracks.log
           echo "| N. Events | N tracks | Total Time | Time / Track / event|" > Summary.md
           echo "|-----------|----------|------------|---------------------|" >> Summary.md
-          while IFS=: read -r nevents ntracks time; do
-            if [ "$nevents" -gt 0 ] && [ "$ntracks" -gt 0 ]; then
-              time1t=$(bc -l <<< "scale=4; $time / ($nevents * $ntracks)")
-            else
-              time1t="N/A"
-            fi
+          while read -r nevents ntracks time; do
+            [[ -z $nevents || -z $ntracks || -z $time ]] && continue
+
+            time1t=$(bc -l <<< "scale=4; $time / ($nevents * $ntracks)")
+
+            printf "| %9s | %8s | %10s | %22s |\n" "$nevents" "$ntracks" "$time" "$time1t"
           done < ntracks.log > Summary.md
           cat Summary.md 
           cat Summary.md >> $GITHUB_STEP_SUMMARY

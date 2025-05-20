@@ -66,9 +66,15 @@ mkdir -p /root/logs
 log_file=/root/logs/"$ntracks"_tracks.log
 gemc_log=/root/logs/gemc.log
 
-lund_file="ci/generated_events/"$ntracks"_tracks.dat"
-echo "Generating file events.dat with $nevents events from lund file: $lund_file"
-./ci/generated_events/randomize_particles.py --nevents $nevents -o events.dat --theta-min 7 --theta-max 120 --seed 123 $lund_file
+# if $ntracks is clasdis then use clasdis lund file
+if [[ $ntracks == "clasdis" ]]; then
+	cp clasdis.dat events.dat
+	echo "Using $nevents events from lund file generated with clasdis --trig 200 --docker"
+else
+	lund_file="ci/generated_events/"$ntracks"_tracks.dat"
+	echo "Generating file events.dat with $nevents events from lund file: $lund_file"
+	./ci/generated_events/randomize_particles.py --nevents $nevents -o events.dat --theta-min 7 --theta-max 120 --seed 123 $lund_file
+fi
 
 # same options as on OSG
 echo "Running gemc with options:  -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard"
@@ -81,7 +87,6 @@ if [[ $exitCode != 0 ]]; then
 	echo exiting with gemc exitCode: $exitCode
 	exit $exitCode
 fi
-
 
 printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" $gemc_log | cut -d':' -f3 | cut -d' ' -f2)" > $log_file
 
