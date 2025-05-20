@@ -68,7 +68,7 @@ gemc_log=/root/logs/gemc.log
 
 # if $ntracks is clasdis then use clasdis lund file
 if [[ $ntracks == "clasdis" ]]; then
-	cp clasdis.dat events.dat
+	cp ci/generated_events/clasdis.dat events.dat
 	echo "Using $nevents events from lund file generated with clasdis --trig 200 --docker"
 else
 	lund_file="ci/generated_events/"$ntracks"_tracks.dat"
