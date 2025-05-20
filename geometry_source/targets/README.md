@@ -134,30 +134,34 @@ Change solid target in "clas12-RGE.gcard" by choosing a subdirectory that contai
 
 ### gcard name format:
 Format of the included gcards for RGE have the following format:
-1
-clas12-RGE_[liquid-target]-[solid-target]-[magnetic-field].gcard
 
-Where [magnetic-field] corresponds to Inbending (In), Outbending (Out), or Zero field (Zero).
+target_text_rge_spring2024_[liquid-target]-[solid-target]-[vertex]-[magnetic-field].gcard
+
+Where:
+
+* [liquid-target] can be either be LD2 or Empty.
+
+* [solid-target] can be either be C, Al, Sn, Cu, Pb or Empty.
+
+* [vertex] corresponds to Liquid (liq), Solid (sol) or Reference foil (ref).
+
+* [magnetic-field] corresponds to Inbending (In), Outbending (Out), or Zero field (Zero).
 
 ### Notes
-clas12-RGE_example.gcard is just an example of an RG-E gcard. It could be updated later depending on the GEMC updates and releases. Please verify it before using.
+RGE gcards could be updated later depending on the GEMC updates and releases. Please verify them before using.
 
 ### Run numbers for each configuration
-| Run number  | Configuration | Torus polarization |
-| :--------: | :-----------: |:-----------|
-20036-20039 | Empty-Empty | Zero Field
-20507| Empty-Empty | Inbending
-20017-20019<br>20070-20072 | Empty+C | Inbending
-20506|Empty+Al|Inbending
-20269-20281|Empty+Pb|Inbending
-20021-20034<br>20131-20176<br> | LD2+C | Inbending
-20435-20493|LD2+Al|Inbending
-20177-20230| LD2+Cu | Inbending
-20331-20434|LD2+Sn| Inbending
-20041-20064<br>20074-20130<br>20232-20267<br>20282-20330<br>20494-20505 | LD2+Pb | Inbending
-20508-20519|LD2+C|Outbending
-20520-20525|LD2+Pb|Outbending
-
-
-
-
+| Run number  | Configuration | Torus polarization | gcard variation name |
+| :--------: | :-----------: | :-----------: | :-----------: |
+20036-20039 | Empty-Empty | Zero Field | Empty-Empty-ref-Zero
+20507| Empty-Empty | Inbending | Empty-Empty-ref-Inb
+20017-20019<br>20070-20072 | Empty+C | Inbending | Empty-C-sol-Inb
+20506|Empty+Al | Inbending | Empty-Al-sol-Inb
+20269-20281 | Empty+Pb|Inbending | Empty-Pb-sol-Inb
+20021-20034<br>20131-20176<br> | LD2+C | Inbending | LD2-C-sol-Inb<br>LD2-C-liq-Inb
+20435-20493 | LD2+Al|Inbending | LD2-Al-sol-Inb<br>LD2-Al-liq-Inb
+20177-20230 | LD2+Cu | Inbending | LD2-Cu-sol-Inb<br>LD2-Cu-liq-Inb
+20331-20434 | LD2+Sn| Inbending | LD2-Sn-sol-Inb<br>LD2-Sn-liq-Inb
+20041-20064<br>20074-20130<br>20232-20267<br>20282-20330<br>20494-20505 | LD2+Pb | Inbending | LD2-Pb-sol-Inb<br>LD2-Pb-liq-Inb
+20508-20519 | LD2+C|Outbending | LD2-C-sol-Out<br>LD2-C-liq-Out
+20520-20525 | LD2+Pb|Outbending | LD2-C-sol-Out<br>LD2-C-liq-Out
