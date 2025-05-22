@@ -110,12 +110,12 @@ Experiment Description: Double target to study hadronization process. Liquid deu
 Solid targets inlcude Carbon, Aluminum, Copper, Tin, and Lead.
 
 ### Variations: 
-1. Liquid Target (2cm liquid cell):
-2cm-lD2 - liquid Deuterium
-2cm-lD2-empty - empty liquid Deuterium cell
+1. Liquid Target (2cm cryocell):
+2cm-lD2 - cryocell full with liquid Deuterium
+2cm-lD2-empty - empty cryocell
 
 2. Solid Target:
-For solid selection, modify CAD subdirectory:
+For solid selection, modify CAD subdirectory in gcard:
 C - Band positioned with C foil in front of the beam
 Al - Band positioned with Al foil in front of the beam
 Cu - Band positioned with Cu foil in front of the beam
@@ -133,7 +133,7 @@ Change solid target in [RGE].gcard by choosing a subdirectory that contains CAD 
 <detector name="experiments/clas12/targets/rge-dt/C/"  factory="CAD"/>
 
 ### gcard name format:
-Format of the included gcards for RGE have the following format:
+Format of gcard names for RGE (in clas12-config) have the following format:
 
 target_text_rge_spring2024_[liquid-target]-[solid-target]-[vertex]-[magnetic-field].gcard
 
@@ -146,6 +146,8 @@ Where:
 * [vertex] corresponds to Liquid (liq), Solid (sol) or Reference foil (ref).
 
 * [magnetic-field] corresponds to Inbending (In), Outbending (Out), or Zero field (Zero).
+
+* Gcards for target testing located in clas12Tags have [vertex] and [magnetic-field] removed from the name.
 
 ### Notes
 RGE gcards could be updated later depending on the GEMC updates and releases. Please verify them before using.
