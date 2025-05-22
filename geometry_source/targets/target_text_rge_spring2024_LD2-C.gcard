@@ -1,0 +1,29 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	<detector name="target"         factory="TEXT" variation="2cm-lD2"/>
+	<detector name="rge-dt/C/"  	factory="CAD"/>
+	<detector name="rge-dt/common/"	factory="CAD"/>
+
+
+
+
+
+
+	<option name="BEAM_P" value="proton, 1.0*GeV, 90*deg, 10*deg"/>
+	<option name="SPREAD_P" value="0.0*GeV, 80*deg, 180*deg"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="DIGITIZATION_VARIATION" value="default"/>
+	<option name="INTEGRATEDRAW" value="*"/>
+
+	<option name="RFSETUP" value="clas12_ccdb"/>
+	<option name="RFSTART" value="eventVertex, 0, 0, -30.0"/>
+	<option name="LUMI_EVENT" value="0, 248.5*ns, 4*ns"/>
+
+</gcard>

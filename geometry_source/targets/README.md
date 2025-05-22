@@ -110,12 +110,12 @@ Experiment Description: Double target to study hadronization process. Liquid deu
 Solid targets inlcude Carbon, Aluminum, Copper, Tin, and Lead.
 
 ### Variations: 
-1. Liquid Target (2cm liquid cell):
-2cm-lD2 - liquid Deuterium
-2cm-lD2-empty - empty liquid Deuterium cell
+1. Liquid Target (2cm cryocell):
+2cm-lD2 - cryocell full with liquid Deuterium
+2cm-lD2-empty - empty cryocell
 
 2. Solid Target:
-For solid selection, modify CAD subdirectory:
+For solid selection, modify CAD subdirectory in gcard:
 C - Band positioned with C foil in front of the beam
 Al - Band positioned with Al foil in front of the beam
 Cu - Band positioned with Cu foil in front of the beam
@@ -125,39 +125,45 @@ Empty - Band positioned with empty hole in front of the beam
 
 ### How to use it in the gcard
 1. Choose LD2 variation:
-Set it up in "clas12-RGE.gcard" to choose full or empty deuterium cell"
+Set it up in [RGE].gcard to choose full or empty deuterium cell:
 <detector name="experiments/clas12/targets/target"         factory="TEXT" variation="2cm-lD2"/>
 
 2. Choose Solid Target:
-Change solid target in "clas12-RGE.gcard" by choosing a subdirectory that contains CAD models for the requiered solid target configuration:
+Change solid target in [RGE].gcard by choosing a subdirectory that contains CAD models for the requiered solid target configuration:
 <detector name="experiments/clas12/targets/rge-dt/C/"  factory="CAD"/>
 
 ### gcard name format:
-Format of the included gcards for RGE have the following format:
-1
-clas12-RGE_[liquid-target]-[solid-target]-[magnetic-field].gcard
+Format of gcard names for RGE (in clas12-config) have the following format:
 
-Where [magnetic-field] corresponds to Inbending (In), Outbending (Out), or Zero field (Zero).
+target_text_rge_spring2024_[liquid-target]-[solid-target]-[vertex]-[magnetic-field].gcard
+
+Where:
+
+* [liquid-target] can be either be LD2 or Empty.
+
+* [solid-target] can be either be C, Al, Sn, Cu, Pb or Empty.
+
+* [vertex] corresponds to Liquid (liq), Solid (sol) or Reference foil (ref).
+
+* [magnetic-field] corresponds to Inbending (In), Outbending (Out), or Zero field (Zero).
+
+* Gcards for target testing located in clas12Tags have [vertex] and [magnetic-field] removed from the name.
 
 ### Notes
-clas12-RGE_example.gcard is just an example of an RG-E gcard. It could be updated later depending on the GEMC updates and releases. Please verify it before using.
+RGE gcards could be updated later depending on the GEMC updates and releases. Please verify them before using.
 
 ### Run numbers for each configuration
-| Run number  | Configuration | Torus polarization |
-| :--------: | :-----------: |:-----------|
-20036-20039 | Empty-Empty | Zero Field
-20507| Empty-Empty | Inbending
-20017-20019<br>20070-20072 | Empty+C | Inbending
-20506|Empty+Al|Inbending
-20269-20281|Empty+Pb|Inbending
-20021-20034<br>20131-20176<br> | LD2+C | Inbending
-20435-20493|LD2+Al|Inbending
-20177-20230| LD2+Cu | Inbending
-20331-20434|LD2+Sn| Inbending
-20041-20064<br>20074-20130<br>20232-20267<br>20282-20330<br>20494-20505 | LD2+Pb | Inbending
-20508-20519|LD2+C|Outbending
-20520-20525|LD2+Pb|Outbending
-
-
-
-
+| Run number  | Configuration | Torus polarization | gcard variation name |
+| :--------: | :-----------: | :-----------: | :-----------: |
+20036-20039 | Empty-Empty | Zero Field | Empty-Empty-ref-Zero
+20507| Empty-Empty | Inbending | Empty-Empty-ref-Inb
+20017-20019<br>20070-20072 | Empty+C | Inbending | Empty-C-sol-Inb
+20506|Empty+Al | Inbending | Empty-Al-sol-Inb
+20269-20281 | Empty+Pb|Inbending | Empty-Pb-sol-Inb
+20021-20034<br>20131-20176<br> | LD2+C | Inbending | LD2-C-sol-Inb<br>LD2-C-liq-Inb
+20435-20493 | LD2+Al|Inbending | LD2-Al-sol-Inb<br>LD2-Al-liq-Inb
+20177-20230 | LD2+Cu | Inbending | LD2-Cu-sol-Inb<br>LD2-Cu-liq-Inb
+20331-20434 | LD2+Sn| Inbending | LD2-Sn-sol-Inb<br>LD2-Sn-liq-Inb
+20041-20064<br>20074-20130<br>20232-20267<br>20282-20330<br>20494-20505 | LD2+Pb | Inbending | LD2-Pb-sol-Inb<br>LD2-Pb-liq-Inb
+20508-20519 | LD2+C|Outbending | LD2-C-sol-Out<br>LD2-C-liq-Out
+20520-20525 | LD2+Pb|Outbending | LD2-C-sol-Out<br>LD2-C-liq-Out
