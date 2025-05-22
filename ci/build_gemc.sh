@@ -9,13 +9,20 @@
 
 source ci/env.sh
 
+# if the option DEBUG is set, set the var debug to "DEBUG=1"
+if [[ $DEBUG == "1" ]]; then
+	debug="DEBUG=1"
+else
+	debug=""
+fi
+
 function compile_gemc {
 	cd source
 	# getting number of available CPUS
 	copt=" -j"$(getconf _NPROCESSORS_ONLN)" OPT=1"
 	echo
-	echo Compiling GEMC with options: "$copt"
-	scons SHOWENV=1 SHOWBUILD=1 $copt > gemc_build.log 2>&1
+	echo Compiling GEMC with options: "$copt" $debug
+	scons SHOWENV=1 SHOWBUILD=1 $copt $debug > gemc_build.log 2>&1
 	# checking existence of executable
 	ls gemc
 	if [ $? -ne 0 ]; then

@@ -4,17 +4,17 @@ permissions:
   pull-requests: write
 
   # Triggers the workflow on all pushes to main and all pull requests
-#on:
-#  pull_request:
-#  merge_group:
-#  push:
-#    branches: [ main ]
-#    tags: [ '*' ]
-
 on:
-  schedule:
-    # every day at 4:44
-    - cron: '44 1 * * *'
+  pull_request:
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+
+#on:
+#  schedule:
+#    # every day at 4:44
+#    - cron: '44 4 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -44,15 +44,9 @@ jobs:
       fail-fast: false
       matrix:
         ntracks:
-          - '01'
-          - '02'
           - '03'
           - '05'
-          - '10'
-          - '15'
-          - '20'
           - 'clasdis_all'
-          - 'clasdis_acc'
 
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
@@ -63,12 +57,13 @@ jobs:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: Build GEMC
         run: |
-          ./ci/build_gemc.sh
+          ./ci/build_gemc.sh DEBUG
       - name: ${{ matrix.ntracks }} test
         env:
           BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
-          ./ci/lund_run_test.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
+          yum install -u valgrind
+          ./ci/profile_gemc.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
