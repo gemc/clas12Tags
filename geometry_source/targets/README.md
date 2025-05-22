@@ -125,11 +125,11 @@ Empty - Band positioned with empty hole in front of the beam
 
 ### How to use it in the gcard
 1. Choose LD2 variation:
-Set it up in "clas12-RGE.gcard" to choose full or empty deuterium cell"
+Set it up in [RGE].gcard to choose full or empty deuterium cell:
 <detector name="experiments/clas12/targets/target"         factory="TEXT" variation="2cm-lD2"/>
 
 2. Choose Solid Target:
-Change solid target in "clas12-RGE.gcard" by choosing a subdirectory that contains CAD models for the requiered solid target configuration:
+Change solid target in [RGE].gcard by choosing a subdirectory that contains CAD models for the requiered solid target configuration:
 <detector name="experiments/clas12/targets/rge-dt/C/"  factory="CAD"/>
 
 ### gcard name format:
