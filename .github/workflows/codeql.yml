@@ -1,12 +1,15 @@
 name: "CodeQL Advanced"
+permissions:
+  contents: read
+  pull-requests: write
 
+# Triggers the workflow on all pushes to main and all pull requests
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
-  schedule:
-    - cron: '20 2 * * 5'
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
 
 jobs:
   analyze:

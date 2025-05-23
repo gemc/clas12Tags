@@ -265,20 +265,17 @@ CLAS12 GEMC simulations can be run on the Open Science Grid (OSG) using the
 
 ## Timer per track
 
-A metric is compiled by a GitHub action that runs gemc nightly with the
+The profile table below is obtained by a GitHub action that runs gemc nightly with the
 RGA Spring 2018 configuration with a mix of 1, 2, 3, 5, 10, 15, 20 tracks,
 and by using clasdis.
 
-The tracks files come from a mix of:
-
-clasdis, dvcsgen, las12-elspectro, gibuu, genKandOnePione, onepigen, twopeg.
+The events come from a picking single tracks from a the following clas12 mcgen generators: clasdis, dvcsgen, las12-elspectro, gibuu, genKandOnePione, onepigen, twopeg.
 
 The clasdis files are:
 
-clasdis_all : generated with no options
-clasdis_acc: generated with --t 15 35 option (electron theta between 15 and 35)
+- clasdis_all : generated with no options
+- clasdis_acc: generated with --t 15 35 option (electron theta between 15 and 35)
 
-The results are summarized below.
 
 ![Alt Profile](ci/tracks_profile.png?raw=true "Time per track for various configurations")
 
@@ -338,11 +335,21 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-- [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
-- [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml) [![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
-- [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
+### Pull Requests:
+
+- [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
+- [![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
 - [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
 - [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
+- [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
+
+### Nightly:
+
+- [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
+- [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
+- [![GCards Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml)
+- [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
+
 
 <br>
 

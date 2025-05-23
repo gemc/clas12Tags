@@ -3,18 +3,11 @@ permissions:
   contents: read
   pull-requests: write
 
-  # Triggers the workflow on all pushes to main and all pull requests
 on:
-  pull_request:
-  merge_group:
-  push:
-    branches: [ main ]
-    tags: [ '*' ]
+  schedule:
+    # every day at 4:44
+    - cron: '44 2 * * *'
 
-#on:
-#  schedule:
-#    # every day at 4:44
-#    - cron: '44 4 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
