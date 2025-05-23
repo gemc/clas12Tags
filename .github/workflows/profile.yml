@@ -62,7 +62,7 @@ jobs:
         env:
           BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
-          yum install -u valgrind
+          yum install -y valgrind
           ./ci/profile_gemc.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
