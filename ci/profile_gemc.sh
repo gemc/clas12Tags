@@ -69,6 +69,7 @@ gemc_log=/root/logs/gemc.log
 
 # if $ntracks is clasdis then use clasdis lund file
 if [[ $ntracks == "clasdis_all"  ]]; then
+	nevents=100
 	cp ci/generated_events/"$ntracks".dat events.dat
 	echo "Using $nevents events from lund file generated with clasdis --trig 200 --docker"
 else
@@ -82,7 +83,7 @@ echo "Running valgrind on $(which gemc) with options:  -INPUT_GEN_FILE=\"lund, e
 valgrind --tool=callgrind  --callgrind-out-file=callgrind.out.%p   $(which gemc) \
 	-INPUT_GEN_FILE="lund, events.dat"    -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10  -RANDOMIZE_LUND_VZ='-1.94*cm, 2.5*cm, reset ' \
 	-BEAM_SPOT='0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset '   -RASTER_VERTEX='0.0*cm, 0.0*cm, reset ' \
-	-SCALE_FIELD='binary_torus, -1.00'     -SCALE_FIELD='binary_solenoid, -1.00' -INTEGRATEDRAW='*' $gcard >$gemc_log
+	-SCALE_FIELD='binary_torus, -1.00' -SCALE_FIELD='binary_solenoid, -1.00' -INTEGRATEDRAW='*' $gcard >$gemc_log
 exitCode=$?
 
 if [[ $exitCode != 0 ]]; then

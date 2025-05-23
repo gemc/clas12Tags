@@ -20,6 +20,8 @@ at Jefferson Lab, providing:
 
 ## General Information:
 
+<br>
+
 - [GEMC Documentation Page](https://gemc.jlab.org/gemc/html/index.html)
 - [CLAS12 Discourse Forum: Simulation](https://clas12.discourse.group/c/simulation/9)
 - [clas12-config repository with the steering cards](https://github.com/JeffersonLab/clas12-config)
@@ -31,6 +33,8 @@ at Jefferson Lab, providing:
 ---
 
 # How to create the CLAS12 detector geometry database
+
+<br>
 
 ## Pre-requisites
 
@@ -64,6 +68,8 @@ At this point you can either:
 2. create a detector geometry inside the `geometry_source`
    directory for debugging purposes.
 
+<br>
+
 ### 1. Install geometry database into the `experiments` directory:
 
 The script `create_geometry.sh` will create an individual detector geometry or all of them:
@@ -90,6 +96,8 @@ Examples:
 ./create_geometry.sh : creates all the CLAS12 detectors, updates the SQLITE database
 ```
 
+<br>
+
 ### 2. Create a single detector geometry in the `geometry_source` directory:
 
 The script above run a script to install coatjava and creates the SQLITE database.
@@ -112,10 +120,15 @@ cd geometry_source/ftof
 You will see in the local directory the ASCII databases (geometry and materials txt files),
 and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
+<br>
 
 ---
 
+<br>
+
 ## How compile the source code
+
+<br>
 
 You will need:
 
@@ -136,6 +149,8 @@ where N is the number of cores available.
 
 # Release workflow
 
+<br>
+
 Changes to the repository will trigger the **CI creation of artifacts** containing
 the new executable and the geometry database.
 
@@ -150,6 +165,8 @@ As a result these JLAB installations are up-to-date:
 
 The GitHub `dev` release is also created nightly by the CI.
 
+<br>
+
 ### Pull requests
 
 Please make a pull requests with changes pertaining to the directories:
@@ -162,6 +179,8 @@ The changes will be reviewed and queue for auto-merging into the main branch pen
 - compilation for fedora36, almalinux94 and ubuntu24
 - coatjava validation
 - run clas12-config gcards successfully
+
+<br>
 
 ### Use at JLab:
 
@@ -194,10 +213,15 @@ gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2
 Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
 
 
+<br>
 
 ---
 
+<br>
+
 ## Docker Images
+
+<br>
 
 Docker images for Almalinux, Fedora and Ubuntu based OS systems
 are available on [DockerHub](https://hub.docker.com/repository/docker/jeffersonlab/gemc/general).
@@ -225,7 +249,9 @@ docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 bash
 
 # Portal to Off-site farms CLAS12 Simulations
 
-GEMC simulations can be run on the Open Science Grid (OSG) using the
+<br>
+
+CLAS12 GEMC simulations can be run on the Open Science Grid (OSG) using the
 <a href="https://gemc.jlab.org/web_interface/index.php"> CLAS12 Simulation Submission Portal</a>.
 
 <br>
@@ -254,7 +280,7 @@ clasdis_acc: generated with --t 15 35 option (electron theta between 15 and 35)
 
 The results are summarized below.
 
-![Alt Profile](tracks_profile.png ?raw=true "Time per track for various configurations")
+![Alt Profile](ci/tracks_profile.png?raw=true "Time per track for various configurations")
 
 
 
@@ -267,6 +293,8 @@ The results are summarized below.
 <br>
 
 # Utilities
+
+<br>
 
 ### Changing a material
 
@@ -304,22 +332,27 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 ---
 
+<br>
+
 ## GitHub Actions
 
-[![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml)
-[![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml)
-[![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
-[![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
-[![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
-[![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
-[![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
-[![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
+<br>
+
+- [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
+- [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml) [![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
+- [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
+- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
+- [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
 
 <br>
 
 ---
 
+<br>
+
 ## Citations
+
+<br>
 
 - [Nucl. Instrum. Meth. A, Volume 959, 163422 (2020)](https://inspirehep.net/literature/1780020)
 - [EPJ Web of Conf. Volume 295, 05505 (2024)](https://www.epj-conferences.org/articles/epjconf/abs/2024/05/epjconf_chep2024_05005/epjconf_chep2024_05005.html)
@@ -327,6 +360,8 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 <br>
 
 ---
+
+<br>
 
 ## Author
 
