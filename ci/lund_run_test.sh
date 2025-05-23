@@ -71,7 +71,7 @@ if [[ $ntracks == "clasdis_all" || $ntracks == "clasdis_acc" ]]; then
 	cp ci/generated_events/"$ntracks".dat events.dat
 	if [[ $ntracks == "clasdis_all" ]]; then
 		echo "Using $nevents events from lund file generated with clasdis --trig 200 --docker"
-	elif [ $ntracks == "clasdis_acc" ]; then
+	elif [[ $ntracks == "clasdis_acc" ]]; then
 		echo "Using $nevents events from lund file generated with clasdis --t 15 35 --trig 200 --docker"
 	fi
 else

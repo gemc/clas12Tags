@@ -1,4 +1,4 @@
-name: Ntracks Metrics
+name: Valgrind
 permissions:
   contents: read
   pull-requests: write

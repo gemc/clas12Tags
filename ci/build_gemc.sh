@@ -9,12 +9,12 @@
 
 source ci/env.sh
 
-# if the option DEBUG is set, set the var debug to "DEBUG=1"
-if [[ $DEBUG == "1" ]]; then
+debug=""
+# if the option $1 is set to "DEBUG" then set debug to "DEBUG=1"
+if [ "$1" = "DEBUG" ]; then
 	debug="DEBUG=1"
-else
-	debug=""
 fi
+
 
 function compile_gemc {
 	cd source
