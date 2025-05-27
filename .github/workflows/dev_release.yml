@@ -6,7 +6,7 @@ permissions:
 
 on:
   schedule:
-    # every day at 1:00
+    # every day at 1:00. This takes a few seconds
     - cron: '00 1 * * *'
 
   # Allows you to run this workflow manually from the Actions tab

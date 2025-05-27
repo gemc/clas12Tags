@@ -5,8 +5,9 @@ permissions:
 
 on:
   schedule:
-    # every day at 4:44
-    - cron: '44 2 * * *'
+    # every day at 1:10
+    # clasdis takes 3 hours 10 minutes
+    - cron: '10 1 * * *'
 
 
   # Allows you to run this workflow manually from the Actions tab

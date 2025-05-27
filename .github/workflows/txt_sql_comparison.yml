@@ -5,8 +5,9 @@ permissions:
 
 on:
   schedule:
-    # every day at 4:44
-    - cron: '44 3 * * *'
+    # every day at 2:44
+    # This takes about 3 hours to run. Currently at 142 jobs
+    - cron: '44 2 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
