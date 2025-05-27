@@ -3,7 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="ftof" factory="TEXT" variation="rga_fall2018"/>
+	<detector name="ftof" factory="TEXT" variation="rga_spring2018"/>
 
 
 

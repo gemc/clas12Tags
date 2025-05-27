@@ -346,9 +346,9 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 ### Nightly:
 
 - [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
+- [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
 - [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
 - [![GCards Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml)
-- [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
 
 
 <br>
@@ -370,7 +370,7 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-## Author
+## Maurizio Ungaro
 
 <br>
 
