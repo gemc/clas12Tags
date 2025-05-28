@@ -19,25 +19,24 @@ githubRepo="https://github.com/JeffersonLab/coatjava"
 
 REPO="JeffersonLab/coatjava"
 LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r .tag_name)
-echo "Latest Coatjava release tag: $LATEST_RELEASE"
 
-# if the argument '-d' is given, set USEDEVEL="yes"
+
 # if the -g option is given, set the github url accordingly
 # if the -t option is given, set the coatjava tag accordingly
-if [[ $1 == "-d" ]]; then
-	USEDEVEL="yes"
-elif [[ $1 == "-g" ]]; then
+if [[ $1 == "-g" ]]; then
 	githubRepo=$2
 	USEDEVEL="yes"
+	echo "Requested Coatjava Repository: $githubRepo"
 elif [[ $1 == "-t" ]]; then
 	COATJAVA_TAG=$2
-	echo "Using coatjava tag $COATJAVA_TAG"
 	USEDEVEL="no"
-	tag_gz="https://github.com/JeffersonLab/coatjava/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
+	tag_gz="$githubRepo/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
+	echo "Requested Coatjava Tag: $COATJAVA_TAG"
 elif [[ $1 == "-l" ]]; then
 	COATJAVA_TAG=$LATEST_RELEASE
 	USEDEVEL="no"
-	tag_gz="https://github.com/JeffersonLab/coatjava/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
+	tag_gz="$githubRepo/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
+	echo "Requested Latest Coatjava Release: $LATEST_RELEASE"
 fi
 
 # print help if -h is given

@@ -8,19 +8,49 @@ export PATH=$PATH:$COATJAVA/bin
 all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets uRwell upstream"
 
 function printHelp() {
-	echo
-	echo "Usage: create_geometry.sh [detector]"
-	echo "Creates the geometry for the given detector"
-	echo "If no detector is given, all detectors will be run"
-	echo
-	echo "All detectors:" $all_dets
+    cat <<EOF
+
+Usage: create_geometry.sh [coatjava release options] [detector]
+
+Coatjava options (optional – at most one of -d|-l|-t|-g):
+  -l               use latest tag (default)
+  -t <tag>         use specific tag, like 12.0.4t
+  -g <github_url>  use custom github URL
+  -h               show this help
+
+If a detector is given, only that detector will be built; otherwise every detector below is processed:
+
+  $all_dets
+
+EOF
 }
 
-# print help if -h --h -help --help is given as argument
-if [[ $1 == "-h" || $1 == "--h" || $1 == "-help" || $1 == "--help" ]]; then
-	printHelp
-	exit 0
+coatjava_args=("-l")         # default behaviour = latest tag
+explicit_coatjava=0          # did the user pass a coatjava flag?
+
+while getopts ":lt:g:h" opt; do
+  case "$opt" in
+    l) coatjava_args=("-l"); explicit_coatjava=1 ;;
+    t) coatjava_args=("-t" "$OPTARG"); explicit_coatjava=1 ;;
+    g) coatjava_args=("-g" "$OPTARG"); explicit_coatjava=1 ;;
+    h) printHelp; exit 0 ;;
+    :) echo "Error: -$OPTARG requires an argument." >&2; exit 1 ;;
+    \?) echo "Error: unknown option -$OPTARG" >&2; printHelp; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))        # drop parsed options
+
+
+# Positional argument = detector (optional)
+if [[ $# -gt 0 ]]; then
+  detector="$1"
+  if [[ ! " $all_dets " =~ " $detector " ]]; then
+    echo "Error: '$detector' is not a recognised detector." >&2
+    exit 1
+  fi
+  all_dets="$detector"
 fi
+
 
 function find_subdirs_with_file() {
 	local subdirs_with_file=() # Initialize an empty array to store matching subdirs
@@ -60,17 +90,9 @@ fi
 cd geometry_source
 
 # if the directory coatjava does not exist, run the script to create it
-if [ ! -d "coatjava" ]; then
-	./install_coatjava.sh -l
-fi
-
-# if an argument is given, check that its inside all_dets
-if [[ $# -gt 0 ]]; then
-	if [[ ! " $all_dets " =~ " $1 " ]]; then
-		echo "Error: $1 is not a valid detector"
-		exit 1
-	fi
-	all_dets=$1
+if [[ ! -d coatjava || $explicit_coatjava -eq 1 ]]; then
+  [[ -d coatjava ]] && echo "Re‑installing coatjava with specified option(s)…"
+  ./install_coatjava.sh "${coatjava_args[@]}"
 fi
 
 # loop over all dets

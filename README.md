@@ -4,9 +4,16 @@ The `clas12Tags` repository serves as the simulation resource for the CLAS12 exp
 at Jefferson Lab, providing:
 
 - The CLAS12 detectors geometry database (in the form of ASCII files and a SQLITE database).
-- Individual system steering cards (GCARDS)
+- Individual system steering cards (GCARDS) for debugging and testing.
 - A customized version of the GEMC source code tailored specifically for the JLab CLAS12 experiments.
 - The CLAS12 geometry source code.
+
+The `experiments` directory contains the **latest version of the geometry database 
+of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
+
+By pointing the `GEMC_DATA_DIR` environment variable to the clas12Tags directory, 
+running gemc will load the geometry database from the `experiments` directory.
+
 
 ![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
 
@@ -32,6 +39,8 @@ at Jefferson Lab, providing:
 
 ---
 
+<br>
+
 # How to create the CLAS12 detector geometry database
 
 <br>
@@ -43,14 +52,21 @@ You will need:
 - `java (openjdk >= 17)` and `groovy` installed to run the coatjava geometry service.
 - gemc environment.
 
-The above requirements are met at JLab by executing
+The above requirements are met at JLab by loading the usual **clas12 module**, 
+then switching to gemc/dev:
 
-```
+```bash
+module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
 module load clas12
 module switch gemc/dev
 ```
 
-On a local installation you can use `module load gemc/dev` instead.
+
+Alternatively you can load the gemc module directly:
+```
+module use /scigroup/cvmfs/geant4/modules
+module load gemc/dev
+```
 
 ## Procedure:
 
@@ -61,29 +77,33 @@ git clone https://github.com/gemc/clas12Tags
 cd clas12Tags
 ```
 
+
+
 At this point you can either:
 
-1. install the geometry database for a single detector or all of them into the `experiments`
-   directory
-2. create a detector geometry inside the `geometry_source`
-   directory for debugging purposes.
+1. create and install the geometry database them into the `experiments` directory
+2. create a detector database inside the `geometry_source`
+   directory for debugging and testing.
 
 <br>
 
-### 1. Install geometry database into the `experiments` directory:
+### 1. Create and Install the geometry database into the `experiments` directory:
+
 
 The script `create_geometry.sh` will create an individual detector geometry or all of them:
 
 ```
-Usage: create_geometry.sh [detector]
-Creates the geometry for the given detector
-If no detector is given, all detectors will be run
+Usage: create_geometry.sh [coatjava release options] [detector]
 
-All detectors: 
+Coatjava options (optional – at most one of -d|-l|-t|-g):
+  -l               use latest tag (default)
+  -t <tag>         use specific tag, like 12.0.4t
+  -g <github_url>  use custom github URL
+  -h               show this help
 
-alert band beamline bst bstShield cnd ctof dc ddvcs ec fluxDets 
-ft ftof ftofShield htcc ltcc magnets micromegas pcal rich 
-rtpc targets uRwell upstream
+If a detector is given, only that detector will be built; otherwise every detector below is processed:
+
+  alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets uRwell upstream
 ```
 
 The script will install (if not present) the latest tagged coatjava in the directory
@@ -91,22 +111,35 @@ The script will install (if not present) the latest tagged coatjava in the direc
 
 Examples:
 
-```
-./create_geometry.sh cnd : creates the CND geometry ASCII database, updates the SQLITE database
-./create_geometry.sh : creates all the CLAS12 detectors, updates the SQLITE database
-```
+
+- `./create_geometry.sh cnd`
+   - install if not present the latest coatjava tag, 
+   - create the CND geometry ASCII database
+   - create or update updates the SQLITE database
+- `./create_geometry.sh`: 
+   - install if not present the latest coatjava tag
+   - create all the CLAS12 detectors
+   - create or update updates the SQLITE database
+- `./create_geometry.sh -t 12.0.4t bst`: 
+    - install the coatjava tag 12.0.4t
+    - create the BST geometry ASCII database
+    - create or update updates the SQLITE database
+
 
 <br>
 
 ### 2. Create a single detector geometry in the `geometry_source` directory:
 
 The script above run a script to install coatjava and creates the SQLITE database.
-If you didn't run `create_geometry.sh` you need to do these things manually:
+If you didn't run `create_geometry.sh` you need to do these things manually. For example, 
+to install the latest coatjava and create the geometry database for the CND detector:
 
-```
+```bash
 cd geometry_source 
 ./install_coatjava.sh -l
+cd cnd
 $GEMC/api/perl/sqlite.py -n ../../clas12.sqlite
+./cnd.pl config.dat
 ```
 
 Change directory to detector of interest inside `geometry_source` and run
@@ -126,18 +159,13 @@ and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
 <br>
 
-## How compile the source code
+## How compile the source code at JLab
 
 <br>
 
-You will need:
+Load the environment as described above, then:
 
-- gemc environment, loaded either with `module load clas12` or `module load gemc hipo ccdb`.
-- scons
-
-Run scons in the `source` directory:
-
-```
+```bash
 cd source
 scons -jN OPT=1
 ```
@@ -151,8 +179,9 @@ where N is the number of cores available.
 
 <br>
 
-Changes to the repository will trigger the **CI creation of artifacts** containing
-the new executable and the geometry database.
+Merging changes in the repository will trigger the 
+**CI creation of artifacts** containing the new executable and the 
+geometry databases.
 
 These are installed at JLAB in /scigroup/cvmfs using a **cronjob that runs every couple of hours**.
 
@@ -182,36 +211,23 @@ The changes will be reviewed and queue for auto-merging into the main branch pen
 
 <br>
 
-### Use at JLab:
+### Run at JLab:
 
-The following releases of Clas12Tags are installed on CVMFS:
+The gemc releases of Clas12Tags can be listed using `module avail gemc`.
 
-- [dev](release_notes/dev.md) (tagged nightly)
-- [5.11](release_notes/5.11.md)
-- [5.10](release_notes/5.10.md)
-- [4.4.2](release_notes/4.4.2.md)
+Use `module switch` to change to the desired version.
 
-To load the GEMC environment at JLab:
 
-```commandline
-module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
-module load clas12
-```
-
-To switch to a different version of gemc use `module switch`. For example:
-
-```
-module switch gemc/dev
-```
-
-To run GEMC you can select one of the gcards in the clas12-config installed on cvmfs. For example:
+To run GEMC you can select one of the gcards in the clas12-config 
+installed on cvmfs. For example:
 
 ```
 gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
 ```
 
-Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
-
+Make sure that the clas12-config version is production for a tagged release, 
+or dev for the latest development version. For **gemc/dev**, you will also need to 
+use the subdir `clas12-config/dev/gemc/dev` 
 
 <br>
 
