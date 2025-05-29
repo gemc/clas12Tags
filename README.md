@@ -1,6 +1,24 @@
 # The clas12Tags repository
 
+### Pull requests
+
+- [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
+- [![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
+- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
+- [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
+- [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
+
+### Nightly
+
+- [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
+- [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
+- [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
+- [![GCards Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml)
+
+
 <br>
+
+
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -43,7 +61,7 @@
 The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments
 at Jefferson Lab, providing:
 
-- The CLAS12 geometry databases, in the form of ASCII and SQLITE files.
+- The CLAS12 geometry databases, in the form of ASCII and SQLite files.
 - The CLAS12 geometry source code. It creates the geometry databases.
 - Detectors steering cards (GCARDS) for debugging and testing.
 - The GEMC c++ source code and perl API.
@@ -56,7 +74,7 @@ at Jefferson Lab, providing:
 
 <br>
 
-![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
+![CLAS12 Detector Rendering](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
 
 ###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
 
@@ -174,26 +192,26 @@ Examples:
 - `./create_geometry.sh cnd`:
    - install if not present the latest coatjava tag, 
    - create the CND geometry ASCII database
-   - create or update updates the SQLITE database
+   - create or update updates the SQLite database
   
  
 - `./create_geometry.sh`: 
    - install if not present the latest coatjava tag
    - create all the CLAS12 detectors
-   - create or update updates the SQLITE database
+   - create or update updates the SQLite database
 
   
 - `./create_geometry.sh -t 12.0.4t bst`: 
     - install the coatjava tag 12.0.4t
     - create the BST geometry ASCII database
-    - create or update updates the SQLITE database
+    - create or update updates the SQLite database
 
 
 <br>
 
 ## 2. Debug / test a detector geometry in the `geometry_source` directory:
 
-The script above run a script to install coatjava and creates the SQLITE database.
+The script above run a script to install coatjava and creates the SQLite database.
 If you didn't run `create_geometry.sh` you need to do these things manually. For example, 
 to install the latest coatjava and create the geometry database for the CND detector:
 
@@ -206,7 +224,7 @@ $GEMC/api/perl/sqlite.py -n ../../clas12.sqlite
 ```
 
 Change directory to detector of interest inside `geometry_source` and run
-the geometry script to create the ASCII and SQLITE databases: For example, for ftof:
+the geometry script to create the ASCII and SQLite databases: For example, for ftof:
 
 ```
 cd geometry_source/ftof
@@ -214,7 +232,7 @@ cd geometry_source/ftof
 ```
 
 You will see in the local directory the ASCII databases (geometry and materials txt files),
-and the SQLITE database `clas12.sqlite` will be updated with the new detector.
+and the SQLite database `clas12.sqlite` will be updated with the new detector.
 
 
 <br>
@@ -224,7 +242,7 @@ and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 > - `<detector>_text_<variation>.gcard`: for debugging the detector geometry 
 >   for a specific variation. These uses the ASCII database.
 > - `<dectector>_sqlite.gcard`: for running the detector geometry for a 
->   specific run number. This uses the SQLITE database `clas12.sqlite` 
+>   specific run number. This uses the SQLite database `clas12.sqlite` 
 >   in the `geometry_source` directory.
 
 These gcards contain their detector's geometry but not 
@@ -235,7 +253,7 @@ the local directory.
 
 <br>
 
-## How compile the source code at JLab
+## How to compile the source code at JLab
 
 <br>
 
@@ -315,7 +333,7 @@ gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2
 
 <br>
 
-## Docker Images
+## Docker images
 
 <br>
 
@@ -343,7 +361,7 @@ docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 bash
 ---
 <br>
 
-# Portal to Off-site farms CLAS12 Simulations
+# Portal to off-site farms CLAS12 Simulations
 
 <br>
 
@@ -375,7 +393,7 @@ The clasdis files are:
 - clasdis_acc: generated with --t 15 35 option (electron theta between 15 and 35)
 
 
-![Alt Profile](ci/tracks_profile.png?raw=true "Time per track for various configurations")
+![Track Profiling](ci/tracks_profile.png?raw=true "Time per track for various configurations")
 
 
 
@@ -429,27 +447,11 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-## GitHub Actions
+## GitHub actions
 
 <br>
 
-### Pull Requests
 
-- [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
-- [![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
-- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
-- [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
-- [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
-
-### Nightly
-
-- [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
-- [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
-- [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
-- [![GCards Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml)
-
-
-<br>
 
 ---
 
