@@ -1,5 +1,4 @@
 # The clas12Tags repository
-<hr style="height:4px;border:0;background:#4a90e2;">
 
 <br>
 
@@ -114,7 +113,7 @@ At this point you can either:
 
 <br>
 
-### 1. Create and Install the geometry database into the `experiments` directory:
+## 1. Create and Install the geometry database into the `experiments` directory:
 
 
 The script `create_geometry.sh` will create an individual detector geometry or all of them:
@@ -128,9 +127,13 @@ Coatjava options (optional – at most one of -d|-l|-t|-g):
   -g <github_url>  use custom github URL
   -h               show this help
 
-If a detector is given, only that detector will be built; otherwise every detector below is processed:
+If a detector is given (from the list below), only that detector will be built; 
+otherwise all will be processed.
 
-  alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets uRwell upstream
+  alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof 
+  ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets 
+  uRwell upstream
+  
 ```
 
 The script will install (if not present) the latest tagged coatjava in the directory
@@ -159,7 +162,7 @@ Examples:
 
 <br>
 
-### 2. Debug / test a detector geometry in the `geometry_source` directory:
+## 2. Debug / test a detector geometry in the `geometry_source` directory:
 
 The script above run a script to install coatjava and creates the SQLITE database.
 If you didn't run `create_geometry.sh` you need to do these things manually. For example, 
@@ -320,6 +323,8 @@ CLAS12 GEMC simulations can be run on the Open Science Grid (OSG) using the
 <br>
 
 # Profiling
+
+<br>
 
 ## Time per track
 
