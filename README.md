@@ -43,15 +43,18 @@
 The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments
 at Jefferson Lab, providing:
 
-- The CLAS12 geometry source code. It creates the geometry databases.
 - The CLAS12 geometry databases, in the form of ASCII and SQLITE files.
+- The CLAS12 geometry source code. It creates the geometry databases.
 - Detectors steering cards (GCARDS) for debugging and testing.
-- The GEMC source code.
+- The GEMC c++ source code and perl API.
+
+- <br>
 
 > [!NOTE]
 > The `experiments` directory contains the **latest version of the geometry database 
 > of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
 
+<br>
 
 ![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
 
