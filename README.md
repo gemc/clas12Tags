@@ -56,7 +56,7 @@ at Jefferson Lab, providing:
 - Detectors steering cards (GCARDS) for debugging and testing.
 - The GEMC c++ source code and perl API.
 
-> [!NOTE]
+> **Note:**
 > The `experiments` directory contains the **latest version of the geometry database 
 > of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
 
