@@ -102,10 +102,11 @@ module load clas12
 module switch gemc/dev
 ```
 
-> [!NOTE]
+> [!Caution]
 > This will set the environment variables `GEMC` `GEMC_DATA_DIR` to the /scigroup location.
-> If you are testing some API changes, point $GEMC the cloned clas12Tags directory.
-> If you are testing geometry changes using the clas12-config gcards,  
+> Be careful: 
+> 1) If you are testing some API changes, point $GEMC the cloned clas12Tags directory.
+> 2) If you are testing geometry changes using the clas12-config gcards,  
 > point $GEMC the cloned clas12Tags directory.
 
 <br>
