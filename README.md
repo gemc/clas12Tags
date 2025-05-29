@@ -213,7 +213,7 @@ Each detector subdir has two sets of gcards:
 - `<dectectot>_sqlite.gcard`: for running the detector geometry for a specific run number.
   This uses the SQLITE database `clas12.sqlite` in the `geometry_source` directory.
 
-These gcards only use their detector's geometry.
+These gcards contain their detector's geometry but not other CLAS12 components.
 
 ---
 
