@@ -102,6 +102,12 @@ module load clas12
 module switch gemc/dev
 ```
 
+> [!NOTE]
+> This will set the environment variables `GEMC` `GEMC_DATA_DIR` to the /scigroup location.
+> If you are testing some API changes, point $GEMC the cloned clas12Tags directory.
+> If you are testing geometry changes using the clas12-config gcards,  
+> point $GEMC the cloned clas12Tags directory.
+
 <br>
 
 ## Procedure:
@@ -112,8 +118,6 @@ Clone the clas12Tags repository:
 git clone https://github.com/gemc/clas12Tags
 cd clas12Tags
 ```
-
-
 
 At this point you can either:
 
@@ -146,11 +150,14 @@ otherwise all will be processed.
   
 ```
 
-The script will install (if not present) the latest tagged coatjava in the directory
+The script will install (if not present) the desired tagged coatjava in the directory
 `geometry_source` and run the geometry service for the requested detector(s).
 
-Examples:
+> [!TIP]
+> By default, the latest coatjava tag is used. This is also the suggested option.
+> Other tags can be used but they may not be compatible with the latest code.
 
+Examples:
 
 - `./create_geometry.sh cnd`:
    - install if not present the latest coatjava tag, 
@@ -199,9 +206,6 @@ and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
 <br>
 
-> [!NOTE]
-> By pointing the `GEMC_DATA_DIR` environment variable to the clas12Tags directory, 
-> running gemc will load the geometry database from the `experiments` directory.
 
 
 <br>
