@@ -1,4 +1,7 @@
 # The clas12Tags repository
+<hr style="height:4px;border:0;background:#4a90e2;">
+
+<br>
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -15,7 +18,15 @@
 - [Citations](#citations)
 - [Maurizio Ungaro](#maurizio-ungaro)
 
+<br>
+
+---
+
+<br>
+
 ## Introduction
+
+<br>
 
 The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments
 at Jefferson Lab, providing:
@@ -82,6 +93,8 @@ module use /scigroup/cvmfs/geant4/modules
 module load gemc/dev
 ```
 
+<br>
+
 ## Procedure:
 
 Clone the clas12Tags repository:
@@ -96,8 +109,8 @@ cd clas12Tags
 At this point you can either:
 
 1. create and install the geometry database them into the `experiments` directory
-2. create a detector database inside the `geometry_source`
-   directory for debugging and testing.
+2. debug / test a detector database inside the `geometry_source`
+   directory.
 
 <br>
 
@@ -126,14 +139,18 @@ The script will install (if not present) the latest tagged coatjava in the direc
 Examples:
 
 
-- `./create_geometry.sh cnd`
+- `./create_geometry.sh cnd`:
    - install if not present the latest coatjava tag, 
    - create the CND geometry ASCII database
    - create or update updates the SQLITE database
+  
+ 
 - `./create_geometry.sh`: 
    - install if not present the latest coatjava tag
    - create all the CLAS12 detectors
    - create or update updates the SQLITE database
+
+  
 - `./create_geometry.sh -t 12.0.4t bst`: 
     - install the coatjava tag 12.0.4t
     - create the BST geometry ASCII database
@@ -142,7 +159,7 @@ Examples:
 
 <br>
 
-### 2. Create a single detector geometry in the `geometry_source` directory:
+### 2. Debug / test a detector geometry in the `geometry_source` directory:
 
 The script above run a script to install coatjava and creates the SQLITE database.
 If you didn't run `create_geometry.sh` you need to do these things manually. For example, 
@@ -167,6 +184,8 @@ cd geometry_source/ftof
 You will see in the local directory the ASCII databases (geometry and materials txt files),
 and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
+<br>
+
 > [!NOTE]
 > By pointing the `GEMC_DATA_DIR` environment variable to the clas12Tags directory, 
 > running gemc will load the geometry database from the `experiments` directory.
@@ -182,7 +201,7 @@ and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
 <br>
 
-Load the environment as described above, then:
+Load the environment as described above [^1], then:
 
 ```bash
 cd source
@@ -191,7 +210,10 @@ scons -jN OPT=1
 
 where N is the number of cores available.
 
+[^1]: if the clas12 module is not loaded, you will need to load the 
+**ccdb** and **hipo** modules directly.
 
+<br>
 
 ---
 
