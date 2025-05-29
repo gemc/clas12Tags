@@ -48,7 +48,7 @@ at Jefferson Lab, providing:
 - Detectors steering cards (GCARDS) for debugging and testing.
 - The GEMC c++ source code and perl API.
 
-- <br>
+<br>
 
 > [!NOTE]
 > The `experiments` directory contains the **latest version of the geometry database 
