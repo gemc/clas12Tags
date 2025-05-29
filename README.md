@@ -206,6 +206,15 @@ and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
 <br>
 
+Each detector subdir has two sets of gcards:
+
+- `<detector>_text_<variation>.gcard`: for debugging the detector geometry for a specific variation.
+  This uses the ASCII database.
+- `<dectectot>_sqlite.gcard`: for running the detector geometry for a specific run number.
+  This uses the SQLITE database `clas12.sqlite` in the `geometry_source` directory.
+
+These gcards only use their detector's geometry.
+
 ---
 
 <br>
