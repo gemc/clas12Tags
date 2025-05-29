@@ -230,7 +230,7 @@ cd source
 scons -jN OPT=1
 ```
 
-where N is the number of cores available.
+where N is the number of cores available. At JLab, N=40 is a good choice.
 
 [^1]: you will need to load the 
 **ccdb** and **hipo** modules, included when with the **clas12** module.
@@ -244,17 +244,17 @@ where N is the number of cores available.
 
 <br>
 
-Merging changes in the repository will trigger the 
-**CI creation of artifacts** containing the new executable and the 
+Merging changes in the repository will trigger CI validation workflows and the 
+**creation of artifacts** containing the new executable and the 
 geometry databases.
 
 These are installed at JLAB in /scigroup/cvmfs using a **cronjob that runs every couple of hours**.
 
-As a result these JLAB installations are up-to-date:
+As a result these JLAB installations are up-to-date with this timelines:
 
-- `/scigroup/cvmfs` : 2-8 hours after the commit, passing through the CI validation and
+- `/scigroup/cvmfs` (used on ifarms) : 2-8 hours after the commit, passing through the CI validation and
   merge queue when necessary.
-- `/cvmfs/oasis.opensciencegrid.org` : an additional 4-8 hours after the JLAB
+- `/cvmfs/oasis.opensciencegrid.org` (used on OSG): an additional 4-8 hours after the JLAB
   installation once the CVMFS sync runs.
 
 The GitHub `dev` release is also created nightly by the CI.
@@ -263,25 +263,20 @@ The GitHub `dev` release is also created nightly by the CI.
 
 ### Pull requests
 
-Please make a pull requests with changes pertaining to the directories:
-
-- **geometry_source**: for changes to the geometry source code.
-- **source**: for changes to the GEMC source code.
-
-The changes will be reviewed and queue for auto-merging into the main branch pending passing the CI:
+The pull requests will be reviewed and queue for auto-merging into the 
+main branch pending passing the CI:
 
 - compilation for fedora36, almalinux94 and ubuntu24
-- coatjava validation
-- run clas12-config gcards successfully
+- coatjava validation with 500 events
+- run gemc on 1000 events using all gcards in clas12-config/gemc/dev development branch
 
 <br>
 
 ### Run at JLab:
 
-The gemc releases of Clas12Tags can be listed using `module avail gemc`.
+The available modules can be listed using `module avail gemc`.
 
 Use `module switch` to change to the desired version.
-
 
 To run GEMC you can select one of the gcards in the clas12-config 
 installed on cvmfs. For example:
@@ -291,8 +286,8 @@ gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2
 ```
 
 Make sure that the clas12-config version is production for a tagged release, 
-or dev for the latest development version. For **gemc/dev**, you will also need to 
-use the subdir `clas12-config/dev/gemc/dev` 
+or dev for the latest development version. 
+For **gemc/dev**, you will also need to use the subdir `clas12-config/dev/gemc/dev` 
 
 <br>
 
