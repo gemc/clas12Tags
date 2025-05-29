@@ -114,16 +114,16 @@ cd clas12Tags
 
 At this point you can either:
 
-1. create and install the geometry database them into the `experiments` directory
+1. create and install the geometry databases into the `experiments` directory
 2. debug / test a detector database inside the `geometry_source`
    directory.
 
 <br>
 
-## 1. Create and Install the geometry database into the `experiments` directory:
+## 1. Create and Install the geometry databases into the `experiments` directory:
 
 
-The script `create_geometry.sh` will create an individual detector geometry or all of them:
+The script `create_geometry.sh` will create a single detector or all geometry databases:
 
 ```
 Usage: create_geometry.sh [coatjava release options] [detector]
@@ -220,8 +220,8 @@ scons -jN OPT=1
 
 where N is the number of cores available.
 
-[^1]: if the clas12 module is not loaded, you will need to load the 
-**ccdb** and **hipo** modules directly.
+[^1]: you will need to load the 
+**ccdb** and **hipo** modules, included when with the **clas12** module.
 [^2]: for a standalone installation, follow the [ceInstall instructions](https://github.com/JeffersonLab/ceInstall).
 
 <br>
