@@ -42,9 +42,6 @@
 - [Utilities](#utilities)
   - [Changing a material](#changing-a-material)
   - [Removing a detector or a volume](#removing-a-detector-or-a-volume)
-- [GitHub Actions](#github-actions)
-  - [Pull Requests](#pull-requests-1)
-  - [Nightly](#nightly)
 - [Citations](#citations)
 - [Maurizio Ungaro](#maurizio-ungaro)
 
@@ -80,8 +77,6 @@ at Jefferson Lab, providing:
 
 # How to create the CLAS12 geometry databases
 
-
-
 ## Pre-requisites
 
 You will need:
@@ -97,8 +92,6 @@ module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
 module load clas12
 module switch gemc/dev
 ```
-
-
 
 > [!Caution]
 > This will set the environment variables `GEMC` (used by the perl API; `GEMC`/bin added to your path) and 
@@ -417,22 +410,6 @@ To remove individual elements, use the existance tag in the gcard. For example, 
     <existence exist="no" />
 </detector>
 ```
-
-
-
-
-
-
-
-
-## GitHub actions
-
-
-
-
-
-
-
 
 
 ## Citations

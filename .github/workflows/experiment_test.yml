@@ -1,4 +1,4 @@
-name: GCards Tests
+name: Clas12-Config GCards Tests
 permissions:
   contents: read
   pull-requests: write
