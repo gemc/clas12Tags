@@ -6,14 +6,27 @@
 - [Introduction](#introduction)
 - [General Information](#general-information)
 - [How to create the CLAS12 detector geometry database](#how-to-create-the-clas12-detector-geometry-database)
+  - [Pre-requisites](#pre-requisites)
+  - [Procedure](#procedure)
+    - [Step 1: Clone the repository](#step-1-clone-the-repository)
+    - [Step 2: Install coatjava](#step-2-install-coatjava)
+    - [Step 3: Build the geometry database](#step-3-build-the-geometry-database)
+  - [1. Create and Install the geometry database into the experiments directory](#1-create-and-install-the-geometry-database-into-the-experiments-directory)
+  - [2. Debug / test a detector geometry in the geometry_source directory](#2-debug--test-a-detector-geometry-in-the-geometry_source-directory)
 - [How compile the source code at JLab](#how-compile-the-source-code-at-jlab)
 - [Release workflow](#release-workflow)
-- [Run at JLab](#run-at-jlab)
+  - [Pull requests](#pull-requests)
+  - [Run at JLab:](#run-at-jlab)
 - [Docker Images](#docker-images)
 - [Portal to Off-site farms CLAS12 Simulations](#portal-to-off-site-farms-clas12-simulations)
 - [Profiling](#profiling)
+  - [Time per track](#time-per-track)
 - [Utilities](#utilities)
+  - [Changing a material](#changing-a-material)
+  - [Removing a detector or a volume](#removing-a-detector-or-a-volume)
 - [GitHub Actions](#github-actions)
+  - [Pull Requests](#pull-requests-1)
+  - [Nightly](#nightly)
 - [Citations](#citations)
 - [Maurizio Ungaro](#maurizio-ungaro)
 
@@ -398,7 +411,7 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br>
 
-### Pull Requests:
+### Pull Requests
 
 - [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
 - [![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
@@ -406,7 +419,7 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 - [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
 - [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
 
-### Nightly:
+### Nightly
 
 - [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
 - [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
