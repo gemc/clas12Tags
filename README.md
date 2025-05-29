@@ -102,12 +102,17 @@ module load clas12
 module switch gemc/dev
 ```
 
+<br>
+
 > [!Caution]
-> This will set the environment variables `GEMC` `GEMC_DATA_DIR` to the /scigroup location.
+> This will set the environment variables `GEMC` (used by the perl API) and 
+> `GEMC_DATA_DIR` (used by gemc to find the databases) to the /scigroup location.
 > Be careful: 
-> 1) If you are testing some API changes, point $GEMC the cloned clas12Tags directory.
+> 1) If you are testing specific perl API changes, point $GEMC the cloned clas12Tags directory.
 > 2) If you are testing geometry changes using the clas12-config gcards,  
 > point $GEMC the cloned clas12Tags directory.
+> 3) If you are testing changes within the geometry_source directory, you do not need to set any environment 
+> additional variables, as the detectors gcards load the local geometry database.
 
 <br>
 
@@ -154,9 +159,13 @@ otherwise all will be processed.
 The script will install (if not present) the desired tagged coatjava in the directory
 `geometry_source` and run the geometry service for the requested detector(s).
 
-> [!TIP]
+<br>
+
+> [!Warning]
 > By default, the latest coatjava tag is used. This is also the suggested option.
 > Other tags can be used but they may not be compatible with the latest code.
+
+<br>
 
 Examples:
 
@@ -205,20 +214,20 @@ cd geometry_source/ftof
 You will see in the local directory the ASCII databases (geometry and materials txt files),
 and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
-<br>
-
-
 
 <br>
 
-Each detector subdir has two sets of gcards:
+> [!NOTE]
+> Each detector subdir has two sets of gcards:
+> - `<detector>_text_<variation>.gcard`: for debugging the detector geometry 
+>   for a specific variation. These uses the ASCII database.
+> - `<dectector>_sqlite.gcard`: for running the detector geometry for a 
+>   specific run number. This uses the SQLITE database `clas12.sqlite` 
+>   in the `geometry_source` directory.
 
-- `<detector>_text_<variation>.gcard`: for debugging the detector geometry for a specific variation.
-  This uses the ASCII database.
-- `<dectectot>_sqlite.gcard`: for running the detector geometry for a specific run number.
-  This uses the SQLITE database `clas12.sqlite` in the `geometry_source` directory.
-
-These gcards contain their detector's geometry but not other CLAS12 components.
+These gcards contain their detector's geometry but not 
+other CLAS12 components and will only load the detector geometry database in 
+the local directory.
 
 ---
 

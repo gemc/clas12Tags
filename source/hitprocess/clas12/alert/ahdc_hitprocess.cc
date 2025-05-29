@@ -56,9 +56,9 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 
 	if(aHit->isBackgroundHit == 1) {
 
-		double totEdep  = aHit->GetEdep()[0];
+		// double totEdep  = aHit->GetEdep()[0];
 		double stepTime = aHit->GetTime()[0];
-		double tdc      = stepTime;
+		// double tdc      = stepTime;
 
 		dgtz["hitn"]      = hitn;
 		dgtz["sector"]    = sector;
