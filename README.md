@@ -16,7 +16,7 @@
 - [![GCards Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml)
 
 
-<br>
+
 
 
 
@@ -48,15 +48,8 @@
 - [Citations](#citations)
 - [Maurizio Ungaro](#maurizio-ungaro)
 
-<br>
-
----
-
-<br>
 
 ## Introduction
-
-<br>
 
 The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments
 at Jefferson Lab, providing:
@@ -66,27 +59,17 @@ at Jefferson Lab, providing:
 - Detectors steering cards (GCARDS) for debugging and testing.
 - The GEMC c++ source code and perl API.
 
-<br>
-
 > [!NOTE]
 > The `experiments` directory contains the **latest version of the geometry database 
 > of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
 
-<br>
 
 ![CLAS12 Detector Rendering](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
 
 ###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
 
-<br>
-
----
-
-<br>
-
 ## General Information:
 
-<br>
 
 - [GEMC Documentation Page](https://gemc.jlab.org/gemc/html/index.html)
 - [CLAS12 Discourse Forum: Simulation](https://clas12.discourse.group/c/simulation/9)
@@ -94,15 +77,10 @@ at Jefferson Lab, providing:
 - [CLAS12 Software Center Wiki](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Center#tab=Communications)
 - [CCDB Viewer](https://clasweb.jlab.org/cgi-bin/ccdb/objects)
 
-<br>
-
----
-
-<br>
 
 # How to create the CLAS12 geometry databases
 
-<br>
+
 
 ## Pre-requisites
 
@@ -120,7 +98,7 @@ module load clas12
 module switch gemc/dev
 ```
 
-<br>
+
 
 > [!Caution]
 > This will set the environment variables `GEMC` (used by the perl API; `GEMC`/bin added to your path) and 
@@ -134,7 +112,7 @@ module switch gemc/dev
 > 4) If you're testing changes in gemc code, make sure to use the `gemc` executable 
 >    in the cloned repository, or the one installed in the `GEMC`/bin directory will be used instead.
 
-<br>
+
 
 ## Procedure:
 
@@ -151,7 +129,7 @@ At this point you can either:
 2. debug / test a detector database inside the `geometry_source`
    directory.
 
-<br>
+
 
 ## 1. Create and Install the geometry databases into the `experiments` directory:
 
@@ -179,13 +157,13 @@ otherwise all will be processed.
 The script will install (if not present) the desired tagged coatjava in the directory
 `geometry_source` and run the geometry service for the requested detector(s).
 
-<br>
+
 
 > [!Warning]
 > By default, the latest coatjava tag is used. This is also the suggested option.
 > Other tags can be used but they may not be compatible with the latest code.
 
-<br>
+
 
 Examples:
 
@@ -207,7 +185,7 @@ Examples:
     - create or update updates the SQLite database
 
 
-<br>
+
 
 ## 2. Debug / test a detector geometry in the `geometry_source` directory:
 
@@ -235,7 +213,7 @@ You will see in the local directory the ASCII databases (geometry and materials 
 and the SQLite database `clas12.sqlite` will be updated with the new detector.
 
 
-<br>
+
 
 > [!NOTE]
 > Each detector subdir has two sets of gcards:
@@ -249,13 +227,13 @@ These gcards contain their detector's geometry but not
 other CLAS12 components and will only load the detector geometry database in 
 the local directory.
 
----
 
-<br>
+
+
 
 ## How to compile the source code at JLab
 
-<br>
+
 
 Load the environment as described above [^1][^2], then:
 
@@ -270,13 +248,13 @@ where N is the number of cores available. At JLab, N=40 is a good choice.
 **ccdb** and **hipo** modules, included when with the **clas12** module.
 [^2]: for a standalone installation, follow the [ceInstall instructions](https://github.com/JeffersonLab/ceInstall).
 
-<br>
 
----
+
+
 
 # Release workflow
 
-<br>
+
 
 Merging changes in the repository will trigger CI validation workflows and the 
 **creation of artifacts** containing the new executable and the 
@@ -293,7 +271,7 @@ As a result these JLAB installations are up-to-date with this timelines:
 
 The GitHub `dev` release is also created nightly by the CI.
 
-<br>
+
 
 ### Pull requests
 
@@ -304,7 +282,7 @@ main branch pending passing the CI:
 - coatjava validation with 500 events
 - run gemc on 1000 events using all gcards in clas12-config/gemc/dev development branch
 
-<br>
+
 
 ### Run at JLab:
 
@@ -319,7 +297,7 @@ installed on cvmfs. For example:
 gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
 ```
 
-<br>
+
 
 > [!NOTE]
 > Make sure that the clas12-config version is production for a tagged release, 
@@ -327,15 +305,15 @@ gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2
 > For **gemc/dev**, you will also need to use the subdir `clas12-config/dev/gemc/dev` 
 > You can used `gemc -v` to check the version of gemc.
 
-<br>
 
----
 
-<br>
+
+
+
 
 ## Docker images
 
-<br>
+
 
 Docker images for Almalinux, Fedora and Ubuntu based OS systems
 are available on [DockerHub](https://hub.docker.com/repository/docker/jeffersonlab/gemc/general).
@@ -356,28 +334,28 @@ On MacOS the additional option `--platform linux/amd64` is needed:
 docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 bash
 ```
 
-<br>
 
----
-<br>
+
+
+
 
 # Portal to off-site farms CLAS12 Simulations
 
-<br>
+
 
 CLAS12 GEMC simulations can be run on the Open Science Grid (OSG) using the
 <a href="https://gemc.jlab.org/web_interface/index.php"> CLAS12 Simulation Submission Portal</a>.
 
-<br>
-
----
 
 
-<br>
+
+
+
+
 
 # Profiling
 
-<br>
+
 
 ## Time per track
 
@@ -398,16 +376,16 @@ The clasdis files are:
 
 
 
-<br>
-
----
 
 
-<br>
+
+
+
+
 
 # Utilities
 
-<br>
+
 
 ### Changing a material
 
@@ -425,11 +403,11 @@ For example, to change the target cell `lh2` material from LH2 to a vacuum:
 <option name="CHANGEVOLUMEMATERIALTO" value="lh2, G4_Galactic"/>
 ```
 
-<br>
+
 
 ### Removing a detector or a volume
 
-<br>
+
 
 You can remove/comment out the ```<detector>``` tag in the gcard to remove a whole system.
 To remove individual elements, use the existance tag in the gcard. For example, to remove the forward micromegas:
@@ -440,46 +418,46 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 </detector>
 ```
 
-<br>
 
 
----
 
-<br>
+
+
+
 
 ## GitHub actions
 
-<br>
 
 
 
----
 
-<br>
+
+
+
 
 ## Citations
 
-<br>
+
 
 - [Nucl. Instrum. Meth. A, Volume 959, 163422 (2020)](https://inspirehep.net/literature/1780020)
 - [EPJ Web of Conf. Volume 295, 05505 (2024)](https://www.epj-conferences.org/articles/epjconf/abs/2024/05/epjconf_chep2024_05005/epjconf_chep2024_05005.html)
 
-<br>
 
----
 
-<br>
+
+
+
 
 ## Maurizio Ungaro
 
-<br>
+
 
 <a href="https://scholar.google.com/citations?user=zkWYILYAAAAJ&amp;hl=en" target="_blank"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/gscholar.png"> </a>
 <a href="https://github.com/maureeungaro" target="_blank"><a href="mailto:ungaro@jlab.org"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/github.png"> </a>
 <a href="https://inspirehep.net/authors/1322331" target="_blank"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/inspire.png"> </a>
 <a href="mailto:ungaro@jlab.org"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/email.png"> </a>
 
-<br>
 
 
----
+
+
