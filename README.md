@@ -1,5 +1,22 @@
 # The clas12Tags repository
 
+## Table of Contents
+- [Introduction](#introduction)
+- [General Information](#general-information)
+- [How to create the CLAS12 detector geometry database](#how-to-create-the-clas12-detector-geometry-database)
+- [How compile the source code at JLab](#how-compile-the-source-code-at-jlab)
+- [Release workflow](#release-workflow)
+- [Run at JLab](#run-at-jlab)
+- [Docker Images](#docker-images)
+- [Portal to Off-site farms CLAS12 Simulations](#portal-to-off-site-farms-clas12-simulations)
+- [Profiling](#profiling)
+- [Utilities](#utilities)
+- [GitHub Actions](#github-actions)
+- [Citations](#citations)
+- [Maurizio Ungaro](#maurizio-ungaro)
+
+## Introduction
+
 The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments
 at Jefferson Lab, providing:
 
@@ -279,7 +296,7 @@ CLAS12 GEMC simulations can be run on the Open Science Grid (OSG) using the
 
 # Profiling
 
-## Timer per track
+## Time per track
 
 The profile table below is obtained by a GitHub action that runs gemc nightly with the
 RGA Spring 2018 configuration with a mix of 1, 2, 3, 5, 10, 15, 20 tracks,
