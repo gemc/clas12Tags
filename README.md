@@ -108,11 +108,11 @@ module switch gemc/dev
 > This will set the environment variables `GEMC` (used by the perl API) and 
 > `GEMC_DATA_DIR` (used by gemc to find the databases) to the /scigroup location.
 > Be careful: 
-> 1) If you are testing specific perl API changes, point $GEMC the cloned clas12Tags directory.
+> 1) If you are testing specific perl API changes, point $`GEMC` the cloned clas12Tags directory.
 > 2) If you are testing geometry changes using the clas12-config gcards,  
-> point $GEMC the cloned clas12Tags directory.
+>    point $`GEMC_DATA_DIR` the cloned clas12Tags directory.
 > 3) If you are testing changes within the geometry_source directory, you do not need to set any environment 
-> additional variables, as the detectors gcards load the local geometry database.
+>    additional variables, as the detectors gcards load the local geometry database.
 
 <br>
 
