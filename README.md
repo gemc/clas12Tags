@@ -285,10 +285,11 @@ installed on cvmfs. For example:
 gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
 ```
 
-Make sure that the clas12-config version is production for a tagged release, 
-or dev for the latest development version. 
-For **gemc/dev**, you will also need to use the subdir `clas12-config/dev/gemc/dev` 
-
+> [!NOTE]
+> Make sure that the clas12-config version is production for a tagged release, 
+> or dev for the latest development version. 
+> For **gemc/dev**, you will also need to use the subdir `clas12-config/dev/gemc/dev` 
+> You can used `gemc -v` to check the version of gemc.
 <br>
 
 ---
