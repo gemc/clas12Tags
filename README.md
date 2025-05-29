@@ -43,13 +43,14 @@
 The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments
 at Jefferson Lab, providing:
 
-- The CLAS12 geometry source code.
-- The CLAS12 detectors geometry database (in the form of ASCII files and a SQLITE database).
-- Individual system steering cards (GCARDS) for debugging and testing.
-- A customized version of the GEMC source code tailored specifically for the JLab CLAS12 experiments.
+- The CLAS12 geometry source code. It creates the geometry databases.
+- The CLAS12 geometry databases, in the form of ASCII and SQLITE files.
+- Detectors steering cards (GCARDS) for debugging and testing.
+- The GEMC source code.
 
-The `experiments` directory contains the **latest version of the geometry database 
-of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
+> [!NOTE]
+> The `experiments` directory contains the **latest version of the geometry database 
+> of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
 
 
 ![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
@@ -68,7 +69,7 @@ of the CLAS12 detectors**, built using the **latest tagged version of coatjava**
 
 - [GEMC Documentation Page](https://gemc.jlab.org/gemc/html/index.html)
 - [CLAS12 Discourse Forum: Simulation](https://clas12.discourse.group/c/simulation/9)
-- [clas12-config repository with the steering cards](https://github.com/JeffersonLab/clas12-config)
+- [Clas12-config repository with the various experiments steering cards](https://github.com/JeffersonLab/clas12-config)
 - [CLAS12 Software Center Wiki](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Center#tab=Communications)
 - [CCDB Viewer](https://clasweb.jlab.org/cgi-bin/ccdb/objects)
 
@@ -78,7 +79,7 @@ of the CLAS12 detectors**, built using the **latest tagged version of coatjava**
 
 <br>
 
-# How to create the CLAS12 detector geometry database
+# How to create the CLAS12 geometry databases
 
 <br>
 
@@ -86,7 +87,7 @@ of the CLAS12 detectors**, built using the **latest tagged version of coatjava**
 
 You will need:
 
-- `java (openjdk >= 17)` and `groovy` installed to run the coatjava geometry service.
+- `maven`, `java (openjdk >= 17)` and `groovy` to install and run the coatjava geometry service.
 - gemc environment.
 
 The above requirements are met at JLab by loading the usual **clas12 module**, 
@@ -96,13 +97,6 @@ then switching to gemc/dev:
 module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
 module load clas12
 module switch gemc/dev
-```
-
-
-Alternatively you can load the gemc module directly:
-```
-module use /scigroup/cvmfs/geant4/modules
-module load gemc/dev
 ```
 
 <br>
@@ -217,7 +211,7 @@ and the SQLITE database `clas12.sqlite` will be updated with the new detector.
 
 <br>
 
-Load the environment as described above [^1], then:
+Load the environment as described above [^1][^2], then:
 
 ```bash
 cd source
@@ -228,6 +222,7 @@ where N is the number of cores available.
 
 [^1]: if the clas12 module is not loaded, you will need to load the 
 **ccdb** and **hipo** modules directly.
+[^2]: for a standalone installation, follow the [ceInstall instructions](https://github.com/JeffersonLab/ceInstall).
 
 <br>
 
