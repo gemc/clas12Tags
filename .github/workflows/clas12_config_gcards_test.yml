@@ -54,7 +54,7 @@ jobs:
           echo generate-matrix: $JSON
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
-  test:
+  gcard-test:
     needs: generate-matrix
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -77,10 +77,10 @@ jobs:
         run: |
           ./ci/clas12_config_gcards_test.sh -g ${{ matrix.gcard }}
 
-  dev-gcards-test-final:
+  clas12-config-gcards-test-final:
     needs:
       - generate-matrix
-      - test
+      - gcard-test
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'

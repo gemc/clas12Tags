@@ -3,7 +3,8 @@
 ### Pull requests
 
 - [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
-- [![Clas12-Config GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml)- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
+- [![Clas12-Config GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml)
+- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
 - [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
 - [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
 - [![Local Gcards Tests](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml)
@@ -51,7 +52,7 @@ cd clas12Tags
 
 ## Introduction
 
-The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments
+The clas12Tags repository is the Geant4 simulation resource for the CLAS12 experiments
 at Jefferson Lab, providing:
 
 - The CLAS12 geometry databases, in the form of ASCII and SQLite files.
@@ -59,14 +60,16 @@ at Jefferson Lab, providing:
 - Detectors steering cards (GCARDS) for debugging and testing.
 - The GEMC c++ source code and perl API.
 
-> [!NOTE]
-> The `experiments` directory contains the **latest version of the geometry database 
-> of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
+The `experiments` directory contains the **latest version of the geometry database 
+of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
 
 
-![CLAS12 Detector Rendering](clas12.png?raw=true "The CLAS12 detector simulation. The electron beam is going from left to right.")
 
-###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
+<p align="center">
+  <img src="clas12.png?raw=true" alt="CLAS12 detector rendering" width="600">
+  <br>
+  <em>Figure&nbsp;1 — The CLAS12 detector simulation. The electron beam travels left&nbsp;→&nbsp;right.</em>
+</p>
 
 ## General Information:
 

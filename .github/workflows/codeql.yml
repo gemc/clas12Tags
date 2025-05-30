@@ -1,4 +1,4 @@
-name: "CodeQL Advanced"
+name: CodeQL Advanced
 permissions:
   contents: read
   pull-requests: write

@@ -8,19 +8,26 @@ DetectorDirNotExisting() {
 log_gemc_info() {
 	echo
 	echo
-	echo
-	echo ============ log_gemc_info ============
+	echo "========================================"
+	echo "============= log_gemc_info ============"
+	echo "========================================"
 	echo
 	echo "\n > GCard: $gcard"
-	echo " > GEMC: $GEMC "
+	echo " > GEMC: $GEMC top level content:\n\n $(ls -l $GEMC/) \n"
+	# if GEMC_DATA_DIR different from GEMC, then print it
+	if [[ $GEMC_DATA_DIR != $GEMC ]]; then
+		echo " > GEMC_DATA_DIR: $GEMC_DATA_DIR top level content:\n\n $(ls -l $GEMC_DATA_DIR/) \n"
+	else
+		echo " > GEMC_DATA_DIR is the same as GEMC"
+	fi
+
 	echo " > gemc: $(which gemc) "
-	echo " > GEMC compiled on $(date)"
-	echo " > GEMC Version: $(gemc --version)"
-	echo " > Content of $GEMC dir:"
-	echo " > GEMC_DATA_DIR: $GEMC_DATA_DIR top level content: $(ls -l $GEMC_DATA_DIR) \n\n"
+	echo "   Compiled on $(date)"
+	echo "   Version:\n$(gemc --version | grep -v Connecting| grep -v RTPC)"
 	echo
-	echo
-	echo ========================================
+	echo "========================================"
+	echo "========================================"
+	echo "========================================"
 	echo
 	echo
 }
