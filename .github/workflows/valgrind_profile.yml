@@ -53,8 +53,6 @@ jobs:
         run: |
           ./ci/build_gemc.sh DEBUG
       - name: ${{ matrix.ntracks }} test
-        env:
-          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           yum install -y valgrind
           ./ci/profile_gemc.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}

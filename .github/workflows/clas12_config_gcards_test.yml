@@ -46,13 +46,6 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: ${{ 'gemc/clas12Tags' }}
-      - name: Fix Ownership
-        run: |
-          # recent versions of Git refuse to touch a repository whose on-disk owner 
-          # doesn’t match the UID that is running the command
-          # mark the workspace (and any nested path) as safe
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"/src
       - id: set-matrix
         run: |
           echo "Current Working Directory: $(pwd)"

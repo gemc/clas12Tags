@@ -26,13 +26,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Fix Ownership
-        run: |
-          # recent versions of Git refuse to touch a repository whose on-disk owner 
-          # doesn’t match the UID that is running the command
-          # mark the workspace (and any nested path) as safe
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"/src
       - name: Build gemc
         run: |
           ./ci/build_gemc.sh

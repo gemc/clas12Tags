@@ -6,13 +6,23 @@ DetectorDirNotExisting() {
 }
 
 log_gemc_info() {
-
+	echo
+	echo
+	echo
+	echo ============ log_gemc_info ============
+	echo
 	echo "\n > GCard: $gcard"
-	echo " > GEMC: $(which gemc) "
+	echo " > GEMC: $GEMC "
+	echo " > gemc: $(which gemc) "
 	echo " > GEMC compiled on $(date)"
 	echo " > GEMC Version: $(gemc --version)"
 	echo " > Content of $GEMC dir:"
 	echo " > GEMC_DATA_DIR: $GEMC_DATA_DIR top level content: $(ls -l $GEMC_DATA_DIR) \n\n"
+	echo
+	echo
+	echo ========================================
+	echo
+	echo
 }
 
 # returns runs to test
@@ -125,6 +135,12 @@ else
 	# recent versions of Git refuse to touch a repository whose on-disk owner
 	# doesn’t match the UID that is running the command
 	# mark the workspace (and any nested path) as safe
+	echo "Marking workspace as safe for Git"
 	git config --global --add safe.directory '*'
+
+	echo Setting GEMC and GEMC_DATA_DIR to this directory
+	export GEMC=$(pwd)
+	export GEMC_DATA_DIR=$GEMC
+	export PATH=$GEMC/bin:$PATH
 
 fi

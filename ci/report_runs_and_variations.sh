@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+source ci/env.sh
+
 # Enable associative arrays
 typeset -A geo_runs
 
