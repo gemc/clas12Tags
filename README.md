@@ -3,8 +3,7 @@
 ### Pull requests
 
 - [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
-- [![GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/experiment_test.yml)
-- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
+[![Clas12-Config GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml)- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
 - [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
 - [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
 - [![Local Gcards Tests](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml)
@@ -14,8 +13,7 @@
 - [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
 - [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
 - [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
-- [![GCards Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/main_dev_config_comparison.yml)
-
+[![Clas12-config Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml)
 ## QuickStart
 
 ```bash
