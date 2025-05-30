@@ -75,7 +75,7 @@ jobs:
         env:
           BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
-          ./ci/gcard_run_test.sh -g ${{ matrix.gcard }}
+          ./ci/clas12_config_gcards_test.sh -g ${{ matrix.gcard }}
 
   dev-gcards-test-final:
     needs:

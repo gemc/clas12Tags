@@ -42,17 +42,21 @@ while getopts ":hd:" option; do
 	esac
 done
 
-echo "Running on branch: $BRANCH_NAME"
-echo " > Detector: $detector\n"
 
 # set gcards to the list of files in the directory geometry_source/$detector with extension .gcard
 cd geometry_source/$detector || {
 	echo "Directory geometry_source/$detector does not exist"
 	exit 2
 }
-gcards=$(ls *.gcard 2>/dev/null)
 
-for gcard in $gcards; do
+echo " > Detector: $detector\n"
+echo " > Directory: $(pwd)\n"
+
+gcards=$(ls *.gcard)
+
+for gcard in $=gcards; do
+	echo " > Running gcard: $gcard"
+
 	if [[ ! -f "$gcard" ]]; then
 		echo "Gcard: $gcard not existing"
 		exit 3

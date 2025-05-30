@@ -1,4 +1,4 @@
-name: GCards Dev Main Comparison
+name: Clas12-config Dev Main Comparison
 permissions:
   contents: read
   pull-requests: write
@@ -59,7 +59,7 @@ jobs:
           ./ci/install_comparison_software.sh
       - name: ${{ matrix.gcard }} tests
         run: |
-          ./ci/gcard_dev_main_comparison.sh -g ${{ matrix.gcard }}
+          ./ci/clas12_config_dev_main_comparison.sh -g ${{ matrix.gcard }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
