@@ -39,10 +39,12 @@ function create_geo_dbs {
 	echo "Creating all geometry databases with: create_geometry.sh"
 	./create_geometry.sh > geo_build.log 2>&1
 	echo "Copying experiments ASCII DB and sqlite file to $GEMC for CI"
-	cp -r experiments clas12.sqlite gemc_build.log geo_build.log build_coatjava.log /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+	cp -r experiments clas12.sqlite source/gemc_build.log geo_build.log geometry_source/build_coatjava.log /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 	echo "Changes after creation:"
 	git branch ; git status -s
 }
+
+
 
 compile_gemc
 create_geo_dbs

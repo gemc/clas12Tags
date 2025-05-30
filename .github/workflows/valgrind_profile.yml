@@ -1,4 +1,4 @@
-name: Valgrind
+name: Valgrind-Profile
 permissions:
   contents: read
   pull-requests: write
@@ -31,7 +31,7 @@ jobs:
           echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
 
 
-  ntracks-metrics:
+  profile-metrics:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -64,8 +64,8 @@ jobs:
           name: tracklogs-${{ matrix.ntracks }}
           path: /root/logs/
 
-  ntracks-metrics-result:
-    needs: ntracks-metrics
+  profile-metrics-result:
+    needs: profile-metrics
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
@@ -88,3 +88,20 @@ jobs:
           done < ntracks.log >> Summary.md
           cat Summary.md 
           cat Summary.md >> $GITHUB_STEP_SUMMARY
+
+  profile-metrics-final:
+    needs:
+      - profile-metrics-result
+    runs-on: ubuntu-latest
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

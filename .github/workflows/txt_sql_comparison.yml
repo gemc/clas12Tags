@@ -55,12 +55,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+      - name: Fix Ownership
+        run: |
+          # recent versions of Git refuse to touch a repository whose on-disk owner 
+          # doesn’t match the UID that is running the command
+          # mark the workspace (and any nested path) as safe
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"/src
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh
       - name: Geometry ${{ matrix.detector }} Comparison
         run: |
-          ./ci/geometry_comparison.sh -d ${{ matrix.detector }}
+          ./ci/txt_sql_geometry_comparison.sh -d ${{ matrix.detector }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
@@ -113,7 +120,7 @@ jobs:
           ./ci/install_comparison_software.sh
       - name: GEMC ${{ matrix.detector }} Comparison
         run: |
-          ./ci/detector_sqlite_dev_comparison.sh -d ${{ matrix.detector }} -v ${{ matrix.variation }}
+          ./ci/txt_sql_run_comparison.sh -d ${{ matrix.detector }} -v ${{ matrix.variation }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:

@@ -50,7 +50,8 @@ cd geometry_source/$detector || {
 }
 
 echo " > Detector: $detector\n"
-echo " > Directory: $(pwd)\n"
+echo " > Content of $(pwd): $(ls -l)\n"
+echo " > Content of ../../: $(ls -l ../../)\n"
 
 gcards=$(ls *.gcard)
 

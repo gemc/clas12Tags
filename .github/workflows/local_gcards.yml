@@ -19,7 +19,7 @@ on:
 
 jobs:
 
-  test:
+  local-gcards-test:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -47,18 +47,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+      - name: Fix Ownership
+        run: |
+          # recent versions of Git refuse to touch a repository whose on-disk owner 
+          # doesn’t match the UID that is running the command
+          # mark the workspace (and any nested path) as safe
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"/src
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh
-      - name: Geometry ${{ matrix.detector }} Comparison
+      - name: Geometry ${{ matrix.detector }} Test
         run: |
           ./ci/local_gcards_test.sh -d ${{ matrix.detector }}
 
-
-
-  test-final:
+  local-gcards-test-final:
     needs:
-      - test
+      - local-gcards-test
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'

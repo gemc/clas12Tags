@@ -121,4 +121,10 @@ else
 	module load hipo
 	module load ccdb
 	echo
+
+	# recent versions of Git refuse to touch a repository whose on-disk owner
+	# doesn’t match the UID that is running the command
+	# mark the workspace (and any nested path) as safe
+	git config --global --add safe.directory '*'
+
 fi
