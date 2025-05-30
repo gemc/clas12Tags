@@ -12,7 +12,7 @@
 ### Nightly
 
 - [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
-- [![Valgrind](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/profile.yml)
+- [![Valgrind-Profile](https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml)
 - [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/txt_sql_comparison.yml)
 - [![Clas12-config Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml)
 

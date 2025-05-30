@@ -3,24 +3,14 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="experiments/clas12/targets/target" factory="TEXT" variation="transverse"/>
-
-	<!-- Beamline ELMO configuration -->
+	<detector name="cad/"     factory="CAD" variation="ELMO"/>
 	<detector name="beamline" factory="TEXT" variation="ELMO"/>
-	<detector name="cad/" factory="CAD" variation="ELMO"/>
 
-	<detector name="cad_transverse/noWedges/"           factory="CAD" />
-	<detector name="cad_transverse/forwardWedges/"      factory="CAD" />
-	<detector name="cad_transverse/midpointWedges/"     factory="CAD" />
+	<detector name="cad_transverse/noWedges/"       factory="CAD"/>
+	<detector name="cad_transverse/forwardWedges/"  factory="CAD"/>
+	<detector name="cad_transverse/midpointWedges/" factory="CAD"/>
 
-	<detector name="experiments/clas12/magnets/torus" factory="TEXT" variation="original"/>
-
-
-	<option name="HALL_FIELD"  value="Full_transsolenoid_x321_y161_z321_April2024:Symm_torus_r2501_phi16_z251_24Apr2018"/>
-
-	<detector name="ElmoTungstenTip">
-		<existence exist="no" />
-	</detector>
+	<option name="HALL_FIELD" value="Full_transsolenoid_x321_y161_z321_April2024:Symm_torus_r2501_phi16_z251_24Apr2018"/>
 
 	<!-- End of ELMO  -->
 	<option name="OUTPUT" value="hipo, out.hipo"/>

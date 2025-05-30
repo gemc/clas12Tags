@@ -42,7 +42,6 @@ while getopts ":hd:" option; do
 	esac
 done
 
-
 # set gcards to the list of files in the directory geometry_source/$detector with extension .gcard
 cd geometry_source/$detector || {
 	echo "Directory geometry_source/$detector does not exist"
@@ -56,7 +55,9 @@ echo " > Content of ../../: $(ls -l ../../)\n"
 gcards=$(ls *.gcard)
 
 for gcard in $=gcards; do
+	echo
 	echo " > Running gcard: $gcard"
+	echo
 
 	if [[ ! -f "$gcard" ]]; then
 		echo "Gcard: $gcard not existing"

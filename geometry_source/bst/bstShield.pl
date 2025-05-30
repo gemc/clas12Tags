@@ -26,7 +26,7 @@ sub make_bst_shield() {
     $detector{"color"} = "88aaff";
     $detector{"type"} = "Tube";
     $detector{"pos"} = $pos;
-    $detector{"material"} = "beamline_W";
+    $detector{"material"} = "bst_W";
 
     my $rmax = 0;
 
