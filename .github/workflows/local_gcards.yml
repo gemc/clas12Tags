@@ -50,7 +50,7 @@ jobs:
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh
-      - name: Geometry ${{ matrix.detector }} Test
+      - name: Gcard ${{ matrix.detector }} Test
         run: |
           ./ci/local_gcards_test.sh -d ${{ matrix.detector }}
 

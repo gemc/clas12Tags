@@ -49,17 +49,19 @@ sub create_system {
     # probably not worth fix this perl API for it.
     # makeTorus($variation, $runNumber, $factory) if $variation eq "default";
 
-    makeSolenoid($variation, $runNumber, $factory);
+    makeSolenoid($variation, $runNumber);
 }
 
 # TEXT Factory, include extra variations
 my $runNumber = 11;
+$configuration{"factory"} = "TEXT";
 foreach my $variation (@variations) {
     $configuration{"variation"} = $variation;
-    create_system($variation, $runNumber, "TEXT");
+    create_system($variation, $runNumber);
 }
 
 # SQLITE Factory
+$configuration{"factory"} = "SQLITE";
 foreach my $run (@runs) {
     $configuration{"variation"} = "default";
     create_system("default", $run);

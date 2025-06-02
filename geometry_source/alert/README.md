@@ -3,14 +3,16 @@
 # this should be done from the directory where this file is located
 
 ```
-cd ../targets
-./targets.pl config.dat
+
 cd ../alert/ahdc
 ./ahdc.pl config.dat
+
 cd ../atof
 ./atof.pl config.dat
+
 cd ../external_shell_nonActif
 ./alertshell.pl config.dat
+
 cd ../He_bag
 ./hebag.pl config.dat
 cd ../

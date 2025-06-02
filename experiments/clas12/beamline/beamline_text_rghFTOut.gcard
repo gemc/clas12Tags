@@ -4,9 +4,9 @@
 
 
 	<detector name="cad/"                      factory="CAD"  variation="rgk_winter2018"/>
-	<detector name="beamline"                  factory="TEXT" variation="rgk_winter2018"/>
-	<detector name="experiments/clas12/ft/ft"  factory="TEXT" variation="rgk_winter2018"/>
+	<detector name="beamline"                  factory="TEXT" variation="rghFTOut"/>
 
+	
 	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
 	<option name="SPREAD_P" value="0.0*GeV, 10*deg, 180*deg"/>
 
