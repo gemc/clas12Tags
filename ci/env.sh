@@ -23,7 +23,7 @@ log_gemc_info() {
 
 	echo " > gemc: $(which gemc) "
 	echo "   Compiled on $(date)"
-	echo "   Version:\n$(gemc --version | grep -v Connecting| grep -v RTPC)"
+	echo "   Version:\n$(gemc --version | grep -v Connecting | grep -v RTPC)"
 	echo
 	echo "========================================"
 	echo "========================================"
@@ -99,6 +99,12 @@ variations_for_run_and_system()  {
 	elif [[ $1 == "19300" ]]; then
 		echo "rgk_spring2024"
 	elif [[ $1 == "21000" ]]; then
+		echo "rgl_spring2025_H2"
+	elif [[ $1 == "21001" ]]; then
+		echo "rgl_spring2025_D2"
+	elif [[ $1 == "21002" ]]; then
+		echo "rgl_spring2025_He"
+	elif [[ $1 == "21003" ]]; then
 		echo "rgl_spring2025"
 	elif [[ $1 == "15016" || $1 == "15534" ]]; then
 		echo "rgm_fall2021_H"

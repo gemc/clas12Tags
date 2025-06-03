@@ -43,9 +43,17 @@ function create_geo_dbs {
 	echo " TEMPORARY PATCH: Restoring some original repo files needed for validation."
 	echo " This PATCH will be removed in the once the Real Run Number work for targets is completed."
 	echo
-	git checkout -- experiments/clas12/targets/target__geometry_alertHe.txt
+	echo RGM targets
 	git checkout -- experiments/clas12/targets/target__geometry_2cm-lD2.txt
 	git checkout -- experiments/clas12/targets/target__geometry_2cm-lD2-empty.txt
+	git checkout -- experiments/clas12/targets/target__materials_2cm-lD2.txt
+	git checkout -- experiments/clas12/targets/target__materials_2cm-lD2-empty.txt
+	echo RGD targets
+ 	git checkout -- experiments/clas12/targets/target__geometry_lD2CuSn.txt
+ 	git checkout -- experiments/clas12/targets/target__geometry_lD2CxC.txt
+ 	git checkout -- experiments/clas12/targets/target__materials_lD2CuSn.txt
+ 	git checkout -- experiments/clas12/targets/target__materials_lD2CxC.txt
+
 
 	echo "Copying experiments ASCII DB and sqlite file to $GEMC for CI"
 	cp -r experiments clas12.sqlite source/gemc_build.log geo_build.log geometry_source/build_coatjava.log /cvmfs/oasis.opensciencegrid.org/jlab/geant4

@@ -36,7 +36,10 @@ my %variation_to_runs = (
     "rgc_winter2023"    => [ 18305 ],
     "rgd_fall2023"      => [ 17471 ],
     "rge_spring2024"    => [ 20000 ],
-    "rgl_spring2025"    => [ 21000 ]
+    "rgl_spring2025"    => [ 21000 ],
+    "rgl_spring2025_H2" => [ 21001 ],
+    "rgl_spring2025_D2" => [ 21002 ],
+    "rgl_spring2025_He" => [ 21003 ]
 );
 
 # Build reverse mapping: run => array of variations
@@ -96,7 +99,6 @@ sub clas12_run {
     my $runs_ref = $variation_to_runs{$variation};
     return $runs_ref ? $runs_ref->[0] : 0;
 }
-
 
 sub clas12_variation {
     my $run_number = shift;

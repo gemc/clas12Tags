@@ -51,17 +51,23 @@ sub create_system {
 }
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgb_spring2019", "rga_spring2019", "rgb_fall2019", "rgf_spring2020",
-    "rgm_fall2021_He", "rgm_fall2021_C", "rgm_fall2021_Sn",  "rgm_fall2021_Cx4", "rgm_fall2021_Snx4", "rgm_fall2021_Ca", "rgc_summer2022");
+    "rgm_fall2021_He", "rgm_fall2021_C", "rgm_fall2021_Sn", "rgm_fall2021_Cx4", "rgm_fall2021_Snx4", "rgm_fall2021_Ca", "rgc_summer2022",
+    "rgl_spring2025_H2", "rgl_spring2025_D2", "rgl_spring2025_He");
 
 my @runs = clas12_runs(@variations);
 
-my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse", "APOLLOnd3");
+my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse", "APOLLOnd3", "bonusH2", "bonusHe", "lH2e");
+
 
 # list of original variations:
 # lH2, lD2, lHe, ND3, PolTarg, APOLLOnh3, APOLLOnd3, lH2e,
 # bonusD2, bonusH2, bonusHe, pbTest, hdIce, longitudinal, transverse,
 # RGM_2_C, RGM_2_Sn, RGM_8_C_S, RGM_8_C_L, RGM_8_Sn_S, RGM_8_Sn_L, RGM_Ca,
 # alertD2, alertH2, alertHe, lD2CxC, lD2CuSn, 2cm-lD2, 2cm-lD2-empty
+
+# originals w/o the moved to Real Run Numbers
+# PolTarg,
+# lD2CxC, lD2CuSn, 2cm-lD2, 2cm-lD2-empty
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
@@ -99,7 +105,6 @@ require "gxml_to_sqlite.pl";
 foreach my $variation ("default") {
     $configuration{"run_number"} = clas12_run($variation);
     process_gxml("cad/cad_$variation.gxml", "experiments/clas12/targets/cad");
-    process_gxml("cad_rgm/cad_$variation.gxml", "experiments/clas12/targets/cad_rgm");
 }
 
 

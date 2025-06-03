@@ -3,9 +3,9 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="cad/"                      factory="CAD"  variation="rgb_spring2019"/>
+	<detector name="cad/"                      factory="CAD"  />
 	<detector name="beamline"                  factory="TEXT" variation="rghFTOn"/>
-	<detector name="experiments/clas12/ft/ft"  factory="TEXT" variation="rgb_spring2019"/>
+	<detector name="experiments/clas12/ft/ft"  factory="TEXT" />
 
 	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
 	<option name="SPREAD_P" value="0.0*GeV, 10*deg, 180*deg"/>
