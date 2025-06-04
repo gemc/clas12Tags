@@ -154,7 +154,7 @@ The script will install (if not present) the desired tagged coatjava in the dire
 
 > [!Warning]
 > By default, the latest coatjava tag is used. This is also the suggested option.
-> Other tags can be used but they may not be compatible with the latest code.
+> Other tags can be used but they are not guaranteed to work.
 
 
 Examples:

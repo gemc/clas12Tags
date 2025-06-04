@@ -3,7 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="cad/"                      factory="CAD"  />
+	<detector name="cad/"                      factory="CAD"  variation="rgc_fall2022"/>
 	<detector name="beamline"                  factory="TEXT" variation="rghFTOn"/>
 	<detector name="experiments/clas12/ft/ft"  factory="TEXT" />
 
