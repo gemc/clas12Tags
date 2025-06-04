@@ -1128,6 +1128,23 @@ sub make_ft_cal_beamline {
 }
 
 sub make_ft_cal {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+    if ($configuration_string eq "rgc_fall2022") {
+        my %detector = init_det();
+        $detector{"name"} = "ft_dummy";
+        $detector{"mother"} = "root";
+        $detector{"description"} = "Empty volume to represent FT Out";
+        $detector{"pos"} = "5000.0*mm 0.0*mm 0.0*mm ";
+        $detector{"color"} = "F2F2F2";
+        $detector{"type"} = "Box";
+        $detector{"dimensions"} = "0.1*mm 0.1*mm 0.1*mm";
+        $detector{"material"} = "G4_AIR";
+        $detector{"visible"} = 0;
+        print_det(\%configuration, \%detector);
+        return;
+    }
+
     make_ft_cal_mother_volume();
     make_ft_cal_crystals_volume();
     make_ft_cal_crystals();
@@ -1145,6 +1162,12 @@ sub make_ft_cal {
 }
 
 sub make_ft_hodo {
+
+    my $configuration_string = clas12_configuration_string(\%configuration);
+    if ($configuration_string eq "rgc_fall2022") {
+        return;
+    }
+
     my %detector = init_det();
     $detector{"name"} = "ft_hodo";
     $detector{"mother"} = "root";
@@ -2107,7 +2130,7 @@ sub make_ft_trk_fee_boxes {
 sub make_ft_trk {
     my $configuration_string = clas12_configuration_string(\%configuration);
 
-    if ($configuration_string eq "rgk_winter2018" || $configuration_string eq "rgf_spring2020" || $configuration_string eq "rge_spring2024") {
+    if ($configuration_string eq "rgk_winter2018" || $configuration_string eq "rgf_spring2020" || $configuration_string eq "rge_spring2024" || $configuration_string eq "rgc_fall2022") {
         return;
     }
     make_ft_trk_mother();

@@ -50,7 +50,7 @@ jobs:
         run: |
           echo "Current Working Directory: $(pwd)"
           echo "Content: $(ls -l)"
-          export JSON=$( ./ci/gcards_devconfig_list.sh )
+          export JSON=$( ./ci/clas12-config-dev-gcard-list.sh )
           echo generate-matrix: $JSON
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
