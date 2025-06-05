@@ -22,10 +22,10 @@ DatabaseConstantProvider cp = new DatabaseConstantProvider(runNumber, variation)
 AlertDCFactory factory = new AlertDCFactory();
 Detector ahdc = factory.createDetectorCLAS(cp);
 
-def parFile = new File("ahdc__parameters_"+variation+".txt");
+def parFile = new File("alert__parameters_"+variation+".txt");
 def writer1=parFile.newWriter();
 
-def outFile = new File("ahdc__volumes_"+variation+".txt");
+def outFile = new File("alert__volumes_"+variation+".txt");
 def writer2=outFile.newWriter();
 
 // dump the geometry in GEMC format
