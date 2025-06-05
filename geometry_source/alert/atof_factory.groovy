@@ -22,11 +22,11 @@ DatabaseConstantProvider cp = new DatabaseConstantProvider(runNumber, variation)
 AlertTOFFactory factory = new AlertTOFFactory();
 Detector atof = factory.createDetectorCLAS(cp);
 
-def parFile = new File("atof__parameters_"+variation+".txt");
-def writer1=parFile.newWriter();
+def parFile = new File("alert__parameters_"+variation+".txt");
+def writer1 = parFile.newWriter(true)   // true = append, don’t truncate
 
-def outFile = new File("atof__volumes_"+variation+".txt");
-def writer2=outFile.newWriter();
+def outFile = new File("alert__volumes_"+variation+".txt");
+def writer2=outFile.newWriter(true);
 
 // dump the geometry in GEMC format
 // may want to add mother volume
@@ -55,7 +55,7 @@ for(int isec=0; isec<nsectors; isec++)
 				{
 					//Bottom bar not sliced in z index=10
 					Component comp = atof.getSector(isec).getSuperlayer(isl).getLayer(ilay).getComponent(10);
-                                        writer2<< gemcString(isec, isl, ilay, comp);
+                                        writer2<< gemc_atof_string(isec, isl, ilay, comp);
 				}
 				else
 				{
@@ -63,7 +63,7 @@ for(int isec=0; isec<nsectors; isec++)
 					{
 						//Top wedge has 10 z slices
 						Component comp = atof.getSector(isec).getSuperlayer(isl).getLayer(ilay).getComponent(icomp);
-						writer2<< gemcString(isec, isl, ilay, comp);
+						writer2<< gemc_atof_string(isec, isl, ilay, comp);
 					}
 				}
 			}
@@ -74,7 +74,7 @@ writer1.close();
 writer2.close();
 
 // need to be updated with correct format for trapezoide
-public String gemcString(int sector, int superlayer,int layer, Component comp) {
+public String gemc_atof_string(int sector, int superlayer,int layer, Component comp) {
         StringBuilder str = new StringBuilder();
 		
 	// reading top face vertices of ATOF cell and storing their x,y coordinates

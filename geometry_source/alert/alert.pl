@@ -38,6 +38,7 @@ require "./materials.pl";
 require "./bank.pl";
 require "./hit.pl";
 require "./ahdc_geometry_java.pl";
+require "./atof_geometry_java.pl";
 
 
 # subroutines create_system with arguments (variation, run number)
@@ -51,12 +52,14 @@ sub create_system {
 
     # run EC factory from COATJAVA to produce volumes
     system("groovy -cp '../*:..' ahdc_factory.groovy --variation $variation --runnumber $runNumber");
+    system("groovy -cp '../*:..' atof_factory.groovy --variation $variation --runnumber $runNumber");
 
     # Global pars - these should be read by the load_parameters from file or DB
     our %parameters = get_parameters(%configuration);
     our @volumes = get_volumes(%configuration);
 
-	coatjava::makeAHDC();
+   # coatjava::makeAHDC();
+    coatjava::makeATOF();
 }
 
 my @variations = ("default", "rga_fall2018");

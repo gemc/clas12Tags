@@ -50,7 +50,7 @@ for(int isec=1; isec<=nsectors; isec++)
 				for(int icomp=1; icomp<=ncomponents; icomp++) 
 				{
 					Component comp = ahdc.getSector(isec).getSuperlayer(isl).getLayer(ilay).getComponent(icomp);
-					writer2<< gemcString(isl, ilay, comp);
+					writer2<< gemc_ahdc_string(isl, ilay, comp);
 				}
 			}
 		}
@@ -63,7 +63,7 @@ writer1.close();
 writer2.close();
 
 // need to be updated with correct format for generic trapezoid
-public String gemcString(int superlayer, int layer, Component comp) {
+public String gemc_ahdc_string(int superlayer, int layer, Component comp) {
         StringBuilder str = new StringBuilder();
 	/*
 	for (int ip = 0; ip < comp.getNumVolumePoints(); ip++) {
