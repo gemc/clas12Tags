@@ -122,30 +122,5 @@ for dete in $=all_dets; do
 	if [ $dete = "targets" ]; then
 		cp -r rge-dt $cdir/experiments/clas12/$dete
 	fi
-
-	if [ $dete = "alert" ]; then
-		for sdete in He_bag ahdc atof external_shell_nonActif; do
-			echo
-			echo " > Building ALERT $sdete"
-			echo
-
-			cd $sdete
-			detep=$sdete
-			if [ $sdete = "He_bag" ]; then
-				detep="hebag"
-			elif [ $sdete = "external_shell_nonActif" ]; then
-				detep="alertshell"
-			elif [ $sdete = "ahdc" ] || [ $dete = "atof" ]; then
-				run-groovy factory.groovy --variation default --runnumber 11
-				run-groovy factory.groovy --variation rga_fall2018 --runnumber 11
-			fi
-
-			"./$detep.pl" config.dat
-			copyFilesAndCadDirsTo "$cdir/experiments/clas12/$dete/$sdete"
-
-			cd ..
-
-		done
-	fi
 	cd ..
 done

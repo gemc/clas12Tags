@@ -60,9 +60,9 @@ sub create_system {
     our %parameters = get_parameters(%configuration);
     our @volumes = get_volumes(%configuration);
 
-   # coatjava::makeAHDC();
-    # coatjava::makeATOF();
-    #make_alert_shell();
+    coatjava::makeAHDC();
+    coatjava::makeATOF();
+    make_alert_shell();
     build_hebag();
 }
 

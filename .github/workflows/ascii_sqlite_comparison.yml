@@ -49,6 +49,7 @@ jobs:
           - beamline
           - magnets
           - targets
+          - alert
 
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
@@ -88,6 +89,8 @@ jobs:
           - rich
           - ft
           - beamline
+          - alert
+
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
           - default

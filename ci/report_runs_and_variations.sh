@@ -29,7 +29,7 @@ geo_runs=(
     [rgl_spring2025_H2]=21001
     [rgl_spring2025_D2]=21002
     [rgl_spring2025_He]=21003
-    [rgm_winter2021]=15016
+    [rgm_fall2021_H]=15016
 
 )
 

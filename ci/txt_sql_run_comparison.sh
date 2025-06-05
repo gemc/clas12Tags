@@ -112,6 +112,8 @@ elif [[ $system == "micromegas" ]]; then
 	banks_to_check="BMT::adc FMT::adc"
 elif [[ $system == "ft" || $system == "beamline" || $system = "magnets" ]]; then
 	banks_to_check="FTCAL::adc FTHODO::adc FTTRK::adc"
+elif [[ $system == "alert" ]]; then
+	banks_to_check="AHDC::tdc ATOF::tdc AHDC::wf"
 fi
 
 cd "experiments/clas12/$system" || DetectorDirNotExisting
