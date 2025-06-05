@@ -1,7 +1,6 @@
-# use strict;
-use warnings;
-
 use lib ("../");
+use warnings;
+use strict;
 use clas12_configuration_string;
 
 our %configuration;
@@ -202,7 +201,7 @@ sub define_fmt {
         $outerRohacell_RMin = $parameters{"FMT_outerROHACELLInnerRadius"};
         $outerRohacell_RMax = $parameters{"FMT_outerROHACELLOuterRadius"};
 
-        for ($l = 0; $l < $nlayer; $l++) {
+        for (my $l = 0; $l < $nlayer; $l++) {
             place_cuground($l);
             place_pcbground($l);
             place_innerFR4($l);
