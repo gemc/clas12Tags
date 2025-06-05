@@ -1,4 +1,3 @@
-use lib ("../");
 use warnings;
 use strict;
 use clas12_configuration_string;
