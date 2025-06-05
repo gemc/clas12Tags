@@ -39,6 +39,7 @@ require "./bank.pl";
 require "./hit.pl";
 require "./ahdc_geometry_java.pl";
 require "./atof_geometry_java.pl";
+require "./alert_shell.pl";
 
 
 # subroutines create_system with arguments (variation, run number)
@@ -59,7 +60,8 @@ sub create_system {
     our @volumes = get_volumes(%configuration);
 
    # coatjava::makeAHDC();
-    coatjava::makeATOF();
+    # coatjava::makeATOF();
+    make_alert_shell();
 }
 
 my @variations = ("default", "rga_fall2018");
