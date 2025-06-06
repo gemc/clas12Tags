@@ -9,7 +9,7 @@
 #include <TControlBar.h>
 
 // global application settings
-const std::string variation = "original";
+const std::string variation = "default";
 const std::string PRINT = ".png";
 const int RECALC  = 0;
 const int RECALC2 = 0;
