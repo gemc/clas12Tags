@@ -3,8 +3,8 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="cad/"     factory="CAD" variation="ELMO"/>
-	<detector name="beamline" factory="TEXT" variation="ELMO"/>
+	<detector name="cad/"     factory="CAD" variation="rgc_fall2022"/>
+	<detector name="beamline" factory="TEXT" variation="rgc_fall2022"/>
 
 	<detector name="cad_transverse/noWedges/"       factory="CAD"/>
 	<detector name="cad_transverse/forwardWedges/"  factory="CAD"/>
