@@ -76,6 +76,13 @@ jobs:
           BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           ./ci/clas12_config_gcards_test.sh -g ${{ matrix.gcard }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemc
+          path: |
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
 
   clas12-config-gcards-test-final:
     needs:

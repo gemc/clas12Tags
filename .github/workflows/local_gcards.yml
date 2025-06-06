@@ -53,6 +53,13 @@ jobs:
       - name: Gcard ${{ matrix.detector }} Test
         run: |
           ./ci/local_gcards_test.sh -d ${{ matrix.detector }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemc
+          path: |
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
 
   local-gcards-test-final:
     needs:

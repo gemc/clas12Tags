@@ -39,3 +39,5 @@ jobs:
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/clas12.sqlite
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log

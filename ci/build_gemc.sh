@@ -21,8 +21,10 @@ function compile_gemc {
 	# getting number of available CPUS
 	copt=" -j"$(getconf _NPROCESSORS_ONLN)" OPT=1"
 	echo
-	echo Compiling GEMC with options: "$copt" $debug
-	scons SHOWENV=1 SHOWBUILD=1 $copt $debug > gemc_build.log 2>&1
+	echo Compiling GEMC with options: "$copt" "$debug"
+	echo START_GEMC_COMPILATION $(date) > gemc_build.log
+	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" >> gemc_build.log
+	echo END_GEMC_COMPILATION $(date) >> gemc_build.log
 	# checking existence of executable
 	echo "Created executable: " $(ls gemc)
 	if [ $? -ne 0 ]; then
@@ -37,7 +39,9 @@ function compile_gemc {
 function create_geo_dbs {
 	echo
 	echo "Creating all geometry databases with: create_geometry.sh"
-	./create_geometry.sh > geo_build.log 2>&1
+	echo START_CREATE_GEOMETRY $(date) > geo_build.log
+	./create_geometry.sh >> geo_build.log
+	echo END_CREATE_GEOMETRY $(date) >> geo_build.log
 
 	echo
 	echo " TEMPORARY PATCH: Restoring some original repo files needed for validation."
