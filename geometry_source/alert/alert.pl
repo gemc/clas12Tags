@@ -68,6 +68,7 @@ sub create_system {
 
 my @variations = ("default", "rga_fall2018");
 my @runs = clas12_runs(@variations);
+my $system = $configuration{'detector_name'};
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
@@ -83,7 +84,6 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_banks();
-my $system = $configuration{'detector_name'};
 foreach my $variation (@variations) {
     foreach my $run (clas12_runs_for_variations($variation)) {
         upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $run);
@@ -96,3 +96,9 @@ foreach my $run (@runs) {
     create_system("default", $run);
 }
 
+# clean up
+use File::Path qw(make_path remove_tree);
+foreach my $variation (@variations) {
+    print("Removing parameters file:", "$system"."__parameters_"."$variation".".txt\n");
+    remove_tree("$system"."__parameters_"."$variation".".txt");
+}

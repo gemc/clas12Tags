@@ -100,6 +100,7 @@ sub create_system {
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018");
 my @runs = clas12_runs(@variations);
+my $system = $configuration{'detector_name'};
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
@@ -136,8 +137,6 @@ foreach my $run (@runs) {
 
     my $variation = clas12_variation($run);
 
-    print("hello $variation run $run\n");
-
     copy("javacad_$run/cad.gxml", "cad/cad_$variation.gxml") or die "Copy failed: $!";
     copy("javacad_$run" . "_upstream/cad.gxml", "cad_upstream/cad_$variation.gxml") or die "Copy failed: $!";
 }
@@ -154,3 +153,10 @@ foreach my $variation (@variations) {
 # Use glob to expand javacad* into actual paths
 my @dirs_cleanup = glob("javacad*");
 remove_tree(@dirs_cleanup);
+
+# clean up
+use File::Path qw(make_path remove_tree);
+foreach my $variation (@variations) {
+    print("Removing parameters file:", "$system"."__parameters_"."$variation".".txt\n");
+    remove_tree("$system"."__volumes_"."$variation".".txt");
+}

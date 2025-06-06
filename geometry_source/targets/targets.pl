@@ -55,6 +55,7 @@ my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgb_spring2019",
     "rgl_spring2025_H2", "rgl_spring2025_D2", "rgl_spring2025_He");
 
 my @runs = clas12_runs(@variations);
+my $system = $configuration{'detector_name'};
 
 my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse", "APOLLOnd3", "bonusH2", "bonusHe", "lH2e");
 
@@ -79,7 +80,6 @@ foreach my $variation (@variations, @custom_variations) {
 
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
-my $system = $configuration{'detector_name'};
 foreach my $variation (@variations) {
     foreach my $run (clas12_runs_for_variations($variation)) {
         upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $run);

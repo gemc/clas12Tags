@@ -153,9 +153,9 @@ else
 	echo "Marking workspace as safe for Git"
 	git config --global --add safe.directory '*'
 
-	echo Setting GEMC and GEMC_DATA_DIR to this directory
 	export GEMC=$(pwd)
 	export GEMC_DATA_DIR=$GEMC
+	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $GEMC"
 	export PATH=$GEMC/bin:$PATH
 
 fi
