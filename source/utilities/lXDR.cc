@@ -252,8 +252,9 @@ double *lXDR::readFloatArray(long &length)
    // je: FIXME what happens if _hasNetworkOrder == true?!
    if (_hasNetworkOrder == false) {
       for (long i = 0; i < length; i++) {
-         long l = ntohl(st[i]);
-         s[i] = (double) (*((float *) &l));
+		long l = ntohl(st[i]);
+		float     f = std::bit_cast<float>(l);
+		s[i] = static_cast<double>(f);
       }
    }
    _error = LXDR_SUCCESS;

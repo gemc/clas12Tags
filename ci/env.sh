@@ -25,6 +25,10 @@ log_gemc_info() {
 	echo "   Compiled on $(date)"
 	echo "   Version:\n$(gemc --version | grep -v Connecting | grep -v RTPC)"
 	echo
+	echo " Java version:" $(java -version) $(which java)
+    echo " JAVA_HOME=${JAVA_HOME:-<unset>}"
+    echo " Groovy version: " $(groovy -version)
+	echo
 	echo "========================================"
 	echo "========================================"
 	echo "========================================"

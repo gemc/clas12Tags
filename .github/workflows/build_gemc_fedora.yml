@@ -26,6 +26,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+      - name: Fix Java Version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
       - name: Build gemc
         run: |
           ./ci/build_gemc.sh
@@ -41,3 +46,4 @@ jobs:
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log

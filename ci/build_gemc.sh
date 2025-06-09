@@ -23,6 +23,7 @@ function compile_gemc {
 	echo
 	echo Compiling GEMC with options: "$copt" "$debug"
 	echo START_GEMC_COMPILATION $(date) > gemc_build.log
+	echo Compiling GEMC with options: "$copt" "$debug" >> gemc_build.log
 	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" >> gemc_build.log
 	echo END_GEMC_COMPILATION $(date) >> gemc_build.log
 	# checking existence of executable
@@ -41,7 +42,6 @@ function create_geo_dbs {
 	echo "Creating all geometry databases with: create_geometry.sh"
 	echo START_CREATE_GEOMETRY $(date) > geo_build.log
 	./create_geometry.sh >> geo_build.log
-	echo END_CREATE_GEOMETRY $(date) >> geo_build.log
 
 	echo
 	echo " TEMPORARY PATCH: Restoring some original repo files needed for validation."
@@ -64,6 +64,9 @@ function create_geo_dbs {
 
 	echo "Changes after creation:"
 	git branch ; git status -s
+	git branch ; git status -s >> geo_build.log
+	echo END_CREATE_GEOMETRY $(date) >> geo_build.log
+
 }
 
 

@@ -73,6 +73,7 @@ else
 fi
 
 cd $src_dir
-./build-coatjava.sh > ../build_coatjava.log 2>&1
+paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
+./build-coatjava.sh --no-progress  $paralllel > ../build_coatjava.log 2>&1
 cp coatjava/lib/clas/* ..
 cp -r coatjava ../$install_dir
