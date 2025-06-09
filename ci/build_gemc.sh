@@ -25,13 +25,14 @@ function compile_gemc {
 	echo START_GEMC_COMPILATION $(date) > gemc_build.log
 	echo Compiling GEMC with options: "$copt" "$debug" >> gemc_build.log
 	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" >> gemc_build.log
+	if [ $? -ne 0 ]; then
+		echo scons failed
+		exit 1
+	fi
 	echo END_GEMC_COMPILATION $(date) >> gemc_build.log
 	# checking existence of executable
 	echo "Created executable: " $(ls gemc)
-	if [ $? -ne 0 ]; then
-		echo gemc executable not found
-		exit 1
-	fi
+
 	cp gemc $GEMC/bin
 	cd ..
 	echo "Copying gemc to $GEMC/bin for CI"
@@ -42,7 +43,10 @@ function create_geo_dbs {
 	echo "Creating all geometry databases with: create_geometry.sh"
 	echo START_CREATE_GEOMETRY $(date) > geo_build.log
 	./create_geometry.sh >> geo_build.log
-
+	if [ $? -ne 0 ]; then
+		echo create_geometry failed
+		exit 1
+	fi
 	echo
 	echo " TEMPORARY PATCH: Restoring some original repo files needed for validation."
 	echo " This PATCH will be removed in the once the Real Run Number work for targets is completed."
