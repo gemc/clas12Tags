@@ -68,6 +68,7 @@ jobs:
             /root/logs/
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
 
   compare-result:
     needs: compare

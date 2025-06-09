@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <bit>
 
 #if defined(__APPLE_CC__)
 #include <sys/types.h>
