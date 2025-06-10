@@ -47,6 +47,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
+      - name: Fix Java Version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh

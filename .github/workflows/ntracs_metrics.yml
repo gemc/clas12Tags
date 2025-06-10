@@ -59,6 +59,11 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: ${{ 'gemc/clas12Tags' }}
+      - name: Fix Java Version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh
