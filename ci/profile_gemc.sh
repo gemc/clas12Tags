@@ -92,7 +92,7 @@ fi
 
 mv callgrind.* /root/logs/
 
-printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" $gemc_log | cut -d':' -f3 | cut -d' ' -f2)" >$log_file
+printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" $gemc_log | cut -d':' -f3 | cut -d' ' -f2)" > $log_file
 
 echo
 cat $log_file
