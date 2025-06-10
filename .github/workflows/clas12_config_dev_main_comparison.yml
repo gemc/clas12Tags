@@ -82,8 +82,8 @@ jobs:
           pattern: gemclogs-*
       - name: Detailed Table
         run: |
-          ls */*output_details.log
-          cat */*output_details.log > comparison.log
+          ls */root/logs/*output_details.log
+          cat */root/logs/*output_details.log > comparison.log
           echo "| GCard | Bank | Status  |" > Summary.md
           echo "|-------|---------|---------|" >> Summary.md
           while IFS=: read -r gcard bank pass; do

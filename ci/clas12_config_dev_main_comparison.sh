@@ -115,7 +115,7 @@ gemc   -USE_GUI=0 "$gcard_main" -N="$nevents" -OUTPUT="hipo, $outfile2" -RANDOM=
 
 echo
 echo   "\n\nContent of directory after running gemc: "
-echo   "\n\nContent of directory after running gemc: " >>$log_file_run
+echo   "\n\nContent of directory after running gemc: " >> $log_file_run
 ls -l
 ls -l >>$log_file_run
 echo
