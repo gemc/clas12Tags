@@ -30,7 +30,7 @@ def download_artifact(download_url, token, artifact_name):
 # Parse the command-line argument for OS type
 parser = argparse.ArgumentParser(
 	description="Specify the OS for selecting the appropriate workflow.")
-parser.add_argument("os_type", choices=["almalinux", "fedora"],
+parser.add_argument("os_type", choices=["almalinux", "fedora", "ubuntu"],
                     help="Specify 'almalinux' or 'fedora'")
 
 args = parser.parse_args()
@@ -40,13 +40,15 @@ if args.os_type == "almalinux":
 	WORKFLOW_ID = "build_gemc_almalinux.yml"
 elif args.os_type == "fedora":
 	WORKFLOW_ID = "build_gemc_fedora.yml"
+elif args.os_type == "fedora":
+	WORKFLOW_ID = "build_gemc_ubuntu.yml"
 
 # Define the variables
 # Use HOME environment variable to get the path
 with open(f"{os.path.expanduser('~')}/.mauri") as f:
 	MAURI = f.read().strip()
 
-REPO = "gemc/clas12Tags"  # e.g., "octocat/Hello-World"
+REPO = "gemc/clas12Tags"
 
 # Set up the headers for authentication
 headers = {

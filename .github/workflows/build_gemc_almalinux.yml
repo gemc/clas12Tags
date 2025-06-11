@@ -31,6 +31,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
+      - name: Build Coatjava
+        run: |
+          ./geometry_source/install_coatjava.sh
       - name: Build gemc
         run: |
           ./ci/build_gemc.sh
@@ -38,7 +41,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: gemc
+          name: gemc-almalinux
           path: |
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api

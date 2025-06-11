@@ -11,6 +11,9 @@ function mwget() {
 
 }
 
+echo START_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
+
+
 rm -rf coat*jar jcsg*jar vecmath*jar
 
 # development. Set to no to use coatjava distribution instead
@@ -74,6 +77,8 @@ fi
 
 cd $src_dir
 paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
-./build-coatjava.sh --no-progress  $paralllel > ../build_coatjava.log 2>&1
+echo "Running coatjava build with options: --no-progress  $paralllel" >> ../build_coatjava.log
+./build-coatjava.sh --no-progress  $paralllel >> ../build_coatjava.log
 cp coatjava/lib/clas/* ..
 cp -r coatjava ../$install_dir
+echo END_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
