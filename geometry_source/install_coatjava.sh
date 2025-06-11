@@ -79,6 +79,10 @@ cd $src_dir
 paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
 echo "Running coatjava build with options: --no-progress  $paralllel" >> ../build_coatjava.log
 ./build-coatjava.sh --no-progress  $paralllel >> ../build_coatjava.log
+if [[ $? -ne 0 ]]; then
+	echo "Error: coatjava build failed. See build_coatjava.log for details."
+	exit 1
+fi
 cp coatjava/lib/clas/* ..
 cp -r coatjava ../$install_dir
 echo END_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
