@@ -33,8 +33,9 @@ jobs:
           distribution: 'zulu'
       - name: Build Coatjava
         run: |
-          ./geometry_source/install_coatjava.sh
-      - name: Build gemc
+          cd ./geometry_source
+          ./install_coatjava.sh
+      - name: Build Gemc
         run: |
           ./ci/build_gemc.sh
           echo "github.event.head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
