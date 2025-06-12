@@ -22,14 +22,15 @@ function compile_gemc {
 	copt=" -j"$(getconf _NPROCESSORS_ONLN)" OPT=1"
 	echo
 	echo Compiling GEMC with options: "$copt" "$debug"
-	echo START_GEMC_COMPILATION $(date) > gemc_build.log
-	echo Compiling GEMC with options: "$copt" "$debug" >> gemc_build.log
-	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" >> gemc_build.log
+	echo START_GEMC_COMPILATION $(date) > gemc_build.log | tee -a gemc_build.log
+	echo Compiling GEMC with options: "$copt" "$debug" >> gemc_build.log | tee -a gemc_build.log
+	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" &>> gemc_build.log
 	if [ $? -ne 0 ]; then
-		echo scons failed
+		echo "scons failed. Log: "
+		cat gemc_build.log
 		exit 1
 	fi
-	echo END_GEMC_COMPILATION $(date) >> gemc_build.log
+	echo END_GEMC_COMPILATION $(date) >> gemc_build.log | tee -a gemc_build.log
 	# checking existence of executable
 	echo "Created executable: " $(ls gemc)
 
@@ -41,10 +42,11 @@ function compile_gemc {
 function create_geo_dbs {
 	echo
 	echo "Creating all geometry databases with: create_geometry.sh"
-	echo START_CREATE_GEOMETRY $(date) > geo_build.log
-	./create_geometry.sh >> geo_build.log
+	echo START_CREATE_GEOMETRY $(date) > geo_build.log | tee -a geo_build.log
+	./create_geometry.sh &>> geo_build.log
 	if [ $? -ne 0 ]; then
-		echo create_geometry failed
+		echo "create_geometry failed. Log:"
+		cat geo_build.log
 		exit 1
 	fi
 	echo
@@ -67,13 +69,10 @@ function create_geo_dbs {
 	cp -r experiments clas12.sqlite source/gemc_build.log geo_build.log geometry_source/build_coatjava.log /cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 	echo "Changes after creation:"
-	git branch ; git status -s
-	git branch ; git status -s >> geo_build.log
-	echo END_CREATE_GEOMETRY $(date) >> geo_build.log
+	git branch ; git status -s >> geo_build.log | tee -a geo_build.log
+	echo END_CREATE_GEOMETRY $(date) >> geo_build.log | tee -a geo_build.log
 
 }
-
-
 
 compile_gemc
 create_geo_dbs

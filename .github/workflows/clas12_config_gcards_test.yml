@@ -68,7 +68,11 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: ${{ 'gemc/clas12Tags' }}
-      - name: Build GEMC
+      - name: Build Coatjava
+        run: |
+          cd ./geometry_source
+          ./install_coatjava.sh -l
+      - name: Build Gemc
         run: |
           ./ci/build_gemc.sh
       - name: Fix Java Version
