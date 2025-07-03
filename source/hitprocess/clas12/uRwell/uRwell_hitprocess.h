@@ -65,6 +65,14 @@ private:
 	
 	// - electronicNoise: returns a vector of hits generated / by electronics.
 	vector<MHit*> electronicNoise();
+    
+    double uRwell_GetStereoAngle(G4Step*);
+    vector<int> uRwell_getNumberStripChamber(G4Step*);
+    double uRwell_getStripPitch(G4Step* aStep);
+    double uRwell_getStripWidth(G4Step* aStep);
+    
+    
+    
 	
 };
 

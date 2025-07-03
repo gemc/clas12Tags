@@ -69,7 +69,7 @@ for(my $ii=0; $ii<=$#allConfs; $ii++){
     print "$configuration{variation}\n";
     
     # run DC factory from COATJAVA to produce volumes
-    system("../coatjava/bin/run-groovy factory.groovy --variation $configuration{variation} --runnumber 11 --number_of_Region $configuration{number_of_Region}");
+    system("$ENV{COATJAVA}/bin/run-groovy factory.groovy --variation $configuration{variation} --runnumber 11 --number_of_Region $configuration{number_of_Region}");
 
   #  %configuration = $configuration{"variation"};
     

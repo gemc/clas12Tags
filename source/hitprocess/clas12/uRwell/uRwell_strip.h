@@ -35,16 +35,22 @@ public:
 	// strip geometrical characteristics;
 	
 	int number_of_strip;
-	int number_strip_chamber[3];
+	//int number_strip_chamber[3];
 	
-	double stripU_stereo_angle ; // angle between strip and trapezoid base in degree
-	double stripU_pitch ;  //mm
-	double stripU_width[4] ;  // mm
+    double stripPitch; //mm
+    double stripPitch_ddvcs; //
+    
+    double stripWidth; //mm
+    double stripWidth_ddvcs; //mm
+    
+    double stripAngle;
+    double stripAngle_ddvcs;
+    
+//	double stripU_width[4] ;  // mm
 	double stripU_width_proto[4]; //mm
 
-	double stripV_stereo_angle ; // angle between strip and trapezoid base in degree
-	double stripV_pitch ;  //mm
-	double stripV_width[4] ;  // mm
+
+	//double stripV_width[4] ;  // mm
 	double stripV_width_proto[4]; //mm
 
 	
@@ -67,26 +73,31 @@ private:
 	
 public:
 
-	inline void get_strip_info(string a, bool isProto){
-		if (a == "strip_u") {
-			stereo_angle = stripU_stereo_angle;
-			strip_pitch = stripU_pitch;
+	inline void get_strip_info(string a, bool isProto, double angle, double pitch, double width){
+        
+        double Stripwidth =width;
+        if (a == "strip_u") {
+			stereo_angle = -angle;
+			strip_pitch = pitch;
 			if(isProto==true) {
 				copy(std::begin(stripU_width_proto), std::end(stripU_width_proto), std::begin(strip_width));
 			//	strip_width = stripU_width_proto;
 			}else{
-				copy(std::begin(stripU_width), std::end(stripU_width), std::begin(strip_width));
+                std::fill(std::begin(strip_width), std::end(strip_width), Stripwidth);
+				
 			}
 			kind_strip = a;
 		}
 		if (a == "strip_v") {
-			stereo_angle = stripV_stereo_angle;
-			strip_pitch = stripV_pitch;
+			stereo_angle = angle;
+			strip_pitch = pitch;
+            
 			if(isProto==true) {
 				copy(std::begin(stripV_width_proto), std::end(stripV_width_proto), std::begin(strip_width));
-			}else{
-				copy(std::begin(stripV_width), std::end(stripV_width), std::begin(strip_width));
-			}
+            }else{
+                
+                std::fill(std::begin(strip_width), std::end(strip_width), Stripwidth);
+            }
 			kind_strip = a;
 		}
 	}
@@ -144,6 +155,8 @@ public:
 	int Number_of_strip(uRwellConstants uRwellc);
 	int strip_id(int i, uRwellConstants uRwellc);
 	
+    bool is_on_segment(const G4ThreeVector& P, const G4ThreeVector& A, const G4ThreeVector& B);
+    bool intersect_segment_with_line(const G4ThreeVector& A, const G4ThreeVector& B, double m, double c, G4ThreeVector& intersection);
 };
 
 

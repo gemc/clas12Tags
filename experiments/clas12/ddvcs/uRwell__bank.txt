@@ -1,0 +1,9 @@
+              urwell  |              bankid  |                                    urwell bank ID  | 2300   |                  Di  
+              urwell  |              sector  |                                     sector number  |    1   |                  Di  
+              urwell  |               layer  |                                      layer number  |    2   |                  Di  
+              urwell  |           component  |                                      strip number  |    3   |                  Di  
+              urwell  |           ADC_order  |                                          always 0  |    4   |                  Di  
+              urwell  |             ADC_ADC  |                                               ADC  |    5   |                  Di  
+              urwell  |            ADC_time  |                                          always 0  |    6   |                  Dd  
+              urwell  |             ADC_ped  |                                          always 0  |    7   |                  Di  
+              urwell  |                hitn  |                                        hit number  |   99   |                  Di  

@@ -4,6 +4,7 @@
 #include "G4Poisson.hh"
 #include <iostream>
 #include <cmath>
+#include <set>
 #define _USE_MATH_DEFINES
 
 vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Edep, uRwellConstants uRwellc, double time, bool isProto)
@@ -30,9 +31,8 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	
 	// strip reference frame
 	
-	
-	double x_real = xyz.x()*cos(M_PI*uRwellc.get_stereo_angle()/180) + xyz.y()*sin(M_PI*uRwellc.get_stereo_angle()/180);
-	double y_real = xyz.y()*cos(M_PI*uRwellc.get_stereo_angle()/180) - xyz.x()*sin(M_PI*uRwellc.get_stereo_angle()/180);
+	double x_real = xyz.x()*cos(uRwellc.get_stereo_angle()) + xyz.y()*sin(uRwellc.get_stereo_angle());
+	double y_real = xyz.y()*cos(uRwellc.get_stereo_angle()) - xyz.x()*sin(uRwellc.get_stereo_angle());
 	double z_real = xyz.z();
 	
 	
@@ -41,9 +41,11 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	int ClosestStrip_ID = round((y_real)/uRwellc.get_strip_pitch());
 	
 	double weight=Weight_td(ClosestStrip_ID, x_real, y_real, z_real, uRwellc, isProto);
+    
 	double strip_length_toReadout =cal_length(strip_endpoint1, xyz);
 	double time_toReadout = strip_length_toReadout/uRwellc.v_eff_readout;
-	if(uRwellc.v_eff_readout ==0) time_toReadout=0;
+	
+    if(uRwellc.v_eff_readout ==0) time_toReadout=0;
 	time_strip = time + time_dz + time_toReadout + G4RandGauss::shoot(0., uRwellc.sigma_time);
 	
 	ClosestStrip.numberID = ClosestStrip_ID;
@@ -59,10 +61,12 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	double weight_previous=1;
 	int clus =1;
 	
+ //   cout <<"ClosestStrip_ID "<<ClosestStrip_ID<<endl;
 	while(weight_next>=0. || weight_previous>=0.){
-		
+        
 		//Look at the next strip
 		strip_num = ClosestStrip_ID + clus;
+     //   cout <<"next ID "<<strip_num<<endl;
 		weight_next = Weight_td(strip_num, x_real, y_real, z_real, uRwellc, isProto);
 		if(weight_next!=-1){
 			NextStrip.numberID = strip_num;
@@ -76,6 +80,7 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 		
 		//Look at the previous strip
 		strip_num = ClosestStrip_ID - clus;
+    //    cout <<"previous ID "<<strip_num<<endl;
 	    weight_previous = Weight_td(strip_num, x_real, y_real, z_real, uRwellc, isProto);
 		if(weight_previous!=-1){
 			NextStrip.numberID = strip_num;
@@ -92,7 +97,7 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	
 	
 	/* New strip ID numeration: 1.... Number_of_strips. Number of involved strips is the size of the vector strip_found_temp  */
-	
+    /*
 	auto max = std::max_element( strip_found_temp.begin(), strip_found_temp.end(),
 										 []( const uRwell_strip_found &a, const uRwell_strip_found &b )
 										 {
@@ -109,12 +114,38 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	//	auto number_of_strip = Number_of_strip(uRwellc);
 	
 	for (unsigned int i=0; i<strip_found_temp.size();i++){
-	//	cout <<"b: "<<strip_found_temp.at(i).numberID<<endl;
+		cout <<"b: "<<strip_found_temp.at(i).numberID<<endl;
 		strip_found_temp.at(i).numberID = strip_found_temp.at(i).numberID - avg + strip_found_temp.size()/2 ;
-//		cout <<"a: "<<strip_found_temp.at(i).numberID<<endl;
+		cout <<"a: "<<strip_found_temp.at(i).numberID<<endl;
 
 	}
-	
+	*/
+    
+    // 1. Collect all unique IDs
+    std::set<int> unique_ids;
+    for (const auto& strip : strip_found_temp)
+        unique_ids.insert(strip.numberID);
+
+    // 2. Build oldID → newID map
+    std::map<int, int> old_to_new;
+    int base = *unique_ids.begin(); // Smallest ID becomes 1
+    for (int id : unique_ids) {
+        old_to_new[id] = id - base + 1;
+    }
+
+    // 3. Print oldID → newID mapping
+    /*
+    std::cout << "Old ID → New ID mapping:\n";
+    for (const auto& [oldID, newID] : old_to_new) {
+        std::cout << "  " << oldID << " → " << newID << '\n';
+    }
+*/
+    // 4. Apply new numbering
+    for (auto& strip : strip_found_temp) {
+        strip.numberID = old_to_new[strip.numberID];
+    }
+    
+    
 	double Nel_left=N_el;
 	double renorm=0;
 	double weight_this_strip;
@@ -163,11 +194,56 @@ double uRwell_strip::Weight_td(int strip, double x, double y, double z, uRwellCo
 	return wght;
 }
 
+
+// Check if point P lies on segment AB
+bool uRwell_strip::is_on_segment(const G4ThreeVector& P, const G4ThreeVector& A, const G4ThreeVector& B) {
+    double minX = std::min(A.x(), B.x()), maxX = std::max(A.x(), B.x());
+    double minY = std::min(A.y(), B.y()), maxY = std::max(A.y(), B.y());
+    return (P.x() >= minX - 1e-9 && P.x() <= maxX + 1e-9 &&
+            P.y() >= minY - 1e-9 && P.y() <= maxY + 1e-9);
+}
+
+// Find the intersection between a line y = m*x + c and the segment AB
+bool uRwell_strip::intersect_segment_with_line(const G4ThreeVector& A, const G4ThreeVector& B, double m, double c, G4ThreeVector& intersection) {
+    double x1 = A.x(), y1 = A.y();
+    double x2 = B.x(), y2 = B.y();
+
+    double dx = x2 - x1;
+    double dy = y2 - y1;
+
+    // Handle vertical segment
+    if (std::abs(dx) < 1e-9) {
+        double x = x1;
+        double y = m * x + c;
+        intersection = {x, y, A.z()};
+        return is_on_segment(intersection, A, B);
+    }
+
+    // Check if the line and the segment are parallel
+    double denom = dy - m * dx;
+    if (std::abs(denom) < 1e-9) return false;
+
+    // Solve for parameter s along the segment
+    double s = (m * x1 + c - y1) / denom;
+    if (s < 0.0 || s > 1.0) return false; // intersection not within segment
+
+    // Compute intersection point
+    double x = x1 + s * dx;
+    double y = y1 + s * dy;
+    intersection = {x, y, A.z()};
+    return true;
+}
+
+
+
+
+
+
 bool uRwell_strip::Build_strip(int strip, uRwellConstants uRwellc ){
 	
 	//strip straight line -> y = mx +c;
-	double m = tan(M_PI*uRwellc.get_stereo_angle()/180);
-	double c = strip*uRwellc.get_strip_pitch()/cos(M_PI*uRwellc.get_stereo_angle()/180);
+	double m = tan(uRwellc.get_stereo_angle());
+	double c = strip*uRwellc.get_strip_pitch()/cos(uRwellc.get_stereo_angle());
 
    // Trapezoid coordinates
 	G4ThreeVector A = {-uRwellc.Xhalf_base, -uRwellc.Yhalf, uRwellc.Zhalf};
@@ -195,44 +271,37 @@ bool uRwell_strip::Build_strip(int strip, uRwellConstants uRwellc ){
 	G4ThreeVector first_point;
 	G4ThreeVector second_point;
 	
-	// check if the intersection point is on the segment defined by two points (i.e A and B)
-	
-	 if(uRwellc.get_strip_kind()=="strip_v"){
+    
+    std::vector<G4ThreeVector> intersections;
+    G4ThreeVector verts[4] = {A, B, D, C}; // side: AB, BD, DC, CA
+    
+    for (int i = 0; i < 4; ++i) {
+        G4ThreeVector P1 = verts[i];
+        G4ThreeVector P2 = verts[(i + 1) % 4];
+        G4ThreeVector inter;
 
-		if(pointOnsegment(AC_strip, A, C)) {
-			first_point=AC_strip;
-			if(pointOnsegment(BD_strip, B, D)) second_point = BD_strip;
-			if(pointOnsegment(CD_strip, C, D)) second_point = CD_strip;
-			
-		}else if(pointOnsegment(AB_strip, A, B)){
-			first_point=AB_strip;
-			
-			if(pointOnsegment(BD_strip, B, D)) second_point = BD_strip;
-			if(pointOnsegment(CD_strip, C, D)) second_point = CD_strip;
-			
-		}else{
-			return false;
-		}
-	}
-	
-	
-	
-	 if(uRwellc.get_strip_kind()=="strip_u"){
+        if (intersect_segment_with_line(P1, P2, m, c, inter)) {
+            intersections.push_back(inter);
+        }
+    }
 
-		if(pointOnsegment(BD_strip, B, D)){
-			first_point=BD_strip;
-			
-			if(pointOnsegment(AC_strip, A, C)) second_point = AC_strip;
-			if(pointOnsegment(CD_strip, C, D)) second_point = CD_strip;
-		}else if (pointOnsegment(AB_strip, A, B)){
-			first_point=AB_strip;
-			if(pointOnsegment(AC_strip, A, C)) second_point = AC_strip;
-			if(pointOnsegment(CD_strip, C, D)) second_point = CD_strip;
-		}else{
-			return false;
-		}
-		
-	}
+    // Output
+/*
+    std::cout << "Found " << intersections.size() << " Inteserction Points:\n";
+    for (size_t i = 0; i < intersections.size(); ++i) {
+        std::cout << "Point " << i+1 << ": ("
+                  << intersections[i].x() << ", "
+                  << intersections[i].y() << ")\n";
+    }
+  */
+    
+    if(intersections.size()!=2) {
+        return false;
+    }else{
+        first_point =intersections[0];
+        second_point =intersections[1];
+    }
+    
 	
 	length_strip = cal_length(first_point, second_point);
 	
@@ -247,15 +316,22 @@ bool uRwell_strip::Build_strip(int strip, uRwellConstants uRwellc ){
 	strip_y = strip_endpoint1_stripFrame.y();
 	strip_x = (strip_endpoint1_stripFrame.x() + strip_endpoint2_stripFrame.x())/2;
 	
-/*
-	cout << "strip: "<<strip<< endl;
+    /*
+	cout << "strip: "<<strip<<"  "<<uRwellc.get_strip_kind()<< endl;
 	cout << strip_endpoint1.x()<< " "<< strip_endpoint1.y()<<" "<<endl;
 	cout << strip_endpoint2.x()<< " "<< strip_endpoint2.y()<<" "<<endl;
 	cout <<"done"<<endl;
 */
 
+ 
 	return true;
 }
+
+
+
+
+
+
 
 G4ThreeVector uRwell_strip::change_of_coordinates( G4ThreeVector A, uRwellConstants uRwellc){
 	
@@ -322,16 +398,19 @@ int uRwell_strip::Number_of_strip(uRwellConstants uRwellc){
 	
 	/*** number of strip in AB***/
 	
-	int n_AB = abs(2*uRwellc.Xhalf_base/(uRwellc.stripU_pitch/sin(M_PI*uRwellc.get_stereo_angle()/180)));
+	int n_AB = abs(2*uRwellc.Xhalf_base/(uRwellc.get_strip_pitch()/sin(uRwellc.get_stereo_angle())));
 
 	/** number of strip in CA **/
+    
 	double AC = sqrt((pow((uRwellc.Xhalf_base-uRwellc.Xhalf_Largebase),2) + pow((uRwellc.Yhalf+uRwellc.Yhalf),2)));
     double theta = acos(2*uRwellc.Yhalf/(AC));
-	int n_AC = AC/(uRwellc.stripU_pitch/cos(theta-abs(M_PI*uRwellc.get_stereo_angle())/180));
+	int n_AC = AC/(uRwellc.get_strip_pitch()/cos(theta-abs(uRwellc.get_stereo_angle())));
 
 	N = n_AB + n_AC+1;
+
     return N;
 }
+
 
 int uRwell_strip::strip_id(int i, uRwellConstants uRwell ){
 	int ID = 0;

@@ -18,6 +18,10 @@ using namespace CLHEP;
 #include <CCDB/Calibration.h>
 #include <CCDB/Model/Assignment.h>
 #include <CCDB/CalibrationGenerator.h>
+
+
+#include <cmath>
+
 using namespace ccdb;
 
 static uRwellConstants initializeuRwellConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
@@ -50,31 +54,35 @@ static uRwellConstants initializeuRwellConstants(int runno, string digiVariation
 	 // all dimensions are in mm
 	 */
 	/*number of strip in each chambers*/
-	urwellC.number_strip_chamber[0] = 542;
-	urwellC.number_strip_chamber[1] = 628;
-	urwellC.number_strip_chamber[2] = 714;
+//	urwellC.number_strip_chamber[0] = 542;
+//	urwellC.number_strip_chamber[1] = 628;
+//	urwellC.number_strip_chamber[2] = 714;
 	
-	urwellC.number_of_strip = 1884; //Total number of strip
-	urwellC.stripU_stereo_angle = -10 ; // angle between strip and trapezoid base in degree
-	urwellC.stripU_pitch = 1.;  //mm
+//	urwellC.number_of_strip = 1884; //Total number of strip
 
-	urwellC.stripU_width[0] = 0.4;
-	urwellC.stripU_width[1] = 0.4;
-	urwellC.stripU_width[2] = 0.4;
-	urwellC.stripU_width[3] = 0.4;
+
+    urwellC.stripPitch = 1.; //mm
+    urwellC.stripPitch_ddvcs = 0.5; //
+    urwellC.stripWidth = 0.4; //mm
+    urwellC.stripWidth_ddvcs = 0.3; //mm
+    
+    urwellC.stripAngle = 10; //deg
+
+  //  urwellC.stripU_width[0] = 0.4;
+//	urwellC.stripU_width[1] = 0.4;
+//	urwellC.stripU_width[2] = 0.4;
+//	urwellC.stripU_width[3] = 0.4;
 
 	urwellC.stripU_width_proto[0] = 0.175;
 	urwellC.stripU_width_proto[1] = 0.350;
 	urwellC.stripU_width_proto[2] = 0.262;
 	urwellC.stripU_width_proto[3] = 0.350;
 
-	urwellC.stripV_stereo_angle = 10 ; // angle between strip and trapezoid base in degree
-	urwellC.stripV_pitch = 1.;  //mm
 
-	urwellC.stripV_width[0] = 0.4;
-	urwellC.stripV_width[1] = 0.4;
-	urwellC.stripV_width[2] = 0.4;
-	urwellC.stripV_width[3] = 0.4;
+//	urwellC.stripV_width[0] = 0.4;
+//	urwellC.stripV_width[1] = 0.4;
+//	urwellC.stripV_width[2] = 0.4;
+//	urwellC.stripV_width[3] = 0.4;
 
 	urwellC.stripV_width_proto[0] = 0.355;
 	urwellC.stripV_width_proto[1] = 0.650;
@@ -92,6 +100,127 @@ static uRwellConstants initializeuRwellConstants(int runno, string digiVariation
 	
 	return urwellC;
 }
+
+
+
+double uRwell_HitProcess::uRwell_getStripWidth(G4Step* aStep){
+
+    double stripWidth = uRwellC.stripWidth;
+    G4VTouchable* TH = (G4VTouchable*) aStep->GetPreStepPoint()->GetTouchable();
+    G4Trap *Trap = dynamic_cast<G4Trap*>(TH->GetSolid());
+    
+    if(Trap->GetName().find("ddvcs")!=std::string::npos){
+     
+        stripWidth = uRwellC.stripWidth_ddvcs;
+    }
+    
+    return stripWidth;
+}
+
+
+
+double uRwell_HitProcess::uRwell_getStripPitch(G4Step* aStep){
+    
+    double stripPitch =0;
+    G4VTouchable* TH = (G4VTouchable*) aStep->GetPreStepPoint()->GetTouchable();
+    G4Trap *Trap = dynamic_cast<G4Trap*>(TH->GetSolid());
+    
+    if(Trap->GetName().find("ddvcs")!=std::string::npos){
+        
+        stripPitch =  uRwellC.stripPitch_ddvcs; //mm
+        
+    }else{
+        stripPitch = uRwellC.stripPitch; //mm
+    }
+
+    return stripPitch;
+}
+
+
+double uRwell_HitProcess::uRwell_GetStereoAngle(G4Step* aStep){
+    
+    double stereoAngle =0;
+    G4VTouchable* TH = (G4VTouchable*) aStep->GetPreStepPoint()->GetTouchable();
+    G4Trap *Trap = dynamic_cast<G4Trap*>(TH->GetSolid());
+    
+    if(Trap->GetName().find("ddvcs")!=std::string::npos){
+        
+        stereoAngle = atan(2*Trap->GetYHalfLength1()/(Trap->GetXHalfLength2() - Trap->GetXHalfLength1()));
+    } else if(Trap->GetName().find("proto")!=std::string::npos){
+     
+        stereoAngle = uRwellC.stripAngle*M_PI/180;
+    } else{
+        
+        stereoAngle = uRwellC.stripAngle*M_PI/180;
+    }
+    return stereoAngle;
+    
+}
+
+
+
+
+vector<int> uRwell_HitProcess::uRwell_getNumberStripChamber(G4Step* aStep){
+    
+    vector<int> numberStripChamber;
+    
+    double stereoAngle = uRwell_GetStereoAngle(aStep);
+    double pitch = uRwell_getStripPitch(aStep);
+
+    G4VPhysicalVolume* grandmotherPV = aStep->GetPreStepPoint()->GetTouchableHandle()->GetVolume(2);
+    if (grandmotherPV) {
+        // logicc volume mother
+        G4LogicalVolume* grandmotherLV = grandmotherPV->GetLogicalVolume();
+
+        // Controlla se ha una parameterizzazione
+        const G4VPVParameterisation* param = grandmotherPV->GetParameterisation();
+        if (!param) {
+            G4int nMothers = grandmotherLV->GetNoDaughters();
+            for (G4int i = 0; i < nMothers; ++i) {
+                G4VPhysicalVolume* motherPV = grandmotherLV->GetDaughter(i);
+                G4LogicalVolume* motherLV = motherPV->GetLogicalVolume();
+                G4int nDaughters = motherLV->GetNoDaughters();
+                for (G4int i = 0; i < nDaughters; ++i) {
+                    
+                    G4VPhysicalVolume* daughter = motherLV->GetDaughter(i);
+                    G4VSolid* solidT2 = daughter->GetLogicalVolume()->GetSolid();
+                    G4Trap* Trap = dynamic_cast<G4Trap*>(solidT2);
+  
+                    if(Trap->GetName().find("cathode_gas")!=std::string::npos){
+
+                        double xHalfSmallBase = Trap->GetXHalfLength1();
+                        double xHalfLargeBase = Trap->GetXHalfLength2();
+                        double yHalf = Trap->GetYHalfLength1();
+                        
+                        
+                        
+                        int nAB = static_cast<int>(std::round(2 * xHalfSmallBase / (pitch / std::sin(stereoAngle))));
+
+                        double AC = std::sqrt(std::pow((xHalfSmallBase - xHalfLargeBase), 2) + std::pow((2 * yHalf), 2));
+                        double theta = std::acos(2 * yHalf / AC);
+
+                        int nAC = static_cast<int>(std::round(AC / (pitch / std::cos(theta - stereoAngle))));
+
+                        int nStrips = nAB + nAC;
+                        
+                        numberStripChamber.push_back(nStrips);
+                    }
+                }
+                
+            }
+        }
+    }
+    
+    return numberStripChamber;
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -143,8 +272,12 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 	// double Lorentz_angle=0;
 	G4ThreeVector   xyz    = aStep->GetPostStepPoint()->GetPosition();
 	G4ThreeVector  lxyz    = aStep->GetPreStepPoint()->GetTouchableHandle()->GetHistory()->GetTopTransform().TransformPoint(xyz); ///< Local Coordinates of interaction
-	
-	
+    
+    
+    
+    vector<int> number_strip_chamber = uRwell_getNumberStripChamber(aStep);
+      
+
 	
 	
 	G4VTouchable* TH = (G4VTouchable*) aStep->GetPreStepPoint()->GetTouchable();
@@ -155,6 +288,7 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 	 bool isProto = false;
 	 if(Trap->GetName().find("proto")!=std::string::npos) isProto = true;
 
+    
 	uRwellC.Xhalf_base = Trap->GetXHalfLength1();
 	uRwellC.Xhalf_Largebase = Trap->GetXHalfLength2();
 	uRwellC.Yhalf = Trap->GetYHalfLength1();
@@ -186,9 +320,18 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 	 Lorentz_angle =0;
 	 }
 	 */
+    
+    
+    double stereo_angle_strip = uRwell_GetStereoAngle(aStep);
+    double pitch = uRwell_getStripPitch(aStep);
+    double width = uRwell_getStripWidth(aStep);
+    
+
+    
+    
 	
 	/* STRIP U */
-    uRwellC.get_strip_info("strip_u", isProto);
+    uRwellC.get_strip_info("strip_u", isProto, stereo_angle_strip, pitch, width);
     vector<uRwell_strip_found> multi_hit_u = URwell_strip.FindStrip(lxyz, depe, uRwellC, time, isProto);
     int n_multi_hits_u = multi_hit_u.size();
 
@@ -216,7 +359,7 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 					    if(multi_hit_u.at(h).numberID ==-15000){
 					    	this_id.id  = multi_hit_u.at(h).numberID ;
 					    } else {
-					    	this_id.id  = multi_hit_u.at(h).numberID + std::accumulate(uRwellC.number_strip_chamber,uRwellC.number_strip_chamber +id[2].id-1,0);
+					    	this_id.id  = multi_hit_u.at(h).numberID + std::accumulate(number_strip_chamber.begin(),number_strip_chamber.begin() +id[2].id-1,0);
 					    }
     				}else this_id.id  = multi_hit_u.at(h).numberID;
     					this_id.time       = multi_hit_u.at(h).time;
@@ -234,7 +377,7 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 
 	
     /* STRIP V */
-    uRwellC.get_strip_info("strip_v", isProto);
+    uRwellC.get_strip_info("strip_v", isProto, stereo_angle_strip, pitch, width);
 	vector<uRwell_strip_found> multi_hit_v = URwell_strip.FindStrip(lxyz, depe, uRwellC, time, isProto);
 	int n_multi_hits_v = multi_hit_v.size();
 
@@ -255,7 +398,7 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 					    if(multi_hit_v.at(h).numberID ==-15000){
 					    	this_id.id  = multi_hit_v.at(h).numberID ;
 					    } else {
-					    	this_id.id  = multi_hit_v.at(h).numberID + std::accumulate(uRwellC.number_strip_chamber,uRwellC.number_strip_chamber +id[2].id-1,0);
+					    	this_id.id  = multi_hit_v.at(h).numberID + std::accumulate(number_strip_chamber.begin(),number_strip_chamber.begin() +id[2].id-1,0);
 					    }
 
 				   }else this_id.id  = multi_hit_v.at(h).numberID;
@@ -326,6 +469,8 @@ void uRwell_HitProcess::initWithRunNumber(int runno)
 		uRwellC.runNo = runno;
 	}
 }
+
+
 
 
 
