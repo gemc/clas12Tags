@@ -109,11 +109,11 @@ public String gemc_atof_string(int sector, int superlayer,int layer, Component c
 				
 		if(superlayer == 0)
 		{
-			str.append(String.format("| %8.4f*mm %8.4f*mm %8.4f*mm | ", 0.0, 0.0, ((comp.getLine().midpoint().z() - 279.7/2)))); // in mm
+			str.append(String.format("| %8.4f*mm %8.4f*mm %8.4f*mm | ", 0.0, 0.0, ((comp.getLine().midpoint().z() )))); // in mm
 		}
 		if(superlayer == 1)
 		{
-			str.append(String.format("| %8.4f*mm %8.4f*mm %8.4f*mm | ", 0.0, 0.0, ((comp.getLine().midpoint().z() - 279.7/2)))); // in mm
+			str.append(String.format("| %8.4f*mm %8.4f*mm %8.4f*mm | ", 0.0, 0.0, ((comp.getLine().midpoint().z() )))); // in mm
 		}
 
 		// these should be the rotation angles 	
