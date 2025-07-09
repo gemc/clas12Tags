@@ -159,8 +159,9 @@ map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// use Crystal ID to define IDX and IDY
 	int IDX = identity[0].id;
 	int IDY = identity[1].id;
-	int iCrystal = (IDY-1)*22+IDX-1;
-	
+	int iCrystal = 245; //(IDY-1)*22+IDX-1;
+	int component = (IDY-1)*40+IDX-1;
+
 	if(aHit->isBackgroundHit == 1) {
 		
 		// background hit has all the energy in the first step. Time is also first step
@@ -171,7 +172,7 @@ map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		dgtz["hitn"]      = hitn;
 		dgtz["sector"]    = 1;
 		dgtz["layer"]     = 1;
-		dgtz["component"] = iCrystal;
+		dgtz["component"] = component;
 		dgtz["ADC_order"] = 0;
 		dgtz["ADC_ADC"]   = (int) (charge/ftcc.fadc_to_charge[iCrystal]);
 		dgtz["ADC_time"]  = (int) stepTime*ftcc.time_to_tdc/25;
@@ -186,7 +187,7 @@ map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// R.De Vita (November 2016)
 	
 	// Get the crystal length: in the FT crystal are BOXes and the half-length is the 3rd element
-	double length = 2 * aHit->GetDetector().dimensions[2];
+	double length = 2 * aHit->GetDetector().dimensions[4];
 	// Get the crystal width (rear face): in the FT crystal are BOXes and the half-length is the 2th element
 	//	double width  = 2 * aHit->GetDetector().dimensions[1];
 	
@@ -195,7 +196,7 @@ map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	int ADC = 0;
 	//int TDC = 8191;
     double FADC_TIME = 8191;
-	
+
 	if(tInfos.eTot>0)
 	{
 		/*
@@ -272,7 +273,7 @@ map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = 1;
 	dgtz["layer"]     = 1;
-	dgtz["component"] = iCrystal;
+	dgtz["component"] = component;
 	dgtz["ADC_order"] = 0;
 	dgtz["ADC_ADC"]   = ADC;
 	dgtz["ADC_time"]  = convert_to_precision(FADC_TIME);
