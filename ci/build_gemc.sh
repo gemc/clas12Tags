@@ -79,12 +79,12 @@ create_geo_dbs
 log_gemc_info
 
 echo
-echo "Content of artifacts dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4"
+echo "Content of artifacts dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4:"
 ls -lrt /cvmfs/oasis.opensciencegrid.org/jlab/geant4
-
-echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12"
+echo
+echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12:"
 ls -lrt /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12
-
+echo
 # copying executable, api and sqlite database for artifact retrieval
 # the experiment dir is synced with the bin/cron_gemc_artifact_install_jlab.sh
 echo "Copying executable, api and sqlite database for artifact retrieval"

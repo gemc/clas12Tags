@@ -21,7 +21,7 @@
 ```bash
 git clone https://github.com/gemc/clas12Tags
 cd clas12Tags
-./create_geometry.sh cnd     # build & test the CND detector
+./create_geometry.sh cnd     # build & install the CND detector databases
 ```
 
 ## Table of Contents

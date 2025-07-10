@@ -21,8 +21,15 @@ USEDEVEL="no"
 githubRepo="https://github.com/JeffersonLab/coatjava"
 
 REPO="JeffersonLab/coatjava"
-LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r .tag_name)
+# wait a bit before retrying to avoid rate limiting
+while [[ "$LATEST_RELEASE" == "null" || -z "$LATEST_RELEASE" ]]; do
+  echo "Fetching latest release from $REPO..."
+  LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r .tag_name)
 
+  [[ -z "$LATEST_RELEASE" ]] && sleep 2
+done
+
+echo "Latest coatjava release from $REPO: $LATEST_RELEASE"
 
 # if the -g option is given, set the github url accordingly
 # if the -t option is given, set the coatjava tag accordingly
