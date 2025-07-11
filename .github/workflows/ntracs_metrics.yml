@@ -98,6 +98,7 @@ jobs:
           pattern: tracklogs-*
       - name: Generate Table
         run: |
+          ls -Rl
           cat */*tracks.log > ntracks.log
           echo "| N. Events | N tracks | Total Time | Time / event|" > Summary.md
           echo "|-----------|----------|------------|-------------|" >> Summary.md

@@ -171,6 +171,7 @@ jobs:
           cat Summary.md >> $GITHUB_STEP_SUMMARY
       - name: Summary Digitization Table
         run: |
+          ls -Rl
           ls */*output_summary.log
           cat */*output_summary.log > comparison.log
           echo "| Detector | Digitization Variations | Status  |" > Summary.md
