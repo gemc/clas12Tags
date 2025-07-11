@@ -122,6 +122,7 @@ sub make_mucal_crystals
 				$detector{"material"}    = "G4_PbWO4";
 			        $detector{"sensitivity"} = "ft_cal";
                                 $detector{"hit_type"} = "ft_cal";
+                                $detector{"identifiers"} = "ih manual $iX iv manual $iY";
                 		$detector{"style"}       = 1;
 				print_det(\%configuration, \%detector);
 				
