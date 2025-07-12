@@ -99,7 +99,7 @@ jobs:
       - name: Generate Table
         run: |
           ls -Rl
-          cat */*tracks.log > ntracks.log
+          cat tracklogs*/root/logs/*tracks.log > ntracks.log
           echo "| N. Events | N tracks | Total Time | Time / event|" > Summary.md
           echo "|-----------|----------|------------|-------------|" >> Summary.md
           while read -r nevents ntracks time; do
