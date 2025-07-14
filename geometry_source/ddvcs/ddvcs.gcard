@@ -4,6 +4,7 @@
 
 
 	<detector name="experiments/clas12/ddvcs/ddvcs"     factory="TEXT" variation="newScattChamber"/>
+	<detector name="experiments/clas12/ddvcs/ddvcsts"   factory="TEXT" variation="torusShield"/>
 	<detector name="experiments/clas12/ddvcs/uRwell"    factory="TEXT" variation="ddvcs"/>
 <!--	<detector name="experiments/clas12/ddvcs/cad/"    factory="CAD"/>-->
 
