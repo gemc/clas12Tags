@@ -97,7 +97,7 @@ sub vacuumLine() {
     $zpos = $pipeFirstStep + $pipeLength;
 
     %detector = init_det();
-    my $connectingIR = $secondVacuumIR + 0.1;
+    my $connectingIR = $secondVacuumIR + 0.3;
     $detector{"name"} = "vacuumPipe3";
     $detector{"mother"} = "root";
     $detector{"description"} = "straightVacuumPipe";
