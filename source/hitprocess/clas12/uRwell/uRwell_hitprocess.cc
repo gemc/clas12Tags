@@ -249,7 +249,7 @@ map<string, double>uRwell_HitProcess :: integrateDgt(MHit* aHit, int hitn)
     }
 	dgtz["ADC_ped"]   = 0;
 	
-//	cout<<dgtz["sector"]<<" "<<dgtz["layer"]<<" "<<dgtz["component"]<<" "<<dgtz["ADC_ADC"]<<endl;
+	//cout<<dgtz["sector"]<<" "<<dgtz["layer"]<<" "<<dgtz["component"]<<" "<<dgtz["ADC_ADC"]<<endl;
 	
 	// define conditions to reject hit
 	if (rejectHitConditions) {
@@ -337,11 +337,11 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 
 
     for(int h=0; h<n_multi_hits_u; h++){
-
+        
     		for(int j=0; j<5; j++)
     		{
     			// j=0 region ; j=1 sector; j2 chamber; j3 layer; j4 component
-
+                
     			identifier this_id;
     			this_id.name       = id[j].name;
     			this_id.rule       = id[j].rule;
@@ -349,9 +349,10 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
     			if(j==0) this_id.id = id[j].id;
     			if(j==1) this_id.id = id[j].id;
     			if(j==2) this_id.id = id[j].id;
-    			if(j==3) {
-    				this_id.id = 2*id[0].id-1;
-    			}
+                if(j==3) {
+                    this_id.id = 2*id[0].id-1;
+                   
+                }
     			this_id.time       = id[j].time;
 
     			if(j==4){    //J==4 strip ID
@@ -377,21 +378,32 @@ vector<identifier> uRwell_HitProcess :: processID(vector<identifier> id, G4Step*
 
 	
     /* STRIP V */
+  
     uRwellC.get_strip_info("strip_v", isProto, stereo_angle_strip, pitch, width);
 	vector<uRwell_strip_found> multi_hit_v = URwell_strip.FindStrip(lxyz, depe, uRwellC, time, isProto);
-	int n_multi_hits_v = multi_hit_v.size();
+    
+    int n_multi_hits_v = multi_hit_v.size();
 
+    
+    
+    
+    
 	 for(int h=0; h<n_multi_hits_v; h++){
+       
 	 		for(int j=0; j<5; j++)
 	 		{
+                
 	 			identifier this_id;
 				this_id.name       = id[j].name;
 				this_id.rule       = id[j].rule;
 				if(j==0) this_id.id = id[j].id;
 				if(j==1) this_id.id = id[j].id;
 				if(j==2) this_id.id = id[j].id;
-				if(j==3) this_id.id = 2*id[0].id;
-				this_id.time       = id[j].time;
+                if(j==3) {
+                    this_id.id = 2*id[0].id;
+                    
+                }
+                    this_id.time       = id[j].time;
 
 				if(j==4){    //J==4 strip ID
 				   if(id[2].id>0) {

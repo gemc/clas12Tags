@@ -30,7 +30,7 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	N_el = G4Poisson(N_el*uRwellc.gain);
 	
 	// strip reference frame
-	
+  
 	double x_real = xyz.x()*cos(uRwellc.get_stereo_angle()) + xyz.y()*sin(uRwellc.get_stereo_angle());
 	double y_real = xyz.y()*cos(uRwellc.get_stereo_angle()) - xyz.x()*sin(uRwellc.get_stereo_angle());
 	double z_real = xyz.z();
@@ -41,6 +41,7 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	int ClosestStrip_ID = round((y_real)/uRwellc.get_strip_pitch());
 	
 	double weight=Weight_td(ClosestStrip_ID, x_real, y_real, z_real, uRwellc, isProto);
+  
     
 	double strip_length_toReadout =cal_length(strip_endpoint1, xyz);
 	double time_toReadout = strip_length_toReadout/uRwellc.v_eff_readout;
@@ -61,13 +62,14 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 	double weight_previous=1;
 	int clus =1;
 	
- //   cout <<"ClosestStrip_ID "<<ClosestStrip_ID<<endl;
+   
 	while(weight_next>=0. || weight_previous>=0.){
         
 		//Look at the next strip
 		strip_num = ClosestStrip_ID + clus;
-     //   cout <<"next ID "<<strip_num<<endl;
+        
 		weight_next = Weight_td(strip_num, x_real, y_real, z_real, uRwellc, isProto);
+        
 		if(weight_next!=-1){
 			NextStrip.numberID = strip_num;
 			NextStrip.weight = weight_next;
@@ -185,8 +187,11 @@ vector<uRwell_strip_found> uRwell_strip::FindStrip(G4ThreeVector xyz , double Ed
 double uRwell_strip::Weight_td(int strip, double x, double y, double z, uRwellConstants uRwellc, bool isProto){
 	double wght;
 	if(Build_strip(strip, uRwellc)){
+
+        
 	 wght=( erf((strip_y+uRwellc.get_strip_width(strip, isProto)/2.-y)/uRwellc.sigma_td/sqrt(2))-erf((strip_y-uRwellc.get_strip_width(strip, isProto)/2.-y)/uRwellc.sigma_td/sqrt(2)))*
 			 (erf((strip_x+strip_length/2.-x)/uRwellc.sigma_td/sqrt(2))-erf((strip_x-strip_length/2.-x)/uRwellc.sigma_td/sqrt(2)))/2./2.;
+       
 	 if (wght<0) wght=-wght;
 	}else{
 		wght =-1;
@@ -321,7 +326,7 @@ bool uRwell_strip::Build_strip(int strip, uRwellConstants uRwellc ){
 	cout << strip_endpoint1.x()<< " "<< strip_endpoint1.y()<<" "<<endl;
 	cout << strip_endpoint2.x()<< " "<< strip_endpoint2.y()<<" "<<endl;
 	cout <<"done"<<endl;
-*/
+ */
 
  
 	return true;
@@ -336,8 +341,8 @@ bool uRwell_strip::Build_strip(int strip, uRwellConstants uRwellc ){
 G4ThreeVector uRwell_strip::change_of_coordinates( G4ThreeVector A, uRwellConstants uRwellc){
 	
 	G4ThreeVector XYZ;
-	XYZ.setX(A.x()*cos(M_PI*uRwellc.get_stereo_angle()/180) + A.y()*sin(M_PI*uRwellc.get_stereo_angle()/180));
-    XYZ.setY(A.y()*cos(M_PI*uRwellc.get_stereo_angle()/180) - A.x()*sin(M_PI*uRwellc.get_stereo_angle()/180));
+	XYZ.setX(A.x()*cos(uRwellc.get_stereo_angle()) + A.y()*sin(uRwellc.get_stereo_angle()));
+    XYZ.setY(A.y()*cos(uRwellc.get_stereo_angle()) - A.x()*sin(uRwellc.get_stereo_angle()));
 	XYZ.setZ(A.z());
 	
 	return XYZ;
