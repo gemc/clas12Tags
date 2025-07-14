@@ -33,8 +33,8 @@ sub vacuumLine() {
     # 1.651mm thick
     my $pipeLength = ($pipeFirstStep - $shieldStart) / 2.0 - 0.1;
     my $zpos = $shieldStart + $pipeLength;
-    my $firstVacuumIR = 26.924;
-    my $firstVacuumOR = 28.52;
+    my $firstVacuumIR = 22.924;
+    my $firstVacuumOR = 24.52;
 
 
     my %detector = init_det();
@@ -65,8 +65,8 @@ sub vacuumLine() {
     # in "root" the second part of the pipe is straight until torus
     $pipeLength = ($torusStart - $mediumStarts) / 2.0 - 0.1;
     $zpos = $mediumStarts + $pipeLength;
-    my $secondVacuumIR = 33.275;
-    my $secondVacuumOR = 34.925;
+    my $secondVacuumIR = 24.275;
+    my $secondVacuumOR = 32.925;
 
     %detector = init_det();
     $detector{"name"} = "vacuumPipe2";
@@ -131,7 +131,7 @@ sub vacuumLine() {
 
     my $radius = 30;
     if ($variation eq "ddvcs") {
-        $radius = 28.52;
+        $radius = 24.52;
     }
 
     my $thickness = 0.0375;
