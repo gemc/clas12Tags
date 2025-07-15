@@ -47,7 +47,7 @@ sub buildEcal_motherVolume
     my $Y=0.;
     my $Z=0.;
     $detector{"pos"}         = "$X*mm $Y*mm $Z*mm ";
-    $detector{"material"}    = "G4_PbWO4";
+    $detector{"material"}    = "G4_AIR";
     $detector{"style"}       = "0";
    print_det(\%configuration, \%detector);
 
@@ -124,7 +124,7 @@ sub make_mucal_crystals
 				$detector{"material"}    = "G4_PbWO4";
 			        $detector{"sensitivity"} = "ft_cal";
                                 $detector{"hit_type"} = "ft_cal";
-                                $detector{"identifiers"} = "ih manual $iX iv manual $iY";
+                                $detector{"identifiers"} = "ih manual $idX iv manual $idY";
                 		$detector{"style"}       = 1;
 				print_det(\%configuration, \%detector);
 				
