@@ -69,14 +69,14 @@ sub make_mucal_crystals
         my $CrmaxU = ($Dat25deg+$Clength/2) * ( tan($ThetaU) + tan($ThetaMax - $ThetaU) )*cos($ThetaU);
 	my $microgap = 0.5;
         my $Cwidth = ($CwidthU+$CwidthD)/2 + $microgap;
-	my $nCrystal = 2*$CrmaxU / $Cwidth;
+	my $nCrystal = 2*(int($CrmaxU / $Cwidth)+0);
 
 	for(my $iX = 0; $iX < $nCrystal; $iX++)
 	{
 		for(my $iY = 0; $iY < $nCrystal; $iY++)
 		{
-			my $centerX = - $CrmaxU + $iX*$Cwidth + 0.5*$Cwidth;
-			my $centerY = - $CrmaxU + $iY*$Cwidth + 0.5*$Cwidth;
+			my $centerX = - $nCrystal/2*$Cwidth + $iX*$Cwidth + 0.5*$Cwidth;
+			my $centerY = - $nCrystal/2*$Cwidth + $iY*$Cwidth + 0.5*$Cwidth;
 
 			my $x12 = ($centerX - 0.5*$Cwidth)*($centerX - 0.5*$Cwidth);
 			my $x22 = ($centerX + 0.5*$Cwidth)*($centerX + 0.5*$Cwidth);
@@ -107,9 +107,11 @@ sub make_mucal_crystals
                                 my $posZ = $centerZ * ($radius+$Clength*0/2)/$radius;
 
 				my %detector = init_det();
-				$detector{"name"}        = "ddvcs_ecal" . $iX . "_" . $iY ;
+                                my $idX = $iX+1;
+                                my $idY = $iY+1;
+				$detector{"name"}        = "ddvcs_ecal" . $idX . "_" . $idY ;
 				$detector{"mother"}      = "ddvcs_ecal";
-				$detector{"description"} = "ft crystal (h:" . $iX . ", v:" . $iY . ")";
+				$detector{"description"} = "ft crystal (h:" . $idX . ", v:" . $idY . ")";
             				
                                 $detector{"pos"}         = "$posX*mm $posY*mm $posZ*mm";
                                 $detector{"rotation"}    = "$thetaY*deg $thetaX*deg 0*deg  ";

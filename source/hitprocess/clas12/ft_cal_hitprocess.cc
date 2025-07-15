@@ -160,7 +160,7 @@ map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	int IDX = identity[0].id;
 	int IDY = identity[1].id;
 	int iCrystal = 245; //(IDY-1)*22+IDX-1;
-	int component = (IDY-1)*40+IDX-1;
+	int component = (IDY-1)*44+IDX-1;
 
 	if(aHit->isBackgroundHit == 1) {
 		
