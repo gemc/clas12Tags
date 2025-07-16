@@ -91,7 +91,6 @@ jobs:
           pattern: gemclogs-*
       - name: Detailed Table
         run: |
-          ls -Rl
           ls */root/logs/*output_details.log
           cat */root/logs/*output_details.log > comparison.log
           echo "| GCard | Bank | Status  |" > Summary.md
@@ -102,8 +101,9 @@ jobs:
           cat Summary.md >> $GITHUB_STEP_SUMMARY
       - name: Summary Table
         run: |
-          ls */*output_summary.log
-          cat */*output_summary.log > comparison.log
+          ls -Rl
+          ls */root/logs/*output_summary.log
+          cat */root/logs/*output_summary.log > comparison.log
           echo "| GCard | Status  |" > Summary.md
           echo "|----------|---------|" >> Summary.md
           while IFS=: read -r gcard pass; do
