@@ -241,9 +241,12 @@ map<string, double>uRwell_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	dgtz["layer"]  = identity[3].id;
 	dgtz["component"]  = identity[4].id;
     if(identity[4].id ==-15000){
+        rejectHitConditions = true;
     	dgtz["ADC_ADC"]  = 0;
     	dgtz["ADC_time"] = 0;
     }else{
+        if(tInfos.eTot<0.000025)
+            rejectHitConditions = true;
     	dgtz["ADC_ADC"]  = (1.0*(int) (uRwellC.gain*1e6*tInfos.eTot/uRwellC.w_i));
     	dgtz["ADC_time"] = identity[4].time;
     }
