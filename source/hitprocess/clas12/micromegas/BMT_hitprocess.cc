@@ -71,7 +71,9 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 			bmtc.PITCH[layer][row] = data[row][1];
 			
 			if (bmtc.AXIS[layer]==1) {//Compute angular pitch and redefine the phi angular coverage to be consistent with the pitch
-				bmtc.PITCH[layer][row] = bmtc.PITCH[layer][row]/bmtc.RADIUS[layer]; //Get an angular pitch
+				bmtc.NSTRIPS[layer] = bmtc.RADIUS[layer]*(-bmtc.EDGE1[layer]+bmtc.EDGE2[layer])/bmtc.PITCH[layer][row];
+				bmtc.GROUP[layer][row] = bmtc.NSTRIPS[layer];
+                                bmtc.PITCH[layer][row] = bmtc.PITCH[layer][row]/bmtc.RADIUS[layer]; //Get an angular pitch
 				for (int j = 0; j <bmtc.NSECTORS ; ++j)
 				{
 					double middle=(bmtc.EDGE1[layer]+bmtc.EDGE2[layer])/2.;
