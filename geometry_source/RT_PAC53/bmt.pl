@@ -39,7 +39,7 @@ sub load_parameters_bmt {
     $bmt_ir = $parameters{"BMT_mothervol_InnerRadius"};
     $bmt_or = $parameters{"BMT_mothervol_OutRadius"};
     $bmt_dz = $parameters{"BMT_mothervol_HalfLength"};
-    $bmt_z = $parameters{"FMT_mothervol_zmin"} - $bmt_dz;
+    $bmt_z = 0;#$parameters{"FMT_mothervol_zmin"} - $bmt_dz;
     $bmt_zpcb = $parameters{"BMT_endPCB_zpos"} - $bmt_z;
 
     $nlayer = $parameters{"BMT_nlayer"};
@@ -361,7 +361,7 @@ sub place_coverlay {
         my $PRMax = $PRMin + $Coverlay_Width;
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
 
 
         my $PSPhi = $dtheta_start[$l];
@@ -409,7 +409,7 @@ sub place_cuGround {
         my $PRMax = $PRMin + $CuGround_Width;
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
@@ -455,7 +455,7 @@ sub place_pcb {
     my $PRMin = $radius[$l] + $Coverlay_Width + $CuGround_Width;
     my $PRMax = $radius[$l] + $Coverlay_Width + $CuGround_Width + $PCB_Width;
     my $PDz       = $Dz_halflength[$l];
-    my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
     #my $PDz = 712. / 2.; # actually whole pCB, not just active zone
     #my $PSPhi     = $dtheta_start[$l];
     #my $PDPhi     = $dtheta[$l];
@@ -506,7 +506,7 @@ sub place_Strips {
         my $PRMin = $radius[$l] + $Coverlay_Width + $CuGround_Width + $PCB_Width;
         my $PRMax = $PRMin + $CuStrips_Width;
         my $PDz = $Dz_halflength[$l];
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
@@ -557,7 +557,7 @@ sub place_Kapton {
         my $PRMax = $PRMin + $KaptonStrips_Width;
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
@@ -602,7 +602,7 @@ sub place_Resist {
         my $PRMax = $PRMin + $ResistStrips_Width;
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
@@ -652,7 +652,7 @@ sub place_Gas1 {
         my $PRMax = $radius[$l] + $Coverlay_Width + $CuGround_Width + $PCB_Width + $CuStrips_Width + $KaptonStrips_Width + $ResistStrips_Width + $Gas1_Width;
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
@@ -697,7 +697,7 @@ sub place_Mesh {
         my $PRMax = $PRMin + $Mesh_Width;
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
@@ -751,7 +751,7 @@ sub place_Gas2 {
         my $PRMax = $PRMin + $Gas2_Width;
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
@@ -800,7 +800,7 @@ sub place_driftCuElectrode {
         
         my $PDz = $Dz_halflength[$l];
 
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
         my $PRMin = $radius[$l] + $Coverlay_Width + $CuGround_Width + $PCB_Width + $CuStrips_Width + $KaptonStrips_Width + $ResistStrips_Width + $Gas1_Width + $Mesh_Width + $Gas2_Width;
@@ -870,7 +870,7 @@ sub place_driftKapton {
     my $dthet_start = $noDrift / 2.0;           # slight rotation to keep symmetry.
 
     #my $PDz = $drift_dz[$l] / 2.; # actually whole Drift z-length, not just active zone
-    my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
     my $PSPhi = $dthet_start;
     my $PDPhi = $dthet;
 
@@ -928,7 +928,7 @@ sub place_driftCuGround {
         }
 
         my $PDz = $Dz_halflength[$l];
-        my $z = $bmt_zpcb - $PDz - $zstart_positions[$l];
+        my $z = -$bmt_z + $PDz + $zstart_positions[$l];
         my $PSPhi = $dtheta_start[$l];
         my $PDPhi = $dtheta[$l];
 
