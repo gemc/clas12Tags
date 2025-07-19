@@ -8,6 +8,7 @@
 	<detector name="experiments/clas12/ddvcs/uRwell"    factory="TEXT" variation="ddvcs"/>
 <!--	<detector name="experiments/clas12/ddvcs/cad/"    factory="CAD"/>-->
 
+        <detector name="geometry_source/RT_PAC53/RT" factory="TEXT" variation="default"/>
 	<detector name="experiments/clas12/ddvcs/fluxDets"    factory="TEXT" variation="ddvcs"/>
 
 	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="ddvcs"/>
@@ -49,8 +50,8 @@
         <option name="RECORD_OPTICALPHOTONS"   value="1"/>
         <option name="SKIPREJECTEDHITS"    value="1" />
 
-	<option name="BEAM_P"    value="e-, 11*GeV, 0*deg, 0*deg" />
-<!--	<option name="SPREAD_P"  value="1*GeV, 10*deg, 180*deg" />-->
+	<option name="BEAM_P"    value="proton, 1*GeV, 55*deg, 0*deg" />
+	<option name="SPREAD_P"  value="0.5*GeV, 15*deg, 180*deg" />
 
        <!--  Time window defined by LUMI_EVENT -->
         <option name="LUMI_EVENT"  value="0, 248.5*ns, 4*ns" />

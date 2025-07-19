@@ -38,7 +38,7 @@ sub load_parameters_bmt {
 
     $bmt_ir = $parameters{"BMT_mothervol_InnerRadius"};
     $bmt_or = $parameters{"BMT_mothervol_OutRadius"};
-    $bmt_dz = $parameters{"BMT_mothervol_HalfLength"};
+    $bmt_dz = 330;# $parameters{"BMT_mothervol_HalfLength"};
     $bmt_z = 0;#$parameters{"FMT_mothervol_zmin"} - $bmt_dz;
     $bmt_zpcb = $parameters{"BMT_endPCB_zpos"} - $bmt_z;
 
