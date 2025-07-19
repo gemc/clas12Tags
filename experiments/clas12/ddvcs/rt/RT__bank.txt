@@ -1,0 +1,9 @@
+                 bmt  |              bankid  |                                       bmt bank ID  |  200   |                  Di  
+                 bmt  |              sector  |                                     sector number  |    1   |                  Di  
+                 bmt  |               layer  |                                      layer number  |    2   |                  Di  
+                 bmt  |           component  |                                      strip number  |    3   |                  Di  
+                 bmt  |           ADC_order  |                                          always 0  |    4   |                  Di  
+                 bmt  |             ADC_ADC  |                                               ADC  |    5   |                  Di  
+                 bmt  |            ADC_time  |                                              time  |    6   |                  Dd  
+                 bmt  |             ADC_ped  |                                          always 0  |    7   |                  Di  
+                 bmt  |                hitn  |                                        hit number  |   99   |                  Di  

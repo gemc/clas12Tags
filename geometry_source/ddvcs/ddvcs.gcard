@@ -8,7 +8,7 @@
 	<detector name="experiments/clas12/ddvcs/uRwell"    factory="TEXT" variation="ddvcs"/>
 <!--	<detector name="experiments/clas12/ddvcs/cad/"    factory="CAD"/>-->
 
-        <detector name="geometry_source/RT_PAC53/RT" factory="TEXT" variation="default"/>
+        <detector name="experiments/clas12/ddvcs/rt/RT" factory="TEXT" variation="default"/>
 	<detector name="experiments/clas12/ddvcs/fluxDets"    factory="TEXT" variation="ddvcs"/>
 
 	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="ddvcs"/>
