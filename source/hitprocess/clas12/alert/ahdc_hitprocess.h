@@ -14,9 +14,43 @@ public:
 	string date;
 	string connection;
 	char   database[80];
-	
+
+	// convert each (sector, layer, component) to a number between 0 and 575 (we have 576 wires)
+	static int getUniqueId(int sector, int layer, int component) {
+		if      (layer == 11) {
+			return component - 1;
+		} 
+		else if (layer == 21) {
+			return 47 + component - 1;
+		} 
+		else if (layer == 22) {
+			return 47 + 56 + component - 1;
+		} 
+		else if (layer == 31) {
+			return 47 + 56 + 56 + component - 1;
+		} 
+		else if (layer == 32) {
+			return 47 + 56 + 56 + 72 + component - 1;
+		} 
+		else if (layer == 41) {
+			return 47 + 56 + 56 + 72 + 72 + component - 1;
+		} 
+		else if (layer == 42) {
+			return 47 + 56 + 56 + 72 + 72 + 87 + component - 1;
+		} 
+		else if (layer == 51) {
+			return 47 + 56 + 56 + 72 + 72 + 87 + 87 + component - 1;
+		} else {
+			return -1; // not a ahdc wire
+		}
+	}
+
 	// translation table
 	TranslationTable TT;
+	
+	// t0 table: sector (1) x layer (8) x component (99 wires max : 47 56 56 72 72 87 87 99)
+	double T0Correction[576];
+	double get_T0(int sector, int layer, int component) { return T0Correction[getUniqueId(sector, layer, component)];}
 };
 
 
@@ -31,7 +65,7 @@ public:
 	~ahdc_HitProcess(){;}
 	
 	// constants initialized with initWithRunNumber
-	static ahdcConstants atc;
+	static ahdcConstants ahdcc;
 	
 	void initWithRunNumber(int runno);
 	
@@ -104,7 +138,9 @@ class ahdcSignal {
 		int sector; ///< sector, first wire identifier
 		int layer; ///< layer, second wire identifer
 		int component; ///< component, third wire identifier
-		int nsteps; ///< number of steps in this MHit, i.e number of Geant4 calculation steps in the sensitive area of the wire 
+		int nsteps; ///< number of steps in this MHit, i.e number of Geant4 calculation steps in the sensitive area of the wire
+		ahdcConstants* ptr_ahdcc = nullptr;
+		double t0 = 200;
 	// vectors
 	private :
 		std::vector<double> Edep; ///< array of deposited energy in each step [keV]
@@ -139,7 +175,7 @@ class ahdcSignal {
 		ahdcSignal() = delete;
 		
 		/** @brief Constructor */
-		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width) 
+		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width, ahdcConstants* _ptr_ahdcc) 
 		: tmin(_tmin), tmax(_tmax), timeOffset(_timeOffset), samplingTime(_samplingTime), Landau_width(_Landau_width) {
 			// read identifiers
 			hitn = _hitn;
@@ -147,6 +183,9 @@ class ahdcSignal {
 			sector = 0;
 			layer = 10 * identity[0].id + identity[1].id ; // 10*superlayer + layer
 			component = identity[2].id;
+			ptr_ahdcc = _ptr_ahdcc;
+			t0 = ptr_ahdcc->get_T0(sector, layer, component);
+			//std::cout << "<<< t0 in ahdcSignal : " << t0 << std::endl;
 			// fill vectors
 			Edep = aHit->GetEdep();
 			nsteps = Edep.size();
@@ -199,7 +238,7 @@ class ahdcSignal {
 			for (int s=0; s<nsteps; s++){
 				// setting Landau's parameters
 				Landau L;
-				L.peak() = Parameter("Peak",DriftTime.at(s),tmin,tmax); 
+				L.peak() = Parameter("Peak",1.458*(DriftTime.at(s)+t0),tmin,tmax); 
 				L.width() = Parameter("Width",Landau_width,0,400); 
 				signalValue += Edep.at(s)*L(timePoint-timeOffset);
 			}
