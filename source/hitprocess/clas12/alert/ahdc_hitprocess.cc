@@ -24,20 +24,51 @@ using namespace CLHEP;
 
 
 // this method is for connection to calibration database and extraction of calibration parameters
-static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "default") {
-	ahdcConstants atc;
+static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no") {
+	ahdcConstants ahdcc;
 	
 	// do not initialize at the beginning, only after the end of the first event,
 	// with the proper run number coming from options or run table
-	if (runno == -1) return atc;
+	if (runno == -1) return ahdcc;
+
+	string timestamp = "";
+	if(digiSnapshotTime != "no") {
+		timestamp = ":"+digiSnapshotTime;
+	}
 	
-	atc.runNo = runno;
+	ahdcc.runNo = runno;
 	if (getenv("CCDB_CONNECTION") != nullptr)
-		atc.connection = (string) getenv("CCDB_CONNECTION");
+		ahdcc.connection = (string) getenv("CCDB_CONNECTION");
 	else
-		atc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
+		ahdcc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
 	
-	return atc;
+	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(ahdcc.connection));
+	
+	/////////////////////////////////////////////////
+	// The following code is inspired by dcConstants
+	/////////////////////////////////////////////////
+	
+	// reading t0 table
+	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_offsets:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	vector<vector<double> > data;
+	calib->GetCalib(data, ahdcc.database);
+	for(unsigned row = 0; row < data.size(); row++)
+	{
+		int sector = data[row][0];
+		int layer  = data[row][1];
+		int component  = data[row][2]; // wire id
+		std::cout << "///////////////////////////////////////////////////" << std::endl;
+		std::cout << " sector : " << sector << std::endl; 
+		std::cout << " layer : " << layer << std::endl; 
+		std::cout << " comp : " << component << std::endl; 
+		std::cout << " getUniqueId : " << ahdcConstants::getUniqueId(sector, layer, component) << std::endl; 
+		std::cout << " t0 : " << data[row][3] << std::endl; 
+		std::cout << "///////////////////////////////////////////////////" << std::endl;
+		ahdcc.T0Correction[ahdcConstants::getUniqueId(sector, layer, component)] = data[row][3];
+	}
+
+	
+	return ahdcc;
 }
 
 
@@ -75,8 +106,10 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		return dgtz;
 
 	}
-
-	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,6000,1000,44,240);
+	// set the delay at 0 for the moment
+	
+	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,0,48,106, &ahdcc);
+	//Signal->ptr_ahdcc = &ahdcc;
 	Signal->SetElectronYield(50000);
 	Signal->Digitize();
 	//std::map<std::string,double> output = Signal->Extract();
@@ -101,7 +134,12 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 
 	for(unsigned t=0; t<30; t++) {
 		string dname = "wf_s" + to_string(t+1);
-		dgtz[dname] = Signal->GetDgtz().at(t);
+		if (t < 20) {
+			dgtz[dname] = Signal->GetDgtz().at(t);
+		}
+		else {
+			dgtz[dname] = 0;
+		}
 	}
 	delete Signal;
 
@@ -166,16 +204,17 @@ double ahdc_HitProcess::voltage(double charge, double time, double forTime) {
 void ahdc_HitProcess::initWithRunNumber(int runno)
 {
 	string digiVariation = gemcOpt.optMap["DIGITIZATION_VARIATION"].args;
+	string digiSnapshotTime = gemcOpt.optMap["DIGITIZATION_TIMESTAMP"].args;
 	
-	if (atc.runNo != runno) {
+	if (ahdcc.runNo != runno) {
 		cout << " > Initializing " << HCname << " digitization for run number " << runno << endl;
-		atc = initializeAHDCConstants(runno, digiVariation);
-		atc.runNo = runno;
+		ahdcc = initializeAHDCConstants(runno, digiVariation, digiSnapshotTime);
+		ahdcc.runNo = runno;
 	}
 }
 
 // this static function will be loaded first thing by the executable
-ahdcConstants ahdc_HitProcess::atc = initializeAHDCConstants(-1);
+ahdcConstants ahdc_HitProcess::ahdcc = initializeAHDCConstants(-1);
 
 
 // -------------
@@ -275,7 +314,7 @@ void ahdcSignal::GenerateNoise(double mean, double stdev){
 }
 
 void ahdcSignal::Digitize(){
-	this->GenerateNoise(300,30);
+	this->GenerateNoise(300,10);
 	int Npts = (int) floor( (tmax-tmin)/samplingTime );
 	for (int i=0;i<Npts;i++) {
 		double value = this->operator()(tmin + i*samplingTime); //in keV/ns
