@@ -79,7 +79,7 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,6000,1000,44,240);
 	Signal->SetElectronYield(50000);
 	Signal->Digitize();
-	std::map<std::string,double> output = Signal->Extract();
+	//std::map<std::string,double> output = Signal->Extract();
 
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = sector;
