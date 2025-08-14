@@ -120,6 +120,7 @@ public:
 
 #include <string>
 #include "CLHEP/GenericFunctions/Landau.hh"
+#include <random>
 
 /**
  * @class ahdcSignal
@@ -237,9 +238,16 @@ class ahdcSignal {
 			double signalValue = 0;
 			for (int s=0; s<nsteps; s++){
 				// setting Landau's parameters
+				//std::random_device rd{};
+				//std::mt19937 gen{rd()};
+				//std::normal_distribution deltaTime{146.9, 33.87};
+				double mu = DriftTime.at(s) + t0 + 1.16*178.9;
+				double sigma = 108.01;	
 				Landau L;
-				L.peak() = Parameter("Peak",1.458*(DriftTime.at(s)+t0),tmin,tmax); 
-				L.width() = Parameter("Width",Landau_width,0,400); 
+				//L.peak() = Parameter("Peak",DriftTime.at(s)+t0+deltaTime(gen),tmin,tmax); 
+				L.peak() = Parameter("Peak",mu,tmin,tmax); 
+				L.width() = Parameter("Width",sigma,0,400); 
+				//L.width() = Parameter("Width",Landau_width,0,400); 
 				signalValue += Edep.at(s)*L(timePoint-timeOffset);
 			}
 			return signalValue;
