@@ -108,9 +108,9 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	}
 	// set the delay at 0 for the moment
 	
-	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,0,48,106, &ahdcc);
+	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,0,48,106.29, &ahdcc);
 	//Signal->ptr_ahdcc = &ahdcc;
-	Signal->SetElectronYield(50000);
+	Signal->SetElectronYield(25000);
 	Signal->Digitize();
 	//std::map<std::string,double> output = Signal->Extract();
 
