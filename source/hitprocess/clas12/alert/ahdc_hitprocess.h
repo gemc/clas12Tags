@@ -146,6 +146,7 @@ class ahdcSignal {
 		std::vector<double> G4Time; ///< array of Geant4 time corresponding to each step [ns]
 		std::vector<double> Doca; ///< array of distance of closest approach corresponding each step [mm]
 		std::vector<double> DriftTime; ///< array of drift time corresponding each step [ns]
+		vector<double> stepTime; ///< Geant4 time of each step [ns]
 		
 		/**
 		 * @brief Fill the arrays Doca and DriftTime
@@ -184,8 +185,12 @@ class ahdcSignal {
 			component = identity[2].id;
 			// fill vectors
 			Edep = aHit->GetEdep();
+			stepTime    = aHit->GetTime();
 			nsteps = Edep.size();
-			for (int s=0;s<nsteps;s++){Edep.at(s) = Edep.at(s)*1000;} // convert MeV to keV
+			for (int s=0;s<nsteps;s++){ 
+				Edep.at(s) = Edep.at(s)*1000;
+				std::cout << "stepTime[" << s << "] = " << stepTime[s] << std::endl;
+			} // convert MeV to keV
 			G4Time = aHit->GetTime();
 			this->ComputeDocaAndTime(aHit); // fills Doca and DriftTime
 		}
