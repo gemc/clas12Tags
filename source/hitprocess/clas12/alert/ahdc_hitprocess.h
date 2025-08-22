@@ -140,8 +140,6 @@ class ahdcSignal {
 		int layer; ///< layer, second wire identifer
 		int component; ///< component, third wire identifier
 		int nsteps; ///< number of steps in this MHit, i.e number of Geant4 calculation steps in the sensitive area of the wire
-		ahdcConstants* ptr_ahdcc = nullptr;
-		double t0 = 200;
 	// vectors
 	private :
 		std::vector<double> Edep; ///< array of deposited energy in each step [keV]
@@ -176,17 +174,14 @@ class ahdcSignal {
 		ahdcSignal() = delete;
 		
 		/** @brief Constructor */
-		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width, ahdcConstants* _ptr_ahdcc) 
+		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width) 
 		: tmin(_tmin), tmax(_tmax), timeOffset(_timeOffset), samplingTime(_samplingTime), Landau_width(_Landau_width) {
 			// read identifiers
 			hitn = _hitn;
 			vector<identifier> identity = aHit->GetId();
-			sector = 0;
+			sector = 1;
 			layer = 10 * identity[0].id + identity[1].id ; // 10*superlayer + layer
 			component = identity[2].id;
-			ptr_ahdcc = _ptr_ahdcc;
-			t0 = ptr_ahdcc->get_T0(sector, layer, component);
-			//std::cout << "<<< t0 in ahdcSignal : " << t0 << std::endl;
 			// fill vectors
 			Edep = aHit->GetEdep();
 			nsteps = Edep.size();
@@ -237,17 +232,11 @@ class ahdcSignal {
 			using namespace Genfun;
 			double signalValue = 0;
 			for (int s=0; s<nsteps; s++){
-				// setting Landau's parameters
-				//std::random_device rd{};
-				//std::mt19937 gen{rd()};
-				//std::normal_distribution deltaTime{146.9, 33.87};
-				double mu = DriftTime.at(s) + t0 + 1.16*178.9;
-				double sigma = 108.01;	
+				double sigma = Landau_width;	
+				double mu = DriftTime.at(s) + 1.36*sigma;
 				Landau L;
-				//L.peak() = Parameter("Peak",DriftTime.at(s)+t0+deltaTime(gen),tmin,tmax); 
 				L.peak() = Parameter("Peak",mu,tmin,tmax); 
 				L.width() = Parameter("Width",sigma,0,400); 
-				//L.width() = Parameter("Width",Landau_width,0,400); 
 				signalValue += Edep.at(s)*L(timePoint-timeOffset);
 			}
 			return signalValue;
