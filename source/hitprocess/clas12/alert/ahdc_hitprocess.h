@@ -120,7 +120,6 @@ public:
 
 #include <string>
 #include "CLHEP/GenericFunctions/Landau.hh"
-#include <random>
 
 /**
  * @class ahdcSignal
@@ -189,7 +188,7 @@ class ahdcSignal {
 			nsteps = Edep.size();
 			for (int s=0;s<nsteps;s++){ 
 				Edep.at(s) = Edep.at(s)*1000;
-				std::cout << "stepTime[" << s << "] = " << stepTime[s] << std::endl;
+				//std::cout << "stepTime[" << s << "] = " << stepTime[s] << std::endl;
 			} // convert MeV to keV
 			G4Time = aHit->GetTime();
 			this->ComputeDocaAndTime(aHit); // fills Doca and DriftTime
