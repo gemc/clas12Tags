@@ -57,13 +57,6 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 		int sector = data[row][0];
 		int layer  = data[row][1];
 		int component  = data[row][2]; // wire id
-		std::cout << "///////////////////////////////////////////////////" << std::endl;
-		std::cout << " sector : " << sector << std::endl; 
-		std::cout << " layer : " << layer << std::endl; 
-		std::cout << " comp : " << component << std::endl; 
-		std::cout << " getUniqueId : " << ahdcConstants::getUniqueId(sector, layer, component) << std::endl; 
-		std::cout << " t0 : " << data[row][3] << std::endl; 
-		std::cout << "///////////////////////////////////////////////////" << std::endl;
 		ahdcc.T0Correction[ahdcConstants::getUniqueId(sector, layer, component)] = data[row][3];
 	}
 
@@ -313,7 +306,7 @@ void ahdcSignal::GenerateNoise(double mean, double stdev){
 }
 
 void ahdcSignal::Digitize(){
-	this->GenerateNoise(300,10);
+	this->GenerateNoise(300,15);
 	int Npts = (int) floor( (tmax-tmin)/samplingTime );
 	for (int i=0;i<Npts;i++) {
 		double value = this->operator()(tmin + i*samplingTime); //in keV/ns
