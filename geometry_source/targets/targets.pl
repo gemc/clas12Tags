@@ -52,7 +52,7 @@ sub create_system {
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgb_spring2019", "rga_spring2019", "rgb_fall2019", "rgf_spring2020",
     "rgm_fall2021_He", "rgm_fall2021_C", "rgm_fall2021_Sn", "rgm_fall2021_Cx4", "rgm_fall2021_Snx4", "rgm_fall2021_Ca", "rgc_summer2022",
-    "rgl_spring2025_H2", "rgl_spring2025_D2", "rgl_spring2025_He", "rgd_fall2023_lD2");
+    "rgl_spring2025_H2", "rgl_spring2025_D2", "rgl_spring2025_He", "rgd_fall2023_lD2", "rgd_fall2023_CxC", "rgd_fall2023_CuSn");
 
 my @runs = clas12_runs(@variations);
 my $system = $configuration{'detector_name'};
