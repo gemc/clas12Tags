@@ -100,6 +100,7 @@ my @rgd = qw(
   rgd_fall2023_lD2
   rgd_fall2023_CxC
   rgd_fall2023_CuSn
+  rgd_fall2023_empty
 );
 
 my @variations = ("default", @rga, @rgb, @rgc, @rge, @rgf, @rgl, @rgm, @rgd);

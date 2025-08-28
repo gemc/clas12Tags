@@ -141,6 +141,9 @@ sub build_liquid_standard_cell {
     elsif ($configuration_string eq "rgm_fall2021_He") {
         $detector{"material"} = "lHeTarget";
     }
+    elsif ($configuration_string eq "rgd_fall2023_empty") {
+        $detector{"material"} = "G4_Galactic";
+    }
 
     $detector{"style"} = 1;
     print_det(\%configuration, \%detector);
