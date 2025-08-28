@@ -21,6 +21,7 @@ require "./rgm.pl";
 require "./apollo.pl"; # rgc
 require "./alert.pl";  # rgl
 require "./rgd_solid.pl"; # rgd
+require "./rge.pl";  # rge
 
 sub load_target_parameters {
     $target_zpos = $parameters{"target_zpos"};
@@ -86,6 +87,17 @@ sub build_target {
     }
     elsif ($configuration_string eq "rgd_fall2023_CuSn") {
         build_rgd_CuSn();
+    }
+    elsif ($configuration_string eq "rge_spring2024_Empty_Al"
+        or $configuration_string eq "rge_spring2024_Empty_C"
+        or $configuration_string eq "rge_spring2024_Empty_Empty"
+        or $configuration_string eq "rge_spring2024_Empty_Pb"
+        or $configuration_string eq "rge_spring2024_LD2_Al"
+        or $configuration_string eq "rge_spring2024_LD2_C"
+        or $configuration_string eq "rge_spring2024_LD2_Cu"
+        or $configuration_string eq "rge_spring2024_LD2_Pb"
+        or $configuration_string eq "rge_spring2024_LD2_Sn") {
+        build_rge_liquid_targets();
     }
     else {
         print "Error: Unknown target variation: $configuration_string\n";

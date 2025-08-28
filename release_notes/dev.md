@@ -11,6 +11,8 @@
 - Torus + Shielding beamline CAD geometry (in progress) 
 - Several issues with RG-F target #236 (in progress)
 - DC v2
+- Meson
+- G4 11.3.2
 
 
 
