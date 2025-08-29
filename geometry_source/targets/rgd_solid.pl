@@ -33,6 +33,7 @@ sub build_rgd_CxC {
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $oradius[$i]*mm";}
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $z_plane[$i]*mm";}
     $detector{"dimensions"} = $dimen;
+    $detector{"pos"} = "0*mm 0*mm $target_zpos*mm";
     $detector{"material"} = "G4_Galactic";
     $detector{"style"} = 0;
     print_det(\%configuration, \%detector);
@@ -158,6 +159,7 @@ sub build_rgd_CuSn {
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $z_plane[$i]*mm";}
     $detector{"dimensions"} = $dimen;
     $detector{"material"} = "G4_Galactic";
+    $detector{"pos"} = "0*mm 0*mm $target_zpos*mm";
     $detector{"style"} = 0;
     print_det(\%configuration, \%detector);
 
