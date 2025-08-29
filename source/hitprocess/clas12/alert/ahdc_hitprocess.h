@@ -238,6 +238,7 @@ class ahdcSignal {
 			for (int s=0; s<nsteps; s++){
 				double sigma = Landau_width;	
 				double mu = DriftTime.at(s) + 1.36*sigma;
+				//std::cout << DriftTime.at(s) << " ";
 				Landau L;
 				L.peak() = Parameter("Peak",mu,tmin,tmax); 
 				L.width() = Parameter("Width",sigma,0,400); 
