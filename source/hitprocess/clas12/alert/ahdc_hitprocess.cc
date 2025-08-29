@@ -101,7 +101,7 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	}
 	// the t0 is our timeOffset
 	double t0 = ahdcc.get_T0(sector, layer, component);	
-	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,118.84);
+	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,107.14);
 	Signal->SetElectronYield(25000);
 	Signal->Digitize();
 	//std::map<std::string,double> output = Signal->Extract();
@@ -132,6 +132,8 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		else {
 			dgtz[dname] = 0;
 		}
+		//if (t == 28) { dgtz[dname] = Signal->nsteps;}
+		//if (t == 29) { dgtz[dname] = (int) (Signal->GetMCTime()*100);}
 	}
 	delete Signal;
 
@@ -287,6 +289,7 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 		docasig = docasig/1000; // mm
 		std::default_random_engine dseed(time(0)); //seed
 		std::normal_distribution<double> docadist(H_abh, docasig);
+		//std::cout << "H_abh : " << H_abh << ", docasig : " << docasig << " ";
 		// Compute time
 		double driftTime = 7*H_abh + 7*pow(H_abh,2) + 4*pow(H_abh,3); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
 		DriftTime.push_back(driftTime);
