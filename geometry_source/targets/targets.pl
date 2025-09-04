@@ -96,7 +96,14 @@ my @rgm = qw(
     rgm_fall2021_Ca
 );
 
-my @variations = ("default", @rga, @rgb, @rgc, @rge, @rgf, @rgl, @rgm);
+my @rgd = qw(
+  rgd_fall2023_lD2
+  rgd_fall2023_CxC
+  rgd_fall2023_CuSn
+  rgd_fall2023_empty
+);
+
+my @variations = ("default", @rga, @rgb, @rgc, @rge, @rgf, @rgl, @rgm, @rgd);
 
 my @runs = clas12_runs(@variations);
 my $system = $configuration{'detector_name'};

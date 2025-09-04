@@ -134,11 +134,15 @@ sub build_liquid_standard_cell {
         $detector{"material"} = "G4_lH2";
     }
     elsif ($configuration_string eq "rgb_spring2019"
-        or $configuration_string eq "rgb_fall2019") {
+        or $configuration_string eq "rgb_fall2019"
+        or $configuration_string eq "rgd_fall2023_lD2") {
         $detector{"material"} = "LD2";
     }
     elsif ($configuration_string eq "rgm_fall2021_He") {
         $detector{"material"} = "lHeTarget";
+    }
+    elsif ($configuration_string eq "rgd_fall2023_empty") {
+        $detector{"material"} = "G4_Galactic";
     }
 
     $detector{"style"} = 1;
