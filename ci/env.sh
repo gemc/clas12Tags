@@ -39,6 +39,9 @@ log_gemc_info() {
 # returns runs to test
 runs_for_system() {
 	rgm_runs="15016 15043 15108 15165 15178 15318 15356 15434 15458 15534 15566 15637 15643 15671 15732 15733 15734"
+	rge_runs="20035 20041 20070 20074 20131 20177 20232 20269 20282 20331 20435 20494 20506 20507 20508 20520"
+	rgl_runs="21000 21001 21002 21003"
+	rgd_runs="18347 18372 18560 18660 18874 19061 18339 18369 18400 18440 18756 18796 18316 18399 19060 18305 18318 18419 18528 18644 18764 18851 19021"
 
 	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
@@ -57,11 +60,11 @@ runs_for_system() {
 	elif [[ $system == "ft" ]]; then
 		echo "11 5874 6150 11620 16043 20000"
 	elif [[ $system == "beamline" ]]; then
-		echo "11 5874 6150 11620 16043 16843 20000 21000"
+		echo "11 5874 6150 11620 16043 16843 $rgd_runs 20000 21000"
 	elif [[ $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "targets" ]]; then
-		echo "11 3029 4763 6150 6608 11093 $rgm_runs"
+		echo "11 3029 4763 6150 6608 11093 $rgm_runs $rgd_runs $rge_runs $rgl_runs"
 	fi
 }
 
@@ -86,10 +89,30 @@ variations_for_run_and_system()  {
 		echo "rgc_fall2022"
 	elif [[ $1 == "17471" ]]; then
 		echo "rgc_winter2023"
-	elif [[ $1 == "18305" ]]; then
-		echo "rgd_fall2023"
-	elif [[ $1 == "20000" ]]; then
-		echo "rge_spring2024"
+	elif [[ $1 == "18347" || $1 == "18372"  || $1 == "18560" || $1 == "18660" || $1 == "18874"  || $1 == "19061" ]]; then
+		echo "rgd_fall2023_CuSn"
+	elif [[ $1 == "18339" || $1 == "18369"  || $1 == "18400" || $1 == "18440" || $1 == "18440"  || $1 == "18440" ]]; then
+		echo "rgd_fall2023_CxC"
+	elif [[ $1 == "18305" || $1 == "18318"  || $1 == "18419" || $1 == "18528" || $1 == "18644"  || $1 == "18764" || $1 == "18851"  || $1 == "19021" ]]; then
+		echo "rgd_fall2023_lD2"
+	elif [[ $1 == "18316" || $1 == "18399"  || $1 == "19060" ]]; then
+		echo "rgd_fall2023_empty"
+	elif [[ $1 == "20070" ]]; then
+		echo "rge_spring2024_Empty_C"
+	elif [[ $1 == "20035" || $1 == "20507" ]]; then
+		echo "rge_spring2024_Empty_Empty"
+	elif [[ $1 == "20269" ]]; then
+		echo "rge_spring2024_Empty_Pb"
+	elif [[ $1 == "20435" ]]; then
+		echo "rge_spring2024_LD2_Al"
+	elif [[ $1 == "20021" || $1 == "20131"  || $1 == "20508" ]]; then
+		echo "rge_spring2024_LD2_C"
+	elif [[ $1 == "20177" ]]; then
+		echo "rge_spring2024_LD2_Cu"
+	elif [[ $1 == "20041" || $1 == "20074"  || $1 == "20232" || $1 == "20282" || $1 == "20494"  || $1 == "20520" ]]; then
+		echo "rge_spring2024_LD2_Pb"
+	elif [[ $1 == "20331" ]]; then
+		echo "rge_spring2024_LD2_Sn"
 	elif [[ $1 == "11620" ]]; then
 		echo "rgf_spring2020"
 	elif [[ $1 == "12389" ]]; then
@@ -161,5 +184,6 @@ else
 	export GEMC_DATA_DIR=$GEMC
 	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $GEMC"
 	export PATH=$GEMC/bin:$PATH
+	export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 fi
