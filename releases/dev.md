@@ -1,0 +1,349 @@
+## Based on Coatjava Release 12.0.4t
+
+## In progress
+
+- Torus + Shielding beamline CAD geometry (in progress) 
+- Several issues with RG-F target #236 (in progress)
+- DC v2
+- Meson
+- G4 11.3.2
+
+<br/><br/>
+<hr/>
+<!-- AUTO-DEVMD:START -->
+## Commits on main since 2025-01-17
+
+- 2025-09-08 **eb6c409** — debugging sqlite db run _(by Maurizio Ungaro)_
+- 2025-09-04 **1dc27b8** — added rgd ranges and fixed ci _(by Maurizio Ungaro)_
+- 2025-09-04 **c357044** — rgd target changes by Mathieu _(by Mathieu Ouillon)_
+- 2025-08-29 **d5980c6** — added rgd_dall2023 variatrions for ft and beamline. this will fail ci for targets on rgd runs until rgd geo is merged _(by Maurizio Ungaro)_
+- 2025-08-28 **7b7450e** — moved and renamed files from rge-dt to rge_cad _(by Maurizio Ungaro)_
+- 2025-08-28 **f855efd** — rge-dt renamed cad_rge _(by Maurizio Ungaro)_
+- 2025-08-28 **1e353be** — added or modified rge gcards _(by Maurizio Ungaro)_
+- 2025-08-28 **296d69e** — rge materials _(by Maurizio Ungaro)_
+- 2025-08-28 **3abb5e4** — rge geometry files _(by Maurizio Ungaro)_
+- 2025-08-28 **a716713** — added rge parameters _(by Maurizio Ungaro)_
+- 2025-08-28 **b6c8d64** — added rge parameters _(by Maurizio Ungaro)_
+- 2025-08-27 **7415f28** — ci links at the bottom _(by Maurizio Ungaro)_
+- 2025-07-16 **8a49bf9** — dev main comparison fix _(by Maurizio Ungaro)_
+- 2025-07-15 **5680847** — fix valgrind artifact name and logging paths _(by Maurizio Ungaro)_
+- 2025-07-12 **a0bf186** — browsing log locations before collection _(by Maurizio Ungaro)_
+- 2025-07-11 **924fad5** — browsing log locations before collection _(by Maurizio Ungaro)_
+- 2025-07-10 **081d5c6** — sometimes the coatjava latest release fetch fails, added guard. fixed valgrind log filenames _(by Maurizio Ungaro)_
+- 2025-07-07 **30b9848** — removing alert atof hardcoded shift _(by Maurizio Ungaro)_
+- 2025-06-12 **395fed6** — testing coatjava as extra step - this may fail due to problems with jlab network _(by Maurizio Ungaro)_
+- 2025-06-11 **3507e0b** — ci argument to install coatjava and adding error checks _(by Maurizio Ungaro)_
+- 2025-06-11 **296fc3d** — fixed path on install coatjava _(by Maurizio Ungaro)_
+- 2025-06-11 **3b02f02** — coatjava installation as a separate ci step _(by Maurizio Ungaro)_
+- 2025-06-10 **13bb5e5** — reverting to cpp17 because too many warnings, and using java 17 on all actions _(by Maurizio Ungaro)_
+- 2025-06-10 **0bc0006** — fixed log file paths _(by Maurizio Ungaro)_
+- 2025-06-10 **9c380c5** — fixed dev main log names _(by Maurizio Ungaro)_
+- 2025-06-10 **d116319** — fixed track log filename _(by Maurizio Ungaro)_
+- 2025-06-09 **db62218** — wrong exit code in ../ci/build_gemc.sh  and comments in lXDR.cc _(by Maurizio Ungaro)_
+- 2025-06-09 **3630628** — reverting lXDR.cc - and testing c++20 standard _(by Maurizio Ungaro)_
+- 2025-06-09 **3669d75** — missing header in lXDR.cc _(by Maurizio Ungaro)_
+- 2025-06-09 **5d99071** — pbtest name case fix _(by Maurizio Ungaro)_
+- 2025-06-09 **dd33ad8** — forcing java 17 on images _(by Maurizio Ungaro)_
+- 2025-06-06 **de979ad** — fix option to scons not being propagated properly and add logs to artifacts uploads _(by Maurizio Ungaro)_
+- 2025-06-06 **23d96f7** — added clean up of coatjava created files _(by Maurizio Ungaro)_
+- 2025-06-06 **1ea81e9** — unused parameters _(by Maurizio Ungaro)_
+- 2025-06-06 **b828fbd** — fixed mm rgm variation _(by Maurizio Ungaro)_
+- 2025-06-06 **1253705** — fixed rgm ltcc variation _(by Maurizio Ungaro)_
+- 2025-06-06 **ce6c348** — these were removed _(by Maurizio Ungaro)_
+- 2025-06-06 **e64ab12** — added mirror variation _(by Maurizio Ungaro)_
+- 2025-06-06 **167fd4c** — rgm_winter2021 renamed rgm_fall2021_H _(by Maurizio Ungaro)_
+- 2025-06-06 **37c93ce** — renamed rgm variation in ltcc code _(by Maurizio Ungaro)_
+- 2025-06-06 **5c7c495** — added rgl target gcards _(by Maurizio Ungaro)_
+- 2025-06-06 **1f4a4a5** — variation name update _(by Maurizio Ungaro)_
+- 2025-06-06 **f3226a1** — fixed consistency between ascii and sqlite gcards _(by Maurizio Ungaro)_
+- 2025-06-06 **8867b6b** — variation name update _(by Maurizio Ungaro)_
+- 2025-06-06 **5460e31** — fixed beamline variation _(by Maurizio Ungaro)_
+- 2025-06-06 **810ed5b** — removed duplicate entries in rich bank and added new stl files - probably coming from coatjava 13 _(by Maurizio Ungaro)_
+- 2025-06-05 **c92c4d6** — added alert geometry to real run numbers _(by Maurizio Ungaro)_
+- 2025-06-05 **e7a2001** — obsolete _(by Maurizio Ungaro)_
+- 2025-06-05 **8dfe77f** — obsolete _(by Maurizio Ungaro)_
+- 2025-06-05 **2af8514** — moved alert he bag code to top alert directory. verified geometry is identical _(by Maurizio Ungaro)_
+- 2025-06-05 **88ae46b** — added strict _(by Maurizio Ungaro)_
+- 2025-06-05 **2476b1e** — moved alert shell code to top alert directory. verified geometry is identical _(by Maurizio Ungaro)_
+- 2025-06-05 **81d7941** — moved atof code to top alert directory. verified geometry is identical _(by Maurizio Ungaro)_
+- 2025-06-05 **d926d4c** — align screen log _(by Maurizio Ungaro)_
+- 2025-06-05 **c856361** — reduntand bank def _(by Maurizio Ungaro)_
+- 2025-06-05 **6f510b2** — moved ahdc code to top alert directory. verified geometry is identical _(by Maurizio Ungaro)_
+- 2025-06-05 **ca15def** — micromegas rgm_winter2021 renamed fall_2021_h _(by Maurizio Ungaro)_
+- 2025-06-05 **1bc25eb** — fixed variation for transverse beamline gcard _(by Maurizio Ungaro)_
+- 2025-06-05 **be62eb9** — rgm winter 2021 renamed fall 2021 for run number consistency _(by Maurizio Ungaro)_
+- 2025-06-05 **7b84e29** — rgm winter 2021 renamed fall 2021 for run number consistency _(by Maurizio Ungaro)_
+- 2025-06-04 **3b76902** — added empty ft geometry for rcg_fall2022 so that all gcards contain ft. renamed some ci scripts for clarity _(by Maurizio Ungaro)_
+- 2025-06-04 **6e6b7af** — removing some rgh components related to hdice which is not correctly implemented _(by Maurizio Ungaro)_
+- 2025-06-03 **bb585d3** — added rgl gcardscat target__parameters_rgl_spring2025_D2.txt _(by Maurizio Ungaro)_
+- 2025-06-03 **c87baa9** — added alert to real run number. fixed magnets gcard. keepong lH2e, bonush2 and bonushe variations _(by Maurizio Ungaro)_
+- 2025-06-03 **281996c** — keeping extended target for now _(by Maurizio Ungaro)_
+- 2025-06-03 **dd1d49e** — renamed to rgl spring 2025 variations _(by Maurizio Ungaro)_
+- 2025-06-03 **21c2f8d** — renamed to rgl spring 2025 variations _(by Maurizio Ungaro)_
+- 2025-06-03 **9cf5ef3** — renamed to rgl spring 2025 variations _(by Maurizio Ungaro)_
+- 2025-06-03 **902fc67** — renamed to rgl spring 2025 variations _(by Maurizio Ungaro)_
+- 2025-06-03 **184a4d7** — added rgl targets _(by Maurizio Ungaro)_
+- 2025-06-03 **83b9a46** — keeping lh2 extended for now _(by Maurizio Ungaro)_
+- 2025-06-03 **4224bfe** — renamed for real run numbers _(by Maurizio Ungaro)_
+- 2025-06-03 **8b4910d** — renamed to rgm _(by Maurizio Ungaro)_
+- 2025-06-03 **fd20145** — renamed for real run numbers _(by Maurizio Ungaro)_
+- 2025-06-03 **48fa1fd** — trivial comment change _(by Maurizio Ungaro)_
+- 2025-06-03 **93f9a61** — renamed to rgb _(by Maurizio Ungaro)_
+- 2025-06-03 **fac7482** — renamed to rgb variations _(by Maurizio Ungaro)_
+- 2025-06-03 **5285bb5** — bonus pars _(by Maurizio Ungaro)_
+- 2025-06-03 **1992dc7** — bonus pars _(by Maurizio Ungaro)_
+- 2025-06-03 **20fc96e** — bonus targets added to real run numbers code _(by Maurizio Ungaro)_
+- 2025-06-02 **67d3b12** — fixed bst material, beamline gcards in general, magnets perl scripts _(by Maurizio Ungaro)_
+- 2025-05-30 **00e945b** — fixed beamline gcards, renamed pcal gcard from fall, fixed bst missing material _(by Maurizio Ungaro)_
+- 2025-05-30 **8322d3b** — added rge target gcards _(by Maurizio Ungaro)_
+- 2025-05-30 **d1a2a34** — removed obsolete directories _(by Maurizio Ungaro)_
+- 2025-05-30 **6e363d8** — fixed log gemc info _(by Maurizio Ungaro)_
+- 2025-05-30 **52a8195** — ownership now done in env.sh - also set GEMC to the cloned directory _(by Maurizio Ungaro)_
+- 2025-05-30 **12441c5** — fix gemc and coatjava log copying, debugging local gcard tests _(by Maurizio Ungaro)_
+- 2025-05-30 **b30c1ca** — updated badges with new workflow names _(by Maurizio Ungaro)_
+- 2025-05-30 **fd7d888** — renaming workflows for clarity _(by Maurizio Ungaro)_
+- 2025-05-29 **705a544** — added quick startosgGens _(by Maurizio Ungaro)_
+- 2025-05-29 **a2d58a2** — readme test _(by Maurizio Ungaro)_
+- 2025-05-29 **6ba9880** — adding local gcards tests _(by Maurizio Ungaro)_
+- 2025-05-29 **ae253bc** — more readme updates _(by Maurizio Ungaro)_
+- 2025-05-29 **785462d** — more readme updates _(by Maurizio Ungaro)_
+- 2025-05-29 **d409b62** — more readme updates _(by Maurizio Ungaro)_
+- 2025-05-29 **b171028** — readme changes _(by Maurizio Ungaro)_
+- 2025-05-29 **8e83423** — readme changes _(by Maurizio Ungaro)_
+- 2025-05-29 **10bb465** — readme changes and addressing alert warnings _(by Maurizio Ungaro)_
+- 2025-05-29 **f921713** — updated readme _(by Maurizio Ungaro)_
+- 2025-05-29 **45ae72a** — env notes and coatjava release notes _(by Maurizio Ungaro)_
+- 2025-05-29 **627555f** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **53ce542** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **0c29eac** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **73a70c7** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **68e2ade** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **92543d0** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **e8f7200** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **9f87663** — improved readme _(by Maurizio Ungaro)_
+- 2025-05-29 **1b6cca2** — better toc _(by Maurizio Ungaro)_
+- 2025-05-29 **981a710** — better toc _(by Maurizio Ungaro)_
+- 2025-05-29 **51d2ce4** — updated README _(by Maurizio Ungaro)_
+- 2025-05-29 **b668771** — updated README _(by Maurizio Ungaro)_
+- 2025-05-29 **c312b72** — testing paths-ignore _(by Maurizio Ungaro)_
+- 2025-05-29 **87e39d9** — toc on readme and testing paths-ignore _(by Maurizio Ungaro)_
+- 2025-05-28 **000913c** — updated README and valgrind options _(by Maurizio Ungaro)_
+- 2025-05-22 **a2d4fb2** — Update README.md _(by antorad)_
+- 2025-05-22 **8d9c078** — Changed RGE gcards _(by antorad)_
+- 2025-05-20 **1e80347** — Updated RGE gcards _(by antorad)_
+- 2025-05-27 **adba37f** — fall2018 renamed to spring2018 for the ec, rich and ftof gcards. Removed string default for default variations for cnd, ctof, htcc. _(by Maurizio Ungaro)_
+- 2025-05-27 **dba3678** — obsolete _(by Maurizio Ungaro)_
+- 2025-05-27 **0cfac9f** — renamed to spring18 for consistency _(by Maurizio Ungaro)_
+- 2025-05-27 **25dabf3** — make name consistent with variations used _(by Maurizio Ungaro)_
+- 2025-05-27 **57a1c0a** — removed string default from default gcard _(by Maurizio Ungaro)_
+- 2025-05-27 **e40cadb** — removed string default from default gcard _(by Maurizio Ungaro)_
+- 2025-05-27 **a955596** — removed string default from default gcard _(by Maurizio Ungaro)_
+- 2025-05-27 **91c7002** — removed obsolete ctof3, and string default from default gcard _(by Maurizio Ungaro)_
+- 2025-05-27 **251b9d5** — make name consistent with variations used _(by Maurizio Ungaro)_
+- 2025-05-27 **c7552c3** — adjusted nightly times according to duration _(by Maurizio Ungaro)_
+- 2025-05-27 **fa41105** — make name consistent with variations used _(by Maurizio Ungaro)_
+- 2025-05-23 **c793a5b** — updated README, reactivated workflow, assinging nightly and on push _(by Maurizio Ungaro)_
+- 2025-05-23 **96b8d74** — updated README, better build log and using 100 events for valgrind profiling clasdis events _(by Maurizio Ungaro)_
+- 2025-05-23 **d430370** — better readme, testing new image for debug _(by Maurizio Ungaro)_
+- 2025-05-23 **9ac3640** — added valgrind profiling - fixed option passed to build_gemc.sh _(by Maurizio Ungaro)_
+- 2025-05-22 **d176951** — added valgrind profiling _(by Maurizio Ungaro)_
+- 2025-05-21 **270e90a** — fixing lund filenames in script _(by Maurizio Ungaro)_
+- 2025-05-21 **2d3e705** — testing selecting clasdis in phase space _(by Maurizio Ungaro)_
+- 2025-05-20 **6f6555f** — not normalizing by tracks, just by nevents. fix summary table _(by Maurizio Ungaro)_
+- 2025-05-20 **1d25555** — wrong path for clasdis _(by Maurizio Ungaro)_
+- 2025-05-20 **8433988** — adding clasdis and fixing summary script for track metrics _(by Maurizio Ungaro)_
+- 2025-05-19 **11fe31d** — using same options used on OSG _(by Maurizio Ungaro)_
+- 2025-05-19 **6242109** — fixing collection script, reactivating workflows _(by Maurizio Ungaro)_
+- 2025-05-19 **82aeb99** — fixed log error _(by Maurizio Ungaro)_
+- 2025-05-19 **2f1ad11** — normalizing ntracks test per number of events _(by Maurizio Ungaro)_
+- 2025-05-19 **01eff1d** — test summary table with ntracks _(by Maurizio Ungaro)_
+- 2025-05-16 **2bdd414** — cut w is only for mac, replaced with space _(by Maurizio Ungaro)_
+- 2025-05-16 **ecc653d** — renaming lund file so they are in alphabetical order - adding time per track on summary table _(by Maurizio Ungaro)_
+- 2025-05-16 **ce0d194** — fixed filenames and ci file name upload _(by Maurizio Ungaro)_
+- 2025-05-16 **05671fc** — testing tracks metric ci _(by Maurizio Ungaro)_
+- 2025-05-13 **a33d07c** — updated ddvcs configuration to match proposal _(by Raffaella De Vita)_
+- 2025-05-08 **62531be** — added apollo target to real run numbers _(by Maurizio Ungaro)_
+- 2025-05-08 **c4f731b** — forgot to remove materials for apollonh3 _(by Maurizio Ungaro)_
+- 2025-05-08 **e88fe99** — apollo target moved to rcc _(by Maurizio Ungaro)_
+- 2025-05-06 **06b00af** — experiment was now uploaded into artifacts, and collecting gemc and coatjava builds in log as well _(by Maurizio Ungaro)_
+- 2025-05-06 **5ef321f** — Merge branch 'main' of mauriGithub:gemc/clas12Tags _(by Maurizio Ungaro)_
+- 2025-05-06 **411eba0** — fix for experiment directory not being copied properly _(by Maurizio Ungaro)_
+- 2025-05-02 **55b9cc9** — Remove the AHDC::adc bank, it will be create in the reconstruction software. _(by Mathieu Ouillon)_
+- 2025-05-01 **6b91108** — Fix: Change name of the waveform bank name AHDC::wf for the signal from WF to wf _(by MathieuOuillon)_
+- 2025-04-29 **46ee3fe** — Merge branch 'main' of mauriGithub:gemc/clas12Tags _(by Maurizio Ungaro)_
+- 2025-04-29 **53e3a14** — reverting dc real run number until coatjava is ready _(by Maurizio Ungaro)_
+- 2025-04-18 **50573fc** — Define AHDC cells length in z independently from position _(by raffaelladevita)_
+- 2025-04-28 **8bbb39d** — renaming names in ci _(by Maurizio Ungaro)_
+- 2025-04-28 **834ce66** — removed obsolete cad_rgm _(by Maurizio Ungaro)_
+- 2025-04-28 **6faf445** — fixes to rgm target: torlon not present in 4 foils targets. cad rgm consolidated in cad _(by Maurizio Ungaro)_
+- 2025-04-28 **2048b8d** — fixes to rgm target: torlon not present in 4 foils targets. cad rgm consolidated in cad _(by Maurizio Ungaro)_
+- 2025-04-28 **a632602** — helium target for rgm _(by Maurizio Ungaro)_
+- 2025-04-28 **e44a46d** — re-instated material _(by Maurizio Ungaro)_
+- 2025-04-28 **92f12ef** — build gemc step added to txt_sql_comparison.yml. removed obsolete ci/detectors_tests _(by Maurizio Ungaro)_
+- 2025-04-25 **8810023** — committed some deletion by mistake _(by Maurizio Ungaro)_
+- 2025-04-25 **a10c24d** — rgm removed D and H cause they are rga or rgb. fixed gcards. preparing branch detection for workflow call _(by Maurizio Ungaro)_
+- 2025-04-25 **e3dfd6e** — they are rga or rgb _(by Maurizio Ungaro)_
+- 2025-04-25 **a55a608** — rgm targets _(by Maurizio Ungaro)_
+- 2025-04-24 **2e2762c** — fixed if condition in ci _(by Maurizio Ungaro)_
+- 2025-04-24 **5ff735b** — manually fix materials for rge empty target _(by Maurizio Ungaro)_
+- 2025-04-24 **4d13eb2** — minor description _(by Maurizio Ungaro)_
+- 2025-04-24 **fe7b8f7** — removed obsolete rgm targets mats _(by Maurizio Ungaro)_
+- 2025-04-24 **5b755ed** — removed obsolete rgm targets _(by Maurizio Ungaro)_
+- 2025-04-24 **f7817bd** — adding rgm targets run ranges _(by Maurizio Ungaro)_
+- 2025-04-24 **3cea2b2** — rgm targets _(by Maurizio Ungaro)_
+- 2025-04-24 **bbe90f5** — using multiple runs per variation _(by Maurizio Ungaro)_
+- 2025-04-24 **93672aa** — added rgm pars and geo _(by Maurizio Ungaro)_
+- 2025-04-24 **0cad23b** — added rgm pars and geo _(by Maurizio Ungaro)_
+- 2025-04-24 **d967638** — added rgm pars and geo _(by Maurizio Ungaro)_
+- 2025-04-24 **3ec521e** — stashing nd3 and hdice changes _(by Maurizio Ungaro)_
+- 2025-04-23 **1349438** — adding ubuntu build. using rsync instead of gcp for copying dirs. the build script now will re-create the geometry _(by Maurizio Ungaro)_
+- 2025-04-23 **05cbdde** — committing current changes before rgm _(by Maurizio Ungaro)_
+- 2025-04-22 **2fef3e7** — removed detector tests, superseeded by experiment tests _(by Maurizio Ungaro)_
+- 2025-04-22 **8950052** — adding reading sqlite file from GEMC_DATA_DIR, moving micromegas rga_spring2018 to default _(by Maurizio Ungaro)_
+- 2025-04-21 **1c6e76b** — fixed clas12_configuration_string for sqlite cases where variation is default _(by Maurizio Ungaro)_
+- 2025-04-18 **5c2f68e** — rga rgb rgf real run number targets, starting rgm, various api fixes and improvements _(by Maurizio Ungaro)_
+- 2025-04-18 **62dfc90** — added gcards for rgf and rgm _(by Maurizio Ungaro)_
+- 2025-04-18 **13cc958** — using the latest coatjava _(by Maurizio Ungaro)_
+- 2025-04-18 **ad5f1cf** — ap move and adding partial targets to ci _(by Maurizio Ungaro)_
+- 2025-04-18 **f700cb4** — starting rgm targets _(by Maurizio Ungaro)_
+- 2025-04-18 **aec87ef** — rgf bonus target and starting rgm _(by Maurizio Ungaro)_
+- 2025-04-18 **2d30d73** — rgm targets _(by Maurizio Ungaro)_
+- 2025-04-18 **a1eefa9** — formatting _(by Maurizio Ungaro)_
+- 2025-04-18 **4106081** — moved gxml api to api, and added 2019 variations _(by Maurizio Ungaro)_
+- 2025-04-17 **1692588** — addressing clang warnings _(by Maurizio Ungaro)_
+- 2025-04-17 **147e967** — adding pars and gcards for various targets _(by Maurizio Ungaro)_
+- 2025-04-17 **db98f51** — renoved unecessary files _(by Maurizio Ungaro)_
+- 2025-04-17 **129a550** — added targets experiments _(by Maurizio Ungaro)_
+- 2025-04-17 **3f21f07** — removed obsolete geo _(by Maurizio Ungaro)_
+- 2025-04-17 **62892d8** — more improvements and comments _(by Maurizio Ungaro)_
+- 2025-04-17 **690d600** — removed transient files for ctof _(by Maurizio Ungaro)_
+- 2025-04-17 **ddf7e40** — removed transient files for ctof _(by Maurizio Ungaro)_
+- 2025-04-17 **a97bbf5** — improved script for real run numbers _(by Maurizio Ungaro)_
+- 2025-04-17 **33a80f6** — more general script and added runs _(by Maurizio Ungaro)_
+- 2025-04-17 **b21bada** — fixed variations for ctof _(by Maurizio Ungaro)_
+- 2025-04-17 **5863aad** — debug log _(by Maurizio Ungaro)_
+- 2025-04-17 **597c173** — adding geometry for first experiments _(by Maurizio Ungaro)_
+- 2025-04-17 **b358697** — added targets gcards for various experiments _(by Maurizio Ungaro)_
+- 2025-04-17 **ef42560** — added bank to write to summary ci _(by Maurizio Ungaro)_
+- 2025-04-17 **e42eba1** — target standard cad files _(by Maurizio Ungaro)_
+- 2025-04-17 **8e422db** — had wrong volumes here for ctof _(by Maurizio Ungaro)_
+- 2025-04-16 **afb3229** — no need for default string _(by Maurizio Ungaro)_
+- 2025-04-16 **3ccf74e** — fix cases where sqlite was using wrong variation for parameters _(by Maurizio Ungaro)_
+- 2025-04-16 **4ffd738** — using stl array to silence warnings _(by Maurizio Ungaro)_
+- 2025-04-16 **24d6d1f** — explicit longitudinal name _(by Maurizio Ungaro)_
+- 2025-04-16 **2c4cbe8** — work in progress for real run numbers. renaming first variations to experiments _(by Maurizio Ungaro)_
+- 2025-04-16 **df37be1** — reorg some logs _(by Maurizio Ungaro)_
+- 2025-04-16 **0dc3bf9** — reorg summary table and added targets to ci comparison _(by Maurizio Ungaro)_
+- 2025-04-15 **8bb450f** — adding custom target variations, fix names for dev main workflow _(by Maurizio Ungaro)_
+- 2025-04-15 **7d901f5** — forgot to build gemc and install software _(by Maurizio Ungaro)_
+- 2025-04-15 **74c21fc** — testing new workflow _(by Maurizio Ungaro)_
+- 2025-04-11 **e1c9330** — saving progress and starting a new workflow _(by Maurizio Ungaro)_
+- 2025-04-11 **8152763** — micromegas fmt.pl typo and using coatjava 12.0.3t for new alert wf _(by Maurizio Ungaro)_
+- 2025-04-10 **a474cfc** — added repo pars to all checkouts in gcards tests _(by Maurizio Ungaro)_
+- 2025-04-10 **d4e6132** — testing repo checkout _(by Maurizio Ungaro)_
+- 2025-04-10 **256c4ef** — testing path for gcard creation script _(by Maurizio Ungaro)_
+- 2025-04-10 **d71c15c** — accepting other worflow triggers for gcard tests _(by Maurizio Ungaro)_
+- 2025-04-10 **19bc3de** — fixed material error in ddvcs - added ddvcs to gcards to test _(by Maurizio Ungaro)_
+- 2025-04-09 **cae1a30** — change AHDC::wf to 30 samples _(by baltzell)_
+- 2025-04-07 **b954734** — fixed typo _(by Maurizio Ungaro)_
+- 2025-04-07 **fd04de6** — testing no jobs for merge queue request and exit with error if pindex is 0 _(by Maurizio Ungaro)_
+- 2025-04-07 **2290c93** — Merge branch 'main' of mauriGithub:gemc/clas12Tags _(by Maurizio Ungaro)_
+- 2025-04-07 **e0a891c** — addressing more codeQL checks _(by Maurizio Ungaro)_
+- 2025-04-07 **5b6ea83** — addressing codeQL concents _(by Maurizio Ungaro)_
+- 2025-04-07 **c318bbc** — permission change for dev release _(by Maurizio Ungaro)_
+- 2025-04-04 **9199b8c** — test: PR _(by Christopher Dilks)_
+- 2025-04-04 **e62990a** — switching default ddvcs material to lead _(by Raffaella De Vita)_
+- 2025-04-04 **a88fc16** — switching default ddvcs material to lead _(by Raffaella De Vita)_
+- 2025-04-04 **4bc9417** — more updats to beamline for ddvcs and new gcard _(by Raffaella De Vita)_
+- 2025-04-03 **a844fca** — updated DDVCS geometry _(by Raffaella De Vita)_
+- 2025-04-04 **3224228** — Create codeql.yml _(by Mauri)_
+- 2025-04-04 **4b5ea10** — should be merge_group: _(by Maurizio Ungaro)_
+- 2025-04-04 **2ba7c93** — added merge requests to trigger workflows _(by Maurizio Ungaro)_
+- 2025-04-04 **347a4d7** — added codeql initialization and analysis - test _(by Maurizio Ungaro)_
+- 2025-04-04 **5e81bf9** — updated permission to address sql concerns _(by Maurizio Ungaro)_
+- 2025-04-03 **89ac668** — more renaming of jobs _(by Maurizio Ungaro)_
+- 2025-04-03 **107a69a** — renaming jobs in the yaml to try match them with github checks. added final steps for jobs with matrices _(by Maurizio Ungaro)_
+- 2025-04-03 **287fb7a** — renaming job _(by Maurizio Ungaro)_
+- 2025-04-03 **f608f0d** — fixed ahdc bank _(by Maurizio Ungaro)_
+- 2025-04-02 **b83e676** — run ci for all pushes to main and all pull requests _(by Maurizio Ungaro)_
+- 2025-04-02 **d392fb5** — Merge pull request #31 from c-dilks/fix-readme-spelling _(by Mauri)_
+- 2025-04-02 **250db06** — ci: add a PR trigger to `build_gemc_almalinux` workflow _(by Christopher Dilks)_
+- 2025-04-02 **930611d** — doc: fix a couple typos _(by Christopher Dilks)_
+- 2025-04-02 **160aa9b** — fixed ddccs r3 shielding and flux det. fixed alert alertAhdcTDCSchema _(by Maurizio Ungaro)_
+- 2025-04-01 **e2501e0** — Merge pull request #29 from baltzell/alert-gcard-uni _(by Mauri)_
+- 2025-04-01 **6210d61** — Merge pull request #30 from raffaelladevita/ahdcBank _(by Mauri)_
+- 2025-03-31 **99ed645** — added time to AHDC::wf and updated bank definition to match coatjava _(by Raffaella De Vita)_
+- 2025-03-31 **ecf1ad6** — remove gcard _(by Nathan Baltzell)_
+- 2025-03-31 **a6ff9d3** — gcard from mathieu _(by baltzell)_
+- 2025-03-31 **5240477** — add gcard from Mathieu _(by Nathan Baltzell)_
+- 2025-03-18 **06102bf** — added fluxDets__geometry_ddvcs _(by Maurizio Ungaro)_
+- 2025-03-17 **258656c** — added fluxDets for ddvcs _(by Maurizio Ungaro)_
+- 2025-03-13 **128d423** — Merge pull request #25 from silvianic/patch-1 _(by Mauri)_
+- 2025-03-12 **3f9f48b** — Update factory.groovy _(by silvianic)_
+- 2025-03-07 **3faf1e3** — testing beamline _(by Maurizio Ungaro)_
+- 2025-03-07 **aedb65d** — README update with docker images _(by Maurizio Ungaro)_
+- 2025-03-07 **1e5086b** — fixed final summary table, added rgl ft configuration _(by Maurizio Ungaro)_
+- 2025-03-07 **a9b612f** — using ft default variation for beamline and magnets _(by Maurizio Ungaro)_
+- 2025-03-07 **29255b7** — added missing magnets gxml variations. testing a few more detectors. fixed final summary table _(by Maurizio Ungaro)_
+- 2025-03-06 **2c08389** — using full paths for cad in sqlite _(by Maurizio Ungaro)_
+- 2025-03-06 **c8cf727** — fixed gcards _(by Maurizio Ungaro)_
+- 2025-03-06 **70715ba** — fixed gemc run script and added magnets solenoid variations for its positioning _(by Maurizio Ungaro)_
+- 2025-03-06 **73e4acc** — dc mismatch was not fixed. added magnets and beamline to both geo comparison and run comparison _(by Maurizio Ungaro)_
+- 2025-03-06 **8915a87** — dc gcards had a mismatch between text and sqlite _(by Maurizio Ungaro)_
+- 2025-03-06 **dadd41f** — fixed api to account for a single dir to produce multiple systems. added magnets to sqlite _(by Maurizio Ungaro)_
+- 2025-03-06 **a00ed01** — fixed api to account for a single dir to produce multiple systems. added magnets to sqlite _(by Maurizio Ungaro)_
+- 2025-03-06 **ffff84a** — rgd sp 25 is rgl _(by Maurizio Ungaro)_
+- 2025-03-04 **cdb7965** — added rgd_spring2025 and fixed geo runs list _(by Maurizio Ungaro)_
+- 2025-03-04 **650e098** — testing rgd_spring2025 for beamline _(by Maurizio Ungaro)_
+- 2025-03-03 **1c02a32** — bst fixed default variation _(by Maurizio Ungaro)_
+- 2025-03-03 **b81ccbb** — more readme update _(by Maurizio Ungaro)_
+- 2025-03-03 **22406f3** — more readme changes _(by Maurizio Ungaro)_
+- 2025-03-03 **595496f** — updated README _(by Maurizio Ungaro)_
+- 2025-02-26 **be1fad7** — added missing variations and runs _(by Maurizio Ungaro)_
+- 2025-02-26 **9cfd521** — bstshield integrated in bst. beamline cad added to sqlite _(by Maurizio Ungaro)_
+- 2025-02-22 **0aaabfd** — fixed beamline fall2022 geo in sqlite, added beamline gcards to DB _(by Maurizio Ungaro)_
+- 2025-02-21 **66456e2** — added beamline sqlite and proper variations and gcards. _(by Maurizio Ungaro)_
+- 2025-02-18 **23cc9a8** — fixed rich sqlite , retesting _(by Maurizio Ungaro)_
+- 2025-02-18 **e93c871** — replaced fall2018 variations with spring2018 for system ftof, ec, pcal and rich _(by Maurizio Ungaro)_
+- 2025-02-17 **a63ded4** — added funxtion to return runs from variations, now used by all detectors. fixed rich bank no existing in text. fixed ft run list _(by Maurizio Ungaro)_
+- 2025-02-17 **ee2ae93** — improved sensitivity log, fixed sqlite hit definitions loading _(by Maurizio Ungaro)_
+- 2025-02-17 **311b425** — conforming gcards _(by Maurizio Ungaro)_
+- 2025-02-17 **44f3b94** — removing env log, added ft to geometry comparison _(by Maurizio Ungaro)_
+- 2025-02-14 **81f685f** — wrong indenting _(by Maurizio Ungaro)_
+- 2025-02-14 **5c907ab** — trying space separated bank names _(by Maurizio Ungaro)_
+- 2025-02-14 **b4d820b** — added ft to sqlite, added ft variations corresponding to timelines, added corresponding ft gcards _(by Maurizio Ungaro)_
+- 2025-02-12 **417c1b3** — fix rich output bank _(by Maurizio Ungaro)_
+- 2025-02-12 **a8fe9f3** — fixed sqlite file location in ci, added rich sqlite gcard _(by Maurizio Ungaro)_
+- 2025-02-12 **998cae0** — fixed comparison script _(by Maurizio Ungaro)_
+- 2025-02-12 **349da31** — fixed cad api mfield default value, removed old stl ltcc volumes from gxml, sqlite cad factory only adds valid stl filenames, added summary table in ci _(by Maurizio Ungaro)_
+- 2025-02-11 **dbc2e7a** — added sqlite gcard for comparisons _(by Maurizio Ungaro)_
+- 2025-02-11 **7f8222d** — added rich to sqlite db, checking all detectors in CI _(by Maurizio Ungaro)_
+- 2025-02-11 **ed610a7** — fixed var of banks _(by Maurizio Ungaro)_
+- 2025-02-10 **42f7ec7** — readded experiments tests _(by Maurizio Ungaro)_
+- 2025-02-10 **6ca0346** — added ltcc sqlite gcard _(by Maurizio Ungaro)_
+- 2025-02-10 **1e0084f** — PERL API improved in handling of empty strings, Fixed materials for LTCC WC _(by Maurizio Ungaro)_
+- 2025-02-10 **200226b** — moved cron script to bin, updated gemc comparison to check multiple banks _(by Maurizio Ungaro)_
+- 2025-02-07 **2ba48bc** — fixed summary log for each system _(by Maurizio Ungaro)_
+- 2025-02-07 **e601b51** — added runs and variation to report _(by Maurizio Ungaro)_
+- 2025-02-07 **484af73** — moved rgm fmt downstream by 2mm - matching rga - to avoid overlap of closing plates _(by Maurizio Ungaro)_
+- 2025-02-07 **cfcc0f8** — micromegas added to sqlite. fixes to rgf / rgm geometries. variation name changes for michel and slim, to rga and rgm. removed readme from experiment db. added micromegas to ci _(by Maurizio Ungaro)_
+- 2025-02-07 **b03b6ba** — mm variation name changes _(by Maurizio Ungaro)_
+- 2025-02-07 **33a363a** — mm variation name changes _(by Maurizio Ungaro)_
+- 2025-02-03 **4620501** — fixed coatjava branch to use _(by Maurizio Ungaro)_
+- 2025-02-03 **bde5361** — added He3Inelastic in catalogue, verbosity condition to gxml log, removed unecessary variation string in rich digitization, better gitignore, trying coatjava branch in ci _(by Maurizio Ungaro)_
+- 2025-01-31 **6f83d63** — re-added validation, and examples in readme _(by Maurizio Ungaro)_
+- 2025-01-31 **9abe6b6** — sqlite file path change, added options to new create_geometry.sh , modified readme with new workflow _(by Maurizio Ungaro)_
+- 2025-01-30 **fbfacb5** — adding geometry source. temp disabling clas12 validation _(by Maurizio Ungaro)_
+- 2025-01-30 **fa72086** — fixed minor comment _(by Maurizio Ungaro)_
+- 2025-01-30 **1e05547** — Merge remote-tracking branch 'origin/dc_ec' into new_cad_import _(by Maurizio Ungaro)_
+- 2025-01-30 **79f3ee7** — merged from main _(by Maurizio Ungaro)_
+- 2025-01-30 **da94e8d** — dev release notes _(by Maurizio Ungaro)_
+- 2025-01-30 **cb7138a** — updating alert geo and adding recoil _(by Maurizio Ungaro)_
+- 2025-01-30 **94c0592** — ci fix _(by Maurizio Ungaro)_
+- 2025-01-17 **c197ca4** — testing summary output _(by Maurizio Ungaro)_
+- 2025-01-17 **e4bf57e** — alert changes, updated notes _(by Maurizio Ungaro)_
+- 2025-01-17 **5762a43** — testing summary output _(by Maurizio Ungaro)_
+- 2025-01-17 **f074238** — fixed summary output _(by Maurizio Ungaro)_
+- 2025-01-17 **a971bde** — summary and detailed tables instead of exit codes _(by Maurizio Ungaro)_
+
+<!-- AUTO-DEVMD:END -->

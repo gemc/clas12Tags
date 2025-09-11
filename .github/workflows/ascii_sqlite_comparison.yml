@@ -26,7 +26,7 @@ jobs:
           ./ci/report_runs_and_variations.sh  > Summary.md
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
-  txt-sql-geo-compare:
+  txt-sql-geo:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -68,7 +68,7 @@ jobs:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
 
-  txt-sql-run-compare:
+  txt-sql-run:
     needs: Notary
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -129,7 +129,7 @@ jobs:
           path: /root/logs/
 
   txt-sql-geo-result:
-    needs: txt-sql-geo-compare
+    needs: txt-sql-geo
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
@@ -150,7 +150,7 @@ jobs:
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
   txt-sql-run-result:
-    needs: txt-sql-run-compare
+    needs: txt-sql-runs
     runs-on: ubuntu-latest
     # Skip this entire job if the commit was made by the merge queue bot
     if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
