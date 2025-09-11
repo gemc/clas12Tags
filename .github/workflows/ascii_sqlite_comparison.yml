@@ -16,8 +16,6 @@ jobs:
   Notary:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -51,8 +49,6 @@ jobs:
           - targets
           - alert
 
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -103,8 +99,6 @@ jobs:
           - rgf_spring2020_mc
           - rgm_fall2021_mc
 
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -131,8 +125,6 @@ jobs:
   txt-sql-geo-result:
     needs: txt-sql-geo
     runs-on: ubuntu-latest
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: Collect logs
         uses: actions/download-artifact@v4
@@ -150,10 +142,8 @@ jobs:
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
   txt-sql-run-result:
-    needs: txt-sql-runs
+    needs: txt-sql-run
     runs-on: ubuntu-latest
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: Collect logs
         uses: actions/download-artifact@v4
@@ -201,8 +191,6 @@ jobs:
       - txt-sql-geo-result
       - txt-sql-run-result
     runs-on: ubuntu-latest
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: fail
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
