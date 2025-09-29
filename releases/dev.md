@@ -1,4 +1,4 @@
-## Based on Coatjava Release 12.0.4t
+## Based on Coatjava Release 13.3.0
 
 ## In progress
 
@@ -11,8 +11,21 @@
 <br/><br/>
 <hr/>
 <!-- AUTO-DEVMD:START -->
-## Commits on main since 2025-01-17
+## Commits on main
 
+- 2025-09-29 **b59b2b5** — pol target shift coming from parameters, rgd parameters comments fix. _(by Maurizio Ungaro)_
+- 2025-09-29 **a549534** — new stl files from the geometry service for RICH _(by Maurizio Ungaro)_
+- 2025-09-29 **6e536f2** — reduced min step for alert _(by Maurizio Ungaro)_
+- 2025-09-11 **30a510b** — removed unecessary conditions on merge queue and fixed comparison yml _(by Maurizio Ungaro)_
+- 2025-09-11 **32a522f** — fix clas12-config gcard list for dev. nightly dev will have all commits in the release notes from the last release. _(by Maurizio Ungaro)_
+- 2025-08-29 **1d25c39** — update maxStep for ahdc hits _(by Felix Touchte Codjo)_
+- 2025-08-29 **91017e3** — update landau width _(by Felix Touchte Codjo)_
+- 2025-08-25 **05bd1fc** — delete some comments _(by Felix Touchte Codjo)_
+- 2025-08-22 **f159d25** — read step time _(by Felix Touchte Codjo)_
+- 2025-08-22 **326e859** — ahdc waveform simulation calibrated with elastics data _(by Felix Touchte Codjo)_
+- 2025-08-14 **fa0fe16** — backup, no big diff _(by Felix Touchte Codjo)_
+- 2025-08-11 **793dba9** — load t0 table for the ahdc make some test _(by Felix Touchte Codjo)_
+- 2025-08-11 **58aea04** — remove wf extraction _(by Felix Touchte Codjo)_
 - 2025-09-08 **eb6c409** — debugging sqlite db run _(by Maurizio Ungaro)_
 - 2025-09-04 **1dc27b8** — added rgd ranges and fixed ci _(by Maurizio Ungaro)_
 - 2025-09-04 **c357044** — rgd target changes by Mathieu _(by Mathieu Ouillon)_
@@ -345,5 +358,314 @@
 - 2025-01-17 **5762a43** — testing summary output _(by Maurizio Ungaro)_
 - 2025-01-17 **f074238** — fixed summary output _(by Maurizio Ungaro)_
 - 2025-01-17 **a971bde** — summary and detailed tables instead of exit codes _(by Maurizio Ungaro)_
+- 2025-01-16 **e811a37** — testing return code _(by Maurizio Ungaro)_
+- 2025-01-16 **2d8fed0** — testing return code _(by Maurizio Ungaro)_
+- 2025-01-16 **3af703c** — better run report _(by Maurizio Ungaro)_
+- 2025-01-16 **cd5ebd5** — runs-on is needed _(by Maurizio Ungaro)_
+- 2025-01-16 **c776347** — runs-on is needed _(by Maurizio Ungaro)_
+- 2025-01-16 **0b81465** — removed runs on when container is specified, using our container for the report _(by Maurizio Ungaro)_
+- 2025-01-16 **681aa22** — report before other runs in CI _(by Maurizio Ungaro)_
+- 2025-01-16 **b0c80b9** — fixed indents _(by Maurizio Ungaro)_
+- 2025-01-16 **ac73c38** — reinstated alertAtofTDCSchema _(by Maurizio Ungaro)_
+- 2025-01-16 **f1e66ac** — latest ecal and dc changes by Cole / Raffaella _(by Maurizio Ungaro)_
+- 2025-01-16 **9a6d542** — added run variation reports _(by Maurizio Ungaro)_
+- 2025-01-16 **3d5b22f** — reinstating all detectors for summary report _(by Maurizio Ungaro)_
+- 2025-01-16 **c7c8499** — forgot bst in variations_for_run_and_system _(by Maurizio Ungaro)_
+- 2025-01-16 **f29549a** — added bst real run number, temp removing other detectors for ci _(by Maurizio Ungaro)_
+- 2025-01-15 **2800c20** — forgot to add cnd to runs_for_system _(by Maurizio Ungaro)_
+- 2025-01-15 **edb0924** — removing obsolete changelog files, making gcards more consistent, fixed ctof gxml files, spreading more theta in the central detectors. doubling number of events. adding cnd to CI _(by Maurizio Ungaro)_
+- 2025-01-13 **8d30a0b** — added missing banks from comparison script _(by Maurizio Ungaro)_
+- 2025-01-10 **5b71b66** — name change to for alphabetical order geo first _(by Maurizio Ungaro)_
+- 2025-01-10 **4034dd1** — adding ctof to ci comparisons _(by Maurizio Ungaro)_
+- 2025-01-10 **cc7a399** — adding ctof to sqlite DB, ctof sqlite gcard _(by Maurizio Ungaro)_
+- 2025-01-10 **3a3fd4a** — fixed alert schema _(by Maurizio Ungaro)_
+- 2025-01-10 **f28abb1** — latest alert digitization _(by Maurizio Ungaro)_
+- 2025-01-10 **9c911a5** — fixing artifact retrievning branch name _(by Maurizio Ungaro)_
+- 2025-01-10 **1168d1a** — removing deprecated actions, fixed version switch on env _(by Maurizio Ungaro)_
+- 2025-01-09 **5f7d975** — trying 500 events _(by Maurizio Ungaro)_
+- 2025-01-09 **d8e06f6** — added recoil digitization, alert digitization upgrades. release notes. This will be tag 5.11 of gemc _(by Maurizio Ungaro)_
+- 2025-01-08 **a6360af** — fixed opt property non existance in geo and source _(by Maurizio Ungaro)_
+- 2025-01-08 **298f127** — release notes addition _(by Maurizio Ungaro)_
+- 2025-01-08 **8e1f6e9** — fixed airPipe / HTCC cone overlap in issue 21 _(by Maurizio Ungaro)_
+- 2025-01-08 **3da2df8** — fixed airPipe / HTCC cone overlap in issue 21 _(by Maurizio Ungaro)_
+- 2025-01-07 **0182ad6** — activationg all existing variations _(by Maurizio Ungaro)_
+- 2025-01-07 **8738319** — using default instead of original variation for htcc _(by Maurizio Ungaro)_
+- 2025-01-03 **b5eab85** — fixed nevents for non default variations _(by Maurizio Ungaro)_
+- 2025-01-03 **1224359** — default digi variation for ec and pcal gcards, fixed bank name for ec, pcal in ci _(by Maurizio Ungaro)_
+- 2025-01-02 **482203c** — more infos on logs _(by Maurizio Ungaro)_
+- 2025-01-02 **d223631** — fixing comparison function _(by Maurizio Ungaro)_
+- 2025-01-02 **7f934ac** — removing magnets from gcard and using common functions for geo/output comparison _(by Maurizio Ungaro)_
+- 2025-01-02 **61b9be6** — fixed GEMC_DATA_DIR issue _(by Maurizio Ungaro)_
+- 2025-01-02 **aa492dc** — debuggin results _(by Maurizio Ungaro)_
+- 2025-01-02 **1ad85dc** — debuggin results _(by Maurizio Ungaro)_
+- 2025-01-02 **3bff64e** — forgot default _(by Maurizio Ungaro)_
+- 2025-01-02 **2cb75c0** — fixed workflow names _(by Maurizio Ungaro)_
+- 2025-01-02 **9f1f198** — fixed confusion on digi variation, testing on fewer digi variations _(by Maurizio Ungaro)_
+- 2024-12-20 **ff14fb3** — activating all comparison, but something is still off _(by Maurizio Ungaro)_
+- 2024-12-20 **839cce6** — output filename fix _(by Maurizio Ungaro)_
+- 2024-12-20 **b41041c** — fix bank name in the output _(by Maurizio Ungaro)_
+- 2024-12-20 **bb1726b** — added bank and more debugging output _(by Maurizio Ungaro)_
+- 2024-12-20 **650634b** — not performing output check if default variation _(by Maurizio Ungaro)_
+- 2024-12-20 **d445b16** — fix sqlite gcard and artifacts names _(by Maurizio Ungaro)_
+- 2024-12-20 **1c72005** — comparison script had errors _(by Maurizio Ungaro)_
+- 2024-12-20 **1db9b73** — adding java, j4np comparison _(by Maurizio Ungaro)_
+- 2024-12-20 **8608330** — fix script and we need to recompile gemc cause of new cad mechanism _(by Maurizio Ungaro)_
+- 2024-12-20 **127a217** — no building gemc unless necessary and fix argument to script _(by Maurizio Ungaro)_
+- 2024-12-20 **065f25c** — typo on yaml _(by Maurizio Ungaro)_
+- 2024-12-20 **961684c** — adding output comparison to ci _(by Maurizio Ungaro)_
+- 2024-12-20 **35fd3ee** — name changes, algorithm refers to geometry _(by Maurizio Ungaro)_
+- 2024-12-20 **6f58030** — try 21 _(by Maurizio Ungaro)_
+- 2024-12-20 **3fc1206** — try 29 _(by Maurizio Ungaro)_
+- 2024-12-20 **469b457** — try 19 _(by Maurizio Ungaro)_
+- 2024-12-20 **d899dba** — try 18 _(by Maurizio Ungaro)_
+- 2024-12-20 **a17dff5** — try 17 _(by Maurizio Ungaro)_
+- 2024-12-20 **9369c34** — try 16 _(by Maurizio Ungaro)_
+- 2024-12-19 **884197e** — try 15 _(by Maurizio Ungaro)_
+- 2024-12-19 **ed05bad** — try 14 _(by Maurizio Ungaro)_
+- 2024-12-19 **223d74d** — try 13 _(by Maurizio Ungaro)_
+- 2024-12-19 **a2cb982** — try 12 _(by Maurizio Ungaro)_
+- 2024-12-19 **295fdda** — try 11 _(by Maurizio Ungaro)_
+- 2024-12-19 **882c6ab** — try 10 _(by Maurizio Ungaro)_
+- 2024-12-19 **388007b** — another try _(by Maurizio Ungaro)_
+- 2024-12-19 **f237f91** — another try _(by Maurizio Ungaro)_
+- 2024-12-19 **3a6279b** — another try _(by Maurizio Ungaro)_
+- 2024-12-19 **69a6454** — one fix one try _(by Maurizio Ungaro)_
+- 2024-12-19 **8cdf3c4** — path fix _(by Maurizio Ungaro)_
+- 2024-12-19 **3ae3b7c** — another test, removing pcal cause too slow _(by Maurizio Ungaro)_
+- 2024-12-19 **87c6b5e** — another test, removing ec cause too slow _(by Maurizio Ungaro)_
+- 2024-12-19 **0a64b8e** — another test _(by Maurizio Ungaro)_
+- 2024-12-19 **a5233f5** — dynamic artifact names for download _(by Maurizio Ungaro)_
+- 2024-12-19 **a6303ce** — fixed artifact name _(by Maurizio Ungaro)_
+- 2024-12-19 **c7f22a4** — fixed filename _(by Maurizio Ungaro)_
+- 2024-12-19 **b4e4b24** — different artifacts _(by Maurizio Ungaro)_
+- 2024-12-19 **faba695** — fixed filepath _(by Maurizio Ungaro)_
+- 2024-12-19 **597ae33** — testing output _(by Maurizio Ungaro)_
+- 2024-12-19 **7088fb0** — testing output _(by Maurizio Ungaro)_
+- 2024-12-19 **a529ac3** — testing output _(by Maurizio Ungaro)_
+- 2024-12-19 **fff283a** — added experiments/clas12/targets/target__geometry_lD2CuSn.txt _(by Maurizio Ungaro)_
+- 2024-12-19 **f9559d4** — temp removing other tests, trying summary _(by Maurizio Ungaro)_
+- 2024-12-19 **7700f68** — test fixed argument _(by Maurizio Ungaro)_
+- 2024-12-19 **f26dc55** — workflow name and fix compare path _(by Maurizio Ungaro)_
+- 2024-12-19 **1231897** — added api, removed digi variation from sqlite gcards, added variation_run_comparison test _(by Maurizio Ungaro)_
+- 2024-12-11 **a812c82** — README.md showing workflow _(by Maurizio Ungaro)_
+- 2024-12-11 **ec499aa** — README.md showing workflow _(by Maurizio Ungaro)_
+- 2024-12-11 **124f7b5** — transverseTargetMagnets to cad_transverse using new cad import _(by Maurizio Ungaro)_
+- 2024-12-11 **1a3afa6** — condensed cadBeamlineELMO into cad using new cad import _(by Maurizio Ungaro)_
+- 2024-12-11 **8f55c2d** — cad_downstream_beamline condensed into cad _(by Maurizio Ungaro)_
+- 2024-12-11 **d982880** — cadBeamline, cadBeamlineFTOFF condensed to cad using new cad import _(by Maurizio Ungaro)_
+- 2024-12-09 **9ae4b92** — rich adapted to new cad import _(by Maurizio Ungaro)_
+- 2024-12-09 **7ba5a37** — only install artifacts from dev branch _(by Maurizio Ungaro)_
+- 2024-12-09 **f134200** — only download artifacts from dev _(by Maurizio Ungaro)_
+- 2024-12-06 **9158513** — removed ctof duplicated cad directories, added shared cad folders and gcards _(by Maurizio Ungaro)_
+- 2024-12-05 **14c7a89** — rename target cad directories to a common cad prefix. target and magnets cad.gxml renamed cad_default.gxml _(by Maurizio Ungaro)_
+- 2024-12-05 **3a0c60f** — added sqlite cad and mirrors gemc api _(by Maurizio Ungaro)_
+- 2024-12-04 **f675d23** — added sqlite cad and mirror factories _(by Maurizio Ungaro)_
+- 2024-12-03 **c4eca05** — ltcc variations renaming rgb_winter2019 to rgb_winter2020 and rgm to rgm_winter202. added ltcc text gcards for various variations. cad_cone cad files moved to cad _(by Maurizio Ungaro)_
+- 2024-11-26 **f91be05** — htcc variations name conform to other detectors, adding htcc sqlite gcards, improved various readme _(by Maurizio Ungaro)_
+- 2024-11-26 **6f72797** — added flux to ignore wf:10 detectors for main _(by Maurizio Ungaro)_
+- 2024-11-25 **e0ae5b4** — gemc exe was in wrong place _(by Maurizio Ungaro)_
+- 2024-11-25 **49cdbc2** — was not finding executable _(by Maurizio Ungaro)_
+- 2024-11-25 **86e7ce7** — not packing source _(by Maurizio Ungaro)_
+- 2024-11-20 **305f64a** — using standard CLAS12 variation names for htcc _(by Maurizio Ungaro)_
+- 2024-11-20 **0773ef2** — not triggering validation from this branch _(by Maurizio Ungaro)_
+- 2024-11-20 **f9c5e82** — added htcc cad variations, pcal sqlite gcards. should not trigger validation for this branch _(by Maurizio Ungaro)_
+- 2024-11-18 **83c6af0** — added to readme to test validation CI _(by Maurizio Ungaro)_
+- 2024-11-18 **ec55046** — fix readme to test validation CI _(by Maurizio Ungaro)_
+- 2024-11-15 **687724a** — no need for lib in artifact _(by Maurizio Ungaro)_
+- 2024-11-15 **89e424f** — fixed build gemc and removing ddvcs from gcards to test _(by Maurizio Ungaro)_
+- 2024-11-15 **6b8149c** — test validation trigger on push _(by Maurizio Ungaro)_
+- 2024-11-15 **0b97c49** — using almalinux93 _(by Maurizio Ungaro)_
+- 2024-11-15 **f2cb758** — ci fix _(by Maurizio Ungaro)_
+- 2024-11-15 **d7fcfa6** — re-added ddvcs _(by Maurizio Ungaro)_
+- 2024-11-15 **8ea90e4** — re-added ddvcs, dc geometry and digitization with hexagonal cells _(by Maurizio Ungaro)_
+- 2024-11-15 **ba2bba2** — re-added ddvcs, dc geometry and digitization with hexagonal cells _(by Maurizio Ungaro)_
+- 2024-11-14 **0abdce3** — Merge pull request #17 from c-dilks/use-validation-dev _(by Mauri)_
+- 2024-11-14 **2819845** — added various gcards, adding source and api to artifacts _(by Maurizio Ungaro)_
+- 2024-11-13 **f2dbc3e** — fix: just use the actual refs _(by Christopher Dilks)_
+- 2024-11-13 **5d8cd19** — test: the right version... _(by Christopher Dilks)_
+- 2024-11-13 **43fd735** — ci: use new validation GEMC versioning _(by Christopher Dilks)_
+- 2024-11-12 **1618390** — removing gemc.zip after unpacking it _(by Maurizio Ungaro)_
+- 2024-11-04 **b8b1768** — testing validation dev branch of clas12-config _(by Maurizio Ungaro)_
+- 2024-11-04 **3b10c3f** — added WF10_timestamp and WF10_snumber pulses hipo schema and output. added alert ahdc hit process with example _(by Maurizio Ungaro)_
+- 2024-11-01 **f924240** — fixed .gitignore _(by Maurizio Ungaro)_
+- 2024-11-01 **ac34493** — unzip overwrite _(by Maurizio Ungaro)_
+- 2024-11-01 **847ba72** — not removing /work clas12Tags _(by Maurizio Ungaro)_
+- 2024-11-01 **46b0b04** — workdir as subdir of /work _(by Maurizio Ungaro)_
+- 2024-11-01 **348a8f7** — fixed artifact path _(by Maurizio Ungaro)_
+- 2024-11-01 **92e3411** — added log statements _(by Maurizio Ungaro)_
+- 2024-10-30 **e394ec3** — not packing experiments, adding scripts to update jlab gemc dev executables and geometries _(by Maurizio Ungaro)_
+- 2024-10-29 **5fc6c92** — packing bin/gemc and updating get_last_ci_artifact.py to use argument _(by Maurizio Ungaro)_
+- 2024-10-29 **23ccd9c** — fixed target tests and copy experiments _(by Maurizio Ungaro)_
+- 2024-10-29 **4b6040f** — added env.sh common code, using AUTOBUILD as container check _(by Maurizio Ungaro)_
+- 2024-10-29 **334aca1** — debugging ci _(by Maurizio Ungaro)_
+- 2024-10-29 **8eec179** — saving geometry with artifacts and updating ci to use new containers _(by Maurizio Ungaro)_
+- 2024-10-29 **3a02f3a** — added almalinux and fedora build _(by Maurizio Ungaro)_
+- 2024-10-29 **4dea612** — script to get artifact _(by Maurizio Ungaro)_
+- 2024-10-28 **a65ac85** — testing telemetry _(by mungaro)_
+- 2024-10-28 **69e0855** — testing telemetry, was failing _(by mungaro)_
+- 2024-10-28 **4a2ba96** — testing artifact upload _(by mungaro)_
+- 2024-10-24 **194e1f3** — adding michel_9mmcopper variation with increased DriftCuElectrode thickness _(by mungaro)_
+- 2024-10-24 **914f705** — fixed dc test gcards _(by mungaro)_
+- 2024-10-23 **7ee2a62** — using clas12-config test for ci _(by mungaro)_
+- 2024-10-23 **65881bf** — reinstated empty ctof geometry _(by mungaro)_
+- 2024-10-23 **c3025a5** — dc test require additional system _(by mungaro)_
+- 2024-10-23 **26e831a** — restored ec _(by mungaro)_
+- 2024-10-23 **27dcd58** — RGE double target implementation, Updated CAD volumes for RICH, added alert geometry _(by mungaro)_
+- 2024-09-16 **4513c48** — Added beamline components and adjusted vacuum line downstream of the torus, will link upcoming CLAS Note _(by mungaro)_
+- 2024-09-11 **a73ff7f** — removed obsolete vacuumLine cad dir _(by mungaro)_
+- 2024-09-11 **126f74d** — volumes are replaced by native volumes to make sure thickness is correct _(by mungaro)_
+- 2024-09-10 **0728079** — initializeRTPCConstants to 11 instead of -1 as rtpc needs it _(by mungaro)_
+- 2024-09-03 **db2f519** — tungsten material update to beamline_W instead of pure W _(by mungaro)_
+- 2024-08-14 **684fb87** — added upstream geometry and transverse beamline gcard _(by mungaro)_
+- 2024-08-13 **0e914eb** — added checking parameter files in GEMC_DATA_DIR. minor re-formatting of other files _(by mungaro)_
+- 2024-07-18 **a8f414c** — material database updated with MIE scattering entries and diff script improvements _(by mungaro)_
+- 2024-07-18 **c5f260d** — merged changes from connor on MIE scattering, alert group on digitization and YuchunHung for rtpc _(by mungaro)_
+- 2024-07-18 **c70d5a1** — api does not belong here _(by mungaro)_
+- 2024-07-17 **15d87a7** — fixed version name _(by mungaro)_
+- 2024-06-26 **6e0144e** — addressing shortcoming of geant4-config 10.7.4 not returning all libraries _(by mungaro)_
+- 2024-06-17 **e48e0c9** — rg-d target assembly by Lamia _(by mungaro)_
+- 2024-06-03 **0975c03** — updated README _(by mungaro)_
+- 2024-05-02 **645deed** — Update gemc.cc _(by Mauri)_
+- 2024-05-02 **2b42ab7** — Update gemc.cc _(by Mauri)_
+- 2024-05-02 **2dcfdb2** — cleaning up release notes, moved to 5.9 _(by mungaro)_
+- 2024-05-02 **5efcf1b** — moved DSS (downstream shield) volumes from beamline to torus where the apex is implemented (Raffella) _(by mungaro)_
+- 2024-05-02 **fbdd710** — moved DSS (downstream shield) volumes from beamline to torus where the apex is implemented (Raffella), ddvcs geo update, fixed raster options for LUND format, added new transverse solenoid map option: Full_transsolenoid_x321_y161_z321_April2024 _(by mungaro)_
+- 2024-04-17 **a1dbf4f** — added fton ftoff gcard, fixed ftoff vacuum entrance and airpipe length _(by mungaro)_
+- 2024-03-28 **2263682** — using jeffersonlab/gemc:dev-fedora36 container, now an autobuild _(by mungaro)_
+- 2024-03-28 **a348e9b** — fix removed Symm_torus_r2501_phi16_z251_24Apr2018 _(by mungaro)_
+- 2024-03-28 **01a674c** — added may2018 torus map _(by mungaro)_
+- 2024-03-28 **b305dbe** — added alert geo and gcards _(by mungaro)_
+- 2024-03-22 **996d40e** — revert fix, need act on actual tag _(by mungaro)_
+- 2024-03-22 **ac90682** — 5.8 version tag fix _(by mungaro)_
+- 2024-03-20 **00a43df** — container for tests is changed _(by mungaro)_
+- 2024-03-20 **c46e90b** — from Whitney: fixed alert bank variable names _(by mungaro)_
+- 2024-03-20 **45a537c** — Eric updated alert geometry, documentation and gcards. rich modified STL volumes from Connor. Added README.md templates and uRwell gcard _(by mungaro)_
+- 2024-03-04 **edaeb06** — version tag is 5.8 _(by mungaro)_
+- 2024-03-04 **b30e710** — remove obsolete notes _(by mungaro)_
+- 2024-03-04 **7eeb420** — cumulating release notes to actual releases _(by mungaro)_
+- 2024-03-01 **d442eab** — release 5.8 for new geant4 _(by mungaro)_
+- 2024-03-01 **e32a69f** — release 5.7 with vertex fix _(by mungaro)_
+- 2024-02-23 **e72902f** — better log messages _(by mungaro)_
+- 2024-02-23 **0013338** — fixed obsolete calls to close db _(by mungaro)_
+- 2024-02-23 **0684094** — adding bank and hit sqlite factories, fixed condition to scan detectors that caused TEXT factory to fail relative accounting _(by mungaro)_
+- 2024-02-22 **4cee42a** — newScattChamber containing ddvcs_bigcone and ddvcs_ecal _(by mungaro)_
+- 2024-02-21 **07829dc** — working sqlite material factory _(by mungaro)_
+- 2024-02-21 **5707668** — fixed sqlite material factory _(by mungaro)_
+- 2024-02-21 **2b9cf4c** — photon must be 22 _(by mungaro)_
+- 2024-02-21 **3a49398** — adding sqlite geometry / materials factory. fixed vertex units . reorg release notes to include all _(by mungaro)_
+- 2024-02-01 **1a92f26** — added dc tests, testing dev container with new tags _(by mungaro)_
+- 2024-01-31 **d83a8eb** — removing gitboard io, placing telemetry after container checkout, before job _(by mungaro)_
+- 2024-01-31 **4ef3319** — various fixes for ci _(by mungaro)_
+- 2024-01-31 **b545f04** — fixed container name on tests _(by mungaro)_
+- 2024-01-31 **818a9b6** — added target tests, using dev container for main branch tests _(by mungaro)_
+- 2024-01-31 **b8ab884** — dev tag for main _(by mungaro)_
+- 2024-01-31 **df8069d** — release 5.6 _(by mungaro)_
+- 2024-01-31 **d6d871b** — random engine status fix, removing requirement of being less than 100 _(by mungaro)_
+- 2024-01-29 **057dc4d** — Merge pull request #8 from c-dilks/rm-concurrency-class _(by Mauri)_
+- 2024-01-29 **97f9752** — formatted rich readme _(by mungaro)_
+- 2024-01-29 **00fc193** — rich_sector4 generalized to rich, proper variations applied _(by mungaro)_
+- 2024-01-26 **c909d4f** — ci: remove validation caller concurrency class _(by Christopher Dilks)_
+- 2024-01-24 **e313816** — release 5.6 _(by mungaro)_
+- 2024-01-24 **3885406** — added next release notes _(by mungaro)_
+- 2024-01-24 **c901e1f** — new g4 version OPTICALPHOTONPID is 22 not 0 _(by mungaro)_
+- 2024-01-24 **4a3b4de** — added ec and fc README, removed obsolete fc volumes, removed rich_sector4 and added rich, elmo line airgap changes _(by mungaro)_
+- 2024-01-23 **03a720c** — added support for Full_transsolenoid_x161_y161_z321_March2021 binary map. _(by mungaro)_
+- 2024-01-10 **fc876b1** — updated interface to FrequencySyncSignal to pass one of engine status longs as seed, to guarantee reproducibility of RFs _(by mungaro)_
+- 2023-11-29 **8f99566** — new vacuum windows, added urwell _(by mungaro)_
+- 2023-11-20 **af6518b** — introspection option _(by mungaro)_
+- 2023-11-06 **5d24e86** — Merge pull request #4 from c-dilks/ci-validation _(by Mauri)_
+- 2023-10-28 **196a18b** — ci: trigger `clas12-validation` _(by Christopher Dilks)_
+- 2023-11-02 **e7acbb9** — added cli version option, field persistence for 2 and 3d maps is float instead of double _(by mungaro)_
+- 2023-11-02 **85359dd** — Merge pull request #2 from c-dilks/ignore-build-artifacts _(by Mauri)_
+- 2023-10-20 **787dd30** — rich hit process _(by mungaro)_
+- 2023-10-16 **c6f3f6e** — fadc time is double not int, ft cal and hodo fix _(by Maurizio Ungaro)_
+- 2023-10-16 **34513d8** — fix diff for .scons and correct urwell code _(by Maurizio Ungaro)_
+- 2023-10-13 **7a5c814** — fix: add build artifacts to `.gitignore` _(by Christopher Dilks)_
+- 2023-10-13 **6acc1dd** — diff script in zsh, new urwell hit process _(by Maurizio Ungaro)_
+- 2023-09-18 **f8eee0f** — using gnu sed _(by Maurizio Ungaro)_
+- 2023-09-12 **b46cf94** — added rich adc to ignore schema list _(by Maurizio Ungaro)_
+- 2023-09-11 **4e3083c** — time_in_ns in ctof, ecal, ftof, the ccs, fixed int _(by Maurizio Ungaro)_
+- 2023-09-11 **07a9fbf** — time_in_ns in ctof is not an int _(by Maurizio Ungaro)_
+- 2023-09-08 **afd57d5** — removed test value of rfvalue_strings that was overriding ccdb _(by Maurizio Ungaro)_
+- 2023-09-06 **5751f1e** — added next release notes, 5.5 _(by Maurizio Ungaro)_
+- 2023-09-06 **79d98fa** — updated 5.4 release notes _(by Maurizio Ungaro)_
+- 2023-09-05 **852e198** — first rich digitization, config removed, now in clas12-config repo _(by Maurizio Ungaro)_
+- 2023-09-05 **0c67084** — gcard changes for various detectors. target material fix for lHe. rich updates _(by Maurizio Ungaro)_
+- 2023-08-10 **333e6cc** — added template CLAS12TAG to top of gcards - added script to browse differences with clas12-config _(by Maurizio Ungaro)_
+- 2023-08-08 **0963c29** — testing other clas12tag versions and not dev _(by Maurizio Ungaro)_
+- 2023-08-08 **d6e20ba** — addressing clas12-config issue 8 _(by Maurizio Ungaro)_
+- 2023-08-08 **02b9301** — trying priviledge flag for container _(by Maurizio Ungaro)_
+- 2023-08-03 **44b0376** — fixed convert_to_precision function _(by Maurizio Ungaro)_
+- 2023-08-01 **c2ea84b** — added band, ltcc and htcc tdc_conv reading from CCDB and standardize their timing output _(by Maurizio Ungaro)_
+- 2023-07-26 **fa6bbb9** — using telemetry v 1.8.7 _(by Maurizio Ungaro)_
+- 2023-07-26 **d76e96e** — using telemetry v 1.8.0 _(by Maurizio Ungaro)_
+- 2023-07-26 **2a7893a** — 1K events, using telemetry v 1.8 _(by Maurizio Ungaro)_
+- 2023-07-26 **937fa7d** — compiling source if dev tag given _(by Maurizio Ungaro)_
+- 2023-07-26 **acbfcb2** — fixed json output _(by Maurizio Ungaro)_
+- 2023-07-26 **eb07c6b** — matrix test _(by Maurizio Ungaro)_
+- 2023-07-26 **a0563a5** — addressing warning and using base container _(by Maurizio Ungaro)_
+- 2023-07-26 **0cc99bc** — added matrix generation _(by Maurizio Ungaro)_
+- 2023-07-26 **ed6b783** — removed cvmfs action, added telemetry _(by Maurizio Ungaro)_
+- 2023-07-26 **13ee86f** — added osg otpions for truth matching, experiment workflow _(by Maurizio Ungaro)_
+- 2023-07-25 **cd39f67** — rfsetup only for different runnp _(by Maurizio Ungaro)_
+- 2023-07-25 **4952937** — rfsetup from ccdb and standardized fadc time and tdc _(by Maurizio Ungaro)_
+- 2023-07-18 **dfcf969** — release notes for upcoming 5.4 _(by Maurizio Ungaro)_
+- 2023-07-18 **4dbfcdf** — added checkout of code _(by Maurizio Ungaro)_
+- 2023-07-18 **f2b486a** — testing2 ubuntu container _(by Maurizio Ungaro)_
+- 2023-07-18 **93e7eb6** — testing ubuntu container _(by Maurizio Ungaro)_
+- 2023-07-18 **395b53c** — trying cvmfs v3.1 _(by Maurizio Ungaro)_
+- 2023-07-17 **413dd32** — specify container for test runs _(by Maurizio Ungaro)_
+- 2023-07-17 **9b89f33** — ci script executables _(by Maurizio Ungaro)_
+- 2023-07-17 **db4282e** — added name, try fix _(by Maurizio Ungaro)_
+- 2023-07-17 **591e529** — starting tests _(by Maurizio Ungaro)_
+- 2023-07-17 **5b71c4f** — added cadrgm _(by Maurizio Ungaro)_
+- 2023-07-17 **db8a615** — added section on PR for clas12Tags _(by Maurizio Ungaro)_
+- 2023-07-10 **e99322e** — gcards with period and added 5.4 notes _(by Maurizio Ungaro)_
+- 2023-05-01 **edaa225** — fadc time now includes 16 picoseconds precision _(by Maurizio Ungaro)_
+- 2023-04-18 **8dcf269** — precision omly diff for micromegas, last-a-foam insertion for ec _(by Maurizio Ungaro)_
+- 2023-04-17 **2daa61f** — added release notes for future 5.3 _(by Maurizio Ungaro)_
+- 2023-04-14 **25485e9** — compatibility with apple silicon, silence warnings and using solenoid and torus filenames _(by Maurizio Ungaro)_
+- 2023-04-13 **fbea2b7** — removed ogl direct calls for apple silicon support _(by Maurizio Ungaro)_
+- 2023-04-13 **a192cab** — patch for apple silicon _(by Maurizio Ungaro)_
+- 2023-04-11 **d74aa6b** — elmo and fton configurations _(by maureeungaro)_
+- 2023-04-11 **7cf8b77** — 2 confs for rgc _(by Maurizio Ungaro)_
+- 2023-04-03 **fbc3fd2** — added web printout _(by Maurizio Ungaro)_
+- 2023-03-31 **591db13** — needed quotes for py code _(by Maurizio Ungaro)_
+- 2023-03-31 **a27a392** — added code to extract the digitization variation from the gcard files _(by Maurizio Ungaro)_
+- 2023-03-21 **e2c8dfb** — readme to have ft on/off pics on same row _(by maureeungaro)_
+- 2023-03-21 **9292aef** — Update README.md _(by Mauri)_
+- 2023-03-21 **2de7955** — readme to have ft on/off pics on same row _(by maureeungaro)_
+- 2023-03-21 **abf044b** — release notes updated _(by maureeungaro)_
+- 2023-03-21 **ce2032d** — test11 _(by maureeungaro)_
+- 2023-03-21 **ae70e97** — test10 _(by maureeungaro)_
+- 2023-03-21 **3ab93ea** — test9 _(by maureeungaro)_
+- 2023-03-21 **e87a96d** — test8 _(by maureeungaro)_
+- 2023-03-21 **2cd6910** — test7 _(by maureeungaro)_
+- 2023-03-21 **8cffa1c** — test6 _(by maureeungaro)_
+- 2023-03-21 **aeaab90** — checkout v3 _(by maureeungaro)_
+- 2023-03-21 **39fc739** — test5 _(by maureeungaro)_
+- 2023-03-21 **f724284** — test3 _(by maureeungaro)_
+- 2023-03-21 **d094c99** — test2 _(by maureeungaro)_
+- 2023-03-21 **c5877d9** — test: added auto dev release _(by maureeungaro)_
+- 2023-03-20 **9ff50e0** — removed checkmarks from notes _(by Maurizio Ungaro)_
+- 2023-03-20 **3d5212c** — better log for diffs _(by Maurizio Ungaro)_
+- 2023-03-20 **ea762bf** — ready for 5.2 release _(by Maurizio Ungaro)_
+- 2023-03-20 **44d9f44** — bit more readable _(by Maurizio Ungaro)_
+- 2023-03-20 **8b2d5b0** — using c12BinaryTorusFull2021Solenoid2018 by default and adding proper scale and displace maps _(by Maurizio Ungaro)_
+- 2023-03-17 **989ff69** — adding notes for next release _(by Maurizio Ungaro)_
+- 2023-03-10 **b9c73f0** — better formatting _(by maureeungaro)_
+- 2023-03-10 **b26fe69** — table formatting didnt work _(by maureeungaro)_
+- 2023-03-10 **c0fc645** — formatting release notes _(by maureeungaro)_
+- 2023-03-10 **c188de8** — updated README in anticipation of repo move to clas12Tags _(by maureeungaro)_
+- 2023-03-09 **2afc946** — release notes _(by maureeungaro)_
+- 2023-03-08 **19f7d80** — no more yaml in clas12_tags config _(by Maurizio Ungaro)_
+- 2023-02-24 **7452ed5** — 5.1 still uses opt id 0 _(by Maurizio Ungaro)_
+- 2023-02-24 **5036cdd** — updating 5.1 _(by Maurizio Ungaro)_
+- 2023-02-14 **e8c0fd3** — 5.1 _(by maureeungaro)_
+- 2023-02-14 **73c5132** — removed foam and adapter _(by maureeungaro)_
+- 2023-02-14 **28790f1** — clas12 tag version 4.4.2 _(by maureeungaro)_
+- 2023-02-14 **1e7befb** — clas12 tag version 4.4.1 _(by maureeungaro)_
+- 2023-02-14 **bcce6bb** — clas12 tag version 4.4.0 on new repo _(by maureeungaro)_
+- 2023-02-14 **7055e6b** — Initial commit _(by Mauri)_
 
 <!-- AUTO-DEVMD:END -->

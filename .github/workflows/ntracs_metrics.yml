@@ -51,6 +51,8 @@ jobs:
           - '20'
           - 'clasdis_all'
           - 'clasdis_acc'
+          - 'clasdis_all_savemothers'
+          - 'clasdis_all_no_int'
 
     steps:
       - name: Checkout
