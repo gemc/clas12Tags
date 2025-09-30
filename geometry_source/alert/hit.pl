@@ -13,7 +13,7 @@ sub define_ahdc_hit {
     $hit{"signalThreshold"} = "0.5*MeV";
     $hit{"timeWindow"} = "400*ns";
     $hit{"prodThreshold"} = "1*mm";
-    $hit{"maxStep"} = "1*cm";
+    $hit{"maxStep"} = "0.5*mm";
     $hit{"delay"} = "50*ns";
     $hit{"riseTime"} = "1*ns";
     $hit{"fallTime"} = "2*ns";

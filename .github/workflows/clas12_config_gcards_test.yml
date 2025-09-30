@@ -39,8 +39,6 @@ jobs:
     container: jeffersonlab/gemc:dev-fedora36
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: Creates list of gcards
         uses: actions/checkout@main
@@ -61,8 +59,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -99,8 +95,6 @@ jobs:
       - generate-matrix
       - gcard-test
     runs-on: ubuntu-latest
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
       - name: fail
         if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}

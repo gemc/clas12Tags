@@ -2,9 +2,9 @@
 
 	<option name="geometry" value="1400x1200"/>
 
-	<detector name="target"         factory="TEXT" variation="2cm-lD2"/>
-	<detector name="rge-dt/Sn/"  	factory="CAD"/>
-	<detector name="rge-dt/common/"	factory="CAD"/>
+	<!-- targets -->
+	<detector name="experiments/clas12/targets/target"    factory="TEXT" variation="rge_spring2024_LD2_Sn"/>
+	<detector name="experiments/clas12/targets/cad_rge/"  factory="CAD"  variation="rge_spring2024_LD2_Sn"/>
 
 
 

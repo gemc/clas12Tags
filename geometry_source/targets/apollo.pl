@@ -53,6 +53,7 @@ sub apollo {
     $detector{"color"} = "123456";
     $detector{"type"} = "Polycone";
     $detector{"dimensions"} = "0.0*deg 360*deg 2*counts 0.0*mm 0.0*mm $Rout*mm $Rout*mm -$VolumeLength*mm $Zlength*mm";
+    $detector{"pos"} = "0*mm 0*mm $target_zpos*mm";
     $detector{"material"} = "G4_AIR";
     $detector{"visible"} = 0;
     $detector{"style"} = "1";

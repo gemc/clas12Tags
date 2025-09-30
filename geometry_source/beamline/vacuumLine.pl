@@ -22,9 +22,14 @@ my $apexPos = 5372;
 sub vacuumLine() {
     my $variation = clas12_configuration_string(\%configuration);
 
-
     my $shieldStart = 963; # start of vacuum pipe is 1mm downstream of target vac extension
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024" || $variation eq "ddvcs") {
+
+    if ($variation eq "rgk_winter2018"
+        || $variation eq "rgf_spring2020"
+        || $variation eq "rgm_fall2021"
+        || $variation eq "rge_spring2024"
+        || $variation eq "rgd_spring2023"
+        || $variation eq "ddvcs") {
         $shieldStart = 503; # 46 cm shift
     }
 
@@ -35,7 +40,6 @@ sub vacuumLine() {
     my $zpos = $shieldStart + $pipeLength;
     my $firstVacuumIR = 26.924;
     my $firstVacuumOR = 28.52;
-
 
     my %detector = init_det();
     $detector{"name"} = "vacuumPipe1";
@@ -125,7 +129,12 @@ sub vacuumLine() {
 
     # vacuum line al window
     $zpos = 962.5;
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024" || $variation eq "ddvcs") {
+    if ($variation eq "rgk_winter2018"
+        || $variation eq "rgf_spring2020"
+        || $variation eq "rgm_fall2021"
+        || $variation eq "rge_spring2024"
+        || $variation eq "rgd_spring2023"
+        || $variation eq "ddvcs") {
         $zpos = 502.5; # 46 cm shift
     }
 
@@ -181,7 +190,11 @@ sub vacuumLine() {
     my $gapZpos = 283;
     my $gapLength = 295;
 
-    if ($variation eq "rgk_winter2018" || $variation eq "rgf_spring2020" || $variation eq "rgm_fall2021" || $variation eq "rge_spring2024") {
+    if ($variation eq "rgk_winter2018"
+        || $variation eq "rgf_spring2020"
+        || $variation eq "rgm_fall2021"
+        || $variation eq "rgd_spring2023"
+        || $variation eq "rge_spring2024") {
         $gapLength = 86.5;
     }
 

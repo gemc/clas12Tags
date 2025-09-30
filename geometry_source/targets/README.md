@@ -50,7 +50,10 @@ https://clasweb.jlab.org/rcdb/runs/search?runFrom=15015&runTo=15884&q=event_coun
 - lD2: liquid Deuterium
 - lHe: liquid Helium
 
-### Solid Targets
+### RGM Solid Targets
+
+Original author: Justin Paulson
+Current maintainer: Andrew Denniston awild@mit.edu
 
 - **RGM_2_Sn**: single foil tin target in beamline > **rgm_fall2021_Sn**
 - **RGM_2_C**: single foil carbon target in beamline > **rgm_fall2021_C**

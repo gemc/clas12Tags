@@ -124,11 +124,5 @@ for dete in $=all_dets; do
 	fi
 	copyFilesAndCadDirsTo "$cdir/experiments/clas12/$dete"
 
-	# detectors details
-
-	# target rge-dt
-	if [ $dete = "targets" ]; then
-		cp -r rge-dt $cdir/experiments/clas12/$dete
-	fi
 	cd ..
 done
