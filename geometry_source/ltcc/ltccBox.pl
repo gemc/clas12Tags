@@ -21,8 +21,8 @@ our @rgb_winter2020_materials;
 our @rgb_spring2019_sectorsPresence;
 our @rgb_spring2019_materials;
 
-our @rgm_winter2021_sectorsPresence;
-our @rgm_winter2021_materials;
+our @rgm_fall2021_H_sectorsPresence;
+our @rgm_fall2021_H_materials;
 
 #
 #  large angle side(top) -->  /\
@@ -287,10 +287,10 @@ sub build_ltcc_box() {
                 $gasMaterial = $rgb_spring2019_materials[$s - 1];
             }
         }
-        elsif ($configuration_string eq "rgm_winter2021") {
-            if ($rgm_winter2021_sectorsPresence[$s - 1] == 1) {
+        elsif ($configuration_string eq "rgm_fall2021_H") {
+            if ($rgm_fall2021_H_sectorsPresence[$s - 1] == 1) {
                 $shouldPrintDetector = 1;
-                $gasMaterial = $rgm_winter2021_materials[$s - 1];
+                $gasMaterial = $rgm_fall2021_H_materials[$s - 1];
             }
         }
         if ($shouldPrintDetector == 1) {

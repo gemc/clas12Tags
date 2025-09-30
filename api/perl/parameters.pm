@@ -21,7 +21,7 @@ sub upload_parameters {
     my $factory = $configuration{"factory"};
 
     # print configuration
-    print "  + Uploading parameters from file: $filename for System: $system, Variation: $variation, Run number: $runno, DBhost: $dbhost, Factory: $factory \n";
+    print "   > Uploading parameters from file: $filename for System: $system, Variation: $variation, Run number: $runno, DBhost: $dbhost, Factory: $factory \n";
 
     # Insert parameters into table for the variation, run min, run max. Increment id for this set.
     my $dbh = open_db(%configuration);

@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+source ci/env.sh
+
 # Enable associative arrays
 typeset -A geo_runs
 
@@ -24,7 +26,10 @@ geo_runs=(
     [rgk_winter2022]=19200
     [rgk_spring2024]=19300
     [rgl_spring2025]=21000
-    [rgm_winter2021]=15016
+    [rgl_spring2025_H2]=21001
+    [rgl_spring2025_D2]=21002
+    [rgl_spring2025_He]=21003
+    [rgm_fall2021_H]=15016
 
 )
 

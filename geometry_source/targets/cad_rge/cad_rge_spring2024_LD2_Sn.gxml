@@ -1,0 +1,29 @@
+<gxml>
+	<!-- upstream of the target -->
+	<volume name="TargetBaseTubeTorlon"      mother="target" color="444444" position="0*mm 0*mm 1217.5*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- Structure -->
+	<volume name="Tracks" mother="target" color="1a1305" position="0*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="torlon4435" identifiers="id manual 3 ID"/>
+	<volume name="Rods" mother="target" color="000000" position="0*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="carbonFiber" identifiers="id manual 3 ID"/>
+	<volume name="Rings" mother="target" color="c7bf58" position="0*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="torlon4203" identifiers="id manual 3 ID"/>
+
+	<!-- target container-->
+	<volume name="TargetWallKapton"          mother="target" color="ffaaaa" position="0*mm 0*mm 1208.8*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+	<volume name="TargetEndCapKapton"        mother="target" color="ffaaaa" position="0*mm 0*mm 1208.8*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+	
+	<!-- carbon fiber chamber-->
+	<volume name="ScatteringChamberC"         mother="target" color="2e2e2e" position="0*mm 0*mm -24.34*mm" rotation="0*deg 0*deg 0*deg" material="carbonFiber"/>
+	<volume name="ScatteringChamberC_window"  mother="target" color="848789" position="0*mm 0*mm -24.24*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+
+	<!-- Band -->
+	<volume name="Sn_Band" mother="target" color="BB6622" position="0*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="band" identifiers="id manual 3 ID"/>
+	<volume name="Sn_Boxes" mother="target" color="893727" position="0*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="G4_Cu" identifiers="id manual 3 ID"/>
+
+	<!-- Targets -->
+	<volume name="Sn_Carbon" mother="target" color="191919" position="-0.01*mm 0*mm -328.04*mm" rotation="0*deg 0*deg 240*deg" material="G4_C" identifiers="id manual 3 ID"/>
+	<volume name="Sn_Aluminum" mother="target" color="848789" position="0*mm 0*mm -328.03*mm" rotation="0*deg 0*deg 240*deg" material="G4_Al" identifiers="id manual 3 ID"/>
+	<volume name="Sn_Copper" mother="target" color="B87333" position="0*mm 0*mm -328.03*mm" rotation="0*deg 0*deg 240*deg" material="G4_Cu" identifiers="id manual 3 ID"/>
+	<volume name="Sn_Tin" mother="target" color="D3D4D5" position="0*mm 0*mm -328.03*mm" rotation="0*deg 0*deg 240*deg" material="G4_Sn" identifiers="id manual 3 ID"/>
+	<volume name="Sn_Lead" mother="target" color="6C6C6A" position="0*mm 0*mm -328.03*mm" rotation="0*deg 0*deg 240*deg" material="G4_Pb" identifiers="id manual 3 ID"/>
+
+</gxml>

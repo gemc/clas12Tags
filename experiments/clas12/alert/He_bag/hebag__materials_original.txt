@@ -1,2 +1,0 @@
-            HeBagGas  |         Downstream He bag gas  |  0.000164  |         1  |                                           G4_He 1  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  |   -1  | none  |   -1  |   -1  |   -1  
-               HECO2  |               Wires layer gas  |  0.000487  |         3  |                                      He 1 C 1 O 2  | none  | none  | none  | none  | none  | none  | none  |   -1  |   -1  |   -1  |   -1  |   -1  | none  |   -1  | none  |   -1  |   -1  |   -1  

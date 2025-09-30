@@ -253,6 +253,11 @@ double *lXDR::readFloatArray(long &length)
    if (_hasNetworkOrder == false) {
       for (long i = 0; i < length; i++) {
          long l = ntohl(st[i]);
+         // je: FIXME this will cause problems in architectures where long isn't 4 byte long
+         // 6/09/2025: I tried this w/o success:
+		 //  uint32_t l = /* … */;   // the 32‑bit pattern of a float
+		 // float     f = std::bit_cast<float>(l);
+		 // s[i] = static_cast<double>(f);
          s[i] = (double) (*((float *) &l));
       }
    }

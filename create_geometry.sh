@@ -91,8 +91,12 @@ cd geometry_source
 
 # if the directory coatjava does not exist, run the script to create it
 if [[ ! -d coatjava || $explicit_coatjava -eq 1 ]]; then
-  [[ -d coatjava ]] && echo "Re‑installing coatjava with specified option(s)…"
+  [[ -d coatjava ]] && echo "Re‑installing coatjava with specified options..."
   ./install_coatjava.sh "${coatjava_args[@]}"
+	if [[ $? -ne 0 ]]; then
+		echo "Error: coatjava build failed. See ../build_coatjava.log for details."
+		exit 1
+	fi
 fi
 
 # loop over all dets
@@ -113,39 +117,12 @@ for dete in $=all_dets; do
 	# main run
 	if [[ -f "./$dete.pl" ]]; then
 		./"$dete.pl" config.dat
+	if [[ $? -ne 0 ]]; then
+		echo "Error: building $dete failed. Check the geometry build log for details."
+		exit 1
+	fi
 	fi
 	copyFilesAndCadDirsTo "$cdir/experiments/clas12/$dete"
 
-	# detectors details
-
-	# target rge-dt
-	if [ $dete = "targets" ]; then
-		cp -r rge-dt $cdir/experiments/clas12/$dete
-	fi
-
-	if [ $dete = "alert" ]; then
-		for sdete in He_bag ahdc atof external_shell_nonActif; do
-			echo
-			echo " > Building ALERT $sdete"
-			echo
-
-			cd $sdete
-			detep=$sdete
-			if [ $sdete = "He_bag" ]; then
-				detep="hebag"
-			elif [ $sdete = "external_shell_nonActif" ]; then
-				detep="alertshell"
-			elif [ $sdete = "ahdc" ] || [ $dete = "atof" ]; then
-				run-groovy factory.groovy --variation default --runnumber 11
-				run-groovy factory.groovy --variation rga_fall2018 --runnumber 11
-			fi
-
-			"./$detep.pl" config.dat
-			copyFilesAndCadDirsTo "$cdir/experiments/clas12/$dete/$sdete"
-
-			cd ..
-
-		done
-	fi
 	cd ..
 done

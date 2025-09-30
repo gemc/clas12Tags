@@ -52,7 +52,6 @@ ExperimentNotExisting() {
 	exit 3
 }
 
-echo "Running on branch: $BRANCH_NAME"
 
 [[ -d clas12-config ]] && echo clas12-config exist || git clone -b dev https://github.com/JeffersonLab/clas12-config
 echo " > Gcard: $gcard\n"
@@ -80,11 +79,30 @@ else
 	./ci/generated_events/randomize_particles.py --nevents $nevents -o events.dat --theta-min 7 --theta-max 120 --seed 123 $lund_file
 fi
 
-# same options as on OSG
-echo "Running gemc with options:  -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard"
-gemc -INPUT_GEN_FILE="lund, events.dat"  -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10  -RANDOMIZE_LUND_VZ='-1.94*cm, 2.5*cm, reset ' \
-     -BEAM_SPOT='0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset ' -RASTER_VERTEX='0.0*cm, 0.0*cm, reset '  \
-     -SCALE_FIELD='binary_torus, -1.00'   -SCALE_FIELD='binary_solenoid, -1.00' -INTEGRATEDRAW='*' $gcard > $gemc_log
+options_general="-INPUT_GEN_FILE=\"lund, events.dat\" -NGENP=100 -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 -OUTPUT=\"hipo, gemc.hipo\""
+options_vertex=" -RANDOMIZE_LUND_VZ=\"-1.94*cm, 2.5*cm, reset\" -BEAM_SPOT=\"0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset\" -RASTER_VERTEX=\"0.0*cm, 0.0*cm, reset\" "
+options_fields=" -SCALE_FIELD=\"binary_torus, -1.00\" -SCALE_FIELD=\"binary_solenoid, -1.00\" "
+options_integrated="-INTEGRATED_RAW=\"*\""
+options_mothers="-SAVE_ALL_MOTHERS=\"1\""
+options_output="-OUTPUT='hipo, gemc.hipo'"
+
+options="$gemc_general $options_vertex $options_fields $options_output"
+
+# if $ntracks is NOT clasdis_all_no_int, add integrated option
+if [[ $ntracks != "clasdis_all_no_int" ]]; then
+	options="$options $options_integrated"
+fi
+
+if [[ $ntracks == "clasdis_all_savemothers" ]]; then
+	options="$options $options_mothers"
+fi
+
+
+gemc_options="$options"  | sed '/G4Exception-START/,/G4Exception-END/d'
+echo "Running gemc with options: $options and gcard: $gcard"
+
+gemc $options $gcard > $gemc_log
+
 exitCode=$?
 
 if [[ $exitCode != 0 ]]; then

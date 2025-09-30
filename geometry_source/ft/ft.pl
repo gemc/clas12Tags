@@ -49,7 +49,8 @@ sub create_system {
 
 }
 
-my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rge_spring2024", "rgl_spring2025");
+# the rgc fall variation contains an empty volume to indicate it's 'out'. This way we can include it in all gcards.
+my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgd_spring2023", "rgc_summer2022", "rgc_fall2022", "rge_spring2024", "rgl_spring2025");
 my @runs = clas12_runs(@variations);
 
 

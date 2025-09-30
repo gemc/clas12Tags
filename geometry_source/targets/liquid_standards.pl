@@ -10,12 +10,19 @@ our %parameters;
 our $target_zpos;
 
 sub build_liquid_standard_container {
+    my $configuration_string = clas12_configuration_string(\%configuration);
+
     my %detector = init_det();
 
     # vacuum target container
     my $nplanes = 4;
     my @oradius = (50.3, 50.3, 21.1, 21.1);
     my @z_plane = (-140.0, 265.0, 280.0, 280.0);
+
+    if ($configuration_string eq "lH2e") {
+        @z_plane = (-115.0, 365.0, 390.0, 925.0);
+    }
+
     $detector{"name"} = "target";
     $detector{"mother"} = "root";
     $detector{"description"} = "Target Container";
@@ -122,15 +129,20 @@ sub build_liquid_standard_cell {
     if ($configuration_string eq "default"
         or $configuration_string eq "rga_spring2018"
         or $configuration_string eq "rga_fall2018"
-        or $configuration_string eq "rga_spring2019") {
+        or $configuration_string eq "rga_spring2019"
+        or $configuration_string eq "lH2e") {
         $detector{"material"} = "G4_lH2";
     }
     elsif ($configuration_string eq "rgb_spring2019"
-        or $configuration_string eq "rgb_fall2019") {
+        or $configuration_string eq "rgb_fall2019"
+        or $configuration_string eq "rgd_fall2023_lD2") {
         $detector{"material"} = "LD2";
     }
     elsif ($configuration_string eq "rgm_fall2021_He") {
         $detector{"material"} = "lHeTarget";
+    }
+    elsif ($configuration_string eq "rgd_fall2023_empty") {
+        $detector{"material"} = "G4_Galactic";
     }
 
     $detector{"style"} = 1;

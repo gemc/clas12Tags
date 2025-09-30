@@ -88,3 +88,9 @@ foreach my $run (@runs) {
 }
 
 
+# clean up
+use File::Path qw(make_path remove_tree);
+foreach my $variation (@variations) {
+    print("Removing parameters file:", "$system"."__parameters_"."$variation".".txt\n");
+    remove_tree("$system"."__parameters_"."$variation".".txt");
+}

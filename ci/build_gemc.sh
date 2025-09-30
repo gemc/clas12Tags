@@ -21,14 +21,19 @@ function compile_gemc {
 	# getting number of available CPUS
 	copt=" -j"$(getconf _NPROCESSORS_ONLN)" OPT=1"
 	echo
-	echo Compiling GEMC with options: "$copt" $debug
-	scons SHOWENV=1 SHOWBUILD=1 $copt $debug > gemc_build.log 2>&1
-	# checking existence of executable
-	echo "Created executable: " $(ls gemc)
+	echo Compiling GEMC with options: "$copt" "$debug"
+	echo START_GEMC_COMPILATION $(date) > gemc_build.log | tee -a gemc_build.log
+	echo Compiling GEMC with options: "$copt" "$debug" >> gemc_build.log | tee -a gemc_build.log
+	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" &>> gemc_build.log
 	if [ $? -ne 0 ]; then
-		echo gemc executable not found
+		echo "scons failed. Log: "
+		cat gemc_build.log
 		exit 1
 	fi
+	echo END_GEMC_COMPILATION $(date) >> gemc_build.log | tee -a gemc_build.log
+	# checking existence of executable
+	echo "Created executable: " $(ls gemc)
+
 	cp gemc $GEMC/bin
 	cd ..
 	echo "Copying gemc to $GEMC/bin for CI"
@@ -37,28 +42,42 @@ function compile_gemc {
 function create_geo_dbs {
 	echo
 	echo "Creating all geometry databases with: create_geometry.sh"
-	./create_geometry.sh > geo_build.log 2>&1
-	echo "Copying experiments ASCII DB and sqlite file to $GEMC for CI"
-	cp -r experiments clas12.sqlite gemc_build.log geo_build.log build_coatjava.log /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+	echo START_CREATE_GEOMETRY $(date) > geo_build.log | tee -a geo_build.log
+	./create_geometry.sh &>> geo_build.log
+	ls -lrt > geo_build.log | tee -a geo_build.log
+	if [ $? -ne 0 ]; then
+		echo "create_geometry failed. Log:"
+		cat geo_build.log
+		exit 1
+	fi
+
+	echo "Copying experiments ASCII DB and sqlite file to $ARTIFACT_DIR for CI"
+	cp -r experiments clas12.sqlite source/gemc_build.log geo_build.log geometry_source/build_coatjava.log $ARTIFACT_DIR
+
+	echo
 	echo "Changes after creation:"
-	git branch ; git status -s
+	git branch ; git status -s >> geo_build.log | tee -a geo_build.log
+	echo END_CREATE_GEOMETRY $(date) >> geo_build.log | tee -a geo_build.log
+
 }
 
 compile_gemc
 create_geo_dbs
 log_gemc_info
-
 echo
-echo "Content of artifacts dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4"
-ls -lrt /cvmfs/oasis.opensciencegrid.org/jlab/geant4
-
-echo "Content of artifacts experiment dir /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12"
-ls -lrt /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments/clas12
-
+echo "Content of $GEMC after geo creation:"
+ls -lrt $GEMC
+echo
+echo "Content of artifacts dir $ARTIFACT_DIR:"
+ls -lrt $ARTIFACT_DIR
+echo
+echo "Content of artifacts experiment dir $ARTIFACT_DIR/experiments/clas12:"
+ls -lrt $ARTIFACT_DIR/experiments/clas12
+echo
 # copying executable, api and sqlite database for artifact retrieval
 # the experiment dir is synced with the bin/cron_gemc_artifact_install_jlab.sh
 echo "Copying executable, api and sqlite database for artifact retrieval"
-mkdir -p /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
-cp source/gemc /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
-cp -r api /cvmfs/oasis.opensciencegrid.org/jlab/geant4
-cp clas12.sqlite /cvmfs/oasis.opensciencegrid.org/jlab/geant4
+mkdir -p $ARTIFACT_DIR/bin
+cp source/gemc $ARTIFACT_DIR/bin
+cp -r api $ARTIFACT_DIR
+cp clas12.sqlite $ARTIFACT_DIR

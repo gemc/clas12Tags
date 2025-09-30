@@ -1,4 +1,4 @@
-name: "CodeQL Advanced"
+name: CodeQL Advanced
 permissions:
   contents: read
   pull-requests: write
@@ -54,11 +54,16 @@ jobs:
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
         # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
-    # Skip this entire job if the commit was made by the merge queue bot
-    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Fix Ownership
+      run: |
+        # recent versions of Git refuse to touch a repository whose on-disk owner 
+        # doesn’t match the UID that is running the command
+        # mark the workspace (and any nested path) as safe
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"/src
 
     # Add any setup steps before running the `github/codeql-action/init` action.
     # This includes steps like installing compilers or runtimes (`actions/setup-node`
