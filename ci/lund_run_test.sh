@@ -82,26 +82,25 @@ fi
 options_general="-INPUT_GEN_FILE=\"lund, events.dat\" -NGENP=100 -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 -OUTPUT=\"hipo, gemc.hipo\""
 options_vertex=" -RANDOMIZE_LUND_VZ=\"-1.94*cm, 2.5*cm, reset\" -BEAM_SPOT=\"0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset\" -RASTER_VERTEX=\"0.0*cm, 0.0*cm, reset\" "
 options_fields=" -SCALE_FIELD=\"binary_torus, -1.00\" -SCALE_FIELD=\"binary_solenoid, -1.00\" "
-options_integrated="-INTEGRATED_RAW=\"*\""
-options_mothers="-SAVE_ALL_MOTHERS=\"1\""
-options_output="-OUTPUT='hipo, gemc.hipo'"
+options_integrated=" -INTEGRATED_RAW=\"*\""
+options_mothers=" -SAVE_ALL_MOTHERS=\"1\""
+options_output=" -OUTPUT='hipo, gemc.hipo'"
 
-options="$gemc_general $options_vertex $options_fields $options_output"
+gemc_opts="$gemc_general $options_vertex $options_fields $options_output"
 
 # if $ntracks is NOT clasdis_all_no_int, add integrated option
 if [[ $ntracks != "clasdis_all_no_int" ]]; then
-	options="$options $options_integrated"
+	gemc_opts="$gemc_opts $options_integrated"
 fi
 
 if [[ $ntracks == "clasdis_all_savemothers" ]]; then
-	options="$options $options_mothers"
+	gemc_opts="$gemc_opts $options_integrated $options_mothers"
 fi
 
 
-gemc_options="$options"  | sed '/G4Exception-START/,/G4Exception-END/d'
-echo "Running gemc with options: $options and gcard: $gcard"
+echo "Running gemc with options: $gemc_opts and gcard: $gcard"
 
-gemc $options $gcard > $gemc_log
+gemc $gemc_opts $gcard | sed '/G4Exception-START/,/G4Exception-END/d' > $gemc_log
 
 exitCode=$?
 
