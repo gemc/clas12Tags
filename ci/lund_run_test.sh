@@ -38,7 +38,8 @@ while getopts ":hg:l:" option; do
 			;;
 		l)
 			ntracks="$OPTARG"
-			;;		\?) # Invalid option
+			;;
+		\?)    # Invalid option
 			echo "Error: Invalid option"
 			exit 1
 			;;
@@ -51,7 +52,6 @@ ExperimentNotExisting() {
 	Help
 	exit 3
 }
-
 
 [[ -d clas12-config ]] && echo clas12-config exist || git clone -b dev https://github.com/JeffersonLab/clas12-config
 echo " > Gcard: $gcard\n"
@@ -73,6 +73,9 @@ if [[ $ntracks == "clasdis_all" || $ntracks == "clasdis_acc" ]]; then
 	elif [[ $ntracks == "clasdis_acc" ]]; then
 		echo "Using $nevents events from lund file generated with clasdis --t 15 35 --trig 200 --docker"
 	fi
+elif [[ $ntracks == "clasdis_all_no_int" || $ntracks == "clasdis_all_savemothers" ]]; then
+	cp ci/generated_events/clasdis_all.dat events.dat
+	echo "Using clasdis_all events from lund file generated with clasdis --trig 200 --docker"
 else
 	lund_file="ci/generated_events/"$ntracks"_tracks.dat"
 	echo "Generating file events.dat with $nevents events from lund file: $lund_file"
@@ -97,10 +100,9 @@ if [[ $ntracks == "clasdis_all_savemothers" ]]; then
 	gemc_opts="$gemc_opts $options_integrated $options_mothers"
 fi
 
-
 echo "Running gemc with options: $gemc_opts and gcard: $gcard"
 
-gemc $gemc_opts $gcard | sed '/G4Exception-START/,/G4Exception-END/d' > $gemc_log
+gemc $gemc_opts $gcard | sed '/G4Exception-START/,/G4Exception-END/d' >$gemc_log
 
 exitCode=$?
 
@@ -109,7 +111,7 @@ if [[ $exitCode != 0 ]]; then
 	exit $exitCode
 fi
 
-printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" $gemc_log | cut -d':' -f3 | cut -d' ' -f2)" > $log_file
+printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" $gemc_log | cut -d':' -f3 | cut -d' ' -f2)" >$log_file
 
 echo
 cat $log_file

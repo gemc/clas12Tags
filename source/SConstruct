@@ -7,7 +7,6 @@ env.Append(CXXFLAGS=['-std=c++17'])
 
 # addressing shortcoming of geant4-config 10.7.4 not returning all libraries
 additional_libs = []
-additional_libs.append('pthread')
 additional_libs.append('G4ptl')
 additional_libs.append('G4tasking')
 additional_libs.append('ccdb_sqlite')
@@ -143,8 +142,8 @@ hitp_sources = Split("""
 	hitprocess/clas12/band_hitprocess.cc
  	hitprocess/clas12/uRwell/uRwell_hitprocess.cc
  	hitprocess/clas12/uRwell/uRwell_strip.cc
-        hitprocess/clas12/recoil/recoil_hitprocess.cc	
-        hitprocess/clas12/recoil/recoil_strip.cc
+    hitprocess/clas12/recoil/recoil_hitprocess.cc
+    hitprocess/clas12/recoil/recoil_strip.cc
 	hitprocess/bdx/cormo_hitprocess.cc
 	hitprocess/bdx/veto_hitprocess.cc
 	hitprocess/bdx/crs_hitprocess.cc
@@ -164,7 +163,6 @@ env.Library(source = hitp_sources, target = "lib/ghitprocess")
 env.Append(CPPPATH = 'output')
 output_sources = Split("""
 	output/outputFactory.cc
-	
 	output/hipo_output.cc
 	output/hipoSchemas.cc
 	output/txt_output.cc
@@ -205,8 +203,24 @@ gemc_sources = Split("""
 	src/ActionInitialization.cc
 	src/MSteppingAction.cc""")
 
-env.Append(LIBPATH = ['lib'])
-env.Prepend(LIBS =  ['gmaterials', 'gmirrors', 'gparameters', 'gutilities', 'gdetector', 'gsensitivity', 'gphysics', 'gfields', 'ghitprocess', 'goutput', 'ggui'])
+env.Append(LIBPATH = ['#lib'])
+env.Prepend(LIBS=[
+    'ggui',
+    'gdetector',
+    'gfields',
+    'gphysics',
+    'gmaterials','gmirrors','gparameters','gutilities',
+    'gsensitivity','ghitprocess','goutput',
+])
+
+
+# on macos, the latest xcodebuild may be more strict with the order of libraries
+from SCons.Script import File
+env.Append(LINKFLAGS = ['-Wl,-force_load,' + File('#lib/libgdetector.a').abspath])
+env.Append(LINKFLAGS = ['-Wl,-force_load,' + File('#lib/libgfields.a').abspath])
+env.Append(LINKFLAGS = ['-Wl,-force_load,' + File('#lib/libgphysics.a').abspath])
+
+
 env.Program(source = gemc_sources, target = "gemc")
 
 
