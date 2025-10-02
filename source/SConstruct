@@ -215,11 +215,32 @@ env.Prepend(LIBS=[
 
 
 # on macos, the latest xcodebuild may be more strict with the order of libraries
+# SConstruct
+import sys
 from SCons.Script import File
-env.Append(LINKFLAGS = ['-Wl,-force_load,' + File('#lib/libgdetector.a').abspath])
-env.Append(LINKFLAGS = ['-Wl,-force_load,' + File('#lib/libgfields.a').abspath])
-env.Append(LINKFLAGS = ['-Wl,-force_load,' + File('#lib/libgphysics.a').abspath])
 
+archives = [
+    File('#lib/libgdetector.a').abspath,
+    File('#lib/libgfields.a').abspath,
+    File('#lib/libgphysics.a').abspath,
+]
+
+if sys.platform == 'darwin':
+    # Mach-O (macOS): force-load each archive explicitly
+    for a in archives:
+        env.Append(LINKFLAGS=[f'-Wl,-force_load,{a}'])
+# else:
+#     # ELF (Linux): pull all objects from these archives
+#     # Option A: whole-archive (strongest; pulls everything in)
+#     env.Append(LINKFLAGS=['-Wl,--whole-archive'])
+#     env.Append(LINKFLAGS=archives)
+#     env.Append(LINKFLAGS=['-Wl,--no-whole-archive'])
+#
+#     # If you have circular deps across multiple static libs and prefer
+#     # selective pulling instead of whole-archive, you can try start/end group:
+#     # env.Append(LINKFLAGS=['-Wl,--start-group'])
+#     # env.Append(LINKFLAGS=archives)
+#     # env.Append(LINKFLAGS=['-Wl,--end-group'])
 
 env.Program(source = gemc_sources, target = "gemc")
 
