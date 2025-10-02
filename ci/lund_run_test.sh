@@ -87,17 +87,18 @@ options_vertex=" -RANDOMIZE_LUND_VZ=\"-1.94*cm, 2.5*cm, reset\" -BEAM_SPOT=\"0.0
 options_fields=" -SCALE_FIELD=\"binary_torus, -1.00\" -SCALE_FIELD=\"binary_solenoid, -1.00\" "
 options_integrated=" -INTEGRATED_RAW=\"*\""
 options_mothers=" -SAVE_ALL_MOTHERS=\"1\""
-options_output=" -OUTPUT='hipo, gemc.hipo'"
+options_output=" -OUTPUT=\"hipo, gemc.hipo\""
 
-gemc_opts="$gemc_general $options_vertex $options_fields $options_output"
+
+gemc_opts=$options_general$options_vertex$options_fields$options_output
 
 # if $ntracks is NOT clasdis_all_no_int, add integrated option
 if [[ $ntracks != "clasdis_all_no_int" ]]; then
-	gemc_opts="$gemc_opts $options_integrated"
+	gemc_opts=$gemc_opts$options_integrated
 fi
 
 if [[ $ntracks == "clasdis_all_savemothers" ]]; then
-	gemc_opts="$gemc_opts $options_integrated $options_mothers"
+	gemc_opts=$gemc_opts$options_integrated$options_mothers
 fi
 
 echo "Running gemc with options: $gemc_opts and gcard: $gcard"
