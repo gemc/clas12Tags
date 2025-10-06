@@ -75,7 +75,7 @@ jobs:
         env:
           BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
-          ./ci/lund_run_test.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
+          ./ci/ntracks_metricks.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
       - name: Upload logs
         uses: actions/upload-artifact@v4
         with:
