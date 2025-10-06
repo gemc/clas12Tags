@@ -87,10 +87,6 @@ fi
 echo " Content of $event_lund_file :" > $gemc_log
 cat $event_lund_file >> $gemc_log
 
-options_mothers=" -SAVE_ALL_MOTHERS=\"1\""
-options_output=" -OUTPUT=\"hipo, gemc.hipo\""
-
-gemc_opts=$options_general$options_vertex$options_fields$options_output
 
 # --- build gemc options as an ARRAY (zsh) ---
 typeset -a gemc_opts
@@ -115,7 +111,7 @@ gemc_opts=(
 
 # conditional flags (append safely)
 if [[ $ntracks != "clasdis_all_no_int" ]]; then
-  gemc_opts+=(-INTEGRATED_RAW="*")
+  gemc_opts+=(-INTEGRATEDRAW="*")
 fi
 
 if [[ $ntracks == "clasdis_all_savemothers" ]]; then
