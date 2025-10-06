@@ -109,6 +109,8 @@ exitCode=$?
 
 if [[ $exitCode != 0 ]]; then
 	echo exiting with gemc exitCode: $exitCode
+	echo "Log:"
+	cat $log_file
 	exit $exitCode
 fi
 
