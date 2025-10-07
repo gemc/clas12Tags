@@ -1,0 +1,12 @@
+# Detector name and variation
+detector_name: dc
+comment: CLAS12 DC detector
+
+# MYSQL server / SQLITE file
+dbhost: ../../clas12.sqlite
+
+# Verbosity controls the perl script output
+verbosity: 0
+
+
+

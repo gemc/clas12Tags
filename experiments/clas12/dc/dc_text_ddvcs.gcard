@@ -1,0 +1,25 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<detector name="dc" factory="TEXT" variation="ddvcs"/>
+	<detector name="experiments/clas12/beamline/beamline"  factory="TEXT" variation="rgk_winter2018"/>
+
+	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
+	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>
+
+	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->
+	<option name="HALL_FIELD" value="Symm_solenoid_r601_phi1_z1201_13June2018:Symm_torus_r2501_phi16_z251_24Apr2018"/>
+	<option name="SCALE_FIELD" value="binary_torus, -1"/>
+	<option name="SCALE_FIELD" value="binary_solenoid, -1"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="INTEGRATEDRAW" value="dc"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="DIGITIZATION_VARIATION" value="default"/>
+
+</gcard>

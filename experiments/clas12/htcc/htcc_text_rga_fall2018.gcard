@@ -1,0 +1,21 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<detector name="./htcc" factory="TEXT" variation="rga_fall2018"/>
+	<detector name="./cad/" factory="CAD"  variation="rga_fall2018"/>
+
+	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
+	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="INTEGRATEDRAW" value="htcc"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT + Optical"/>
+	<option name="RECORD_OPTICALPHOTONS" value="1"/>
+	<option name="DIGITIZATION_VARIATION" value="rga_fall2018_mc"/>
+	
+</gcard>

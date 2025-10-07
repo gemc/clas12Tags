@@ -1,0 +1,23 @@
+ the det_CO2 table is used by A. Vlassov to calculate photon yields 
+ the calculations are made in refl_n.f
+ 
+ the variables storead are
+  read(10,*) alamb(i),r_mylar(i),r_al_mgf2(i), r_beral(i),
+     &  qe_std(i), qe_UV(i), qe_kvarts(i), g_trans(i)
+		 
+		 
+ so to store q.e. of std, uv and quartz respectively, and the gas 
+ transparency:
+ 
+ the file pmt_qe.txt and c4f10_tr.txt are made with these commanads:
+ 
+ awk '{print $1"  "$5"  "$6"  "$7}' det_CO2.dat > pmt_qe.txt
+ awk '{print $8}' det_CO2.dat > c4f10_tr.txt
+
+ 
+the mirror reflectivit text file come from measurements made by a. puckett 
+on the hyp. mirrors and the coated sample from ECI. They are stored in 
+excel format in 
+
+~/Desktop/Dropbox/LTCC/documents/mirrors/reflectivity\ measurement/
+

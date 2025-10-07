@@ -1,0 +1,28 @@
+<!--
+
+ The mesh export presents a small overlap between the flanges of the tagger and torus mount.
+ The position is modified by to produce a little gap
+
+ For the FTON configurration the cone is shifted by -238.8mm
+
+ -->
+
+<gxml>
+
+	<!-- upstream of the target -->
+	<volume name="TargetBaseTubeTorlon"      mother="target" color="444444" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- target itself -->
+	<volume name="TargetAlWindowD"           mother="target" color="aaaaff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetAlWindowU"           mother="target" color="aaaaff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetWallKapton"          mother="target" color="ffaaaa" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+	<volume name="TargetEndCapKapton"        mother="target" color="ffaaaa" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- rohacell chamber. The TargetFoam volume comes from a different model (Saclay has a different coordinate system?). -->
+	<volume name="foamExtended"              mother="target" color="aaffff" rotation="0*deg 180*deg 0*deg" material="rohacell"/>
+
+	<!-- vacuum extension -->
+	<volume name="TargetVacuumWindow50umAl"  mother="target" color="aaaaff" position="0*mm 0*mm 1255*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetWindowAdapterTorlon" mother="target" color="444444" position="0*mm 0*mm 1255*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+</gxml>

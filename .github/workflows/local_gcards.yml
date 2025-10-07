@@ -1,0 +1,85 @@
+name: Local Gcards Tests
+permissions:
+  contents: read
+  pull-requests: write
+
+  # Triggers the workflow on all pushes to main, all pull and merge requests
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+    paths-ignore:
+      - "**/*.md"
+      - "release_notes/**"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+
+  local-gcards-test:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-almalinux94
+    strategy:
+      fail-fast: false
+      matrix:
+        detector:
+          - ec
+          - pcal
+          - dc
+          - ftof
+          - ctof
+          - cnd
+          - bst
+          - htcc
+          - micromegas
+          - ltcc
+          - rich
+          - ft
+          - beamline
+          - magnets
+          - targets
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+      - name: Fix Java Version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+      - name: Build Coatjava
+        run: |
+          cd ./geometry_source
+          ./install_coatjava.sh -l
+      - name: Build Gemc
+        run: |
+          ./ci/build_gemc.sh
+      - name: Gcard ${{ matrix.detector }} Test
+        run: |
+          ./ci/local_gcards_test.sh -d ${{ matrix.detector }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildlogs-${{ matrix.detector }}
+          path: |
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+
+  local-gcards-test-final:
+    needs:
+      - local-gcards-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

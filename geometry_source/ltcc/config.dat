@@ -1,0 +1,9 @@
+# Detector name and variation
+detector_name: ltcc
+comment: CLAS12 Low Threshold Cherenkov Counter
+
+# MYSQL server / SQLITE file
+dbhost: ../../clas12.sqlite
+
+# Verbosity controls the perl script output
+verbosity: 0

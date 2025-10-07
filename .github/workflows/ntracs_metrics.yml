@@ -1,0 +1,126 @@
+name: Ntracks Metrics
+permissions:
+  contents: read
+  pull-requests: write
+
+# Triggers the workflow on all pushes to main and all pull requests
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+    paths-ignore:
+      - "**/*.md"
+      - "release_notes/**"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Allows this workflow to be called by other workflows
+  # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
+  workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
+
+jobs:
+  detect-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set effective branch
+        id: vars
+        run: |
+          echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
+
+
+  ntracks-metrics:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-almalinux94
+    strategy:
+      fail-fast: false
+      matrix:
+        ntracks:
+          - '01'
+          - '02'
+          - '03'
+          - '05'
+          - '10'
+          - '15'
+          - '20'
+          - 'clasdis_all'
+          - 'clasdis_acc'
+          - 'clasdis_all_savemothers'
+          - 'clasdis_all_no_int'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
+      - name: Fix Java Version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+      - name: Build Coatjava
+        run: |
+          cd ./geometry_source
+          ./install_coatjava.sh -l
+      - name: Build Gemc
+        run: |
+          ./ci/build_gemc.sh
+      - name: ${{ matrix.ntracks }} test
+        env:
+          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
+        run: |
+          ./ci/ntracks_metricks.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: tracklogs-${{ matrix.ntracks }}
+          path: |
+            /root/logs/
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+
+  ntracks-metrics-result:
+    needs: ntracks-metrics
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect logs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: tracklogs-*
+      - name: Generate Table
+        run: |
+          ls -Rl
+          cat tracklogs*/root/logs/*tracks.log > ntracks.log
+          echo "| N. Events | N tracks | Total Time | Time / event|" > Summary.md
+          echo "|-----------|----------|------------|-------------|" >> Summary.md
+          while read -r nevents ntracks time; do
+            [[ -z $nevents || -z $ntracks || -z $time ]] && continue
+
+            time1t=$(bc -l <<< "scale=4; $time / $nevents ")
+
+            printf "| %9s | %8s | %10s | %22s |\n" "$nevents" "$ntracks" "$time" "$time1t"
+          done < ntracks.log >> Summary.md
+          cat Summary.md 
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
+
+  ntracks-metrics-final:
+    needs:
+      - ntracks-metrics-result
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

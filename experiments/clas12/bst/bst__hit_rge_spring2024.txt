@@ -1,0 +1,1 @@
+                 bst  |           bst hit definitions  |superlayer  type  segment  module  strip  | 2.0*KeV   |  128*ns   |    1*mm   | 0.03*mm   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  

@@ -1,0 +1,10 @@
+<!--
+	In spring 2018 the survey reported htcc at z=-1.0*cm
+	1mm added to htccMollerConeExt to avoid overlaps with htccMollerCone
+-->
+
+<gxml>
+	<volume name="htccMollerConeExt" color="888888" material="rohacell31" position="0*cm 0*cm -0.9*cm" rotation="0*deg 180*deg 0*deg" />
+	<volume name="htccMollerCone"    color="888888" material="rohacell31" position="0*cm 0*cm -1.0*cm" rotation="0*deg 180*deg 0*deg" />
+	<volume name="htccCone"          color="888888" material="rohacell31" position="0*cm 0*cm -1.0*cm" rotation="0*deg 180*deg 0*deg" />
+</gxml>

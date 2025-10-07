@@ -1,0 +1,10 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+    
+	<detector name="supportsUpstream" factory="TEXT" variation="original"/>
+
+	<!--  Target and central detectors are all shifted upstream by 30 mm -->
+	<detector name="supportsUpstream">    <position x="0.0*cm"  y="0.0*cm"  z="-3.00*cm"  />
+
+</gcard>

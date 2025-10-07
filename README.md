@@ -1,230 +1,354 @@
 # The clas12Tags repository
 
-The `clas12Tags` repository serves as the simulation resource for the CLAS12 experiments at Jefferson Lab, providing:  
-- The CLAS12 detectors geometry database (in the form of ASCII files).  
-- Individual system GCARDS.  
-- A customized version of the GEMC source code tailored specifically for the JLab CLAS12 experiments.  
 
-This repository is tagged more frequently than:  
-- `gemc/source` (the primary GEMC repository).  
-- `gemc/detectors` (which contains the source code for generating the databases).  
+## QuickStart
 
-The increased tagging frequency reflects the more dynamic nature of CLAS12-specific digitization routines and geometry updates compared to the more stable functionality of the GEMC codebase.  
-
-
-![Alt CLAS12](clas12.png?raw=true "The CLAS12 detector in the simulation. The electron beam is going from left to right.")
-
-###### The CLAS12 detector in the simulation. The electron beam is going from left to right.
-
-# Creating the CLAS12 detector geometry database
-
-
-
-
-### Pre-requisites  
-
-To set up the environment and run the scripts, ensure the following prerequisites are met:  
-
-1. A working [ceInstall](https://github.com/JeffersonLab/ceInstall) environment.  
-2. **Groovy** installed.  
-3. A [coatjava](https://github.com/JeffersonLab/coatjava) installation, with the `COATJAVA` environment variable set and `$COATJAVA/bin` included in the system `PATH`.  
-4. A copy of the [gemc/api](https://github.com/gemc/api) repository located inside `$GEMC/api`.  
-5. A copy of the [gemc/detectors](https://github.com/gemc/detectors) repository.  
-
-**Note:** At Jefferson Lab, prerequisites [1-4] are satisfied when using 
-the [CLAS12 environment](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Environment_@_JLab), 
-loaded with the command:  
+Create the CLAS12 geometry database for the CND detector:
 
 ```bash
-module load clas12
+git clone https://github.com/gemc/clas12Tags
+cd clas12Tags
+./create_geometry.sh cnd     # build & install the CND detector databases
 ```
-The utility script `clas12/install_coatjava.sh` in the `gemc/detectors` repository can be used to install `coatjava`.
 
----
-
-### Running the Scripts
-
-The CLAS12 geometry database is generated using PERL scripts in the `gemc/detectors` repository. Each system (represented by a subdirectory within the `clas12` directory) contains a main PERL script for execution, typically named after the subdirectory. For example:  
-- `beamline/beamline.pl`  
-- `ctof/ctof.pl`  
-
-To run a script:  
-1. Change to the corresponding subdirectory.  
-2. Execute the script using the configuration file `config.dat`:  
+Setup the environment at Jefferson Lab, load a tagged or the dev version of gemc:
 
 ```bash
-cd beamline
-./beamline.pl config.dat
+module use /scigroup/cvmfs/geant4/modules
+module load gemc/5.11
+module load gemc/dev
 ```
 
-This will create the ASCII files for the beamline detector 
-for all the variations specified in the main script.
-This command generates the ASCII files for the specified detector system, covering all variations defined in the main script.
+Alternatively, use the [clas12 environment](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Environment_@_JLab)
+for the full CLAS12 software stack, which includes the latest tagged gemc version.
 
-#### Additional Components
+## Table of Contents
 
-Some systems include additional components in the repository, such as:  
-- **Beamline:** The `cadBeamline` directory contains STL files derived from CAD models.  
-- **Ctof:** the STL files are not in the repository but are downloaded using the geometry service.
+- [Introduction](#introduction)
+- [General Information](#general-information)
+- [How to create the CLAS12 detector geometry database](#how-to-create-the-clas12-detector-geometry-database)
+	- [Pre-requisites](#pre-requisites)
+	- [Procedure](#procedure)
+		- [Step 1: Clone the repository](#step-1-clone-the-repository)
+		- [Step 2: Install coatjava](#step-2-install-coatjava)
+		- [Step 3: Build the geometry database](#step-3-build-the-geometry-database)
+	- [1. Create and Install the geometry database into the experiments directory](#1-create-and-install-the-geometry-database-into-the-experiments-directory)
+	- [2. Debug / test a detector geometry in the geometry_source directory](#2-debug--test-a-detector-geometry-in-the-geometry_source-directory)
+- [How compile the source code at JLab](#how-compile-the-source-code-at-jlab)
+- [Release workflow](#release-workflow)
+	- [Pull requests](#pull-requests)
+	- [Run at JLab:](#run-at-jlab)
+- [Docker Images](#docker-images)
+- [Portal to Off-site farms CLAS12 Simulations](#portal-to-off-site-farms-clas12-simulations)
+- [Profiling](#profiling)
+	- [Time per track](#time-per-track)
+- [Utilities](#utilities)
+	- [Changing a material](#changing-a-material)
+	- [Removing a detector or a volume](#removing-a-detector-or-a-volume)
+- [Citations](#citations)
+- [Maurizio Ungaro](#maurizio-ungaro)
 
-#### Special Cases
+<br/>
 
-Two detectors follow different workflows:  
-1. **Alert Detector**: Instructions for execution are detailed in the `alert/README.md` file.  
-2. **LTCC Detector**: Before running the main script, the following command must be executed to define the mirror parameters:  
-   ```bash
-   root -q -b mirrors.C
-    ```  
+## Introduction
+
+The clas12Tags repository collects the databases and source code for the Geant4 simulation of the CLAS12 experiments
+at Jefferson Lab, providing:
+
+- Tagged version of the geometry database, in the form of ASCII and SQLite files.
+- The CLAS12 geometry source code used to create the geometry databases.
+- Detectors steering cards (GCARDS) for debugging and testing.
+- The GEMC C++ source code and perl API.
+
+The `experiments` directory contains the **development version of the geometry database
+of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
 
 
-<br>
 
-## Clas12Tags versions installed at JLab on /site and on CVMFS:
+<p align="center">
+  <img src="clas12.png?raw=true" alt="CLAS12 detector rendering" width="600">
+  <br>
+  <em>Figure&nbsp;1 — The CLAS12 detector simulation. The electron beam travels left&nbsp;→&nbsp;right.</em>
+</p>
 
-<br>
+## General Information:
 
-- [dev](release_notes/dev.md), use COATJAVA release 11.0.4)
-- [5.10](release_notes/5.10.md)
-- [4.4.2](release_notes/4.4.2.md)
+- [GEMC Documentation Page](https://gemc.jlab.org/gemc/html/index.html)
+- [CLAS12 Discourse Forum: Simulation](https://clas12.discourse.group/c/simulation/9)
+- [Clas12-config repository with the various experiments steering cards](https://github.com/JeffersonLab/clas12-config)
+- [CLAS12 Software Center Wiki](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Center#tab=Communications)
+- [CCDB Viewer](https://clasweb.jlab.org/cgi-bin/ccdb/objects)
 
-<br>
+<br/>
 
-To load the GEMC environment through the clas12 environment at JLab:
+# How to create the CLAS12 geometry databases
 
-```commandline
+## Pre-requisites
+
+You will need:
+
+- `maven`, `java (openjdk >= 17)` and `groovy` to install and run the coatjava geometry service.
+- gemc `dev` environment.
+
+The above requirements are met at JLab by loading the usual **clas12 module**,
+then switching to gemc/dev:
+
+```bash
 module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
 module load clas12
-```
-
-To switch to a different version of gemc use `module switch`. For example:
-
-```
 module switch gemc/dev
 ```
 
-To run GEMC you can select one of the gcards in the clas12-config installed on cvmfs. For example:
+> [!Caution]
+> This will set the environment variables `GEMC` (used by the perl API; `GEMC`/bin added to your path) and
+> `GEMC_DATA_DIR` (used by gemc to find the databases) to the /scigroup location.
+> Notice:
+> 1) If you are testing perl API changes, point **GEMC** to your cloned clas12Tags directory.
+> 2) If you are testing geometry changes, point **GEMC_DATA_DIR** the cloned clas12Tags directory.
+> 3) If you are testing changes within the geometry_source directory, you do not need to set any  
+	 > additional variables, as the detectors gcards load the local geometry database.
+> 4) If you're testing changes in gemc code, make sure to use the `gemc` executable
+	 > in the cloned repository, or the one from the environment will be used instead.
 
-```
-gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
-```
+## Procedure:
 
-Alternatively the gcards can be downloaded from https://github.com/JeffersonLab/clas12-config
+Clone the clas12Tags repository:
 
-
-<br>
-
----
-
-## Portal to Off-site farms CLAS12 Simulations
-
-GEMC simulations can be run on the Open Science Grid (OSG) using the
-<a href="https://gemc.jlab.org/web_interface/index.php"> CLAS12 Simulation Submission Portal</a>.
-
-<br>
-
----
-
-<br>
-
-## How to get and compile the clas12Tags
-
-Load the environment as [described above](#use-gemc-versions-installed-at-jlab-on-site-and-on-cvmfs-).
-
-Get the desired tag from [here](https://github.com/gemc/clas12Tags/tags)
-and unpack it (using 5.X as an example):
-
-```
-wget https://github.com/gemc/clas12Tags/archive/refs/tags/5.X.tar.gz
-tar -xvf 5.X.tar.gz
+```bash
+git clone https://github.com/gemc/clas12Tags
+cd clas12Tags
 ```
 
-Then compile gemc:
+At this point you can either:
+
+1. create and install the geometry databases into the `experiments` directory
+2. debug / test a detector database inside the `geometry_source`
+   directory.
+
+<br/>
+
+## 1. Create and Install the geometry databases into the `experiments` directory:
+
+The script `create_geometry.sh` will create a single detector or all geometry databases:
 
 ```
-cd clas12_tags-5.X/source
+Usage: create_geometry.sh [coatjava release options] [detector]
+
+Coatjava options (optional – at most one of -d|-l|-t|-g):
+  -l               use latest tag (default)
+  -t <tag>         use specific tag, like 12.0.4t
+  -g <github_url>  use custom github URL
+  -h               show this help
+
+If a detector is given (from the list below), only that detector will be built; 
+otherwise all will be processed.
+
+  alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof 
+  ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets 
+  uRwell upstream
+```
+
+The script will install (if not present) the desired tagged coatjava in the directory
+`geometry_source` and run the geometry service for the requested detector(s).
+
+
+> [!Warning]
+> By default, the latest coatjava tag is used. This is also the suggested option.
+> Other tags can be used but they are not guaranteed to work.
+
+
+Examples:
+
+- `./create_geometry.sh cnd`:
+	- install if not present the latest coatjava tag,
+	- create, and install in the `experiments` dir, the CND geometry ASCII database
+	- create or update the SQLite database
+
+
+- `./create_geometry.sh`:
+	- install if not present the latest coatjava tag
+	- create, and install in the `experiments` dir, all the CLAS12 detectors geometry ASCII database
+	- create or update the SQLite database
+
+
+- `./create_geometry.sh -t 12.0.4t bst`:
+	- install the coatjava tag 12.0.4t
+	- create, and install in the `experiments` dir, the BST geometry ASCII database
+	- create or update the SQLite database
+
+<br/>
+
+## 2. Debug / test a detector geometry in the `geometry_source` directory:
+
+If you didn't run `create_geometry.sh`, install coatjava first, and create the sqlite geometry database:
+
+```bash
+cd geometry_source 
+./install_coatjava.sh -l
+$GEMC/api/perl/sqlite.py -n ../clas12.sqlite
+```
+
+Change directory to detector of interest inside `geometry_source` and run
+the geometry script to create the ASCII and SQLite databases: For example, for ftof:
+
+```bash
+cd geometry_source/ftof
+./ftof.pl config.dat
+```
+
+You will see in the local directory the ASCII databases (geometry and materials txt files),
+and the SQLite database `clas12.sqlite` will be updated with the new detector.
+
+
+> [!NOTE]
+> Each detector subdir has two sets of gcards:
+> - `<detector>_text_<variation>.gcard`: for debugging the detector geometry
+>   or a specific variation using the ASCII database.
+> - `<dectector>_sqlite.gcard`: for running the detector geometry for a
+>   specific run number using the SQLite database `clas12.sqlite`
+>   in the `geometry_source` directory.
+> - These gcards contain their detector's geometry but not
+>   other CLAS12 components and will only load the detector geometry database in
+>   the local directory.
+
+
+<br/>
+
+# How to compile the source code at JLab
+
+Load the **gemc/dev**,  **ccdb** and **hipo** modules as described above [^1].
+
+Then, change directory to the `source` directory and run:
+
+```bash
+cd source
 scons -jN OPT=1
 ```
 
-where N is the number of cores available.
+where N is the number of cores available. At JLab, N=40 is a good choice.
 
-<br>
+[^1]: for a standalone installation, follow the [ceInstall instructions](https://github.com/JeffersonLab/ceInstall).
 
-## How to make changes to the clas12Tags
 
-clas12Tags is a repo with source code and geometry derived from gemc/source.
-Modifications should be made to the gemc/source repo by forking it
-and making a pull request.
+<br/>
 
-Note: gemc uses static function to load specific clas12 code (ugly, fixed in gemc3).
-In particular the BMT and FMT hit processes have these two functions:
+# Release workflow
+
+Merging changes in the repository will trigger various CI validation workflows and the
+**creation of artifacts** containing the new executable and the
+geometry databases.
+
+These are installed at JLAB in /scigroup/cvmfs using a **cronjob that runs every couple of hours**.
+
+As a result these JLAB installations are up-to-date with this timelines:
+
+- `/scigroup/cvmfs` (used on ifarms) : 2-8 hours after the commit, passing through the CI validation and
+  merge queue when necessary.
+- `/cvmfs/oasis.opensciencegrid.org` (used on OSG): an additional 4-8 hours after the JLAB
+  installation once the CVMFS sync runs.
+
+The GitHub `dev` release is also created nightly by the CI.
+
+### Pull requests
+
+The pull requests will be reviewed and queue for auto-merging into the
+main branch pending passing the CI:
+
+- compilation for fedora36, almalinux94 and ubuntu24
+- coatjava validation with 500 events
+- run gemc on 1000 events using all gcards in clas12-config/gemc/dev development branch
+
+### Run at JLab:
+
+The available modules can be listed using `module avail gemc`.
+
+To run GEMC you can select one of the gcards in the clas12-config
+installed on cvmfs. For example:
+
+```bash
+gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
+```
+
+> [!NOTE]
+> - Make sure that the clas12-config version is production for a tagged release,
+	> or dev for the latest development version.
+> - For **gemc/dev**, you will need to use the subdir `clas12-config/dev/gemc/dev`
+
+
+<br/>
+
+## Docker images
+
+Docker images for Almalinux, Fedora and Ubuntu based OS systems
+are available on [DockerHub](https://hub.docker.com/repository/docker/jeffersonlab/gemc/general).
+
+- dev-ubuntu24
+- dev-fedora36
+- dev-fedora40
+- dev-almalinux94
+
+To run the docker image (for example dev-fedora):
 
 ```
-bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(-1);
-fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(-1);
+docker run -it --rm jeffersonlab/gemc:dev-fedora36 bash
 ```
 
-that should be changed to:
+On MacOS the additional option `--platform linux/amd64` is needed:
 
 ```
-bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
-fmtConstants FMT_HitProcess::fmtc = initializeFMTConstants(1);
+docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 bash
 ```
 
-to initialize properly BMT and FMT and avoid seg fault when those
-detectors are used. This is done in the clas12Tags repo.
+<br/>
 
-# Changing Configurations
+# Portal to off-site farms CLAS12 Simulations
 
-## Magnetic Fields
+CLAS12 GEMC simulations can be run on the Open Science Grid (OSG) using the
+<a href="https://gemc.jlab.org/web_interface/index.php"> CLAS12 Simulation Submission Portal</a>.
 
-### ASCII:
 
-You can scale magnetic fields using the SCALE_FIELD option. To do that copy the gcard somewhere first, then modify it.
-The gcard can work from any location.
-Example on how to run at 80% torus field (inbending) and 60% solenoid field:
+<br/>
 
-```
-<option name="SCALE_FIELD" value="binary_torus, -0.8"/>
-<option name="SCALE_FIELD" value="binary_solenoid, 0.6"/>
-```
+# Profiling
 
-<br>
+## Time per track
 
-## Hydrogen, Deuterium or empty target
+The profile table below is obtained by a [metrics action](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
+that runs gemc nightly with the RGA Spring 2018 configuration, with a mix of 1, 2, 3, 5, 10, 15, 20 tracks,
+and by using clasdis.
 
-By default, the target cell is filled with liquid hydrogen by specifying the "lh2" target variation.
-To use liquid deuterium instead use the variation "lD2" instead.
+The events come from a picking single tracks from a the following clas12 mcgen generators: clasdis, dvcsgen, las12-elspectro, gibuu, genKandOnePione, onepigen, twopeg.
 
-To use an empty target instead, use the SWITCH_MATERIALTO option.
+The clasdis files are:
+
+- clasdis_all : generated with no options
+- clasdis_acc: generated with --t 15 35 option (electron theta between 15 and 35)
+
+![Track Profiling](ci/tracks_profile.png?raw=true "Time per track for various configurations")
+
+
+
+<br/>
+
+# Utilities
+
+### Changing a material
+
+The option `SWITCH_MATERIALTO` can be used to change a material of a volume
+For example, to change the `G4_lH2` to vacuum:
 
 ```
 <option name="SWITCH_MATERIALTO" value="G4_lH2, G4_Galactic"/>
 ```
 
-<br>
+The option `CHANGEVOLUMEMATERIALTO` can be used to change the material of a volume.
+For example, to change the target cell `lh2` material from LH2 to a vacuum:
 
-## Event Vertex
+```
+<option name="CHANGEVOLUMEMATERIALTO" value="lh2, G4_Galactic"/>
+```
 
-<br>
-While the gcards takes care of the target volumes positions (for example, in rga_spring2019 it is moved upstream by 3cm),
-it is up to the generators and the LUND files to place the event in the correct location.
-
-The <a href="https://github.com/gemc/clas12Tags/tree/master/5.1/config"> surveyed target positions</a> are listed
-below:<br>
-
-- rga_spring2018</b>: -1.94cm
-- rga_fall2018</b>:  -3.0cm
-- rgk_fall2018_FTOn</b>:  -3.0cm
-- rgk_fall2018_FTOff</b>:  -3.0cm
-- rgb_spring2019</b>: -3.0cm
-- rga_spring2019</b>: -3.0cm
-- rgb_fall2019</b>:   -3.0cm
-
-<br>
-
-## Removing a detector or a volume
-
-<br>
+### Removing a detector or a volume
 
 You can remove/comment out the ```<detector>``` tag in the gcard to remove a whole system.
 To remove individual elements, use the existance tag in the gcard. For example, to remove the forward micromegas:
@@ -235,94 +359,47 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 </detector>
 ```
 
-<br>
+<br/>
 
-## Detector Sources
+## Citations
 
-<br>
+- [Nucl. Instrum. Meth. A, Volume 959, 163422 (2020)](https://inspirehep.net/literature/1780020)
+- [EPJ Web of Conf. Volume 295, 05505 (2024)](https://www.epj-conferences.org/articles/epjconf/abs/2024/05/epjconf_chep2024_05005/epjconf_chep2024_05005.html)
 
-The CLAS12 detector geometry sources are kept in the
-<a href="https://github.com/gemc/detectors"> detector git repository</a>.
+<br/>
 
-The CLAS12 geometry services are kept in the
-<a href="https://github.com/JeffersonLab/clas12-offline-software/blob/development/common-tools/clas-jcsg/src/main/java/org/jlab/detector/geant4/v2/">
-java geant4 factory git repository</a>.
+## Author
 
-<br>
+Maurizio Ungaro
 
-## FTOn, FTOff configurations
+<a href="https://scholar.google.com/citations?user=zkWYILYAAAAJ&amp;hl=en" target="_blank"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/gscholar.png"> </a>
+<a href="https://github.com/maureeungaro" target="_blank"><a href="mailto:ungaro@jlab.org"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/github.png"> </a>
+<a href="https://inspirehep.net/authors/1322331" target="_blank"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/inspire.png"> </a>
+<a href="mailto:ungaro@jlab.org"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/email.png"> </a>
 
-<br>
 
-The default configuration for the first experiment is with "FTOn" (Figure 1, Left): complete forward tagger is fully
-operational.
-The other available configuration is "FTOff" (Figure 1, Right): the Forward Tagger tracker is replaced with shielding,
-and the tungsten cone is moved upstream.
+<br/>
+<br/>
 
-The simulations in preparation of the first experiment should use the default version FTOn.
-FTOff will be used only by experts for special studies in preparation for the engineering run.
+<hr>
 
-|                                                                              |                                                                                                         |
-|------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
-| <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/> | <img src="https://raw.githubusercontent.com/gemc/clas12Tags/main/ftOn.png"/>                            |
-| FT On configuration: Full, OperationalForward Tagger.                        | FT Off configuration: FT Tracker replaced by shielding, Tungsten Cone moved upstream, FT if turned off. |
+<br/>
+<br/>
 
-<br>
+# CI
 
-To change configuration from FTOn to FTOff, replace the keywords and variations from:
+### Pull requests
 
-```
-<detector name="ft" factory="TEXT" variation="FTOn"/>
-<detector name="beamline" factory="TEXT" variation="FTOn"/>
-<detector name="cadBeamline/" factory="CAD"/>
-```
+- [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
+- [![Clas12-Config GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml)
+- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
+- [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
+- [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
+- [![Local Gcards Tests](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml)
 
-to:
+### Nightly
 
-```
-<detector name="ft" factory="TEXT" variation="FTOff"/>
-<detector name="beamline" factory="TEXT" variation="FTOff"/>
-<detector name="cadBeamlineFTOFF/" factory="CAD"/>
-```
-
-### Run numbers vs Run groups
-
-Source: [calcom run groups](https://clasweb.jlab.org/wiki/index.php/CLAS12_Calibration_and_Commissioning)
-
-|                    |               | 
-|--------------------|---------------|
-| rga_spring2018     | 3029 - 4326   |
-| rga_fall2018       | 4763-5666     |
-| rga_spring2019     | 6608-6783     |
-|                    |               |
-| rgb_spring2019     | 6150 – 6603   |
-| rgb_fall2019       | 11093 – 11301 |
-| rgb_winter20       | 11323 - 11571 |
-|                    |               |
-| rgc_summer2022     | 16043-16772   |
-| rgc_fall2022       | 16843-17408   |
-| rgc_winter23       | 17471-17811   |
-|                    |               |
-| rgd_fall2023       | 18305 - 19131 |
-|                    |               |
-| rgf_spring2020     | 11620 - 12282 |
-| rgf_summer2020     | 12389 - 12951 |
-|                    |               |
-| rgk_fall2018_FTOn  | 5674 - 5870   |
-| rgk_fall2018_FTOff | 5874-6000     |
-| rgk_winter23       | 19200 - 19260 |
-| rgk_spring24       | 19300 - 19893 |
-|                    |               |
-| rgm_fall2021       | 15016 - 15884 |
-|                    |               |
-| rge_spring2024     |               |
-
-## Feedback
-
-Please use CLAS12 discourse for feedback on anything clas12tags related:
-
-https://clas12.discourse.group
-
-<br>
-
-<br>
+- [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
+- [![Valgrind-Profile](https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml)
+- [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml)
+- [![Clas12-config Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml)

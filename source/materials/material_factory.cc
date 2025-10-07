@@ -316,79 +316,79 @@ map<string, G4Material *> materials::materialsFromMap(map <string, material> mma
                 if (nopts) {
                     optTable.push_back(new G4MaterialPropertiesTable());
 
-                    double penergy[nopts];
+    				vector<double> penergy(nopts);
                     for (unsigned i = 0; i < nopts; i++)
                         penergy[i] = it->second.photonEnergy[i];
 
                     // index of refraction
                     if (it->second.indexOfRefraction.size() == nopts) {
-                        double ior[nopts];
+                        vector<double> ior(nopts);
                         for (unsigned i = 0; i < nopts; i++) {
                             ior[i] = it->second.indexOfRefraction[i];
                         }
-                        optTable.back()->AddProperty("RINDEX", penergy, ior, nopts);
+                        optTable.back()->AddProperty("RINDEX", penergy.data(), ior.data(), nopts);
                     }
 
                     // absorption length
                     if (it->second.absorptionLength.size() == nopts) {
-                        double abs[nopts];
+                        vector<double> abs(nopts);
                         for (unsigned i = 0; i < nopts; i++)
                             abs[i] = it->second.absorptionLength[i];
-                        optTable.back()->AddProperty("ABSLENGTH", penergy, abs, nopts);
+                        optTable.back()->AddProperty("ABSLENGTH", penergy.data(), abs.data(), nopts);
                     }
 
                     // reflectivity
                     if (it->second.reflectivity.size() == nopts) {
-                        double ref[nopts];
+                        vector<double> ref(nopts);
                         for (unsigned i = 0; i < nopts; i++)
                             ref[i] = it->second.reflectivity[i];
 
-                        optTable.back()->AddProperty("REFLECTIVITY", penergy, ref, nopts);
+                        optTable.back()->AddProperty("REFLECTIVITY", penergy.data(), ref.data(), nopts);
                     }
 
                     // efficiency
                     if (it->second.efficiency.size() == nopts) {
-                        double eff[nopts];
+                        vector<double> eff(nopts);
                         for (unsigned i = 0; i < nopts; i++)
                             eff[i] = it->second.efficiency[i];
 
-                        optTable.back()->AddProperty("EFFICIENCY", penergy, eff, nopts);
+                        optTable.back()->AddProperty("EFFICIENCY", penergy.data(), eff.data(), nopts);
                     }
 
                     // fastcomponent
                     if (it->second.fastcomponent.size() == nopts) {
-                        double fastc[nopts];
+                        vector<double> fastc(nopts);
                         for (unsigned i = 0; i < nopts; i++)
                             fastc[i] = it->second.fastcomponent[i];
 
-                        optTable.back()->AddProperty("FASTCOMPONENT", penergy, fastc, nopts);
+                        optTable.back()->AddProperty("FASTCOMPONENT", penergy.data(), fastc.data(), nopts);
                     }
 
                     // slowcomponent
                     if (it->second.slowcomponent.size() == nopts) {
-                        double slowc[nopts];
+                        vector<double> slowc(nopts);
                         for (unsigned i = 0; i < nopts; i++)
                             slowc[i] = it->second.slowcomponent[i];
 
-                        optTable.back()->AddProperty("SLOWCOMPONENT", penergy, slowc, nopts);
+                        optTable.back()->AddProperty("SLOWCOMPONENT", penergy.data(), slowc.data(), nopts);
                     }
 
                     // rayleigh scattering
                     if (it->second.rayleigh.size() == nopts) {
-                        double ray[nopts];
+                        vector<double> ray(nopts);
                         for (unsigned i = 0; i < nopts; i++)
                             ray[i] = it->second.rayleigh[i];
 
-                        optTable.back()->AddProperty("RAYLEIGH", penergy, ray, nopts);
+                        optTable.back()->AddProperty("RAYLEIGH", penergy.data(), ray.data(), nopts);
                     }
 
                     // mie scattering
                     if (it->second.mie.size() == nopts) {
-                        double mie[nopts];
+                        vector<double> mie(nopts);
                         for (unsigned i = 0; i < nopts; i++)
                             mie[i] = it->second.mie[i];
 
-                        optTable.back()->AddProperty("MIEHG", penergy, mie, nopts);
+                        optTable.back()->AddProperty("MIEHG", penergy.data(), mie.data(), nopts);
                     }
 
 

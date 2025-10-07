@@ -1,0 +1,10 @@
+
+CLAS12 UPSTREAM CND README
+
+--------------------------------------------------
+
+The geometry defines the CND lightguides upstream of the target.
+
+The commands to build the geometry and materials are:
+
+perl cndUpstream.pl config.dat

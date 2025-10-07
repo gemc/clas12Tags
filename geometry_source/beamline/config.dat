@@ -1,0 +1,9 @@
+# Detector name and variation
+detector_name: beamline
+comment: CLAS12 Beamline
+
+# MYSQL server / SQLITE file
+dbhost: ../../clas12.sqlite
+
+# Verbosity controls the perl script output
+verbosity: 0

@@ -1,0 +1,1 @@
+thetaEC_deg              |  25 |  degrees | angle of EC face to a line perpendicular to the beamline | Gerry Gilfoyle | gilfoyle@jlab.org | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12

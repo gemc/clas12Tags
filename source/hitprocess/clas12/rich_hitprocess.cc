@@ -37,7 +37,6 @@ initializeRICHConstants(int runno, string digiVariation = "default", string digi
   else
     richc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
   
-  richc.variation  = "main";
   unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(richc.connection));
   
   return richc;
@@ -446,12 +445,12 @@ void RichPixel::InitMaroc(double g, double th)
 
   /* charge to time conversion, saturated region */
   q0_t = 230;
-  /* Values from Ctest data analysis                                                                                                                                                                            
-    p_t[0] = 118.3;                                                                                                                                                                                             
-  p_t[1] = -0.3134;                                                                                                                                                                                             
-  p_t[2] = 0.002787;                                                                                                                                                                                            
-  p_t[3] = -1.382e-5;                                                                                                                                                                                           
-  p_t[4] = 2.531e-8;                                                                                                                                                                                            
+  /* Values from Ctest data analysis
+     p_t[0] = 118.3;
+     p_t[1] = -0.3134;
+     p_t[2] = 0.002787;
+     p_t[3] = -1.382e-5;
+     p_t[4] = 2.531e-8;
   */
 
   p_t[0] = 7.32 + 4;
@@ -462,7 +461,7 @@ void RichPixel::InitMaroc(double g, double th)
 
 
   /* charge to time conversion, linear region */
-  //m_t = -0.00307; //value from CTest data analysis                                                                                                                                                            
+  //m_t = -0.00307; //value from CTest data analysis
   m_t = -0.00207;
   q_t = -m_t * q0_t;
   for (int i=0; i<5; i++) {
@@ -472,9 +471,9 @@ void RichPixel::InitMaroc(double g, double th)
 
   /* from charge to duration */
 
-  //p0_d = 80; //from CTest data                                                                                                                                                                                
-  //p1_d = 170.1;  //from CTest data                                                                                                                                                                            
-
+  //p0_d = 80; //from CTest data
+  //p1_d = 170.1;  //from CTest data
+  
   p0_d = 68.19;
   p1_d = 60.1;
 
@@ -503,6 +502,7 @@ void RichPixel::Clear()
 
   qtdc = 0;
   pmt_time = 0;
+
   t1 = 0;
   t2 = 0;
   duration = 0;
@@ -590,9 +590,7 @@ void RichPixel::ChargeToTime()
   }
   maroc_time = time;
 
-
-  t1 = pmt_time + maroc_time;
-
+  t1 = TimeOffset + pmt_time + maroc_time;
 
   return;
 }

@@ -1,29 +1,49 @@
 # https://github.com/marketplace/actions/automatic-releases
-name: GitHub Dev Release
+name: Nightly Dev Release
+permissions:
+  contents: write
+  pull-requests: write
 
 on:
   schedule:
-    # every day at 1:44
-    - cron: '44 1 * * *'
+    # every day at 1:00. This takes a few seconds
+    - cron: '00 1 * * *'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
 jobs:
-  pre-release:
-    name: dev Release
-    runs-on: "ubuntu-latest"
-
+  dev-release:
+    runs-on: ubuntu-latest
+    env:
+      DEVMD_SINCE: "2025-01-17"   # optional fixed start date
+      TAG_NAME: "dev"             # reuse the same tag each night
+      RELEASE_TITLE: "Dev Nightly"
     steps:
-      - name: Create Release
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - uses: actions/checkout@v4
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "dev"
-          prerelease: false
-          title: "Development Release"
-      - uses: gitboard-io/gitboard-action@main
+          fetch-depth: 0
+
+      - name: Generate dev notes
+        run: |
+          ci/update-devmd.sh
+
+      # (Optional) Only extract the auto section between markers for the release body
+      - name: Extract release body from dev.md markers
+        id: notes
+        run: |
+          awk '/<!-- AUTO-DEVMD:START -->/{f=1;print;next} /<!-- AUTO-DEVMD:END -->/{print;f=0} f' releases/dev.md > /tmp/release_notes.md
+          # Fallback to entire file if markers missing or empty
+          if [ ! -s /tmp/release_notes.md ]; then
+            cp releases/dev.md /tmp/release_notes.md
+          fi
+
+      - name: Create/Update release
+        uses: ncipollo/release-action@v1
         with:
-          username: maureeungaro
-          key: 3d8e9059-a164-4bea-9541-1cb8789d805b
+          tag: ${{ env.TAG_NAME }}
+          name: ${{ env.RELEASE_TITLE }}
+          bodyFile: /tmp/release_notes.md
+          prerelease: true
+          allowUpdates: true
+          artifactErrorsFailBuild: false

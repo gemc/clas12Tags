@@ -592,15 +592,16 @@ int detector::create_solid(goptions gemcOpt, map<string, detector> *Map)
 	{
 		hd_msg  = gemcOpt.optMap["LOG_MSG"].args + " Copy: >> ";
 		string original(type, 6, 190);
-		
+
+		string torig = trimSpacesFromString(original);
 		// Look for original
-		map<string, detector>::iterator it = (*Map).find(trimSpacesFromString(original));
+		map<string, detector>::iterator it = (*Map).find(torig);
 		if(it == (*Map).end()) {
-			cout <<  hd_msg << " <" << original << "> not found. Exiting." << endl << endl;
+			cout <<  hd_msg << " <" << torig << "> not found. Exiting." << endl << endl;
 			exit(501);
 		} else {
 			if(VERB>4 || name.find(catch_v) != string::npos) {
-				cout << hd_msg << " " << name << " is a copy of <" << trimSpacesFromString(original) << ">. Pointing to its logical volume." << endl;
+				cout << hd_msg << " " << name << " is a copy of <" << torig << ">. Pointing to its logical volume." << endl;
 			}
 			SetLogical(it->second.GetLogical());
 		}

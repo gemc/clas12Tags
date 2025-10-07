@@ -14,9 +14,43 @@ public:
 	string date;
 	string connection;
 	char   database[80];
-	
+
+	// convert each (sector, layer, component) to a number between 0 and 575 (we have 576 wires)
+	static int getUniqueId(int sector, int layer, int component) {
+		if      (layer == 11) {
+			return component - 1;
+		} 
+		else if (layer == 21) {
+			return 47 + component - 1;
+		} 
+		else if (layer == 22) {
+			return 47 + 56 + component - 1;
+		} 
+		else if (layer == 31) {
+			return 47 + 56 + 56 + component - 1;
+		} 
+		else if (layer == 32) {
+			return 47 + 56 + 56 + 72 + component - 1;
+		} 
+		else if (layer == 41) {
+			return 47 + 56 + 56 + 72 + 72 + component - 1;
+		} 
+		else if (layer == 42) {
+			return 47 + 56 + 56 + 72 + 72 + 87 + component - 1;
+		} 
+		else if (layer == 51) {
+			return 47 + 56 + 56 + 72 + 72 + 87 + 87 + component - 1;
+		} else {
+			return -1; // not a ahdc wire
+		}
+	}
+
 	// translation table
 	TranslationTable TT;
+	
+	// t0 table: sector (1) x layer (8) x component (99 wires max : 47 56 56 72 72 87 87 99)
+	double T0Correction[576];
+	double get_T0(int sector, int layer, int component) { return T0Correction[getUniqueId(sector, layer, component)];}
 };
 
 
@@ -31,7 +65,7 @@ public:
 	~ahdc_HitProcess(){;}
 	
 	// constants initialized with initWithRunNumber
-	static ahdcConstants atc;
+	static ahdcConstants ahdcc;
 	
 	void initWithRunNumber(int runno);
 	
@@ -104,13 +138,14 @@ class ahdcSignal {
 		int sector; ///< sector, first wire identifier
 		int layer; ///< layer, second wire identifer
 		int component; ///< component, third wire identifier
-		int nsteps; ///< number of steps in this MHit, i.e number of Geant4 calculation steps in the sensitive area of the wire 
+		int nsteps; ///< number of steps in this MHit, i.e number of Geant4 calculation steps in the sensitive area of the wire
 	// vectors
 	private :
 		std::vector<double> Edep; ///< array of deposited energy in each step [keV]
 		std::vector<double> G4Time; ///< array of Geant4 time corresponding to each step [ns]
 		std::vector<double> Doca; ///< array of distance of closest approach corresponding each step [mm]
 		std::vector<double> DriftTime; ///< array of drift time corresponding each step [ns]
+		vector<double> stepTime; ///< Geant4 time of each step [ns]
 		
 		/**
 		 * @brief Fill the arrays Doca and DriftTime
@@ -144,13 +179,17 @@ class ahdcSignal {
 			// read identifiers
 			hitn = _hitn;
 			vector<identifier> identity = aHit->GetId();
-			sector = 0;
+			sector = 1;
 			layer = 10 * identity[0].id + identity[1].id ; // 10*superlayer + layer
 			component = identity[2].id;
 			// fill vectors
 			Edep = aHit->GetEdep();
+			stepTime    = aHit->GetTime();
 			nsteps = Edep.size();
-			for (int s=0;s<nsteps;s++){Edep.at(s) = Edep.at(s)*1000;} // convert MeV to keV
+			for (int s=0;s<nsteps;s++){ 
+				Edep.at(s) = Edep.at(s)*1000;
+				//std::cout << "stepTime[" << s << "] = " << stepTime[s] << std::endl;
+			} // convert MeV to keV
 			G4Time = aHit->GetTime();
 			this->ComputeDocaAndTime(aHit); // fills Doca and DriftTime
 		}
@@ -197,10 +236,12 @@ class ahdcSignal {
 			using namespace Genfun;
 			double signalValue = 0;
 			for (int s=0; s<nsteps; s++){
-				// setting Landau's parameters
+				double sigma = Landau_width;	
+				double mu = DriftTime.at(s) + 1.36*sigma;
+				//std::cout << DriftTime.at(s) << " ";
 				Landau L;
-				L.peak() = Parameter("Peak",DriftTime.at(s),tmin,tmax); 
-				L.width() = Parameter("Width",Landau_width,0,400); 
+				L.peak() = Parameter("Peak",mu,tmin,tmax); 
+				L.width() = Parameter("Width",sigma,0,400); 
 				signalValue += Edep.at(s)*L(timePoint-timeOffset);
 			}
 			return signalValue;

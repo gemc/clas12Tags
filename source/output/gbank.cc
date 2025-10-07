@@ -324,12 +324,11 @@ map <string, gBank> read_banks(goptions gemcOpt, map <string, string> allSystems
 
             // connection to the DB
             QSqlDatabase db = openGdb(gemcOpt);
-            if (verbosity > 1) cout << "   > Loading SQLITE definitions for <" << systemName << ">." << endl;
 
             // first select all unique bank_name for this system
             string dbexecute = "select DISTINCT bank_name from banks where system = '" + systemName + "'";
 
-            // executing query - will exit if not successfull.
+            // executing query - will exit if not successful.
             QSqlQuery q;
             if (!q.exec(dbexecute.c_str())) {
                 cout  << " !!! Failed to execute SQLITE query " << dbexecute << ". This is a fatal error. Exiting." << endl;
@@ -345,12 +344,13 @@ map <string, gBank> read_banks(goptions gemcOpt, map <string, string> allSystems
 
             // now loading bank and variables
             for (unsigned b = 0; b < banksForSystem.size(); b++) {
+            if (verbosity > 1) cout << "   > Loading SQLITE bank definitions for <" << systemName << ">." << endl;
+
                 string bname = banksForSystem[b];
-                cout << "  > Loading bank definitions for <" << bname << ">." << endl;
 
                 string dbexecute = "select variable_name, int_id, type, description from banks where bank_name = '" + bname + "'";
 
-                // executing query - will exit if not successfull.
+                // executing query - will exit if not successful.
                 QSqlQuery q;
                 if (!q.exec(dbexecute.c_str())) {
                     cout << " !!! Failed to execute SQLITE query " << dbexecute << ". This is a fatal error. Exiting." << endl;

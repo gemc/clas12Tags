@@ -1,2 +1,20 @@
-# build artifacts, if built while in `./source`
-api
+.DS_Store
+*.hipo
+
+geometry_source/**/*__geometry_*.txt
+geometry_source/**/*__bank.txt
+geometry_source/**/*__materials_*.txt
+geometry_source/**/*__hit_*.txt
+geometry_source/**/*__mirrors_*.txt
+geometry_source/**/*__volumes_*.txt
+bin/gemc
+source/**/*.o
+source/**/moc*.cc
+geometry_source/coatjava*
+geometry_source/coat-libs*
+source/.sconsign.dblite
+clas12.sqlite
+.idea
+geometry_source/rich/cad/
+geometry_source/ctof/cad/
+geometry_source/ctof/cad_upstream/

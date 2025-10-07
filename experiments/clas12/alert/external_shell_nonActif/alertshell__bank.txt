@@ -1,2 +1,0 @@
-          alertshell  |              bankid  |                                alertshell bank ID  | 2400   |                  Di  
-          alertshell  |                hitn  |                                        hit number  |   99   |                  Di  

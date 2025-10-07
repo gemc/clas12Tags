@@ -460,7 +460,7 @@ void MDetectorConstruction::buildMirrors() {
                 // use this instead of a new table!
 
                 string maptOptProps = itr->second->maptOptProps;
-                if (maptOptProps != "none" && ((*mats)[maptOptProps])->GetMaterialPropertiesTable()) {
+                if (maptOptProps != "none" && maptOptProps != "notDefined" && ((*mats)[maptOptProps])->GetMaterialPropertiesTable()) {
                     mirrorsMPT.push_back(((*mats)[maptOptProps])->GetMaterialPropertiesTable());
                 } else {
                     mirrorsMPT.push_back(new G4MaterialPropertiesTable());
@@ -478,35 +478,35 @@ void MDetectorConstruction::buildMirrors() {
                         // properties by construction, assured by the API
                         unsigned peneSize = photonEnergy.size();
 
-                        G4double pene[peneSize];
-                        G4double var[peneSize];
+                        vector<G4double> pene(peneSize);
+                        vector<G4double> var(peneSize);
 
                         for (unsigned i = 0; i < peneSize; i++)
                             pene[i] = photonEnergy[i];
 
                         if (indexOfRefraction.size()) {
                             for (unsigned i = 0; i < peneSize; i++) var[i] = indexOfRefraction[i];
-                            mirrorsMPT.back()->AddProperty("RINDEX", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("RINDEX", pene.data(), var.data(), peneSize);
                         }
                         if (reflectivity.size()) {
                             for (unsigned i = 0; i < peneSize; i++) var[i] = reflectivity[i];
-                            mirrorsMPT.back()->AddProperty("REFLECTIVITY", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("REFLECTIVITY", pene.data(), var.data(), peneSize);
                         }
                         if (efficiency.size()) {
                             for (unsigned i = 0; i < peneSize; i++) var[i] = efficiency[i];
-                            mirrorsMPT.back()->AddProperty("EFFICIENCY", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("EFFICIENCY", pene.data(), var.data(), peneSize);
                         }
                         if (specularlobe.size()) {
                             for (unsigned i = 0; i < peneSize; i++)var[i] = specularlobe[i];
-                            mirrorsMPT.back()->AddProperty("SPECULARLOBECONSTANT", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("SPECULARLOBECONSTANT", pene.data(), var.data(), peneSize);
                         }
                         if (specularspike.size()) {
                             for (unsigned i = 0; i < peneSize; i++)var[i] = specularspike[i];
-                            mirrorsMPT.back()->AddProperty("SPECULARSPIKECONSTANT", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("SPECULARSPIKECONSTANT", pene.data(), var.data(), peneSize);
                         }
                         if (backscatter.size()) {
                             for (unsigned i = 0; i < peneSize; i++)var[i] = backscatter[i];
-                            mirrorsMPT.back()->AddProperty("BACKSCATTERCONSTANT", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("BACKSCATTERCONSTANT", pene.data(), var.data(), peneSize);
                         }
                     } else {
                         cout << " !! Fatal error: no optical property material, and no optical properties for mirror "
@@ -531,7 +531,6 @@ void MDetectorConstruction::buildMirrors() {
                 if (surfaceFinish == "ground") mirrorSurfaces.back()->SetFinish(ground);                // rough surface
                 if (surfaceFinish == "groundfrontpainted") mirrorSurfaces.back()->SetFinish(groundfrontpainted);    // rough top-layer (front) paint
                 if (surfaceFinish == "groundbackpainted") mirrorSurfaces.back()->SetFinish(groundbackpainted);     // same as 'ground' but with a back-paint
-
 
                 if (surfaceFinish == "polishedlumirrorair")
                     mirrorSurfaces.back()->SetFinish(polishedlumirrorair);   // mechanically polished surface, with lumirror

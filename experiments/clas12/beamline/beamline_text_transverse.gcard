@@ -1,0 +1,21 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<detector name="cad/"     factory="CAD" variation="rgc_fall2022"/>
+	<detector name="beamline" factory="TEXT" variation="rgc_fall2022"/>
+
+	<detector name="cad_transverse/noWedges/"       factory="CAD"/>
+	<detector name="cad_transverse/forwardWedges/"  factory="CAD"/>
+	<detector name="cad_transverse/midpointWedges/" factory="CAD"/>
+
+	<option name="HALL_FIELD" value="Full_transsolenoid_x321_y161_z321_April2024:Symm_torus_r2501_phi16_z251_24Apr2018"/>
+
+	<!-- End of ELMO  -->
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="RUNNO" value="11"/>
+	<option name="DIGITIZATION_VARIATION" value="rga_fall2018_mc"/>
+
+</gcard>

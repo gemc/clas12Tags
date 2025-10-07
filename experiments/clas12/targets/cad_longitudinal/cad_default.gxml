@@ -1,0 +1,27 @@
+<!--
+Transversely Polarized He-3 Target
+ --> 
+
+<gxml>
+
+    <volume name="deverter"  mother="ltarget"    color="fc7f03" position="0*mm 0*mm 165.78*mm" rotation="0*deg 270*deg 0*deg" material="G4_Al"/>
+    <volume name="flow_entrance"  mother="ltarget"    color="fc7f03" position="0*mm 0*mm -9.64*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+    <volume name="outer_cell"  mother="ltarget"    color="fc7f03" position="0*mm 0*mm -0.2*mm" rotation="0*deg 0*deg 0*deg" material="G4_Al"/>
+    <volume name="flow_entrance001"  mother="ltarget"    color="fc7f03" position="0*mm 0*mm -28.74*mm" rotation="0*deg 0*deg 180*deg" material="G4_Al"/>
+    <volume name="exchanger"  mother="ltarget"    color="fc7f03" position="0*mm 0*mm -54.14*mm" rotation="0*deg 0*deg 180*deg" material="G4_Al"/>
+    <volume name="beam_window"  mother="ltarget"    color="fc7f03" position="0*mm 0*mm -54.14*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+
+    <!-- target itself -->
+    <volume name="he3"  mother="ltarget"    color="aa0000" position="0*mm 0*mm -24.2*mm" rotation="0*deg 0*deg 0*deg" material="polarizedHe3"/>
+
+	<!-- rohacell chamber. The TargetFoam volume comes from a different model (Saclay has a different coordinate system?). -->
+	<volume name="TargetFoam"                mother="ltarget" color="aaffff" rotation="0*deg 90*deg 0*deg" material="rohacell"/>
+	<volume name="TargetFoam2"               mother="ltarget" color="aaffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="rohacell"/>
+	<volume name="TargetFoam3"               mother="ltarget" color="aaffff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="rohacell"/>
+
+	<!-- vacuum extension -->
+	<volume name="TargetVacuumWindow50umAl"  mother="ltarget" color="aaaaff" position="0*mm 0*mm 625*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetWindowAdapterTorlon" mother="ltarget" color="444444" position="0*mm 0*mm 625*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+
+</gxml>

@@ -1,0 +1,33 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<detector name="ltcc" factory="TEXT" variation="rga_fall2018"/>
+	<detector name="cad/" factory="CAD"  variation="rga_fall2018"/>
+
+	<option name="BEAM_P" value="e-, 8.0*GeV, 15*deg, 60*deg"/>
+	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="INTEGRATEDRAW" value="ltcc"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT + Optical"/>
+	<option name="RECORD_OPTICALPHOTONS" value="1"/>
+	<option name="DIGITIZATION_VARIATION" value="rga_fall2018_mc"/>
+	<option name="RECORD_PASSBY" value="1"/>
+
+	<!-- Hall Field. torus -1 means e- INBENDING  -->
+	<option name="HALL_FIELD" value="Symm_solenoid_r601_phi1_z1201_13June2018:Symm_torus_r2501_phi16_z251_24Apr2018"/>
+	<option name="SCALE_FIELD" value="binary_torus, -1"/>
+	<option name="SCALE_FIELD" value="binary_solenoid, -1"/>
+
+	<option name="PRODUCTIONCUTFORVOLUMES"
+			value="frame1_s2 frame1_s5 frame1_s6 frame2_s2 frame2_s5 frame2_s6 frame3_s2 frame3_s5 frame3_s6 frame4_s2 frame4_s5 frame4_s6 frame5_s2 frame5_s5 frame5_s6 frame6_s2 frame6_s5 frame6_s6 frame7_s2 frame7_s5 frame7_s6 frame8_s2 frame8_s5 frame8_s6 frame9_s2 frame9_s5 frame9_s6 20"/>
+
+</gcard>
+
+
+

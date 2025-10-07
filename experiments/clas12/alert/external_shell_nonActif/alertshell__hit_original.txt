@@ -1,1 +1,0 @@
-          alertshell  |alertshell hit is not sensitive, it is just for material budget  |                              alertshell  | 0.1*MeV   |  0.1*ns   |  0.1*mm   |  0.2*mm   |   50*ns   |   20*ns   |     100   |     -20   |   10*ns  

@@ -1,0 +1,6 @@
+from init_env import init_environment
+env = init_environment("ccdb")
+
+env.Program(source = "dc12geom.cc", target = "dc12geom")
+
+

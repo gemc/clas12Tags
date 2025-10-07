@@ -1,0 +1,11 @@
+# Detector name and variation
+detector_name: target
+comment: CLAS12 Various Targets
+
+# MYSQL server / SQLITE file
+dbhost: ../../clas12.sqlite
+
+# Verbosity controls the perl script output
+verbosity: 0
+
+

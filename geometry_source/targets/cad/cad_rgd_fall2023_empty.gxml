@@ -1,0 +1,15 @@
+<gxml>
+
+	<!-- upstream of the target -->
+	<volume name="TargetBaseTubeTorlon"      mother="target" color="444444" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- target itself -->
+	<volume name="TargetAlWindowD"           mother="target" color="aaaaff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetAlWindowU"           mother="target" color="aaaaff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetWallKapton"          mother="target" color="ffaaaa" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+	<volume name="TargetEndCapKapton"        mother="target" color="ffaaaa" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- rohacell chamber. The scatteringChamber volume is placed at -3 in the model, here we pushed it back to have it at CLAS nominal position -->
+	<volume name="scatteringChamber"         mother="target" color="aaffff" position="0*mm 0*mm 1303.27*mm" rotation="0*deg 180*deg 0*deg" material="rohacell"/>
+
+</gxml>

@@ -1,0 +1,23 @@
+# Configuration file for the BAND detector
+
+# Detector name and variation
+detector_name: band
+variation:     noft
+
+# Factory can be MYQL or TEXT
+factory:       TEXT 
+
+# run ranges and variation will apply to geometry, materials and parameters
+rmin:       1
+rmax:       10000
+
+# MYSQL server and databse if MYSQL factory is selected
+dbhost: clasdb.jlab.org
+
+# Comments/Description
+comment:       This is the first implementation of the band
+
+# Verbosity controls the perl script output
+verbosity: 0
+
+

@@ -1,5 +1,0 @@
-<gxml>
-	<volume name="WC_S" mother="ltccS3" color="aa9999"  sensitivity="mirror: ltcc_AlMgF2" hitType="mirror" identifiers="sector manual 1 side manual 2 segment manual 1"   position="0.390826*cm 58.2255*cm 446.167*cm" rotation="7.72*deg -30.8*deg 30.8*deg" />
-	<volume name="WC_M" mother="ltccS3" color="aa9999"  sensitivity="mirror: ltcc_AlMgF2" hitType="mirror" identifiers="sector manual 1 side manual 2 segment manual 11"  position="76.6113*cm 184.572*cm 384.362*cm" rotation="26.04*deg -27.19*deg 27.19*deg" />
-	<volume name="WC_L" mother="ltccS3" color="aa9999"  sensitivity="mirror: ltcc_AlMgF2" hitType="mirror" identifiers="sector manual 1 side manual 2 segment manual 13"  position="93.0427*cm 212.743*cm 368.448*cm" rotation="30.48*deg -24*deg 25.99*deg" />
-</gxml>

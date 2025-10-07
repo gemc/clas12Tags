@@ -1,0 +1,121 @@
+name: Clas12-config Dev Main Comparison
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  schedule:
+    # every day at 5:44
+    # This takes about 1.5 hours, currently at 29 jobs
+    - cron: '44 5 * * *'
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Allows this workflow to be called by other workflows
+  # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
+  workflow_call:
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-fedora36
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Creates list of gcards
+        uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
+      - id: set-matrix
+        run: |
+          echo "Current Working Directory: $(pwd)"
+          echo "Content: $(ls -l)"
+          export JSON=$( ./ci/clas12-config-main-and-dev-gcard-list.sh )
+          echo generate-matrix: $JSON
+          echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
+
+  compare:
+    needs: generate-matrix
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-almalinux94
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
+      - name: Fix Java Version
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+      - name: Build Coatjava
+        run: |
+          cd ./geometry_source
+          ./install_coatjava.sh -l
+      - name: Build Gemc
+        run: |
+          ./ci/build_gemc.sh
+      - name: Install Software
+        run: |
+          ./ci/install_comparison_software.sh
+      - name: ${{ matrix.gcard }} tests
+        run: |
+          ./ci/clas12_config_dev_main_comparison.sh -g ${{ matrix.gcard }}
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: gemclogs-${{ matrix.gcard }}
+          path: |
+            /root/logs/
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+
+  compare-result:
+    needs: compare
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect logs
+        uses: actions/download-artifact@v4
+        with:
+          pattern: gemclogs-*
+      - name: Detailed Table
+        run: |
+          ls */root/logs/*output_details.log
+          cat */root/logs/*output_details.log > comparison.log
+          echo "| GCard | Bank | Status  |" > Summary.md
+          echo "|-------|---------|---------|" >> Summary.md
+          while IFS=: read -r gcard bank pass; do
+            echo "| $gcard | $bank | $pass |" >> Summary.md
+          done < comparison.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
+      - name: Summary Table
+        run: |
+          ls -Rl
+          ls */root/logs/*output_summary.log
+          cat */root/logs/*output_summary.log > comparison.log
+          echo "| GCard | Status  |" > Summary.md
+          echo "|----------|---------|" >> Summary.md
+          while IFS=: read -r gcard pass; do
+            echo "| $gcard | $pass |" >> Summary.md
+          done < comparison.log
+          cat Summary.md >> $GITHUB_STEP_SUMMARY
+
+  compare-result-final:
+    needs:
+      - compare-result
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

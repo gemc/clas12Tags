@@ -1,0 +1,9 @@
+# Detector name and variation
+detector_name: fluxDets
+comment: Various flux detectors for different scenarios
+
+# MYSQL server / SQLITE file
+dbhost: ../../clas12.sqlite
+
+# Verbosity controls the perl script output
+verbosity: 0

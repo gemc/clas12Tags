@@ -1,0 +1,39 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<!-- target. Notice variation give the target type. Can be: lH2, lD2, ND3 -->
+	<detector name="../targets/cad/"   factory="CAD"/>
+	<detector name="../targets/target" factory="TEXT" variation="cad"/>
+
+	<!-- central detectors 	-->
+	<detector name="../bst/bst"               factory="TEXT" variation="java"/>
+	<detector name="../bstShield/bstShield"   factory="TEXT" variation="w51"/>
+
+	<detector name="../micromegas/micromegas" factory="TEXT" variation="rga_spring2018"/>
+
+	<!--ctof, cad  -->
+	<detector name="../ctof/ctof"      factory="TEXT" variation="cad"/>
+	<detector name="../ctof/javacad/"  factory="CAD"/>
+
+	<detector name="ctofShield"   factory="TEXT" variation="w1"/>
+
+	<detector name="../cnd/cnd"                factory="TEXT" variation="original"/>
+
+
+	<option name="BEAM_P" value="e-, 2.0*GeV, 20*deg, 10*deg"/>
+	<option name="OUTPUT" value="evio, out.ev"/>
+
+	<!--  FMT is removed in 4a.2.5 -->
+	<detector name="FMT">
+		<existence exist="no" />
+	</detector>
+
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+
+</gcard>
+
