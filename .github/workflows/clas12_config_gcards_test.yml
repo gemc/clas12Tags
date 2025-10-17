@@ -74,7 +74,7 @@ jobs:
       - name: Fix Java Version
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'zulu'
       - name: ${{ matrix.gcard }} tests
         env:
