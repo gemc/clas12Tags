@@ -38,10 +38,23 @@ jobs:
             cp releases/dev.md /tmp/release_notes.md
           fi
 
+      - name: Configure git author (for tag push)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Create or move tag to current commit
+        run: |
+          git tag -f "${TAG_NAME}" "${GITHUB_SHA}"
+          git push --force origin "refs/tags/${TAG_NAME}"
+
       - name: Create/Update release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ env.TAG_NAME }}
+          # If the tag didn’t exist the very first time, this tells the action
+          # what commit to use to create it (safe to keep even after creation):
+          commit: ${{ github.sha }}
           name: ${{ env.RELEASE_TITLE }}
           bodyFile: /tmp/release_notes.md
           prerelease: true
