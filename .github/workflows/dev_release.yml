@@ -38,15 +38,20 @@ jobs:
             cp releases/dev.md /tmp/release_notes.md
           fi
 
-      - name: Configure git author (for tag push)
+      - name: Create or move tag to current commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-      - name: Create or move tag to current commit
-        run: |
           git tag -f "${TAG_NAME}" "${GITHUB_SHA}"
           git push --force origin "refs/tags/${TAG_NAME}"
+
+      - name: Delete existing release (if any)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release view "${TAG_NAME}" >/dev/null 2>&1 && \
+          gh release delete "${TAG_NAME}" -y || \
+          echo "No existing release to delete"
 
       - name: Create/Update release
         uses: ncipollo/release-action@v1
