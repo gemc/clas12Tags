@@ -64,6 +64,11 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: ${{ 'gemc/clas12Tags' }}
+      - name: Fix Java Version
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'zulu'
       - name: Build Coatjava
         run: |
           cd ./geometry_source
@@ -71,11 +76,6 @@ jobs:
       - name: Build Gemc
         run: |
           ./ci/build_gemc.sh
-      - name: Fix Java Version
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'zulu'
       - name: ${{ matrix.gcard }} tests
         env:
           BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}

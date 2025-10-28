@@ -167,7 +167,7 @@ public:
     int fastMCMode;         ///< In fast MC mode, the particle smeared/unsmeared momenta are saved
     long int requestedNevents;
     int ntoskip;                      ///< Number of events to skip
-    vector <string> rfvalue_strings; ///< values from
+    vector <string> rfvalue_strings;  ///< values from
 
     // sampling time of electronics (typically FADC)
     // and number of samplings

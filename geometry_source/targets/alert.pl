@@ -154,6 +154,7 @@ sub build_alert_mats {
     $mat{"density"} = "0.000487"; # in g/cm3
     $mat{"ncomponents"} = "3";
     $mat{"components"} = "He 1 C 1 O 2";
+    print_mat(\%configuration, \%mat);
 
     if ($configuration_string eq "rgl_spring2025_D2") {
         %mat = init_mat();

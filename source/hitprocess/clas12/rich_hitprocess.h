@@ -87,6 +87,8 @@ private:
   /* TDC threshold in charge */
   double MarocThrCharge = 0;
 
+  /* Time offset (ns) */
+  double TimeOffset = -50;
 
   /* Time sigma resolution for the gaussian smearing */
   double TimeResol_H12700 = 0.35;

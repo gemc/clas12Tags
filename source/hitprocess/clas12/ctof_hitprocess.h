@@ -38,6 +38,9 @@ public:
 	// tdc_conc: tdc conversion factors
 	vector<double> tdcconv[1][1][2];
 	
+       	// adc time offsets
+	vector<double> adcoffset[1][1][2];
+        
 	// veff: effective velocity
 	vector<double> veff[1][1][2];
 	

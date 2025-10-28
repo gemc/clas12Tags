@@ -68,7 +68,7 @@ of the CLAS12 detectors**, built using the **latest tagged version of coatjava**
 <p align="center">
   <img src="clas12.png?raw=true" alt="CLAS12 detector rendering" width="600">
   <br>
-  <em>Figure&nbsp;1 — The CLAS12 detector simulation. The electron beam travels left&nbsp;→&nbsp;right.</em>
+  <em>Figure&nbsp;1: The CLAS12 detector simulation. The electron beam travels left&nbsp;→&nbsp;right.</em>
 </p>
 
 ## General Information:
@@ -290,13 +290,13 @@ are available on [DockerHub](https://hub.docker.com/repository/docker/jeffersonl
 To run the docker image (for example dev-fedora):
 
 ```
-docker run -it --rm jeffersonlab/gemc:dev-fedora36 bash
+docker run -it --rm jeffersonlab/gemc:dev-almalinux94 bash
 ```
 
 On MacOS the additional option `--platform linux/amd64` is needed:
 
 ```
-docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 bash
+docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-almalinux94 bash
 ```
 
 <br/>

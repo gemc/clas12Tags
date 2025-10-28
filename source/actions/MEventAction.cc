@@ -580,7 +580,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt)
 		
 		FrequencySyncSignal rfs(rfsetup_string);
 		processOutputFactory->writeRFSignal(outContainer, rfs, getBankFromMap("rf", banksMap));
-		
+
 		if(VERB > 1) {
 			cout << rfs << endl;
 		}
@@ -1151,21 +1151,18 @@ void MEventAction::setup_clas12_RF(int runno) {
 
 		snprintf(database, sizeof(database), "%s:%d:%s%s", "/calibration/eb/rf/config", runno, digiVariation.c_str(), timestamp.c_str());
 		cout << " Connecting to " << database << endl;
-
 		data.clear(); calib->GetCalib(data, database);
+		double clock = data[0][4];
+		double prescale = data[0][5];
+
 		
-		double clock, prescale;
-		
-		// taking first entry only
-		for(unsigned row = 0; row < 1; row++) {
-//		for(unsigned row = 0; row < data.size(); row++) {
-//			isec   = data[row][0]; ilay   = data[row][1]; istr   = data[row][2];
-			clock = data[row][4];
-			prescale =  data[row][5];
-		}
-		
-		
-		rfvalue_strings = {to_string(clock), to_string(prescale)};
+		snprintf(database, sizeof(database), "%s:%d:%s%s", "/calibration/eb/rf/offset", runno, digiVariation.c_str(), timestamp.c_str());
+		cout << " Connecting to " << database << endl;
+		data.clear(); calib->GetCalib(data, database);
+		double offset1 = data[0][3];
+		double offset2 = data[0][4];
+
+		rfvalue_strings = {to_string(clock), to_string(prescale), to_string(offset1), to_string(20), to_string(offset2)};
 		set_and_show_rf_setup();
         for(auto& rfv: rfvalue_strings) {
             cout << "    - " << rfv << endl;
@@ -1182,7 +1179,5 @@ void MEventAction::set_and_show_rf_setup() {
 	cout << " RF Setup: Period, Frequency [GHz], [prescales]" << endl;
     cout << "    - " << get_number(rfvalue_strings[0]) << endl;
     rfvalue_strings[0] = to_string(rf_frquency_from_period) + " ";
-//	for(auto& rfv: rfvalue_strings) {
-//		cout << "    - " << rfv << endl;
-//	}
+
 }
