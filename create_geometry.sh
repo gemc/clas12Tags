@@ -8,19 +8,49 @@ export PATH=$PATH:$COATJAVA/bin
 all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets uRwell upstream"
 
 function printHelp() {
-	echo
-	echo "Usage: create_geometry.sh [detector]"
-	echo "Creates the geometry for the given detector"
-	echo "If no detector is given, all detectors will be run"
-	echo
-	echo "All detectors:" $all_dets
+    cat <<EOF
+
+Usage: create_geometry.sh [coatjava release options] [detector]
+
+Coatjava options (optional – at most one of -d|-l|-t|-g):
+  -l               use latest tag (default)
+  -t <tag>         use specific tag, like 12.0.4t
+  -g <github_url>  use custom github URL
+  -h               show this help
+
+If a detector is given, only that detector will be built; otherwise every detector below is processed:
+
+  $all_dets
+
+EOF
 }
 
-# print help if -h --h -help --help is given as argument
-if [[ $1 == "-h" || $1 == "--h" || $1 == "-help" || $1 == "--help" ]]; then
-	printHelp
-	exit 0
+coatjava_args=("-l")         # default behaviour = latest tag
+explicit_coatjava=0          # did the user pass a coatjava flag?
+
+while getopts ":lt:g:h" opt; do
+  case "$opt" in
+    l) coatjava_args=("-l"); explicit_coatjava=1 ;;
+    t) coatjava_args=("-t" "$OPTARG"); explicit_coatjava=1 ;;
+    g) coatjava_args=("-g" "$OPTARG"); explicit_coatjava=1 ;;
+    h) printHelp; exit 0 ;;
+    :) echo "Error: -$OPTARG requires an argument." >&2; exit 1 ;;
+    \?) echo "Error: unknown option -$OPTARG" >&2; printHelp; exit 1 ;;
+  esac
+done
+shift $((OPTIND - 1))        # drop parsed options
+
+
+# Positional argument = detector (optional)
+if [[ $# -gt 0 ]]; then
+  detector="$1"
+  if [[ ! " $all_dets " =~ " $detector " ]]; then
+    echo "Error: '$detector' is not a recognised detector." >&2
+    exit 1
+  fi
+  all_dets="$detector"
 fi
+
 
 function find_subdirs_with_file() {
 	local subdirs_with_file=() # Initialize an empty array to store matching subdirs
@@ -45,15 +75,10 @@ function copyFilesAndCadDirsTo() {
 
 	cadDirs=$(find_subdirs_with_file)
 	for cadDir in $=cadDirs; do
-		echo Copying CAD Subdirs: $cadDir
-		# copy $cadDir preserving full path. coreutils provides gcp
-		gcp -r --parents "$cadDir" "$destination/"
+		echo Copying CAD Subdirs: $cadDir to $destination
+		# copy $cadDir preserving full path. Notice it needs the relative path.
+		rsync -aR "./$cadDir" "$destination/"
 	done
-
-	# if dir tests exists, copy it
-	if [ -d tests ]; then
-		cp -r tests "$destination/"
-	fi
 }
 
 
@@ -65,18 +90,13 @@ fi
 cd geometry_source
 
 # if the directory coatjava does not exist, run the script to create it
-if [ ! -d "coatjava" ]; then
-	./install_coatjava.sh -l
-fi
-
-
-# if an argument is given, check that its inside all_dets
-if [[ $# -gt 0 ]]; then
-	if [[ ! " $all_dets " =~ " $1 " ]]; then
-		echo "Error: $1 is not a valid detector"
+if [[ ! -d coatjava || $explicit_coatjava -eq 1 ]]; then
+  [[ -d coatjava ]] && echo "Re‑installing coatjava with specified options..."
+  ./install_coatjava.sh "${coatjava_args[@]}"
+	if [[ $? -ne 0 ]]; then
+		echo "Error: coatjava build failed. See ../build_coatjava.log for details."
 		exit 1
 	fi
-	all_dets=$1
 fi
 
 # loop over all dets
@@ -97,39 +117,12 @@ for dete in $=all_dets; do
 	# main run
 	if [[ -f "./$dete.pl" ]]; then
 		./"$dete.pl" config.dat
+	if [[ $? -ne 0 ]]; then
+		echo "Error: building $dete failed. Check the geometry build log for details."
+		exit 1
+	fi
 	fi
 	copyFilesAndCadDirsTo "$cdir/experiments/clas12/$dete"
 
-	# detectors details
-
-	# target rge-dt
-	if [ $dete = "targets" ]; then
-		cp -r rge-dt $cdir/experiments/clas12/$dete
-	fi
-
-	if [ $dete = "alert" ]; then
-		for sdete in He_bag ahdc atof external_shell_nonActif; do
-			echo
-			echo " > Building ALERT $sdete"
-			echo
-
-			cd $sdete
-			detep=$sdete
-			if [ $sdete = "He_bag" ]; then
-				detep="hebag"
-			elif [ $sdete = "external_shell_nonActif" ]; then
-				detep="alertshell"
-			elif [ $sdete = "ahdc" ] || [ $dete = "atof" ]; then
-				run-groovy factory.groovy --variation default --runnumber 11
-				run-groovy factory.groovy --variation rga_fall2018 --runnumber 11
-			fi
-
-			"./$detep.pl" config.dat
-			copyFilesAndCadDirsTo "$cdir/experiments/clas12/$dete/$sdete"
-
-			cd ..
-
-		done
-	fi
 	cd ..
 done

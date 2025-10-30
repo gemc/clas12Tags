@@ -7,7 +7,6 @@ env.Append(CXXFLAGS=['-std=c++17'])
 
 # addressing shortcoming of geant4-config 10.7.4 not returning all libraries
 additional_libs = []
-additional_libs.append('pthread')
 additional_libs.append('G4ptl')
 additional_libs.append('G4tasking')
 additional_libs.append('ccdb_sqlite')
@@ -165,7 +164,6 @@ env.Library(source = hitp_sources, target = "lib/ghitprocess")
 env.Append(CPPPATH = 'output')
 output_sources = Split("""
 	output/outputFactory.cc
-	
 	output/hipo_output.cc
 	output/hipoSchemas.cc
 	output/txt_output.cc
@@ -206,8 +204,45 @@ gemc_sources = Split("""
 	src/ActionInitialization.cc
 	src/MSteppingAction.cc""")
 
-env.Append(LIBPATH = ['lib'])
-env.Prepend(LIBS =  ['gmaterials', 'gmirrors', 'gparameters', 'gutilities', 'gdetector', 'gsensitivity', 'gphysics', 'gfields', 'ghitprocess', 'goutput', 'ggui'])
+env.Append(LIBPATH = ['#lib'])
+env.Prepend(LIBS=[
+    'ggui',
+    'gdetector',
+    'gfields',
+    'gphysics',
+    'gmaterials','gmirrors','gparameters','gutilities',
+    'gsensitivity','ghitprocess','goutput',
+])
+
+
+# on macos, the latest xcodebuild may be more strict with the order of libraries
+# SConstruct
+import sys
+from SCons.Script import File
+
+archives = [
+    File('#lib/libgdetector.a').abspath,
+    File('#lib/libgfields.a').abspath,
+    File('#lib/libgphysics.a').abspath,
+]
+
+if sys.platform == 'darwin':
+    # Mach-O (macOS): force-load each archive explicitly
+    for a in archives:
+        env.Append(LINKFLAGS=[f'-Wl,-force_load,{a}'])
+# else:
+#     # ELF (Linux): pull all objects from these archives
+#     # Option A: whole-archive (strongest; pulls everything in)
+#     env.Append(LINKFLAGS=['-Wl,--whole-archive'])
+#     env.Append(LINKFLAGS=archives)
+#     env.Append(LINKFLAGS=['-Wl,--no-whole-archive'])
+#
+#     # If you have circular deps across multiple static libs and prefer
+#     # selective pulling instead of whole-archive, you can try start/end group:
+#     # env.Append(LINKFLAGS=['-Wl,--start-group'])
+#     # env.Append(LINKFLAGS=archives)
+#     # env.Append(LINKFLAGS=['-Wl,--end-group'])
+
 env.Program(source = gemc_sources, target = "gemc")
 
 

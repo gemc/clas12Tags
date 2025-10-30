@@ -1,35 +1,52 @@
 name: Almalinux Build
+permissions:
+  contents: read
+  pull-requests: write
 
-# Controls when the workflow will run
+  # Triggers the workflow on all pushes to main, all pull and merge requests
 on:
-  # Triggers the workflow on all pushes
+  pull_request:
+  merge_group:
   push:
-    branches:
-      - '*'
+    branches: [ main ]
+    tags: [ '*' ]
+    paths-ignore:
+      - "**/*.md"
+      - "release_notes/**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-permissions:
-  actions: read
-
 jobs:
-  build:
+  build-on-almalinux:
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
-
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - name: Build gemc
+      - name: Fix Java Version
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+      - name: Build Coatjava
+        run: |
+          cd ./geometry_source
+          ./install_coatjava.sh -l
+      - name: Build Gemc
         run: |
           ./ci/build_gemc.sh
-      - name: Copy gemc binary
+          echo "github.event.head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
+      - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: gemc
+          name: gemc-almalinux
           path: |
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/clas12.sqlite
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/experiments
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
 

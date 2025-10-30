@@ -478,35 +478,35 @@ void MDetectorConstruction::buildMirrors() {
                         // properties by construction, assured by the API
                         unsigned peneSize = photonEnergy.size();
 
-                        G4double pene[peneSize];
-                        G4double var[peneSize];
+                        vector<G4double> pene(peneSize);
+                        vector<G4double> var(peneSize);
 
                         for (unsigned i = 0; i < peneSize; i++)
                             pene[i] = photonEnergy[i];
 
                         if (indexOfRefraction.size()) {
                             for (unsigned i = 0; i < peneSize; i++) var[i] = indexOfRefraction[i];
-                            mirrorsMPT.back()->AddProperty("RINDEX", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("RINDEX", pene.data(), var.data(), peneSize);
                         }
                         if (reflectivity.size()) {
                             for (unsigned i = 0; i < peneSize; i++) var[i] = reflectivity[i];
-                            mirrorsMPT.back()->AddProperty("REFLECTIVITY", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("REFLECTIVITY", pene.data(), var.data(), peneSize);
                         }
                         if (efficiency.size()) {
                             for (unsigned i = 0; i < peneSize; i++) var[i] = efficiency[i];
-                            mirrorsMPT.back()->AddProperty("EFFICIENCY", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("EFFICIENCY", pene.data(), var.data(), peneSize);
                         }
                         if (specularlobe.size()) {
                             for (unsigned i = 0; i < peneSize; i++)var[i] = specularlobe[i];
-                            mirrorsMPT.back()->AddProperty("SPECULARLOBECONSTANT", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("SPECULARLOBECONSTANT", pene.data(), var.data(), peneSize);
                         }
                         if (specularspike.size()) {
                             for (unsigned i = 0; i < peneSize; i++)var[i] = specularspike[i];
-                            mirrorsMPT.back()->AddProperty("SPECULARSPIKECONSTANT", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("SPECULARSPIKECONSTANT", pene.data(), var.data(), peneSize);
                         }
                         if (backscatter.size()) {
                             for (unsigned i = 0; i < peneSize; i++)var[i] = backscatter[i];
-                            mirrorsMPT.back()->AddProperty("BACKSCATTERCONSTANT", pene, var, peneSize);
+                            mirrorsMPT.back()->AddProperty("BACKSCATTERCONSTANT", pene.data(), var.data(), peneSize);
                         }
                     } else {
                         cout << " !! Fatal error: no optical property material, and no optical properties for mirror "

@@ -3,8 +3,8 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="./htcc" factory="TEXT" variation="default"/>
-	<detector name="./cad/" factory="CAD"  variation="default"/>
+	<detector name="./htcc" factory="TEXT" />
+	<detector name="./cad/" factory="CAD"  />
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>

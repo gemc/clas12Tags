@@ -69,7 +69,7 @@ sub create_system {
 
         our @volumes = get_volumes(%configuration);
         coatjava::makeDC();
-        make_region3_front_shield();
+#        make_region3_front_shield();
         make_region3_back_shield();
     }
     else {
@@ -98,9 +98,8 @@ foreach my $variation (@variations, @custom_variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }

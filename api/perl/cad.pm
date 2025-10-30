@@ -76,7 +76,7 @@ sub print_cad {
             my $sql = "DELETE FROM cad WHERE system = ?";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
-            print "   > Deleted all cad entries for system $system \n";
+            print "   > Deleting all cad entries for system $system \n";
             $counter_sqlite = 1;
             $this_variation = $varia;
         }

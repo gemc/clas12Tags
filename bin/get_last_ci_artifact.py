@@ -1,96 +1,110 @@
 #!/usr/bin/env python3
-# notice personal access token (classic) MAURI must be updated if it expires
-# - public repo scope is enough
-
-import requests
-import subprocess
-import os
 import argparse
+import os
+import sys
+import zipfile
+import io
+import requests
 
+def die(msg, code=1):
+    print(msg, file=sys.stderr)
+    sys.exit(code)
 
-# add function to download artifact using curl
-def download_artifact(download_url, token, artifact_name):
-	filename = f"{artifact_name}.zip"
-	curl_accept1 = "Accept: application/vnd.github+json"
-	curl_accept2 = "Authorization: token " + token
-	curl_command = f"curl  -H '{curl_accept1}' -H '{curl_accept2}' -L -o {filename} {download_url}"
-	# exectute the curl command
-	result = subprocess.run(curl_command, shell=True, capture_output=True, text=True)
-	# unzip the resulting artifact
-	if result.returncode == 0:
-		print(f"Artifact {artifact_name} downloaded successfully.")
-		# Unzip the artifact if it's a zip file
-		if filename.endswith('.zip'):
-			unzip_command = f"unzip -o {filename}"
-			subprocess.run(unzip_command, shell=True)
-	else:
-		print(f"Failed to download artifact: {result.stderr}")
+def read_token():
+    path = os.path.expanduser("~/.mauri")
+    if not os.path.exists(path):
+        die(f"Token file not found: {path}\nCreate it with your GitHub PAT (classic).")
+    with open(path, "r") as f:
+        token = f.read().strip()
+    if not token:
+        die(f"Token file {path} is empty.")
+    return token
 
+def pick_workflow(os_type: str) -> str:
+    mapping = {
+        "almalinux": "build_gemc_almalinux.yml",
+        "fedora":    "build_gemc_fedora.yml",
+        "ubuntu":    "build_gemc_ubuntu.yml",
+    }
+    return mapping[os_type]
 
-# Parse the command-line argument for OS type
-parser = argparse.ArgumentParser(
-	description="Specify the OS for selecting the appropriate workflow.")
-parser.add_argument("os_type", choices=["almalinux", "fedora"],
-                    help="Specify 'almalinux' or 'fedora'")
+def gh_get(url: str, token: str, params=None):
+    headers = {
+        # Classic PATs should use "token", not "Bearer"
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "gemc-ci-fetcher",
+    }
+    r = requests.get(url, headers=headers, params=params, timeout=60)
+    # Surface helpful details on 401
+    if r.status_code == 401:
+        die(
+            "Failed to authenticate with GitHub (401 Bad credentials).\n"
+            "- If you are using a classic PAT, keep 'Authorization: token <PAT>'.\n"
+            "- If you switched to a fine-grained token, ensure the repository is allowed and\n"
+            "  the 'Actions: Read' permission is enabled.\n"
+            f"Response: {r.text}"
+        )
+    r.raise_for_status()
+    return r
 
-args = parser.parse_args()
+def download_artifact_zip(download_url: str, token: str, artifact_name: str):
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "gemc-ci-fetcher",
+    }
+    # archive_download_url is a direct (redirecting) zip download
+    with requests.get(download_url, headers=headers, stream=True, timeout=300) as r:
+        r.raise_for_status()
+        data = io.BytesIO(r.content)
+    # unzip in current directory
+    with zipfile.ZipFile(data) as zf:
+        zf.extractall(".")
+    print(f"Artifact '{artifact_name}' downloaded and extracted.")
 
-# Set WORKFLOW_ID based on the argument
-if args.os_type == "almalinux":
-	WORKFLOW_ID = "build_gemc_almalinux.yml"
-elif args.os_type == "fedora":
-	WORKFLOW_ID = "build_gemc_fedora.yml"
+def main():
+    parser = argparse.ArgumentParser(
+        description="Fetch latest artifact from a workflow on main for a given OS."
+    )
+    parser.add_argument("os_type", choices=["almalinux", "fedora", "ubuntu"],
+                        help="Which OS workflow to use.")
+    args = parser.parse_args()
 
-# Define the variables
-# Use HOME environment variable to get the path
-with open(f"{os.path.expanduser('~')}/.mauri") as f:
-	MAURI = f.read().strip()
+    token = read_token()
+    repo = "gemc/clas12Tags"
+    workflow_id = pick_workflow(args.os_type)
 
-REPO = "gemc/clas12Tags"  # e.g., "octocat/Hello-World"
+    # 1) List runs for that workflow
+    runs_url = f"https://api.github.com/repos/{repo}/actions/workflows/{workflow_id}/runs"
+    runs = gh_get(runs_url, token, params={"per_page": 50}).json().get("workflow_runs", [])
 
-# Set up the headers for authentication
-headers = {
-	"Authorization": f"Bearer {MAURI}",
-	"Accept":        "application/vnd.github.v3+json"
-}
+    # Filter to main branch and prefer the most recent successful run (if available)
+    main_runs = [run for run in runs if run.get("head_branch") == "main"]
+    if not main_runs:
+        die("No workflow runs found for 'main' branch.")
 
-# Step 1: Get the latest runs for the specified workflow
-runs_url = f"https://api.github.com/repos/{REPO}/actions/workflows/{WORKFLOW_ID}/runs"
-runs_response = requests.get(runs_url, headers=headers)
+    # Prefer completed+successful; otherwise fall back to the newest main run
+    successful = [r for r in main_runs if r.get("status") == "completed" and r.get("conclusion") == "success"]
+    chosen = successful[0] if successful else main_runs[0]
+    run_id = chosen["id"]
+    run_html = chosen.get("html_url", "(no url)")
+    print(f"Using run {run_id} {run_html} (status={chosen.get('status')}, conclusion={chosen.get('conclusion')})")
 
-if runs_response.status_code == 200:
-	runs = runs_response.json().get("workflow_runs", [])
+    # 2) Get artifacts for that run
+    arts_url = f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts"
+    artifacts = gh_get(arts_url, token).json().get("artifacts", [])
 
-	# Filter for runs in the 'main' branch
-	main_runs = [run for run in runs if run["head_branch"] == "main"]
+    if not artifacts:
+        die(f"No artifacts found for run id {run_id} on 'main'.")
 
-	if main_runs:
-		# Get the latest run on 'main' branch
-		latest_run_id = main_runs[0]["id"]
+    # Pick the newest artifact (GitHub returns newest first)
+    latest = artifacts[0]
+    name = latest["name"]
+    dl_url = latest["archive_download_url"]
+    print(f"Latest artifact: {name}\nDownload URL: {dl_url}")
 
-		# Step 2: Get artifacts for the latest run
-		artifacts_url = f"https://api.github.com/repos/{REPO}/actions/runs/{latest_run_id}/artifacts"
-		artifacts_response = requests.get(artifacts_url, headers=headers)
+    download_artifact_zip(dl_url, token, name)
 
-		if artifacts_response.status_code == 200:
-			artifacts = artifacts_response.json().get("artifacts", [])
-
-			if artifacts:
-				# Get the latest artifact
-				latest_artifact = artifacts[0]
-				print("Latest Artifact Name:", latest_artifact["name"])
-				print("Download URL:", latest_artifact["archive_download_url"])
-
-				# Download the latest artifact
-				download_artifact(latest_artifact["archive_download_url"], MAURI,
-				                  latest_artifact["name"])
-			else:
-				print("No artifacts found for the latest workflow run on 'main' branch. Run ID:",
-				      latest_run_id)
-		else:
-			print("Failed to get artifacts:", artifacts_response.status_code,
-			      artifacts_response.text)
-	else:
-		print("No workflow runs found for 'main' branch.")
-else:
-	print("Failed to get workflow runs:", runs_response.status_code, runs_response.text)
+if __name__ == "__main__":
+    main()

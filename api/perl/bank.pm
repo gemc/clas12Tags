@@ -63,7 +63,7 @@ sub insert_bank_variable {
             my $sql = "DELETE FROM banks WHERE system = ?";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
-            print "   > Deleted all banks for system $system \n";
+            print "   > Deletingw all banks for system $system \n";
             $counter_sqlite = 1;
         }
 

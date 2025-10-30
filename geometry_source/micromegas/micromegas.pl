@@ -32,7 +32,6 @@ if (scalar @ARGV != 1) {
 
 # Loading configuration file and parameters
 our %configuration = load_configuration($ARGV[0]);
-$configuration{"variation"} = "rga_spring2018";
 our %parameters ;
 
 # import scripts
@@ -60,8 +59,9 @@ sub create_system {
     define_fmt();
 }
 
-my @variations = ("rga_spring2018", "rgf_spring2020", "rgm_winter2021");
+my @variations = ("default", "rgf_spring2020", "rgm_fall2021_H");
 my @runs = clas12_runs(@variations);
+my $system = $configuration{'detector_name'};
 
 my @custom_variations = ("michel_9mmcopper");
 
@@ -78,16 +78,16 @@ foreach my $variation (@variations, @custom_variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-upload_parameters(\%configuration, "micromegas__parameters_rga_spring2018.txt", "micromegas", "default", 3029);
-upload_parameters(\%configuration, "micromegas__parameters_rgf_spring2020.txt", "micromegas", "default", 11620);
-upload_parameters(\%configuration, "micromegas__parameters_rgm_winter2021.txt", "micromegas", "default", 15016);
+foreach my $variation (@variations) {
+    my $runNumber = clas12_run($variation);
+    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "default", $runNumber);
+}
 upload_parameters(\%configuration, "micromegas__parameters_michel_9mmcopper.txt", "micromegas", "default", 30000);
 
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 

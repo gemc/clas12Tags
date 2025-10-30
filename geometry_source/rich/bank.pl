@@ -31,6 +31,5 @@ sub define_bank {
     insert_bank_variable(\%configuration, $bankname, "hitn",        99, "Di", "hit number");
 }
 
-define_bank();
 
 1;

@@ -24,8 +24,8 @@ our @rgb_winter2020_materials;
 our @rgb_spring2019_sectorsPresence;
 our @rgb_spring2019_materials;
 
-our @rgm_winter2021_sectorsPresence;
-our @rgm_winter2021_materials;
+our @rgm_fall2021_H_sectorsPresence;
+our @rgm_fall2021_H_materials;
 
 # number of mirrors
 my $nmirrors = $parameters{"nmirrors"};
@@ -60,7 +60,9 @@ sub calculatePMTPars {
     for (my $n = 0; $n < $nmirrors; $n++) {
         my $s = $n + 1;
 
-        # All variables defined below take their values from ltcc__parameters_original.txt file which can be rewritten by running mirrors.C after adding new variables or editting current variables (one should define them in ltcc.h and io.C and also give the values in ccngeom.dat )
+        # All variables defined below take their values from ltcc__parameters_default.txt
+        # which can be rewritten by running mirrors.C after adding new variables or editing current variables
+        # (one should define them in ltcc.h and io.C and also give the values in ccngeom.dat )
 
         $x0[$n] = $parameters{"ltcc.pmt.s$s" . "_pmt0x"};
         $y0[$n] = $parameters{"ltcc.pmt.s$s" . "_pmt0y"};
@@ -115,8 +117,8 @@ sub build_pmts {
                     $shouldPrintDetector = 1;
                 }
             }
-            elsif ($configuration_string eq "rgm_winter2021") {
-                if ($rgm_winter2021_sectorsPresence[$s - 1] == 1) {
+            elsif ($configuration_string eq "rgm_fall2021_H") {
+                if ($rgm_fall2021_H_sectorsPresence[$s - 1] == 1) {
                     $shouldPrintDetector = 1;
                 }
             }

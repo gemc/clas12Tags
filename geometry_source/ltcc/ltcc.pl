@@ -93,10 +93,10 @@ our @rgb_spring2019_materials = ("na", "na", "C4F10", "na", "C4F10", "na");
 our @rgb_winter2020_sectorsPresence = (0, 0, 1, 0, 1, 0);
 our @rgb_winter2020_materials = ("na", "na", "C4F10", "na", "C4F10", "na");
 
-our @rgm_winter2021_sectorsPresence = (0, 1, 1, 0, 1, 1);
-our @rgm_winter2021_materials = ("na", "N2", "N2", "na", "N2", "N2");
+our @rgm_fall2021_H_sectorsPresence = (0, 1, 1, 0, 1, 1);
+our @rgm_fall2021_H_materials = ("na", "N2", "N2", "na", "N2", "N2");
 
-my @variations = ("default", "rga_spring2018", "rga_fall2018",  "rgb_spring2019", "rgb_winter2020", "rgm_winter2021");
+my @variations = ("default", "rga_spring2018", "rga_fall2018",  "rgb_spring2019", "rgb_winter2020", "rgm_fall2021_H");
 my @runs = clas12_runs(@variations);
 
 # TEXT Factory
@@ -111,15 +111,14 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 # port gxml to sqlite
-require "../gxml_to_sqlite.pl";
+require "gxml_to_sqlite.pl";
 
 foreach my $variation (@variations) {
     $configuration{"run_number"} = clas12_run($variation);

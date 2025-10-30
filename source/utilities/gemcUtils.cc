@@ -202,36 +202,41 @@ G4Colour gcol(string cvar) {
 // gets last id from table, variation, run number
 int get_sql_run_number(QSqlDatabase db, string system_name, string v, int run, string table_name) {
 
+    if (!db.isValid() || !db.isOpen()) {
+        cerr << " !!! Error: Invalid or unopened database connection. Exiting." << endl;
+        exit(1);
+    }
+
     string dbexecute = " select DISTINCT run from " + table_name;
     dbexecute += " where variation = '" + v;
     dbexecute += "' and system = '" + system_name + "'";
 
     vector<int> run_numbers;
 
-    QSqlQuery q;
-    if (!q.exec(dbexecute.c_str())) {
-        cout << " !!! Failed to execute SQL query " << dbexecute << ". This is a fatal error. Exiting." << endl;
+    QSqlQuery q(db); // Use the db explicitly
+    if (!q.exec(QString::fromStdString(dbexecute))) {
+        cerr << " !!! Failed to execute SQL query:\n" << dbexecute << endl;
         qDebug() << q.lastError();
         exit(1);
     }
-    // Warning if nothing is found
-    if (q.size() == 0) {
-        cout << endl << "         >> WARNING: nothing found on table \"" << table_name << "\" for system \"" << system_name
-             << "\" with variation \"" << v << endl << endl;
+
+    if (!q.next()) {  // .next() returns false if there are no results
+        cout << "\n         >> WARNING: nothing found on table \"" << table_name << "\" for system \""
+             << system_name << "\" with variation \"" << v << "\"\n" << endl;
         return 0;
     } else {
-        while (q.next()) {
+        do {
             run_numbers.push_back(q.value(0).toInt());
-        }
+        } while (q.next());
     }
 
-    // return the largest item in run_numbers less or equal run
-    // std::upper_bound returns an iterator to the first element greater than run
-    auto it = std::upper_bound(run_numbers.begin(), run_numbers.end(), run);
+    // Find largest run number <= run
+    auto it = upper_bound(run_numbers.begin(), run_numbers.end(), run);
     if (it != run_numbers.begin()) {
-        --it; // Move iterator to the element before the one found by upper_bound
-        return *it; // Return the largest element less than or equal to run
+        --it;
+        return *it;
     }
+
 
     // error: no values found
     return -1;
@@ -242,27 +247,46 @@ int get_sql_run_number(QSqlDatabase db, string system_name, string v, int run, s
 QSqlDatabase openGdb(goptions gemcOpt) {
 
     string database = gemcOpt.optMap["DATABASE"].args;
-    QSqlDatabase db;
+    string dbPath = database;
+    if (!QFile::exists(QString::fromStdString(dbPath))) {
+        // Try $GEMC_DATA_DIR
+        const char* gemcEnv = getenv("GEMC_DATA_DIR");
+        if (gemcEnv != nullptr) {
+            string altPath = string(gemcEnv) + "/" + database;
+            if (QFile::exists(QString::fromStdString(altPath))) {
+                dbPath = altPath;
+            } else {
+                cerr << "   Error! Database file not found: " << database << " or " << altPath << ". Exiting." << endl;
+                exit(404);
+            }
+        } else {
+            cerr << "   Error! Database file not found and $GEMC_DATA_DIR is not set. Exiting." << endl;
+            exit(404);
+        }
+    }
+
+
+
 
     // if database ends with '.sqlite' or 'db' it's a file
     if (database.find(".sqlite") != string::npos || database.find(".db") != string::npos) {
 
         if (QSqlDatabase::contains("qt_sql_default_connection")) {
-            return db;
+            return QSqlDatabase::database("qt_sql_default_connection");
         }
 
-        db = QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName(database.c_str());
+    	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    	db.setDatabaseName(QString::fromStdString(dbPath));
 
-
-        if (!db.open()) {
-            cout << "   Error! Cannot connect to SQLITE database " << database << ". Exiting." << endl;
-            exit(401);
-        } else {
-            return db;
-        }
+    	if (!db.open()) {
+    		cerr << "   Error! Cannot connect to SQLITE database " << dbPath << ". Exiting." << endl;
+    		exit(401);
+    	} else {
+    		return db;
+    	}
     } // else if there is 'http' it's a mysql server
     else if (database.find("http") != string::npos) {
+    	QSqlDatabase db = QSqlDatabase::addDatabase("MYSQL");
 
         if (QSqlDatabase::contains("qt_sql_default_connection")) {
             return db;

@@ -202,11 +202,11 @@ sub print_mat {
 
     # MYSQL Factory
     if ($configuration{"factory"} eq "MYSQL") {
-
     }
 
     # SQLITE Factory
     if ($configuration{"factory"} eq "SQLITE") {
+
         my $dbh = open_db(%configuration);
         my $system = $configuration{"detector_name"};
 
@@ -237,7 +237,6 @@ sub print_mat {
         my $sth = $dbh->prepare($sql);
         $sth->execute($system, $varia, $runno, $lname, $ldesc, $ldensity, $lncomponents, $lcomponents, $lphotonEnergy, $lindexOfRefraction, $labsorptionLength, $lreflectivity, $lefficiency, $lfastcomponent, $lslowcomponent, $lscintillationyield, $lresolutionscale, $lfasttimeconstant, $lslowtimeconstant, $lyieldratio, $lrayleigh, $lbirkConstant, $lmie, $lmieforward, $lmiebackward, $lmieratio)
             or die "SQL Error: $DBI::errstr\n";
-
     }
 
     if ($configuration{"verbosity"} > 0) {

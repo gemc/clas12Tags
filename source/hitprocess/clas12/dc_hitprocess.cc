@@ -246,7 +246,11 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	{
 		G4ThreeVector DOCA(0, Lpos[s].y() + ylength - wirePos.y(), Lpos[s].z() + zlength - wirePos.z()); // local cylinder
 		double tprop = (WIRE_DX + dcc.stbloc[SECI][SLI]*(Lpos[s].x()-wirePos.x()))/dcc.vprop; //x axis points toward the left end of the wire 
-		signal_t = stepTime[s]/ns + DOCA.mag()/(dcc.v0[SECI][SLI]*cm/ns) + tprop;
+		signal_t = stepTime[s]/ns + DOCA.mag()/(dcc.v0[SECI][SLI]*cm/ns) ;
+		// TODO: After coatjava real run numner
+		// signal_t = stepTime[s]/ns + DOCA.mag()/(dcc.v0[SECI][SLI]*cm/ns) + tprop;
+
+
 		//	        cout << " signal_t: " << signal_t << " stepTime: " << stepTime[s] << " DOCA: " << DOCA.mag() << " driftVelocity: " << dcc.v0[SECI][SLI]
 //		  cout << " tprop: " << tprop << " ylength: " << ylength << " WIRE_Y: " << WIRE_Y << " WIRE_DX: " << WIRE_DX << "/" << xlength_low+(xlength_high-xlength_low)*(Lpos[s].y()+ylength)/2/ylength << " x: " << (Lpos[s].x()-WIRE_X) << " y: " << (Lpos[s].y()+ylength) << " Lposx: " << (Lpos[s].x()) << " Lposy: " << (Lpos[s].y()) << " Lposz: " << Lpos[s].z() << " phi: " << atan2(pos[s].y(),pos[s].x())*180/3.14156 << " dcc.NWIRES: " << dcc.NWIRES << endl;
 		
@@ -257,8 +261,9 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			
 			// new hit time
 			// (w/o the drift time)
-			hit_signal_t = stepTime[s]/ns;
-			prop_t = tprop/ns;
+		// TODO: After coatjava real run numner
+//			hit_signal_t = stepTime[s]/ns;
+//			prop_t = tprop/ns;
 
 			if(Edep[s] >= dcc.dcThreshold*eV) {
 

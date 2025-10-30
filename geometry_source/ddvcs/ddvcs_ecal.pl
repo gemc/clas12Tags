@@ -24,11 +24,11 @@ sub buildEcal_motherVolume
 {
  
     my $nplanes = 4;
-    my @ecal_iradius = (301, 77.1, 85.7, 101 );
-    my @ecal_oradius = (301.1, 360.6, 401, 101.1 );
+    my @ecal_iradius = (301, 72.8, 81.5, 98.7 );
+    my @ecal_oradius = (301.1, 360.6, 401, 98.8 );
     my @ecal_zpos_root = (520, 625, 696, 836);
 
-    
+
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
     
     for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $ecal_iradius[$i]*mm";}

@@ -18,7 +18,7 @@ sub make_region3_front_shield
 	my $iregion = 2;
 	my $region = $iregion+1;
 		
-	my $y_enlargement = 3.65;
+	my $y_enlargement = 1.00;
 	my $dx_shift = fstr( $y_enlargement * tan(rad(29.5)));
 	my $dx1_adjustment = 3.9;
 	
@@ -83,7 +83,7 @@ sub make_region3_back_shield
 	my $iregion = 2;
 	my $region = $iregion+1;
 		
-	my $y_enlargement = 3.65;
+	my $y_enlargement = 1.00;
 	my $dx_shift = fstr( $y_enlargement * tan(rad(29.5)));
 	
 	my $spDZ	= 2;
@@ -113,7 +113,7 @@ sub make_region3_back_shield
 		$detector{"color"}       = "555599";
 		$detector{"type"}        = "G4Trap";
 		$detector{"dimensions"}  = "$spDZ*mm $stheta*deg $sphi*deg $spDY1*cm $spDX1*cm $spDX2*cm $spALP1*deg $spDY2*cm $spDX3*cm $spDX4*cm $spALP2*deg";
-		$detector{"material"}    = "W_alloy";
+		$detector{"material"}    = "G4_GRAPHITE";
 		$detector{"style"}       = 1;
 			
 		print_det(\%configuration, \%detector);

@@ -8,8 +8,13 @@ The geometry consists of central barrel (BMT) and a forward one (FMT) of microme
 |------------------|----------------|
 | rga_spring2018   | 3029           | 
 | rgf_spring2020   | 11620          | 
-| rgm_winter2021   | 15016          | 
+| rgm_fall2021_H   | 15016          | 
 | michel_9mmcopper | 30000          | 
+
+
+rga_spring2018:  BMT, 6 FMT layers
+rgf_spring2020:  no BMT, 3 FMT layers
+rgm_fall2021_H:  BMT, 3 FMT layers
 
 To build the geometry:
 
@@ -29,7 +34,7 @@ To compare the two databases (TEXT and SQLITE) the script ` $GEMC/api/perl/db_co
 ````
 $GEMC/api/perl/db_compare.py micromegas__geometry_rga_spring2018.txt ../../clas12.sqlite micromegas  3029  default
 $GEMC/api/perl/db_compare.py micromegas__geometry_rgf_spring2020.txt ../../clas12.sqlite micromegas  11620 default
-$GEMC/api/perl/db_compare.py micromegas__geometry_rgm_winter2021.txt ../../clas12.sqlite micromegas  15016 default
+$GEMC/api/perl/db_compare.py micromegas__geometry_rgm_fall2021_H.txt ../../clas12.sqlite micromegas  15016 default
 ````
 
 <br/>

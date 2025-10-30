@@ -21,13 +21,7 @@ sub upload_parameters {
     my $factory = $configuration{"factory"};
 
     # print configuration
-    print "  + Uploading parameters from file: $filename \n";
-    print "  + System: $system \n";
-    print "  + Variation: $variation \n";
-    print "  + Run number: $runno \n";
-    print "  + DBhost: $dbhost \n";
-    print "  + Factory: $factory \n";
-
+    print "   > Uploading parameters from file: $filename for System: $system, Variation: $variation, Run number: $runno, DBhost: $dbhost, Factory: $factory \n";
 
     # Insert parameters into table for the variation, run min, run max. Increment id for this set.
     my $dbh = open_db(%configuration);
@@ -157,7 +151,7 @@ sub upload_parameter {
             my $sql = "DELETE FROM parameters WHERE system = ? and variation = ? and run = ?";
             my $sth = $dbh->prepare($sql);
             $sth->execute($system);
-            print "   > Deleted all parameters for system $system \n";
+            print "   > Deleting all parameters for system $system \n";
             $counter_sqlite = 1;
             $this_variation = $varia;
             $state_system = $system;
@@ -231,7 +225,7 @@ sub get_parameters {
 
     if ($configuration{"verbosity"} > 0) {
         foreach my $key (keys %parameters) {
-            print " * Parameter \"$key\" loaded with value: $parameters{$key} \n";
+            print " * Parameter \"$key\" loaded with value: $parameters{$key} for variation: $varia, run: $runno from $configuration{\"factory\"}\n";
         }
     }
 

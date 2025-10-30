@@ -30,6 +30,7 @@ if (scalar @ARGV != 1) {
 
 # Loading configuration file
 our %configuration = load_configuration($ARGV[0]);
+ our %parameters;
 
 # import scripts
 require "./materials.pl";
@@ -50,7 +51,7 @@ sub create_system {
     system("groovy -cp '../*:..' factory.groovy --variation $variation --runnumber $runNumber");
 
     # Global pars - these should be read by the load_parameters from file or DB
-    our %parameters = get_parameters(%configuration);
+    %parameters = get_parameters(%configuration);
     our @volumes = get_volumes(%configuration);
 
     coatjava::makeFTOF();
@@ -73,14 +74,23 @@ foreach my $variation (@variations) {
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-upload_parameters(\%configuration, "ftof__parameters_default.txt", "ftof", "default", 11);
-upload_parameters(\%configuration, "ftof__parameters_rga_spring2018.txt", "ftof", "default", 3029);
+my $system = $configuration{'detector_name'};
+foreach my $variation (@variations) {
+    foreach my $run (clas12_runs_for_variations($variation)) {
+        upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $run);
+    }
+}
 
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 
+# clean up
+use File::Path qw(make_path remove_tree);
+foreach my $variation (@variations) {
+    print("Removing parameters file:", "$system"."__parameters_"."$variation".".txt\n");
+    remove_tree("$system"."__parameters_"."$variation".".txt");
+}

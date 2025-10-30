@@ -49,7 +49,7 @@ sub create_system {
     elsif ($variation eq "TransverseUpstreamBeampipe") {
         transverseUpstreamBeampipe();
     }
-    elsif ($variation eq "rghFTOut" || $configuration{"variation"} eq "rghFTOn") {
+    elsif ($variation eq "rghFTOut" || $variation eq "rghFTOn") {
         rghline();
     }
     else {
@@ -59,10 +59,10 @@ sub create_system {
     materials();
 }
 
-my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rgc_fall2022", "rge_spring2024", "rgl_spring2025");
+my @variations = ("default", "rgk_winter2018", "rgb_spring2019", "rgf_spring2020", "rgc_summer2022", "rgc_fall2022", "rgd_fall2023", "rge_spring2024", "rgl_spring2025");
 my @runs = clas12_runs(@variations);
 
-my @custom_variations = ("rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
+my @custom_variations = ("ddvcs", "rghFTOut", "rghFTOn", "TransverseUpstreamBeampipe");
 
 # TEXT Factory, include extra variations
 $configuration{"factory"} = "TEXT";
@@ -74,17 +74,17 @@ foreach my $variation (@variations, @custom_variations) {
 
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
-my $variation = "default";
 foreach my $run (@runs) {
-    $configuration{"variation"} = $variation;
+    $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system($variation, $run);
+    create_system("default", $run);
 }
 
 
 # port gxml to sqlite
-require "../gxml_to_sqlite.pl";
+require "gxml_to_sqlite.pl";
 foreach my $variation (@variations) {
     $configuration{"run_number"} = clas12_run($variation);
     process_gxml("cad/cad_$variation.gxml", "experiments/clas12/beamline/cad");
 }
+process_gxml("cad/cad_ddvcs.gxml", "experiments/clas12/beamline/cad");

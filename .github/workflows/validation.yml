@@ -1,10 +1,18 @@
-name: Validation
+name: Coatjava Validation
+permissions:
+  contents: read
+  pull-requests: write
 
+# Triggers the workflow on all pushes to main and all pull requests
 on:
+  pull_request:
+  merge_group:
   push:
-    branches:
-      - '*'
+    branches: [ main ]
     tags: [ '*' ]
+    paths-ignore:
+      - "**/*.md"
+      - "release_notes/**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -26,3 +34,17 @@ jobs:
           "coatjava":      { "fork": "JeffersonLab/coatjava",      "ref": "dc-tdigi-unc" }
         }
 
+  validation-final:
+    needs:
+      - validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

@@ -164,6 +164,17 @@ static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "
 		ftc.tdcconv[isec - 1][ilay - 1][1].push_back(data[row][4]);
 	}
 	
+        cout << "FTOF:Getting adc_offsets" << endl;
+        snprintf(ftc.database, sizeof(ftc.database),  "/calibration/ftof/fadc_offset:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
+        data.clear();
+        calib->GetCalib(data, ftc.database);
+        for (unsigned row = 0; row < data.size(); row++) {
+                isec = data[row][0];
+                ilay = data[row][1];
+                ftc.adcoffset[isec - 1][ilay - 1][0].push_back(data[row][3]);
+                ftc.adcoffset[isec - 1][ilay - 1][1].push_back(data[row][4]);
+        }
+
 	cout << "FTOF:Getting resolutions" << endl;
 	snprintf(ftc.database, sizeof(ftc.database),  "/calibration/ftof/tres:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
@@ -249,6 +260,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	int pmt    = identity[3].id; // 0=> Left PMT, 1=> Right PMT. A better name would be pmtSide
 	
 	// TDC conversion factors
+	double adcoffset = ftc.adcoffset[sector - 1][panel - 1][pmt][paddle - 1];
 	double tdcconv = ftc.tdcconv[sector - 1][panel - 1][pmt][paddle - 1];
 	double time_in_ns = 0;
 
@@ -265,7 +277,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		dgtz["component"] = paddle;
 		dgtz["ADC_order"] = pmt;
 		dgtz["ADC_ADC"]   = (int) adc;
-		dgtz["ADC_time"]  = convert_to_precision(stepTime);
+		dgtz["ADC_time"]  = convert_to_precision(stepTime - adcoffset);
 		dgtz["ADC_ped"]   = 0;
 		
 		dgtz["TDC_order"] = pmt + 2;
@@ -396,7 +408,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	//	cout << " > FTOF status: " << ftc.status[sector-1][panel-1][0][paddle-1] << " for sector " << sector << ",  panel " << panel << ", paddle " << paddle << " left: " << adcl << endl;
 	//	cout << " > FTOF status: " << ftc.status[sector-1][panel-1][1][paddle-1] << " for sector " << sector << ",  panel " << panel << ", paddle " << paddle << " right:  " << adcr << endl;
 	
-	double fadc_time = convert_to_precision(time_in_ns);
+	double fadc_time = convert_to_precision(time_in_ns - ftc.adcoffset[sector - 1][panel - 1][pmt][paddle - 1]);
 	tdc  = time_in_ns / tdcconv;
 	
 	dgtz["sector"]    = sector;

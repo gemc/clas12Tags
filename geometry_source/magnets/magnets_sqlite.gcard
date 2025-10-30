@@ -1,11 +1,12 @@
 <gcard>
 
 	<option name="geometry" value="1400x1200"/>
-	<option name="DATABASE" value="../clas12.sqlite"/>
+	<option name="DATABASE" value="clas12.sqlite"/>
 
 	<detector name="solenoid"    factory="SQLITE"/>
 	<detector name="torus_cad"   factory="SQLITECAD" />
 	<detector name="ft"          factory="SQLITE"/>
+	<detector name="beamline"    factory="SQLITE"/>
 
 	<option name="NO_FIELD" value="all"/>
 	

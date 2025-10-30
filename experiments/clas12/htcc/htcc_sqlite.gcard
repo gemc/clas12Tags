@@ -1,7 +1,7 @@
 <gcard>
 
 	<option name="geometry" value="1400x1200"/>
-	<option name="DATABASE" value="../clas12.sqlite"/>
+	<option name="DATABASE" value="clas12.sqlite"/>
 
 	<detector name="htcc"     factory="SQLITE"/>
 	<detector name="htcc_cad" factory="SQLITECAD"/>

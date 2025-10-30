@@ -1,0 +1,45 @@
+<!--
+
+ The mesh export presents a small overlap between the flanges of the tagger and torus mount.
+ The position is modified by to produce a little gap
+
+ For the FTON configuration the cone is shifted by -238.8 mm
+ 
+ Lamiaa: Used lD2 CAD + STL files of the new Flag Solid Foils Assembly
+ 
+ -->
+
+<gxml>
+	
+	
+	<!-- Flag Assembly -->
+	<!-- Al Bottom Rod Holder -->
+        <volume name="rgd_main_rode"  mother="target" color="444444" position="3.175*mm -27.4574*mm 127.3*mm" rotation="0.0*deg 180.0*deg 0.0*deg" material="G4_Al"/> 
+  
+        <!-- 1st Needle -->
+        <volume name="rgd_needle_1"  mother="target" color="aaaaff" position="0*mm -27.4574*mm 127.3*mm" rotation="0.0*deg 180.0*deg 0.0*deg" material="G4_Al"/>
+  
+        <!-- 2nd Needle -->
+        <volume name="rgd_needle_2"  mother="target" color="ffaaaa" position="0*mm -27.4574*mm 127.3*mm" rotation="-180.0*deg 0.0*deg 60.0*deg" material="G4_Al"/>
+
+        <!-- 3rd Needle  -->
+        <volume name="rgd_needle_3"  mother="target" color="aaaaff" position="0*mm -27.4574*mm 127.3*mm" rotation="0.0*deg 180.0*deg 0.0*deg" material="G4_Al"/> 
+	
+	<!-- 4th Needle  -->
+        <volume name="rgd_needle_4"  mother="target" color="ffaaaa" position="0*mm -27.4574*mm 127.3*mm" rotation="-180.0*deg 0.0*deg 60.0*deg" material="G4_Al"/> 
+
+
+        <!-- upstream of the target -->
+	<volume name="TargetBaseTubeTorlon"      mother="target" color="444444" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- target itself -->
+	<volume name="TargetAlWindowD"           mother="target" color="aaaaff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetAlWindowU"           mother="target" color="aaaaff" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_Al"/>
+	<volume name="TargetWallKapton"          mother="target" color="ffaaaa" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+	<volume name="TargetEndCapKapton"        mother="target" color="ffaaaa" position="0*mm 0*mm 1273.27*mm" rotation="0*deg 180*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- rohacell chamber. The scatteringChamber volume is placed at -3 in the model, here we pushed it back to have it at CLAS nominal position -->
+	<volume name="scatteringChamber"         mother="target" color="aaffff" position="0*mm 0*mm 1303.27*mm" rotation="0*deg 180*deg 0*deg" material="rohacell"/>
+
+
+</gxml>
