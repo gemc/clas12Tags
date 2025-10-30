@@ -104,25 +104,14 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,107.14);
 	Signal->SetElectronYield(25000);
 	Signal->Digitize();
-	//std::map<std::string,double> output = Signal->Extract();
 
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = sector;
 	dgtz["layer"]     = layer;
 	dgtz["component"] = component;
 
-	// adc
-	// dgtz["ADC_order"] = 1;
-	// dgtz["ADC_ADC"]   = (int) output["adcMax"];
-	// dgtz["ADC_time"]  = output["timeMax"];
-	// dgtz["ADC_ped"]   = (int) output["adcOffset"];
-
-	// tdc
-	// dgtz["TDC_order"] = 0;
-	// dgtz["TDC_TDC"]   = 0;
-
 	// WF
-	dgtz["WF_timestamp"] = 0;
+	dgtz["wf_timestamp"] = 0;
 
 	for(unsigned t=0; t<30; t++) {
 		string dname = "wf_s" + to_string(t+1);
@@ -338,153 +327,5 @@ double ahdcSignal::GetMCEtot(){
 		mcEtot += Edep.at(s);
 	}
 	return mcEtot;
-}
-
-std::map<std::string,double> ahdcSignal::Extract(){
-	ahdcExtractor T(samplingTime,0.5f,5,0.3f);
-	T.adcOffset = (short) (Dgtz[0] + Dgtz[1] + Dgtz[2] + Dgtz[3] + Dgtz[4])/5;
-	std::map<std::string,double> output = T.extract(Dgtz);
-	return output;
-}
-
-std::map<std::string,double> ahdcExtractor::extract(const std::vector<short> samples){
-	samplesCorr = samples;
-	this->waveformCorrection();
-	this->fitAverage();
-	this->fitParabolic();
-	this->computeTimeAtConstantFractionAmplitude();
-	this->computeTimeUsingConstantFractionDiscriminator();
-	//this->fineTimeStampCorrection();
-	std::map<std::string,double> output;
-	output["binMax"] = binMax;
-	output["binOffset"] = binOffset;
-	output["adcMax"] = adcMax;
-	output["timeMax"] = timeMax;
-	output["integral"] = integral;
-	output["timeRiseCFA"] = timeRiseCFA;
-	output["timeFallCFA"] = timeFallCFA;
-	output["timeOverThresholdCFA"] = timeOverThresholdCFA;
-	output["timeCFD"] = timeCFD;
-	output["adcOffset"] = adcOffset;
-	return output;
-
-}
-
-void ahdcExtractor::waveformCorrection(){
-	binNumber = samplesCorr.size();
-	binMax = 0;
-	adcMax = (short) (samplesCorr[0] - adcOffset);
-	integral = 0;
-	for (int bin = 0; bin < binNumber; bin++){
-		samplesCorr[bin] = (short) (samplesCorr[bin] - adcOffset);
-		if (adcMax < samplesCorr[bin]){
-			adcMax = samplesCorr[bin];
-			binMax = bin;
-		}
-		integral += samplesCorr[bin];
-	}
-	/*
-	 * If adcMax + adcOffset == ADC_LIMIT, that means there is saturation
-	 * In that case, binMax is the middle of the first plateau
-	 * This convention can be changed
-	 */
-	if ((short) adcMax + adcOffset == ADC_LIMIT) {
-		int binMax2 = binMax;
-		for (int bin = binMax; bin < binNumber; bin++){
-			if (samplesCorr[bin] + adcOffset == ADC_LIMIT) {
-				binMax2 = bin;
-			}
-			else {
-				break;
-			}
-		}
-		binMax = (binMax + binMax2)/2;
-	}
-	binOffset = sparseSample*binMax;
-	timeMax = (binMax + binOffset)*samplingTime;
-}
-
-
-void ahdcExtractor::fitAverage(){
-	if ((binMax - 2 >= 0) && (binMax + 2 <= binNumber - 1)){
-		adcMax = 0;
-		for (int bin = binMax - 2; bin <= binMax + 2; bin++){
-			adcMax += samplesCorr[bin];
-		}
-		adcMax = adcMax/5;
-	}
-}
-
-void ahdcExtractor::fitParabolic(){}
-
-void ahdcExtractor::fineTimeStampCorrection(){}
-
-void ahdcExtractor::computeTimeAtConstantFractionAmplitude(){
-	float threshold = amplitudeFractionCFA*adcMax;
-	// timeRiseCFA
-	int binRise = 0;
-	for (int bin = 0; bin < binMax; bin++){
-		if (samplesCorr[bin] < threshold)
-			binRise = bin;  // last pass below threshold and before adcMax
-	} // at this stage : binRise < timeRiseCFA/samplingTime <= binRise + 1 // timeRiseCFA is determined by assuming a linear fit between binRise and binRise + 1
-	float slopeRise = 0;
-	if (binRise + 1 <= binNumber-1)
-		slopeRise = samplesCorr[binRise+1] - samplesCorr[binRise];
-	float fittedBinRise = (slopeRise == 0) ? binRise : binRise + (threshold - samplesCorr[binRise])/slopeRise;
-	timeRiseCFA = (fittedBinRise + binOffset)*samplingTime; // binOffset is determined in wavefromCorrection() // must be the same for all time ? // or must be defined using fittedBinRise*sparseSample
-
-	// timeFallCFA
-	int binFall = binMax;
-	for (int bin = binMax; bin < binNumber; bin++){
-		if (samplesCorr[bin] > threshold){
-				binFall = bin;
-		}
-		else {
-				binFall = bin;
-				break; // first pass below the threshold
-		}
-	} // at this stage : binFall - 1 <= timeRiseCFA/samplingTime < binFall // timeFallCFA is determined by assuming a linear fit between binFall - 1 and binFall
-	float slopeFall = 0;
-	if (binFall - 1 >= 0)
-		slopeFall = samplesCorr[binFall] - samplesCorr[binFall-1];
-	float fittedBinFall = (slopeFall == 0) ? binFall : binFall-1 + (threshold - samplesCorr[binFall-1])/slopeFall;
-	timeFallCFA = (fittedBinFall + binOffset)*samplingTime;
-	
-	// timeOverThreshold
-	timeOverThresholdCFA = timeFallCFA - timeRiseCFA;
-}
-
-void ahdcExtractor::computeTimeUsingConstantFractionDiscriminator(){
-	std::vector<float> signal(binNumber,0.0);
-	// signal generation
-	for (int bin = 0; bin < binNumber; bin++){
-		signal[bin] = (1 - fractionCFD)*samplesCorr[bin]; // we fill it with a fraction of the original signal
-		if (bin < binNumber - binDelayCFD)
-			signal[bin] += -1*fractionCFD*samplesCorr[bin + binDelayCFD]; // we advance and invert a complementary fraction of the original signal and superimpose it to the previous signal
-	}
-	// determine the two humps
-	int binHumpSup = 0;
-	int binHumpInf = 0;
-	for (int bin = 0; bin < binNumber; bin++){
-		if (signal[bin] > signal[binHumpSup])
-			binHumpSup = bin;
-	}
-	for (int bin = 0; bin < binHumpSup; bin++){ // this loop has been added to be sure : binHumpInf < binHumpSup
-		if (signal[bin] < signal[binHumpInf])
-			binHumpInf = bin;
-	}
-	// research for zero
-	int binZero = 0;
-	for (int bin = binHumpInf; bin <= binHumpSup; bin++){
-		if (signal[bin] < 0)
-			binZero = bin; // last pass below zero
-	} // at this stage : binZero < timeCFD/samplingTime <= binZero + 1 // timeCFD is determined by assuming a linear fit between binZero and binZero + 1
-	float slopeCFD = 0;
-	if (binZero + 1 <= binNumber)
-		slopeCFD = signal[binZero+1] - signal[binZero];
-	float fittedBinZero = (slopeCFD == 0) ? binZero : binZero + (0 - signal[binZero])/slopeCFD;
-	timeCFD = (fittedBinZero + binOffset)*samplingTime;
-	//
-	samplesCFD = signal;
 }
 
