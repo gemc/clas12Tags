@@ -133,7 +133,7 @@ public:
  */
 class ahdcSignal {
 	// MHit or wires identifiers
-	public : 
+	private : 
 		int hitn; ///< n-th MHit of the event, also corresponds to the n-th activated wire
 		int sector; ///< sector, first wire identifier
 		int layer; ///< layer, second wire identifer
@@ -146,7 +146,9 @@ class ahdcSignal {
 		std::vector<double> Doca; ///< array of distance of closest approach corresponding each step [mm]
 		std::vector<double> DriftTime; ///< array of drift time corresponding each step [ns]
 		vector<double> stepTime; ///< Geant4 time of each step [ns]
-		
+		double Etot; ///< sum of Edep
+		double doca; ///< for now, min of Doca
+		double docaTime; ///< time corresponding to the doca using the time2distance
 		/**
 		 * @brief Fill the arrays Doca and DriftTime
 		 * 
@@ -163,7 +165,7 @@ class ahdcSignal {
 	private : 
 		const double tmin; ///< lower limit of the simulated time window
 		const double tmax; ///< upper limit of the simulated time window
-		const double timeOffset; ///< time offset for simulation purpose
+		const double timeOffset; ///< time offset for simulation purpose, linked to the t0 from calibration
 		const double samplingTime; ///< sampling time [ns]
 		const double Landau_width; ///< Width pararemeter of the Landau distribution
 		double electronYield = 9500;   ///< ADC gain
@@ -186,8 +188,10 @@ class ahdcSignal {
 			Edep = aHit->GetEdep();
 			stepTime    = aHit->GetTime();
 			nsteps = Edep.size();
+			Etot = 0;
 			for (int s=0;s<nsteps;s++){ 
 				Edep.at(s) = Edep.at(s)*1000;
+				Etot += Edep.at(s);
 				//std::cout << "stepTime[" << s << "] = " << stepTime[s] << std::endl;
 			} // convert MeV to keV
 			G4Time = aHit->GetTime();
@@ -218,6 +222,9 @@ class ahdcSignal {
 		/** @brief Return the content of the attribut `Dgtz` */
 		std::vector<short> 			GetDgtz()		{return Dgtz;}
 		
+		/** @brief Return the number of steps in the AHDC cell */		
+		int GetNSteps() { return nsteps;}	
+
 		/**
 		 * @brief Set the electron yield. 
 		 * 
@@ -232,7 +239,7 @@ class ahdcSignal {
 		 *
 		 * @return Value of the signal at the time `t`
 		 */
-		double operator()(double timePoint){
+		/*double operator()(double timePoint){
 			using namespace Genfun;
 			double signalValue = 0;
 			for (int s=0; s<nsteps; s++){
@@ -245,6 +252,16 @@ class ahdcSignal {
 				signalValue += Edep.at(s)*L(timePoint-timeOffset);
 			}
 			return signalValue;
+		}*/
+		double operator()(double timePoint){
+			using namespace Genfun;
+			double sigma = Landau_width;	
+			double mu = docaTime + 1.36*sigma;
+			mu -= 4; // systematic correction from the decoding
+			Landau L;
+			L.peak() = Parameter("Peak",mu,tmin,tmax); 
+			L.width() = Parameter("Width",sigma,0,400); 
+			return Etot*L(timePoint-timeOffset);
 		}
 		
 		/**
@@ -265,8 +282,10 @@ class ahdcSignal {
 		 */
 		void GenerateNoise(double mean, double stdev);
 		
-		double GetMCTime(); // tmp
-		double GetMCEtot(); // tmp
+		double GetMeanTimeValue(); 
+		double GetDocaTimeValue(); 
+		double GetDocaValue(); 
+		double GetEtotValue(); 
 		
 };
 
