@@ -101,7 +101,7 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	}
 	// the t0 is our timeOffset
 	double t0 = ahdcc.get_T0(sector, layer, component);	
-	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,107.14);
+	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,115.75803);
 	Signal->SetElectronYield(25000);
 	Signal->Digitize();
 
@@ -121,8 +121,9 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		else {
 			dgtz[dname] = 0;
 		}
-		//if (t == 28) { dgtz[dname] = Signal->nsteps;}
-		//if (t == 29) { dgtz[dname] = (int) (Signal->GetMCTime()*100);}
+		//if (t == 27) { dgtz[dname] = (int) (Signal->GetDocaValue()*1000);}
+		//if (t == 28) { dgtz[dname] = Signal->GetNSteps();}
+		//if (t == 29) { dgtz[dname] = (int) (Signal->GetMeanTimeValue()*100);}
 	}
 	delete Signal;
 
@@ -262,6 +263,8 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 	double L_ab, L_ah, L_bh, H_abh;
 	// Compute the distance between top and bottom of the wire
 	L_ab = sqrt(pow(X_sigwire_top-X_sigwire_bot,2) + pow(Y_sigwire_top-Y_sigwire_bot,2) + pow(Z_sigwire_top-Z_sigwire_bot,2));
+	doca = 1e10; // arbitray big number
+	docaTime = -99; // arbitrary negative value
 	for (int s=0;s<nsteps;s++) {
 		// Load current hit positions
 		LposX = Lpos[s].x();
@@ -274,14 +277,26 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 		H_abh = L_ah*sqrt(1 - pow((L_ah*L_ah + L_ab*L_ab - L_bh*L_bh)/(2*L_ah*L_ab),2)); // this is the d.o.c.a of a given hit (!= MHit)
 		Doca.push_back(H_abh);
 		// Add a resolution on doca
-		double docasig = 337.3-210.3*H_abh+34.7*pow(H_abh,2); // um // fit sigma vs distance // Fig 4.14 (right), L. Causse's thesis
-		docasig = docasig/1000; // mm
-		std::default_random_engine dseed(time(0)); //seed
-		std::normal_distribution<double> docadist(H_abh, docasig);
+		//double docasig = 337.3-210.3*H_abh+34.7*pow(H_abh,2); // um // fit sigma vs distance // Fig 4.14 (right), L. Causse's thesis
+		//docasig = docasig/1000; // mm
+		//std::default_random_engine dseed(time(0)); //seed
+		//std::normal_distribution<double> docadist(H_abh, docasig);
+		//double new_H_abh = docadist(dseed);
 		//std::cout << "H_abh : " << H_abh << ", docasig : " << docasig << " ";
 		// Compute time
-		double driftTime = 7*H_abh + 7*pow(H_abh,2) + 4*pow(H_abh,3); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
+		double p0 = 0;
+		double p1 = 2.55132;
+		double p2 = 10.7884;
+		double p3 = 12.8042;
+		double p4 = -9.91149;
+		double p5 = 2.38082;
+		//double driftTime = 7*H_abh + 7*pow(H_abh,2) + 4*pow(H_abh,3); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
+		double driftTime = p0 + p1*H_abh + p2*pow(H_abh,2) + p3*pow(H_abh,3) + p4*pow(H_abh,4) + p5*pow(H_abh,5); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
 		DriftTime.push_back(driftTime);
+		if (H_abh < doca) { 
+			doca = H_abh;
+			docaTime = driftTime;
+		}
 	}
 }
 
@@ -307,8 +322,15 @@ void ahdcSignal::Digitize(){
 		Dgtz.push_back(adc);
 	}
 }
+double ahdcSignal::GetDocaTimeValue() {
+	return docaTime;
+}
 
-double ahdcSignal::GetMCTime(){
+double ahdcSignal::GetDocaValue() {
+	return doca;
+}
+
+double ahdcSignal::GetMeanTimeValue(){
 	if (nsteps == 0){ return 0; }
 	double mctime = 0;
 	double Etot = 0;
@@ -320,12 +342,7 @@ double ahdcSignal::GetMCTime(){
 	return mctime;
 }
 
-double ahdcSignal::GetMCEtot(){
-	if (nsteps == 0) { return 0;}
-	double mcEtot = 0;
-	for (int s=0;s<nsteps;s++){
-		mcEtot += Edep.at(s);
-	}
-	return mcEtot;
+double ahdcSignal::GetEtotValue(){
+	return Etot;
 }
 
