@@ -57,7 +57,7 @@ public:
 	double eval_t2d(double x) { return T2D[0] + T2D[1]*pow(x, 1.0) + T2D[2]*pow(x, 2.0) + T2D[3]*pow(x, 3.0) + T2D[4]*pow(x, 4.0) + T2D[5]*pow(x, 5.0);}
 	double xi[50];
 	double yi[50]; 
-	// inverse of the xime2yistance	
+	// inverse of the time2distance	
 	double eval_inv_t2d(double y) {
 		if (y < 0) {
 			return ((xi[1]-xi[0])/(yi[1]-yi[0]))*(y - yi[0]) + xi[0];
@@ -171,7 +171,7 @@ class ahdcSignal {
 		std::vector<double> DriftTime; ///< array of drift time corresponding each step [ns]
 		vector<double> stepTime; ///< Geant4 time of each step [ns]
 		double Etot; ///< sum of Edep
-		double doca; ///< for now, min of Doca
+		double doca; ///< for now, distance of the closest hit in the AHDC cell
 		double docaTime; ///< time corresponding to the doca using the time2distance
 		/**
 		 * @brief Fill the arrays Doca and DriftTime
