@@ -48,7 +48,7 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 	// The following code is inspired by dcConstants
 	/////////////////////////////////////////////////
 	
-	// reading t0 table
+	// read the t0 table
 	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_offsets:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	vector<vector<double> > data;
 	calib->GetCalib(data, ahdcc.database);
@@ -59,7 +59,38 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 		int component  = data[row][2]; // wire id
 		ahdcc.T0Correction[ahdcConstants::getUniqueId(sector, layer, component)] = data[row][3];
 	}
+	data.clear();
 
+	// read the time2distance table
+	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_to_distance:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	calib->GetCalib(data, ahdcc.database);
+	for(unsigned row = 0; row < data.size(); row++) {
+		//int sector = data[row][0];
+		//int layer  = data[row][1];
+		//int component  = data[row][2]; // wire id
+		ahdcc.T2D[0] = data[row][3];	
+		ahdcc.T2D[1] = data[row][4];	
+		ahdcc.T2D[2] = data[row][5];	
+		ahdcc.T2D[3] = data[row][6];	
+		ahdcc.T2D[4] = data[row][7];	
+		ahdcc.T2D[5] = data[row][8];
+		std::cout << "p0 : " << ahdcc.T2D[0] << std::endl;
+		std::cout << "p1 : " << ahdcc.T2D[1] << std::endl;
+		std::cout << "p2 : " << ahdcc.T2D[2] << std::endl;
+		std::cout << "p3 : " << ahdcc.T2D[3] << std::endl;
+		std::cout << "p4 : " << ahdcc.T2D[4] << std::endl;
+		std::cout << "p5 : " << ahdcc.T2D[5] << std::endl;
+		// for now we only have one row this table
+		// I add this condition in case the t2d table grows to act channel by channel
+		// If this happens, I will need to change the structure of the T2D
+		if (row > 1) break;
+	}
+	data.clear();
+	// inverse the time2distance
+	for (int i = 0; i < 50; i++) {
+		ahdcc.xi[i] = i*(350.0/50);
+		ahdcc.yi[i] = ahdcc.eval_t2d(ahdcc.xi[i]);
+	}
 	
 	return ahdcc;
 }
@@ -101,7 +132,7 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	}
 	// the t0 is our timeOffset
 	double t0 = ahdcc.get_T0(sector, layer, component);	
-	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,115.75803);
+	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,115.75803, &ahdcc);
 	Signal->SetElectronYield(25000);
 	Signal->Digitize();
 
@@ -121,9 +152,9 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		else {
 			dgtz[dname] = 0;
 		}
-		//if (t == 27) { dgtz[dname] = (int) (Signal->GetDocaValue()*1000);}
-		//if (t == 28) { dgtz[dname] = Signal->GetNSteps();}
-		//if (t == 29) { dgtz[dname] = (int) (Signal->GetMeanTimeValue()*100);}
+		if (t == 27) { dgtz[dname] = (int) (Signal->GetDocaValue()*1000);}
+		if (t == 28) { dgtz[dname] = Signal->GetNSteps();}
+		if (t == 29) { dgtz[dname] = (int) (Signal->GetMeanTimeValue()*100);}
 	}
 	delete Signal;
 
@@ -284,14 +315,14 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 		//double new_H_abh = docadist(dseed);
 		//std::cout << "H_abh : " << H_abh << ", docasig : " << docasig << " ";
 		// Compute time
-		double p0 = 0;
-		double p1 = 2.55132;
-		double p2 = 10.7884;
-		double p3 = 12.8042;
-		double p4 = -9.91149;
-		double p5 = 2.38082;
-		//double driftTime = 7*H_abh + 7*pow(H_abh,2) + 4*pow(H_abh,3); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
-		double driftTime = p0 + p1*H_abh + p2*pow(H_abh,2) + p3*pow(H_abh,3) + p4*pow(H_abh,4) + p5*pow(H_abh,5); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
+		//double p0 = 0;
+		//double p1 = 2.55132;
+		//double p2 = 10.7884;
+		//double p3 = 12.8042;
+		//double p4 = -9.91149;
+		//double p5 = 2.38082;
+		//double driftTime = p0 + p1*H_abh + p2*pow(H_abh,2) + p3*pow(H_abh,3) + p4*pow(H_abh,4) + p5*pow(H_abh,5); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
+		double driftTime = ahdcc_ptr->eval_inv_t2d(H_abh);
 		DriftTime.push_back(driftTime);
 		if (H_abh < doca) { 
 			doca = H_abh;

@@ -48,9 +48,33 @@ public:
 	// translation table
 	TranslationTable TT;
 	
-	// t0 table: sector (1) x layer (8) x component (99 wires max : 47 56 56 72 72 87 87 99)
+	// t0 table
 	double T0Correction[576];
 	double get_T0(int sector, int layer, int component) { return T0Correction[getUniqueId(sector, layer, component)];}
+	double get_T0(int wireId) { return T0Correction[wireId];}
+	// time2distance 
+	double T2D[6]; // contains the coefficients of a polynomial fit : p0 + p1*x + ... + p5*x^5
+	double eval_t2d(double x) { return T2D[0] + T2D[1]*pow(x, 1.0) + T2D[2]*pow(x, 2.0) + T2D[3]*pow(x, 3.0) + T2D[4]*pow(x, 4.0) + T2D[5]*pow(x, 5.0);}
+	double xi[50];
+	double yi[50]; 
+	// inverse of the xime2yistance	
+	double eval_inv_t2d(double y) {
+		if (y < 0) {
+			return ((xi[1]-xi[0])/(yi[1]-yi[0]))*(y - yi[0]) + xi[0];
+		} 
+		else if (y >= yi[49]) {
+			return ((xi[49]-xi[48])/(yi[49]-yi[48]))*(y - yi[48]) + xi[48];
+		} else {
+			int i = 0;
+			while (i < 48) {
+				if ((y >= yi[i]) && (y < yi[i+1])) {
+					break;
+				}
+				i++;
+			}
+			return ((xi[i+1]-xi[i])/(yi[i+1]-yi[i]))*(y - yi[i]) + xi[i];
+		}
+	}
 };
 
 
@@ -161,6 +185,7 @@ class ahdcSignal {
 		void ComputeDocaAndTime(MHit * aHit);
 		std::vector<short> Dgtz; ///< Array containing the samples of the simulated signal
 		std::vector<short> Noise; ///< Array containing the samples of the simulated noise
+		ahdcConstants * ahdcc_ptr = nullptr;
 	// setting parameters for digitization
 	private : 
 		const double tmin; ///< lower limit of the simulated time window
@@ -176,8 +201,9 @@ class ahdcSignal {
 		ahdcSignal() = delete;
 		
 		/** @brief Constructor */
-		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width) 
+		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width, ahdcConstants * _ptr) 
 		: tmin(_tmin), tmax(_tmax), timeOffset(_timeOffset), samplingTime(_samplingTime), Landau_width(_Landau_width) {
+			ahdcc_ptr = _ptr;
 			// read identifiers
 			hitn = _hitn;
 			vector<identifier> identity = aHit->GetId();
