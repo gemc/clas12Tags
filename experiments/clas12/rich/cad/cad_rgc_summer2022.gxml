@@ -1,5 +1,5 @@
 <gxml>
-	<volume name="AaRICH_m1" color="444444" material="Air_Opt" position="0*cm 0*cm 5*cm" rotation="0 0 0*deg" mother="root" />
+	<volume name="AaRICH_m1" color="444444" material="Air_Opt" position="0*cm 0*cm 0*cm" rotation="0 0 0*deg" mother="root" />
 	<volume name="TedlarWrapping_m1" color="444444" material="G4_AIR" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" />
 	<volume name="Aluminum_m1" color="4444ff" material="G4_Al" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" />
 	<volume name="CFRP_m1" color="44ff44" material="CarbonFiber" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" />
@@ -113,7 +113,7 @@
 	<volume name="Layer_301_component_5_m1" color="cc99ff" material="G4_Pyrex_Glass" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" sensitivity="mirror: rich_m1_mirror_planar_comp_5" hitType="mirror" identifiers="module manual 5" />
 	<volume name="Layer_301_component_6_m1" color="cc99ff" material="G4_Pyrex_Glass" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" sensitivity="mirror: rich_m1_mirror_planar_comp_6" hitType="mirror" identifiers="module manual 6" />
 	<volume name="Layer_301_component_7_m1" color="cc99ff" material="G4_Pyrex_Glass" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m1" sensitivity="mirror: rich_m1_mirror_planar_comp_7" hitType="mirror" identifiers="module manual 7" />
-	<volume name="AaRICH_m2" color="444444" material="Air_Opt" position="0*cm 0*cm 5*cm" rotation="0 0 180*deg" mother="root" />
+	<volume name="AaRICH_m2" color="444444" material="Air_Opt" position="0*cm 0*cm 0*cm" rotation="0 0 180*deg" mother="root" />
 	<volume name="TedlarWrapping_m2" color="444444" material="G4_AIR" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m2" />
 	<volume name="Aluminum_m2" color="4444ff" material="G4_Al" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m2" />
 	<volume name="CFRP_m2" color="44ff44" material="CarbonFiber" position="0*cm 0*cm 0*cm" rotation="0 0 0" mother="AaRICH_m2" />
