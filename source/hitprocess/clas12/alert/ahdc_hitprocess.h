@@ -283,7 +283,7 @@ class ahdcSignal {
 			using namespace Genfun;
 			double sigma = Landau_width;	
 			double mu = docaTime + 1.36*sigma;
-			mu -= 4; // systematic correction from the decoding
+			//mu -= 4; // systematic correction from the decoding
 			Landau L;
 			L.peak() = Parameter("Peak",mu,tmin,tmax); 
 			L.width() = Parameter("Width",sigma,0,400); 
