@@ -152,9 +152,9 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		else {
 			dgtz[dname] = 0;
 		}
-		if (t == 27) { dgtz[dname] = (int) (Signal->GetDocaValue()*1000);}
-		if (t == 28) { dgtz[dname] = Signal->GetNSteps();}
-		if (t == 29) { dgtz[dname] = (int) (Signal->GetMeanTimeValue()*100);}
+		//if (t == 27) { dgtz[dname] = (int) (Signal->GetDocaValue()*1000);}
+		//if (t == 28) { dgtz[dname] = Signal->GetNSteps();}
+		//if (t == 29) { dgtz[dname] = (int) (Signal->GetMeanTimeValue()*100);}
 	}
 	delete Signal;
 
@@ -315,13 +315,6 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 		//double new_H_abh = docadist(dseed);
 		//std::cout << "H_abh : " << H_abh << ", docasig : " << docasig << " ";
 		// Compute time
-		//double p0 = 0;
-		//double p1 = 2.55132;
-		//double p2 = 10.7884;
-		//double p3 = 12.8042;
-		//double p4 = -9.91149;
-		//double p5 = 2.38082;
-		//double driftTime = p0 + p1*H_abh + p2*pow(H_abh,2) + p3*pow(H_abh,3) + p4*pow(H_abh,4) + p5*pow(H_abh,5); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
 		double driftTime = ahdcc_ptr->eval_inv_t2d(H_abh);
 		DriftTime.push_back(driftTime);
 		if (H_abh < doca) { 
