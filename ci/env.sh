@@ -60,7 +60,7 @@ runs_for_system() {
 	elif [[ $system == "ft" ]]; then
 		echo "11 5874 6150 11620 16043 20000"
 	elif [[ $system == "beamline" ]]; then
-		echo "11 5874 6150 11620 16043 16843 $rgd_runs 20000 21000"
+		echo "11 5874 6150 11620 16043 16843 20000 21000"
 	elif [[ $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "targets" ]]; then

@@ -86,6 +86,7 @@ jobs:
           - ft
           - beamline
           - alert
+          - targets
 
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
