@@ -77,26 +77,35 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	
 	
 	//********************************************
+	//reading reference and current-run pressure:
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_to_distance/ref_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear();
+	calib->GetCalib(data, dcc.database);
+	double ref_pressure = data[0][3];
+	snprintf(dcc.database, sizeof(dcc.database),  "/hall/weather/pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear();
+	calib->GetCalib(data, dcc.database);
+	double current_pressure = data[3][3];
+        double dpressure = current_pressure - ref_pressure;
+	//********************************************
 	//calculating distance to time:
-	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_to_distance/time2dist:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_to_distance/t2d_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data, dcc.database);
 	
 	for(unsigned row = 0; row < data.size(); row++) {
 		int sec = data[row][0] - 1;
 		int sl  = data[row][1] - 1;
-		dcc.v0[sec][sl] = data[row][3];
-		dcc.deltanm[sec][sl] = data[row][4]; //used in exponential function only
-		dcc.tmaxsuperlayer[sec][sl] = data[row][5];
-		// Row left out, corresponds to distbfield
-		dcc.delta_bfield_coefficient[sec][sl] = data[row][7];
-		dcc.deltatime_bfield_par1[sec][sl] = data[row][8];
-		dcc.deltatime_bfield_par2[sec][sl] = data[row][9];
-		dcc.deltatime_bfield_par3[sec][sl] = data[row][10];
-		dcc.deltatime_bfield_par4[sec][sl] = data[row][11];
-		dcc.R[sec][sl] = data[row][13];     // used in polynomial function only
-		dcc.vmid[sec][sl] = data[row][14];  // used in polynomial function only
-		//        cout << dcc.v0[sec][sl] << " " << dcc.deltanm[sec][sl] << " " << dcc.tmaxsuperlayer[sec][sl] << " " << dcc.R[sec][sl] << " " << dcc.vmid[sec][sl] << endl;
+		dcc.v0[sec][sl] = data[row][3] + data[row][4]*dpressure + data[row][5]*dpressure*dpressure;
+		dcc.vmid[sec][sl] = data[row][6] + data[row][7]*dpressure + data[row][8]*dpressure*dpressure;
+		dcc.tmaxsuperlayer[sec][sl] = data[row][9] + data[row][10]*dpressure + data[row][11]*dpressure*dpressure;
+		// Row left out, corresponds to distbeta
+		dcc.delta_bfield_coefficient[sec][sl] = data[row][15] + data[row][16]*dpressure + data[row][17]*dpressure*dpressure;
+		dcc.deltatime_bfield_par1[sec][sl] = data[row][18] + data[row][19]*dpressure + data[row][20]*dpressure*dpressure;
+		dcc.deltatime_bfield_par2[sec][sl] = data[row][21] + data[row][22]*dpressure + data[row][23]*dpressure*dpressure;
+		dcc.deltatime_bfield_par3[sec][sl] = data[row][24] + data[row][25]*dpressure + data[row][26]*dpressure*dpressure;
+		dcc.deltatime_bfield_par4[sec][sl] = data[row][27] + data[row][28]*dpressure + data[row][29]*dpressure*dpressure;
+		dcc.R[sec][sl] = data[row][30] + data[row][31]*dpressure;
 	}
 	
 	// wire readout side (should come from CCDB but it is currently hardcoded in reconstruction too)
