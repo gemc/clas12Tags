@@ -86,6 +86,7 @@ jobs:
           - ft
           - beamline
           - alert
+          - targets
 
         # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
         variation:
@@ -103,9 +104,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@main
       - name: Fix Java Version
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'zulu'
       - name: Build GEMC
         run: |

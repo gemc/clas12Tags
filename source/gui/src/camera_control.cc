@@ -249,6 +249,8 @@ camera_control::camera_control(QWidget *parent, goptions *Opts) : QWidget(parent
 	sides_per_circle->addItem(tr("100"));
 	sides_per_circle->addItem(tr("200"));
 	sides_per_circle->setCurrentIndex(0);
+
+
 	QHBoxLayout *sides_per_circleLayout = new QHBoxLayout;
 	sides_per_circleLayout->addWidget(sides_per_circlesLabel);
 	sides_per_circleLayout->addWidget(sides_per_circle);

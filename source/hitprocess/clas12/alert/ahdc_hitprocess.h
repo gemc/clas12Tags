@@ -48,9 +48,33 @@ public:
 	// translation table
 	TranslationTable TT;
 	
-	// t0 table: sector (1) x layer (8) x component (99 wires max : 47 56 56 72 72 87 87 99)
+	// t0 table
 	double T0Correction[576];
 	double get_T0(int sector, int layer, int component) { return T0Correction[getUniqueId(sector, layer, component)];}
+	double get_T0(int wireId) { return T0Correction[wireId];}
+	// time2distance 
+	double T2D[6]; // contains the coefficients of a polynomial fit : p0 + p1*x + ... + p5*x^5
+	double eval_t2d(double x) { return T2D[0] + T2D[1]*pow(x, 1.0) + T2D[2]*pow(x, 2.0) + T2D[3]*pow(x, 3.0) + T2D[4]*pow(x, 4.0) + T2D[5]*pow(x, 5.0);}
+	double xi[50];
+	double yi[50]; 
+	// inverse of the time2distance	
+	double eval_inv_t2d(double y) {
+		if (y < 0) {
+			return ((xi[1]-xi[0])/(yi[1]-yi[0]))*(y - yi[0]) + xi[0];
+		} 
+		else if (y >= yi[49]) {
+			return ((xi[49]-xi[48])/(yi[49]-yi[48]))*(y - yi[48]) + xi[48];
+		} else {
+			int i = 0;
+			while (i < 48) {
+				if ((y >= yi[i]) && (y < yi[i+1])) {
+					break;
+				}
+				i++;
+			}
+			return ((xi[i+1]-xi[i])/(yi[i+1]-yi[i]))*(y - yi[i]) + xi[i];
+		}
+	}
 };
 
 
@@ -133,7 +157,7 @@ public:
  */
 class ahdcSignal {
 	// MHit or wires identifiers
-	public : 
+	private : 
 		int hitn; ///< n-th MHit of the event, also corresponds to the n-th activated wire
 		int sector; ///< sector, first wire identifier
 		int layer; ///< layer, second wire identifer
@@ -146,7 +170,9 @@ class ahdcSignal {
 		std::vector<double> Doca; ///< array of distance of closest approach corresponding each step [mm]
 		std::vector<double> DriftTime; ///< array of drift time corresponding each step [ns]
 		vector<double> stepTime; ///< Geant4 time of each step [ns]
-		
+		double Etot; ///< sum of Edep
+		double doca; ///< for now, distance of the closest hit in the AHDC cell
+		double docaTime; ///< time corresponding to the doca using the time2distance
 		/**
 		 * @brief Fill the arrays Doca and DriftTime
 		 * 
@@ -159,11 +185,12 @@ class ahdcSignal {
 		void ComputeDocaAndTime(MHit * aHit);
 		std::vector<short> Dgtz; ///< Array containing the samples of the simulated signal
 		std::vector<short> Noise; ///< Array containing the samples of the simulated noise
+		ahdcConstants * ahdcc_ptr = nullptr;
 	// setting parameters for digitization
 	private : 
 		const double tmin; ///< lower limit of the simulated time window
 		const double tmax; ///< upper limit of the simulated time window
-		const double timeOffset; ///< time offset for simulation purpose
+		const double timeOffset; ///< time offset for simulation purpose, linked to the t0 from calibration
 		const double samplingTime; ///< sampling time [ns]
 		const double Landau_width; ///< Width pararemeter of the Landau distribution
 		double electronYield = 9500;   ///< ADC gain
@@ -174,8 +201,9 @@ class ahdcSignal {
 		ahdcSignal() = delete;
 		
 		/** @brief Constructor */
-		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width) 
+		ahdcSignal(MHit * aHit, int _hitn, double _tmin, double _tmax, double _timeOffset, double _samplingTime, double _Landau_width, ahdcConstants * _ptr) 
 		: tmin(_tmin), tmax(_tmax), timeOffset(_timeOffset), samplingTime(_samplingTime), Landau_width(_Landau_width) {
+			ahdcc_ptr = _ptr;
 			// read identifiers
 			hitn = _hitn;
 			vector<identifier> identity = aHit->GetId();
@@ -186,8 +214,10 @@ class ahdcSignal {
 			Edep = aHit->GetEdep();
 			stepTime    = aHit->GetTime();
 			nsteps = Edep.size();
+			Etot = 0;
 			for (int s=0;s<nsteps;s++){ 
 				Edep.at(s) = Edep.at(s)*1000;
+				Etot += Edep.at(s);
 				//std::cout << "stepTime[" << s << "] = " << stepTime[s] << std::endl;
 			} // convert MeV to keV
 			G4Time = aHit->GetTime();
@@ -218,6 +248,9 @@ class ahdcSignal {
 		/** @brief Return the content of the attribut `Dgtz` */
 		std::vector<short> 			GetDgtz()		{return Dgtz;}
 		
+		/** @brief Return the number of steps in the AHDC cell */		
+		int GetNSteps() { return nsteps;}	
+
 		/**
 		 * @brief Set the electron yield. 
 		 * 
@@ -232,7 +265,7 @@ class ahdcSignal {
 		 *
 		 * @return Value of the signal at the time `t`
 		 */
-		double operator()(double timePoint){
+		/*double operator()(double timePoint){
 			using namespace Genfun;
 			double signalValue = 0;
 			for (int s=0; s<nsteps; s++){
@@ -245,6 +278,16 @@ class ahdcSignal {
 				signalValue += Edep.at(s)*L(timePoint-timeOffset);
 			}
 			return signalValue;
+		}*/
+		double operator()(double timePoint){
+			using namespace Genfun;
+			double sigma = Landau_width;	
+			double mu = docaTime + 1.36*sigma;
+			//mu -= 4; // systematic correction from the decoding
+			Landau L;
+			L.peak() = Parameter("Peak",mu,tmin,tmax); 
+			L.width() = Parameter("Width",sigma,0,400); 
+			return Etot*L(timePoint-timeOffset);
 		}
 		
 		/**
@@ -265,125 +308,14 @@ class ahdcSignal {
 		 */
 		void GenerateNoise(double mean, double stdev);
 		
-		double GetMCTime(); // tmp
-		double GetMCEtot(); // tmp
+		double GetMeanTimeValue(); 
+		double GetDocaTimeValue(); 
+		double GetDocaValue(); 
+		double GetEtotValue(); 
 		
-		/**
-		 * @brief Extract various informations from the digitized signal 
-		 *
-		 * This method computes
-		 * - `binMax`, `binOffset`, `adcMax`, `timeMax`, `integral` 
-		 * - `timeRiseCFA`, `timeFallCFA`, `timeOverThresholdCFA`, `timeCFD` 
-		 */
-		std::map<std::string,double> Extract();
 };
 
 
-/**
- * @class ahdcExtractor
- * 
- * @author Felix Touchte Codjo
- */
-class ahdcExtractor {
-	public :
-		float samplingTime; ///< time between two ADC bins
-		int sparseSample = 0; ///< used to defined binOffset
-		short adcOffset = 0; ///< pedestal or noise level
-		long timeStamp = 0; ///< timeStamp timing informations (used to make fine corrections)
-		float fineTimeStampResolution = 0; ///< precision of dream clock (usually 8) 
-		static const short ADC_LIMIT = 4095; ///< Maximum value of ADC : 2^12-1
-		float amplitudeFractionCFA; ///< amplitude fraction between 0 and 1
-		int binDelayCFD; ///< CFD delay parameter
-		float fractionCFD; ///< CFD fraction parameter between 0 and 1
-	
-	public :
-		int binMax; ///< Bin of the max ADC over the pulse
-                int binOffset; ///< Offset due to sparse sample
-                float adcMax; ///< Max value of ADC over the pulse (fitted)
-                float timeMax; ///< Time of the max ADC over the pulse (fitted)
-                float integral; ///< Sum of ADCs over the pulse (not fitted)
-
-		std::vector<short> samplesCorr; ///< Waveform after offset (pedestal) correction
-                int binNumber; ///< Number of bins in one waveform
-
-                float timeRiseCFA; ///< moment when the signal reaches a Constant Fraction of its Amplitude uphill (fitted)
-                float timeFallCFA; ///< moment when the signal reaches a Constant Fraction of its Amplitude downhill (fitted)
-                float timeOverThresholdCFA; ///< is equal to (timeFallCFA - timeRiseCFA)
-                float timeCFD; ///< time extracted using the Constant Fraction Discriminator (CFD) algorithm (fitted)
-
-		/** @brief Default constructor */
-		ahdcExtractor() = default;
-
-		/** @brief Constructor */
-		ahdcExtractor(float _samplingTime,float _amplitudeFractionCFA, int _binDelayCFD, float _fractionCFD) :
-			samplingTime(_samplingTime), amplitudeFractionCFA(_amplitudeFractionCFA), binDelayCFD(_binDelayCFD), fractionCFD(_fractionCFD) {}
-		
-		/** @brief Destructor */
-		~ahdcExtractor(){;}
-		
-		/**
-		 * This method extracts relevant informations from the digitized signal
-		 * (the samples) and store them in a Pulse
-		 *
-		 * @param samples ADC samples
-		 */
-		std::map<std::string,double> extract(const std::vector<short> samples);
-
-	private :
-		/**
-		* This method subtracts the pedestal (noise) from samples and stores it in : `samplesCorr`
-		* It also computes a first value for : `adcMax`, `binMax`, `timeMax` and `integral`
-		* This code is inspired by the one of coatjava/.../MVTFitter.java
-		*/
-		void waveformCorrection();
-
-		/**
-		 * This method gives a more precise value of the max of the waveform by computing the average of five points around the binMax
-		 * It is an alternative to fitParabolic()
-		 * The suitability of one of these fits can be the subject of a study
-		 * Remark : This method updates adcMax but doesn't change timeMax
-		 */
-		void fitAverage();
-
-		/**
-		 * @brief Alternative to `fitAverage`
-		 */
-		void fitParabolic();
-		
-		/**
-		 * From MVTFitter.java
-		 * Make fine timestamp correction (using dream (=electronic chip) clock)
-		 * 
-		 * Parameter dependency :
-		 * - `timeStamp` 
-		 * - `fineTimeStampResolution`
-		 */
-		void fineTimeStampCorrection();
-		//void fineTimeStampCorrection (long timeStamp, float fineTimeStampResolution);
-
-		/**
-		 * This method determines the moment when the signal reaches a Constant Fraction of its Amplitude (i.e amplitudeFraction*adcMax)
-		 * It fills the attributs : `timeRiseCFA`, `timeFallCFA`, `timeOverThresholdCFA`
-		 * 
-		 * Parameter dependency :
-		 * - `samplingTime` time between 2 ADC bins
-		 * - `amplitudeFraction` amplitude fraction between 0 and 1
-		 */
-		void computeTimeAtConstantFractionAmplitude();
-
-		/**
-		 * This methods extracts a time using the Constant Fraction Discriminator (CFD) algorithm
-		 * It fills the attribut : `timeCFD`
-		 *
-		 * Parameter dependency :
-		 * - `samplingTime` time between 2 ADC bins
-		 * - `fractionCFD` CFD fraction parameter between 0 and 1
-		 * - `binDelayCFD` CFD delay parameter
-		 */
-		void computeTimeUsingConstantFractionDiscriminator();
-	public:	
-		std::vector<float> samplesCFD; ///< samples corresponding to the CFD signal
-};
 
 #endif
 

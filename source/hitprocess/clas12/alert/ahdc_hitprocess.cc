@@ -48,7 +48,7 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 	// The following code is inspired by dcConstants
 	/////////////////////////////////////////////////
 	
-	// reading t0 table
+	// read the t0 table
 	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_offsets:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	vector<vector<double> > data;
 	calib->GetCalib(data, ahdcc.database);
@@ -59,7 +59,38 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 		int component  = data[row][2]; // wire id
 		ahdcc.T0Correction[ahdcConstants::getUniqueId(sector, layer, component)] = data[row][3];
 	}
+	data.clear();
 
+	// read the time2distance table
+	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_to_distance:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	calib->GetCalib(data, ahdcc.database);
+	for(unsigned row = 0; row < data.size(); row++) {
+		//int sector = data[row][0];
+		//int layer  = data[row][1];
+		//int component  = data[row][2]; // wire id
+		ahdcc.T2D[0] = data[row][3];	
+		ahdcc.T2D[1] = data[row][4];	
+		ahdcc.T2D[2] = data[row][5];	
+		ahdcc.T2D[3] = data[row][6];	
+		ahdcc.T2D[4] = data[row][7];	
+		ahdcc.T2D[5] = data[row][8];
+		std::cout << "p0 : " << ahdcc.T2D[0] << std::endl;
+		std::cout << "p1 : " << ahdcc.T2D[1] << std::endl;
+		std::cout << "p2 : " << ahdcc.T2D[2] << std::endl;
+		std::cout << "p3 : " << ahdcc.T2D[3] << std::endl;
+		std::cout << "p4 : " << ahdcc.T2D[4] << std::endl;
+		std::cout << "p5 : " << ahdcc.T2D[5] << std::endl;
+		// for now we only have one row this table
+		// I add this condition in case the t2d table grows to act channel by channel
+		// If this happens, I will need to change the structure of the T2D
+		if (row > 1) break;
+	}
+	data.clear();
+	// inverse the time2distance
+	for (int i = 0; i < 50; i++) {
+		ahdcc.xi[i] = i*(350.0/50);
+		ahdcc.yi[i] = ahdcc.eval_t2d(ahdcc.xi[i]);
+	}
 	
 	return ahdcc;
 }
@@ -101,28 +132,17 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	}
 	// the t0 is our timeOffset
 	double t0 = ahdcc.get_T0(sector, layer, component);	
-	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,107.14);
+	ahdcSignal *Signal = new ahdcSignal(aHit,hitn,0,1000,t0,48,115.75803, &ahdcc);
 	Signal->SetElectronYield(25000);
 	Signal->Digitize();
-	//std::map<std::string,double> output = Signal->Extract();
 
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = sector;
 	dgtz["layer"]     = layer;
 	dgtz["component"] = component;
 
-	// adc
-	// dgtz["ADC_order"] = 1;
-	// dgtz["ADC_ADC"]   = (int) output["adcMax"];
-	// dgtz["ADC_time"]  = output["timeMax"];
-	// dgtz["ADC_ped"]   = (int) output["adcOffset"];
-
-	// tdc
-	// dgtz["TDC_order"] = 0;
-	// dgtz["TDC_TDC"]   = 0;
-
 	// WF
-	dgtz["WF_timestamp"] = 0;
+	dgtz["wf_timestamp"] = 0;
 
 	for(unsigned t=0; t<30; t++) {
 		string dname = "wf_s" + to_string(t+1);
@@ -132,8 +152,9 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		else {
 			dgtz[dname] = 0;
 		}
-		//if (t == 28) { dgtz[dname] = Signal->nsteps;}
-		//if (t == 29) { dgtz[dname] = (int) (Signal->GetMCTime()*100);}
+		//if (t == 27) { dgtz[dname] = (int) (Signal->GetDocaValue()*1000);}
+		//if (t == 28) { dgtz[dname] = Signal->GetNSteps();}
+		//if (t == 29) { dgtz[dname] = (int) (Signal->GetMeanTimeValue()*100);}
 	}
 	delete Signal;
 
@@ -273,6 +294,8 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 	double L_ab, L_ah, L_bh, H_abh;
 	// Compute the distance between top and bottom of the wire
 	L_ab = sqrt(pow(X_sigwire_top-X_sigwire_bot,2) + pow(Y_sigwire_top-Y_sigwire_bot,2) + pow(Z_sigwire_top-Z_sigwire_bot,2));
+	doca = 1e10; // arbitray big number
+	docaTime = -99; // arbitrary negative value
 	for (int s=0;s<nsteps;s++) {
 		// Load current hit positions
 		LposX = Lpos[s].x();
@@ -285,14 +308,19 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 		H_abh = L_ah*sqrt(1 - pow((L_ah*L_ah + L_ab*L_ab - L_bh*L_bh)/(2*L_ah*L_ab),2)); // this is the d.o.c.a of a given hit (!= MHit)
 		Doca.push_back(H_abh);
 		// Add a resolution on doca
-		double docasig = 337.3-210.3*H_abh+34.7*pow(H_abh,2); // um // fit sigma vs distance // Fig 4.14 (right), L. Causse's thesis
-		docasig = docasig/1000; // mm
-		std::default_random_engine dseed(time(0)); //seed
-		std::normal_distribution<double> docadist(H_abh, docasig);
+		//double docasig = 337.3-210.3*H_abh+34.7*pow(H_abh,2); // um // fit sigma vs distance // Fig 4.14 (right), L. Causse's thesis
+		//docasig = docasig/1000; // mm
+		//std::default_random_engine dseed(time(0)); //seed
+		//std::normal_distribution<double> docadist(H_abh, docasig);
+		//double new_H_abh = docadist(dseed);
 		//std::cout << "H_abh : " << H_abh << ", docasig : " << docasig << " ";
 		// Compute time
-		double driftTime = 7*H_abh + 7*pow(H_abh,2) + 4*pow(H_abh,3); // fit t vs distance //  Fig 4.12 (right), L. Causse's thesis
+		double driftTime = ahdcc_ptr->eval_inv_t2d(H_abh);
 		DriftTime.push_back(driftTime);
+		if (H_abh < doca) { 
+			doca = H_abh;
+			docaTime = driftTime;
+		}
 	}
 }
 
@@ -318,8 +346,15 @@ void ahdcSignal::Digitize(){
 		Dgtz.push_back(adc);
 	}
 }
+double ahdcSignal::GetDocaTimeValue() {
+	return docaTime;
+}
 
-double ahdcSignal::GetMCTime(){
+double ahdcSignal::GetDocaValue() {
+	return doca;
+}
+
+double ahdcSignal::GetMeanTimeValue(){
 	if (nsteps == 0){ return 0; }
 	double mctime = 0;
 	double Etot = 0;
@@ -331,160 +366,7 @@ double ahdcSignal::GetMCTime(){
 	return mctime;
 }
 
-double ahdcSignal::GetMCEtot(){
-	if (nsteps == 0) { return 0;}
-	double mcEtot = 0;
-	for (int s=0;s<nsteps;s++){
-		mcEtot += Edep.at(s);
-	}
-	return mcEtot;
-}
-
-std::map<std::string,double> ahdcSignal::Extract(){
-	ahdcExtractor T(samplingTime,0.5f,5,0.3f);
-	T.adcOffset = (short) (Dgtz[0] + Dgtz[1] + Dgtz[2] + Dgtz[3] + Dgtz[4])/5;
-	std::map<std::string,double> output = T.extract(Dgtz);
-	return output;
-}
-
-std::map<std::string,double> ahdcExtractor::extract(const std::vector<short> samples){
-	samplesCorr = samples;
-	this->waveformCorrection();
-	this->fitAverage();
-	this->fitParabolic();
-	this->computeTimeAtConstantFractionAmplitude();
-	this->computeTimeUsingConstantFractionDiscriminator();
-	//this->fineTimeStampCorrection();
-	std::map<std::string,double> output;
-	output["binMax"] = binMax;
-	output["binOffset"] = binOffset;
-	output["adcMax"] = adcMax;
-	output["timeMax"] = timeMax;
-	output["integral"] = integral;
-	output["timeRiseCFA"] = timeRiseCFA;
-	output["timeFallCFA"] = timeFallCFA;
-	output["timeOverThresholdCFA"] = timeOverThresholdCFA;
-	output["timeCFD"] = timeCFD;
-	output["adcOffset"] = adcOffset;
-	return output;
-
-}
-
-void ahdcExtractor::waveformCorrection(){
-	binNumber = samplesCorr.size();
-	binMax = 0;
-	adcMax = (short) (samplesCorr[0] - adcOffset);
-	integral = 0;
-	for (int bin = 0; bin < binNumber; bin++){
-		samplesCorr[bin] = (short) (samplesCorr[bin] - adcOffset);
-		if (adcMax < samplesCorr[bin]){
-			adcMax = samplesCorr[bin];
-			binMax = bin;
-		}
-		integral += samplesCorr[bin];
-	}
-	/*
-	 * If adcMax + adcOffset == ADC_LIMIT, that means there is saturation
-	 * In that case, binMax is the middle of the first plateau
-	 * This convention can be changed
-	 */
-	if ((short) adcMax + adcOffset == ADC_LIMIT) {
-		int binMax2 = binMax;
-		for (int bin = binMax; bin < binNumber; bin++){
-			if (samplesCorr[bin] + adcOffset == ADC_LIMIT) {
-				binMax2 = bin;
-			}
-			else {
-				break;
-			}
-		}
-		binMax = (binMax + binMax2)/2;
-	}
-	binOffset = sparseSample*binMax;
-	timeMax = (binMax + binOffset)*samplingTime;
-}
-
-
-void ahdcExtractor::fitAverage(){
-	if ((binMax - 2 >= 0) && (binMax + 2 <= binNumber - 1)){
-		adcMax = 0;
-		for (int bin = binMax - 2; bin <= binMax + 2; bin++){
-			adcMax += samplesCorr[bin];
-		}
-		adcMax = adcMax/5;
-	}
-}
-
-void ahdcExtractor::fitParabolic(){}
-
-void ahdcExtractor::fineTimeStampCorrection(){}
-
-void ahdcExtractor::computeTimeAtConstantFractionAmplitude(){
-	float threshold = amplitudeFractionCFA*adcMax;
-	// timeRiseCFA
-	int binRise = 0;
-	for (int bin = 0; bin < binMax; bin++){
-		if (samplesCorr[bin] < threshold)
-			binRise = bin;  // last pass below threshold and before adcMax
-	} // at this stage : binRise < timeRiseCFA/samplingTime <= binRise + 1 // timeRiseCFA is determined by assuming a linear fit between binRise and binRise + 1
-	float slopeRise = 0;
-	if (binRise + 1 <= binNumber-1)
-		slopeRise = samplesCorr[binRise+1] - samplesCorr[binRise];
-	float fittedBinRise = (slopeRise == 0) ? binRise : binRise + (threshold - samplesCorr[binRise])/slopeRise;
-	timeRiseCFA = (fittedBinRise + binOffset)*samplingTime; // binOffset is determined in wavefromCorrection() // must be the same for all time ? // or must be defined using fittedBinRise*sparseSample
-
-	// timeFallCFA
-	int binFall = binMax;
-	for (int bin = binMax; bin < binNumber; bin++){
-		if (samplesCorr[bin] > threshold){
-				binFall = bin;
-		}
-		else {
-				binFall = bin;
-				break; // first pass below the threshold
-		}
-	} // at this stage : binFall - 1 <= timeRiseCFA/samplingTime < binFall // timeFallCFA is determined by assuming a linear fit between binFall - 1 and binFall
-	float slopeFall = 0;
-	if (binFall - 1 >= 0)
-		slopeFall = samplesCorr[binFall] - samplesCorr[binFall-1];
-	float fittedBinFall = (slopeFall == 0) ? binFall : binFall-1 + (threshold - samplesCorr[binFall-1])/slopeFall;
-	timeFallCFA = (fittedBinFall + binOffset)*samplingTime;
-	
-	// timeOverThreshold
-	timeOverThresholdCFA = timeFallCFA - timeRiseCFA;
-}
-
-void ahdcExtractor::computeTimeUsingConstantFractionDiscriminator(){
-	std::vector<float> signal(binNumber,0.0);
-	// signal generation
-	for (int bin = 0; bin < binNumber; bin++){
-		signal[bin] = (1 - fractionCFD)*samplesCorr[bin]; // we fill it with a fraction of the original signal
-		if (bin < binNumber - binDelayCFD)
-			signal[bin] += -1*fractionCFD*samplesCorr[bin + binDelayCFD]; // we advance and invert a complementary fraction of the original signal and superimpose it to the previous signal
-	}
-	// determine the two humps
-	int binHumpSup = 0;
-	int binHumpInf = 0;
-	for (int bin = 0; bin < binNumber; bin++){
-		if (signal[bin] > signal[binHumpSup])
-			binHumpSup = bin;
-	}
-	for (int bin = 0; bin < binHumpSup; bin++){ // this loop has been added to be sure : binHumpInf < binHumpSup
-		if (signal[bin] < signal[binHumpInf])
-			binHumpInf = bin;
-	}
-	// research for zero
-	int binZero = 0;
-	for (int bin = binHumpInf; bin <= binHumpSup; bin++){
-		if (signal[bin] < 0)
-			binZero = bin; // last pass below zero
-	} // at this stage : binZero < timeCFD/samplingTime <= binZero + 1 // timeCFD is determined by assuming a linear fit between binZero and binZero + 1
-	float slopeCFD = 0;
-	if (binZero + 1 <= binNumber)
-		slopeCFD = signal[binZero+1] - signal[binZero];
-	float fittedBinZero = (slopeCFD == 0) ? binZero : binZero + (0 - signal[binZero])/slopeCFD;
-	timeCFD = (fittedBinZero + binOffset)*samplingTime;
-	//
-	samplesCFD = signal;
+double ahdcSignal::GetEtotValue(){
+	return Etot;
 }
 

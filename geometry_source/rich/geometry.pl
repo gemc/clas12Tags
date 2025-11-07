@@ -85,7 +85,7 @@ sub build_MESH {
         }
         $detector{"pos"} = $positions->{$vname};
         if ($mesh eq "RICH_s4" and ($variation eq "rga_fall2018" or $variation eq "rgc_summer2022")) {
-            $detector{"pos"} = "0*cm 0*cm 5*cm";
+            $detector{"pos"} = "0*cm 0*cm 0*cm";
         }
         #rotate mesh for sector 1 180 deg. around z
         $detector{"rotation"} = $rotations->{$vname};

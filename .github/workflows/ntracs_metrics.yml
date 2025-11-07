@@ -60,9 +60,9 @@ jobs:
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: Fix Java Version
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'zulu'
       - name: Build Coatjava
         run: |
