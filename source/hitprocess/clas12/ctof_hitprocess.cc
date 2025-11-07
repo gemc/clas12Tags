@@ -76,7 +76,7 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 	}
 	
 	if(accountForHardwareStatus) {
-		snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+		snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/status:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
 		cout << "CTOF:Getting status" << endl;
 		data.clear();
 		calib->GetCalib(data, ctc.database);
@@ -113,8 +113,6 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 		ctc.efficiency[isec - 1][ilay - 1][1].push_back(data[row][3]);
 	}
 	
-	
-	
 	snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/gain_balance:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
 	cout << "CTOF:Getting gain_balance" << endl;
 	data.clear();
@@ -127,23 +125,30 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 		ctc.countsForMIP[isec - 1][ilay - 1][1].push_back(data[row][4]);
 	}
 	
-	/* For future use in HitProcess
-	 cout<<"Getting time_walk"<<endl;
-	 snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/time_walk:%d:%s%s",ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+	 snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/hpos:%d:%s%s",ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+	 cout<<"CTOF: Getting hpos parameters"<<endl;
 	 data.clear() ; calib->GetCalib(data,ctc.database);
 	 for(unsigned row = 0; row < data.size(); row++)
 	 {
-	 isec   = data[row][0]; ilay   = data[row][1]; istr   = data[row][2];
-	 ctc.twlk[isec-1][ilay-1][0].push_back(data[row][3]);
-	 ctc.twlk[isec-1][ilay-1][1].push_back(data[row][4]);
-	 ctc.twlk[isec-1][ilay-1][2].push_back(data[row][5]);
-	 ctc.twlk[isec-1][ilay-1][3].push_back(data[row][6]);
-	 ctc.twlk[isec-1][ilay-1][4].push_back(data[row][7]);
-	 ctc.twlk[isec-1][ilay-1][5].push_back(data[row][8]);
+ 	 	 isec   = data[row][0];
+		 ilay   = data[row][1];
+		 ctc.hpos[isec-1][ilay-1][0].push_back(data[row][3]);
+		 ctc.hpos[isec-1][ilay-1][1].push_back(data[row][4]);
 	 }
-	 */
 	
-    snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/time_offsets:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+         snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/hposbin:%d:%s%s",ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+         cout<<"CTOF: Getting hpos parameters"<<endl;
+         data.clear() ; calib->GetCalib(data,ctc.database);
+         for(unsigned row = 0; row < data.size(); row++)
+         {
+                 isec   = data[row][0]; 
+                 ilay   = data[row][1]; 
+                 for(unsigned bin=0; bin<=ctc.hposbins; bin++) {
+			ctc.hpos[isec-1][ilay-1][bin].push_back(data[row][3+bin]);
+		 }
+         }
+        
+        snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/time_offsets:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
 	cout << "CTOF:Getting time_offsets" << endl;
 	data.clear();
 	calib->GetCalib(data, ctc.database);
@@ -168,6 +173,14 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 		ctc.tdcconv[isec - 1][ilay - 1][1].push_back(data[row][4]);
 	}
 	
+        snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/time_jitter:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+        cout << "CTOF:Getting time_jitter" << endl;
+        data.clear();
+        calib->GetCalib(data, ctc.database);
+        ctc.jitter_period = data[0][3];
+        ctc.jitter_phase  = data[0][4];
+        ctc.jitter_cycles = data[0][5];
+        
         snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/fadc_offset:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
         cout << "CTOF:Getting adc_offsets" << endl;
         data.clear();
@@ -310,7 +323,8 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 	// ctof paddle center is offsetby ctc.zoffset from the CLAS12 target position,
 	// so need to  z is also the local coordinate
 	// side = 0 or 1,
-	double d = length + (1. - 2. * side)*(tInfos.z - offset - ctc.targetZPos); // The distance between the hit and PMT?
+	double y = tInfos.z - offset - ctc.targetZPos;
+	double d = length + (1. - 2. * side)*y; // The distance between the hit and PMT?
 	
 	// attenuation length
 	double attlen = ctc.attlen[sector - 1][layer - 1][side][paddle - 1];
@@ -362,16 +376,21 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 		//double            B = ctc.twlk[sector-1][layer-1][1][paddle-1];
 		//double            C = ctc.twlk[sector-1][layer-1][2][paddle-1];
 		//double   timeWalkUp = A/(B+C*sqrt(adcu));
-		double timeWalk = 0.;
+		double hpos = ctc.hpos[sector-1][layer-1][0][paddle-1] * exp(ctc.hpos[sector-1][layer-1][1][paddle-1]/cm * y);
+		if(ctc.hposbin[sector-1][layer-1][0][paddle-1]>0) {
+			int bin = (int) floor(y/cm) + ctc.hposbins/2;
+			hpos += ctc.hposbin[sector-1][layer-1][bin+1][paddle-1];
+		}
 		
 		double tU = tInfos.time + d/ctc.veff[sector-1][layer-1][side][paddle-1]/cm +  (1. - 2. * side)*ctc.toff_UD[sector-1][layer-1][paddle-1]/2.
 		- ctc.toff_RFpad[sector-1][layer-1][paddle-1]
 		- ctc.toff_P2P[sector-1][layer-1][paddle-1]
-		+ timeWalk;
+		- hpos;
 		
 		time_in_ns = G4RandGauss::shoot(tU, sqrt(2) * ctc.tres[paddle - 1]);
 		// tdcu = tU / tdcconv;
-		tdc = (int)  ( time_in_ns / tdcconv );
+		double tdc_jitter = ctc.jitter_period * ((0 + ctc.jitter_phase) % ctc.jitter_cycles);  // assumes event timestamp is zero
+		tdc = (int)  ((time_in_ns + tdc_jitter) / tdcconv);
 	}
 	
 	if(accountForHardwareStatus) {

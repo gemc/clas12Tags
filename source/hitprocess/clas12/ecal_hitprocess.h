@@ -29,6 +29,11 @@ public:
 	//gain: pmt gain
 	vector<double> gain[nsect][nlayer];
 	
+        // tdc jitter parameters
+        double jitter_period;
+        int    jitter_phase;
+        int    jitter_cycles;
+
 	//timing: TDC calibration constants
 	vector<double>  dtime[nsect][nlayer][9];
 	vector<double>  ftime[nsect][nlayer][7];

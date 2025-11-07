@@ -139,6 +139,12 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	}
 	//********************************************
 	
+        snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_jitter:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+        data.clear();
+        calib->GetCalib(data, dcc.database);
+        dcc.jitter_period = data[0][3];
+        dcc.jitter_phase  = data[0][4];
+        dcc.jitter_cycles = data[0][5];
 	
 	
 	// reading DC core parameters
@@ -250,6 +256,8 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double signal_t = 0;
 	double hit_signal_t = 0;
 	double prop_t = 0;
+        double tdc_jitter = dcc.jitter_period * ((0 + dcc.jitter_phase) % dcc.jitter_cycles);  // assumes event timestamp is zero
+
 	
 	for(unsigned int s=0; s<nsteps; s++)
 	{
@@ -381,7 +389,7 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 	// Now calculate the smeared time:
 	// adding the time of hit from the start of the event (signal_t), which also has the drift velocity into it
-	double smeared_time = unsmeared_time + dt_random + hit_signal_t + prop_t + dcc.get_T0(SECI, SLI, LAYI, nwire);
+	double smeared_time = unsmeared_time + dt_random + hit_signal_t + prop_t + dcc.get_T0(SECI, SLI, LAYI, nwire) + tdc_jitter;
 	
 	// cout << " DC TIME stime: " << smeared_time << " X: " << X << "  doca: " << doca/cm << "  dmax: " << dcc.dmaxsuperlayer[SLI] << "    tmax: " << dcc.tmaxsuperlayer[SECI][SLI] << "   alpha: " << alpha << "   thisMgnf: " << thisMgnf << " SECI: " << SECI << " SLI: " << SLI << endl;
 	

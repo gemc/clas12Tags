@@ -137,9 +137,32 @@ static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "
 		ftc.twlk[isec - 1][ilay - 1][4].push_back(data[row][7]);
 		ftc.twlk[isec - 1][ilay - 1][5].push_back(data[row][8]);
 	}
-	
+
+	cout << "FTOF:Getting energy-dependent time_walk" << endl;
+	snprintf(ftc.database, sizeof(ftc.database),  "/calibration/ftof/time_walk_exp:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear();
+	calib->GetCalib(data, ftc.database);
+	for (unsigned row = 0; row < data.size(); row++) {
+		isec = data[row][0];
+		ilay = data[row][1];
+		ftc.twlke[isec - 1][ilay - 1][0].push_back(data[row][3]);
+		ftc.twlke[isec - 1][ilay - 1][1].push_back(data[row][4]);
+		ftc.twlke[isec - 1][ilay - 1][2].push_back(data[row][5]);
+		ftc.twlke[isec - 1][ilay - 1][3].push_back(data[row][6]);
+	}
+
+        cout << "FTOF:Getting position-dependent time_walk" << endl;
+        snprintf(ftc.database, sizeof(ftc.database),  "/calibration/ftof/time_walk_pos:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
+        data.clear();
+        calib->GetCalib(data, ftc.database);
+        for (unsigned row = 0; row < data.size(); row++) {
+                isec = data[row][0];
+                ilay = data[row][1];
+                ftc.twlkp[isec - 1][ilay - 1][0].push_back(data[row][3]);
+                ftc.twlkp[isec - 1][ilay - 1][1].push_back(data[row][4]);
+        }
+
 	cout << "FTOF:Getting time_offset" << endl;
-	
 	snprintf(ftc.database, sizeof(ftc.database), "/calibration/ftof/time_offsets:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data, ftc.database);
@@ -164,6 +187,14 @@ static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "
 		ftc.tdcconv[isec - 1][ilay - 1][1].push_back(data[row][4]);
 	}
 	
+        snprintf(ftc.database, sizeof(ftc.database),  "/calibration/ftof/time_jitter:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
+        cout << "FTOF:Getting time_jitter" << endl;
+        data.clear();
+        calib->GetCalib(data, ftc.database);
+        ftc.jitter_period = data[0][3];
+        ftc.jitter_phase  = data[0][4];
+        ftc.jitter_cycles = data[0][5];
+
         cout << "FTOF:Getting adc_offsets" << endl;
         snprintf(ftc.database, sizeof(ftc.database),  "/calibration/ftof/fadc_offset:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
         data.clear();
@@ -262,6 +293,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	// TDC conversion factors
 	double adcoffset = ftc.adcoffset[sector - 1][panel - 1][pmt][paddle - 1];
 	double tdcconv = ftc.tdcconv[sector - 1][panel - 1][pmt][paddle - 1];
+        double tdc_jitter = ftc.jitter_period * ((0 + ftc.jitter_phase) % ftc.jitter_cycles);  // assumes event timestamp is zero
 	double time_in_ns = 0;
 
 	if(aHit->isBackgroundHit == 1) {
@@ -357,9 +389,17 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		adc = ene * ftc.countsForMIP[sector - 1][panel - 1][pmt][paddle - 1] / ftc.dEMIP[panel - 1] / gain;
 		double A = ftc.twlk[sector - 1][panel - 1][3 * pmt + 0][paddle - 1];
 		double B = ftc.twlk[sector - 1][panel - 1][3 * pmt + 1][paddle - 1];
+		double E0 = ftc.twlke[sector - 1][panel - 1][0][paddle - 1];
+		double E1 = ftc.twlke[sector - 1][panel - 1][1][paddle - 1];
+		double E2 = ftc.twlke[sector - 1][panel - 1][2][paddle - 1];
+		double E3 = ftc.twlke[sector - 1][panel - 1][3][paddle - 1];
+		double P1 = ftc.twlkp[sector - 1][panel - 1][0][paddle - 1];
+		double P2 = ftc.twlkp[sector - 1][panel - 1][1][paddle - 1];
 		//double            C = ftc.twlk[sector-1][panel-1][2][paddle-1];
 		
-		double timeWalk  = A / pow(adc, B);
+		double timeWalk  = (E0-1) * A / pow(adc, B);
+		double timeWalkE = E0*E1*exp(E2*tInfos.eTot/MeV)+E3/(tInfos.eTot/MeV);
+		double timeWalkP = P1*pow(tInfos.lx/cm, 2)+P2*tInfos.lx/cm;
 		//		double timeWalkU = A / pow(adcu, B);
 		
 		//		double tU = tInfos.time + d/ftc.veff[sector-1][panel-1][pmt][paddle-1]/cm + (1. - 2. * pmt)*ftc.toff_LR[sector-1][panel-1][paddle-1]/2.
@@ -376,8 +416,9 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		// cout << " FTOF Unsmeared Time after p2p subtraction: " << tU << endl;
 		
 		//		tdcu = (tU + timeWalkU) / tdcconv;
-		time_in_ns  = G4RandGauss::shoot(tU+ timeWalk, sqrt(2) * ftc.tres[sector - 1][panel - 1][paddle - 1]) ;
-	//	tdc  = time / tdcconv;
+		time_in_ns  = G4RandGauss::shoot(tU+ timeWalk + timeWalkE - timeWalkP, sqrt(2) * ftc.tres[sector - 1][panel - 1][paddle - 1]) ;
+
+		tdc  = (time_in_ns + tdc_jitter) / tdcconv;
 		
 	}
 	
@@ -409,7 +450,6 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	//	cout << " > FTOF status: " << ftc.status[sector-1][panel-1][1][paddle-1] << " for sector " << sector << ",  panel " << panel << ", paddle " << paddle << " right:  " << adcr << endl;
 	
 	double fadc_time = convert_to_precision(time_in_ns - ftc.adcoffset[sector - 1][panel - 1][pmt][paddle - 1]);
-	tdc  = time_in_ns / tdcconv;
 	
 	dgtz["sector"]    = sector;
 	dgtz["layer"]     = panel;

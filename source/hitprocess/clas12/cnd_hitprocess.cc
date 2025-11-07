@@ -75,6 +75,14 @@ static cndConstants initializeCNDConstants(int runno, string digiVariation = "de
 		cndc.slope_R[isec-1][ilay-1][istr-1]=data[row][5];
 	}
 	
+        snprintf(cndc.database, sizeof(cndc.database),  "/calibration/cnd/time_jitter:%d:%s%s", cndc.runNo, digiVariation.c_str(), timestamp.c_str());
+        cout << "CND:Getting time_jitter" << endl;
+        data.clear();
+        calib->GetCalib(data, cndc.database);
+        cndc.jitter_period = data[0][3];
+        cndc.jitter_phase  = data[0][4];
+        cndc.jitter_cycles = data[0][5];
+
 	cout<<"CND:Getting attenuation"<<endl;
 	snprintf(cndc.database, sizeof(cndc.database), "/calibration/cnd/Attenuation:%d:%s%s", cndc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,cndc.database);
@@ -281,7 +289,10 @@ map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double threshold = 0;
 	
 	double time_in_ns = 0;
-	
+
+        double tdc_jitter = cndc.jitter_period * ((0 + cndc.jitter_phase) % cndc.jitter_cycles);  // assumes event timestamp is zero
+
+ 	
 	// LEFT PADDLE
 	if ( side == 1 ){
 		
@@ -455,14 +466,14 @@ map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		// MARK: TO delete later
 		if (etotUp > 0.) {
 			time_in_ns  = G4RandGauss::shoot(timeD, sigmaTD/sqrt(etotUp));
-			TDCD = (int) ( (G4RandGauss::shoot(timeD, sigmaTD/sqrt(etotUp)) ) / slope_D);
+			TDCD = (int) ( (G4RandGauss::shoot(timeD+tdc_jitter, sigmaTD/sqrt(etotUp)) ) / slope_D);
 			double npheD = G4Poisson(etotUp*pmtPEYldD);
 			double eneD = npheD/pmtPEYldD;
 			ADCD = (int) (eneD*adc_mip_D*2./(dEdxMIP*thickness));
 		}
 		if (etotDown > 0.) {
 			time_in_ns  = G4RandGauss::shoot(timeN, sigmaTD/sqrt(etotDown));
-			TDCN = (int) ( (G4RandGauss::shoot(timeN, sigmaTN/sqrt(etotDown)) ) / slope_N);
+			TDCN = (int) ( (G4RandGauss::shoot(timeN+tdc_jitter, sigmaTN/sqrt(etotDown)) ) / slope_N);
 			double npheN = G4Poisson(etotDown*pmtPEYldN);
 			double eneN = npheN/pmtPEYldN;
 			ADCN = (int) (eneN*adc_mip_N*2./(dEdxMIP*thickness));
@@ -472,7 +483,7 @@ map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 		// of the shooting of random numbers
 		if ( eTotal > 0 ) {
 			time_in_ns  = G4RandGauss::shoot(eTime, sigma/sqrt(eTotal));
-			TDC = (int) ( (G4RandGauss::shoot(eTime, sigma/sqrt(eTotal)) ) / slope);
+			TDC = (int) ( (G4RandGauss::shoot(eTime+tdc_jitter, sigma/sqrt(eTotal)) ) / slope);
 			double nphe = G4Poisson(eTotal*pmtPEYld);
 			double ene  = nphe/pmtPEYld;
 			ADC = (int) (ene*adc_mip*2./(dEdxMIP*thickness));
@@ -583,12 +594,13 @@ map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// standardizing fadc time and tdc info
 	double fadc_time = convert_to_precision(time_in_ns);
 
-	
+
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = sector;
 	dgtz["layer"]     = layer;
 	dgtz["component"] = 1;
 	dgtz["ADC_order"] = adc_order ; // 0 = left 1 = right
+
 	dgtz["ADC_ADC"]   = ADC;
 	dgtz["ADC_time"]  = fadc_time;
 	dgtz["ADC_ped"]   = 0;
