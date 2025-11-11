@@ -73,68 +73,24 @@ variations_for_run_and_system()  {
 		echo "default"
 	elif [[ $1 == "3029" ]]; then
 		echo "rga_spring2018"
-	elif [[ $1 == "4763" ]]; then
+	elif [[ $1 == "4760" ]]; then
 		echo "rga_fall2018"
-	elif [[ $1 == "6608" ]]; then
-		echo "rga_spring2019"
-	elif [[ $1 == "6150" ]]; then
-		echo "rgb_spring2019"
-	elif [[ $1 == "11093" ]]; then
-		echo "rgb_fall2019"
-	elif [[ $1 == "11323" ]]; then
-		echo "rgb_winter2020"
-	elif [[ $1 == "16043" ]]; then
-		echo "rgc_summer2022"
-	elif [[ $1 == "16843" ]]; then
-		echo "rgc_fall2022"
-	elif [[ $1 == "17471" ]]; then
-		echo "rgc_winter2023"
-	elif [[ $1 == "18347" || $1 == "18372"  || $1 == "18560" || $1 == "18660" || $1 == "18874"  || $1 == "19061" ]]; then
-		echo "rgd_fall2023_CuSn"
-	elif [[ $1 == "18339" || $1 == "18369"  || $1 == "18400" || $1 == "18440" || $1 == "18440"  || $1 == "18440" ]]; then
-		echo "rgd_fall2023_CxC"
-	elif [[ $1 == "18305" || $1 == "18318"  || $1 == "18419" || $1 == "18528" || $1 == "18644"  || $1 == "18764" || $1 == "18851"  || $1 == "19021" ]]; then
-		echo "rgd_fall2023_lD2"
-	elif [[ $1 == "18316" || $1 == "18399"  || $1 == "19060" ]]; then
-		echo "rgd_fall2023_empty"
-	elif [[ $1 == "20070" ]]; then
-		echo "rge_spring2024_Empty_C"
-	elif [[ $1 == "20035" || $1 == "20507" ]]; then
-		echo "rge_spring2024_Empty_Empty"
-	elif [[ $1 == "20269" ]]; then
-		echo "rge_spring2024_Empty_Pb"
-	elif [[ $1 == "20435" ]]; then
-		echo "rge_spring2024_LD2_Al"
-	elif [[ $1 == "20021" || $1 == "20131"  || $1 == "20508" ]]; then
-		echo "rge_spring2024_LD2_C"
-	elif [[ $1 == "20177" ]]; then
-		echo "rge_spring2024_LD2_Cu"
-	elif [[ $1 == "20041" || $1 == "20074"  || $1 == "20232" || $1 == "20282" || $1 == "20494"  || $1 == "20520" ]]; then
-		echo "rge_spring2024_LD2_Pb"
-	elif [[ $1 == "20331" ]]; then
-		echo "rge_spring2024_LD2_Sn"
-	elif [[ $1 == "11620" ]]; then
-		echo "rgf_spring2020"
-	elif [[ $1 == "12389" ]]; then
-		echo "rgf_summer2020"
 	elif [[ $1 == "5674" ]]; then
 		echo "rgk_fall2018"
 	elif [[ $1 == "5874" ]]; then
 		echo "rgk_winter2018"
-	elif [[ $1 == "19200" ]]; then
-		echo "rgk_winter2023"
-	elif [[ $1 == "19300" ]]; then
-		echo "rgk_spring2024"
-	elif [[ $1 == "21000" ]]; then
-		echo "rgl_spring2025"
-	elif [[ $1 == "21001" ]]; then
-		echo "rgl_spring2025_H2"
-	elif [[ $1 == "21002" ]]; then
-		echo "rgl_spring2025_D2"
-	elif [[ $1 == "21003" ]]; then
-		echo "rgl_spring2025_He"
-	elif [[ $1 == "21003" ]]; then
-		echo "rgl_spring2025"
+	elif [[ $1 == "6141" ]]; then
+		echo "rgb_spring2019"
+	elif [[ $1 == "6607" ]]; then
+		echo "rga_spring2019"
+	elif [[ $1 == "11014" ]]; then
+		echo "rgb_fall2019"
+	elif [[ $1 == "11323" ]]; then
+		echo "rgb_spring2020"
+	elif [[ $1 == "11607" ]]; then
+		echo "rgf_spring2020"
+	elif [[ $1 == "12321" ]]; then
+		echo "rgf_summer2020"
 	elif [[ $1 == "15016" || $1 == "15534" ]]; then
 		echo "rgm_fall2021_H"
 	elif [[ $1 == "15043" || $1 == "15434" || $1 == "15566" ]]; then
@@ -153,6 +109,50 @@ variations_for_run_and_system()  {
 		echo "rgm_fall2021_Sn"
 	elif [[ $1 == "15807" ]]; then
 		echo "rgm_fall2021_Snx4"
+	elif [[ $1 == "16000" ]]; then
+		echo "rgc_summer2022"
+	elif [[ $1 == "16843" ]]; then
+		echo "rgc_fall2022"
+	elif [[ $1 == "17471" ]]; then
+		echo "rgc_spring2023"
+	elif [[ $1 == "18347" || $1 == "18372"  || $1 == "18560" || $1 == "18660" || $1 == "18874"  || $1 == "19061" ]]; then
+		echo "rgd_fall2023_CuSn"
+	elif [[ $1 == "18339" || $1 == "18369"  || $1 == "18400" || $1 == "18440" || $1 == "18440"  || $1 == "18440" ]]; then
+		echo "rgd_fall2023_CxC"
+	elif [[ $1 == "18305" || $1 == "18318"  || $1 == "18419" || $1 == "18528" || $1 == "18644"  || $1 == "18764" || $1 == "18851"  || $1 == "19021" ]]; then
+		echo "rgd_fall2023_lD2"
+	elif [[ $1 == "18316" || $1 == "18399"  || $1 == "19060" ]]; then
+		echo "rgd_fall2023_empty"
+	elif [[ $1 == "19200" ]]; then
+		echo "rgk_fall2023"
+	elif [[ $1 == "19300" ]]; then
+		echo "rgk_spring2024"
+	elif [[ $1 == "20070" ]]; then
+		echo "rge_spring2024_Empty_C"
+	elif [[ $1 == "20035" || $1 == "20507" ]]; then
+		echo "rge_spring2024_Empty_Empty"
+	elif [[ $1 == "20269" ]]; then
+		echo "rge_spring2024_Empty_Pb"
+	elif [[ $1 == "20435" ]]; then
+		echo "rge_spring2024_LD2_Al"
+	elif [[ $1 == "20021" || $1 == "20131"  || $1 == "20508" ]]; then
+		echo "rge_spring2024_LD2_C"
+	elif [[ $1 == "20177" ]]; then
+		echo "rge_spring2024_LD2_Cu"
+	elif [[ $1 == "20041" || $1 == "20074"  || $1 == "20232" || $1 == "20282" || $1 == "20494"  || $1 == "20520" ]]; then
+		echo "rge_spring2024_LD2_Pb"
+	elif [[ $1 == "20331" ]]; then
+		echo "rge_spring2024_LD2_Sn"
+	elif [[ $1 == "21000" ]]; then
+		echo "rgl_spring2025"
+	elif [[ $1 == "21001" ]]; then
+		echo "rgl_spring2025_H2"
+	elif [[ $1 == "21002" ]]; then
+		echo "rgl_spring2025_D2"
+	elif [[ $1 == "21003" ]]; then
+		echo "rgl_spring2025_He"
+	elif [[ $1 == "21003" ]]; then
+		echo "rgl_spring2025"
 	fi
 }
 

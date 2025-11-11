@@ -460,7 +460,7 @@
 - 2024-12-05 **14c7a89** — rename target cad directories to a common cad prefix. target and magnets cad.gxml renamed cad_default.gxml _(by Maurizio Ungaro)_
 - 2024-12-05 **3a0c60f** — added sqlite cad and mirrors gemc api _(by Maurizio Ungaro)_
 - 2024-12-04 **f675d23** — added sqlite cad and mirror factories _(by Maurizio Ungaro)_
-- 2024-12-03 **c4eca05** — ltcc variations renaming rgb_winter2019 to rgb_winter2020 and rgm to rgm_winter202. added ltcc text gcards for various variations. cad_cone cad files moved to cad _(by Maurizio Ungaro)_
+- 2024-12-03 **c4eca05** — ltcc variations renaming rgb_winter2019 to rgb_spring2020 and rgm to rgm_winter202. added ltcc text gcards for various variations. cad_cone cad files moved to cad _(by Maurizio Ungaro)_
 - 2024-11-26 **f91be05** — htcc variations name conform to other detectors, adding htcc sqlite gcards, improved various readme _(by Maurizio Ungaro)_
 - 2024-11-26 **6f72797** — added flux to ignore wf:10 detectors for main _(by Maurizio Ungaro)_
 - 2024-11-25 **e0ae5b4** — gemc exe was in wrong place _(by Maurizio Ungaro)_

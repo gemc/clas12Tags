@@ -18,8 +18,8 @@ our @rga_spring2018_materials;
 our @rga_fall2018_sectorsPresence;
 our @rga_fall2018_materials;
 
-our @rgb_winter2020_sectorsPresence;
-our @rgb_winter2020_materials;
+our @rgb_spring2020_sectorsPresence;
+our @rgb_spring2020_materials;
 
 our @rgb_spring2019_sectorsPresence;
 our @rgb_spring2019_materials;
@@ -241,10 +241,10 @@ sub build_hyp_mirrors {
                     $gasMaterial = $rga_fall2018_materials[$s - 1];
                 }
             }
-            elsif ($configuration_string eq "rgb_winter2020") {
-                if ($rgb_winter2020_sectorsPresence[$s - 1] == 1) {
+            elsif ($configuration_string eq "rgb_spring2020") {
+                if ($rgb_spring2020_sectorsPresence[$s - 1] == 1) {
                     $shouldPrintDetector = 1;
-                    $gasMaterial = $rgb_winter2020_materials[$s - 1];
+                    $gasMaterial = $rgb_spring2020_materials[$s - 1];
                 }
             }
             elsif ($configuration_string eq "rgb_spring2019") {
