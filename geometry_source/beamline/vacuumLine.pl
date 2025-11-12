@@ -28,7 +28,7 @@ sub vacuumLine() {
         || $variation eq "rgf_spring2020"
         || $variation eq "rgm_fall2021"
         || $variation eq "rge_spring2024"
-        || $variation eq "rgd_spring2023"
+        || $variation eq "rgd_fall2023"
         || $variation eq "ddvcs") {
         $shieldStart = 503; # 46 cm shift
     }
@@ -133,7 +133,7 @@ sub vacuumLine() {
         || $variation eq "rgf_spring2020"
         || $variation eq "rgm_fall2021"
         || $variation eq "rge_spring2024"
-        || $variation eq "rgd_spring2023"
+        || $variation eq "rgd_fall2023"
         || $variation eq "ddvcs") {
         $zpos = 502.5; # 46 cm shift
     }
@@ -193,7 +193,7 @@ sub vacuumLine() {
     if ($variation eq "rgk_winter2018"
         || $variation eq "rgf_spring2020"
         || $variation eq "rgm_fall2021"
-        || $variation eq "rgd_spring2023"
+        || $variation eq "rgd_fall2023"
         || $variation eq "rge_spring2024") {
         $gapLength = 86.5;
     }
