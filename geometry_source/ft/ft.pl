@@ -55,7 +55,6 @@ my @variations = ("default",
     "rgb_spring2019",
     "rgf_spring2020",
     "rgc_summer2022",
-    "rgd_spring2023",
     "rgd_fall2023",
     "rgl_spring2025");
 my @runs = clas12_runs(@variations);
