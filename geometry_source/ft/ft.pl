@@ -51,6 +51,7 @@ sub create_system {
 
 # the rgc fall variation contains an empty volume to indicate it's 'out'. This way we can include it in all gcards.
 my @variations = ("default",
+    "rga_spring2018",
     "rgk_winter2018",
     "rgb_spring2019",
     "rgf_spring2020",
