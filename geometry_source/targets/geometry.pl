@@ -22,6 +22,7 @@ require "./apollo.pl"; # rgc
 require "./alert.pl";  # rgl
 require "./rgd_solid.pl"; # rgd
 require "./rge.pl";  # rge
+require "./short_cryocell_targets.pl"; # rgm
 
 sub load_target_parameters {
     $target_zpos = $parameters{"target_zpos"};
@@ -80,7 +81,10 @@ sub build_target {
         or $configuration_string eq "rgm_fall2021_Cx4"
         or $configuration_string eq "rgm_fall2021_Ca"
         or $configuration_string eq "rgm_fall2021_Sn"
-        or $configuration_string eq "rgm_fall2021_Snx4") {
+        or $configuration_string eq "rgm_fall2021_Snx4"
+        or $configuration_string eq "rgm_fall2021_Ar"
+        or $configuration_string eq "rgm_fall2021_C_v2_S"
+        or $configuration_string eq "rgm_fall2021_C_v2_L") {
         build_rgm_targets();
     }
     elsif ($configuration_string eq "rgd_fall2023_CxC") {
