@@ -60,6 +60,7 @@ sub create_system {
 }
 
 my @variations = ("default",
+    "rga_spring2018",
     "rgk_winter2018",
     "rgb_spring2019",
     "rgf_spring2020",
