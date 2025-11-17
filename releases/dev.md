@@ -3,16 +3,57 @@
 ## In progress
 
 - Torus + Shielding beamline CAD geometry (in progress) 
-- Several issues with RG-F target #236 (in progress)
 - DC v2
 - Meson
-- G4 11.3.2
+- G4 11.4.0
 
 <br/><br/>
 <hr/>
 <!-- AUTO-DEVMD:START -->
 ## Commits on main
 
+- 2025-11-14 **9f909a5** — added beamline rga_spring2018 configuration as per Raffa request _(by Maurizio Ungaro)_
+- 2025-11-13 **cc45dec** — added ft rga_spring2018 _(by Maurizio Ungaro)_
+- 2025-11-13 **747ec2a** — logging gcard on screen before running gemc on exp gcards _(by Maurizio Ungaro)_
+- 2025-11-12 **02000a1** — rgm target cad and z position changes _(by Maurizio Ungaro)_
+- 2025-11-12 **9cddcda** — fixed rgm target run numbers _(by Maurizio Ungaro)_
+- 2025-11-12 **c598ee6** — added -30 mm to rgm targets, fixed cad for rgm targets _(by Maurizio Ungaro)_
+- 2025-11-12 **f94c645** — removed rgd_spring2023 and ft from rgc fall2022 gcard _(by Maurizio Ungaro)_
+- 2025-11-12 **f470fe5** — fixed ft and beamline variations : rgd_fall2023 db added, extra db removed _(by Maurizio Ungaro)_
+- 2025-11-12 **1d8b9a9** — fixed ft and beamline variations _(by Maurizio Ungaro)_
+- 2025-11-11 **6a637aa** — Merge branch 'main' of mauriGithub:gemc/clas12Tags _(by Maurizio Ungaro)_
+- 2025-11-11 **cd33d9c** — run numbers based on rcdb, using correct naming for some experiments _(by Maurizio Ungaro)_
+- 2025-11-06 **2650351** — DC hit process now uses v1 t2d_pressure _(by Raffaella De Vita)_
+- 2025-11-05 **de9b16c** — added targets to ci _(by Maurizio Ungaro)_
+- 2025-11-04 **1fe6ab2** — Remove 5cm RICH shift from rgc geometry _(by Connor Pecar)_
+- 2025-11-04 **27fb33a** — Remove 5cm shift for consistency in RICH position between run groups _(by Connor Pecar)_
+- 2025-11-04 **ae84a16** — update comments _(by Felix Touchte Codjo)_
+- 2025-11-04 **37d42f4** — cleanup _(by Felix Touchte Codjo)_
+- 2025-11-04 **b9c7538** — remove time shift _(by Felix Touchte Codjo)_
+- 2025-11-04 **2005f0c** — load time2distance and invert it _(by Felix Touchte Codjo)_
+- 2025-10-31 **4af9d6f** — fix distance in ahdc simulation _(by Felix Touchte Codjo)_
+- 2025-10-30 **3ebd021** — clean extraction code _(by Felix Touchte Codjo)_
+- 2025-10-21 **5fa678b** — dev release also delete the old one _(by Maurizio Ungaro)_
+- 2025-10-21 **9051ce2** — nightly dev actually publishing a release _(by Maurizio Ungaro)_
+- 2025-10-17 **28fa3ca** — fixed java version on gcards test _(by Maurizio Ungaro)_
+- 2025-10-17 **c613b5f** — using java 21 for all workflows _(by Maurizio Ungaro)_
+- 2025-10-17 **6a407cb** — using java 21 _(by Maurizio Ungaro)_
+- 2025-10-17 **6b062ca** — using RF offset in RFSETUP _(by Maurizio Ungaro)_
+- 2025-01-28 **d555059** — added htcc npe -> adc conversion factors from ccdb, removing the hardcoded gain=100 _(by raffaelladevita)_
+- 2025-01-28 **9ff878d** — added ftof and ctof fadc time offset _(by raffaelladevita)_
+- 2025-10-06 **1f8b6a1** — fixed name of integrated raw option _(by Maurizio Ungaro)_
+- 2025-10-06 **8050f13** — ntracks_metricks.sh script fix and alert material was not printed fix _(by Maurizio Ungaro)_
+- 2025-10-06 **5785fef** — fixed target rga fall 2018 cad variation is default _(by Maurizio Ungaro)_
+- 2025-10-06 **fb63f23** — fixed longitudinal target gcard _(by Maurizio Ungaro)_
+- 2025-10-06 **a2d1343** — removed obsolete gcards _(by Maurizio Ungaro)_
+- 2025-10-06 **150437c** — metrics test re-run and logging output if failure as it is working on my mac _(by Maurizio Ungaro)_
+- 2025-10-02 **ee52b2e** — fix options in track metric _(by Maurizio Ungaro)_
+- 2025-10-02 **8b83d71** — testing no force loading on linux _(by Maurizio Ungaro)_
+- 2025-10-01 **68fa11d** — fixed ci/lund_run_test.sh , removed deprecated gcards, new fix needed for SConstruct on macos _(by Maurizio Ungaro)_
+- 2025-10-01 **5858610** — Merge branch 'main' of mauriGithub:gemc/clas12Tags # Please enter a commit message to explain why this merge is necessary, # especially if it merges an updated upstream into a topic branch. # # Lines starting with '#' will be ignored, and an empty message aborts # the commit. _(by Maurizio Ungaro)_
+- 2025-10-01 **b0ac051** — fixed ci/lund_run_test.sh _(by Maurizio Ungaro)_
+- 2025-09-15 **85c24ca** — Re-implement time offset to bring TDC lead time closer to distribution in data _(by Connor Pecar)_
+- 2025-09-29 **4db26de** — updated notes and added noint and saveall to metrics _(by Maurizio Ungaro)_
 - 2025-09-29 **b59b2b5** — pol target shift coming from parameters, rgd parameters comments fix. _(by Maurizio Ungaro)_
 - 2025-09-29 **a549534** — new stl files from the geometry service for RICH _(by Maurizio Ungaro)_
 - 2025-09-29 **6e536f2** — reduced min step for alert _(by Maurizio Ungaro)_
@@ -460,7 +501,7 @@
 - 2024-12-05 **14c7a89** — rename target cad directories to a common cad prefix. target and magnets cad.gxml renamed cad_default.gxml _(by Maurizio Ungaro)_
 - 2024-12-05 **3a0c60f** — added sqlite cad and mirrors gemc api _(by Maurizio Ungaro)_
 - 2024-12-04 **f675d23** — added sqlite cad and mirror factories _(by Maurizio Ungaro)_
-- 2024-12-03 **c4eca05** — ltcc variations renaming rgb_winter2019 to rgb_spring2020 and rgm to rgm_winter202. added ltcc text gcards for various variations. cad_cone cad files moved to cad _(by Maurizio Ungaro)_
+- 2024-12-03 **c4eca05** — ltcc variations renaming rgb_winter2019 to rgb_winter2020 and rgm to rgm_winter202. added ltcc text gcards for various variations. cad_cone cad files moved to cad _(by Maurizio Ungaro)_
 - 2024-11-26 **f91be05** — htcc variations name conform to other detectors, adding htcc sqlite gcards, improved various readme _(by Maurizio Ungaro)_
 - 2024-11-26 **6f72797** — added flux to ignore wf:10 detectors for main _(by Maurizio Ungaro)_
 - 2024-11-25 **e0ae5b4** — gemc exe was in wrong place _(by Maurizio Ungaro)_
