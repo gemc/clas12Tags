@@ -121,6 +121,7 @@ public:
 		{"atof",    24},
 		{"ahdc",    25},
 		{"recoil",  26},
+		{"recoil_tof", 27},
 		{"flux",   100}
 	};
 
