@@ -1456,9 +1456,9 @@ sub build_RGM_Ca {
     print_det(\%configuration, \%detector);
 }
 
-# RGM_lAr implementation
-sub build_new_rgm_targets {
-    my ($configuration_string) = @_; #To add $configuration_string as an argument to the build_new_rgm_targets subroutine
+# Short cryocell targets - lAr, small foils, and large foils
+sub build_short_cryocell_targets {
+    my ($configuration_string) = @_; #To add $configuration_string as an argument to the build_short_cryocell_targets subroutine
 
     # Flag Shaft Geometry (cm/deg)
     my @flag_shaft = (0.2665, 0.3175, 8.145, 0, 360, 0, 0, 0); #Inner radius, outer radius, half length, initial angle, final angle, x angle, y angle, z angle
@@ -1834,7 +1834,7 @@ sub build_rgm_targets {
     elsif ($configuration_string eq "rgm_fall2021_Ar"
         or $configuration_string eq "rgm_fall2021_C_v2_S"
         or $configuration_string eq "rgm_fall2021_C_v2_L") {
-        build_new_rgm_targets($configuration_string);
+        build_short_cryocell_targets($configuration_string);
     }
 
 }
