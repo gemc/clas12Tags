@@ -1,0 +1,20 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+	<detector name="cad/"                      factory="CAD"  variation="rga_spring2018"/>
+	<detector name="beamline"                  factory="TEXT" variation="rga_spring2018"/>
+	<detector name="experiments/clas12/ft/ft"  factory="TEXT" variation="rga_spring2018"/>
+
+	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
+	<option name="SPREAD_P" value="0.0*GeV, 10*deg, 180*deg"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="INTEGRATEDRAW" value="ft_cal, ft_hodo, ft_trk"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+
+</gcard>

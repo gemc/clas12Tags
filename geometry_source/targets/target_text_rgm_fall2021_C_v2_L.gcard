@@ -3,7 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 
 	<detector name="target" factory="TEXT" variation="rgm_fall2021_C_v2_L"/>
-	<detector name="cad_rgm_new/" factory="CAD" variation="default"/>
+	<detector name="cad_short_cryocell/" factory="CAD" variation="default"/>
 
 
 
