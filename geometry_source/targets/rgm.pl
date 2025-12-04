@@ -1466,10 +1466,24 @@ sub build_short_cryocell_targets {
     my (@Sn_flag_pole, @C_flag_pole, @Sn_flag, @C_flag, @Sn_target, @C_target, @flag_pole_relpos, @row);
     my ($separation, $offset_x, $offset_y, $offset_z, $row_pole, $row_target, $row_flag, $Sn_p_x, $Sn_p_y);
     my ($C_p_x, $C_p_y, $Sn_t_x, $Sn_t_y, $C_t_x, $C_t_y, $Sn_f_x, $Sn_f_y, $C_f_x, $C_f_y);
+    
+    # Variables for calculating the custom foil target's z offset
+    my ($cryocell_to_foil_difference, $exit_window_z_dimensions, $foil_half_thickness, $custom_foil_z_offset);
 
     # separation = distance the flags set the target above the end of the flag poles.
     # This distance is kept the same for small and large foils.
     $separation = 0.127;
+
+    # Calculate the custom z offset for the foil targets within the cryocell, to fit the data up to a few mm:
+    $cryocell_to_foil_difference = 3.4; # Measured in CAD drawing, conformed in the data up to a few mm.
+    # $cryocell_to_foil_difference = 3.24; # Measured in CAD drawing, conformed in the data up to a few mm.
+    $exit_window_z_dimensions = 0.25;    # Distance from the upstream edge of the cryocell's CAD exit window, to the CAD upstream face of the foils (cm).
+    $foil_half_thickness = 0.1;          # Half thickness of the foil target (cm).
+    # $custom_foil_z_offset = 0;
+    $custom_foil_z_offset = 5 - $cryocell_to_foil_difference + $exit_window_z_dimensions - $foil_half_thickness;
+    $flag_shaft[2] = ($flag_shaft[2]*2 - $custom_foil_z_offset)/2; # Update the flag_shaft half length to include the custom z offset, so that the shaft won't go out of the mother volume.
+
+    print("\n\ncustom_foil_z_offset:\t\t\t\t $custom_foil_z_offset [cm]\n\n");
 
     @flag_pole_relpos = (0.381, 1.25, 1.25, 1.25); #Distance from end of flag_shaft to center of flag_pole 1, center of flag_pole 1 to center of flag_pole 2, center of flag_pole 2 to center of flag_pole 3, and center of flag_pole 3 to center of flag_pole 4
     @row = ($flag_shaft[2] - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2] - $flag_pole_relpos[3], $flag_shaft[2] - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2], $flag_shaft[2] - $flag_pole_relpos[0] - $flag_pole_relpos[1], $flag_shaft[2] - $flag_pole_relpos[0]); #Positions of rows of the flag_poles.
@@ -1493,22 +1507,27 @@ sub build_short_cryocell_targets {
             @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
 
             # Targets Geometry (cm)
-            @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
-            @C_target = (0.175, 0.405, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            @Sn_target = (0.175, 0.405, $foil_half_thickness, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            @C_target = (0.175, 0.405, $foil_half_thickness, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            # @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            # @C_target = (0.175, 0.405, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
         } elsif ($configuration_string eq "rgm_fall2021_C_v2_L") {
             # Flag Geometry (cm)
             @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
             @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
 
             # Targets Geometry (cm)
-            @Sn_target = (0.245, 0.455, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
-            @C_target = (0.245, 0.455, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            @Sn_target = (0.245, 0.455, $foil_half_thickness, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            @C_target = (0.245, 0.455, $foil_half_thickness, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            # @Sn_target = (0.245, 0.455, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            # @C_target = (0.245, 0.455, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
         }
 
         # Offset to "zero" the center of the target.
         $offset_x = 0.0;
         $offset_y = -(2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation); # Set Y=0 to be center on target.
-        $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2); #0.625 from magic? (first flag is flag 0)
+        $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2) - $custom_foil_z_offset; #0.625 from magic? (first flag is flag 0)
+        # $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2); #0.625 from magic? (first flag is flag 0)
 
         # Adjusted position of the rows for the flag poles.
         $row_pole = ($row[3] + $offset_z);
@@ -1556,8 +1575,10 @@ sub build_short_cryocell_targets {
         @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
 
         # Targets Geometry (cm)
-        @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55/2); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
-        @C_target = (0.175, 0.405, 0.1, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+        @Sn_target = (0.175, 0.405, $foil_half_thickness, 0, 0, -55/2); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+        @C_target = (0.175, 0.405, $foil_half_thickness, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+        # @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55/2); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+        # @C_target = (0.175, 0.405, 0.1, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
 
         my $Sn_rot_degrees = $Sn_target[5];
         my $C_rot_degrees = $C_target[5];
@@ -1568,7 +1589,7 @@ sub build_short_cryocell_targets {
         # Offset to "zero" the center of the target.
         $offset_x = 0.0;
         $offset_y = -(2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation); # Set Y=0 to be center on target.
-        $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2); #0.625 from magic? (first flag is flag 0)
+        $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2) - $custom_foil_z_offset; #0.625 from magic? (first flag is flag 0)
 
         # Adjusted position of the rows for the flag poles.
         $row_pole = ($row[3] + $offset_z);

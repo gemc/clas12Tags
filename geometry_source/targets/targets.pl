@@ -117,7 +117,7 @@ my @custom_variations = ("pbtest", "ND3", "hdice", "longitudinal", "transverse",
 # list of original variations in gemc 5.11:
 # lH2, lD2, lHe, ND3, PolTarg, APOLLOnh3, APOLLOnd3, lH2e,
 # bonusD2, bonusH2, bonusHe, pbTest, hdIce, longitudinal, transverse,
-# RGM_2_C, RGM_2_Sn, RGM_8_C_S, RGM_8_C_L, RGM_8_Sn_S, RGM_8_Sn_L, RGM_Ca, rgm_fall2021_Ar, rgm_fall2021_C_v2_S, rgm_fall2021_C_v2_L,
+# RGM_2_C, RGM_2_Sn, RGM_8_C_S, RGM_8_C_L, RGM_8_Sn_S, RGM_8_Sn_L, RGM_Ca,
 # alertD2, alertH2, alertHe, lD2CxC, lD2CuSn, 2cm-lD2, 2cm-lD2-empty
 
 
