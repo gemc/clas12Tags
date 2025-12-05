@@ -1475,6 +1475,7 @@ sub build_short_cryocell_targets {
     $separation = 0.127;
 
     # Calculate the custom z offset for the foil targets within the cryocell, to fit the data up to a few mm:
+    # TODO: decide on the final value to use for $cryocell_to_foil_difference
     $cryocell_to_foil_difference = 3.4; # Measured in CAD drawing, conformed in the data up to a few mm.
     # $cryocell_to_foil_difference = 3.24; # Measured in CAD drawing, conformed in the data up to a few mm.
     $exit_window_z_dimensions = 0.25;    # Distance from the upstream edge of the cryocell's CAD exit window, to the CAD upstream face of the foils (cm).
