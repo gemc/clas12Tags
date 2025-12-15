@@ -4,19 +4,27 @@
 // gemc headers
 #include "HitProcess.h"
 
-
 class atofConstants
 {
 public:
-	
-	// Database parameters
-	int    runNo;
-	string date;
-	string connection;
-	char   database[80];
-	
-	// translation table
-	TranslationTable TT;
+  
+  // Database parameters
+  int    runNo;
+  string date;
+  string connection;
+  char   database[80];
+  
+  //time offsets
+  //sector,layer,component,(T0,dT0)
+  vector<double> timeOffset[1][1][1][2];
+  //sector,layer,component,order,(TUD,dTUD)
+  vector<double> timeUD[1][1][1][1][2];
+  // veff: effective velocity
+  //sector,layer,component,(veff,dveff)
+  vector<double> veff[1][1][1][2];
+  
+  // translation table
+  TranslationTable TT;
 };
 
 
@@ -56,7 +64,15 @@ public:
 	
 	// - electronicNoise: returns a vector of hits generated / by electronics.
 	vector<MHit*> electronicNoise();
-	
+
+        //time offsets
+        //sector,layer,component,order,(T0,dT0)
+	vector<double> timeOffset[1][1][1][1][2];
+        vector<double> tUD[1][1][1][1][2];
+	// veff: effective velocity
+        //sector,layer,component,(veff,dveff)
+	vector<double> veff[1][1][1][2];
+  
 };
 
 
