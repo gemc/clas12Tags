@@ -14,19 +14,57 @@ using namespace ccdb;
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-static atofConstants initializeATOFConstants(int runno, string digiVariation = "default") {
+static atofConstants initializeATOFConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false) {
 	atofConstants atc;
 	
 	// do not initialize at the beginning, only after the end of the first event,
 	// with the proper run number coming from options or run table
-	if (runno == -1) return atc;
+	if(runno == -1) return atc;
+	string timestamp = "";
+	if(digiSnapshotTime != "no") {
+		timestamp = ":"+digiSnapshotTime;
+	}
+	
+	cout << "Entering initializeATOF" << endl;
 	
 	atc.runNo = runno;
 	if (getenv("CCDB_CONNECTION") != nullptr)
 		atc.connection = (string) getenv("CCDB_CONNECTION");
 	else
-		atc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
+		atc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";	
 	
+	int isec, ilay, icomponent, iorder;
+	vector<vector<double> > data;
+	
+	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(atc.connection));
+	cout << "Connecting to " << atc.connection << "/calibration/alert/atof" << endl;
+	
+	snprintf(atc.database, sizeof(atc.database),  "/calibration/atof/effective_velocity:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
+	cout << "ATOF:Getting effective_velocity" << endl;
+	data.clear();
+	calib->GetCalib(data, atc.database);
+	for (unsigned row = 0; row < data.size(); row++) {
+		isec = data[row][0];
+		ilay = data[row][1];
+		icomponent = data[row][2];
+		atc.veff[isec][ilay][icomponent][0].push_back(data[row][4]);
+		atc.veff[isec][ilay][icomponent][1].push_back(data[row][5]);
+	}
+		
+	snprintf(atc.database, sizeof(atc.database), "/calibration/atof/time_offsets:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
+	cout << "ATOF:Getting time_offsets" << endl;
+	data.clear();
+	calib->GetCalib(data, atc.database);
+	for (unsigned row = 0; row < data.size(); row++) {
+		isec = data[row][0];
+		ilay = data[row][1];
+		icomponent = data[row][2];
+		iorder = data[row][3];
+		atc.timeOffset[isec][ilay][icomponent][0].push_back(data[row][4]);
+		atc.timeOffset[isec][ilay][icomponent][1].push_back(data[row][7]);
+		atc.timeUD[isec][ilay][icomponent][iorder][0].push_back(data[row][5]);
+		atc.timeUD[isec][ilay][icomponent][iorder][1].push_back(data[row][8]);
+	}	
 	return atc;
 }
 
