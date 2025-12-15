@@ -13,15 +13,19 @@ public:
   string date;
   string connection;
   char   database[80];
-  
+
+  static constexpr unsigned NSECT = 15;
+  static constexpr unsigned NLAY  = 4;
+  static constexpr unsigned NCOMP = 11;
+  static constexpr unsigned NORDER = 2;  
   //time offsets
   //sector,layer,component,(T0,dT0)
-  vector<double> timeOffset[1][1][1][2];
+  vector<double> timeOffset[NSECT][NLAY][NCOMP][2];
   //sector,layer,component,order,(TUD,dTUD)
-  vector<double> timeUD[1][1][1][1][2];
+  vector<double> timeUD[NSECT][NLAY][NCOMP][NORDER][2];
   // veff: effective velocity
   //sector,layer,component,(veff,dveff)
-  vector<double> veff[1][1][1][2];
+  vector<double> veff[NSECT][NLAY][NCOMP][2];
   
   // translation table
   TranslationTable TT;
