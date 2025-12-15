@@ -39,19 +39,19 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
 	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(atc.connection));
 	cout << "Connecting to " << atc.connection << "/calibration/alert/atof" << endl;
 	
-	snprintf(atc.database, sizeof(atc.database),  "/calibration/atof/effective_velocity:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(atc.database, sizeof(atc.database),  "/calibration/alert/atof/effective_velocity:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
 	cout << "ATOF:Getting effective_velocity" << endl;
 	data.clear();
 	calib->GetCalib(data, atc.database);
 	for (unsigned row = 0; row < data.size(); row++) {
-		isec = data[row][0];
-		ilay = data[row][1];
-		icomponent = data[row][2];
-		atc.veff[isec][ilay][icomponent][0].push_back(data[row][4]);
-		atc.veff[isec][ilay][icomponent][1].push_back(data[row][5]);
+	  isec = data[row][0];
+	  ilay = data[row][1];
+	  icomponent = data[row][2];
+	  atc.veff[isec][ilay][icomponent][0].push_back(data[row][4]);
+	  atc.veff[isec][ilay][icomponent][1].push_back(data[row][5]);	  
 	}
 		
-	snprintf(atc.database, sizeof(atc.database), "/calibration/atof/time_offsets:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(atc.database, sizeof(atc.database), "/calibration/alert/atof/time_offsets:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
 	cout << "ATOF:Getting time_offsets" << endl;
 	data.clear();
 	calib->GetCalib(data, atc.database);
