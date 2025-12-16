@@ -159,11 +159,16 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double EtimesTime_Front=0.0;
   double EtimesTime_Back=0.0;
   double EtimesTime_Top=0.0;
-  
-  double v_eff_Front = atc.veffTable[atof_sector][atof_layer][atof_paddle].veff;//mm.ns
+
+  //effective velocity
+  //in principle defined separately for up bar/down bar/wedge
+  //mean and sigma from ccdb fit
+  double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].veff;//mm.ns
+  double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].dveff;
+  double v_eff_Front = G4RandGauss::shoot(effVelocity, deffVelocity);
+  //for now consider veff in all directions, for all scintillators
   double v_eff_Back = v_eff_Front;
   double  v_eff_Top = v_eff_Front;
-  double dveff = 0;//atc.veff[sector][layer][component][1];
   
   double t0 = 0;//atc.timeOffset[atof_sector][atof_layer][atof_paddle][0];
   
