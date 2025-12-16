@@ -36,7 +36,7 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     atc.connection = (string) getenv("CCDB_CONNECTION");
   else
     atc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";	
-
+  
   //table indices
   int isec, ilay, icomponent, iorder;
   //reads out ccdb table
@@ -53,9 +53,9 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
   for (unsigned row = 0; row < data.size(); row++) {
     isec = data[row][0];
     ilay = data[row][1];
-    icomponent = data[row][2];
-    atc.veffTable[isec][ilay][icomponent].value=data[row][4];
-    atc.veffTable[isec][ilay][icomponent].dvalue=data[row][5];
+    icomponent = data[row][2];    
+    atc.veffTable[isec][ilay][icomponent].value=data[row][3];
+    atc.veffTable[isec][ilay][icomponent].dvalue=data[row][4];
   }
 
   //Time offsets readout, T0 and TUD
@@ -165,9 +165,10 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].value;//mm.ns
   double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].dvalue;
   double v_eff_Front = G4RandGauss::shoot(effVelocity, deffVelocity);
-  //for now consider veff in all directions, for all scintillators
+  //for now consider veff in all directions
   double v_eff_Back = v_eff_Front;
-  double  v_eff_Top = v_eff_Front;
+  //and ignore it for wedges
+  //double  v_eff_Top = 100000;
   
   double t0 = G4RandGauss::shoot(atc.timeOffsetTable[atof_sector][atof_layer][atof_paddle].value,
 				 atc.timeOffsetTable[atof_sector][atof_layer][atof_paddle].dvalue);
@@ -239,14 +240,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	      E_tot_Top = E_tot_Top + e_Top;
 	    }
 	  
-	  EtimesTime_Top = EtimesTime_Top + (times[s] + H_hit_SiPM/v_eff_Top)*e_Top;
-	  //cout << "Distance from hit to Top SiPM (mm): " << H_hit_SiPM << endl;
-	  /*
-	    if ( dist_h_SiPMTop <= H_hit_SiPM )
-	    {
-	    dist_h_SiPMTop = H_hit_SiPM; // mm!!!
-	    }
-	  */
+	  EtimesTime_Top = EtimesTime_Top + (times[s])*e_Top;// + H_hit_SiPM/v_eff_Top)*e_Top;	  
 	}	
     }
   // cout << "First loop on steps ends" << endl;
