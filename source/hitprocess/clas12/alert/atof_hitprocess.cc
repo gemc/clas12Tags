@@ -73,7 +73,6 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     atc.timeUDTable[isec][ilay][icomponent][iorder].value = data[row][5];
     atc.timeUDTable[isec][ilay][icomponent][iorder].dvalue = data[row][8];
   }
-
   return atc;
 }
 
@@ -170,13 +169,13 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double v_eff_Back = v_eff_Front;
   double  v_eff_Top = v_eff_Front;
   
-  double t0 = 0;//atc.timeOffset[atof_sector][atof_layer][atof_paddle][0];
+  double t0 = G4RandGauss::shoot(atc.timeOffsetTable[atof_sector][atof_layer][atof_paddle].value,
+				 atc.timeOffsetTable[atof_sector][atof_layer][atof_paddle].dvalue);
+  if(atof_paddle==10) t0 = t0/2;//bar sum to individual bar hits
   
-  /*
-    double dist_h_SiPMFront =0.0;
-    double dist_h_SiPMBack =0.0;
-    double dist_h_SiPMTop =0.0;
-  */
+  double tUD = G4RandGauss::shoot(atc.timeUDTable[atof_sector][atof_layer][atof_paddle][atof_order].value,
+				  atc.timeUDTable[atof_sector][atof_layer][atof_paddle][atof_order].dvalue);
+  
   // cout << "First loop on steps begins" << endl;
   
 	
@@ -274,7 +273,8 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double time_front = 0.00000;
   double time_back = 0.00000;
   double time_top = 0.00000;
-  double sigma_time = 0.1; // in ns! 100 ps = 0.1 ns
+  double sigma_time = 0.01;//reducing sigma time since realistic resolution from veff and time offset calibrations are included
+  //0.1; // in ns! 100 ps = 0.1 ns
   
   ///////ALL OF THIS PART WILL NEED TO BE UPDATED WITH ACTUAL CALIBRATION	
   if ((E_tot_Front > 0.0) || (E_tot_Back > 0.0)) 
@@ -288,8 +288,8 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
       adc_front = energy_fr *adc_CC_front *(1/(dEdxMIP*0.3)); // 3 mm sl0 (radial) thickness in XY -> 0.3 cm
       adc_back = energy_bck *adc_CC_back *(1/(dEdxMIP*0.3));
       
-      time_front = EtimesTime_Front/E_tot_Front;
-      time_back = EtimesTime_Back/E_tot_Back;
+      time_front = EtimesTime_Front/E_tot_Front + t0 + tUD/2;
+      time_back = EtimesTime_Back/E_tot_Back + t0 - tUD/2;
       tdc_front = G4RandGauss::shoot(time_front, sigma_time) / tdc_CC_front; 
       tdc_back = G4RandGauss::shoot(time_back, sigma_time) / tdc_CC_back;
     }
@@ -299,7 +299,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
       double energy_top = nphe_top/pmtPEYld;
       
       adc_top = energy_top *adc_CC_top *(1/(dEdxMIP*2.0)); // 20 mm sl1 (radial) thickness in XY -> 2.0 cm
-      time_top = EtimesTime_Top/E_tot_Top;
+      time_top = EtimesTime_Top/E_tot_Top + t0;
       tdc_top  = G4RandGauss::shoot(time_top, sigma_time) / tdc_CC_top;
     }
   
