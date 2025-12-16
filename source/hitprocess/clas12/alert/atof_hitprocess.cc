@@ -36,13 +36,16 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     atc.connection = (string) getenv("CCDB_CONNECTION");
   else
     atc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";	
-	
+
+  //table indices
   int isec, ilay, icomponent, iorder;
+  //reads out ccdb table
   vector<vector<double>> data;
 	
   unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(atc.connection));
   cout << "Connecting to " << atc.connection << "/calibration/alert/atof" << endl;
-	
+
+  //Effective velocity readout
   snprintf(atc.database, sizeof(atc.database),  "/calibration/alert/atof/effective_velocity:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
   cout << "ATOF:Getting effective_velocity" << endl;
   data.clear();
@@ -54,7 +57,8 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     atc.veffTable[isec][ilay][icomponent].veff=data[row][4];
     atc.veffTable[isec][ilay][icomponent].dveff=data[row][5];
   }
-  
+
+  //Time offsets readout, T0 and TUD
   snprintf(atc.database, sizeof(atc.database), "/calibration/alert/atof/time_offsets:%d:%s%s", atc.runNo, digiVariation.c_str(), timestamp.c_str());
   cout << "ATOF:Getting time_offsets" << endl;
   data.clear();
@@ -68,7 +72,8 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     atc.timeOffset[isec][ilay][icomponent][1].push_back(data[row][7]);
     atc.timeUD[isec][ilay][icomponent][iorder][0].push_back(data[row][5]);
     atc.timeUD[isec][ilay][icomponent][iorder][1].push_back(data[row][8]);
-  }	
+  }
+
   return atc;
 }
 
@@ -147,7 +152,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double E_tot_Top = 0.0;
   
   double attlength = 1600.0; // here in mm! because all lengths from the volume are in mm!! EJ-204 160 cm
-  double pmtPEYld = 1400.0; // EJ-204 10400 (photons / [1MeV*e-])
+  double pmtPEYld = 10400.0; // EJ-204 10400 (photons / [1MeV*e-])
   double dEdxMIP = 1.956; // energy deposited by MIP per cm of scintillator material, to be adapted for SiPM case, it is a function of ?
   
   //Variables for tdc calculation (time)
