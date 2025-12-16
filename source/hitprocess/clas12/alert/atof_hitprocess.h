@@ -4,10 +4,10 @@
 // gemc headers
 #include "HitProcess.h"
 
-//Holding veff values from CCDB
-struct VeffEntry {
-  double veff;
-  double dveff;
+//Holding value values from CCDB
+struct entryWithError {
+  double value;
+  double dvalue;
 };
 
 //CCDB constants
@@ -29,12 +29,12 @@ public:
   
   //time offsets
   //sector,layer,component,(T0,dT0)
-  vector<double> timeOffset[NSECT][NLAY][NCOMP][2];
+  entryWithError timeOffsetTable[NSECT][NLAY][NCOMP];
   //sector,layer,component,order,(TUD,dTUD)
-  vector<double> timeUD[NSECT][NLAY][NCOMP][NORDER][2];
-  // veff: effective velocity
-  //sector,layer,component,(veff,dveff)
-  VeffEntry veffTable[NSECT][NLAY][NCOMP];
+  entryWithError timeUDTable[NSECT][NLAY][NCOMP][NORDER];
+  // value: effective velocity
+  //sector,layer,component,(value,dvalue)
+  entryWithError veffTable[NSECT][NLAY][NCOMP];
   // translation table TBD
   //TranslationTable TT;
 };
@@ -74,15 +74,6 @@ public:
   
   // - electronicNoise: returns a vector of hits generated / by electronics.
   vector<MHit*> electronicNoise();
-
-  /*
-  //time offsets
-  //sector,layer,component,order,(T0,dT0)
-  vector<double> timeOffset[1][1][1][1][2];
-  vector<double> tUD[1][1][1][1][2];
-  // veff: effective velocity
-  //sector,layer,component,(veff,dveff)
-  vector<double> veff[1][1][1][2];*/
 };
 
 #endif

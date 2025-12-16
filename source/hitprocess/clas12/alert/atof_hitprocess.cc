@@ -54,8 +54,8 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     isec = data[row][0];
     ilay = data[row][1];
     icomponent = data[row][2];
-    atc.veffTable[isec][ilay][icomponent].veff=data[row][4];
-    atc.veffTable[isec][ilay][icomponent].dveff=data[row][5];
+    atc.veffTable[isec][ilay][icomponent].value=data[row][4];
+    atc.veffTable[isec][ilay][icomponent].dvalue=data[row][5];
   }
 
   //Time offsets readout, T0 and TUD
@@ -68,10 +68,10 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     ilay = data[row][1];
     icomponent = data[row][2];
     iorder = data[row][3];
-    atc.timeOffset[isec][ilay][icomponent][0].push_back(data[row][4]);
-    atc.timeOffset[isec][ilay][icomponent][1].push_back(data[row][7]);
-    atc.timeUD[isec][ilay][icomponent][iorder][0].push_back(data[row][5]);
-    atc.timeUD[isec][ilay][icomponent][iorder][1].push_back(data[row][8]);
+    atc.timeOffsetTable[isec][ilay][icomponent].value = data[row][4];
+    atc.timeOffsetTable[isec][ilay][icomponent].dvalue = data[row][7];
+    atc.timeUDTable[isec][ilay][icomponent][iorder].value = data[row][5];
+    atc.timeUDTable[isec][ilay][icomponent][iorder].dvalue = data[row][8];
   }
 
   return atc;
@@ -163,8 +163,8 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   //effective velocity
   //in principle defined separately for up bar/down bar/wedge
   //mean and sigma from ccdb fit
-  double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].veff;//mm.ns
-  double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].dveff;
+  double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].value;//mm.ns
+  double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].dvalue;
   double v_eff_Front = G4RandGauss::shoot(effVelocity, deffVelocity);
   //for now consider veff in all directions, for all scintillators
   double v_eff_Back = v_eff_Front;
