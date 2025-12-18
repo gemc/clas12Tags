@@ -1458,10 +1458,10 @@ sub build_RGM_Ca {
 
 # Short cryocell targets - lAr, small foils, and large foils
 sub build_short_cryocell_targets {
-    my ($configuration_string) = @_; #To add $configuration_string as an argument to the build_short_cryocell_targets subroutine
+    my ($configuration_string) = @_; # To add $configuration_string as an argument to the build_short_cryocell_targets subroutine
 
     # Flag Shaft Geometry (cm/deg)
-    my @flag_shaft = (0.2665, 0.3175, 8.145, 0, 360, 0, 0, 0); #Inner radius, outer radius, half length, initial angle, final angle, x angle, y angle, z angle
+    my @flag_shaft = (0.2665, 0.3175, 8.145, 0, 360, 0, 0, 0); # Inner radius, outer radius, half length, initial angle, final angle, x angle, y angle, z angle
 
     my (@Sn_flag_pole, @C_flag_pole, @Sn_flag, @C_flag, @Sn_target, @C_target, @flag_pole_relpos, @row);
     my ($separation, $offset_x, $offset_y, $offset_z, $row_pole, $row_target, $row_flag, $Sn_p_x, $Sn_p_y);
