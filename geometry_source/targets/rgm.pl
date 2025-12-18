@@ -1474,29 +1474,6 @@ sub build_short_cryocell_targets {
     # This distance is kept the same for small and large foils.
     $separation = 0.127;
 
-
-
-
-
-    # # Calculate the custom z offset for the foil targets within the cryocell, to fit the data up to a few mm:
-    # # TODO: decide on the final value to use for $cryocell_to_foil_difference
-    # $cryocell_to_foil_difference = 3.4; # Measured in CAD drawing, conformed in the data up to a few mm.
-    # # $cryocell_to_foil_difference = 3.24; # Measured in CAD drawing, conformed in the data up to a few mm.
-    # $exit_window_z_dimensions = 0.25;    # Distance from the upstream edge of the cryocell's CAD exit window, to the CAD upstream face of the foils (cm).
-    # $foil_half_thickness = 0.1;          # Half thickness of the foil target (cm).
-    # # $custom_foil_z_offset = 0;
-    # $custom_foil_z_offset = 5 - $cryocell_to_foil_difference + $exit_window_z_dimensions - $foil_half_thickness;
-    # $flag_shaft[2] = ($flag_shaft[2]*2 - $custom_foil_z_offset)/2; # Update the flag_shaft half length to include the custom z offset, so that the shaft won't go out of the mother volume.
-
-    # print("\n\ncustom_foil_z_offset:\t\t\t\t $custom_foil_z_offset [cm]\n");
-    # print("flag_shaft[2]:\t\t\t\t $flag_shaft[2]*2 [cm]\n\n");
-
-    # @flag_pole_relpos = (0.381, 1.25, 1.25, 1.25); #Distance from end of flag_shaft to center of flag_pole 1, center of flag_pole 1 to center of flag_pole 2, center of flag_pole 2 to center of flag_pole 3, and center of flag_pole 3 to center of flag_pole 4
-    # @row = ($flag_shaft[2] - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2] - $flag_pole_relpos[3], $flag_shaft[2] - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2], $flag_shaft[2] - $flag_pole_relpos[0] - $flag_pole_relpos[1], $flag_shaft[2] - $flag_pole_relpos[0]); #Positions of rows of the flag_poles.
-
-
-
-
     # Anonymous subroutine to compute all geometry quantities that depend on the custom foil z-offset.
     # This isolates the CAD/data-driven offset logic and returns all derived quantities explicitly.
     my $compute_custom_foil_geometry = sub {
