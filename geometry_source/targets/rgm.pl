@@ -1464,7 +1464,7 @@ sub build_short_cryocell_targets {
     my @flag_shaft = (0.2665, 0.3175, 8.145, 0, 360, 0, 0, 0); # Inner radius, outer radius, half length, initial angle, final angle, x angle, y angle, z angle
 
     my (@Sn_flag_pole, @C_flag_pole, @Sn_flag, @C_flag, @Sn_target, @C_target, @flag_pole_relpos, @row);
-    my ($separation, $offset_x, $offset_y, $offset_z, $row_pole, $row_target, $row_flag, $Sn_p_x, $Sn_p_y);
+    my ($offset_x, $offset_y, $offset_z, $row_pole, $row_target, $row_flag, $Sn_p_x, $Sn_p_y);
     my ($C_p_x, $C_p_y, $Sn_t_x, $Sn_t_y, $C_t_x, $C_t_y, $Sn_f_x, $Sn_f_y, $C_f_x, $C_f_y);
     
     # Variables for calculating the custom foil target's z offset
@@ -1472,21 +1472,31 @@ sub build_short_cryocell_targets {
 
     # separation = distance the flags set the target above the end of the flag poles (cm).
     # This distance is kept the same for small and large foils.
-    $separation = 0.127;
+    my $separation = 0.127;
+
+    # Average C--LAr offset based on Vz of CD pions in the data (C from run 15664 and LAr from run 15672)
+    my $cryocell_to_foil_diff_center_to_center_S = 3.50; # Small foils, C from run 15664 and LAr from run 15672
+    my $cryocell_to_foil_diff_center_to_center_L = 3.28; # Large foils, C from run 15778 and LAr from run 15743
 
     # Anonymous subroutine to compute all geometry quantities that depend on the custom foil z-offset.
     # This isolates the CAD/data-driven offset logic and returns all derived quantities explicitly.
     my $compute_custom_foil_geometry = sub {
         my (%args) = @_; # Read named arguments passed to the lambda for clarity and to avoid reliance on global variables.
 
-        my $flag_shaft_half_length = $args{flag_shaft_half_length}; # Half-length of the flag shaft before applying the custom foil z-offset correction (cm).
-        my $foil_half_thickness    = $args{foil_half_thickness};    # Half-thickness of the foil target, used to position the foil center correctly in z (cm).
-        my $cryocell_to_foil_diff  = $args{cryocell_to_foil_diff};  # CAD-measured distance between the cryocell reference plane and the upstream face of the foil (cm).
-        my $exit_window_z_dim      = $args{exit_window_z_dim};      # Distance from the upstream edge of the cryocell exit window to the CAD upstream face of the foils (cm).
+        my $flag_shaft_half_length = $args{flag_shaft_half_length};                                   # Half-length of the flag shaft before applying the custom foil z-offset correction (cm).
+        my $foil_half_thickness    = $args{foil_half_thickness};                                      # Half-thickness of the foil target, used to position the foil center correctly in z (cm).
+        my $exit_window_z_dim      = $args{exit_window_z_dim};                                        # Distance from the upstream edge of the cryocell exit window to the CAD upstream face of the foils (cm).
+        my $cryocell_to_foil_diff_center_to_center  = $args{cryocell_to_foil_diff_center_to_center};  # the difference between the short-cryocell center and the foil center (cm).
 
-        # Compute the effective z-offset of the foil center relative to the cryocell reference.
-        # The constant 5 cm corresponds to the cryocell half-length reference used throughout the geometry.
-        my $custom_foil_z_offset = 5 - $cryocell_to_foil_diff + $exit_window_z_dim - $foil_half_thickness;
+        # Compute the differance in z pos. between the short-cryocell and the foils, assuming that the Vz peaks in the data are at the center of their corresponding centers:
+        # target_cell_z_poz_diff_center_to_center = the differance between the short-cryocell center and the foil center (obtained from the data).
+        # target_cell_z_poz_diff_inedge_to_inedge = the differance between the short-cryocell's downstream edge and the foil's upstream edge.
+        # According to technical drawing BM2101-02-00-0000:
+        #   (*) target_cell_z_poz_diff_center_to_center = 5.1 cm
+        #   (*) target_cell_z_poz_diff_inedge_to_inedge = 4.75 cm
+        # Hence, if we use target_cell_z_poz_diff_center_to_center = 5.1 cm (i.e., up to spec as in BM2101-02-00-0000), then custom_foil_z_offset should be 0:
+        my $target_cell_z_poz_diff_inedge_to_inedge = $cryocell_to_foil_diff_center_to_center - $exit_window_z_dim - $foil_half_thickness;
+        my $custom_foil_z_offset = 4.75 - $target_cell_z_poz_diff_inedge_to_inedge;
 
         # Reduce the flag shaft half-length so that the shaft remains fully contained within the mother volume
         # after applying the custom foil z-offset.
@@ -1499,8 +1509,7 @@ sub build_short_cryocell_targets {
         my @row = ($updated_flag_shaft_half_length - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2] - $flag_pole_relpos[3],
                    $updated_flag_shaft_half_length - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2],
                    $updated_flag_shaft_half_length - $flag_pole_relpos[0] - $flag_pole_relpos[1],
-                   $updated_flag_shaft_half_length - $flag_pole_relpos[0]
-                  );
+                   $updated_flag_shaft_half_length - $flag_pole_relpos[0]);
 
         # Return all derived geometry quantities, as well as echoed inputs, so the caller
         # can maintain a consistent and explicit geometry state.
@@ -1511,9 +1520,9 @@ sub build_short_cryocell_targets {
             row                  => \@row,
 
             # Echo inputs so the caller can keep consistent state
-            foil_half_thickness   => $foil_half_thickness,
-            cryocell_to_foil_diff => $cryocell_to_foil_diff,
-            exit_window_z_dim     => $exit_window_z_dim,
+            foil_half_thickness                    => $foil_half_thickness,
+            exit_window_z_dim                      => $exit_window_z_dim,
+            cryocell_to_foil_diff_center_to_center => $cryocell_to_foil_diff_center_to_center,
         };
     };
 
@@ -1532,10 +1541,10 @@ sub build_short_cryocell_targets {
 
         if ($configuration_string eq "rgm_fall2021_C_v2_S") {
             my $geom = $compute_custom_foil_geometry->(
-                flag_shaft_half_length => $flag_shaft[2],
-                foil_half_thickness    => 0.1,
-                cryocell_to_foil_diff  => 3.28, # Avarage C--LAr offset based on Vz of CD pions in the data (C from run 15664 and LAr from run 15672)
-                exit_window_z_dim      => 0.25,
+                flag_shaft_half_length                  => $flag_shaft[2],
+                foil_half_thickness                     => 0.1,
+                exit_window_z_dim                       => 0.25,
+                cryocell_to_foil_diff_center_to_center  => $cryocell_to_foil_diff_center_to_center_S,
             );
 
             $custom_foil_z_offset = $geom->{custom_foil_z_offset};
@@ -1543,11 +1552,8 @@ sub build_short_cryocell_targets {
             @flag_pole_relpos     = @{ $geom->{flag_pole_relpos} };
             @row                  = @{ $geom->{row} };
             $foil_half_thickness        = $geom->{foil_half_thickness};
-            $cryocell_to_foil_difference = $geom->{cryocell_to_foil_diff};
+            $cryocell_to_foil_difference = $geom->{cryocell_to_foil_diff_center_to_center};
             $exit_window_z_dimensions    = $geom->{exit_window_z_dim};
-
-            print "\n\ncustom_foil_z_offset:\t\t\t\t $custom_foil_z_offset [cm]\n";
-            print "flag_shaft[2]:\t\t\t\t " . (2 * $flag_shaft[2]) . " [cm]\n\n";
 
             # Flag Geometry (cm)
             @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
@@ -1558,10 +1564,10 @@ sub build_short_cryocell_targets {
             @C_target = (0.175, 0.405, $foil_half_thickness, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
         } elsif ($configuration_string eq "rgm_fall2021_C_v2_L") {
             my $geom = $compute_custom_foil_geometry->(
-                flag_shaft_half_length => $flag_shaft[2],
-                foil_half_thickness    => 0.1,
-                cryocell_to_foil_diff  => 3.50, # Avarage C--LAr offset from the data (C from run 15778 and LAr from run 15743)
-                exit_window_z_dim      => 0.25,
+                flag_shaft_half_length                  => $flag_shaft[2],
+                foil_half_thickness                     => 0.1,
+                exit_window_z_dim                       => 0.25,
+                cryocell_to_foil_diff_center_to_center  => $cryocell_to_foil_diff_center_to_center_L,
             );
 
             $custom_foil_z_offset = $geom->{custom_foil_z_offset};
@@ -1569,11 +1575,8 @@ sub build_short_cryocell_targets {
             @flag_pole_relpos     = @{ $geom->{flag_pole_relpos} };
             @row                  = @{ $geom->{row} };
             $foil_half_thickness        = $geom->{foil_half_thickness};
-            $cryocell_to_foil_difference = $geom->{cryocell_to_foil_diff};
+            $cryocell_to_foil_difference = $geom->{cryocell_to_foil_diff_center_to_center};
             $exit_window_z_dimensions    = $geom->{exit_window_z_dim};
-
-            print "\n\ncustom_foil_z_offset:\t\t\t\t $custom_foil_z_offset [cm]\n";
-            print "flag_shaft[2]:\t\t\t\t " . (2 * $flag_shaft[2]) . " [cm]\n\n";
 
             # Flag Geometry (cm)
             @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
@@ -1599,35 +1602,34 @@ sub build_short_cryocell_targets {
         $row_flag = ($row[3] + $offset_z - $Sn_flag_pole[1] + $Sn_flag[2]);
 
         # Sn Flag Pole position (cm).
-        $Sn_p_x = -(0.81915 * ($Sn_flag_pole[2] + $flag_shaft[1]) + $offset_x); # Cos(35) is the decimal out front.
-        $Sn_p_y = 0.57358 * ($Sn_flag_pole[2] + $flag_shaft[1]) + $offset_y;    # Sin(35) is the decimal out front.
+        $Sn_p_x = -(0.81915 * ($Sn_flag_pole[2] + $flag_shaft[1]) + $offset_x); # Cos(55) is the decimal out front.
+        $Sn_p_y = 0.57358 * ($Sn_flag_pole[2] + $flag_shaft[1]) + $offset_y;    # Sin(55) is the decimal out front.
 
         # C Flag Pole positions (cm).
         $C_p_x = 0.0 + $offset_x;
         $C_p_y = $C_flag_pole[2] + $flag_shaft[1] + $offset_y;
 
         # Sn Targets positions (cm).
-        $Sn_t_x = -(0.81915 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation) + $offset_x); # Cos(35) is the decimal out front.
-        $Sn_t_y = 0.57358 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation) + $offset_y;    # Sin(35) is the decimal out front.
+        $Sn_t_x = -(0.81915 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation) + $offset_x); # Cos(55) is the decimal out front.
+        $Sn_t_y = 0.57358 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation) + $offset_y;    # Sin(55) is the decimal out front.
 
         # C Targets positions (cm).
         $C_t_x = 0.0 + $offset_x;
-        $C_t_y = (2 * $C_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation) + $offset_y;
+        $C_t_y = (2 * $C_flag_pole[2] + $flag_shaft[1] + $C_target[1] + $separation) + $offset_y;
 
         # Sn Flag positions (cm).
-        $Sn_f_x = -(0.81915 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_flag[1]) + $offset_x); # Cos(35) is the decimal out front.
-        $Sn_f_y = 0.57358 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_flag[1]) + $offset_y;    # Sin(35) is the decimal out front.
+        $Sn_f_x = -(0.81915 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_flag[1]) + $offset_x); # Cos(55) is the decimal out front.
+        $Sn_f_y = 0.57358 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_flag[1]) + $offset_y;    # Sin(55) is the decimal out front.
 
         # C Flag positions (cm).
         $C_f_x = 0.0 + $offset_x;
-        $C_f_y = (2 * $C_flag_pole[2] + $flag_shaft[1] + $Sn_flag[1]) + $offset_y;
-
+        $C_f_y = (2 * $C_flag_pole[2] + $flag_shaft[1] + $C_flag[1]) + $offset_y;
     } elsif ($configuration_string eq "rgm_fall2021_Ar") {
         my $geom = $compute_custom_foil_geometry->(
-            flag_shaft_half_length => $flag_shaft[2],
-            foil_half_thickness    => 0.1,
-            cryocell_to_foil_diff  => 3.28, # Avarage C--LAr offset based on Vz of CD pions in the data (C from run 15664 and LAr from run 15672)
-            exit_window_z_dim      => 0.25,
+            flag_shaft_half_length                  => $flag_shaft[2],
+            foil_half_thickness                     => 0.1,
+            exit_window_z_dim                       => 0.25,
+            cryocell_to_foil_diff_center_to_center  => $cryocell_to_foil_diff_center_to_center_S,
         );
 
         $custom_foil_z_offset = $geom->{custom_foil_z_offset};
@@ -1635,11 +1637,8 @@ sub build_short_cryocell_targets {
         @flag_pole_relpos     = @{ $geom->{flag_pole_relpos} };
         @row                  = @{ $geom->{row} };
         $foil_half_thickness        = $geom->{foil_half_thickness};
-        $cryocell_to_foil_difference = $geom->{cryocell_to_foil_diff};
+        $cryocell_to_foil_difference = $geom->{cryocell_to_foil_diff_center_to_center};
         $exit_window_z_dimensions    = $geom->{exit_window_z_dim};
-
-        print "\n\ncustom_foil_z_offset:\t\t\t\t $custom_foil_z_offset [cm]\n";
-        print "flag_shaft[2]:\t\t\t\t " . (2 * $flag_shaft[2]) . " [cm]\n\n";
 
         # Here we set the parameters for the lAr target setup.
         # This time, the Sn and C foils are rotated to -55/2 deg and +55/2 deg, respectively.
@@ -1700,6 +1699,11 @@ sub build_short_cryocell_targets {
         $C_f_x = sin($C_rot_radians) * (2 * $C_flag_pole[2] + $flag_shaft[1] + $C_flag[1]) + $offset_x; # Sin(55/2) is the decimal out front.
         $C_f_y = cos($C_rot_radians) * (2 * $C_flag_pole[2] + $flag_shaft[1] + $C_flag[1]) + $offset_y; # Cos(55/2) is the decimal out front.
     }
+
+    print "\n\nconfiguration_string: $configuration_string\n";
+    printf "custom_foil_z_offset:    %.3f [cm]\n", $custom_foil_z_offset;
+    printf "flag_shaft[2]:           %.3f [cm]\n", (2 * $flag_shaft[2]);
+    printf "row_target-3:            %.3f [cm]\n\n", ($row_target - 3);
 
     # Mother Volume (parameters from lD2)
     my $nplanes = 4;
@@ -1849,7 +1853,7 @@ sub build_short_cryocell_targets {
     $detector{"style"} = 1;
     print_det(\%configuration, \%detector);
 
-    # Upstream Al window. zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
+    # Entrance Al window (upstream window). zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
     my $eng_shift = 1303.27;
     my $al_window_entrance_radius = 2.95;                                 # Spec. entrance window radius is 3 mm. Here we used smaller radius to 2.95 mm to approximate the window as flat and avoid overlap with the base tube, similar to the lD2 target
     my $al_window_entrance_half_thickness = 0.015;                        # Spec. entrance window is 30 microns
@@ -1857,7 +1861,7 @@ sub build_short_cryocell_targets {
     %detector = init_det();
     $detector{"name"} = "al_window_entrance";
     $detector{"mother"} = "target";
-    $detector{"description"} = "30 mm thick aluminum window upstream";
+    $detector{"description"} = "30 microns thick aluminum window upstream";
     $detector{"color"} = "aaaaff";
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "0*mm $al_window_entrance_radius*mm $al_window_entrance_half_thickness*mm 0*deg 360*deg";
@@ -1866,14 +1870,14 @@ sub build_short_cryocell_targets {
     $detector{"style"} = "1";
     print_det(\%configuration, \%detector);
 
-    # Downstream Al window
-    $al_window_exit_radius = 5;                                    # Spec. exit window radius is 7.5 mm. Here we used smaller radius to 5 mm to approximate the window as flat, similar to the lD2 target
-    $al_window_exit_half_thickness = 0.015;                        # Spec. exit window is 30 microns
+    # Exit Al window (downstream window)
+    my $al_window_exit_radius = 5;                                    # Spec. exit window radius is 7.5 mm. Here we used smaller radius to 5 mm to approximate the window as flat, similar to the lD2 target
+    my $al_window_exit_half_thickness = 0.015;                        # Spec. exit window is 30 microns
     $zpos = $eng_shift - 1325.77 - $al_window_exit_half_thickness; # Spec. z position of exit window + new engineering center
     %detector = init_det();
     $detector{"name"} = "al_window_exit";
     $detector{"mother"} = "target";
-    $detector{"description"} = "30 mm thick aluminum window downstream";
+    $detector{"description"} = "30 microns thick aluminum window downstream";
     $detector{"color"} = "aaaaff";
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "0*mm $al_window_exit_radius*mm $al_window_exit_half_thickness*mm 0*deg 360*deg";
@@ -1884,13 +1888,13 @@ sub build_short_cryocell_targets {
 
     # Scattering chambers al window, 75 microns (same as rgb_fall2019)
     # Note: the eng. position is 1017.27 - here it is placed 8mm upstream to place it within the mother scattering chamber
+    my $radius = 12;
+    my $thickness = 0.0375;
     $zpos = $eng_shift - 1025.27;
-    $radius = 12;
-    $thickness = 0.0375;
     %detector = init_det();
     $detector{"name"} = "al_window_scexit";
     $detector{"mother"} = "target";
-    $detector{"description"} = "50 mm thick aluminum window downstream";
+    $detector{"description"} = "75 microns thick aluminum window downstream";
     $detector{"color"} = "aaaaff";
     $detector{"type"} = "Tube";
     $detector{"dimensions"} = "0*mm $radius*mm $thickness*mm 0*deg 360*deg";
