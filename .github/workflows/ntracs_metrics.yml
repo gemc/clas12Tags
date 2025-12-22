@@ -66,8 +66,8 @@ jobs:
           distribution: 'zulu'
       - name: Install Git LFS
         run: |
-          sudo apt-get update
-          sudo apt-get install -y git-lfs
+          apt-get update
+          apt-get install -y git-lfs
           git lfs install
       - name: Build Coatjava
         run: |
