@@ -67,10 +67,16 @@ jobs:
       - name: Install Git LFS
         run: |
           dnf -y install git-lfs 
-          git lfs install
       - name: Build Coatjava
         run: |
           cd ./geometry_source
+          git lfs install
+          if [ -d "etc/data/nnet" ]; then
+             echo "Retrieving neural networks from LFS ..."
+             git lfs pull --include="etc/data/nnet"
+          else
+             echo "etc/data/nnet does not exist. Skipping LFS pull."
+          fi
           ./install_coatjava.sh -l
       - name: Build Gemc
         run: |
