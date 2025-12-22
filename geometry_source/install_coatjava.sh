@@ -13,7 +13,6 @@ function mwget() {
 
 echo START_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
 
-
 rm -rf coat*jar jcsg*jar vecmath*jar
 
 # development. Set to no to use coatjava distribution instead
@@ -81,6 +80,12 @@ else
 
 	mv coatjava-$COATJAVA_TAG $src_dir
 fi
+
+# recent versions of Git refuse to touch a repository whose on-disk owner
+# doesn’t match the UID that is running the command
+# mark the workspace (and any nested path) as safe
+echo "Marking workspace as safe for Git"
+git config --global --add safe.directory '*'
 
 cd $src_dir
 paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
