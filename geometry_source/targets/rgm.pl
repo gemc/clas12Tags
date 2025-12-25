@@ -1491,7 +1491,7 @@ sub build_short_cryocell_targets {
         # Compute the differance in z pos. between the short-cryocell and the foils, assuming that the Vz peaks in the data are at the center of their corresponding centers:
         # target_cell_z_poz_diff_center_to_center = the differance between the short-cryocell center and the foil center (obtained from the data).
         # target_cell_z_poz_diff_inedge_to_inedge = the differance between the short-cryocell's downstream edge and the foil's upstream edge.
-        # According to technical drawing BM2101-02-00-0000:
+        # According to technical drawing BM2101-02-00-0000 (nominal values):
         #   (*) target_cell_z_poz_diff_center_to_center = 5.1 cm
         #   (*) target_cell_z_poz_diff_inedge_to_inedge = 4.75 cm
         # Hence, if we use target_cell_z_poz_diff_center_to_center = 5.1 cm (i.e., up to spec as in BM2101-02-00-0000), then custom_foil_z_offset should be 0:
@@ -1652,6 +1652,7 @@ sub build_short_cryocell_targets {
         @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
 
         # Targets Geometry (cm)
+        # Use small foils - same as rgm_fall2021_C_v2_S
         @Sn_target = (0.175, 0.405, $foil_half_thickness, 0, 0, -55/2); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
         @C_target = (0.175, 0.405, $foil_half_thickness, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
 
@@ -1701,9 +1702,10 @@ sub build_short_cryocell_targets {
     }
 
     print "\n\nconfiguration_string: $configuration_string\n";
-    printf "custom_foil_z_offset:    %.3f [cm]\n", $custom_foil_z_offset;
-    printf "flag_shaft[2]:           %.3f [cm]\n", (2 * $flag_shaft[2]);
-    printf "row_target-3:            %.3f [cm]\n\n", ($row_target - 3);
+    printf "custom_foil_z_offset:                       %.3f [cm]\n", $custom_foil_z_offset;
+    printf "flag shaft length:                          %.3f [cm]\n", (2 * $flag_shaft[2]);
+    printf "Corrected foil z pos. unshiftet:            %.3f [cm]\n", ($row_target);
+    printf "Corrected foil z pos. new eng. center:      %.3f [cm]\n\n", ($row_target - 3);
 
     # Mother Volume (parameters from lD2)
     my $nplanes = 4;
