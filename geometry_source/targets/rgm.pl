@@ -1492,8 +1492,7 @@ sub build_short_cryocell_targets {
         # Hence, if we use target_cell_z_poz_diff_center_to_center = 5.1 cm (i.e., up to spec as in BM2101-02-00-0000), then custom_foil_z_offset should be 0:
         my $custom_foil_z_offset = 5.1 - $cryocell_to_foil_diff_center_to_center;
 
-        # Reduce the flag shaft half-length so that the shaft remains fully contained within the mother volume
-        # after applying the custom foil z-offset.
+        # Reduce the flag shaft half-length so that the shaft remains fully contained within the mother volume after applying the custom foil z-offset.
         my $updated_flag_shaft_half_length = (2 * $flag_shaft_half_length - $custom_foil_z_offset) / 2;
 
         my @flag_pole_relpos = (0.381, 1.25, 1.25, 1.25); # Distance from end of flag_shaft to center of flag_pole 1, center of flag_pole 1 to center of flag_pole 2, center of flag_pole 2 to center of flag_pole 3, and center of flag_pole 3 to center of flag_pole 4
