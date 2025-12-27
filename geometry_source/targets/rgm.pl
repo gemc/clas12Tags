@@ -1514,7 +1514,7 @@ sub build_short_cryocell_targets {
     };
 
     # Anonymous subroutine to compute the offsets that center the target assembly.
-    # This keeps the "offset to zero" logic in one place and avoids repetition between configurations.
+    # This keeps the "offset to zero" logic in one place and avoids repetition between variations.
     my $compute_target_centering_offsets = sub {
         my (%args) = @_; # Read named arguments passed to the lambda for clarity and to avoid reliance on global variables.
 
@@ -1581,7 +1581,6 @@ sub build_short_cryocell_targets {
             # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
             @row                  = @{ $geom->{row} };
 
-
             # Flag Geometry (cm)
             @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
             @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
@@ -1611,7 +1610,6 @@ sub build_short_cryocell_targets {
             # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
             @row                  = @{ $geom->{row} };
 
-
             # Flag Geometry (cm)
             @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
             @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
@@ -1621,10 +1619,19 @@ sub build_short_cryocell_targets {
             @C_target = (0.245, 0.455, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
         }
 
-        # Offset to "zero" the center of the target.
-        $offset_x = 0.0;
-        $offset_y = -(2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation); # Set Y=0 to be center on target.
-        $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2) - $custom_foil_z_offset; #0.625 from magic? (first flag is flag 0)
+        my $offs = $compute_target_centering_offsets->(
+            Sn_flag_pole         => \@Sn_flag_pole,
+            flag_shaft           => \@flag_shaft,
+            Sn_target            => \@Sn_target,
+            Sn_flag              => \@Sn_flag,
+            row                  => \@row,
+            separation           => $separation,
+            custom_foil_z_offset => $custom_foil_z_offset,
+        );
+
+        $offset_x = $offs->{offset_x};
+        $offset_y = $offs->{offset_y};
+        $offset_z = $offs->{offset_z};
 
         # Adjusted position of the rows for the flag poles.
         $row_pole = ($row[3] + $offset_z);
@@ -1680,7 +1687,6 @@ sub build_short_cryocell_targets {
         # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
         @row                  = @{ $geom->{row} };
 
-
         # Here we set the parameters for the lAr target setup.
         # This time, the Sn and C foils are rotated to -55/2 deg and +55/2 deg, respectively.
 
@@ -1703,10 +1709,19 @@ sub build_short_cryocell_targets {
         my $Sn_rot_radians = deg2rad($Sn_rot_degrees); # Convert to radians
         my $C_rot_radians = deg2rad($C_rot_degrees);   # Convert to radians
 
-        # Offset to "zero" the center of the target.
-        $offset_x = 0.0;
-        $offset_y = -(2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation); # Set Y=0 to be center on target.
-        $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2) - $custom_foil_z_offset; #0.625 from magic? (first flag is flag 0)
+        my $offs = $compute_target_centering_offsets->(
+            Sn_flag_pole         => \@Sn_flag_pole,
+            flag_shaft           => \@flag_shaft,
+            Sn_target            => \@Sn_target,
+            Sn_flag              => \@Sn_flag,
+            row                  => \@row,
+            separation           => $separation,
+            custom_foil_z_offset => $custom_foil_z_offset,
+        );
+
+        $offset_x = $offs->{offset_x};
+        $offset_y = $offs->{offset_y};
+        $offset_z = $offs->{offset_z};
 
         # Adjusted position of the rows for the flag poles.
         $row_pole = ($row[3] + $offset_z);
