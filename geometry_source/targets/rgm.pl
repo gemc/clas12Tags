@@ -1487,7 +1487,7 @@ sub build_short_cryocell_targets {
         my $cryocell_to_foil_diff_center_to_center  = $args{cryocell_to_foil_diff_center_to_center};  # the difference between the short-cryocell center and the foil center (cm).
 
         # Compute the differance in z pos. between the short-cryocell and the foils, assuming that the Vz peaks in the data are at the center of their corresponding centers:
-        # target_cell_z_poz_diff_center_to_center = the differance between the short-cryocell center and the foil center (obtained from the data).
+        # target_cell_z_poz_diff_center_to_center = the center-to-center differance between the short-cryocell and the foil (obtained from the data).
         # According to technical drawing BM2101-02-00-0000 (nominal values): target_cell_z_poz_diff_center_to_center = 5.1 cm
         # Hence, if we use target_cell_z_poz_diff_center_to_center = 5.1 cm (i.e., up to spec as in BM2101-02-00-0000), then custom_foil_z_offset should be 0:
         my $custom_foil_z_offset = 5.1 - $cryocell_to_foil_diff_center_to_center;
