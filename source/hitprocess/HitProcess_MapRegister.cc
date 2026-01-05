@@ -27,6 +27,7 @@
 #include "clas12/rtpc_hitprocess.h"             ///< Radial Time Projection Chamber (RTPC)
 #include "clas12/uRwell/uRwell_hitprocess.h"    ///< uRwell detector
 #include "clas12/recoil/recoil_hitprocess.h"    ///< RGH recoil detector
+#include "clas12/recoil_tof/recoil_tof_hitprocess.h"    ///< RGH recoil TOF detector
 
 // Beam Dump eXperiment
 #include "bdx/cormo_hitprocess.h"               ///< Cormorino detector
@@ -93,6 +94,7 @@ map<string, HitProcess_Factory> HitProcess_Map(string experiments)
 			hitMap["rtpc"]      = &rtpc_HitProcess::createHitClass;
 			hitMap["urwell"]    = &uRwell_HitProcess::createHitClass;
 			hitMap["recoil"]    = &recoil_HitProcess::createHitClass;
+			hitMap["recoil_tof"]    = &recoil_tof_HitProcess::createHitClass;
 		} else if(EXP == "HPS") {
 			// Aprime
 			hitMap["SVT"]        = &SVT_HitProcess::createHitClass;
