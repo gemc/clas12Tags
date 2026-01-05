@@ -29,9 +29,14 @@ jobs:
         with:
           java-version: '21'
           distribution: 'zulu'
+      - name: Install Git LFS
+        run: |
+          apt-get update
+          apt-get install -y git-lfs
       - name: Build Coatjava
         run: |
           cd ./geometry_source
+          git lfs install
           ./install_coatjava.sh -l
       - name: Build Gemc
         run: |
