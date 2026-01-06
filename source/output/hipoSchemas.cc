@@ -105,7 +105,7 @@ HipoSchema::HipoSchema() {
     }
     wf_string = wf_string + ", time/I";
     alertAhdcWFSchema.parse(wf_string.c_str());
-    alertAtofTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I, ToT/I");
+    alertAtofTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I, ToT/I, timestamp/L, trigger/I");
 
     bandADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, amplitude/I, time/F, ped/S");
     bandTDCSchema.parse("sector/B, layer/B, component/S, order/B, TDC/I");
