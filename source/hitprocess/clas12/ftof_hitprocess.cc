@@ -293,7 +293,8 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	// TDC conversion factors
 	double adcoffset = ftc.adcoffset[sector - 1][panel - 1][pmt][paddle - 1];
 	double tdcconv = ftc.tdcconv[sector - 1][panel - 1][pmt][paddle - 1];
-        double tdc_jitter = ftc.jitter_period * ((0 + ftc.jitter_phase) % ftc.jitter_cycles);  // assumes event timestamp is zero
+        double tdc_jitter = 0;
+        if(ftc.jitter_cycles != 0) tdc_jitter = ftc.jitter_period * ((0 + ftc.jitter_phase) % ftc.jitter_cycles);  // assumes event timestamp is zero
 	double time_in_ns = 0;
 
 	if(aHit->isBackgroundHit == 1) {

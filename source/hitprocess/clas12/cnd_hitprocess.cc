@@ -290,7 +290,8 @@ map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 	double time_in_ns = 0;
 
-        double tdc_jitter = cndc.jitter_period * ((0 + cndc.jitter_phase) % cndc.jitter_cycles);  // assumes event timestamp is zero
+        double tdc_jitter = 0;
+        if(cndc.jitter_cycles != 0) tdc_jitter = cndc.jitter_period * ((0 + cndc.jitter_phase) % cndc.jitter_cycles);  // assumes event timestamp is zero
 
  	
 	// LEFT PADDLE

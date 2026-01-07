@@ -389,7 +389,8 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 		
 		time_in_ns = G4RandGauss::shoot(tU, sqrt(2) * ctc.tres[paddle - 1]);
 		// tdcu = tU / tdcconv;
-		double tdc_jitter = ctc.jitter_period * ((0 + ctc.jitter_phase) % ctc.jitter_cycles);  // assumes event timestamp is zero
+		double tdc_jitter = 0;
+		if(ctc.jitter_cycles != 0) tdc_jitter = ctc.jitter_period * ((0 + ctc.jitter_phase) % ctc.jitter_cycles);  // assumes event timestamp is zero
 		tdc = (int)  ((time_in_ns + tdc_jitter) / tdcconv);
 	}
 	

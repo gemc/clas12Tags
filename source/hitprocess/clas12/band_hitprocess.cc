@@ -305,7 +305,8 @@ map<string, double> band_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 
 	double fadc_time = convert_to_precision(time_in_ns);
 
-        double tdc_jitter = bhc.jitter_period * ((0 + bhc.jitter_phase) % bhc.jitter_cycles);  // assumes event timestamp is zero
+        double tdc_jitter = 0;
+        if(bhc.jitter_cycles != 0) tdc_jitter = bhc.jitter_period * ((0 + bhc.jitter_phase) % bhc.jitter_cycles);  // assumes event timestamp is zero
         int TDC       = (int) ( adcFactor*((side == 0 ? tL_tdc : tR_tdc)+tdc_jitter)/tdcconv );
 	
 	dgtz["hitn"]          = (int) hitn;

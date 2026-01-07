@@ -256,7 +256,8 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double signal_t = 0;
 	double hit_signal_t = 0;
 	double prop_t = 0;
-        double tdc_jitter = dcc.jitter_period * ((0 + dcc.jitter_phase) % dcc.jitter_cycles);  // assumes event timestamp is zero
+        double tdc_jitter = 0;
+        if(dcc.jitter_cycles != 0) tdc_jitter = dcc.jitter_period * ((0 + dcc.jitter_phase) % dcc.jitter_cycles);  // assumes event timestamp is zero
 
 	
 	for(unsigned int s=0; s<nsteps; s++)
@@ -279,8 +280,8 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			// new hit time
 			// (w/o the drift time)
 		// TODO: After coatjava real run numner
-//			hit_signal_t = stepTime[s]/ns;
-//			prop_t = tprop/ns;
+			hit_signal_t = stepTime[s]/ns;
+			prop_t = tprop/ns;
 
 			if(Edep[s] >= dcc.dcThreshold*eV) {
 

@@ -408,7 +408,8 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double dtres2  = ecc.dtres[sector-1][layer-1][2][0];
 	double dtres3  = ecc.dtres[sector-1][layer-1][3][0];
 
-        double tdc_jitter = ecc.jitter_period * ((0 + ecc.jitter_phase) % ecc.jitter_cycles);  // assumes event timestamp is zero
+        double tdc_jitter = 0;
+        if(ecc.jitter_cycles != 0) tdc_jitter = ecc.jitter_period * ((0 + ecc.jitter_phase) % ecc.jitter_cycles);  // assumes event timestamp is zero
 
 	for(unsigned int s=0; s<tInfos.nsteps; s++) {
 		double xlocal = Lpos[s].x();
