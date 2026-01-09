@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+# Remember to reset DEVMD_SINCE to match DEVMD_SINCE: "2025-11-17" in the yaml workflow
+
 set -euo pipefail
 
 echo "[devmd] start"
@@ -18,7 +21,7 @@ fi
 echo "[devmd] branch = $BRANCH"
 
 # --- Time window (optional) ---
-SINCE="${DEVMD_SINCE:-}"   # e.g. 2024-01-01
+SINCE="${DEVMD_SINCE:-2025-11-17}"   # e.g. 2024-01-01
 UNTIL="${DEVMD_UNTIL:-}"   # e.g. 2025-09-01
 FLAGS=""
 [ -n "$SINCE" ] && FLAGS="$FLAGS --since=$SINCE"

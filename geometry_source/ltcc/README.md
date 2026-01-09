@@ -13,7 +13,7 @@ The parameters are created by the mirrors.C macro.
 | rga_spring2018 | 3029           | 
 | rga_fall2018   | 4763           | 
 | rgb_spring2019 | 6150           | 
-| rgb_winter2020 | 11323          | 
+| rgb_spring2020 | 11323          | 
 | rgm_fall2021_H | 15016          | 
 
 To build the geometry:
@@ -34,7 +34,7 @@ $GEMC/api/perl/db_compare.py ltcc__geometry_default.txt        ../../clas12.sqli
 $GEMC/api/perl/db_compare.py ltcc__geometry_rga_spring2018.txt ../../clas12.sqlite ltcc  3029 default
 $GEMC/api/perl/db_compare.py ltcc__geometry_rga_fall2018.txt   ../../clas12.sqlite ltcc  4763 default
 $GEMC/api/perl/db_compare.py ltcc__geometry_rgb_spring2019.txt ../../clas12.sqlite ltcc  6150 default
-$GEMC/api/perl/db_compare.py ltcc__geometry_rgb_winter2020.txt ../../clas12.sqlite ltcc 11323 default
+$GEMC/api/perl/db_compare.py ltcc__geometry_rgb_spring2020.txt ../../clas12.sqlite ltcc 11323 default
 $GEMC/api/perl/db_compare.py ltcc__geometry_rgm_rgm_fall2021_H.txt ../../clas12.sqlite ltcc 15016 default
 ````
 

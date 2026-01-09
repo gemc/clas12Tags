@@ -5,7 +5,7 @@
 
 	<detector name="cad/"                      factory="CAD"  variation="rge_spring2024"/>
 	<detector name="beamline"                  factory="TEXT" variation="rge_spring2024"/>
-	<detector name="experiments/clas12/ft/ft"  factory="TEXT" variation="rge_spring2024"/>
+	<detector name="experiments/clas12/ft/ft"  factory="TEXT" variation="rgd_fall2023"/>
 
 	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
 	<option name="SPREAD_P" value="0.0*GeV, 10*deg, 180*deg"/>

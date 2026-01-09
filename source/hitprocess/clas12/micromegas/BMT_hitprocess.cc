@@ -105,7 +105,7 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	bmtc.Tsigma   = data[0][5]*ns;
 	
 	// now connecting to target geometry to get its position
-    snprintf(bmtc.database, sizeof(bmtc.database), "/geometry/target:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
+    snprintf(bmtc.database, sizeof(bmtc.database), "/geometry/shifts/solenoid:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,bmtc.database);
 	bmtc.targetZPos = data[0][3]*cm;
 	

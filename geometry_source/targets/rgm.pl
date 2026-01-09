@@ -653,6 +653,7 @@ sub build_RGM_8_Sn_L {
     $detector{"description"} = "Target Container";
     $detector{"color"} = "22ff22";
     $detector{"type"} = "Polycone";
+    $detector{"pos"} = "0*mm 0*mm $target_zpos*mm";
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " 0.0*mm";}
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $oradius[$i]*mm";}
@@ -982,6 +983,11 @@ sub build_RGM_8_C_S {
 
 # large target
 sub build_RGM_8_C_L {
+
+
+    print("Target_zpos for $configuration{'factory'}/$configuration{'variation'}/$configuration{'run_number'}  : $target_zpos\n");
+
+
     #Flag Shaft Geometry (cm/deg)
     my @flag_shaft = (0.2665, 0.3175, 8.145, 0, 360, 0, 0, 0); #Inner radius, outer radius, half length, initial angle, final angle, x angle, y angle, z angle
 
@@ -1055,6 +1061,7 @@ sub build_RGM_8_C_L {
     $detector{"description"} = "Target Container";
     $detector{"color"} = "22ff22";
     $detector{"type"} = "Polycone";
+    $detector{"pos"} = "0*mm 0*mm $target_zpos*mm";
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " 0.0*mm";}
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $oradius[$i]*mm";}
@@ -1266,6 +1273,7 @@ sub build_RGM_Ca {
     $detector{"description"} = "Target Container";
     $detector{"color"} = "22ff22";
     $detector{"type"} = "Polycone";
+    $detector{"pos"} = "0*mm 0*mm $target_zpos*mm";
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " 0.0*mm";}
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $oradius[$i]*mm";}

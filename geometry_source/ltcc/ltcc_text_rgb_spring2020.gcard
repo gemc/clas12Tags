@@ -3,8 +3,8 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="ltcc" factory="TEXT" variation="rgb_winter2020"/>
-	<detector name="cad/" factory="CAD"  variation="rgb_winter2020"/>
+	<detector name="ltcc" factory="TEXT" variation="rgb_spring2020"/>
+	<detector name="cad/" factory="CAD"  variation="rgb_spring2020"/>
 
 	<option name="BEAM_P" value="e-, 8.0*GeV, 15*deg, 60*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>

@@ -2132,9 +2132,8 @@ sub make_ft_trk {
 
     if ($configuration_string eq "rgk_winter2018"
         || $configuration_string eq "rgf_spring2020"
-        || $configuration_string eq "rge_spring2024"
-        || $configuration_string eq "rgd_spring2023"
-        || $configuration_string eq "rgc_fall2022") {
+        || $configuration_string eq "rgd_fall2023"
+        || $configuration_string eq "rgc_summer2022") {
         return;
     }
     make_ft_trk_mother();
