@@ -251,7 +251,7 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 	
 	
 	// now connecting to target geometry to get its position
-	snprintf(ctc.database, sizeof(ctc.database), "/geometry/target:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(ctc.database, sizeof(ctc.database), "/geometry/shifts/solenoid:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,ctc.database);
 	ctc.targetZPos = data[0][3]*cm;
 	
