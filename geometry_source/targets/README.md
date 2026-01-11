@@ -156,18 +156,19 @@ Where:
 RGE gcards could be updated later depending on the GEMC updates and releases. Please verify them before using.
 
 ### Run numbers for each configuration
-| Run number  | Configuration | Torus polarization | gcard variation name |
-| :--------: | :-----------: | :-----------: | :-----------: |
-20036-20039 | Empty-Empty | Zero Field | Empty-Empty-ref-Zero
-20507| Empty-Empty | Inbending | Empty-Empty-ref-Inb
-20017-20019<br>20070-20072 | Empty+C | Inbending | Empty-C-sol-Inb
-20506|Empty+Al | Inbending | Empty-Al-sol-Inb
-20269-20281 | Empty+Pb|Inbending | Empty-Pb-sol-Inb
-20021-20034<br>20131-20176<br> | LD2+C | Inbending | LD2-C-sol-Inb<br>LD2-C-liq-Inb
-20435-20493 | LD2+Al|Inbending | LD2-Al-sol-Inb<br>LD2-Al-liq-Inb
-20177-20230 | LD2+Cu | Inbending | LD2-Cu-sol-Inb<br>LD2-Cu-liq-Inb
-20331-20434 | LD2+Sn| Inbending | LD2-Sn-sol-Inb<br>LD2-Sn-liq-Inb
-20041-20064<br>20074-20130<br>20232-20267<br>20282-20330<br>20494-20505 | LD2+Pb | Inbending | LD2-Pb-sol-Inb<br>LD2-Pb-liq-Inb
-20508-20519 | LD2+C|Outbending | LD2-C-sol-Out<br>LD2-C-liq-Out
-20520-20525 | LD2+Pb|Outbending | LD2-C-sol-Out<br>LD2-C-liq-Out
+
+|                                 Run number                                 | Configuration | Torus polarization |        gcard variation name        |
+|:--------------------------------------------------------------------------:|:-------------:|:------------------:|:----------------------------------:|
+                                20036-20039                                 |  Empty-Empty  |     Zero Field     |        Empty-Empty-ref-Zero        |
+                                   20507                                    |  Empty-Empty  |     Inbending      |        Empty-Empty-ref-Inb         |
+                         20017-20019<br>20070-20072                         |    Empty+C    |     Inbending      |          Empty-C-sol-Inb           |
+                                   20506                                    |   Empty+Al    |     Inbending      |          Empty-Al-sol-Inb          |
+                                20269-20281                                 |   Empty+Pb    |     Inbending      |          Empty-Pb-sol-Inb          |
+                       20021-20034<br>20131-20176<br>                       |     LD2+C     |     Inbending      |   LD2-C-sol-Inb<br>LD2-C-liq-Inb   |
+                                20435-20493                                 |    LD2+Al     |     Inbending      |  LD2-Al-sol-Inb<br>LD2-Al-liq-Inb  |
+                                20177-20230                                 |    LD2+Cu     |     Inbending      |  LD2-Cu-sol-Inb<br>LD2-Cu-liq-Inb  |
+                                20331-20434                                 |    LD2+Sn     |     Inbending      |  LD2-Sn-sol-Inb<br>LD2-Sn-liq-Inb  |
+  20041-20064<br>20074-20130<br>20232-20267<br>20282-20330<br>20494-20505   |    LD2+Pb     |     Inbending      |  LD2-Pb-sol-Inb<br>LD2-Pb-liq-Inb  |
+                                20508-20519                                 |     LD2+C     |     Outbending     |   LD2-C-sol-Out<br>LD2-C-liq-Out   |
+                                20520-20525                                 |    LD2+Pb     |     Outbending     | LD2-C-sol-Out<br>LD2-C-liq-Out     |
 

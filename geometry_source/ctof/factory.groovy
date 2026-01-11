@@ -36,7 +36,7 @@ import org.jlab.detector.geant4.v2.CTOFGeant4Factory.CTOFpaddle
 import java.io.InputStream
 
 String caddbpath  = "/geometry/ctof/cad/"
-double globalOffset = cp.getDouble("/geometry/target/position", 0)
+double globalOffset = cp.getDouble("/geometry/shifts/solenoid", 0)
 double cadRadius  = cp.getDouble(caddbpath+"radius", 0)
 double cadThick   = cp.getDouble(caddbpath+"thickness", 0)
 double cadAngle   = cp.getDouble(caddbpath+"angle", 0)
