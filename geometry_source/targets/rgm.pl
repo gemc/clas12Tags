@@ -1594,21 +1594,21 @@ sub build_short_cryocell_targets {
     }; # End of compute_custom_foil_geometry definition.
 
     # In the following, we set the parameters for the foil-target setup based on the technical drawings. Definitions used in this code:
-    #   - Small foils (rgm_fall2021_C_v2_S): use the same thickness and height as the previous implementation, but use an updated effective width based on the technical drawings.
-    #   - Large foils (rgm_fall2021_C_v2_L and rgm_fall2021_Sn_v2_L): use thickness and height from the technical drawings, and also use an updated effective width derived from the technical drawings.
+    #   - Small foils (rgm_fall2021_C_S): use the same thickness and height as the previous implementation, but use an updated effective width based on the technical drawings.
+    #   - Large foils (rgm_fall2021_C_L and rgm_fall2021_Sn_L): use thickness and height from the technical drawings, and also use an updated effective width derived from the technical drawings.
     # 
     # The effective width is the width of a rectangular box that—given the same thickness and height as the actual foil target—has a total volume equal to that of the irregular (octagonal) foil.
 
-    if ($configuration_string eq "rgm_fall2021_C_v2_S" or $configuration_string eq "rgm_fall2021_C_v2_L" # 1-foil C variations
-        or $configuration_string eq "rgm_fall2021_Sn_v2_L"                                               # 1-foil Sn variation
+    if ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L" # 1-foil C variations
+        or $configuration_string eq "rgm_fall2021_Sn_L"                                            # 1-foil Sn variation
         ) {
         # Here we set the parameters for the foil target setup based on the rgm_fall2021_C (RGM_2_C) variation:
 
-        if ($configuration_string eq "rgm_fall2021_C_v2_S" or $configuration_string eq "rgm_fall2021_C_v2_L") {
+        if ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L") {
             # Flag Pole Geometry (cm/deg)
             @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 55, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
             @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
-        } elsif ($configuration_string eq "rgm_fall2021_Sn_v2_L") {
+        } elsif ($configuration_string eq "rgm_fall2021_Sn_L") {
             # Flag Pole Geometry (cm/deg)
             @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
             @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, -55, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
@@ -1617,7 +1617,7 @@ sub build_short_cryocell_targets {
         # @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 55, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
         # @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
 
-        if ($configuration_string eq "rgm_fall2021_C_v2_S") {
+        if ($configuration_string eq "rgm_fall2021_C_S") {
             # Compute all geometry quantities that depend on the data-driven foil z-offset. Inputs:
             #   - flag_shaft_half_length: original half-length of the flag shaft
             #   - cryocell_to_foil_diff_center_to_center: center-to-center distance between the short cryocell and the foil target, extracted from data (Vz alignment)
@@ -1646,7 +1646,7 @@ sub build_short_cryocell_targets {
             # Targets Geometry (cm) - small foils
             @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
             @C_target = (0.175, 0.405, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
-        } elsif ($configuration_string eq "rgm_fall2021_C_v2_L" or $configuration_string eq "rgm_fall2021_Sn_v2_L") {
+        } elsif ($configuration_string eq "rgm_fall2021_C_L" or $configuration_string eq "rgm_fall2021_Sn_L") {
             # Compute all geometry quantities that depend on the data-driven foil z-offset. Inputs:
             #   - flag_shaft_half_length: original half-length of the flag shaft
             #   - cryocell_to_foil_diff_center_to_center: center-to-center distance between the short cryocell and the foil target, extracted from data (Vz alignment)
@@ -1668,7 +1668,7 @@ sub build_short_cryocell_targets {
             # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
             @row                  = @{ $geom->{row} };
 
-            if ($configuration_string eq "rgm_fall2021_C_v2_L") {
+            if ($configuration_string eq "rgm_fall2021_C_L") {
                 # Flag Geometry (cm)
                 @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
                 @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
@@ -1676,7 +1676,7 @@ sub build_short_cryocell_targets {
                 # Targets Geometry (cm) - large foils
                 @Sn_target = (0.245, 0.455, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
                 @C_target = (0.245, 0.455, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
-            } elsif ($configuration_string eq "rgm_fall2021_Sn_v2_L") {
+            } elsif ($configuration_string eq "rgm_fall2021_Sn_L") {
                 # Flag Geometry (cm)
                 @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, 0); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
                 @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 55);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
@@ -1827,7 +1827,7 @@ sub build_short_cryocell_targets {
         @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
 
         # Targets Geometry (cm) - small foils
-        # Use small foils - same as rgm_fall2021_C_v2_S
+        # Use small foils - same as rgm_fall2021_C_S
         @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55/2); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
         @C_target = (0.175, 0.405, 0.1, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
 
@@ -2038,16 +2038,16 @@ sub build_short_cryocell_targets {
     %detector = init_det();
     if ($configuration_string eq "rgm_fall2021_Ar") {
         $detector{"name"} = "lAr_target_cell";
-    } elsif ($configuration_string eq "rgm_fall2021_C_v2_S" or $configuration_string eq "rgm_fall2021_C_v2_L"
-             or $configuration_string eq "rgm_fall2021_Sn_v2_L") {
+    } elsif ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L"
+             or $configuration_string eq "rgm_fall2021_Sn_L") {
         $detector{"name"} = "Empty_target";
     }
     $detector{"mother"} = "target";
     $detector{"description"} = "Target Cell";
     if ($configuration_string eq "rgm_fall2021_Ar") {
         $detector{"color"} = "aa0000";
-    } elsif ($configuration_string eq "rgm_fall2021_C_v2_S" or $configuration_string eq "rgm_fall2021_C_v2_L"
-             or $configuration_string eq "rgm_fall2021_Sn_v2_L") {
+    } elsif ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L"
+             or $configuration_string eq "rgm_fall2021_Sn_L") {
         $detector{"color"} = "d9d9d9";
     }
     $detector{"type"} = "Polycone";
@@ -2058,8 +2058,8 @@ sub build_short_cryocell_targets {
     $detector{"dimensions"} = $dimen;
     if ($configuration_string eq "rgm_fall2021_Ar") {
         $detector{"material"} = "lAr_target"; # Custom material definition for liquid argon
-    } elsif ($configuration_string eq "rgm_fall2021_C_v2_S" or $configuration_string eq "rgm_fall2021_C_v2_L"   
-             or $configuration_string eq "rgm_fall2021_Sn_v2_L") {
+    } elsif ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L"   
+             or $configuration_string eq "rgm_fall2021_Sn_L") {
         $detector{"material"} = "G4_Galactic";
     }
     $detector{"style"} = 1;
@@ -2144,9 +2144,9 @@ sub build_rgm_targets {
         build_RGM_Ca();
     }
     elsif ($configuration_string eq "rgm_fall2021_Ar"
-        or $configuration_string eq "rgm_fall2021_C_v2_S"
-        or $configuration_string eq "rgm_fall2021_C_v2_L"
-        or $configuration_string eq "rgm_fall2021_Sn_v2_L") {
+        or $configuration_string eq "rgm_fall2021_C_S"
+        or $configuration_string eq "rgm_fall2021_C_L"
+        or $configuration_string eq "rgm_fall2021_Sn_L") {
         build_short_cryocell_targets($configuration_string);
     }
 
