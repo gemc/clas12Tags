@@ -84,7 +84,8 @@ sub build_target {
         or $configuration_string eq "rgm_fall2021_Snx4"
         or $configuration_string eq "rgm_fall2021_Ar"
         or $configuration_string eq "rgm_fall2021_C_v2_S"
-        or $configuration_string eq "rgm_fall2021_C_v2_L") {
+        or $configuration_string eq "rgm_fall2021_C_v2_L"
+        or $configuration_string eq "rgm_fall2021_Sn_v2_L") {
         build_rgm_targets();
     }
     elsif ($configuration_string eq "rgd_fall2023_CxC") {

@@ -97,6 +97,7 @@ my @rgm = qw(
     rgm_fall2021_Ar
     rgm_fall2021_C_v2_S
     rgm_fall2021_C_v2_L
+    rgm_fall2021_Sn_v2_L
 );
 
 my @rgd = qw(
