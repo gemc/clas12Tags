@@ -1474,10 +1474,10 @@ sub build_short_cryocell_targets {
     # This distance is kept the same for small and large foils.
     my $separation = 0.127;
 
-    # Average C--LAr offset based on Vz of CD pions in the data (C from run 15664 and LAr from run 15672)
+    # Average C--lAr offset based on Vz of CD pions in the data (C from run 15664 and lAr from run 15672)
     # cryocell_to_foil_diff_center_to_center_S and cryocell_to_foil_diff_center_to_center_L are in cm. They represent the difference between the short-cryocell center and the foil center, and are given as free parameters.
-    my $cryocell_to_foil_diff_center_to_center_S = 3.50; # Small foils, C from run 15664 and LAr from run 15672
-    my $cryocell_to_foil_diff_center_to_center_L = 3.28; # Large foils, C from run 15778 and LAr from run 15743
+    my $cryocell_to_foil_diff_center_to_center_S = 3.50; # Small foils, C from run 15664 and lAr from run 15672
+    my $cryocell_to_foil_diff_center_to_center_L = 3.28; # Large foils, C from run 15778 and lAr from run 15743
 
     # Anonymous subroutine to compute all geometry quantities that depend on the custom foil z-offset.
     # This isolates the CAD/data-driven offset logic and returns all derived quantities explicitly.
@@ -1487,8 +1487,8 @@ sub build_short_cryocell_targets {
         my $flag_shaft_half_length = $args{flag_shaft_half_length};                                   # Half-length of the flag shaft before applying the custom foil z-offset correction (cm).
         my $cryocell_to_foil_diff_center_to_center  = $args{cryocell_to_foil_diff_center_to_center};  # the difference between the short-cryocell center and the foil center (cm).
 
-        # Compute the differance in z pos. between the short-cryocell and the foils, assuming that the Vz peaks in the data are at the center of their corresponding centers:
-        # target_cell_z_poz_diff_center_to_center = the center-to-center differance between the short-cryocell and the foil (obtained from the data).
+        # Compute the difference in z pos. between the short-cryocell and the foils, assuming that the Vz peaks in the data are at the center of their corresponding centers:
+        # target_cell_z_poz_diff_center_to_center = the center-to-center difference between the short-cryocell and the foil (obtained from the data).
         # According to technical drawing BM2101-02-00-0000 (nominal values): target_cell_z_poz_diff_center_to_center = 5.1 cm
         # Hence, if we use target_cell_z_poz_diff_center_to_center = 5.1 cm (i.e., up to spec as in BM2101-02-00-0000), then custom_foil_z_offset should be 0:
         my $custom_foil_z_offset = 5.1 - $cryocell_to_foil_diff_center_to_center;
@@ -1593,18 +1593,23 @@ sub build_short_cryocell_targets {
         }; # End of returned hashref.
     }; # End of compute_custom_foil_geometry definition.
 
-    # In the following, we set the parameters for the foil-target setup based on the technical drawings. Definitions used in this code:
+    # In the following, we set the parameters for the foil-target setup based on the technical drawings with the data-based custom z offset. Definitions used in this code:
     #   - Small foils (rgm_fall2021_C_S): use the same thickness and height as the previous implementation, but use an updated effective width based on the technical drawings.
     #   - Large foils (rgm_fall2021_C_L and rgm_fall2021_Sn_L): use thickness and height from the technical drawings, and also use an updated effective width derived from the technical drawings.
+    #   - lAr target (rgm_fall2021_Ar): uses a similar foil geometry as rgm_fall2021_C_S.
     # 
     # The effective width is the width of a rectangular box that—given the same thickness and height as the actual foil target—has a total volume equal to that of the irregular (octagonal) foil.
+    # 
+    # In 1-foil C variations, the C foil is rotated to 0 deg and the Sn foil to +55 deg, relative to the y axis (y angle) and around the flag shaft.
+    # In the 1-foil Sn variation, the C foil is rotated to -55 deg and the Sn foil to 0 deg, relative to the y axis (y angle) and around the flag shaft.
+    # In the lAr variation, the C foil is rotated to -55/2 deg and the Sn foil to +55/2 deg, relative to the y axis (y angle) and around the flag shaft.
 
     if ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L" # 1-foil C variations
         or $configuration_string eq "rgm_fall2021_Sn_L"                                            # 1-foil Sn variation
         ) {
         # Here we set the parameters for the foil target setup based on the rgm_fall2021_C (RGM_2_C) variation:
 
-        if ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L") {
+        if ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L") { 
             # Flag Pole Geometry (cm/deg)
             @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 55, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
             @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
@@ -1613,9 +1618,6 @@ sub build_short_cryocell_targets {
             @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
             @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, -55, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
         } # End of flag pole geometry selection.
-        # # Flag Pole Geometry (cm/deg)
-        # @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 55, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
-        # @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
 
         if ($configuration_string eq "rgm_fall2021_C_S") {
             # Compute all geometry quantities that depend on the data-driven foil z-offset. Inputs:
@@ -1685,13 +1687,6 @@ sub build_short_cryocell_targets {
                 @Sn_target = (0.245, 0.455, 0.1, 0, 0, 0); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
                 @C_target = (0.245, 0.455, 0.1, 0, 0, 55);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
             } # End of flag and target geometry selection for large foils.
-            # # Flag Geometry (cm)
-            # @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
-            # @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
-
-            # # Targets Geometry (cm) - large foils
-            # @Sn_target = (0.245, 0.455, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
-            # @C_target = (0.245, 0.455, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
         } # End of foil geometry selection based on configuration string.
 
         my $Sn_rot_degrees = $Sn_target[5];
@@ -1769,31 +1764,7 @@ sub build_short_cryocell_targets {
         # C Flag positions (cm). # Section header for C flag.
         $C_f_x = $C_xy->{flag_x}; # Assign C flag X from returned hashref.
         $C_f_y = $C_xy->{flag_y}; # Assign C flag Y from returned hashref.
-
-        # # Sn Flag Pole position (cm).
-        # $Sn_p_x = -(0.81915 * ($Sn_flag_pole[2] + $flag_shaft[1]) + $offset_x); # Cos(55) is the decimal out front.
-        # $Sn_p_y = 0.57358 * ($Sn_flag_pole[2] + $flag_shaft[1]) + $offset_y;    # Sin(55) is the decimal out front.
-
-        # # C Flag Pole positions (cm).
-        # $C_p_x = 0.0 + $offset_x;
-        # $C_p_y = $C_flag_pole[2] + $flag_shaft[1] + $offset_y;
-
-        # # Sn Targets positions (cm).
-        # $Sn_t_x = -(0.81915 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation) + $offset_x); # Cos(55) is the decimal out front.
-        # $Sn_t_y = 0.57358 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation) + $offset_y;    # Sin(55) is the decimal out front.
-
-        # # C Targets positions (cm).
-        # $C_t_x = 0.0 + $offset_x;
-        # $C_t_y = (2 * $C_flag_pole[2] + $flag_shaft[1] + $C_target[1] + $separation) + $offset_y;
-
-        # # Sn Flag positions (cm).
-        # $Sn_f_x = -(0.81915 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_flag[1]) + $offset_x); # Cos(55) is the decimal out front.
-        # $Sn_f_y = 0.57358 * (2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_flag[1]) + $offset_y;    # Sin(55) is the decimal out front.
-
-        # # C Flag positions (cm).
-        # $C_f_x = 0.0 + $offset_x;
-        # $C_f_y = (2 * $C_flag_pole[2] + $flag_shaft[1] + $C_flag[1]) + $offset_y;
-    } elsif ($configuration_string eq "rgm_fall2021_Ar") { # LAr target setup
+    } elsif ($configuration_string eq "rgm_fall2021_Ar") { # lAr target setup
         # Compute all geometry quantities that depend on the data-driven foil z-offset. Inputs:
         #   - flag_shaft_half_length: original half-length of the flag shaft
         #   - cryocell_to_foil_diff_center_to_center: center-to-center distance between the short cryocell and the foil target, extracted from data (Vz alignment)
@@ -1815,8 +1786,7 @@ sub build_short_cryocell_targets {
         # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
         @row                  = @{ $geom->{row} };
 
-        # Here we set the parameters for the lAr target setup.
-        # This time, the Sn and C foils are rotated to -55/2 deg and +55/2 deg, respectively.
+        # Here we set the parameters for the lAr target setup:
 
         # Flag Pole Geometry (cm/deg)
         @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 55/2, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
@@ -1907,12 +1877,6 @@ sub build_short_cryocell_targets {
         $C_f_x = $C_xy->{flag_x}; # Assign C flag X from returned hashref.
         $C_f_y = $C_xy->{flag_y}; # Assign C flag Y from returned hashref.
     } # End of target configuration selection.
-
-    print "\n\nconfiguration_string: $configuration_string\n";
-    printf "custom_foil_z_offset:                       %.3f [cm]\n", $custom_foil_z_offset;
-    printf "flag shaft length:                          %.3f [cm]\n", (2 * $flag_shaft[2]);
-    printf "Corrected foil z pos. unshiftet:            %.3f [cm]\n", ($row_target);
-    printf "Corrected foil z pos. new eng. center:      %.3f [cm]\n\n", ($row_target - 3);
 
     # Mother Volume (parameters from lD2)
     my $nplanes = 4;
@@ -2057,7 +2021,7 @@ sub build_short_cryocell_targets {
     for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $z_planeT[$i]*mm";}
     $detector{"dimensions"} = $dimen;
     if ($configuration_string eq "rgm_fall2021_Ar") {
-        $detector{"material"} = "lAr_target"; # Custom material definition for liquid argon
+        $detector{"material"} = "lAr_target"; # Custom material definition for liquid argon (G4_Ar with density of 1.396 g/cm3)
     } elsif ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L"   
              or $configuration_string eq "rgm_fall2021_Sn_L") {
         $detector{"material"} = "G4_Galactic";
