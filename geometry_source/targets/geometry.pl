@@ -77,7 +77,6 @@ sub build_target {
     elsif ($configuration_string eq "rgm_fall2021_H"
         or $configuration_string eq "rgm_fall2021_D"
         or $configuration_string eq "rgm_fall2021_He"
-        or $configuration_string eq "rgm_fall2021_C"
         or $configuration_string eq "rgm_fall2021_Cx4"
         or $configuration_string eq "rgm_fall2021_Ca"
         or $configuration_string eq "rgm_fall2021_Sn"
