@@ -398,7 +398,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 		double P2 = ftc.twlkp[sector - 1][panel - 1][1][paddle - 1];
 		//double            C = ftc.twlk[sector-1][panel-1][2][paddle-1];
 		
-		double timeWalk  = (E0-1) * A / pow(adc, B);
+		double timeWalk  = (1-E0) * A / pow(adc, B);
 		double timeWalkE = E0*E1*exp(E2*tInfos.eTot/MeV)+E3/(tInfos.eTot/MeV);
 		double timeWalkP = P1*pow(tInfos.lx/cm, 2)+P2*tInfos.lx/cm;
 		//		double timeWalkU = A / pow(adcu, B);
