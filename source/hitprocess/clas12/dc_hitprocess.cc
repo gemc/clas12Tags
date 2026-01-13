@@ -78,7 +78,7 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	
 	//********************************************
 	//reading reference and current-run pressure:
-	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_to_distance/ref_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/v2/ref_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data, dcc.database);
 	double ref_pressure = data[0][3];
@@ -89,7 +89,7 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
         double dpressure = current_pressure - ref_pressure;
 	//********************************************
 	//calculating distance to time:
-	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_to_distance/t2d_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/v2/t2d_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data, dcc.database);
 	
@@ -126,7 +126,7 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	dcc.vprop = 29.97924580*0.7*cm/ns; // hardcoded in reconstruction too
 	
 	// T0 corrections: a delay to be introduced (plus sign) to the TDC timing
-	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_corrections/T0Corrections:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/v2/t0:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data,  dcc.database);
 	
