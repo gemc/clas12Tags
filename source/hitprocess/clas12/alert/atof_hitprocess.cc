@@ -64,14 +64,16 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
   data.clear();
   calib->GetCalib(data, atc.database);
   for (unsigned row = 0; row < data.size(); row++) {
+    iorder = data[row][3];
+    //For now there are two entries per order for the bars in the CCDB table
+    //But it should not be the case, so here we may need some condition to select the order until the CCDB table format changes
     isec = data[row][0];
     ilay = data[row][1];
     icomponent = data[row][2];
-    iorder = data[row][3];
     atc.timeOffsetTable[isec][ilay][icomponent].value = data[row][4];
     atc.timeOffsetTable[isec][ilay][icomponent].dvalue = data[row][7];
-    atc.timeUDTable[isec][ilay][icomponent][iorder].value = data[row][5];
-    atc.timeUDTable[isec][ilay][icomponent][iorder].dvalue = data[row][8];
+    atc.timeUDTable[isec][ilay][icomponent].value = data[row][5];
+    atc.timeUDTable[isec][ilay][icomponent].dvalue = data[row][8];
   }
   return atc;
 }
@@ -103,14 +105,15 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
     dgtz["sector"]    = atof_sector; //Sector ranges from 0 to 14 counterclockwise when z is pointing towards us
     dgtz["layer"]     = atof_layer; //Layer is the index for the wedge+bar (quarter of sector) ranging 0 to 3
     dgtz["component"] = atof_paddle; //z slice ranging 0 to 9 for the wedge or 10 if it is the long bar
-    dgtz["TDC_order"] = atof_order; //order for the bar is 0/1 for front(upstream)/back(downstream) and 0 for the wedge
+    dgtz["TDC_order"] = atof_order; //order for the bar is 0/1 for downstream/upstream and 0 for the wedge
     dgtz["TDC_ToT"]   = (int) totEdep;
     dgtz["TDC_TDC"]  = tdc; 
     return dgtz;
   }
   
   trueInfos tInfos(aHit);
-  
+
+  //Half length of the atof
   double length = aHit->GetDetector().dimensions[0];
   double dim_3, dim_4, dim_5, dim_6, l_topXY, l_a, l_b;
   
@@ -125,7 +128,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   vector<G4ThreeVector> Lpos  = aHit->GetLPos(); // local position at each step
   vector<double>        times = aHit->GetTime();
   
-  double adc_CC_front, adc_CC_back, adc_CC_top, tdc_CC_front, tdc_CC_back, tdc_CC_top;
+  double adc_CC_upstream, adc_CC_downstream, adc_CC_top, tdc_CC_upstream, tdc_CC_downstream, tdc_CC_top;
   
   double LposX=0.0;
   double LposY=0.0;
@@ -137,13 +140,13 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double totEdep=0.0;
   
   //This is for superlayer 0 paddles!!!
-  //Distance calculation from the hit to the front or back SIPM, superlayer 0!
-  double dFront = 0.0;
-  double dBack = 0.0; 
-  double e_Front = 0.0;
-  double e_Back = 0.0;
-  double E_tot_Front = 0.0;
-  double E_tot_Back = 0.0;
+  //Distance calculation from the hit to the upstream or downstream SIPM, superlayer 0!
+  double dUpstream = 0.0;
+  double dDownstream = 0.0; 
+  double e_Upstream = 0.0;
+  double e_Downstream = 0.0;
+  double E_tot_Upstream = 0.0;
+  double E_tot_Downstream = 0.0;
   
   //For superlayer 1, only one SiPM per paddle, and on the top!
   double H_hit_SiPM = 0.0;
@@ -155,8 +158,8 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double dEdxMIP = 1.956; // energy deposited by MIP per cm of scintillator material, to be adapted for SiPM case, it is a function of ?
   
   //Variables for tdc calculation (time)
-  double EtimesTime_Front=0.0;
-  double EtimesTime_Back=0.0;
+  double EtimesTime_Upstream=0.0;
+  double EtimesTime_Downstream=0.0;
   double EtimesTime_Top=0.0;
 
   //effective velocity
@@ -164,9 +167,9 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   //mean and sigma from ccdb fit
   double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].value;//mm.ns
   double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].dvalue;
-  double v_eff_Front = G4RandGauss::shoot(effVelocity, deffVelocity);
+  double v_eff_Upstream = G4RandGauss::shoot(effVelocity, deffVelocity);
   //for now consider veff in all directions
-  double v_eff_Back = v_eff_Front;
+  double v_eff_Downstream = v_eff_Upstream;
   //and ignore it for wedges
   //double  v_eff_Top = 100000;
   
@@ -174,13 +177,11 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 				 atc.timeOffsetTable[atof_sector][atof_layer][atof_paddle].dvalue);
   if(atof_paddle==10) t0 = t0/2;//bar sum to individual bar hits
   
-  double tUD = G4RandGauss::shoot(atc.timeUDTable[atof_sector][atof_layer][atof_paddle][atof_order].value,
-				  atc.timeUDTable[atof_sector][atof_layer][atof_paddle][atof_order].dvalue);
-  
+  double tUD = G4RandGauss::shoot(atc.timeUDTable[atof_sector][atof_layer][atof_paddle].value,
+				  atc.timeUDTable[atof_sector][atof_layer][atof_paddle].dvalue);
   // cout << "First loop on steps begins" << endl;
-  
 	
-  // notice these calculations are done both for front and back for long paddles
+  // notice these calculations are done both for upstream and downstream for long paddles
   // this can be optimized to have just one calculation using order as discriminating value
   for(unsigned int s=0; s<tInfos.nsteps; s++)
     {
@@ -191,29 +192,29 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
       // long paddles
       if(atof_superlayer == 0)
 	{
-	  dFront = length - LposZ;
-	  dBack = length + LposZ;
-	  e_Front = Edep[s] *exp(-dFront/attlength); // value for just one step, in MeV!
-	  e_Back = Edep[s] *exp(-dBack/attlength);
-	  E_tot_Front = E_tot_Front + e_Front; // to sum over all the steps of the hit
-	  E_tot_Back = E_tot_Back + e_Back;
+	  dUpstream = length + LposZ;
+	  dDownstream = length - LposZ;
+	  e_Upstream = Edep[s] *exp(-dUpstream/attlength); // value for just one step, in MeV!
+	  e_Downstream = Edep[s] *exp(-dDownstream/attlength);
+	  E_tot_Upstream = E_tot_Upstream + e_Upstream; // to sum over all the steps of the hit
+	  E_tot_Downstream = E_tot_Downstream + e_Downstream;
 	  
 	  // to check the totEdep MC truth value
 	  totEdep = totEdep + Edep[s];
 	  
 	  // times[s] is in ns!
-	  EtimesTime_Front = EtimesTime_Front + (times[s] + dFront/v_eff_Front)*e_Front;
-	  EtimesTime_Back = EtimesTime_Back + (times[s] + dBack/v_eff_Back)*e_Back;
+	  EtimesTime_Upstream = EtimesTime_Upstream + (times[s] + dUpstream/v_eff_Upstream)*e_Upstream;
+	  EtimesTime_Downstream = EtimesTime_Downstream + (times[s] + dDownstream/v_eff_Downstream)*e_Downstream;
 	  
-	  //cout << "Distance from hit to Front SIPM, to Back SiPM (mm): " << dFront << ", "<< dBack << endl;
+	  //cout << "Distance from hit to Upstream SIPM, to Downstream SiPM (mm): " << dUpstream << ", "<< dDownstream << endl;
 	  /*
-	    if ( dist_h_SiPMFront <= dFront )
+	    if ( dist_h_SiPMUpstream <= dUpstream )
 	    {
-	    dist_h_SiPMFront = dFront; // mm!!!
+	    dist_h_SiPMUpstream = dUpstream; // mm!!!
 	    }
-	    if ( dist_h_SiPMBack <= dBack )
+	    if ( dist_h_SiPMDownstream <= dDownstream )
 	    {
-	    dist_h_SiPMBack = dBack; // mm!!!
+	    dist_h_SiPMDownstream = dDownstream; // mm!!!
 	    }
 	  */
 	}
@@ -247,10 +248,10 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   if (atof_superlayer == 0)
     {	
       // test factor for calibration coeff. conversion
-      adc_CC_front = 10.0;	
-      adc_CC_back = 10.0;
-      tdc_CC_front = 1.0;	
-      tdc_CC_back = 1.0;
+      adc_CC_upstream = 10.0;	
+      adc_CC_downstream = 10.0;
+      tdc_CC_upstream = 1.0;	
+      tdc_CC_downstream = 1.0;
     }
   else 
     {
@@ -258,34 +259,34 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
       tdc_CC_top = 1.0;
     }
   
-  double adc_front = 0.00000;
-  double adc_back = 0.00000;
+  double adc_upstream = 0.00000;
+  double adc_downstream = 0.00000;
   double adc_top = 0.00000;
-  double tdc_front = 0.00000;
-  double tdc_back = 0.00000;
+  double tdc_upstream = 0.00000;
+  double tdc_downstream = 0.00000;
   double tdc_top = 0.00000;
-  double time_front = 0.00000;
-  double time_back = 0.00000;
+  double time_upstream = 0.00000;
+  double time_downstream = 0.00000;
   double time_top = 0.00000;
   double sigma_time = 0.01;//reducing sigma time since realistic resolution from veff and time offset calibrations are included
   //0.1; // in ns! 100 ps = 0.1 ns
   
   ///////ALL OF THIS PART WILL NEED TO BE UPDATED WITH ACTUAL CALIBRATION	
-  if ((E_tot_Front > 0.0) || (E_tot_Back > 0.0)) 
+  if ((E_tot_Upstream > 0.0) || (E_tot_Downstream > 0.0)) 
     {
-      double nphe_fr = G4Poisson(E_tot_Front*pmtPEYld);
+      double nphe_fr = G4Poisson(E_tot_Upstream*pmtPEYld);
       double energy_fr = nphe_fr/pmtPEYld;
       
-      double nphe_bck = G4Poisson(E_tot_Back*pmtPEYld);
+      double nphe_bck = G4Poisson(E_tot_Downstream*pmtPEYld);
       double energy_bck = nphe_bck/pmtPEYld;	
 
-      adc_front = energy_fr *adc_CC_front *(1/(dEdxMIP*0.3)); // 3 mm sl0 (radial) thickness in XY -> 0.3 cm
-      adc_back = energy_bck *adc_CC_back *(1/(dEdxMIP*0.3));
+      adc_upstream = energy_fr *adc_CC_upstream *(1/(dEdxMIP*0.3)); // 3 mm sl0 (radial) thickness in XY -> 0.3 cm
+      adc_downstream = energy_bck *adc_CC_downstream *(1/(dEdxMIP*0.3));
       
-      time_front = EtimesTime_Front/E_tot_Front + t0 + tUD/2;
-      time_back = EtimesTime_Back/E_tot_Back + t0 - tUD/2;
-      tdc_front = G4RandGauss::shoot(time_front, sigma_time) / tdc_CC_front; 
-      tdc_back = G4RandGauss::shoot(time_back, sigma_time) / tdc_CC_back;
+      time_upstream = EtimesTime_Upstream/E_tot_Upstream + t0 + tUD/2;
+      time_downstream = EtimesTime_Downstream/E_tot_Downstream + t0 - tUD/2;
+      tdc_upstream = G4RandGauss::shoot(time_upstream, sigma_time) / tdc_CC_upstream; 
+      tdc_downstream = G4RandGauss::shoot(time_downstream, sigma_time) / tdc_CC_downstream;
     }
   if(E_tot_Top > 0.0)
     {
@@ -301,12 +302,12 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double time = 0;
   
   if (atof_superlayer == 0) {
-    if ( atof_order == 0 ) {
-      adc  = adc_front;
-      time = tdc_front;
+    if ( atof_order == 1 ) {
+      adc  = adc_upstream;
+      time = tdc_upstream;
     } else {
-      adc  = adc_back;
-      time = tdc_back ;
+      adc  = adc_downstream;
+      time = tdc_downstream ;
     }
   } else {
     adc  = adc_top;

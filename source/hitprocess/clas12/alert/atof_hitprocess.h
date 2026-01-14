@@ -31,7 +31,7 @@ public:
   //sector,layer,component,(T0,dT0)
   entryWithError timeOffsetTable[NSECT][NLAY][NCOMP];
   //sector,layer,component,order,(TUD,dTUD)
-  entryWithError timeUDTable[NSECT][NLAY][NCOMP][NORDER];
+  entryWithError timeUDTable[NSECT][NLAY][NCOMP];
   // value: effective velocity
   //sector,layer,component,(value,dvalue)
   entryWithError veffTable[NSECT][NLAY][NCOMP];
