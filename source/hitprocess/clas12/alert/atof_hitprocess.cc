@@ -187,6 +187,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
       LposX = Lpos[s].x();
       LposY = Lpos[s].y();
       LposZ = Lpos[s].z();
+
       //Bar hits
       if(atof_superlayer == 0)
 	{
@@ -203,7 +204,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	  // to check the totEdep MC truth value
 	  totEdep = totEdep + Edep[s];
 	  
-	  //time in ns
+	  //time in ns, weighed by energy deposit
 	  EtimesTime_Upstream = EtimesTime_Upstream + (times[s] + dUpstream/v_eff_Upstream)*e_Upstream;
 	  EtimesTime_Downstream = EtimesTime_Downstream + (times[s] + dDownstream/v_eff_Downstream)*e_Downstream;
 	}
@@ -230,12 +231,11 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	      e_Top = Edep[s] *exp(-H_hit_SiPM/attlength);
 	      E_tot_Top = E_tot_Top + e_Top;
 	    }
-	  
+	  //For now we ignore veff in the wedges, to update if calibrations evolve
 	  EtimesTime_Top = EtimesTime_Top + (times[s])*e_Top;// + H_hit_SiPM/v_eff_Top)*e_Top;	  
-	}	
+	}
     }
   
-
   if (atof_superlayer == 0)
     {	
       // test factor for calibration coeff. conversion
@@ -259,12 +259,13 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double time_upstream = 0.00000;
   double time_downstream = 0.00000;
   double time_top = 0.00000;
-  double sigma_time = 0.01;//reducing sigma time since realistic resolution from veff and time offset calibrations are included
-  //0.1; // in ns! 100 ps = 0.1 ns
+  //double sigma_time = 0.1;//would be used if realistic resolutions were not in CCDB
+  //in ns, 100 ps = 0.1 ns
   
-
+  //TOT and TDC for bars
   if ((E_tot_Upstream > 0.0) || (E_tot_Downstream > 0.0)) 
     {
+      //energy to TOT conversion
       double nphe_fr = G4Poisson(E_tot_Upstream*pmtPEYld);
       double energy_fr = nphe_fr/pmtPEYld;
       
@@ -273,12 +274,15 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 
       adc_upstream = energy_fr *adc_CC_upstream *(1/(dEdxMIP*0.3)); // 3 mm sl0 (radial) thickness in XY -> 0.3 cm
       adc_downstream = energy_bck *adc_CC_downstream *(1/(dEdxMIP*0.3));
-      
+
+      //Time offset and tdc conversion
       time_upstream = EtimesTime_Upstream/E_tot_Upstream + t0 + tUD/2;
       time_downstream = EtimesTime_Downstream/E_tot_Downstream + t0 - tUD/2;
-      tdc_upstream = G4RandGauss::shoot(time_upstream, sigma_time) / tdc_CC_upstream; 
-      tdc_downstream = G4RandGauss::shoot(time_downstream, sigma_time) / tdc_CC_downstream;
+      //Realistic resolutions are implemented from CCs
+      tdc_upstream = time_upstream/ tdc_CC_upstream;//G4RandGauss::shoot(time_upstream, sigma_time) / tdc_CC_upstream; 
+      tdc_downstream = time_downstream/ tdc_CC_downstream;//G4RandGauss::shoot(time_downstream, sigma_time) / tdc_CC_downstream;
     }
+  //TOT and TDC for wedges
   if(E_tot_Top > 0.0)
     {
       double nphe_top = G4Poisson(E_tot_Top*pmtPEYld);
@@ -286,7 +290,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
       
       adc_top = energy_top *adc_CC_top *(1/(dEdxMIP*2.0)); // 20 mm sl1 (radial) thickness in XY -> 2.0 cm
       time_top = EtimesTime_Top/E_tot_Top + t0;
-      tdc_top  = G4RandGauss::shoot(time_top, sigma_time) / tdc_CC_top;
+      tdc_top  = time_top/ tdc_CC_top;//G4RandGauss::shoot(time_top, sigma_time) / tdc_CC_top;
     }
   
   double adc = 0;
