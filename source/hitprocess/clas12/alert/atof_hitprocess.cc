@@ -7,9 +7,6 @@
 using namespace ccdb;
 // gemc headers
 #include "atof_hitprocess.h"
-// CLHEP units
-#include "CLHEP/Units/PhysicalConstants.h"
-using namespace CLHEP;
 
 //CCDB constant initialization
 //reading out and storing tables
@@ -124,30 +121,17 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   vector<G4double>      Edep  = aHit->GetEdep();
   vector<G4ThreeVector> Lpos  = aHit->GetLPos(); // local position at each step
   vector<double>        times = aHit->GetTime();
-
-  //Digitized hit info
-  double adc_CC_upstream, adc_CC_downstream, adc_CC_top, tdc_CC_upstream, tdc_CC_downstream, tdc_CC_top;
-    
-  // Simple output not equal to real physics, just to feel the adc, time values
-  // Should be: double energy = tInfos.eTot*att;
-  double totEdep=0.0;
+      
+  //Total energy deposited for that hit
+  double eTot = 0.0;
+  //times weighted by energy deposit at each step
+  double weightedTime=0.0;
   
-  //energy deposit up/downstream bar hits
-  double E_tot_Upstream = 0.0;
-  double E_tot_Downstream = 0.0;
-  //Wedge hits, SiPM on "top"
-  double E_tot_Top = 0.0;
-
   //Att length and energy to be calibrated!
   double attlength = 1600.0; // here in mm! because all lengths from the volume are in mm!! EJ-204 160 cm
   double pmtPEYld = 10400.0; // EJ-204 10400 (photons / [1MeV*e-])
   double dEdxMIP = 1.956; // energy deposited by MIP per cm of scintillator material, to be adapted for SiPM case, it is a function of ?
   
-  //Variables for tdc calculation (time)
-  double EtimesTime_Upstream=0.0;
-  double EtimesTime_Downstream=0.0;
-  double EtimesTime_Top=0.0;
-
   //---Calibration constants---//
   //effective velocity
   //mean and sigma from ccdb fit
@@ -166,131 +150,49 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   //---Looping over steps---//
   for(unsigned int s=0; s<tInfos.nsteps; s++)
     {
-      //Local coordinate of this step.
-      double LposX = Lpos[s].x();
-      double LposY = Lpos[s].y();
+      //Local coordinate of this step      
       double LposZ = Lpos[s].z();
 
-      //Bar hits
-      if(atof_superlayer == 0)
-	{
-	  //Distance to SiPM
-	  double dUpstream = halfLength + LposZ;
-	  double dDownstream = halfLength - LposZ;
-	  //Energy deposit for this step, MeV
-	  double e_Upstream = Edep[s] *exp(-dUpstream/attlength);
-	  double e_Downstream = Edep[s] *exp(-dDownstream/attlength);
-	  //Sum over steps used for weighting
-	  E_tot_Upstream = E_tot_Upstream + e_Upstream;
-	  E_tot_Downstream = E_tot_Downstream + e_Downstream;
-	  
-	  // to check the totEdep MC truth value
-	  totEdep = totEdep + Edep[s];
-	  
-	  //time in ns, weighed by energy deposit
-	  EtimesTime_Upstream = EtimesTime_Upstream + (times[s] + dUpstream/effVelocity)*e_Upstream;
-	  EtimesTime_Downstream = EtimesTime_Downstream + (times[s] + dDownstream/effVelocity)*e_Downstream;
-	}
+      //distance to the SiPM
+      double distance = halfLength;
+                  
+      if(atof_superlayer == 0 && atof_order==1) distance += LposZ;
+      else if (atof_superlayer == 0 && atof_order==0) distance += - LposZ;
+      else {
+	double LposX = Lpos[s].x();
+	double LposY = Lpos[s].y();
+	double l_a = sqrt( pow((dim_3 - LposX),2) + pow((dim_4 - LposY),2) );
+	double l_b = sqrt( pow((dim_5 - LposX),2) + pow((dim_6 - LposY),2) );
+	if((l_a + l_b) == l_topXY) distance = 0;
+	else distance = l_a * sqrt( 1 - ((l_topXY*l_topXY + l_a*l_a - l_b*l_b)/(2*l_a*l_topXY)) );
+      }
       
-      //Wedge hits
-      else
-	{
-	  //Position
-	  double l_a = sqrt( pow((dim_3 - LposX),2) + pow((dim_4 - LposY),2) );
-	  double l_b = sqrt( pow((dim_5 - LposX),2) + pow((dim_6 - LposY),2) );
-	  	  
-	  // to check the totEdep MC truth value
-	  totEdep = totEdep + Edep[s];
-
-	  double e_Top;
-	  
-	  if( (l_a + l_b) == l_topXY) 
-	    {
-	      e_Top = Edep[s] *1.0; // H=0.0 -> exp() = 1.0
-	      E_tot_Top = E_tot_Top + e_Top;
-	    }	
-	  else
-	    {
-	      double H_hit_SiPM = l_a * sqrt( 1 - ((l_topXY*l_topXY + l_a*l_a - l_b*l_b)/(2*l_a*l_topXY)) );
-	      e_Top = Edep[s] *exp(-H_hit_SiPM/attlength);
-	      E_tot_Top = E_tot_Top + e_Top;
-	    }
-	  //For now we ignore veff in the wedges, to update if calibrations evolve
-	  EtimesTime_Top = EtimesTime_Top + (times[s])*e_Top;// + H_hit_SiPM/v_eff_Top)*e_Top;	  
-	}
-    }
-  
-  if (atof_superlayer == 0)
-    {	
-      // test factor for calibration coeff. conversion
-      adc_CC_upstream = 10.0;	
-      adc_CC_downstream = 10.0;
-      tdc_CC_upstream = 1.0;	
-      tdc_CC_downstream = 1.0;
-    }
-  else 
-    {
-      adc_CC_top = 10.0;
-      tdc_CC_top = 1.0;
-    }
-  
-  double adc_upstream = 0.00000;
-  double adc_downstream = 0.00000;
-  double adc_top = 0.00000;
-  double tdc_upstream = 0.00000;
-  double tdc_downstream = 0.00000;
-  double tdc_top = 0.00000;
-  double time_upstream = 0.00000;
-  double time_downstream = 0.00000;
-  double time_top = 0.00000;
-  //double sigma_time = 0.1;//would be used if realistic resolutions were not in CCDB
-  //in ns, 100 ps = 0.1 ns
-  
-  //TOT and TDC for bars
-  if ((E_tot_Upstream > 0.0) || (E_tot_Downstream > 0.0)) 
-    {
-      //energy to TOT conversion
-      double nphe_fr = G4Poisson(E_tot_Upstream*pmtPEYld);
-      double energy_fr = nphe_fr/pmtPEYld;
+      //Energy arriving at the SiPM [MeV]
+      double eToSiPM = Edep[s] *exp(-distance/attlength);
       
-      double nphe_bck = G4Poisson(E_tot_Downstream*pmtPEYld);
-      double energy_bck = nphe_bck/pmtPEYld;	
+      //Total energy deposited for this hit
+      eTot += eToSiPM;
+      //time in ns, weighted by energy deposit
+      if(atof_superlayer == 0) weightedTime += (times[s] + distance/effVelocity)*eToSiPM;
+      else weightedTime += (times[s])*eToSiPM;//we ignore effective velocity for wedges for now
+    }
 
-      adc_upstream = energy_fr *adc_CC_upstream *(1/(dEdxMIP*0.3)); // 3 mm sl0 (radial) thickness in XY -> 0.3 cm
-      adc_downstream = energy_bck *adc_CC_downstream *(1/(dEdxMIP*0.3));
+  //total energy for this hit, adding resolution from photo-electron counting
+  double energy = G4Poisson(eTot*pmtPEYld)/pmtPEYld;
 
-      //Time offset and tdc conversion
-      time_upstream = EtimesTime_Upstream/E_tot_Upstream + t0 + tUD/2;
-      time_downstream = EtimesTime_Downstream/E_tot_Downstream + t0 - tUD/2;
-      //Realistic resolutions are implemented from CCs
-      tdc_upstream = time_upstream/ tdc_CC_upstream;//G4RandGauss::shoot(time_upstream, sigma_time) / tdc_CC_upstream; 
-      tdc_downstream = time_downstream/ tdc_CC_downstream;//G4RandGauss::shoot(time_downstream, sigma_time) / tdc_CC_downstream;
-    }
-  //TOT and TDC for wedges
-  if(E_tot_Top > 0.0)
-    {
-      double nphe_top = G4Poisson(E_tot_Top*pmtPEYld);
-      double energy_top = nphe_top/pmtPEYld;
-      
-      adc_top = energy_top *adc_CC_top *(1/(dEdxMIP*2.0)); // 20 mm sl1 (radial) thickness in XY -> 2.0 cm
-      time_top = EtimesTime_Top/E_tot_Top + t0;
-      tdc_top  = time_top/ tdc_CC_top;//G4RandGauss::shoot(time_top, sigma_time) / tdc_CC_top;
-    }
-  
-  double adc = 0;
-  double time = 0;
-  
-  if (atof_superlayer == 0) {
-    if ( atof_order == 1 ) {
-      adc  = adc_upstream;
-      time = tdc_upstream;
-    } else {
-      adc  = adc_downstream;
-      time = tdc_downstream ;
-    }
-  } else {
-    adc  = adc_top;
-    time = tdc_top;
+  //for attenuation
+  double thickness = 0.3;//bars 3mm
+  if(atof_component<10) thickness = 2.0;//wedges 2cm
+
+  //should be converted to an adc value with the proper factor here
+  double adc = energy  *(1/(dEdxMIP*thickness));
+
+  //hit time as mean step time, applying global offset
+  double time = weightedTime/eTot + t0;
+  //for bars we also have time up/down offset
+  if(atof_component == 10){
+    if(atof_order==1) time += tUD/2;
+    else time += -tUD/2;
   }
   
   dgtz["hitn"]      = hitn;
@@ -299,7 +201,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   dgtz["component"] = atof_component; //z slice ranging 0 to 9 for the wedge or 10 if it is the long bar
   dgtz["TDC_order"] = atof_order;
   dgtz["TDC_ToT"]   = (int)adc*100;
-  dgtz["TDC_TDC"]  = time * time_to_tdc;
+  dgtz["TDC_TDC"]   = time * time_to_tdc;//time to tdc conversion
   
   // define conditions to reject hit
   if (rejectHitConditions) {
