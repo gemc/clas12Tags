@@ -60,8 +60,11 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
   calib->GetCalib(data, atc.database);
   for (unsigned row = 0; row < data.size(); row++) {
     iorder = data[row][3];
-    //For now there are two entries per order for the bars in the CCDB table
-    //But it should not be the case, so here we may need some condition to select the order until the CCDB table format changes
+    //There are two entries per order for the bars in the CCDB table
+    //But it should not be the case, the convention has been chosen to be
+    //that order 0 is used to store the right value.
+    //wedges are always order 0
+    if(iorder!=0) continue;
     isec = data[row][0];
     ilay = data[row][1];
     icomponent = data[row][2];
@@ -85,7 +88,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   int atof_sector     = identity[0].id;
   int atof_superlayer = identity[1].id; //bar: SL = 0; wedge: SL=1
   int atof_layer      = identity[2].id;
-  int atof_component     = identity[3].id;
+  int atof_component  = identity[3].id;
   int atof_order      = identity[4].id;
   
   double time_to_tdc = 1./0.015625;
@@ -109,20 +112,21 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   trueInfos tInfos(aHit);
 
   //Half length of the atof
-  double length = aHit->GetDetector().dimensions[0];
+  double halfLength = aHit->GetDetector().dimensions[0];
+  //For the position of the SiPM on top of the wedges
   double dim_3, dim_4, dim_5, dim_6, l_topXY, l_a, l_b;
-  
   dim_3 = aHit->GetDetector().dimensions[3];
   dim_4 = aHit->GetDetector().dimensions[4];
   dim_5 = aHit->GetDetector().dimensions[5];
   dim_6 = aHit->GetDetector().dimensions[6];
-  
   l_topXY = sqrt( pow((dim_3 - dim_5),2) + pow((dim_4 - dim_6),2) );
-  
+
+  //True hit info
   vector<G4double>      Edep  = aHit->GetEdep();
   vector<G4ThreeVector> Lpos  = aHit->GetLPos(); // local position at each step
   vector<double>        times = aHit->GetTime();
-  
+
+  //Digitized hit info
   double adc_CC_upstream, adc_CC_downstream, adc_CC_top, tdc_CC_upstream, tdc_CC_downstream, tdc_CC_top;
   
   double LposX=0.0;
@@ -131,23 +135,23 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   
   // Simple output not equal to real physics, just to feel the adc, time values
   // Should be: double energy = tInfos.eTot*att;
-  
   double totEdep=0.0;
   
-  //This is for superlayer 0 components!!!
-  //Distance calculation from the hit to the upstream or downstream SIPM, superlayer 0!
+  //Distance from bar hit to up/downstream SiPMs
   double dUpstream = 0.0;
   double dDownstream = 0.0; 
+  //energy factors up/downstream bar hits
   double e_Upstream = 0.0;
   double e_Downstream = 0.0;
   double E_tot_Upstream = 0.0;
   double E_tot_Downstream = 0.0;
   
-  //For superlayer 1, only one SiPM per component, and on the top!
+  //Wedge hits, SiPM on "top"
   double H_hit_SiPM = 0.0;
   double e_Top = 0.0;
   double E_tot_Top = 0.0;
-  
+
+  //Att length and energy to be calibrated!
   double attlength = 1600.0; // here in mm! because all lengths from the volume are in mm!! EJ-204 160 cm
   double pmtPEYld = 10400.0; // EJ-204 10400 (photons / [1MeV*e-])
   double dEdxMIP = 1.956; // energy deposited by MIP per cm of scintillator material, to be adapted for SiPM case, it is a function of ?
@@ -160,66 +164,57 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   //effective velocity
   //in principle defined separately for up bar/down bar/wedge
   //mean and sigma from ccdb fit
-  double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_component].value;//mm.ns
+  double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_component].value;//mm.ns-1
   double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_component].dvalue;
   double v_eff_Upstream = G4RandGauss::shoot(effVelocity, deffVelocity);
   //for now consider veff in all directions
   double v_eff_Downstream = v_eff_Upstream;
-  //and ignore it for wedges
-  //double  v_eff_Top = 100000;
-  
+
+  //Global time offset
   double t0 = G4RandGauss::shoot(atc.timeOffsetTable[atof_sector][atof_layer][atof_component].value,
 				 atc.timeOffsetTable[atof_sector][atof_layer][atof_component].dvalue);
-  if(atof_component==10) t0 = t0/2;//bar sum to individual bar hits
-  
+  //For the bars the time offset stored in CCDB is 2*(t0+L/veff) where L is the length of the ATOF
+  if(atof_component==10) t0 = t0/2 - halfLength/v_eff_Downstream;
+
+  //Time offset between up/downstream bar channels
   double tUD = G4RandGauss::shoot(atc.timeUDTable[atof_sector][atof_layer][atof_component].value,
 				  atc.timeUDTable[atof_sector][atof_layer][atof_component].dvalue);
-  // cout << "First loop on steps begins" << endl;
-  
-  // notice these calculations are done both for upstream and downstream for long components
-  // this can be optimized to have just one calculation using order as discriminating value
+
+  //Looping over steps
   for(unsigned int s=0; s<tInfos.nsteps; s++)
     {
+      //Local coordinate of this step.
       LposX = Lpos[s].x();
       LposY = Lpos[s].y();
       LposZ = Lpos[s].z();
-      
-      // long components
+      //Bar hits
       if(atof_superlayer == 0)
 	{
-	  dUpstream = length + LposZ;
-	  dDownstream = length - LposZ;
-	  e_Upstream = Edep[s] *exp(-dUpstream/attlength); // value for just one step, in MeV!
+	  //Distance to SiPM
+	  dUpstream = halfLength + LposZ;
+	  dDownstream = halfLength - LposZ;
+	  //Energy deposit for this step, MeV
+	  e_Upstream = Edep[s] *exp(-dUpstream/attlength);
 	  e_Downstream = Edep[s] *exp(-dDownstream/attlength);
-	  E_tot_Upstream = E_tot_Upstream + e_Upstream; // to sum over all the steps of the hit
+	  //Sum over steps used for weighting
+	  E_tot_Upstream = E_tot_Upstream + e_Upstream;
 	  E_tot_Downstream = E_tot_Downstream + e_Downstream;
 	  
 	  // to check the totEdep MC truth value
 	  totEdep = totEdep + Edep[s];
 	  
-	  // times[s] is in ns!
+	  //time in ns
 	  EtimesTime_Upstream = EtimesTime_Upstream + (times[s] + dUpstream/v_eff_Upstream)*e_Upstream;
 	  EtimesTime_Downstream = EtimesTime_Downstream + (times[s] + dDownstream/v_eff_Downstream)*e_Downstream;
-	  
-	  //cout << "Distance from hit to Upstream SIPM, to Downstream SiPM (mm): " << dUpstream << ", "<< dDownstream << endl;
-	  /*
-	    if ( dist_h_SiPMUpstream <= dUpstream )
-	    {
-	    dist_h_SiPMUpstream = dUpstream; // mm!!!
-	    }
-	    if ( dist_h_SiPMDownstream <= dDownstream )
-	    {
-	    dist_h_SiPMDownstream = dDownstream; // mm!!!
-	    }
-	  */
 	}
-      // top components
+      
+      //Wedge hits
       else
 	{
+	  //Position
 	  l_a = sqrt( pow((dim_3 - LposX),2) + pow((dim_4 - LposY),2) );
 	  l_b = sqrt( pow((dim_5 - LposX),2) + pow((dim_6 - LposY),2) );
-	  // cout << "l_a & l_b (mm): " << l_a << ", " << l_b << endl;
-	  
+	  	  
 	  // to check the totEdep MC truth value
 	  totEdep = totEdep + Edep[s];
 	  
@@ -239,7 +234,8 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	  EtimesTime_Top = EtimesTime_Top + (times[s])*e_Top;// + H_hit_SiPM/v_eff_Top)*e_Top;	  
 	}	
     }
-  // cout << "First loop on steps ends" << endl;
+  
+
   if (atof_superlayer == 0)
     {	
       // test factor for calibration coeff. conversion
@@ -266,7 +262,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double sigma_time = 0.01;//reducing sigma time since realistic resolution from veff and time offset calibrations are included
   //0.1; // in ns! 100 ps = 0.1 ns
   
-  ///////ALL OF THIS PART WILL NEED TO BE UPDATED WITH ACTUAL CALIBRATION	
+
   if ((E_tot_Upstream > 0.0) || (E_tot_Downstream > 0.0)) 
     {
       double nphe_fr = G4Poisson(E_tot_Upstream*pmtPEYld);
