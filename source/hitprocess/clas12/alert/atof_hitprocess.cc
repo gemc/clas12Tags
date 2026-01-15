@@ -1,15 +1,12 @@
 // G4 headers
 #include "G4Poisson.hh"
 #include "Randomize.hh"
-
 #include <CCDB/Calibration.h>
 #include <CCDB/Model/Assignment.h>
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
-
 // gemc headers
 #include "atof_hitprocess.h"
-
 // CLHEP units
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
@@ -28,8 +25,6 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
   if(digiSnapshotTime != "no") {
     timestamp = ":"+digiSnapshotTime;
   }
-
-  cout << "Entering initializeATOF" << endl;
 	
   atc.runNo = runno;
   if (getenv("CCDB_CONNECTION") != nullptr)
@@ -78,7 +73,7 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
   return atc;
 }
 
-// this methos is for implementation of digitized outputs and the first one that needs to be implemented.
+//Making the digitized output
 map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	
   // digitized output
@@ -90,7 +85,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   int atof_sector     = identity[0].id;
   int atof_superlayer = identity[1].id; //bar: SL = 0; wedge: SL=1
   int atof_layer      = identity[2].id;
-  int atof_paddle     = identity[3].id;
+  int atof_component     = identity[3].id;
   int atof_order      = identity[4].id;
   
   double time_to_tdc = 1./0.015625;
@@ -104,7 +99,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
     dgtz["hitn"]      = hitn;
     dgtz["sector"]    = atof_sector; //Sector ranges from 0 to 14 counterclockwise when z is pointing towards us
     dgtz["layer"]     = atof_layer; //Layer is the index for the wedge+bar (quarter of sector) ranging 0 to 3
-    dgtz["component"] = atof_paddle; //z slice ranging 0 to 9 for the wedge or 10 if it is the long bar
+    dgtz["component"] = atof_component; //z slice ranging 0 to 9 for the wedge or 10 if it is the long bar
     dgtz["TDC_order"] = atof_order; //order for the bar is 0/1 for downstream/upstream and 0 for the wedge
     dgtz["TDC_ToT"]   = (int) totEdep;
     dgtz["TDC_TDC"]  = tdc; 
@@ -139,7 +134,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   
   double totEdep=0.0;
   
-  //This is for superlayer 0 paddles!!!
+  //This is for superlayer 0 components!!!
   //Distance calculation from the hit to the upstream or downstream SIPM, superlayer 0!
   double dUpstream = 0.0;
   double dDownstream = 0.0; 
@@ -148,7 +143,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   double E_tot_Upstream = 0.0;
   double E_tot_Downstream = 0.0;
   
-  //For superlayer 1, only one SiPM per paddle, and on the top!
+  //For superlayer 1, only one SiPM per component, and on the top!
   double H_hit_SiPM = 0.0;
   double e_Top = 0.0;
   double E_tot_Top = 0.0;
@@ -165,23 +160,23 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   //effective velocity
   //in principle defined separately for up bar/down bar/wedge
   //mean and sigma from ccdb fit
-  double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].value;//mm.ns
-  double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_paddle].dvalue;
+  double effVelocity = atc.veffTable[atof_sector][atof_layer][atof_component].value;//mm.ns
+  double deffVelocity = atc.veffTable[atof_sector][atof_layer][atof_component].dvalue;
   double v_eff_Upstream = G4RandGauss::shoot(effVelocity, deffVelocity);
   //for now consider veff in all directions
   double v_eff_Downstream = v_eff_Upstream;
   //and ignore it for wedges
   //double  v_eff_Top = 100000;
   
-  double t0 = G4RandGauss::shoot(atc.timeOffsetTable[atof_sector][atof_layer][atof_paddle].value,
-				 atc.timeOffsetTable[atof_sector][atof_layer][atof_paddle].dvalue);
-  if(atof_paddle==10) t0 = t0/2;//bar sum to individual bar hits
+  double t0 = G4RandGauss::shoot(atc.timeOffsetTable[atof_sector][atof_layer][atof_component].value,
+				 atc.timeOffsetTable[atof_sector][atof_layer][atof_component].dvalue);
+  if(atof_component==10) t0 = t0/2;//bar sum to individual bar hits
   
-  double tUD = G4RandGauss::shoot(atc.timeUDTable[atof_sector][atof_layer][atof_paddle].value,
-				  atc.timeUDTable[atof_sector][atof_layer][atof_paddle].dvalue);
+  double tUD = G4RandGauss::shoot(atc.timeUDTable[atof_sector][atof_layer][atof_component].value,
+				  atc.timeUDTable[atof_sector][atof_layer][atof_component].dvalue);
   // cout << "First loop on steps begins" << endl;
-	
-  // notice these calculations are done both for upstream and downstream for long paddles
+  
+  // notice these calculations are done both for upstream and downstream for long components
   // this can be optimized to have just one calculation using order as discriminating value
   for(unsigned int s=0; s<tInfos.nsteps; s++)
     {
@@ -189,7 +184,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
       LposY = Lpos[s].y();
       LposZ = Lpos[s].z();
       
-      // long paddles
+      // long components
       if(atof_superlayer == 0)
 	{
 	  dUpstream = length + LposZ;
@@ -218,7 +213,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 	    }
 	  */
 	}
-      // top paddles
+      // top components
       else
 	{
 	  l_a = sqrt( pow((dim_3 - LposX),2) + pow((dim_4 - LposY),2) );
@@ -317,7 +312,7 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   dgtz["hitn"]      = hitn;
   dgtz["sector"]    = atof_sector; //Sector ranges from 0 to 14 counterclockwise when z is pointing towards us
   dgtz["layer"]     = atof_layer; //Layer is the index for the wedge+bar (quarter of sector) ranging 0 to 3
-  dgtz["component"] = atof_paddle; //z slice ranging 0 to 9 for the wedge or 10 if it is the long bar
+  dgtz["component"] = atof_component; //z slice ranging 0 to 9 for the wedge or 10 if it is the long bar
   dgtz["TDC_order"] = atof_order;
   dgtz["TDC_ToT"]   = (int)adc*100;
   dgtz["TDC_TDC"]  = time * time_to_tdc;
@@ -334,7 +329,7 @@ vector<identifier> atof_HitProcess::processID(vector<identifier> id, G4Step* aSt
   
   vector<identifier> yid = id;
   
-  // top paddles do not modify order
+  // top components do not modify order
   if (yid[1].id == 1) {
     id[id.size()-1].id_sharing = 1;
     return id;
@@ -343,7 +338,7 @@ vector<identifier> atof_HitProcess::processID(vector<identifier> id, G4Step* aSt
   yid[0].id_sharing = 1; // sector
   yid[1].id_sharing = 1; // superlayer
   yid[2].id_sharing = 1; // layer
-  yid[3].id_sharing = 1; // paddle
+  yid[3].id_sharing = 1; // component
   yid[4].id_sharing = 1; // order
   
   if (yid[4].id != 0) {
