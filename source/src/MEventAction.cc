@@ -568,8 +568,8 @@ void MEventAction::EndOfEventAction(const G4Event* evt)
 		string rfsetup_string = to_string(g4rseed) + " " + to_string(gen_action->getTimeWindow()) + " " ;
 		
 		// getting start time of the event
-		rfsetup_string += to_string(gen_action->getStartTime()) + " " ;
-	//			rfsetup_string += to_string(gen_action->getStartTime() + additionalTime) + " " ;
+		// rfsetup_string += to_string(gen_action->getStartTime()) + " " ;
+		rfsetup_string += to_string(gen_action->getStartTime() + additionalTime) + " " ;
 
 		if(RFSETUP == "clas12_ccdb"){
 			setup_clas12_RF(rw.runNo);
