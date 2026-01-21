@@ -59,7 +59,7 @@ sub create_system {
     define_fmt();
 }
 
-my @variations = ("default", "rgf_spring2020", "rgm_fall2021_H");
+my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgf_spring2020", "rgm_fall2021_H", "rgc_summer2022", "rgd_fall2023", );
 my @runs = clas12_runs(@variations);
 my $system = $configuration{'detector_name'};
 
