@@ -91,7 +91,7 @@ variations_for_run_and_system()  {
 		echo "rgf_spring2020"
 	elif [[ $1 == "12321" ]]; then
 		echo "rgf_summer2020"
-	elif [[ $1 == "15016" || $1 == "15534" ]]; then
+	elif [[ $1 == "15016" || $1 == "15534" || $1 == "15628" ]]; then
 		echo "rgm_fall2021_H"
 	elif [[ $1 == "15043" || $1 == "15434" || $1 == "15566" ]]; then
 		echo "rgm_fall2021_D"
@@ -103,16 +103,14 @@ variations_for_run_and_system()  {
 		echo "rgm_fall2021_C_L"
 	elif [[ $1 == "15671" || $1 == "15734" || $1 == "15789" ]]; then
 		echo "rgm_fall2021_Ar"
-	elif [[ $1 == "15178" || $1 == "22000" ]]; then
+	elif [[ $1 == "15178" ]]; then
 		echo "rgm_fall2021_Cx4"
 	elif [[ $1 == "15356" || $1 == "15829" ]]; then
 		echo "rgm_fall2021_Ca"
-	elif [[ $1 == "15318" || $1 == "15804" ]]; then
-		echo "rgm_fall2021_Sn"
+	elif [[ $1 == "15318" ]]; then
+		echo "rgm_fall2021_Snx4"
 	elif [[ $1 == "15804" ]]; then
 		echo "rgm_fall2021_Sn_L"
-	elif [[ $1 == "15807" ]]; then
-		echo "rgm_fall2021_Snx4"
 	elif [[ $1 == "16000" ]]; then
 		echo "rgc_summer2022"
 	elif [[ $1 == "16843" ]]; then
