@@ -79,7 +79,6 @@ sub build_target {
         or $configuration_string eq "rgm_fall2021_He"
         or $configuration_string eq "rgm_fall2021_Cx4"
         or $configuration_string eq "rgm_fall2021_Ca"
-        or $configuration_string eq "rgm_fall2021_Sn"
         or $configuration_string eq "rgm_fall2021_Snx4"
         or $configuration_string eq "rgm_fall2021_Ar"
         or $configuration_string eq "rgm_fall2021_C_S"

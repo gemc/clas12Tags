@@ -89,7 +89,6 @@ my @rgl = qw(
 
 my @rgm = qw(
     rgm_fall2021_He
-    rgm_fall2021_Sn
     rgm_fall2021_Cx4
     rgm_fall2021_Snx4
     rgm_fall2021_Ca
