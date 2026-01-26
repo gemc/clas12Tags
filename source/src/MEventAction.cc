@@ -568,8 +568,9 @@ void MEventAction::EndOfEventAction(const G4Event* evt)
 		string rfsetup_string = to_string(g4rseed) + " " + to_string(gen_action->getTimeWindow()) + " " ;
 		
 		// getting start time of the event
+		// rfsetup_string += to_string(gen_action->getStartTime()) + " " ;
 		rfsetup_string += to_string(gen_action->getStartTime() + additionalTime) + " " ;
-		
+
 		if(RFSETUP == "clas12_ccdb"){
 			setup_clas12_RF(rw.runNo);
 		}
@@ -1160,24 +1161,29 @@ void MEventAction::setup_clas12_RF(int runno) {
 		cout << " Connecting to " << database << endl;
 		data.clear(); calib->GetCalib(data, database);
 		double offset1 = data[0][3];
-		double offset2 = data[0][4];
+		double offset2 = data[1][3];
 
-		rfvalue_strings = {to_string(clock), to_string(prescale), to_string(offset1), to_string(20), to_string(offset2)};
+		rfvalue_strings = {to_string(clock), to_string(prescale), to_string(offset1), "20", to_string(offset2)};
 		set_and_show_rf_setup();
-        for(auto& rfv: rfvalue_strings) {
-            cout << "    - " << rfv << endl;
-        }
+
 	}
 	
 
 }
 
-
 void MEventAction::set_and_show_rf_setup() {
 	double rf_frquency_from_period = 1.0 / get_number(rfvalue_strings[0]);
 
-	cout << " RF Setup: Period, Frequency [GHz], [prescales]" << endl;
-    cout << "    - " << get_number(rfvalue_strings[0]) << endl;
+	cout << " RF Setup: " << endl;
+    cout << "    - Period: " << get_number(rfvalue_strings[0]) << " ns" << endl;
+
+	// replaces rfvalue_strings[0] with frequency
     rfvalue_strings[0] = to_string(rf_frquency_from_period) + " ";
+	cout << "    - Frequency: " << get_number(rfvalue_strings[0]) << " GHz" << endl;
+	cout << "    - Prescale: " << get_number(rfvalue_strings[1]) <<  endl;
+	cout << "    - Offset1: " << get_number(rfvalue_strings[2]) <<  " ns" << endl;
+	cout << "    - RF2 delay from RF1: " << get_number(rfvalue_strings[3]) <<  " periods" << endl;
+	cout << "    - Offset2: " << get_number(rfvalue_strings[4]) <<  " ns" << endl;
+
 
 }

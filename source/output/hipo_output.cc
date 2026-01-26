@@ -93,7 +93,7 @@ void hipo_output::recordSimConditions(outputContainer *output, map <string, stri
     }
 
     // file need to be opened after user configuration is added
-    // output->hipoWriter->addUserConfig("GEMC::config",  bigData);
+    output->hipoWriter->addUserConfig("GEMC::config",  bigData);
 
     output->initializeHipo(true);
 
@@ -293,17 +293,24 @@ void hipo_output::writeRFSignal(outputContainer *output, FrequencySyncSignal rfs
 
     vector <oneRFOutput> rfs = rfsignals.getOutput();
 
-    // only the first rf output is written
-    // beware: in gemc there are 2 rf outputs
-    vector<int> ids = rfs.front().getIDs();
-    vector<double> times = rfs.front().getValues();
 
-    hipo::bank runRFBank(output->hipoSchema->runRFSchema, ids.size());
+    auto firstRF=rfs.front();
+    auto secondRF=rfs.back();
 
-    for (unsigned i = 0; i < ids.size(); i++) {
-        runRFBank.putShort("id", i, (short) ids[i]);
-        runRFBank.putFloat("time", i, (float) times[i]);
-    }
+    // only the first rf entry of each RF  is written
+    // in gemc there are 2 rf outputs
+    vector<int> idsRF1 = firstRF.getIDs();
+    vector<double> timesRF1 =firstRF.getValues();
+
+    vector<int> idsRF2 = secondRF.getIDs();
+    vector<double> timesRF2 =secondRF.getValues();
+
+    hipo::bank runRFBank(output->hipoSchema->runRFSchema, 2);
+
+    runRFBank.putShort("id", 0, (short) idsRF1.front());
+    runRFBank.putFloat("time", 0, (float) timesRF1.front());
+    runRFBank.putShort("id", 1, (short) idsRF2.front());
+    runRFBank.putFloat("time", 1, (float) timesRF2.front());
 
     if (verbosity > 2) {
         runRFBank.show();

@@ -31,7 +31,7 @@ jobs:
       git_upstream: >-
         {
           "clas12-config": { "fork": "JeffersonLab/clas12-config", "ref": "dev" },
-          "coatjava":      { "fork": "JeffersonLab/coatjava",      "ref": "dc-tdigi-unc" }
+          "coatjava":      { "fork": "JeffersonLab/coatjava",      "ref": "development" }
         }
 
   validation-final:
