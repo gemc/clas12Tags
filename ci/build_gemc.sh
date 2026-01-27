@@ -71,9 +71,6 @@ echo
 echo "Content of artifacts dir $ARTIFACT_DIR:"
 ls -lrt $ARTIFACT_DIR
 echo
-echo "Content of artifacts experiment dir $ARTIFACT_DIR/experiments/clas12:"
-ls -lrt $ARTIFACT_DIR/experiments/clas12
-echo
 # copying executable, api and sqlite database for artifact retrieval
 # the experiment dir is synced with the bin/cron_gemc_artifact_install_jlab.sh
 echo "Copying executable, mlibrary, api and sqlite database for artifact retrieval"
@@ -82,5 +79,5 @@ cp source/gemc $ARTIFACT_DIR/bin
 cp -r api $ARTIFACT_DIR
 cp clas12.sqlite $ARTIFACT_DIR
 # mlibrary
-mkdir -p $ARTIFACT_DIR/mlib
-cp -r $MLIBRARY/lib $ARTIFACT_DIR/mlib
+mkdir -p $ARTIFACT_DIR/mlibrary
+cp -r $MLIBRARY/lib/* $MLIBRARY/frequencySyncSignal $MLIBRARY/options $ARTIFACT_DIR/mlibrary

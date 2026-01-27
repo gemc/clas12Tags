@@ -43,7 +43,7 @@ for file in $(find "$almadir" -type f); do
 	fi
 done
 
-echo "Copying files to $fedoradir and $almadir"
+echo "Copying experiments files to $fedoradir and $almadir"
 cp -r experiments/* $fedoradir
 cp -r experiments/* $almadir
 
@@ -51,6 +51,8 @@ echo "Getting last CI artifact in fedora"
 cd $fedoradir/..
 echo "Current dir: " $(pwd)
 $workdir/clas12Tags/bin/get_last_ci_artifact.py fedora
+# copy mlibrary
+cp -r mlibrary/* ../../mlibrary/dev
 # remove gemc.zip if it exists
 if [ -f gemc.zip ]; then
 	rm gemc.zip
@@ -60,6 +62,8 @@ echo "Getting last CI artifact in almalinux"
 cd $almadir/..
 echo "Current dir: " $(pwd)
 $workdir/clas12Tags/bin/get_last_ci_artifact.py almalinux
+# copy mlibrary
+cp -r mlibrary/* ../../mlibrary/dev
 # remove gemc.zip if it exists
 if [ -f gemc.zip ]; then
 	rm gemc.zip
