@@ -79,5 +79,6 @@ cp source/gemc $ARTIFACT_DIR/bin
 cp -r api $ARTIFACT_DIR
 cp clas12.sqlite $ARTIFACT_DIR
 # mlibrary
-mkdir -p $ARTIFACT_DIR/mlibrary
-cp -r $MLIBRARY/lib/* $MLIBRARY/frequencySyncSignal $MLIBRARY/options $ARTIFACT_DIR/mlibrary
+mkdir -p $ARTIFACT_DIR/mlibrary/lib
+cp $MLIBRARY/lib/* $ARTIFACT_DIR/mlibrary/lib
+cp -r $MLIBRARY/frequencySyncSignal $MLIBRARY/options $ARTIFACT_DIR/mlibrary
