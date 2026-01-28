@@ -1,73 +1,154 @@
 #!/bin/zsh
+set -euo pipefail
 
 # Purpose: Install gemc artifact in JLab's CVMFS
-# To be run as the following cron:
-# 03  6  *  *  *  $HOME/tmp/clas12Tags/bin/cron_gemc_artifact_install_jlab.sh   > $HOME/tmp/clas12Tags/log_install.log
 
+# -----------------------------
+# Args / flags
+# -----------------------------
+dry_run=0
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) dry_run=1 ;;
+    *) ;;
+  esac
+done
+
+# -----------------------------
+# Config
+# -----------------------------
 workdir=/work/clas12/ungaro/tmp
-fedoradir=/scigroup/cvmfs/geant4/fedora36-gcc12/clas12Tags/dev/experiments
-almadir=/scigroup/cvmfs/geant4/almalinux9-gcc11/clas12Tags/dev/experiments
+repo_url=https://github.com/gemc/clas12Tags.git
+repo_name=clas12Tags
+repo_subdir=experiments
+get_artifact_py_rel=bin/get_last_ci_artifact.py
 
-mkdir -p $workdir
-cd $workdir
-echo
-echo "Cloning or pulling clas12Tags repo"
-if [ -d clas12Tags ]; then
-	cd clas12Tags
-	git pull
-else
-	git clone https://github.com/gemc/clas12Tags.git
-	cd clas12Tags
+distros=(fedora almalinux)
+
+typeset -A expdir
+expdir[fedora]=/scigroup/cvmfs/geant4/fedora36-gcc12/clas12Tags/dev/experiments
+expdir[almalinux]=/scigroup/cvmfs/geant4/almalinux9-gcc11/clas12Tags/dev/experiments
+
+# -----------------------------
+# Helpers
+# -----------------------------
+die() { print -u2 -- "ERROR: $*"; exit 1; }
+ensure_dir() { mkdir -p -- "${1:?missing dir}"; }
+
+run() {
+  # Print the command always; execute only if not dry-run.
+  if (( dry_run )); then
+    print -- "[dry-run] $*"
+  else
+    eval "$@"
+  fi
+}
+
+sync_repo() {
+  local wd="${1:?missing workdir}"
+  local url="${2:?missing repo url}"
+  local name="${3:?missing repo name}"
+
+  ensure_dir "$wd"
+  cd "$wd"
+
+  echo
+  echo "Cloning or pulling ${name} repo"
+  if [[ -d "$name/.git" ]]; then
+    cd "$name"
+    git pull
+  else
+    git clone "$url" "$name"
+    cd "$name"
+  fi
+}
+
+# Remove files under $target_dir that are NOT present in $repo_root/$repo_subdir
+prune_not_in_repo() {
+  local target_dir="${1:?missing target dir}"
+  local repo_root="${2:?missing repo root}"
+  local subdir="${3:?missing repo subdir}"
+
+  [[ -d "$target_dir" ]] || die "Target dir not found: $target_dir"
+  [[ -d "$repo_root/$subdir" ]] || die "Repo subdir not found: $repo_root/$subdir"
+
+  echo "Removing files not present in ${target_dir}"
+
+  find "$target_dir" -type f -print0 | while IFS= read -r -d '' file; do
+    local rel="${file#$target_dir/}"
+    if [[ ! -f "$repo_root/$subdir/$rel" ]]; then
+      echo "Removing $file"
+      run "rm -f -- ${(qq)file}"
+    fi
+  done
+}
+
+copy_repo_experiments() {
+  local repo_root="${1:?missing repo root}"
+  local subdir="${2:?missing repo subdir}"
+  local target_dir="${3:?missing target dir}"
+
+  echo "Copying ${subdir} files to ${target_dir}"
+  # Use /. to copy contents, preserving structure
+  run "cp -R -- ${(qq)repo_root}/$subdir/. ${(qq)target_dir}/"
+}
+
+fetch_last_ci_artifact_and_finalize() {
+  local distro="${1:?missing distro}"
+  local experiments_dir="${2:?missing experiments dir}"
+  local repo_root="${3:?missing repo root}"
+  local artifact_rel="${4:?missing artifact script rel path}"
+
+  local parent="${experiments_dir:h}"    # zsh: parent dir
+  local artifact_py="${repo_root}/${artifact_rel}"
+
+  [[ -f "$artifact_py" ]] || die "Artifact script not found: $artifact_py"
+  [[ -d "$parent" ]]      || die "Parent directory not found: $parent"
+
+  echo
+  echo "Getting last CI artifact in ${distro}"
+  cd "$parent"
+  echo "Current dir: $(pwd)"
+
+  if (( dry_run )); then
+    print -- "[dry-run] ${(qq)artifact_py} $distro"
+    print -- "[dry-run] cp -R -- mlibrary/* ../../mlibrary/dev"
+    print -- "[dry-run] rm -f -- gemc.zip"
+  else
+    "$artifact_py" "$distro"
+    cp -R -- mlibrary/* ../../mlibrary/dev
+    rm -f -- gemc.zip
+  fi
+}
+
+# -----------------------------
+# Main
+# -----------------------------
+if (( dry_run )); then
+  echo "Running in --dry-run mode: no changes will be made."
 fi
 
-# remove all files in that are not present in the repo
-echo "Removing files not present in $fedoradir"
-for file in $(find "$fedoradir" -type f); do
-	# Get the relative path of the file from the fedoradir directory
-	relative_path="${file#$fedoradir/}"
-	# Check if the file does not exist in the 'experiments' subdirectory of the current directory
-	if [[ ! -f "experiments/$relative_path" ]]; then
-		echo "Removing $file" # Print the file being removed for confirmation
-		rm "$file"
-	fi
+ensure_dir "$workdir"
+sync_repo "$workdir" "$repo_url" "$repo_name"
+repo_root="$(pwd)"  # now inside repo after sync_repo
+
+for d in "${distros[@]}"; do
+  [[ -n "${expdir[$d]:-}" ]] || die "No expdir mapping for distro '$d'"
 done
 
-echo "Removing files not present in $almadir"
-for file in $(find "$almadir" -type f); do
-	# Get the relative path of the file from the fedoradir directory
-	relative_path="${file#$almadir/}"
-	# Check if the file does not exist in the 'experiments' subdirectory of the current directory
-	if [[ ! -f "experiments/$relative_path" ]]; then
-		echo "Removing $file" # Print the file being removed for confirmation
-		rm "$file"
-	fi
+for d in "${distros[@]}"; do
+  prune_not_in_repo "${expdir[$d]}" "$repo_root" "$repo_subdir"
 done
 
-echo "Copying experiments files to $fedoradir and $almadir"
-cp -r experiments/* $fedoradir
-cp -r experiments/* $almadir
+echo
+echo "Copying experiments files to all distros: ${distros[*]}"
+for d in "${distros[@]}"; do
+  copy_repo_experiments "$repo_root" "$repo_subdir" "${expdir[$d]}"
+done
 
-echo "Getting last CI artifact in fedora"
-cd $fedoradir/..
-echo "Current dir: " $(pwd)
-$workdir/clas12Tags/bin/get_last_ci_artifact.py fedora
-# copy mlibrary
-cp -r mlibrary/* ../../mlibrary/dev
-# remove gemc.zip if it exists
-if [ -f gemc.zip ]; then
-	rm gemc.zip
-fi
-
-echo "Getting last CI artifact in almalinux"
-cd $almadir/..
-echo "Current dir: " $(pwd)
-$workdir/clas12Tags/bin/get_last_ci_artifact.py almalinux
-# copy mlibrary
-cp -r mlibrary/* ../../mlibrary/dev
-# remove gemc.zip if it exists
-if [ -f gemc.zip ]; then
-	rm gemc.zip
-fi
+for d in "${distros[@]}"; do
+  fetch_last_ci_artifact_and_finalize "$d" "${expdir[$d]}" "$repo_root" "$get_artifact_py_rel"
+done
 
 echo
-echo Done!
+echo "Done!"
