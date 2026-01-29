@@ -1,0 +1,1 @@
+                muvt  |          muvt hit definitions  |          sector chamber layer component  |   2*KeV   |   50*ns   |    1*mm   |  100*um   |    1*ns   |    2*ns   |     100   |     -20   |   50*ns  

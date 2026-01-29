@@ -65,7 +65,9 @@ HipoSchema::HipoSchema() {
     helADCSchema = hipo::schema("HEL::adc", 22000, 11);
     helFLIPSchema = hipo::schema("HEL::flip", 22000, 12);
     helONLINESchema = hipo::schema("HEL::online", 22000, 13);
-    urwellADCSchema = hipo::schema("URWELL::adc", 22300, 11);
+    //urwellADCSchema = hipo::schema("URWELL::adc", 22300, 11);
+    urwtADCSchema = hipo::schema("URWT::adc", 22300, 11);
+    muvtADCSchema = hipo::schema("MUVT::adc", 22900, 11);
     recoilADCSchema   = hipo::schema("RECOIL::adc",  22600, 11);
     rawADCSchema = hipo::schema("RAW::adc", 20000, 11);
     rawTDCSchema = hipo::schema("RAW::tdc", 20000, 12);
@@ -144,7 +146,9 @@ HipoSchema::HipoSchema() {
     helFLIPSchema.parse("run/I, event/I, timestamp/L, helicity/B, helicityRaw/B, pair/B, pattern/B, status/B");
     helONLINESchema.parse("helicity/B, helicityRaw/B");
 
-    urwellADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+   // urwellADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+    urwtADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+    muvtADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
     recoilADCSchema.parse(  "sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
 
     rawADCSchema.parse("crate/B, slot/B, channel/S, order/B, ADC/I, time/F, ped/S");
@@ -199,7 +203,9 @@ HipoSchema::HipoSchema() {
     schemasToLoad["RTPC::pos"] = rtpcPOSSchema;
     schemasToLoad["HEL::flip"] = helFLIPSchema;
     schemasToLoad["RASTER::adc"] = rasterADCSchema;
-    schemasToLoad["URWELL::adc"] = urwellADCSchema;
+   // schemasToLoad["URWELL::adc"] = urwellADCSchema;
+    schemasToLoad["URWT::adc"] = urwtADCSchema;
+    schemasToLoad["MUVT::adc"] = muvtADCSchema;
     schemasToLoad["RECOIL::adc"]  = recoilADCSchema;
 
     cout << " Done defining Hipo4 schemas." << endl;
@@ -245,14 +251,14 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
             return false;
         }
     } else if (type == 1) { // non tdc detectors
-        if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || schemaName == "urwell" || schemaName == "recoil" || schemaName == "flux") {
+        if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "recoil" || schemaName == "flux") {
             return false;
         }
     } else if (type == 2) { // non wf detectors
         if (schemaName == "atof" || schemaName == "band" || schemaName == "bmt" || schemaName == "fmt" || schemaName == "ftm"
             || schemaName == "dc" || schemaName == "bst" || schemaName == "cnd" || schemaName == "ctof" || schemaName == "ecal"
             || schemaName == "ftof" || schemaName == "ft_cal" || schemaName == "ft_hodo" || schemaName == "ft_trk"
-            || schemaName == "htcc" || schemaName == "ltcc" || schemaName == "rich" || schemaName == "rtpc" || schemaName == "urwell" || schemaName == "recoil" || schemaName == "flux") {
+            || schemaName == "htcc" || schemaName == "ltcc" || schemaName == "rich" || schemaName == "rtpc" || schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "recoil" || schemaName == "flux") {
             return false;
         }
     }

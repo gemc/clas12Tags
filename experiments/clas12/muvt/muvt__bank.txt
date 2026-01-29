@@ -1,0 +1,9 @@
+                muvt  |              bankid  |                                      muvt bank ID  | 2900   |                  Di  
+                muvt  |              sector  |                                     sector number  |    1   |                  Di  
+                muvt  |               layer  |                                      layer number  |    2   |                  Di  
+                muvt  |           component  |                                      strip number  |    3   |                  Di  
+                muvt  |           ADC_order  |                                          always 0  |    4   |                  Di  
+                muvt  |             ADC_ADC  |                                               ADC  |    5   |                  Di  
+                muvt  |            ADC_time  |                                          always 0  |    6   |                  Dd  
+                muvt  |             ADC_ped  |                                          always 0  |    7   |                  Di  
+                muvt  |                hitn  |                                        hit number  |   99   |                  Di  
