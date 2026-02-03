@@ -17,14 +17,7 @@ our %configuration = load_configuration($ARGV[0]);
 sub materials
 {
 	
-	if( $configuration{"variation"} eq "rga_spring2018") {
-	
-		print "Materials: configuration ", $configuration{"variation"}, "\n";
 
-	} elsif( $configuration{"variation"} eq "rgf_spring2020") {
-	
-		print "Materials: configuration ", $configuration{"variation"}, "\n";
-	}
 
 	my %mat = init_mat();
 	$mat{"name"}          = "myEpoxy";

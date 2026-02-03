@@ -1,0 +1,19 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	
+	<detector name="micromegas" factory="TEXT" variation="rge_spring2024"/>
+
+	<option name="BEAM_P" value="proton, 1.0*GeV, 70*deg, 10*deg"/>
+	<option name="SPREAD_P"  value="0.0*GeV, 70*deg, 180*deg"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="INTEGRATEDRAW" value="bmt, fmt"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+	<option name="DIGITIZATION_VARIATION"  value="rgf_spring2020_mc" />
+
+</gcard>
