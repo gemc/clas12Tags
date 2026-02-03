@@ -461,9 +461,19 @@ int detector::create_solid(goptions gemcOpt, map<string, detector> *Map)
 		for(int v=0; v<nz; v++)
 			vertices.push_back(G4TwoVector(dimensions[2*v+1], dimensions[2*v+2]));
 		
-		SolidV = new G4GenericTrap(name,    ///< name
+		if (name.size() > 27 && name.compare(19,8, "ahdccell") == 0) {
+			G4Box*  box = new G4Box("Box",80*mm,80*mm,158*mm);
+			G4GenericTrap* ahdc_cell_nocut = new G4GenericTrap(name + "_nocut", ///< name
 							         dz,    ///< Half z length
 					           vertices);   ///< The (x,y) coordinates of vertices
+			SolidV = new G4IntersectionSolid(name, box, ahdc_cell_nocut);
+
+		} else {
+			SolidV = new G4GenericTrap(name,    ///< name
+							         dz,    ///< Half z length
+					           vertices);   ///< The (x,y) coordinates of vertices
+		}
+		
 		built = 1;
 	}
 	
