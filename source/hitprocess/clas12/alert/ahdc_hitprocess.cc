@@ -244,10 +244,10 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 	// ALERT geometry
 	double X_sigwire_top = 0; // [mm]
 	double Y_sigwire_top = 0;
-	double Z_sigwire_top = -150; 
+	double Z_sigwire_top = -188; 
 	double X_sigwire_bot = 0; // [mm]
 	double Y_sigwire_bot = 0;
-	double Z_sigwire_bot = 150;
+	double Z_sigwire_bot = 162.5;
 	
 	// Compute Y_sigwire_top, Z_sigwire_top, Y_sigwire_bot, Z_sigwire_bot
 	double xV0 = 0.0;
