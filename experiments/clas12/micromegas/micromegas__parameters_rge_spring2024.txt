@@ -44,7 +44,7 @@ BMT_DriftCuGround_width		|    0.005 | mm  | Drift Cu Ground width (radially) 			
 FMT_mothervol_InnerRadius 	|   22.000 | mm	 | Mother volume inner radius					| Maurizio Ungaro	|                             | - | - | - | ??/11/2017
 FMT_mothervol_OutRadius 	|  250.000 | mm  | Mother volume outer radius 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
 FMT_mothervol_zmin		|  290.300 | mm  | Mother volume zmin (BMT_mothervol_zmax set to same value)	| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 09/08/2016
-FMT_mothervol_zmax		|  363.200 | mm  | Mother volume zmax						| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 09/08/2016
+FMT_mothervol_zmax		|  365.00 | mm  | Mother volume zmax						| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 09/08/2016
 FMT_nlayer		 	|    3	   | na  | Number of layers     					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
 FMT_zpos_layer1 		|  290.500 | mm  | Position of the first layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016
 FMT_zpos_layer2 		|  302.400 | mm  | Position of the second layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016

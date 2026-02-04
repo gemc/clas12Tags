@@ -32,7 +32,7 @@ if (scalar @ARGV != 1) {
 
 # Loading configuration file and parameters
 our %configuration = load_configuration($ARGV[0]);
-our %parameters ;
+our %parameters;
 
 # import scripts
 require "./materials.pl";
@@ -59,7 +59,8 @@ sub create_system {
     define_fmt();
 }
 
-my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgf_spring2020", "rgm_fall2021_H", "rgc_summer2022", "rgd_fall2023", );
+# notice, for rgl_spring2025 there is no micromegas. In that case the FMT existence is set to 0. This is enough to guarantee the run number exists and no geometry is loaded.
+my @variations = ("default", "rga_spring2018", "rga_fall2018", "rgf_spring2020", "rgm_fall2021_H", "rgc_summer2022", "rgd_fall2023", "rgk_fall2023", "rge_spring2024", "rgl_spring2025");
 my @runs = clas12_runs(@variations);
 my $system = $configuration{'detector_name'};
 
@@ -80,11 +81,13 @@ $configuration{"factory"} = "SQLITE";
 define_bank();
 foreach my $variation (@variations) {
     my $runNumber = clas12_run($variation);
-    upload_parameters(\%configuration, "$system"."__parameters_$variation.txt", "$system", "default", $runNumber);
+    upload_parameters(\%configuration, "$system" . "__parameters_$variation.txt", "$system", "default", $runNumber);
 }
 upload_parameters(\%configuration, "micromegas__parameters_michel_9mmcopper.txt", "micromegas", "default", 30000);
 
 foreach my $run (@runs) {
+    print "   > Creating system for run $run \n";
+
     $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
     create_system("default", $run);
