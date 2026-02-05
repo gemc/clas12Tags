@@ -3,7 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 	<option name="DATABASE" value="clas12.sqlite"/>
 
-	<detector name="ctof"              factory="SQLITE" variation="empty"/>
+	<detector name="ctof"              factory="SQLITE" />
 	<detector name="ctof_cad"          factory="SQLITECAD" />
 
 
