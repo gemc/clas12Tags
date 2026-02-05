@@ -4,7 +4,7 @@
 import org.jlab.geom.base.*
 import org.jlab.clasrec.utils.*
 import org.jlab.detector.geant4.v2.*
-import org.jlab.detector.geant4.v2.MUVT.*
+import org.jlab.detector.geant4.v2.MPGD.MUVT.*
 import org.jlab.detector.base.*
 import org.jlab.detector.calib.utils.DatabaseConstantProvider
 
