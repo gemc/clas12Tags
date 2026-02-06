@@ -74,7 +74,6 @@ sub init_muvt_from_ccdb {
     }
     print "\nNREGIONS = $NREGIONS, NSECTORS = $NSECTORS\n";
 
-    $dbh->disconnect;
 }
 
 sub make_detector{
