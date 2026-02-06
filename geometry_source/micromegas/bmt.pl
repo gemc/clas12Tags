@@ -214,7 +214,7 @@ sub rot {
 
 sub define_bmt {
     my $configuration_string = clas12_configuration_string(\%configuration);
-    if ($configuration_string eq "rgf_spring2020") {
+    if ($configuration_string eq "rgf_spring2020" || $configuration_string eq "rgl_spring2025") {
         # do not proceed with BMT geometry
         return;
     }

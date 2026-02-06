@@ -46,6 +46,7 @@ jobs:
         with:
           name: gemc-almalinux
           path: |
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/mlibrary
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/bin
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/api
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/clas12.sqlite
