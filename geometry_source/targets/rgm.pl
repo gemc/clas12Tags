@@ -280,8 +280,8 @@ sub build_RGM_8_Sn_L {
 
     #Mother Volume
     my $nplanes = 4;
-    my @oradius = (50.2, 50.2, 21.0, 21.0);
-    my @z_plane = (-115.0, 265.0, 290.0, 300.0);
+    my @oradius = (50.3, 50.3, 21.1, 21.1);
+    my @z_plane = (-145.0, 265.0, 280.0, 280.0);
 
     # vacuum target container
     my %detector = init_det();
@@ -708,7 +708,7 @@ sub build_RGM_8_C_L {
     #Mother Volume
     my $nplanes = 4;
     my @oradius = (50.2, 50.2, 21.0, 21.0);
-    my @z_plane = (-115.0, 265.0, 290.0, 300.0);
+    my @z_plane = (-145.0, 265.0, 280.0, 280.0);
 
     # vacuum target container
     my %detector = init_det();
@@ -842,6 +842,26 @@ sub build_RGM_8_C_L {
         $detector{"style"} = 1;
         print_det(\%configuration, \%detector);
     }
+
+    # zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
+    my $eng_shift = 1303.27;
+    # Scattering chambers al window, 75 microns (same as rgb_fall2019)
+    # Note: the eng. position is 1017.27 - here it is placed 8mm upstream to place it within the mother scattering chamber
+    my $radius = 12;
+    my $thickness = 0.0375;
+    $zpos = $eng_shift - 1025.27;
+    %detector = init_det();
+    $detector{"name"} = "al_window_scexit";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "75 microns thick aluminum window downstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $radius*mm $thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
+    print_det(\%configuration, \%detector);
+
 }
 
 sub build_RGM_Ca {
@@ -919,8 +939,8 @@ sub build_RGM_Ca {
 
     #Mother Volume
     my $nplanes = 4;
-    my @oradius = (50.2, 50.2, 21.0, 21.0);
-    my @z_plane = (-115.0, 265.0, 290.0, 300.0);
+    my @oradius = (50.3, 50.3, 21.1, 21.1);
+    my @z_plane = (-140.0, 265.0, 280.0, 280.0);
 
     # vacuum target container
     my %detector = init_det();
@@ -1108,6 +1128,26 @@ sub build_RGM_Ca {
     $detector{"material"} = "rohacell";
     $detector{"style"} = 1;
     print_det(\%configuration, \%detector);
+
+ # zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
+    my $eng_shift = 1303.27;
+    # Scattering chambers al window, 75 microns (same as rgb_fall2019)
+    # Note: the eng. position is 1017.27 - here it is placed 8mm upstream to place it within the mother scattering chamber
+    my $radius = 12;
+    my $thickness = 0.0375;
+    $zpos = $eng_shift - 1025.27;
+    %detector = init_det();
+    $detector{"name"} = "al_window_scexit";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "75 microns thick aluminum window downstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $radius*mm $thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
+    print_det(\%configuration, \%detector);
+
 }
 
 # Short cryocell targets - lAr, small foils, and large foils
