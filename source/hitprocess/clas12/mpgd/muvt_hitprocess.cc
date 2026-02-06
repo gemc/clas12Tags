@@ -115,6 +115,10 @@ map<string, double> muvt_HitProcess::integrateDgt(MHit *aHit, int hitn)
   dgtz["ADC_time"] = identity[3].time;
   dgtz["ADC_ped"] = 0;
 
+  if((1.0 * (int)(muvtC.gain * 1e6 * tInfos.eTot / muvtC.w_i))<2){
+      rejectHitConditions =true;
+  }
+
   if (rejectHitConditions)
     writeHit = false;
 

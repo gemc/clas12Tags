@@ -74,7 +74,7 @@ sub init_urwt_from_ccdb {
     }
     print "\nNREGIONS = $NREGIONS, NSECTORS = $NSECTORS\n";
 
-    $dbh->disconnect;
+
 }
 
 sub make_detector{
