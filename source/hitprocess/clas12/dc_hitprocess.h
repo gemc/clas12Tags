@@ -46,6 +46,11 @@ public:
 	double vmid[6][6], R[6][6];
 	double dmaxsuperlayer[6];
 	
+        // tdc jitter parameters
+        double jitter_period;
+        int    jitter_phase;
+        int    jitter_cycles;
+
 	// sector, SL, slot, cable
 	double T0Correction[6][6][7][6];
 	
