@@ -280,8 +280,8 @@ sub build_RGM_8_Sn_L {
 
     #Mother Volume
     my $nplanes = 4;
-    my @oradius = (50.2, 50.2, 21.0, 21.0);
-    my @z_plane = (-115.0, 265.0, 290.0, 300.0);
+    my @oradius = (50.3, 50.3, 21.1, 21.1);
+    my @z_plane = (-145.0, 265.0, 280.0, 280.0);
 
     # vacuum target container
     my %detector = init_det();
@@ -415,6 +415,25 @@ sub build_RGM_8_Sn_L {
         $detector{"style"} = 1;
         print_det(\%configuration, \%detector);
     }
+    
+    # zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
+    my $eng_shift = 1303.27;
+    # Scattering chambers al window, 75 microns (same as rgb_fall2019)
+    # Note: the eng. position is 1017.27 - here it is placed 8mm upstream to place it within the mother scattering chamber
+    my $radius = 12;
+    my $thickness = 0.0375;
+    $zpos = $eng_shift - 1025.27;
+    %detector = init_det();
+    $detector{"name"} = "al_window_scexit";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "75 microns thick aluminum window downstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $radius*mm $thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
+    print_det(\%configuration, \%detector);
 }
 
 # small target
@@ -689,7 +708,7 @@ sub build_RGM_8_C_L {
     #Mother Volume
     my $nplanes = 4;
     my @oradius = (50.2, 50.2, 21.0, 21.0);
-    my @z_plane = (-115.0, 265.0, 290.0, 300.0);
+    my @z_plane = (-145.0, 265.0, 280.0, 280.0);
 
     # vacuum target container
     my %detector = init_det();
@@ -823,6 +842,26 @@ sub build_RGM_8_C_L {
         $detector{"style"} = 1;
         print_det(\%configuration, \%detector);
     }
+
+    # zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
+    my $eng_shift = 1303.27;
+    # Scattering chambers al window, 75 microns (same as rgb_fall2019)
+    # Note: the eng. position is 1017.27 - here it is placed 8mm upstream to place it within the mother scattering chamber
+    my $radius = 12;
+    my $thickness = 0.0375;
+    $zpos = $eng_shift - 1025.27;
+    %detector = init_det();
+    $detector{"name"} = "al_window_scexit";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "75 microns thick aluminum window downstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $radius*mm $thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
+    print_det(\%configuration, \%detector);
+
 }
 
 sub build_RGM_Ca {
@@ -900,8 +939,8 @@ sub build_RGM_Ca {
 
     #Mother Volume
     my $nplanes = 4;
-    my @oradius = (50.2, 50.2, 21.0, 21.0);
-    my @z_plane = (-115.0, 265.0, 290.0, 300.0);
+    my @oradius = (50.3, 50.3, 21.1, 21.1);
+    my @z_plane = (-140.0, 265.0, 280.0, 280.0);
 
     # vacuum target container
     my %detector = init_det();
@@ -1088,6 +1127,650 @@ sub build_RGM_Ca {
     $detector{"dimensions"} = "$retainer[0]*cm $retainer[1]*cm $retainer[2]*cm $retainer[3]*deg $retainer[4]*deg";
     $detector{"material"} = "rohacell";
     $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+ # zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
+    my $eng_shift = 1303.27;
+    # Scattering chambers al window, 75 microns (same as rgb_fall2019)
+    # Note: the eng. position is 1017.27 - here it is placed 8mm upstream to place it within the mother scattering chamber
+    my $radius = 12;
+    my $thickness = 0.0375;
+    $zpos = $eng_shift - 1025.27;
+    %detector = init_det();
+    $detector{"name"} = "al_window_scexit";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "75 microns thick aluminum window downstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $radius*mm $thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
+    print_det(\%configuration, \%detector);
+
+}
+
+# Short cryocell targets - lAr, small foils, and large foils
+sub build_short_cryocell_targets {
+    my ($configuration_string) = @_; # To add $configuration_string as an argument to the build_short_cryocell_targets subroutine
+
+    # Flag Shaft Geometry (cm/deg)
+    my @flag_shaft = (0.2665, 0.3175, 8.145, 0, 360, 0, 0, 0); # Inner radius, outer radius, half length, initial angle, final angle, x angle, y angle, z angle
+
+    my (@Sn_flag_pole, @C_flag_pole, @Sn_flag, @C_flag, @Sn_target, @C_target, @flag_pole_relpos, @row);
+    my ($offset_x, $offset_y, $offset_z, $row_pole, $row_target, $row_flag, $Sn_p_x, $Sn_p_y);
+    my ($C_p_x, $C_p_y, $Sn_t_x, $Sn_t_y, $C_t_x, $C_t_y, $Sn_f_x, $Sn_f_y, $C_f_x, $C_f_y);
+    
+    # Variables for calculating the custom foil target's z offset
+    my ($exit_window_z_dimensions, $custom_foil_z_offset);
+
+    # separation = distance the flags set the target above the end of the flag poles (cm).
+    # This distance is kept the same for small and large foils.
+    my $separation = 0.127;
+
+    # Average C--lAr offset based on Vz of CD pions in the data (C from run 15664 and lAr from run 15672)
+    # cryocell_to_foil_diff_center_to_center_S and cryocell_to_foil_diff_center_to_center_L are in cm. They represent the difference between the short-cryocell center and the foil center, and are given as free parameters.
+    my $cryocell_to_foil_diff_center_to_center_S = 3.50; # Small foils, C from run 15664 and lAr from run 15672
+    my $cryocell_to_foil_diff_center_to_center_L = 3.28; # Large foils, C from run 15778 and lAr from run 15743
+
+    # Anonymous subroutine to compute all geometry quantities that depend on the custom foil z-offset.
+    # This isolates the CAD/data-driven offset logic and returns all derived quantities explicitly.
+    my $compute_custom_foil_geometry = sub {
+        my (%args) = @_; # Read named arguments passed to the lambda for clarity and to avoid reliance on global variables.
+
+        my $flag_shaft_half_length = $args{flag_shaft_half_length};                                   # Half-length of the flag shaft before applying the custom foil z-offset correction (cm).
+        my $cryocell_to_foil_diff_center_to_center  = $args{cryocell_to_foil_diff_center_to_center};  # the difference between the short-cryocell center and the foil center (cm).
+
+        # Compute the difference in z pos. between the short-cryocell and the foils, assuming that the Vz peaks in the data are at the center of their corresponding centers:
+        # target_cell_z_poz_diff_center_to_center = the center-to-center difference between the short-cryocell and the foil (obtained from the data).
+        # According to technical drawing BM2101-02-00-0000 (nominal values): target_cell_z_poz_diff_center_to_center = 5.1 cm
+        # Hence, if we use target_cell_z_poz_diff_center_to_center = 5.1 cm (i.e., up to spec as in BM2101-02-00-0000), then custom_foil_z_offset should be 0:
+        my $custom_foil_z_offset = 5.1 - $cryocell_to_foil_diff_center_to_center;
+
+        # Reduce the flag shaft half-length so that the shaft remains fully contained within the mother volume after applying the custom foil z-offset.
+        my $updated_flag_shaft_half_length = (2 * $flag_shaft_half_length - $custom_foil_z_offset) / 2;
+
+        my @flag_pole_relpos = (0.381, 1.25, 1.25, 1.25); # Distance from end of flag_shaft to center of flag_pole 1, center of flag_pole 1 to center of flag_pole 2, center of flag_pole 2 to center of flag_pole 3, and center of flag_pole 3 to center of flag_pole 4
+
+        # Absolute z-positions of the flag pole rows, computed from the updated shaft half-length and the cumulative relative pole separations.
+        my @row = ($updated_flag_shaft_half_length - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2] - $flag_pole_relpos[3],
+                   $updated_flag_shaft_half_length - $flag_pole_relpos[0] - $flag_pole_relpos[1] - $flag_pole_relpos[2],
+                   $updated_flag_shaft_half_length - $flag_pole_relpos[0] - $flag_pole_relpos[1],
+                   $updated_flag_shaft_half_length - $flag_pole_relpos[0]);
+
+        # Return all derived geometry quantities
+        return {
+            custom_foil_z_offset => $custom_foil_z_offset,
+            flag_shaft_half_len  => $updated_flag_shaft_half_length,
+            flag_pole_relpos     => \@flag_pole_relpos,
+            row                  => \@row,
+        }; # End of returned hashref.
+    }; # End of compute_custom_foil_geometry definition.
+
+    # Anonymous subroutine to compute the offsets that center the target assembly.
+    # This keeps the "offset to zero" logic in one place and avoids repetition between variations.
+    my $compute_target_centering_offsets = sub {
+        my (%args) = @_; # Read named arguments passed to the lambda for clarity and to avoid reliance on global variables.
+
+        my $Sn_flag_pole_ref     = $args{Sn_flag_pole};
+        my $flag_shaft_ref       = $args{flag_shaft};
+        my $Sn_target_ref        = $args{Sn_target};
+        my $Sn_flag_ref          = $args{Sn_flag};
+        my $row_ref              = $args{row};
+        my $separation           = $args{separation};
+        my $custom_foil_z_offset = $args{custom_foil_z_offset};
+
+        my @Sn_flag_pole = @{$Sn_flag_pole_ref};
+        my @flag_shaft   = @{$flag_shaft_ref};
+        my @Sn_target    = @{$Sn_target_ref};
+        my @Sn_flag      = @{$Sn_flag_ref};
+        my @row          = @{$row_ref};
+
+        my ($offset_x, $offset_y, $offset_z);
+
+        # Offset to "zero" the center of the target.
+        $offset_x = 0.0;
+        $offset_y = -(2 * $Sn_flag_pole[2] + $flag_shaft[1] + $Sn_target[1] + $separation); # Set Y=0 to be center on target.
+        $offset_z = (0.625 - (($row[1] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]) + ($row[2] - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2])) / 2) - $custom_foil_z_offset; #0.625 from magic? (first flag is flag 0)
+
+        return {
+            offset_x => $offset_x,
+            offset_y => $offset_y,
+            offset_z => $offset_z,
+        }; # End of returned hashref.
+    }; # End of compute_target_centering_offsets definition.
+
+    # Anonymous subroutine to compute the X/Y positions of a rotated flag pole, foil target, and flag.
+    # The rotation is implemented by projecting the relevant radial distances using sin/cos of the rotation angle.
+    # Inputs are passed explicitly to keep the geometry logic self-contained and reusable for each variation.
+    my $compute_rotated_xy_positions = sub {
+        my (%args) = @_;
+
+        my $rot_radians             = $args{rot_radians};
+        my $flag_pole_ref           = $args{flag_pole};
+        my $target_ref              = $args{target};
+        my $flag_ref                = $args{flag};
+        my $flag_shaft_outer_radius = $args{flag_shaft_outer_radius};
+        my $separation              = $args{separation};
+        my $offset_x                = $args{offset_x};
+        my $offset_y                = $args{offset_y};
+
+        my @flag_pole = @{$flag_pole_ref};
+        my @target    = @{$target_ref};
+        my @flag      = @{$flag_ref};
+
+        # Radial distance to the flag pole center (from shaft axis). # Clarifies what distance is being computed.
+        my $pole_r = $flag_pole[2] + $flag_shaft_outer_radius; # pole_r = (flag pole half-length outside shaft) + (shaft outer radius).
+
+        # Radial distance to the foil target center. # Clarifies what distance is being computed.
+        my $target_r = 2 * $flag_pole[2] + $flag_shaft_outer_radius + $target[1] + $separation; # target_r = 2*pole_half_len + shaft_outer + target_outer_radius + separation.
+
+        # Radial distance to the flag center (flag holds the foil). # Clarifies what distance is being computed.
+        my $flag_r = 2 * $flag_pole[2] + $flag_shaft_outer_radius + $flag[1]; # flag_r = 2*pole_half_len + shaft_outer + flag_outer_radius.
+
+        my $pole_x   = sin($rot_radians) * $pole_r   + $offset_x; # Compute rotated pole X using sin(theta)*r, then apply global X offset.
+        my $pole_y   = cos($rot_radians) * $pole_r   + $offset_y; # Compute rotated pole Y using cos(theta)*r, then apply global Y offset.
+
+        my $target_x = sin($rot_radians) * $target_r + $offset_x; # Compute rotated target X using sin(theta)*r, then apply global X offset.
+        my $target_y = cos($rot_radians) * $target_r + $offset_y; # Compute rotated target Y using cos(theta)*r, then apply global Y offset.
+
+        my $flag_x   = sin($rot_radians) * $flag_r   + $offset_x; # Compute rotated flag X using sin(theta)*r, then apply global X offset.
+        my $flag_y   = cos($rot_radians) * $flag_r   + $offset_y; # Compute rotated flag Y using cos(theta)*r, then apply global Y offset.
+
+        return { # Return a hashref so the caller can pick out the values by name.
+            pole_x   => $pole_x,
+            pole_y   => $pole_y,
+            target_x => $target_x,
+            target_y => $target_y,
+            flag_x   => $flag_x,
+            flag_y   => $flag_y,
+        }; # End of returned hashref.
+    }; # End of compute_custom_foil_geometry definition.
+
+    # In the following, we set the parameters for the foil-target setup based on the technical drawings with the data-based custom z offset. Definitions used in this code:
+    #   - Small foils (rgm_fall2021_C_S): use the same thickness and height as the previous implementation, but use an updated effective width based on the technical drawings.
+    #   - Large foils (rgm_fall2021_C_L and rgm_fall2021_Sn_L): use thickness and height from the technical drawings, and also use an updated effective width derived from the technical drawings.
+    #   - lAr target (rgm_fall2021_Ar): uses a similar foil geometry as rgm_fall2021_C_S.
+    # 
+    # The effective width is the width of a rectangular box that—given the same thickness and height as the actual foil target—has a total volume equal to that of the irregular (octagonal) foil.
+    # 
+    # In 1-foil C variations, the C foil is rotated to 0 deg and the Sn foil to +55 deg, relative to the y axis (y angle) and around the flag shaft.
+    # In the 1-foil Sn variation, the C foil is rotated to -55 deg and the Sn foil to 0 deg, relative to the y axis (y angle) and around the flag shaft.
+    # In the lAr variation, the C foil is rotated to -55/2 deg and the Sn foil to +55/2 deg, relative to the y axis (y angle) and around the flag shaft.
+
+    if ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L" # 1-foil C variations
+        or $configuration_string eq "rgm_fall2021_Sn_L"                                            # 1-foil Sn variation
+        ) {
+        # Here we set the parameters for the foil target setup based on the rgm_fall2021_C (RGM_2_C) variation:
+
+        if ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L") { 
+            # Flag Pole Geometry (cm/deg)
+            @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 55, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
+            @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
+        } elsif ($configuration_string eq "rgm_fall2021_Sn_L") {
+            # Flag Pole Geometry (cm/deg)
+            @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 0, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
+            @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, -55, 0);   # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
+        } # End of flag pole geometry selection.
+
+        if ($configuration_string eq "rgm_fall2021_C_S") {
+            # Compute all geometry quantities that depend on the data-driven foil z-offset. Inputs:
+            #   - flag_shaft_half_length: original half-length of the flag shaft
+            #   - cryocell_to_foil_diff_center_to_center: center-to-center distance between the short cryocell and the foil target, extracted from data (Vz alignment)
+            my $geom = $compute_custom_foil_geometry->(
+                flag_shaft_half_length                  => $flag_shaft[2],
+                cryocell_to_foil_diff_center_to_center  => $cryocell_to_foil_diff_center_to_center_S,
+            ); # End of offset computation call.
+
+            # Custom z-offset applied to the foil assembly so that the simulated foil center matches the data-driven center-to-center spacing
+            $custom_foil_z_offset = $geom->{custom_foil_z_offset};
+
+            # Updated half-length of the flag shaft after applying the custom foil z-offset, ensuring that the shaft remains fully contained within the mother volume
+            $flag_shaft[2]        = $geom->{flag_shaft_half_len};
+
+            # Relative z-positions of the flag poles along the shaft, recomputed using the updated shaft length
+            # This is a remnant of the 4-foil implementation, we only using the downstream-most foils
+            @flag_pole_relpos     = @{ $geom->{flag_pole_relpos} };
+
+            # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
+            @row                  = @{ $geom->{row} };
+
+            # Flag Geometry (cm)
+            @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
+            @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
+
+            # Targets Geometry (cm) - small foils
+            @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            @C_target = (0.175, 0.405, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+        } elsif ($configuration_string eq "rgm_fall2021_C_L" or $configuration_string eq "rgm_fall2021_Sn_L") {
+            # Compute all geometry quantities that depend on the data-driven foil z-offset. Inputs:
+            #   - flag_shaft_half_length: original half-length of the flag shaft
+            #   - cryocell_to_foil_diff_center_to_center: center-to-center distance between the short cryocell and the foil target, extracted from data (Vz alignment)
+            my $geom = $compute_custom_foil_geometry->(
+                flag_shaft_half_length                  => $flag_shaft[2],
+                cryocell_to_foil_diff_center_to_center  => $cryocell_to_foil_diff_center_to_center_L,
+            ); # End of offset computation call.
+
+            # Custom z-offset applied to the foil assembly so that the simulated foil center matches the data-driven center-to-center spacing
+            $custom_foil_z_offset = $geom->{custom_foil_z_offset};
+
+            # Updated half-length of the flag shaft after applying the custom foil z-offset, ensuring that the shaft remains fully contained within the mother volume
+            $flag_shaft[2]        = $geom->{flag_shaft_half_len};
+
+            # Relative z-positions of the flag poles along the shaft, recomputed using the updated shaft length
+            # This is a remnant of the 4-foil implementation, we only using the downstream-most foils
+            @flag_pole_relpos     = @{ $geom->{flag_pole_relpos} };
+
+            # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
+            @row                  = @{ $geom->{row} };
+
+            if ($configuration_string eq "rgm_fall2021_C_L") {
+                # Flag Geometry (cm)
+                @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
+                @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
+
+                # Targets Geometry (cm) - large foils
+                @Sn_target = (0.245, 0.455, 0.1, 0, 0, -55); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+                @C_target = (0.245, 0.455, 0.1, 0, 0, 0);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            } elsif ($configuration_string eq "rgm_fall2021_Sn_L") {
+                # Flag Geometry (cm)
+                @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, 0); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
+                @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 55);    # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
+
+                # Targets Geometry (cm) - large foils
+                @Sn_target = (0.245, 0.455, 0.1, 0, 0, 0); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+                @C_target = (0.245, 0.455, 0.1, 0, 0, 55);    # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+            } # End of flag and target geometry selection for large foils.
+        } # End of foil geometry selection based on configuration string.
+
+        my $Sn_rot_degrees = $Sn_target[5];
+        my $C_rot_degrees  = $C_target[5];
+
+        my $Sn_rot_radians = deg2rad($Sn_rot_degrees); # Convert to radians
+        my $C_rot_radians  = deg2rad($C_rot_degrees);   # Convert to radians
+
+        my $offs = $compute_target_centering_offsets->(
+            Sn_flag_pole         => \@Sn_flag_pole,
+            flag_shaft           => \@flag_shaft,
+            Sn_target            => \@Sn_target,
+            Sn_flag              => \@Sn_flag,
+            row                  => \@row,
+            separation           => $separation,
+            custom_foil_z_offset => $custom_foil_z_offset,
+        ); # End centering offsets helper call.
+
+        $offset_x = $offs->{offset_x};
+        $offset_y = $offs->{offset_y};
+        $offset_z = $offs->{offset_z};
+
+        # Adjusted position of the rows for the flag poles.
+        $row_pole = ($row[3] + $offset_z);
+
+        # Adjusted positions of the rows for the target foils.
+        $row_target = ($row[3] + $offset_z - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]);
+
+        # Adjusted positions of the rows for the flags.
+        $row_flag = ($row[3] + $offset_z - $Sn_flag_pole[1] + $Sn_flag[2]);
+
+        # Compute rotated X/Y positions for the Sn and C assemblies (flag pole, foil target, and flag).
+        my $Sn_xy = $compute_rotated_xy_positions->(    # Call helper for Sn geometry.
+            rot_radians             => $Sn_rot_radians, # Sn rotation angle in radians.
+            flag_pole               => \@Sn_flag_pole,  # Reference to Sn flag pole parameters array.
+            target                  => \@Sn_target,     # Reference to Sn target parameters array.
+            flag                    => \@Sn_flag,       # Reference to Sn flag parameters array.
+            flag_shaft_outer_radius => $flag_shaft[1],  # Shaft outer radius (shared geometry), used in radial distances.
+            separation              => $separation,     # Separation between pole end and target (as in original formula).
+            offset_x                => $offset_x,       # Assembly global X offset.
+            offset_y                => $offset_y,       # Assembly global Y offset.
+        ); # End Sn helper call.
+
+        my $C_xy = $compute_rotated_xy_positions->(
+            rot_radians             => $C_rot_radians, # C rotation angle in radians.
+            flag_pole               => \@C_flag_pole,  # Reference to C flag pole parameters array.
+            target                  => \@C_target,     # Reference to C target parameters array.
+            flag                    => \@C_flag,       # Reference to C flag parameters array.
+            flag_shaft_outer_radius => $flag_shaft[1], # Shaft outer radius (shared geometry), used in radial distances.
+            separation              => $separation,    # Separation between pole end and target (as in original formula).
+            offset_x                => $offset_x,      # Assembly global X offset.
+            offset_y                => $offset_y,      # Assembly global Y offset.
+        ); # End C helper call.
+
+        # Sn Flag Pole position (cm). # Section header for Sn pole.
+        $Sn_p_x = $Sn_xy->{pole_x}; # Assign Sn pole X from returned hashref.
+        $Sn_p_y = $Sn_xy->{pole_y}; # Assign Sn pole Y from returned hashref.
+
+        # C Flag Pole positions (cm). # Section header for C pole.
+        $C_p_x = $C_xy->{pole_x}; # Assign C pole X from returned hashref.
+        $C_p_y = $C_xy->{pole_y}; # Assign C pole Y from returned hashref.
+
+        # Sn Targets positions (cm). # Section header for Sn target.
+        $Sn_t_x = $Sn_xy->{target_x}; # Assign Sn target X from returned hashref.
+        $Sn_t_y = $Sn_xy->{target_y}; # Assign Sn target Y from returned hashref.
+
+        # C Targets positions (cm). # Section header for C target.
+        $C_t_x = $C_xy->{target_x}; # Assign C target X from returned hashref.
+        $C_t_y = $C_xy->{target_y}; # Assign C target Y from returned hashref.
+
+        # Sn Flag positions (cm). # Section header for Sn flag.
+        $Sn_f_x = $Sn_xy->{flag_x}; # Assign Sn flag X from returned hashref.
+        $Sn_f_y = $Sn_xy->{flag_y}; # Assign Sn flag Y from returned hashref.
+
+        # C Flag positions (cm). # Section header for C flag.
+        $C_f_x = $C_xy->{flag_x}; # Assign C flag X from returned hashref.
+        $C_f_y = $C_xy->{flag_y}; # Assign C flag Y from returned hashref.
+    } elsif ($configuration_string eq "rgm_fall2021_Ar") { # lAr target setup
+        # Compute all geometry quantities that depend on the data-driven foil z-offset. Inputs:
+        #   - flag_shaft_half_length: original half-length of the flag shaft
+        #   - cryocell_to_foil_diff_center_to_center: center-to-center distance between the short cryocell and the foil target, extracted from data (Vz alignment)
+        my $geom = $compute_custom_foil_geometry->(
+            flag_shaft_half_length                  => $flag_shaft[2],
+            cryocell_to_foil_diff_center_to_center  => $cryocell_to_foil_diff_center_to_center_S,
+        ); # End of offset computation call.
+
+        # Custom z-offset applied to the foil assembly so that the simulated foil center matches the data-driven center-to-center spacing
+        $custom_foil_z_offset = $geom->{custom_foil_z_offset};
+
+        # Updated half-length of the flag shaft after applying the custom foil z-offset, ensuring that the shaft remains fully contained within the mother volume
+        $flag_shaft[2]        = $geom->{flag_shaft_half_len};
+
+        # Relative z-positions of the flag poles along the shaft, recomputed using the updated shaft length
+        # This is a remnant of the 4-foil implementation, we only using the downstream-most foils
+        @flag_pole_relpos     = @{ $geom->{flag_pole_relpos} };
+
+        # Absolute z-positions of the flag pole rows (before global offsets), derived consistently from the updated shaft geometry
+        @row                  = @{ $geom->{row} };
+
+        # Here we set the parameters for the lAr target setup:
+
+        # Flag Pole Geometry (cm/deg)
+        @Sn_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, 55/2, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the Sn flag poles.
+        @C_flag_pole = (0.084, 0.1195, 1.0605, 0, 360, 90, -55/2, 0); # Inner radius, outer radius, half length (outside of flag_shaft to end of flag_pole), initial angle, final angle, x angle, y angle, z angle for the C flag poles.
+
+        # Flag Geometry (cm)
+        @Sn_flag = (0.167, 0.1905, 0.0355, 0, 0, -55/2); # Half x, y, z dimensions and x, y, z angles for the Sn flag that holds the target foils.
+        @C_flag = (0.167, 0.1905, 0.0355, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C flag that holds the target foils.
+
+        # Targets Geometry (cm) - small foils
+        # Use small foils - same as rgm_fall2021_C_S
+        @Sn_target = (0.175, 0.405, 0.1, 0, 0, -55/2); # Half x, y, z dimensions and x, y, z angles for the Sn target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+        @C_target = (0.175, 0.405, 0.1, 0, 0, 55/2);   # Half x, y, z dimensions and x, y, z angles for the C target foils. I did a lot of geometry to try and keep the thickness & over all volume the same as in the CAD file.
+
+        my $Sn_rot_degrees = $Sn_target[5];
+        my $C_rot_degrees  = $C_target[5];
+
+        my $Sn_rot_radians = deg2rad($Sn_rot_degrees); # Convert to radians
+        my $C_rot_radians  = deg2rad($C_rot_degrees);   # Convert to radians
+
+        my $offs = $compute_target_centering_offsets->(
+            Sn_flag_pole         => \@Sn_flag_pole,
+            flag_shaft           => \@flag_shaft,
+            Sn_target            => \@Sn_target,
+            Sn_flag              => \@Sn_flag,
+            row                  => \@row,
+            separation           => $separation,
+            custom_foil_z_offset => $custom_foil_z_offset,
+        ); # End centering offsets helper call.
+
+        $offset_x = $offs->{offset_x};
+        $offset_y = $offs->{offset_y};
+        $offset_z = $offs->{offset_z};
+
+        # Adjusted position of the rows for the flag poles.
+        $row_pole = ($row[3] + $offset_z);
+
+        # Adjusted positions of the rows for the target foils.
+        $row_target = ($row[3] + $offset_z - $Sn_flag_pole[1] + 2 * $Sn_flag[2] + $Sn_target[2]);
+
+        # Adjusted positions of the rows for the flags.
+        $row_flag = ($row[3] + $offset_z - $Sn_flag_pole[1] + $Sn_flag[2]);
+
+        # Compute rotated X/Y positions for the Sn and C assemblies (flag pole, foil target, and flag).
+        my $Sn_xy = $compute_rotated_xy_positions->(    # Call helper for Sn geometry.
+            rot_radians             => $Sn_rot_radians, # Sn rotation angle in radians.
+            flag_pole               => \@Sn_flag_pole,  # Reference to Sn flag pole parameters array.
+            target                  => \@Sn_target,     # Reference to Sn target parameters array.
+            flag                    => \@Sn_flag,       # Reference to Sn flag parameters array.
+            flag_shaft_outer_radius => $flag_shaft[1],  # Shaft outer radius (shared geometry), used in radial distances.
+            separation              => $separation,     # Separation between pole end and target (as in original formula).
+            offset_x                => $offset_x,       # Assembly global X offset.
+            offset_y                => $offset_y,       # Assembly global Y offset.
+        ); # End Sn helper call.
+
+        my $C_xy = $compute_rotated_xy_positions->(
+            rot_radians             => $C_rot_radians, # C rotation angle in radians.
+            flag_pole               => \@C_flag_pole,  # Reference to C flag pole parameters array.
+            target                  => \@C_target,     # Reference to C target parameters array.
+            flag                    => \@C_flag,       # Reference to C flag parameters array.
+            flag_shaft_outer_radius => $flag_shaft[1], # Shaft outer radius (shared geometry), used in radial distances.
+            separation              => $separation,    # Separation between pole end and target (as in original formula).
+            offset_x                => $offset_x,      # Assembly global X offset.
+            offset_y                => $offset_y,      # Assembly global Y offset.
+        ); # End C helper call.
+
+        # Sn Flag Pole position (cm). # Section header for Sn pole.
+        $Sn_p_x = $Sn_xy->{pole_x}; # Assign Sn pole X from returned hashref.
+        $Sn_p_y = $Sn_xy->{pole_y}; # Assign Sn pole Y from returned hashref.
+
+        # C Flag Pole positions (cm). # Section header for C pole.
+        $C_p_x = $C_xy->{pole_x}; # Assign C pole X from returned hashref.
+        $C_p_y = $C_xy->{pole_y}; # Assign C pole Y from returned hashref.
+
+        # Sn Targets positions (cm). # Section header for Sn target.
+        $Sn_t_x = $Sn_xy->{target_x}; # Assign Sn target X from returned hashref.
+        $Sn_t_y = $Sn_xy->{target_y}; # Assign Sn target Y from returned hashref.
+
+        # C Targets positions (cm). # Section header for C target.
+        $C_t_x = $C_xy->{target_x}; # Assign C target X from returned hashref.
+        $C_t_y = $C_xy->{target_y}; # Assign C target Y from returned hashref.
+
+        # Sn Flag positions (cm). # Section header for Sn flag.
+        $Sn_f_x = $Sn_xy->{flag_x}; # Assign Sn flag X from returned hashref.
+        $Sn_f_y = $Sn_xy->{flag_y}; # Assign Sn flag Y from returned hashref.
+
+        # C Flag positions (cm). # Section header for C flag.
+        $C_f_x = $C_xy->{flag_x}; # Assign C flag X from returned hashref.
+        $C_f_y = $C_xy->{flag_y}; # Assign C flag Y from returned hashref.
+    } # End of target configuration selection.
+
+    # Mother Volume (parameters from lD2)
+    my $nplanes = 4;
+    my @oradius = (50.3, 50.3, 21.1, 21.1);
+    my @z_plane = (-140.0, 265.0, 280.0, 280.0);
+
+    # Vacuum target container
+    my %detector = init_det();
+    $detector{"name"} = "target";
+    $detector{"mother"} = "root";
+    $detector{"description"} = "Target Container";
+    $detector{"color"} = "22ff22";
+    $detector{"type"} = "Polycone";
+    my $dimen = "0.0*deg 360*deg $nplanes*counts";
+    for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " 0.0*mm";}
+    for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $oradius[$i]*mm";}
+    for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $z_plane[$i]*mm";}
+    $detector{"dimensions"} = $dimen;
+    $detector{"material"} = "G4_Galactic";
+    $detector{"pos"} = "0*mm 0*mm $target_zpos*mm"; # Mother volume offset in z direction according to the parameter file
+    $detector{"style"} = 0;
+    print_det(\%configuration, \%detector);
+
+    # Flag Shaft
+    $detector{"name"} = "flag shaft";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "RGM Solid Target Tube Main";
+    $detector{"pos"} = "$offset_x*cm $offset_y*cm $offset_z*cm";
+    $detector{"rotation"} = "$flag_shaft[5]*deg $flag_shaft[6]*deg $flag_shaft[7]*deg";
+    $detector{"color"} = "000099";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "$flag_shaft[0]*cm $flag_shaft[1]*cm $flag_shaft[2]*cm 0*deg 360*deg";
+    $detector{"material"} = "G4_Al"; #Al 6061-T6
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # C flag pole
+    $detector{"name"} = "Carbon_flag_pole";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "RGM Solid Target Flag Pole C";
+    $detector{"pos"} = "$C_p_x*cm $C_p_y*cm $row_pole*cm";
+    $detector{"rotation"} = "$C_flag_pole[5]*deg $C_flag_pole[6]*deg $C_flag_pole[7]*deg";
+    $detector{"color"} = "990000";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "$C_flag_pole[0]*cm $C_flag_pole[1]*cm $C_flag_pole[2]*cm 0*deg 360*deg";
+    $detector{"material"} = "G4_Al"; #Al 6061
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # Tin flag pole
+    $detector{"name"} = "Tin_flag_pole";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "RGM Solid Target Flag Pole Sn";
+    $detector{"pos"} = "$Sn_p_x*cm $Sn_p_y*cm $row_pole*cm";
+    $detector{"rotation"} = "$Sn_flag_pole[5]*deg $Sn_flag_pole[6]*deg $Sn_flag_pole[7]*deg";
+    $detector{"color"} = "990000";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "$Sn_flag_pole[0]*cm $Sn_flag_pole[1]*cm $Sn_flag_pole[2]*cm 0*deg 360*deg";
+    $detector{"material"} = "G4_Al"; #Al 6061
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # Carbon Flag
+    # C_flag = the piece that holds the target
+    $detector{"name"} = "Carbon_flag";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "RGM Solid Target Flag C";
+    $detector{"pos"} = "$C_f_x*cm $C_f_y*cm $row_flag*cm";
+    $detector{"rotation"} = "$C_flag[3]*deg $C_flag[4]*deg $C_flag[5]*deg";
+    $detector{"color"} = "009900";
+    $detector{"type"} = "Box";
+    $detector{"dimensions"} = "$C_flag[0]*cm $C_flag[1]*cm $C_flag[2]*cm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # Tin Flag
+    # Sn_flag = the piece that holds the target
+    $detector{"name"} = "Tin_flag";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "RGM Solid Target Flag Sn";
+    $detector{"pos"} = "$Sn_f_x*cm $Sn_f_y*cm $row_flag*cm";
+    $detector{"rotation"} = "$Sn_flag[3]*deg $Sn_flag[4]*deg $Sn_flag[5]*deg";
+    $detector{"color"} = "009900";
+    $detector{"type"} = "Box";
+    $detector{"dimensions"} = "$Sn_flag[0]*cm $Sn_flag[1]*cm $Sn_flag[2]*cm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # Carbon foil target
+    $detector{"name"} = "Carbon_foil_target";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "RGM Solid Target C";
+    $detector{"pos"} = "$C_t_x*cm $C_t_y*cm $row_target*cm";
+    $detector{"rotation"} = "$C_target[3]*deg $C_target[4]*deg $C_target[5]*deg";
+    $detector{"color"} = "FF9300";
+    $detector{"type"} = "Box";
+    $detector{"dimensions"} = "$C_target[0]*cm $C_target[1]*cm $C_target[2]*cm";
+    $detector{"material"} = "G4_C";
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # Tin foil target
+    $detector{"name"} = "Tin_foil_target";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "RGM Solid Target Sn";
+    $detector{"pos"} = "$Sn_t_x*cm $Sn_t_y*cm $row_target*cm";
+    $detector{"rotation"} = "$Sn_target[3]*deg $Sn_target[4]*deg $Sn_target[5]*deg";
+    $detector{"color"} = "0096FF";
+    $detector{"type"} = "Box";
+    $detector{"dimensions"} = "$Sn_target[0]*cm $Sn_target[1]*cm $Sn_target[2]*cm";
+    $detector{"material"} = "G4_Sn";
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # lAr target parameters
+    $nplanes = 5;
+    my @oradiusT = (2, 7.45, 7.425, 4.5, 1.5);             # With 0.1 mm spacing between the lAr and the windows
+    my @z_planeT = (-27.37, -25.47, -25.0, -23.5, -22.63); # With 0.1 mm spacing between the lAr and the windows
+
+    # Actual lAr target
+    %detector = init_det();
+    if ($configuration_string eq "rgm_fall2021_Ar") {
+        $detector{"name"} = "lAr_target_cell";
+    } elsif ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L"
+             or $configuration_string eq "rgm_fall2021_Sn_L") {
+        $detector{"name"} = "Empty_target";
+    }
+    $detector{"mother"} = "target";
+    $detector{"description"} = "Target Cell";
+    if ($configuration_string eq "rgm_fall2021_Ar") {
+        $detector{"color"} = "aa0000";
+    } elsif ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L"
+             or $configuration_string eq "rgm_fall2021_Sn_L") {
+        $detector{"color"} = "d9d9d9";
+    }
+    $detector{"type"} = "Polycone";
+    $dimen = "0.0*deg 360*deg $nplanes*counts";
+    for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " 0.0*mm";}
+    for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $oradiusT[$i]*mm";}
+    for (my $i = 0; $i < $nplanes; $i++) {$dimen = $dimen . " $z_planeT[$i]*mm";}
+    $detector{"dimensions"} = $dimen;
+    if ($configuration_string eq "rgm_fall2021_Ar") {
+        $detector{"material"} = "lAr_target"; # Custom material definition for liquid argon (G4_Ar with density of 1.396 g/cm3)
+    } elsif ($configuration_string eq "rgm_fall2021_C_S" or $configuration_string eq "rgm_fall2021_C_L"   
+             or $configuration_string eq "rgm_fall2021_Sn_L") {
+        $detector{"material"} = "G4_Galactic";
+    }
+    $detector{"style"} = 1;
+    print_det(\%configuration, \%detector);
+
+    # Entrance Al window (upstream window). zpos comes from engineering model, has the shift of 1273.27 mm + 30 mm due to the new engineering center
+    my $eng_shift = 1303.27;
+    my $al_window_entrance_radius = 2.95;                                 # Spec. entrance window radius is 3 mm. Here we used smaller radius to 2.95 mm to approximate the window as flat and avoid overlap with the base tube, similar to the lD2 target
+    my $al_window_entrance_half_thickness = 0.015;                        # Spec. entrance window is 30 microns
+    my $zpos = $eng_shift - 1330.77 + $al_window_entrance_half_thickness; # Spec. z position of entrance window + new engineering center
+    %detector = init_det();
+    $detector{"name"} = "al_window_entrance";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "30 microns thick aluminum window upstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $al_window_entrance_radius*mm $al_window_entrance_half_thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
+    print_det(\%configuration, \%detector);
+
+    # Exit Al window (downstream window)
+    my $al_window_exit_radius = 5;                                 # Spec. exit window radius is 7.5 mm. Here we used smaller radius to 5 mm to approximate the window as flat, similar to the lD2 target
+    my $al_window_exit_half_thickness = 0.015;                     # Spec. exit window is 30 microns
+    $zpos = $eng_shift - 1325.77 - $al_window_exit_half_thickness; # Spec. z position of exit window + new engineering center
+    %detector = init_det();
+    $detector{"name"} = "al_window_exit";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "30 microns thick aluminum window downstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $al_window_exit_radius*mm $al_window_exit_half_thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
+    print_det(\%configuration, \%detector);
+
+    # Scattering chambers al window, 75 microns (same as rgb_fall2019)
+    # Note: the eng. position is 1017.27 - here it is placed 8mm upstream to place it within the mother scattering chamber
+    my $radius = 12;
+    my $thickness = 0.0375;
+    $zpos = $eng_shift - 1025.27;
+    %detector = init_det();
+    $detector{"name"} = "al_window_scexit";
+    $detector{"mother"} = "target";
+    $detector{"description"} = "75 microns thick aluminum window downstream";
+    $detector{"color"} = "aaaaff";
+    $detector{"type"} = "Tube";
+    $detector{"dimensions"} = "0*mm $radius*mm $thickness*mm 0*deg 360*deg";
+    $detector{"pos"} = "0*mm 0*mm $zpos*mm";
+    $detector{"material"} = "G4_Al";
+    $detector{"style"} = "1";
     print_det(\%configuration, \%detector);
 }
 
