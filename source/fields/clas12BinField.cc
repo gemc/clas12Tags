@@ -20,7 +20,7 @@ extern "C" {
 using namespace gstring;
 
 
-bool clas12BinField::isEligible(string compositeFieldsName)
+bool clas12BinField::isEligible([[maybe_unused]] string compositeFieldsName)
 {
 	// we assume the files specified in the gcard exist
 	return 1;

@@ -119,14 +119,14 @@ public:
 
 	// we want to rotate the field (axes), not the point
 	// so each rotation is the inverse of the point rotation
-	inline const double yRotX(double p[3]) const {return  p[1]*cosAlhpa + p[2]*sinAlpha;}
-	inline const double zRotX(double p[3]) const {return -p[1]*sinAlpha + p[2]*cosAlhpa;}
+	inline  double yRotX(double p[3]) const {return  p[1]*cosAlhpa + p[2]*sinAlpha;}
+	inline  double zRotX(double p[3]) const {return -p[1]*sinAlpha + p[2]*cosAlhpa;}
 
-	inline const double xRotY(double p[3]) const {return p[0]*cosBeta - p[2]*sinBeta;}
-	inline const double zRotY(double p[3]) const {return p[0]*sinBeta + p[2]*cosBeta;}
+	inline  double xRotY(double p[3]) const {return p[0]*cosBeta - p[2]*sinBeta;}
+	inline  double zRotY(double p[3]) const {return p[0]*sinBeta + p[2]*cosBeta;}
 
-	inline const double xRotZ(double p[3]) const {return  p[0]*cosGamma + p[1]*sinGamma;}
-	inline const double yRotZ(double p[3]) const {return -p[0]*sinGamma + p[1]*cosGamma;}
+	inline  double xRotZ(double p[3]) const {return  p[0]*cosGamma + p[1]*sinGamma;}
+	inline  double yRotZ(double p[3]) const {return -p[0]*sinGamma + p[1]*cosGamma;}
 
 };
 
