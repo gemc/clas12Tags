@@ -28,7 +28,7 @@ using namespace std;
 
 // json: from https://github.com/nlohmann/json
 // only need this file from the single_include dir
-#include <json.hpp>
+#include "json.hpp"
 using json = nlohmann::json;
 
 /// \class aopt
