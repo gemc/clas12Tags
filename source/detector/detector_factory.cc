@@ -6,9 +6,7 @@
 #include "gdml_det_factory.h"
 #include "cad_det_factory.h"
 #include "sqlite_cad_factory.h"
-#include "clara_det_factory.h"
 
-// mlibrary
 #include "gstring.h"
 
 using namespace gstring;
@@ -56,9 +54,6 @@ map <string, detectorFactoryInMap> registerDetectorFactory() {
 
     // CAD factory using SQLITE
     dFactoryMap["SQLITECAD"] = &sqlitecad_det_factory::createFactory;
-
-    // clara factory
-    dFactoryMap["CLARA"] = clara_det_factory::createFactory;
 
     return dFactoryMap;
 }
