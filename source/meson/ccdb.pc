@@ -1,0 +1,12 @@
+# - Relocatable pkgconfig file for ccdb
+# copy this to <path_to_ccdb)/lib/pkgconfig/
+prefix=${pcfiledir}/../..
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: ccdb
+Description: Calibration and Conditions Database
+Version: 1.99.6
+Libs: -L${libdir} -lcMag
+Cflags: -I${includedir}
+
