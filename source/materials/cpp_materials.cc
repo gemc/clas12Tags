@@ -14,7 +14,7 @@
 using namespace CLHEP;
 
 
-map<string, G4Material *> cpp_materials::initMaterials(runConditions rc, goptions opts) {
+map<string, G4Material *> cpp_materials::initMaterials([[maybe_unused]] runConditions rc, [[maybe_unused]] goptions opts) {
 
     // Many of these elements are already in the G4 Material Database as materials:
     // http://geant4.cern.ch/UserDocumentation/UsersGuides/ForApplicationDeveloper/html/apas08.html
