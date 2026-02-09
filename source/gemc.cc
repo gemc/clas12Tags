@@ -31,7 +31,7 @@
 const char *GEMC_VERSION = "gemc dev" ;
 
 // G4 headers
-#include "G4RunManager.hh"
+#include "G4RunManagerFactory.hh"
 #include "G4UImanager.hh"
 #include "G4UIterminal.hh"
 #include "G4VisExecutive.hh"
@@ -148,7 +148,16 @@ int main(int argc, char **argv) {
 
     // Construct the default G4 run manager
     gemc_splash.message(" Instantiating Run Manager...");
-    G4RunManager *runManager = new G4RunManager;
+
+	auto runManager = G4RunManagerFactory::CreateRunManager(G4RunManagerType::Serial);
+	runManager->SetNumberOfThreads(1);
+
+
+	if (dynamic_cast<G4RunManager*>(runManager)) {
+		std::cout << "Using G4RunManager (Serial)" << std::endl;
+	} else if (dynamic_cast<G4MTRunManager*>(runManager)) {
+		std::cout << "Using G4MTRunManager (Multithreaded)" << std::endl;
+	}
 
     // Initializing run_condition class
     gemc_splash.message(" Instantiating Run Conditions...");
