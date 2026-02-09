@@ -12,15 +12,13 @@ class PhysicsListMessenger: public G4UImessenger
 {
 	public:
 		
-		PhysicsListMessenger(PhysicsList* p = 0);
+		PhysicsListMessenger();
 		virtual ~PhysicsListMessenger();
 		
 		void SetNewValue(G4UIcommand*, G4String);
 		
 	private:
-		
-		PhysicsList* fPhysicsList;
-		
+
 		G4UIcmdWithADoubleAndUnit* fGammaCutCmd;
 		G4UIcmdWithADoubleAndUnit* fElectCutCmd;
 		G4UIcmdWithADoubleAndUnit* fPosCutCmd;

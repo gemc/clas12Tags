@@ -9,7 +9,7 @@
 #include "G4UImanager.hh"
 
 
-PhysicsListMessenger::PhysicsListMessenger(PhysicsList* pPhys) :fPhysicsList(pPhys)
+PhysicsListMessenger::PhysicsListMessenger()
 {
 	fGammaCutCmd = new G4UIcmdWithADoubleAndUnit("/testhadr/CutGamma",this);
 	fGammaCutCmd->SetGuidance("Set gamma cut.");
@@ -67,7 +67,7 @@ PhysicsListMessenger::~PhysicsListMessenger()
 	delete fListCmd;
 }
 
-void PhysicsListMessenger::SetNewValue(G4UIcommand* command, G4String newValue)
+void PhysicsListMessenger::SetNewValue([[maybe_unused]] G4UIcommand* command, [[maybe_unused]] G4String newValue)
 {
 }
 

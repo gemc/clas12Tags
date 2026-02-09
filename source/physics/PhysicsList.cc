@@ -20,6 +20,7 @@ using namespace gstring;
 #include "G4Proton.hh"
 #include "G4DecayTable.hh"
 #include "G4ProcessTable.hh"
+#include <G4UnitsTable.hh>
 
 // geant4 physics headers
 #include "G4DecayPhysics.hh"
@@ -39,7 +40,6 @@ using namespace gstring;
 #include "G4IonPhysics.hh"
 #include "G4NeutronTrackingCut.hh"
 #include "G4MuonRadiativeDecayChannelWithSpin.hh"
-#include "G4MuonDecayChannelWithSpin.hh"
 
 // CLHEP units
 #include "CLHEP/Units/PhysicalConstants.h"
@@ -388,7 +388,8 @@ void PhysicsList::cookPhysics()
 		G4OpticalPhysics* opticalPhysics = new G4OpticalPhysics();
 		// enable Mie scattering (do not think it is enabled by default)
 		// make this optional?
-		opticalPhysics->Configure(kMieHG, true);
+		// 6/10/2026: looks like this was deprecated?
+		// opticalPhysics->Configure(kMieHG, true);
 		
 		// this was deprecated?
 		// Method G4OpticalPhysics::SetWLSTimeProfile is deprecated.
