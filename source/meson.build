@@ -1,27 +1,19 @@
 # Notice: if both static and dynamic libraries are present, the dynamic library will be used
 # Forcing suffix lib instead of variants like lib64
 project('clas12Tags', 'cpp',
-        default_options : ['cpp_std=c++17', 'default_library=static', 'default_both_libraries=static', 'libdir=lib'],
-        version : 'dev',
-        meson_version : '>= 1.6.0'
+        default_options : ['default_library=static', 'default_both_libraries=static', 'libdir=lib'],
+        version : run_command('git', 'describe', '--tags', '--abbrev=0', '--always', check : true).stdout().strip(),
+        meson_version : '>= 1.10.1'
 )
-
-# TODO: remove temp workaround for _LIBCPP_ENABLE_ASSERTIONS deprecation
-add_project_arguments(
-    '-U_LIBCPP_ENABLE_ASSERTIONS', # <-- Unset the deprecated macro
-    '-D_LIBCPP_HARDENING_MODE_DEBUG=true',
-    language : 'cpp'
-)
+project_description = 'GEMC (GEant Monte-Carlo) is a program based on Geant4 to simulate the passage of particles through matter. '
 
 # additional debug options useful for profiling
-# TODO: use -O2 with new option to profile using cachegrind
 if get_option('buildtype') == 'debug'
     add_project_arguments('-fno-omit-frame-pointer', language : 'cpp')
     add_project_arguments('-fno-optimize-sibling-calls', language : 'cpp')
-    # add_project_arguments('-O2', language : 'cpp')
+    add_project_arguments('-O2', language : 'cpp')
 endif
 
-project_description = 'GEMC (GEant Monte-Carlo) is a program based on Geant4 to simulate the passage of particles through matter. '
 
 # init lists
 ############
@@ -29,32 +21,28 @@ LD = []
 all_libs = []
 all_includes = []
 empty_dict = { 'na' : [''] }
-all_lib_names = []  # Store library names as linker flags
 python_exe = import('python').find_installation('python3')
 
-
 subdir('meson')
-add_project_arguments('-Wno-shadow', language : ['cpp'])
-
 
 # Fill dictionary
 #################
-subdir('options')
-subdir('translationTable')
-subdir('gstring')
-subdir('frequencySyncSignal')
-subdir('utilities')
-subdir('materials')
-subdir('mirrors')
-subdir('parameters')
-subdir('detector')
-subdir('sensitivity')
-subdir('physics')
-subdir('fields')
-subdir('hitprocess')
-subdir('output')
-subdir('actions')
-subdir('gui')
+# subdir('options')
+#subdir('translationTable')
+#subdir('gstring')
+#subdir('frequencySyncSignal')
+#subdir('utilities')
+#subdir('materials')
+#subdir('mirrors')
+#subdir('parameters')
+#subdir('detector')
+#subdir('sensitivity')
+#subdir('physics')
+#subdir('fields')
+#subdir('hitprocess')
+#subdir('output')
+#subdir('actions')
+#subdir('gui')
 
 
 # compilation loop
@@ -99,7 +87,6 @@ foreach L : LD
         install_headers(headers)
     endif
 
-
     foreach include_dir : additional_includes
         if not all_includes.contains(include_dir)
             all_includes += include_dir
@@ -108,20 +95,21 @@ foreach L : LD
     if not all_includes.contains(this_lib_name) and not (sources.contains('') and headers.contains(''))
         all_includes += this_lib_name
     endif
+
 endforeach
 
-gemc = executable(
-    'gemc',
-    ['gemc.cc'],
-    install : true,
-    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep, lz4_dep],
-    include_directories : all_includes,
-    link_with : all_libs,
-    link_args : all_lib_names,
-    override_options : ['b_pie=true']
-)
+#gemc = executable(
+#    'gemc',
+#    ['gemc.cc'],
+#    install : true,
+#    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep, lz4_dep],
+#    include_directories : all_includes,
+#    link_with : all_libs,
+#    link_args : all_lib_names,
+#    override_options : ['b_pie=true']
+#)
 
-install_subdir('../api', install_dir: get_option('prefix'))
-install_subdir('../experiments', install_dir: get_option('prefix'))
-install_data(['../clas12.sqlite'],  install_dir: join_paths(get_option('prefix'), 'experiments', 'clas12'))
-
+#install_subdir('../api', install_dir: get_option('prefix'))
+#install_subdir('../experiments', install_dir: get_option('prefix'))
+#install_data(['../clas12.sqlite'],  install_dir: join_paths(get_option('prefix'), 'experiments', 'clas12'))
+#

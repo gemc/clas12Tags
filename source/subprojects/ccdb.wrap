@@ -1,6 +1,6 @@
 [wrap-git]
 url = https://code.jlab.org/hallb/clas12/ccdb
-revision = 1.99.6
+revision = v1.99.7
 depth = 1
 method = cmake
 recursive = true

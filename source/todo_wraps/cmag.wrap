@@ -1,0 +1,9 @@
+[wrap-git]
+url = https://code.jlab.org/hallb/clas12/hipo-cpp
+revision = 4.3.0
+depth = 1
+method = meson
+recursive = true
+
+[provide]
+hipo=hipo_dep

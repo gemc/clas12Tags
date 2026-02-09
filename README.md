@@ -214,9 +214,16 @@ and the SQLite database `clas12.sqlite` will be updated with the new detector.
 
 <br/>
 
-# How to compile the source code at JLab
+# How to compile the source code 
 
-Load the **gemc/dev**,  **ccdb** and **hipo** modules as described above [^1].
+### Pre-requisites: 
+
+- [clhep](https://gitlab.cern.ch/CLHEP/CLHEP), [xercesc](https://github.com/apache/xerces-c.git), [geant4](https://github.com/Geant4/geant4.git). For their installation see also [^1].
+- [hipo](https://code.jlab.org/hallb/clas12/hipo-cpp)
+- [ccdb](https://code.jlab.org/hallb/clas12/ccdb)
+
+> [!NOTE]
+> These pre-requisites are satisfied at JLab by using `module load geant4 ccdb hipo'
 
 Then, change directory to the `source` directory and run:
 
@@ -227,7 +234,7 @@ scons -jN OPT=1
 
 where N is the number of cores available. At JLab, N=40 is a good choice.
 
-[^1]: for a standalone installation, follow the [ceInstall instructions](https://github.com/JeffersonLab/ceInstall).
+[^1]: the [g4install](https://github.com/gemc/g4install) provides modules environment and installation scripts for Geant4
 
 
 <br/>

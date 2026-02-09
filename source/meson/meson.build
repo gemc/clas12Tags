@@ -8,65 +8,69 @@ qt6_deps = dependency('qt6',
                           'OpenGL',
                           'OpenGLWidgets',
                           'Xml',
-                          'Sql'
-                      ], include_type : 'system')
+                          'Sql'],
+                      static : true,
+                      include_type : 'system') # treat as system include paths - no warnings
 
-# check system: pkg-config --cflags --libs gl
-ogl_deps = dependency('opengl', required : true)
+sys = host_machine.system()
 
 # pkg-config --cflags --libs gl
-sqlite_dep = dependency('sqlite3', required : true)
+ogl_deps = dependency('opengl', required : true)
 
-# pkg-config --modversion expat
-expat_dep = dependency('expat', required : true)
+# pkg-config --cflags --libs sqlite3
+if sys == 'darwin'
+    sqlite_dep = dependency('sqlite3', required : true)
+else
+    # no static or it will link to static system
+    sqlite_dep = dependency('sqlite3', static : false, required : true)
+endif
+
+# expat required as geant4 is linked statically
+# Geant4’s GIDI/XML parsing in G4processes uses Expat
+# pkg-config --cflags --libs zlib
+expat_dep = dependency('expat', required: true)
 
 # pkg-config --cflags --libs zlib
 zlib_dep = dependency('zlib', static : false, required : true)  # Use shared libz.so instead of libz.a
 
-# pkg-config --cflags --libs liblz4
-# needed by hipo
-lz4_dep = dependency('liblz4', required: true)
+# pkg-config --cflags --libs clhep
+clhep_deps = dependency('clhep',  version : '>=2.4.7.1',  include_type : 'system') # treat as system include paths - no warnings
 
-# sqlite
-sqlite_dep = dependency('sqlite3', required : true)
+# pkg-config --cflags --libs xerces-c
+xercesc_deps = dependency('xerces-c', version : '>=3.2.5',  include_type : 'system') # treat as system include paths - no warnings
 
-# clhep: pkg-config
-clhep_deps = dependency('clhep', version : '>=2.4.7.1')
-
-# xercesc: pkg-config
-xercesc_deps = dependency('xerces-c', version : '>=3.2.5')
-
-# clas12 cmag: pkg-config
-clas12_cmag_deps = dependency('clas12_cmag', version : '>=1.1')
-
-#  geant4.pc if not found
+# geant4.pc if not found
 fs = import('fs')
 gemc_prefix = get_option('prefix')
-geant4_pc = gemc_prefix / 'lib/pkgconfig/geant4.pc'
-script_path = meson.project_source_root() / 'meson/install_geant4_root_pkgconfig.py'
-if not fs.exists(geant4_pc)
-    message('geant4.pc not found in ' + geant4_pc + ', running install script...')
-    run_command(script_path, gemc_prefix, check : true)
+geant4_pc_path = gemc_prefix / 'lib/pkgconfig'
+geant4_core_pc = geant4_pc_path / 'geant4_core.pc'
+geant4_pc = geant4_pc_path / 'geant4.pc'
+g4_pkgconfig_script = meson.project_source_root() / 'meson/g4_pkgconfig.py'
+if not fs.exists(geant4_pc) or not fs.exists(geant4_core_pc)
+    message('geant4.pc or geant4_core.pc  not found in ' + geant4_pc_path + ', running install script to install it in ' + gemc_prefix)
+    run_command(g4_pkgconfig_script, gemc_prefix, check : true)
 endif
-
-# root: pkg-config created manually by./meson/install_geant4_root_pkgconfig.py
-root_deps = dependency('root', version : '>=6.28/02')
-
-# geant4: pkg-config created manually by ./meson/install_geant4_root_pkgconfig.py
-geant4_deps = dependency('geant4', version : '>=11.3.1')
-# this also works,but ONLY if the dynamic libraries are present
-# geant4_deps = dependency('Geant4', method : 'cmake', static : true)
-
-# hipo is a meson subproject - not working yet: ROOT not found
-# hipo_proj = subproject('hipo')
-# hipo_deps = hipo_proj.get_variable('hipo_dep', default_value: null)
-
-hipo_deps = dependency('hipo', version : '>=4.2.0')
+geant4_dep = dependency('geant4', version : '>=11.3.2', method : 'pkg-config', include_type : 'system') # treat as system include paths - no warnings
+geant4_core_dep = dependency('geant4_core', version : '>=11.3.2', method : 'pkg-config')
+geant4_deps = [geant4_dep]
+geant4_core_deps = [geant4_core_dep]
+if sys == 'linux'
+    # Only on Linux: pull in GLX/X11 stack for G4OpenGL(.a)
+    geant4_deps += [
+        dependency('x11', required : true),
+        dependency('xmu', required : true),
+        dependency('gl', required : true),
+    ]
+endif
 
 cmake = import('cmake')
 opt_var = cmake.subproject_options()
-opt_var.add_cmake_defines({ 'BUILD_SHARED_LIBS' : 'OFF', 'BUILD_STATIC_LIBS' : 'ON', 'CMAKE_POLICY_VERSION_MINIMUM' : '4.0' })
-opt_var.append_compile_args('cpp', '-Wno-shadow')
+
+opt_var.add_cmake_defines({
+                              'BUILD_SHARED_LIBS' : 'OFF',
+                              'BUILD_STATIC_LIBS' : 'ON',
+                              'CMAKE_POLICY_VERSION_MINIMUM' : '4.0',
+                          })
 
 # TODO: remove temp workaround for _LIBCPP_ENABLE_ASSERTIONS deprecation
 opt_var.append_compile_args('cpp',
@@ -75,10 +79,8 @@ opt_var.append_compile_args('cpp',
                             '-D_LIBCPP_HARDENING_MODE_DEBUG=true',
 )
 
-
 assimp_proj = cmake.subproject('assimp', options : opt_var)
-assimp_dep = assimp_proj.dependency('assimp')
-
+assimp_dep  = assimp_proj.dependency('assimp')
 
 # Platform-specific: Add Homebrew paths on macOS for zstd and openssl
 # Needed by ccdb
@@ -96,38 +98,5 @@ endif
 ccdb_proj = cmake.subproject('ccdb', options : opt_var)
 ccdb_deps = ccdb_proj.dependency('ccdb')
 
-# sanitizer settings
-project_test_env = environment()
-project_test_env.set(
-    'UBSAN_OPTIONS',
-    'halt_on_error=1',
-    'abort_on_error=1',
-    'print_summary=1',
-    'print_stacktrace=1',
-    'verbosity=10',
-    'suppressions=' + meson.project_source_root() / 'meson' / 'ubsan.supp',
-)
-project_test_env.set(
-    'ASAN_OPTIONS',
-    'halt_on_error=1',
-    'abort_on_error=1',
-    'print_summary=1',
-    'verbosity=10',
-    'suppressions=' + meson.project_source_root() / 'meson' / 'asan.supp',
-)
+hipo_dep = dependency('hipo4')
 
-project_test_env.set(
-    'LSAN_OPTIONS',
-    'verbosity=10',
-    'suppressions=' + meson.project_source_root() / 'meson' / 'lsan.supp',
-)
-
-# allocator_may_return_null=1: Allows TSan to return NULL on allocation failure instead of crashing,
-# which might give you more information about where the allocation problem is happening.
-project_test_env.set(
-    'TSAN_OPTIONS',
-    'verbosity=10',
-    'heap_size=512M',
-    'allocator_may_return_null=1',
-    'suppressions=' + meson.project_source_root() / 'meson' / 'tsan.supp',
-)
