@@ -1,0 +1,13 @@
+<gxml>
+
+	<!-- Entry assembly. position has already been implemented in the CAD modeling -->
+    <volume name="BaseTube"         mother="target" color="444444" position="0*mm 0*mm 0*mm" rotation="0*deg 90*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- Exit assembly. position has already been implemented in the CAD modeling -->
+    <volume name="CellWall"         mother="target" color="ffaaaa" position="0*mm 0*mm 0*mm" rotation="0*deg 90*deg 0*deg" material="G4_KAPTON"/>
+    <volume name="CellEndCap"         mother="target" color="ffaaaa" position="0*mm 0*mm 0*mm" rotation="0*deg 90*deg 0*deg" material="G4_KAPTON"/>
+
+	<!-- rohacell chamber. The scatteringChamber volume is placed at -3 in the model, here we pushed it back to have it at CLAS nominal position -->
+	<volume name="scatteringChamber"         mother="target" color="aaffff" position="0*mm 0*mm 1303.27*mm" rotation="0*deg 180*deg 0*deg" material="rohacell"/>
+
+</gxml>

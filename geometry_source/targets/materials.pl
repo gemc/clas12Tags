@@ -20,6 +20,10 @@ sub build_materials {
     elsif ($configuration_string eq "transverse") {
         build_transverse_mats();
     }
+    elsif ($configuration_string eq "rgm_fall2021_Ar") {
+        build_lAr_mats();
+    }
+
 
     # common to all
 
