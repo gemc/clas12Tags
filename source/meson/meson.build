@@ -28,16 +28,16 @@ endif
 # expat required as geant4 is linked statically
 # Geant4’s GIDI/XML parsing in G4processes uses Expat
 # pkg-config --cflags --libs zlib
-expat_dep = dependency('expat', required: true)
+expat_dep = dependency('expat', required : true)
 
 # pkg-config --cflags --libs zlib
 zlib_dep = dependency('zlib', static : false, required : true)  # Use shared libz.so instead of libz.a
 
 # pkg-config --cflags --libs clhep
-clhep_deps = dependency('clhep',  version : '>=2.4.7.1',  include_type : 'system') # treat as system include paths - no warnings
+clhep_deps = dependency('clhep', version : '>=2.4.7.1', include_type : 'system') # treat as system include paths - no warnings
 
 # pkg-config --cflags --libs xerces-c
-xercesc_deps = dependency('xerces-c', version : '>=3.2.5',  include_type : 'system') # treat as system include paths - no warnings
+xercesc_deps = dependency('xerces-c', version : '>=3.2.5', include_type : 'system') # treat as system include paths - no warnings
 
 # geant4.pc if not found
 fs = import('fs')
@@ -80,7 +80,7 @@ opt_var.append_compile_args('cpp',
 )
 
 assimp_proj = cmake.subproject('assimp', options : opt_var)
-assimp_dep  = assimp_proj.dependency('assimp')
+assimp_dep = assimp_proj.dependency('assimp')
 
 # Platform-specific: Add Homebrew paths on macOS for zstd and openssl
 # Needed by ccdb
@@ -98,5 +98,13 @@ endif
 ccdb_proj = cmake.subproject('ccdb', options : opt_var)
 ccdb_deps = ccdb_proj.dependency('ccdb')
 
-hipo_dep = dependency('hipo4')
 
+# passing dataframes=false,no need for ROOT support
+hipo_sp = subproject('hipo-cpp',
+                     default_options : [
+                         'buildtype=release',
+                         'default_library=static',
+                         'cpp_std=c++17',
+                         'dataframes=false',
+                     ])
+hipo_dep = hipo_sp.get_variable('hipo_dep')

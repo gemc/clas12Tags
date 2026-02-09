@@ -1,0 +1,8 @@
+[wrap-git]
+directory = hipo-cpp
+url = https://code.jlab.org/hallb/clas12/hipo-cpp.git
+revision = 4.3.0
+depth = 1
+
+[provide]
+hipo-cpp = hipo_dep
