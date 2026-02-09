@@ -10,7 +10,7 @@
 // Notice:
 // For images, use png format.
 
-infos::infos(QWidget *parent, goptions *Opts) : QWidget(parent)
+infos::infos(QWidget *parent, [[maybe_unused]] goptions *Opts) : QWidget(parent)
 {
 	gemcOpt = Opts;
 	
@@ -36,11 +36,10 @@ infos::~infos()
 	double VERB   = gemcOpt->optMap["GEO_VERBOSITY"].arg ;
 	if(VERB>2)
 		cout << hd_msg << " Infos Widget Deleted." << endl;
-	
 }
 
 
-AboutTab::AboutTab(QWidget *parent, goptions *Opts) : QWidget(parent)
+AboutTab::AboutTab(QWidget *parent,  [[maybe_unused]] goptions *Opts) : QWidget(parent)
 {
 	QTextEdit *view = new QTextEdit(parent);
     view->setHtml( load_doc() );
@@ -50,7 +49,7 @@ AboutTab::AboutTab(QWidget *parent, goptions *Opts) : QWidget(parent)
 	setLayout(mLayout);
 }
 
-PColorsTab::PColorsTab(QWidget *parent, goptions *Opts) : QWidget(parent)
+PColorsTab::PColorsTab(QWidget *parent,  [[maybe_unused]] goptions *Opts) : QWidget(parent)
 {
 	QTextEdit *view = new QTextEdit(parent);
 	view->setHtml(load_doc());
@@ -60,7 +59,7 @@ PColorsTab::PColorsTab(QWidget *parent, goptions *Opts) : QWidget(parent)
 	setLayout(mLayout);
 }
 
-LUNDTab::LUNDTab(QWidget *parent, goptions *Opts) : QWidget(parent)
+LUNDTab::LUNDTab(QWidget *parent,  [[maybe_unused]] goptions *Opts) : QWidget(parent)
 {
 	QTextEdit *view = new QTextEdit(parent);
 	view->setHtml(load_doc());

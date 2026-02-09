@@ -6,6 +6,7 @@
 
 // G4 headers
 #include "G4UIcommandTree.hh"
+#include "G4String.hh"
 
 g4dialog::g4dialog(QWidget *parent, goptions *Opts) : QWidget(parent)
 {
@@ -297,7 +298,7 @@ QString g4dialog::GetCommandList (const G4UIcommand *aCommand)
 	{
 		txt += QString((char*)(aCommand->GetGuidanceLine(i_thGuidance)).data()) + "\n";
 	}
-	if( ! rangeString.isNull() )
+	if( ! rangeString.empty() )
 	{
 		txt += " Range of parameters : " + QString((char*)(rangeString).data()) + "\n";
 	}
@@ -310,7 +311,7 @@ QString g4dialog::GetCommandList (const G4UIcommand *aCommand)
 		{
 			param = aCommand->GetParameter(i_thParameter);
 			txt += "\nParameter : " + QString((char*)(param->GetParameterName()).data()) + "\n";
-			if( ! param->GetParameterGuidance().isNull() )
+			if( ! param->GetParameterGuidance().empty() )
 				txt += QString((char*)(param->GetParameterGuidance()).data())+ "\n" ;
 			txt += " Parameter type  : " + QString(QChar(param->GetParameterType())) + "\n";
 			if(param->IsOmittable()) {
@@ -321,15 +322,15 @@ QString g4dialog::GetCommandList (const G4UIcommand *aCommand)
 			
 			if( param->GetCurrentAsDefault() ) {
 				txt += " Default value   : taken from the current value\n";
-			} else if( ! param->GetDefaultValue().isNull() ) {
+			} else if( ! param->GetDefaultValue().empty() ) {
 				txt += " Default value   : " + QString((char*)(param->GetDefaultValue()).data())+ "\n";
 			}
 			
-			if( ! param->GetParameterRange().isNull() ) {
+			if( ! param->GetParameterRange().empty() ) {
 				txt += " Parameter range : " + QString((char*)(param->GetParameterRange()).data())+ "\n";
 			}
 			
-			if( ! param->GetParameterCandidates().isNull() ) {
+			if( ! param->GetParameterCandidates().empty() ) {
 				txt += " Candidates      : " + QString((char*)(param->GetParameterCandidates()).data())+ "\n";
 			}
 		}
