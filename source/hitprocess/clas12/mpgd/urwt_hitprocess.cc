@@ -302,12 +302,6 @@ void urwt_HitProcess::initWithRunNumber(int runno)
   {
 
     cout << " > Initializing " << HCname
-         << " run=" << runno
-         << " variation=" << var
-         << " timestamp=" << ts
-         << endl;
-
-    cout << " > Initializing " << HCname
          << " run=" << urwtC.runNo
          << " variation=" << urwtC.digiVariation
          << " timestamp=" << urwtC.digiSnapshotTime
