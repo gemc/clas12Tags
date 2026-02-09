@@ -22,7 +22,6 @@
 // gemc headers
 #include "detector.h"
 #include "Hit.h"
-#include "outputFactory.h"
 #include "gemcOptions.h"
 
 // translationTable framework
@@ -98,7 +97,7 @@ public:
 	// we don't want to connect to DB for each event but it can be skipped using runno
 	// use static members insted as in FTOF template
 
-	virtual void initWithRunNumber(int runno) {;}
+	virtual void initWithRunNumber([[maybe_unused]] int runno) {;}
 
 	// - integrateRaw: returns geant4 raw information integrated over the hit
 	// - add the info in the bank if INTEGRATEDRAW is TRUE

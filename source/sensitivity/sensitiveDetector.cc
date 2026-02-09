@@ -305,7 +305,7 @@ G4bool sensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 }
 
 
-void sensitiveDetector::EndOfEvent(G4HCofThisEvent *HCE)
+void sensitiveDetector::EndOfEvent([[maybe_unused]] G4HCofThisEvent *HCE)
 {
 	int nhitC = hitCollection->GetSize();
 	if(!nhitC) return;

@@ -31,7 +31,7 @@ set<string> getListOfHitProcessHit(map<string, HitProcess_Factory> hitProcessMap
 
 
 // - integrateRaw: returns geant4 raw information integrated over the hit
-map<string, double> HitProcess::integrateRaw(MHit* aHit, int hitn, bool WRITEBANK)
+map<string, double> HitProcess::integrateRaw(MHit* aHit, [[maybe_unused]] int hitn, bool WRITEBANK)
 {
 	map<string, double> raws;
 
@@ -105,7 +105,7 @@ map<string, double> HitProcess::integrateRaw(MHit* aHit, int hitn, bool WRITEBAN
 
 
 
-map< string, vector <double> > HitProcess::allRaws(MHit* aHit, int hitn)
+map< string, vector <double> > HitProcess::allRaws(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <double> > allRaws;
 	
