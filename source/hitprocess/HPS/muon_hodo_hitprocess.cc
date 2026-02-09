@@ -5,7 +5,7 @@
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-map<string, double> muon_hodo_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> muon_hodo_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;
@@ -50,7 +50,7 @@ map<string, double> muon_hodo_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	return dgtz;
 }
 
-vector<identifier>  muon_hodo_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  muon_hodo_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
 	id[id.size()-1].id_sharing = 1;
 	return id;
@@ -74,7 +74,7 @@ vector<MHit*> muon_hodo_HitProcess :: electronicNoise()
 
 
 
-map< string, vector <int> >  muon_hodo_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  muon_hodo_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -84,7 +84,7 @@ map< string, vector <int> >  muon_hodo_HitProcess :: multiDgt(MHit* aHit, int hi
 
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > muon_hodo_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > muon_hodo_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 
@@ -94,7 +94,7 @@ map< int, vector <double> > muon_hodo_HitProcess :: chargeTime(MHit* aHit, int h
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double muon_hodo_HitProcess :: voltage(double charge, double time, double forTime)
+double muon_hodo_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return 0.0;
 }

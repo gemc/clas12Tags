@@ -18,7 +18,7 @@ using namespace CLHEP;
 #include "rich_hitprocess.h"
 
 static richConstants
-initializeRICHConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false) {
+initializeRICHConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false) {
   // TODO: with TDC simulation class from Marco M., time calibration information maybe not necessary
   richConstants richc;
   if (runno == -1) return richc;
@@ -46,7 +46,7 @@ initializeRICHConstants(int runno, string digiVariation = "default", string digi
 // digitized info integrated over hit
 // changed to match data.json definition of RICH::tdc 
 
-map<string, double> rich_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> rich_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {        
 	map<string, double> dgtz;
 
@@ -127,7 +127,7 @@ map<string, double> rich_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 #include "G4VisAttributes.hh"
 #include "G4ParticleTable.hh"
 
-vector<identifier> rich_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier> rich_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
         vector<identifier> yid = id;
         // id[0]: sector
@@ -195,7 +195,7 @@ vector<identifier> rich_HitProcess :: processID(vector<identifier> id, G4Step* a
 	return yid;
 }
 
-map< string, vector <int> >  rich_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  rich_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	return MH;
@@ -265,7 +265,7 @@ map<int, vector<double> > rich_HitProcess::chargeTime(MHit *aHit, int hitn) {
 }
 
 // - voltage: returns a voltage value for a given time. The input are charge value, time
-double rich_HitProcess::voltage(double charge, double time, double forTime) {
+double rich_HitProcess::voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime) {
     return 1.0;
 }
 

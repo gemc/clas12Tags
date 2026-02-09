@@ -19,7 +19,7 @@
 // Added target position 
 
 // the routine to find the strip
-vector<double> bmt_strip::FindStrip(int layer, int sector, G4ThreeVector lxyz, double Edep, bmtConstants bmtc)
+vector<double> bmt_strip::FindStrip(int layer, int sector, G4ThreeVector lxyz, double Edep, const bmtConstants& bmtc)
 {
 	double lx = lxyz.x()/mm;
 	double ly = lxyz.y()/mm;
@@ -112,7 +112,7 @@ vector<double> bmt_strip::FindStrip(int layer, int sector, G4ThreeVector lxyz, d
 // param y y-coordinate of the hit in the lab frame
 // return the sigma in the azimuth direction taking the Lorentz angle into account
 //
-double bmt_strip::getSigma(int layer, double x, double y,  bmtConstants bmtc)
+double bmt_strip::getSigma(int layer, double x, double y,  const bmtConstants& bmtc)
 { // sigma for Z-detectors
 	
 	double sigma = bmtc.SigmaDrift*(sqrt(x*x+y*y) - bmtc.RADIUS[layer-1])/cos(bmtc.ThetaL);
@@ -121,7 +121,7 @@ double bmt_strip::getSigma(int layer, double x, double y,  bmtConstants bmtc)
 	
 }
 
-int bmt_strip::getClosestStrip(int layer, int sector, double angle, double z, bmtConstants bmtc){
+int bmt_strip::getClosestStrip(int layer, int sector, double angle, double z, const bmtConstants& bmtc){
 	double var=0;
 	double var_min=0;
 	double var_max=0; //var=z if it is a C detector, var=angle if Z detector
@@ -158,7 +158,7 @@ int bmt_strip::getClosestStrip(int layer, int sector, double angle, double z, bm
 }
 
 // Return the group of equally separated strips in which the strip is
-int bmt_strip::getStripGroup(int layer, int strip, bmtConstants bmtc){
+int bmt_strip::getStripGroup(int layer, int strip,const bmtConstants& bmtc){
 	int group=0; //Z is always one group
 	int total_strip=bmtc.GROUP[layer-1][group];
 	while (strip>total_strip){
@@ -174,7 +174,7 @@ int bmt_strip::getStripGroup(int layer, int strip, bmtConstants bmtc){
 //
 // WARNING: This routine is not used?
 //
-double bmt_strip::GetStripInfo(int layer, int sector, int strip, bmtConstants bmtc)
+double bmt_strip::GetStripInfo(int layer, int sector, int strip, const bmtConstants& bmtc)
 {
 	int num_strip = strip - 1;     			// index of the strip (starts at 0)
 	double var=0.;
@@ -201,7 +201,7 @@ double bmt_strip::GetStripInfo(int layer, int sector, int strip, bmtConstants bm
 }
 
 
-int bmt_strip::isInSector(int layer, double angle, bmtConstants bmtc)
+int bmt_strip::isInSector(int layer, double angle, const bmtConstants& bmtc)
 {
 	int num_detector = -1;
 	
@@ -210,7 +210,7 @@ int bmt_strip::isInSector(int layer, double angle, bmtConstants bmtc)
 	return num_detector;
 }
 
-double bmt_strip::Weight_td(int layer,int strip, double angle, double z, bmtConstants bmtc){
+double bmt_strip::Weight_td(int layer,int strip, double angle, double z, const bmtConstants& bmtc){
 	double wght=0;
 	int group=getStripGroup(layer, strip, bmtc);
 	

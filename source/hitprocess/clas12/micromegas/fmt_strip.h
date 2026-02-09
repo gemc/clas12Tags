@@ -57,8 +57,8 @@ public:
 	vector<vector<double> >     STRIP_EFFICIENCY; // Give the efficiency (correlated to gain fluctuation)
 	
 	double w_i=20; //ionization potential assumed to be 25 eV
-	Lorentz Lor_Angle;
-	
+	std::unique_ptr<Lorentz> Lor_Angle;
+
 };
 
 class fmt_strip
@@ -73,9 +73,9 @@ public:
 	double strip_y;          // strip_y is the position of the strips
 	double strip_length;     // length of the strip
 	
-	vector<double> FindStrip( int layer, int sector, double x, double y, double z, double Edep, fmtConstants fmtc);   // Strip Finding Routine
-	void Carac_strip(int strip, fmtConstants fmtc); //length of the strip
-	double Weight_td(int strip, double x, double y, double z, fmtConstants fmtc); //Compute the fraction of Nel falling onto the strip, depending on x,y in the FMT coordinate system
+	vector<double> FindStrip( int layer, int sector, double x, double y, double z, double Edep, const fmtConstants& fmtc);   // Strip Finding Routine
+	void Carac_strip(int strip,const fmtConstants& fmtc); //length of the strip
+	double Weight_td(int strip, double x, double y, double z, const fmtConstants& fmtc); //Compute the fraction of Nel falling onto the strip, depending on x,y in the FMT coordinate system
 	double GetBinomial(double n, double p);//CLHEP Binomial has a weird limit condition which returns -1 instead of 0 when n*p=0
 };
 

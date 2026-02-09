@@ -15,7 +15,7 @@ using namespace CLHEP;
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
-static bstConstants initializeBSTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static bstConstants initializeBSTConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	bstConstants bstc;
@@ -26,7 +26,7 @@ static bstConstants initializeBSTConstants(int runno, string digiVariation = "de
 	return bstc;
 }
 
-map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();
@@ -133,7 +133,7 @@ map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 
 
 
-vector<identifier> bst_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier> bst_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
 	// yid is the current strip identifier.
 	// it has 5 dimensions:
@@ -288,7 +288,7 @@ vector<MHit*> bst_HitProcess :: electronicNoise()
 }
 
 
-map< string, vector <int> >  bst_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  bst_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -296,7 +296,7 @@ map< string, vector <int> >  bst_HitProcess :: multiDgt(MHit* aHit, int hitn)
 }
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > bst_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > bst_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -306,7 +306,7 @@ map< int, vector <double> > bst_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double bst_HitProcess :: voltage(double charge, double time, double forTime)
+double bst_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return 0.0;
 }

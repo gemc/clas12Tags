@@ -55,12 +55,13 @@ public:
 	
 	// creates the HitProcess
 	static HitProcess *createHitClass() {return new FMT_HitProcess;}
-	
+
+
 private:
 	
 	// constants initialized with initWithRunNumber
-	static fmtConstants fmtc;
-	
+	static fmtConstants& fmtc;
+
 	void initWithRunNumber(int runno);
 	
 	// - electronicNoise: returns a vector of hits generated / by electronics.

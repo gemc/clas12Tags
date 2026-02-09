@@ -9,7 +9,7 @@
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-map<string, double> crs_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> crs_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;
@@ -384,7 +384,7 @@ double crs_HitProcess::BirksAttenuation2(double destep,double stepl,int charge,d
 }
 
 
-map< string, vector <int> >  crs_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  crs_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -534,7 +534,7 @@ vector<MHit*> crs_HitProcess :: electronicNoise()
 
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > crs_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > crs_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 
@@ -544,7 +544,7 @@ map< int, vector <double> > crs_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double crs_HitProcess :: voltage(double charge, double time, double forTime)
+double crs_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return 0.0;
 }
