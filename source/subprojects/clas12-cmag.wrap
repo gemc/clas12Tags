@@ -1,0 +1,7 @@
+[wrap-git]
+url = https://github.com/maureeungaro/clas12-cmag.git
+revision = HEAD
+depth = 1
+
+[provide]
+cMag = cMag
