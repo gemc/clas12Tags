@@ -109,4 +109,4 @@ hipo_cpp_sp = subproject('hipo-cpp',
                          ])
 hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep')
 
-clas12_cmag_dep = dependency('clas12-cmag')
+clas12_cmag_dep = dependency('clas12-cmag', include_type : 'system')
