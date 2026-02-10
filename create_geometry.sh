@@ -5,7 +5,7 @@ export COATJAVA=$cdir/geometry_source/coatjava
 export PATH=$PATH:$COATJAVA/bin
 
 # CLAS12
-all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets uRwell upstream"
+all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets urwt upstream"
 
 function printHelp() {
     cat <<EOF
@@ -13,10 +13,11 @@ function printHelp() {
 Usage: create_geometry.sh [coatjava release options] [detector]
 
 Coatjava options (optional – at most one of -d|-l|-t|-g):
-  -l               use latest tag (default)
-  -t <tag>         use specific tag, like 12.0.4t
-  -g <github_url>  use custom github URL
-  -h               show this help
+  -l                 use latest tag (default)
+  -t <tag>           use specific tag, like 12.0.4t
+  -g <github_url>    use custom github URL
+  -c CCDB_CONNECTION use custom CCDB_CONNECTION
+  -h                 show this help
 
 If a detector is given, only that detector will be built; otherwise every detector below is processed:
 
@@ -27,12 +28,14 @@ EOF
 
 coatjava_args=("-l")         # default behaviour = latest tag
 explicit_coatjava=0          # did the user pass a coatjava flag?
+ccdb_conn="mysql://clas12reader@clasdb-farm.jlab.org/clas12"
 
-while getopts ":lt:g:h" opt; do
+while getopts ":lt:g:c:h" opt; do
   case "$opt" in
     l) coatjava_args=("-l"); explicit_coatjava=1 ;;
     t) coatjava_args=("-t" "$OPTARG"); explicit_coatjava=1 ;;
     g) coatjava_args=("-g" "$OPTARG"); explicit_coatjava=1 ;;
+    c) ccdb_conn=$OPTARG ;;
     h) printHelp; exit 0 ;;
     :) echo "Error: -$OPTARG requires an argument." >&2; exit 1 ;;
     \?) echo "Error: unknown option -$OPTARG" >&2; printHelp; exit 1 ;;
@@ -40,6 +43,8 @@ while getopts ":lt:g:h" opt; do
 done
 shift $((OPTIND - 1))        # drop parsed options
 
+export CCDB_CONNECTION=$ccdb_conn
+echo CCDB_CONNECTION: $CCDB_CONNECTION
 
 # Positional argument = detector (optional)
 if [[ $# -gt 0 ]]; then
