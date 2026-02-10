@@ -77,7 +77,7 @@ static fmtConstants initializeFMTConstants(int runno, string digiVariation = "de
 		fmtc.HV_STRIPS_OUT[i]=520;
 	}
 	
-	fmtc.Lor_Angle.Initialize(runno);
+	fmtc.Lor_Angle->Initialize(runno);
 	
 	// get hit time distribution parameters
 	snprintf(fmtc.database, sizeof(fmtc.database), "/calibration/mvt/fmt_time:%d:%s%s", fmtc.runNo, digiVariation.c_str(), timestamp.c_str());
@@ -176,12 +176,12 @@ vector<identifier>  FMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 		G4ThreeVector qEField(0,0,1); //Product q*v
 		G4ThreeVector Fdir=qEField.cross(BField); //Direction of lorentz drift
 		fmanager->GetDetectorField()->GetFieldValue(point, fieldValue);
-		fmtc.ThetaL=fmtc.Lor_Angle.GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+		fmtc.ThetaL=fmtc.Lor_Angle->GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 		fmtc.Theta_Ls=atan2(Fdir.y(),Fdir.x());
 		
 		if(fmtc.runNo == 0){
 			cout << " > FMT: Field found with value " << fieldValue[2]/gauss << " gauss. Setting Lorentz angle accordingly." << endl;
-			fmtc.ThetaL=fmtc.Lor_Angle.GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+			fmtc.ThetaL=fmtc.Lor_Angle->GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 			fmtc.Theta_Ls=atan2(Fdir.y(),Fdir.x());
 		}
 	} else {

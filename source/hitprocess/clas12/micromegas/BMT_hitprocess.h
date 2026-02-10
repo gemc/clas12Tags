@@ -47,38 +47,35 @@
 class BMT_HitProcess : public HitProcess
 {
 public:
-	
-	~BMT_HitProcess(){;}
-	
+	~BMT_HitProcess() override { ; }
+
 	// - integrateDgt: returns digitized information integrated over the hit
-	map<string, double> integrateDgt(MHit*, int);
-	
+	map<string, double> integrateDgt(MHit*, int) override;
+
 	// - multiDgt: returns multiple digitized information / hit
-	map< string, vector <int> > multiDgt(MHit*, int);
-	
+	map<string, vector<int>> multiDgt(MHit*, int) override;
+
 	// - charge: returns charge/time digitized information / step
-	virtual map< int, vector <double> > chargeTime(MHit*, int);
-	
+	map<int, vector<double>> chargeTime(MHit*, int) override;
+
 	// - voltage: returns a voltage value for a given time. The input are charge value, time
-	virtual double voltage(double, double, double);
-	
+	double voltage(double, double, double) override;
+
 	// The pure virtual method processID returns a (new) identifier
 	// containing hit sharing information
-	vector<identifier> processID(vector<identifier>, G4Step*, detector);
-	
+	vector<identifier> processID(vector<identifier>, G4Step*, detector) override;
+
 	// creates the HitProcess
-	static HitProcess *createHitClass() {return new BMT_HitProcess;}
-	
-	
+	static HitProcess* createHitClass() { return new BMT_HitProcess; }
+
 private:
-	
 	// constants initialized with initWithRunNumber
 	static bmtConstants bmtc;
-	
+
 	double fieldScale;
-	
+
 	void initWithRunNumber(int runno);
-	
+
 	// - electronicNoise: returns a vector of hits generated / by electronics.
 	vector<MHit*> electronicNoise();
 };

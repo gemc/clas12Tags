@@ -96,7 +96,7 @@ if host_machine.system() == 'darwin'
 endif
 
 ccdb_proj = cmake.subproject('ccdb', options : opt_var)
-ccdb_dep = ccdb_proj.dependency('ccdb')
+ccdb_dep = ccdb_proj.dependency('ccdb', include_type : 'system')
 
 
 # passing dataframes=false,no need for ROOT support

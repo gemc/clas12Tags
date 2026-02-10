@@ -13,7 +13,6 @@ using namespace UTIL;
 
 // gemc
 #include "gemcOptions.h"
-#include "outputFactory.h"
 
 // C++
 #include <fstream>
