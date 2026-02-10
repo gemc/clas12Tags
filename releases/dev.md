@@ -2,7 +2,6 @@ Based on [Coatjava Release](https://github.com/JeffersonLab/coatjava/releases) 1
 
 ## In progress
 
-- Micromegas geometry and gcards updates
 - Band in real run numbers
 - Torus + Shielding beamline CAD geometry (in progress) 
 - DC v2
