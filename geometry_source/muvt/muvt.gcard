@@ -1,0 +1,29 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+
+
+    <detector name="geometry_source/muvt/muvt"                 factory="TEXT" variation="default"/>
+    
+
+
+	<option name="INTEGRATEDRAW" value="*"/>
+	<option name="RECORD_PASSBY" value="0"/>
+        <option name="SAVE_ALL_MOTHERS" value="0"/>
+        <option name="RECORD_OPTICALPHOTONS"   value="1"/>
+        <option name="SKIPREJECTEDHITS"    value="1" />
+
+	<option name="BEAM_P"    value="e-, 11*GeV, 0*deg, 0*deg" />
+
+	<option name="PRINT_EVENT"    value="100" />
+
+	<option name="OUTPUT"                  value="hipo, out.hipo"/>
+	<option name="PHYSICS"                 value="STD + FTFP_BERT"/>
+	<option name="RUNNO"                   value="11" />
+	<option name="DIGITIZATION_VARIATION"  value="rga_fall2018_mc" />
+
+<!--	<option name="SWITCH_MATERIALTO"       value="beamline_W, G4_W"/>-->
+
+
+</gcard>
