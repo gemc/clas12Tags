@@ -1,9 +1,7 @@
 [wrap-git]
+directory = ccdb
 url = https://code.jlab.org/hallb/clas12/ccdb
 revision = v1.99.7
 depth = 1
+clone-recursive = true
 method = cmake
-recursive = true
-
-[provide]
-ccdb=ccdb_dep

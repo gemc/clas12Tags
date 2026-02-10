@@ -4,5 +4,7 @@ url = https://code.jlab.org/hallb/clas12/hipo-cpp.git
 revision = 4.3.0
 depth = 1
 
+# makes dependency auto-fallback as long as the
+# subproject calls meson.override_dependency
 [provide]
-hipo-cpp = hipo_dep
+dependency_names = hipo-cpp

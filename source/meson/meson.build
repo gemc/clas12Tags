@@ -96,15 +96,17 @@ if host_machine.system() == 'darwin'
 endif
 
 ccdb_proj = cmake.subproject('ccdb', options : opt_var)
-ccdb_deps = ccdb_proj.dependency('ccdb')
+ccdb_dep = ccdb_proj.dependency('ccdb')
 
 
 # passing dataframes=false,no need for ROOT support
-hipo_sp = subproject('hipo-cpp',
-                     default_options : [
-                         'buildtype=release',
-                         'default_library=static',
-                         'cpp_std=c++17',
-                         'dataframes=false',
-                     ])
-hipo_dep = hipo_sp.get_variable('hipo_dep')
+hipo_cpp_sp = subproject('hipo-cpp',
+                         default_options : [
+                             'buildtype=release',
+                             'default_library=static',
+                             'cpp_std=c++17',
+                             'dataframes=false',
+                         ])
+hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep')
+
+clas12_cmag_dep = dependency('clas12-cmag')

@@ -18,5 +18,6 @@ LD += {
         'ActionInitialization.h',
         'MSteppingAction.h'
     ),
-    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep],
+    'additional_includes' : ['actions'],
+    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep],
 }

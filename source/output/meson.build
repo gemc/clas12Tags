@@ -16,5 +16,5 @@ LD += {
         'txt_output.h',
         'gbank.h'
     ),
-    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, hipo_deps, ccdb_deps],
+    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, hipo_cpp_dep, ccdb_dep],
 }

@@ -92,5 +92,5 @@ LD += {
         'HPS/muon_hodo_hitprocess.h'
     ),
     'additional_includes' : ['hitprocess', 'hitprocess/clas12', 'hitprocess/bdx', 'hitprocess/eic', 'hitprocess/injector', 'hitprocess/HPS'],
-    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, ccdb_deps],
+    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, ccdb_dep],
 }

@@ -24,5 +24,5 @@ LD += {
         'multipoleField.h'
     ),
     'additional_includes' : ['fields', 'fields/symmetries'],
-    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, clas12_cmag_deps],
+    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, clas12_cmag_dep],
 }

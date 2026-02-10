@@ -27,22 +27,22 @@ subdir('meson')
 
 # Fill dictionary
 #################
-# subdir('options')
-#subdir('translationTable')
-#subdir('gstring')
-#subdir('frequencySyncSignal')
-#subdir('utilities')
-#subdir('materials')
-#subdir('mirrors')
-#subdir('parameters')
-#subdir('detector')
-#subdir('sensitivity')
-#subdir('physics')
-#subdir('fields')
-#subdir('hitprocess')
-#subdir('output')
-#subdir('actions')
-#subdir('gui')
+subdir('options')
+subdir('translationTable')
+subdir('gstring')
+subdir('frequencySyncSignal')
+subdir('utilities')
+subdir('materials')
+subdir('mirrors')
+subdir('parameters')
+subdir('detector')
+subdir('sensitivity')
+subdir('physics')
+subdir('fields')
+subdir('hitprocess')
+subdir('actions')
+subdir('output')
+subdir('gui')
 
 
 # compilation loop
@@ -78,7 +78,6 @@ foreach L : LD
         )
         if not all_libs.contains(this_library)
             all_libs += this_library
-            all_lib_names += 'lib' + this_lib_name + '.a' # Add as linker flag
         endif
     endif
 
@@ -102,10 +101,9 @@ endforeach
 #    'gemc',
 #    ['gemc.cc'],
 #    install : true,
-#    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep, lz4_dep],
+#    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep, lz4_dep],
 #    include_directories : all_includes,
 #    link_with : all_libs,
-#    link_args : all_lib_names,
 #    override_options : ['b_pie=true']
 #)
 

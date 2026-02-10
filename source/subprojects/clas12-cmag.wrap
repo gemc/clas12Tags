@@ -1,7 +1,10 @@
 [wrap-git]
+directory = clas12-cmag
 url = https://github.com/maureeungaro/clas12-cmag.git
 revision = HEAD
 depth = 1
 
+# makes dependency auto-fallback as long as the
+# subproject calls meson.override_dependency
 [provide]
-cMag = cMag
+dependency_names = clas12-cmag
