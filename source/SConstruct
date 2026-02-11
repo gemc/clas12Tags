@@ -140,8 +140,6 @@ hitp_sources = Split("""
 	hitprocess/clas12/ltcc_hitprocess.cc
 	hitprocess/clas12/rich_hitprocess.cc
 	hitprocess/clas12/band_hitprocess.cc
- 	hitprocess/clas12/uRwell/uRwell_hitprocess.cc
- 	hitprocess/clas12/uRwell/uRwell_strip.cc
     hitprocess/clas12/recoil/recoil_hitprocess.cc
     hitprocess/clas12/recoil/recoil_strip.cc
     hitprocess/clas12/mpgd/urwt_hitprocess.cc
