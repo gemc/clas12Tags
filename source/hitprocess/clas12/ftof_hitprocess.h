@@ -36,6 +36,11 @@ public:
 	// tdc_conc: tdc conversion factors
 	vector<double> tdcconv[6][3][2];
 	
+        // tdc jitter parameters
+        double jitter_period;
+        int    jitter_phase;
+        int    jitter_cycles;
+
 	// adc time offsets
 	vector<double> adcoffset[6][3][2];
 	
@@ -48,8 +53,14 @@ public:
 	// countsForMIP: Desired ADC channel for MIP peak calibration
 	vector<double> countsForMIP[6][3][2];
 	
-	// twlk: Time walk correction, 3 constants each for L and R
+	// twlk: Time walk correction, 5 constants each for L and R
 	vector<double> twlk[6][3][6];
+ 
+	// twlk: Energy-dependent Time walk correction
+	vector<double> twlke[6][3][4];
+ 
+	// twlk: Position-depemdent Time walk correction
+	vector<double> twlkp[6][3][2];
 	
 	// toff_LR and tof_P2P: time offsets for Left-Right and Paddle-to-Paddle
 	vector<double> toff_LR[6][3];
