@@ -101,12 +101,14 @@ ccdb_dep = ccdb_proj.dependency('ccdb', include_type : 'system')
 
 # passing dataframes=false,no need for ROOT support
 hipo_cpp_sp = subproject('hipo-cpp',
-                         default_options : [
+                         default_options: [
                              'buildtype=release',
                              'default_library=static',
                              'cpp_std=c++17',
                              'dataframes=false',
-                         ])
+                         ]
+)
+
 hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep')
 
 clas12_cmag_dep = dependency('clas12-cmag', include_type : 'system')

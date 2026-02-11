@@ -142,7 +142,7 @@ vector<recoil_strip_found> recoil_strip::FindStrip(G4ThreeVector xyz , double Ed
 	
 }
 
-double recoil_strip::Weight_td(int strip, double x, double y, double z, recoilConstants recoilc){
+double recoil_strip::Weight_td(int strip, double x, double y,  [[ maybe_unused ]] double z, recoilConstants recoilc){
 	double wght;
 	if(Build_strip(strip, recoilc)){
 	 wght=(erf((strip_y+recoilc.get_strip_width(strip)/2.-y)/recoilc.sigma_td/sqrt(2))-erf((strip_y-recoilc.get_strip_width(strip)/2.-y)/recoilc.sigma_td/sqrt(2)))*(erf((strip_x+strip_length/2.-x)/recoilc.sigma_td/sqrt(2))-erf((strip_x-strip_length/2.-x)/recoilc.sigma_td/sqrt(2)))/2./2.;

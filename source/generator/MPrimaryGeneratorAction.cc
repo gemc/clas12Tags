@@ -23,9 +23,6 @@ using namespace gstring;
 
 using namespace std;
 
-// CLHEP units
-#include "CLHEP/Units/PhysicalConstants.h"
-
 using namespace CLHEP;
 
 MPrimaryGeneratorAction::MPrimaryGeneratorAction(goptions *opts) {
@@ -507,13 +504,12 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 					}
 					vector <string> headerStrings = getStringVectorFromString(theWholeLine);
 					headerUserDefined.clear();
-					for (auto &s: headerStrings) {
-						headerUserDefined.push_back(get_number(s));
+					for (auto &hs: headerStrings) {
+						headerUserDefined.push_back(get_number(hs));
 					}
 
 					int nparticles = headerUserDefined[0];
 					for (int p = 0; p < nparticles; p++) {
-						string theWholeLine;
 						getline(gif, theWholeLine);
 						if (gif.eof() && p != nparticles - 1) {
 							cout << " Input file " << gfilename << " appear to be truncated." << endl;
@@ -529,8 +525,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 			}
 			vector <string> headerStrings = getStringVectorFromString(theWholeLine);
 			headerUserDefined.clear();
-			for (auto &s: headerStrings) {
-				headerUserDefined.push_back(get_number(s));
+			for (auto &hs: headerStrings) {
+				headerUserDefined.push_back(get_number(hs));
 			}
 
 			int nparticles = headerUserDefined[0];
@@ -541,7 +537,6 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 
 			userInfo.clear();
 			for (int p = 0; p < nparticles; p++) {
-				string theWholeLine;
 				getline(gif, theWholeLine);
 				if (gif.eof() && p != nparticles - 1) {
 					cout << " Input file " << gfilename << " appear to be truncated." << endl;
@@ -551,8 +546,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 				vector <string> infoStrings = getStringVectorFromString(theWholeLine);
 
 				userInforForParticle thisParticleInfo;
-				for (auto &s: infoStrings) {
-					thisParticleInfo.infos.push_back(get_number(s));
+				for (auto &hs: infoStrings) {
+					thisParticleInfo.infos.push_back(get_number(hs));
 				}
 				userInfo.push_back(thisParticleInfo);
 
@@ -642,8 +637,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 			getline(gif, theWholeLine);
 			vector <string> headerStrings = getStringVectorFromString(theWholeLine);
 			headerUserDefined.clear();
-			for (auto &s: headerStrings) {
-				headerUserDefined.push_back(get_number(s));
+			for (auto &hs: headerStrings) {
+				headerUserDefined.push_back(get_number(hs));
 			}
 
 			int nparticles = headerUserDefined.back();
@@ -667,8 +662,8 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 				vector <string> infoStrings = getStringVectorFromString(theWholeLine);
 
 				userInforForParticle thisParticleInfo;
-				for (auto &s: infoStrings) {
-					thisParticleInfo.infos.push_back(get_number(s));
+				for (auto &hs: infoStrings) {
+					thisParticleInfo.infos.push_back(get_number(hs));
 				}
 				if (thisParticleInfo.infos.size() != 18) {
 					cout << " !!! Error: Beagle particle info size is " << thisParticleInfo.infos.size()
@@ -991,7 +986,7 @@ void MPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 
 
 void MPrimaryGeneratorAction::setBeam() {
-	string hd_msg = gemcOpt->optMap["LOG_MSG"].args + " Beam Settings >> ";
+	hd_msg = gemcOpt->optMap["LOG_MSG"].args + " Beam Settings >> ";
 	svx = 0;
 	svy = 0;
 	svz = 0;

@@ -10,9 +10,6 @@
 
 using namespace CLHEP;
 
-// hipo4
-#include "hipo4/writer.h"
-
 // ccdb
 #include <CCDB/Calibration.h>
 #include <CCDB/Model/Assignment.h>

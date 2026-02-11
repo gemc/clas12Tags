@@ -8,7 +8,6 @@
 // CLAS12
 #include "clas12/alert/atof_hitprocess.h"       ///< Alert TOF
 #include "clas12/alert/ahdc_hitprocess.h"       ///< Alert Drift Chamber
-#include "clas12/alert/alertshell_hitprocess.h" ///< Alert shell non active geometry
 #include "clas12/band_hitprocess.h"		         ///< BAND
 #include "clas12/svt/bst_hitprocess.h"          ///< Barrel Silicon Tracker (bst)
 #include "clas12/cnd_hitprocess.h"              ///< Central Neutron Detector
@@ -25,7 +24,6 @@
 #include "clas12/micromegas/BMT_hitprocess.h"   ///< barrel micromegas
 #include "clas12/rich_hitprocess.h"             ///< Pre-shower calorimeter
 #include "clas12/rtpc_hitprocess.h"             ///< Radial Time Projection Chamber (RTPC)
-#include "clas12/uRwell/uRwell_hitprocess.h"    ///< uRwell detector
 #include "clas12/mpgd/urwt_hitprocess.h"    	///< urwt detector urwt
 #include "clas12/mpgd/muvt_hitprocess.h"    	///< muvt detector muvt
 #include "clas12/recoil/recoil_hitprocess.h"    ///< RGH recoil detector
@@ -71,11 +69,8 @@ map<string, HitProcess_Factory> HitProcess_Map(string experiments)
 		
 		// CLAS12
 		if(EXP == "clas12") {
-			// hitMap["alrttof"]   = &atof_HitProcess::createHitClass;
-			// hitMap["alrtdc"]    = &ahdc_HitProcess::createHitClass;
 			hitMap["atof"]   = &atof_HitProcess::createHitClass;
 			hitMap["ahdc"]    = &ahdc_HitProcess::createHitClass;
-			//hitMap["alertshell"] = &alertshell_HitProcess::createHitClass;
 			hitMap["band"]	     = &band_HitProcess::createHitClass;
 			hitMap["bmt"]       = &BMT_HitProcess::createHitClass;
 			hitMap["fmt"]       = &FMT_HitProcess::createHitClass;
@@ -93,7 +88,6 @@ map<string, HitProcess_Factory> HitProcess_Map(string experiments)
 			hitMap["ltcc"]      = &ltcc_HitProcess::createHitClass;
 			hitMap["rich"]      = &rich_HitProcess::createHitClass;
 			hitMap["rtpc"]      = &rtpc_HitProcess::createHitClass;
-			hitMap["urwell"]    = &uRwell_HitProcess::createHitClass;
 			hitMap["urwt"]   	= &urwt_HitProcess::createHitClass;
 			hitMap["muvt"]   	= &muvt_HitProcess::createHitClass;
 			hitMap["recoil"]    = &recoil_HitProcess::createHitClass;

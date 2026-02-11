@@ -15,7 +15,7 @@
 using namespace ccdb;
 
 
-static bmtConstants initializeBMTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static bmtConstants initializeBMTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no",  [[ maybe_unused ]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	bmtConstants bmtc;
@@ -112,7 +112,7 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	return bmtc;
 }
 
-map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused ]] int hitn)
 {
 	map<string, double>  dgtz;
 	vector<identifier> identity = aHit->GetId();
@@ -148,7 +148,6 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	trueInfos tInfos(aHit);
 	
 	if(verbosity>4) {
-		trueInfos tInfos(aHit);
 		cout <<  log_msg << " layer: " << layer << "  sector: " << sector << "  Strip: " << strip
 		<< " x=" << tInfos.x << " y=" << tInfos.y << " z=" << tInfos.z << endl;
 	}
@@ -300,7 +299,7 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 }
 
 
-map< string, vector <int> >  BMT_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  BMT_HitProcess :: multiDgt( [[ maybe_unused ]] MHit* aHit,  [[ maybe_unused ]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -324,7 +323,7 @@ vector<MHit*> BMT_HitProcess :: electronicNoise()
 }
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > BMT_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > BMT_HitProcess :: chargeTime( [[ maybe_unused ]] MHit* aHit,  [[ maybe_unused ]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -334,7 +333,7 @@ map< int, vector <double> > BMT_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double BMT_HitProcess :: voltage(double charge, double time, double forTime)
+double BMT_HitProcess :: voltage( [[ maybe_unused ]] double charge,  [[ maybe_unused ]] double time,  [[ maybe_unused ]] double forTime)
 {
 	return 0.0;
 }

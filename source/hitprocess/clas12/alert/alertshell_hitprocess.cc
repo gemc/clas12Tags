@@ -1,8 +1,6 @@
 // G4 headers
 #include "G4Poisson.hh"
-#include "Randomize.hh"
 
-#include <math.h>
 #include <random>
 
 #include <CCDB/Calibration.h>
@@ -17,14 +15,13 @@ using namespace ccdb;
 #include "alertshell_hitprocess.h"
 
 // CLHEP units
-#include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
 // V. Sergeyeva, started on 13 Oct. 2020
 
 
 // this method is for connection to calibration database and extraction of calibration parameters
-static alertshellConstants initializeALERTSHELLConstants(int runno, string digiVariation = "default") {
+static alertshellConstants initializeALERTSHELLConstants(int runno,  [[ maybe_unused ]] string digiVariation = "default") {
 	alertshellConstants atc;
 	
 	// do not initialize at the beginning, only after the end of the first event,
@@ -159,7 +156,7 @@ map<string, double> alertshell_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 
 
 // this method is to locate the hit event, it returns a hitted wire or paddle; this is also the one that needs to be implemented at first.
-vector<identifier> alertshell_HitProcess::processID(vector<identifier> id, G4Step* aStep, detector Detector) {
+vector<identifier> alertshell_HitProcess::processID(vector<identifier> id,  [[ maybe_unused ]] G4Step* aStep,  [[ maybe_unused ]] detector Detector) {
 	
 	//id[id.size()-1].id_sharing = 1;
 	//return id;
@@ -217,7 +214,7 @@ vector<MHit*> alertshell_HitProcess::electronicNoise() {
 	return noiseHits;
 }
 
-map< string, vector <int> > alertshell_HitProcess::multiDgt(MHit* aHit, int hitn) {
+map< string, vector <int> > alertshell_HitProcess::multiDgt( [[ maybe_unused ]] MHit* aHit,  [[ maybe_unused ]] int hitn) {
 	map< string, vector <int> > MH;
 	
 	return MH;
@@ -226,7 +223,7 @@ map< string, vector <int> > alertshell_HitProcess::multiDgt(MHit* aHit, int hitn
 // - charge: returns charge/time digitized information / step
 // this method is implemented in ftof, but information from this bank is not translated into the root format right now (29/05/2020)
 // the output is only visible in .txt output of gemc simulation + <option name="SIGNALVT" value="ftof"/> into gcard
-map< int, vector <double> > alertshell_HitProcess::chargeTime(MHit* aHit, int hitn) {
+map< int, vector <double> > alertshell_HitProcess::chargeTime( [[ maybe_unused ]] MHit* aHit,  [[ maybe_unused ]] int hitn) {
 	map< int, vector <double> >  CT;
 	
 	return CT;
@@ -236,7 +233,7 @@ map< int, vector <double> > alertshell_HitProcess::chargeTime(MHit* aHit, int hi
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
 
-double alertshell_HitProcess::voltage(double charge, double time, double forTime) {
+double alertshell_HitProcess::voltage( [[ maybe_unused ]] double charge,  [[ maybe_unused ]] double time,  [[ maybe_unused ]] double forTime) {
 	return 0.0;
 }
 

@@ -16,7 +16,7 @@ public:
 	char   database[80];
 
 	// convert each (sector, layer, component) to a number between 0 and 575 (we have 576 wires)
-	static int getUniqueId(int sector, int layer, int component) {
+	static int getUniqueId(  [[ maybe_unused]] int sector, int layer, int component) {
 		if      (layer == 11) {
 			return component - 1;
 		} 
@@ -50,11 +50,11 @@ public:
 	
 	// t0 table
 	double T0Correction[576];
-	double get_T0(int sector, int layer, int component) { return T0Correction[getUniqueId(sector, layer, component)];}
-	double get_T0(int wireId) { return T0Correction[wireId];}
+	double get_T0(int sector, int layer, int component) const { return T0Correction[getUniqueId(sector, layer, component)];}
+	double get_T0(int wireId) const { return T0Correction[wireId];}
 	// time2distance 
 	double T2D[6]; // contains the coefficients of a polynomial fit : p0 + p1*x + ... + p5*x^5
-	double eval_t2d(double x) { return T2D[0] + T2D[1]*pow(x, 1.0) + T2D[2]*pow(x, 2.0) + T2D[3]*pow(x, 3.0) + T2D[4]*pow(x, 4.0) + T2D[5]*pow(x, 5.0);}
+	double eval_t2d(double x) const { return T2D[0] + T2D[1]*pow(x, 1.0) + T2D[2]*pow(x, 2.0) + T2D[3]*pow(x, 3.0) + T2D[4]*pow(x, 4.0) + T2D[5]*pow(x, 5.0);}
 	double xi[50];
 	double yi[50]; 
 	// inverse of the time2distance	
@@ -261,7 +261,7 @@ class ahdcSignal {
 		/**
 		 * @brief Overloaded `()` operator to get the value of the signal at a given time.
 		 * 
-		 * @param t Time at which to calculate the signal's value
+		 * @param timePoint Time at which to calculate the signal's value
 		 *
 		 * @return Value of the signal at the time `t`
 		 */

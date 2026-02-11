@@ -6,7 +6,6 @@ LD += {
         'gemc_options.cc',
         'MDetectorConstruction.cc',
         'MEventAction.cc',
-        'MPrimaryGeneratorAction.cc',
         'ActionInitialization.cc',
         'MSteppingAction.cc'
     ),
@@ -14,10 +13,8 @@ LD += {
         'dmesg_init.h',
         'MDetectorConstruction.h',
         'MEventAction.h',
-        'MPrimaryGeneratorAction.h',
         'ActionInitialization.h',
         'MSteppingAction.h'
     ),
-    'additional_includes' : ['actions'],
     'dependencies' : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep],
 }

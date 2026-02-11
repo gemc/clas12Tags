@@ -74,10 +74,10 @@ private:
 
 	double fieldScale;
 
-	void initWithRunNumber(int runno);
+	void initWithRunNumber(int runno) override;
 
 	// - electronicNoise: returns a vector of hits generated / by electronics.
-	vector<MHit*> electronicNoise();
+	vector<MHit*> electronicNoise() override;
 };
 
 #endif
