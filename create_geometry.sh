@@ -5,7 +5,7 @@ export COATJAVA=$cdir/geometry_source/coatjava
 export PATH=$PATH:$COATJAVA/bin
 
 # CLAS12
-all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets urwt upstream"
+all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets urwt muvt upstream"
 
 function printHelp() {
     cat <<EOF
