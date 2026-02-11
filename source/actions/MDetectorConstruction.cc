@@ -22,8 +22,8 @@
 //
 // *Modifications applied to the vendor header:*
 //   - Marked the following classes `final`
-//       • BuiltInReader
-//       • TessellatedMesh
+//       •BuiltInReader
+//       •TessellatedMesh
 //   - Reason: https://devblogs.microsoft.com/oldnewthing/20200619-00/?p=103877
 //
 // *Optional Dependencies*

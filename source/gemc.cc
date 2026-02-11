@@ -28,7 +28,7 @@
 /// \author \n &copy; Maurizio Ungaro
 /// \author e-mail: ungaro@jlab.org\n\n\n
 
-const char *GEMC_VERSION = "gemc dev" ;
+const char* GEMC_VERSION = "gemc dev";
 
 // G4 headers
 #include "G4RunManagerFactory.hh"
@@ -92,62 +92,63 @@ const char *GEMC_VERSION = "gemc dev" ;
 #include <stdio.h>
 #include <process.h>
 //int get_pid(){return __get_pid();}
-int get_pid(){return 0;}
+int get_pid() { return 0; }
 #endif
 
 // distinguishing between graphical and batch mode
-QCoreApplication *createApplication(int &argc, char *argv[], double use_gui) {
-    if (!use_gui)
-        return new QCoreApplication(argc, argv);
-    return new QApplication(argc, argv);
+QCoreApplication* createApplication(int& argc, char* argv[], double use_gui) {
+	if (!use_gui)
+		return new QCoreApplication(argc, argv);
+	return new QApplication(argc, argv);
 }
 
 
-int main(int argc, char **argv) {
-    clock_t startTime = clock();
-    cout << endl;
+int main(int argc, char** argv) {
+	clock_t startTime = clock();
+	cout << endl;
 
-    goptions gemcOpt;
-    gemcOpt.setGoptions();
-    gemcOpt.setOptMap(argc, argv, GEMC_VERSION);
+	goptions gemcOpt;
+	gemcOpt.setGoptions();
+	gemcOpt.setOptMap(argc, argv, GEMC_VERSION);
 
-    double use_gui = gemcOpt.optMap["USE_GUI"].arg;
+	double use_gui = gemcOpt.optMap["USE_GUI"].arg;
 
-    cout << endl << "  > Initializing GEant4 MonteCarlo:  " << GEMC_VERSION << endl << endl;
+	cout << endl << "  > Initializing GEant4 MonteCarlo:  " << GEMC_VERSION << endl << endl;
 
-    QScopedPointer <QCoreApplication> app(createApplication(argc, argv, use_gui));
+	QScopedPointer<QCoreApplication> app(createApplication(argc, argv, use_gui));
 
-    // Initializing gemc splash class
-    // This class will log initialization messages
-    // This class will show a splashscreen if use_gui is non zero
-    // The screen log verbosity is controlled by LOG_VERBOSITY
-    gui_splash gemc_splash(gemcOpt);
-    gemc_splash.message(" Initializing GEant4 MonteCarlo version " + string(GEMC_VERSION));
+	// Initializing gemc splash class
+	// This class will log initialization messages
+	// This class will show a splashscreen if use_gui is non zero
+	// The screen log verbosity is controlled by LOG_VERBOSITY
+	gui_splash gemc_splash(gemcOpt);
+	gemc_splash.message(" Initializing GEant4 MonteCarlo version " + string(GEMC_VERSION));
 
 
-    // random seed initialization
-    G4Random::setTheEngine(new CLHEP::MixMaxRng);
+	// random seed initialization
+	G4Random::setTheEngine(new CLHEP::MixMaxRng);
 
-    G4int seed;
+	G4int seed;
 
-    if (gemcOpt.optMap["RANDOM"].args == "TIME") {
-        gemc_splash.message(" Initializing CLHEP Random Engine from local time " \
- + stringify((double) time(nullptr)) \
- + ", cpu clock "        \
- + stringify((double) clock())    \
- + " and process id "    \
- + stringify(getpid()) + ".");
-        seed = (G4int)((double) time(nullptr) - (double) clock() - getpid());
-    } else {
-        seed = atoi(gemcOpt.optMap["RANDOM"].args.c_str());
-        gemc_splash.message(" Initializing CLHEP Random Engine from user defined seed.");
-    }
+	if (gemcOpt.optMap["RANDOM"].args == "TIME") {
+		gemc_splash.message(" Initializing CLHEP Random Engine from local time "
+			+ stringify((double)time(nullptr))
+			+ ", cpu clock "
+			+ stringify((double)clock())
+			+ " and process id "
+			+ stringify(getpid()) + ".");
+		seed = (G4int)((double)time(nullptr) - (double)clock() - getpid());
+	}
+	else {
+		seed = atoi(gemcOpt.optMap["RANDOM"].args.c_str());
+		gemc_splash.message(" Initializing CLHEP Random Engine from user defined seed.");
+	}
 
-    CLHEP::HepRandom::setTheSeed(seed);
-    gemc_splash.message(" Seed initialized to: " + stringify(seed));
+	CLHEP::HepRandom::setTheSeed(seed);
+	gemc_splash.message(" Seed initialized to: " + stringify(seed));
 
-    // Construct the default G4 run manager
-    gemc_splash.message(" Instantiating Run Manager...");
+	// Construct the default G4 run manager
+	gemc_splash.message(" Instantiating Run Manager...");
 
 	auto runManager = G4RunManagerFactory::CreateRunManager(G4RunManagerType::Serial);
 	runManager->SetNumberOfThreads(1);
@@ -155,261 +156,263 @@ int main(int argc, char **argv) {
 
 	if (dynamic_cast<G4RunManager*>(runManager)) {
 		std::cout << "Using G4RunManager (Serial)" << std::endl;
-	} else if (dynamic_cast<G4MTRunManager*>(runManager)) {
+	}
+	else if (dynamic_cast<G4MTRunManager*>(runManager)) {
 		std::cout << "Using G4MTRunManager (Multithreaded)" << std::endl;
 	}
 
-    // Initializing run_condition class
-    gemc_splash.message(" Instantiating Run Conditions...");
-    runConditions runConds(gemcOpt);
+	// Initializing run_condition class
+	gemc_splash.message(" Instantiating Run Conditions...");
+	runConditions runConds(gemcOpt);
 
-    // GEMC Detector Map
-    gemc_splash.message(" Registering Detectors Factories...");
-    // Initializing Detector Factory
-    map <string, detectorFactoryInMap> detectorFactoryMap = registerDetectorFactory();
+	// GEMC Detector Map
+	gemc_splash.message(" Registering Detectors Factories...");
+	// Initializing Detector Factory
+	map<string, detectorFactoryInMap> detectorFactoryMap = registerDetectorFactory();
 
-    // Building detector with factories
-    map <string, detector> hallMap = buildDetector(detectorFactoryMap, gemcOpt, runConds);
+	// Building detector with factories
+	map<string, detector> hallMap = buildDetector(detectorFactoryMap, gemcOpt, runConds);
 
-    // Initialize Materials Map Factory
-    gemc_splash.message(" Initializing Material Factories...");
-    map <string, materialFactory> materialFactoriesMap = registerMaterialFactories();
-    // Build all materials
-    map < string, G4Material * > mats = buildMaterials(materialFactoriesMap, gemcOpt, runConds);
+	// Initialize Materials Map Factory
+	gemc_splash.message(" Initializing Material Factories...");
+	map<string, materialFactory> materialFactoriesMap = registerMaterialFactories();
+	// Build all materials
+	map<string, G4Material*> mats = buildMaterials(materialFactoriesMap, gemcOpt, runConds);
 
-    // Initialize Mirrors Map Factory
-    gemc_splash.message(" Initializing Mirrors Factories...");
-    map <string, mirrorFactory> mirrorFactoriesMap = registerMirrorFactories();
-    // Build all mirrors
-    map < string, mirror * > mirs = buildMirrors(mirrorFactoriesMap, gemcOpt, runConds);
+	// Initialize Mirrors Map Factory
+	gemc_splash.message(" Initializing Mirrors Factories...");
+	map<string, mirrorFactory> mirrorFactoriesMap = registerMirrorFactories();
+	// Build all mirrors
+	map<string, mirror*> mirs = buildMirrors(mirrorFactoriesMap, gemcOpt, runConds);
 
-    // Initialize Parameters Map Factory
-    gemc_splash.message(" Registering Parameters Factories...");
-    map <string, parameterFactoryInMap> parameterFactoriesMap = registerParameterFactories();
-    // All Parameters with factories
-    map<string, double> gParameters = loadAllParameters(parameterFactoriesMap, gemcOpt, runConds);
+	// Initialize Parameters Map Factory
+	gemc_splash.message(" Registering Parameters Factories...");
+	map<string, parameterFactoryInMap> parameterFactoriesMap = registerParameterFactories();
+	// All Parameters with factories
+	map<string, double> gParameters = loadAllParameters(parameterFactoriesMap, gemcOpt, runConds);
 
-    // Process Hit Map
-    gemc_splash.message(" Building gemc Process Hit Factory...");
-    map <string, HitProcess_Factory> hitProcessMap = HitProcess_Map(gemcOpt.optMap["HIT_PROCESS_LIST"].args);
+	// Process Hit Map
+	gemc_splash.message(" Building gemc Process Hit Factory...");
+	map<string, HitProcess_Factory> hitProcessMap = HitProcess_Map(gemcOpt.optMap["HIT_PROCESS_LIST"].args);
 
-    ///< magnetic Field Map
-    gemc_splash.message(" Creating fields Map...");
-    map <string, fieldFactoryInMap> fieldFactoryMap = registerFieldFactories();
-    map <string, gfield> fieldsMap = loadAllFields(fieldFactoryMap, gemcOpt);
+	///< magnetic Field Map
+	gemc_splash.message(" Creating fields Map...");
+	map<string, fieldFactoryInMap> fieldFactoryMap = registerFieldFactories();
+	map<string, gfield>            fieldsMap       = loadAllFields(fieldFactoryMap, gemcOpt);
 
-    // Build the detector
-    gemc_splash.message(" Building Detector Map...");
-    MDetectorConstruction *ExpHall = new MDetectorConstruction(gemcOpt);
-    ExpHall->hallMap = &hallMap;
-    ExpHall->mirs = &mirs;
-    ExpHall->mats = &mats;
-    ExpHall->fieldsMap = &fieldsMap;
-    // this is what calls Construct inside MDetectorConstruction
-    runManager->SetUserInitialization(ExpHall);
-
-
-    ///< Physics List
-    string phys_list = gemcOpt.optMap["PHYSICS"].args;
-    gemc_splash.message(" Initializing Physics List " + phys_list + "...");
-    runManager->SetUserInitialization(new PhysicsList(gemcOpt));
-
-    // Setting Max step for all the simulation.
-    // Notice: on the forum:
-    // http://hypernews.slac.stanford.edu/HyperNews/geant4/get/emfields/183/1.html
-    // it is mentioned that going through volumes of different materials could create problems.
-    // this is verified in clas12 when going from target to "hall" - even when vacuum was not involved.
-    // the solution to that was to create a transitional tube from target to the vacuum line
-    // This solution allowed to avoid setting MAX_FIELD_STEP to a value that would slow down the
-    // simulation by a factor of 5
-
-    double max_step = gemcOpt.optMap["MAX_FIELD_STEP"].arg;
-    if (max_step != 0) {
-        G4TransportationManager::GetTransportationManager()->GetPropagatorInField()->SetLargestAcceptableStep(max_step);
-    }
-
-    // User action initialization
-    gemc_splash.message(" Initializing User Actions...");
-    ActionInitialization *gActions = new ActionInitialization(&gemcOpt, &gParameters);
-    runManager->SetUserInitialization(gActions);
-
-    ///< User Interface manager
-    gemc_splash.message(" Initializing User Interface...");
-
-    ///< Vis Manager
-    G4VisManager *visManager = nullptr;
-    if (use_gui) {
-        // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
-        visManager = new G4VisExecutive("Quiet");
-        visManager->Initialize();
-    }
-
-    G4UIsession *session = nullptr;
-    if (use_gui) {
-        session = new G4UIQt(1, argv);
-    }
+	// Build the detector
+	gemc_splash.message(" Building Detector Map...");
+	MDetectorConstruction* ExpHall = new MDetectorConstruction(gemcOpt);
+	ExpHall->hallMap               = &hallMap;
+	ExpHall->mirs                  = &mirs;
+	ExpHall->mats                  = &mats;
+	ExpHall->fieldsMap             = &fieldsMap;
+	// this is what calls Construct inside MDetectorConstruction
+	runManager->SetUserInitialization(ExpHall);
 
 
-    // Output File: registering output type, output process factory,
-    // sensitive detectors into Event Action
-    gemc_splash.message(" Initializing Output Action...");
-    outputContainer outContainer(gemcOpt);
-    map <string, outputFactoryInMap> outputFactoryMap = registerOutputFactories();
+	///< Physics List
+	string phys_list = gemcOpt.optMap["PHYSICS"].args;
+	gemc_splash.message(" Initializing Physics List " + phys_list + "...");
+	runManager->SetUserInitialization(new PhysicsList(gemcOpt));
 
-    // Initialize G4 kernel
-    gemc_splash.message(" Initializing Run Manager...\n");
-    // physical volumes, sensitive detectors are built here
-    runManager->Initialize();
+	// Setting Max step for all the simulation.
+	// Notice: on the forum:
+	// http://hypernews.slac.stanford.edu/HyperNews/geant4/get/emfields/183/1.html
+	// it is mentioned that going through volumes of different materials could create problems.
+	// this is verified in clas12 when going from target to "hall" - even when vacuum was not involved.
+	// the solution to that was to create a transitional tube from target to the vacuum line
+	// This solution allowed to avoid setting MAX_FIELD_STEP to a value that would slow down the
+	// simulation by a factor of 5
 
-    // registering activated field in the option so they're written out
-    if (ExpHall->activeFields.size()) {
-        gemcOpt.optMap["ACTIVEFIELDS"].args = "";
-    }
+	double max_step = gemcOpt.optMap["MAX_FIELD_STEP"].arg;
+	if (max_step != 0) {
+		G4TransportationManager::GetTransportationManager()->GetPropagatorInField()->SetLargestAcceptableStep(max_step);
+	}
 
-    for (set<string>::iterator fit = ExpHall->activeFields.begin(); fit != ExpHall->activeFields.end(); fit++) {
-        gemcOpt.optMap["ACTIVEFIELDS"].args = gemcOpt.optMap["ACTIVEFIELDS"].args + *fit + " ";
-    }
+	// User action initialization
+	gemc_splash.message(" Initializing User Actions...");
+	ActionInitialization* gActions = new ActionInitialization(&gemcOpt, &gParameters);
+	runManager->SetUserInitialization(gActions);
 
-    // Bank Map, derived from sensitive detector map
-    gemc_splash.message(" Creating gemc Banks Map...");
-    map <string, gBank> banksMap = read_banks(gemcOpt, runConds.get_systems());
+	///< User Interface manager
+	gemc_splash.message(" Initializing User Interface...");
 
-    // Getting UI manager, restoring G4Out to cout
-    G4UImanager *UImanager = G4UImanager::GetUIpointer();
-    UImanager->SetCoutDestination(nullptr);
+	///< Vis Manager
+	G4VisManager* visManager = nullptr;
+	if (use_gui) {
+		// G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
+		visManager = new G4VisExecutive("Quiet");
+		visManager->Initialize();
+	}
 
-    // saving simulation condition in the output file
-    if (outContainer.outType != "no") {
-        // Creating the sim_condition map to save to the output
-        gemc_splash.message(" Writing simulation parameters in the output...");
+	G4UIsession* session = nullptr;
+	if (use_gui) {
+		session = new G4UIQt(1, argv);
+	}
 
-        // filling gcard option content
-        map <string, string> sim_condition = gemcOpt.getOptMap();
 
-        // adding detectors conditions to sim_condition
-        mergeMaps(sim_condition, runConds.getDetectorConditionsMap());
+	// Output File: registering output type, output process factory,
+	// sensitive detectors into Event Action
+	gemc_splash.message(" Initializing Output Action...");
+	outputContainer                 outContainer(gemcOpt);
+	map<string, outputFactoryInMap> outputFactoryMap = registerOutputFactories();
 
-        // adding parameters value to sim_condition
-        mergeMaps(sim_condition, getParametersMap(gParameters));
+	// Initialize G4 kernel
+	gemc_splash.message(" Initializing Run Manager...\n");
+	// physical volumes, sensitive detectors are built here
+	runManager->Initialize();
 
-        sim_condition["JSON"] = gemcOpt.jSonOptions();
+	// registering activated field in the option so they're written out
+	if (ExpHall->activeFields.size()) {
+		gemcOpt.optMap["ACTIVEFIELDS"].args = "";
+	}
 
-        outputFactory *processOutputFactory = getOutputFactory(&outputFactoryMap, outContainer.outType);
-        processOutputFactory->recordSimConditions(&outContainer, sim_condition);
+	for (set<string>::iterator fit = ExpHall->activeFields.begin(); fit != ExpHall->activeFields.end(); fit++) {
+		gemcOpt.optMap["ACTIVEFIELDS"].args = gemcOpt.optMap["ACTIVEFIELDS"].args + *fit + " ";
+	}
 
-        // then deleting process output pointer, not needed anymore
-        delete processOutputFactory;
-    }
+	// Bank Map, derived from sensitive detector map
+	gemc_splash.message(" Creating gemc Banks Map...");
+	map<string, gBank> banksMap = read_banks(gemcOpt, runConds.get_systems());
 
-    gActions->evtAction->outContainer = &outContainer;
-    gActions->evtAction->outputFactoryMap = &outputFactoryMap;
-    gActions->evtAction->hitProcessMap = &hitProcessMap;
-    gActions->evtAction->SeDe_Map = ExpHall->SeDe_Map;
-    gActions->evtAction->banksMap = &banksMap;
-    gActions->evtAction->gen_action = gActions->genAction;
+	// Getting UI manager, restoring G4Out to cout
+	G4UImanager* UImanager = G4UImanager::GetUIpointer();
+	UImanager->SetCoutDestination(nullptr);
 
-    ///< passing output process factory to sensitive detectors
-    map<string, sensitiveDetector *>::iterator it;
-    for (it = ExpHall->SeDe_Map.begin(); it != ExpHall->SeDe_Map.end(); it++) {
-        it->second->hitProcessMap = &hitProcessMap;
-    }
+	// saving simulation condition in the output file
+	if (outContainer.outType != "no") {
+		// Creating the sim_condition map to save to the output
+		gemc_splash.message(" Writing simulation parameters in the output...");
 
-    gemc_splash.message(" Executing initial directives...\n");
-    vector <string> init_commands = init_dmesg(gemcOpt);
-    for (unsigned int i = 0; i < init_commands.size(); i++) {
-        UImanager->ApplyCommand(init_commands[i].c_str());
-    }
-    string exec_macro = "/control/execute " + gemcOpt.optMap["EXEC_MACRO"].args;
+		// filling gcard option content
+		map<string, string> sim_condition = gemcOpt.getOptMap();
 
-    clock_t start_events;
+		// adding detectors conditions to sim_condition
+		mergeMaps(sim_condition, runConds.getDetectorConditionsMap());
 
-    long int nEventsToProcess = gemcOpt.optMap["N"].arg;
+		// adding parameters value to sim_condition
+		mergeMaps(sim_condition, getParametersMap(gParameters));
 
-    // if it is not set explicitely, and it is a file input, then run all the event in the file by default
-    // only in batch mode
-    if (use_gui == 0 && gemcOpt.optMap["N"].arg == 0 && gemcOpt.optMap["INPUT_GEN_FILE"].args != "gemc_internal") {
-        nEventsToProcess = 1000000000;
-    }
+		sim_condition["JSON"] = gemcOpt.jSonOptions();
 
-    if (use_gui) {
-        gemc_splash.message("Starting GUI...");
-        qApp->processEvents();
+		outputFactory* processOutputFactory = getOutputFactory(&outputFactoryMap, outContainer.outType);
+		processOutputFactory->recordSimConditions(&outContainer, sim_condition);
 
-        gemcMainWidget gemcW(&gemcOpt, ExpHall->SeDe_Map, &hallMap, mats);
-        gemcW.setWindowTitle(GEMC_VERSION);
-        vector <string> wpos = get_info(gemcOpt.optMap["GUIPOS"].args);
+		// then deleting process output pointer, not needed anymore
+		delete processOutputFactory;
+	}
 
-        gemcW.move(get_number(wpos[0]), get_number(wpos[1]));
-        gemcW.show();
+	gActions->evtAction->outContainer     = &outContainer;
+	gActions->evtAction->outputFactoryMap = &outputFactoryMap;
+	gActions->evtAction->hitProcessMap    = &hitProcessMap;
+	gActions->evtAction->SeDe_Map         = ExpHall->SeDe_Map;
+	gActions->evtAction->banksMap         = &banksMap;
+	gActions->evtAction->gen_action       = gActions->genAction;
 
-        // splash can finish once gemcW is up
-        gemc_splash.splash->finish(&gemcW);
+	///< passing output process factory to sensitive detectors
+	map<string, sensitiveDetector*>::iterator it;
+	for (it = ExpHall->SeDe_Map.begin(); it != ExpHall->SeDe_Map.end(); it++) {
+		it->second->hitProcessMap = &hitProcessMap;
+	}
 
-        gemc_splash.message(" Executing initial visual directives...\n");
-        vector <string> init_vcommands = init_dvmesg(gemcOpt, visManager);
-        for (unsigned int i = 0; i < init_vcommands.size(); i++) {
-            gemc_splash.message(" Now executing: " + init_vcommands[i]);
+	gemc_splash.message(" Executing initial directives...\n");
+	vector<string> init_commands = init_dmesg(gemcOpt);
+	for (unsigned int i = 0; i < init_commands.size(); i++) {
+		UImanager->ApplyCommand(init_commands[i].c_str());
+	}
+	string exec_macro = "/control/execute " + gemcOpt.optMap["EXEC_MACRO"].args;
 
-            UImanager->ApplyCommand(init_vcommands[i].c_str());
-        }
+	clock_t start_events;
 
-        if (exec_macro != "/control/execute no") {
-            UImanager->ApplyCommand(exec_macro.c_str());
-        }
+	long int nEventsToProcess = gemcOpt.optMap["N"].arg;
 
-        if (nEventsToProcess > 0) {
-            start_events = clock();
-            char command[100];
-            // starting clock after the first event is much more precise
-            if (nEventsToProcess > 10) {
-                snprintf(command, 100, "/run/beamOn 1");
-                UImanager->ApplyCommand(command);
-                start_events = clock();
-                nEventsToProcess--;
-            }
-            snprintf(command, 100, "/run/beamOn %ld", nEventsToProcess);
-            UImanager->ApplyCommand(command);
-        }
+	// if it is not set explicitely, and it is a file input, then run all the event in the file by default
+	// only in batch mode
+	if (use_gui == 0 && gemcOpt.optMap["N"].arg == 0 && gemcOpt.optMap["INPUT_GEN_FILE"].args != "gemc_internal") {
+		nEventsToProcess = 1000000000;
+	}
 
-        return qApp->exec();
-        // deleting runManager is now taken care
-        // in the gemc_quit slot
-        delete visManager;
-        if (session != nullptr) delete session;
-    } else {
-        if (exec_macro != "/control/execute no") UImanager->ApplyCommand(exec_macro.c_str());
-        start_events = clock();
-        if (nEventsToProcess > 0) {
-            start_events = clock();
-            char command[100];
-            // starting clock after the first event is much more precise
-            if (nEventsToProcess > 10) {
-                snprintf(command, 100, "/run/beamOn 1");
-                UImanager->ApplyCommand(command);
-                start_events = clock();
-                nEventsToProcess--;
-            }
-            snprintf(command, 100, "/run/beamOn %ld", nEventsToProcess);
-            UImanager->ApplyCommand(command);
-        }
-    }
+	if (use_gui) {
+		gemc_splash.message("Starting GUI...");
+		qApp->processEvents();
 
-    clock_t endTime = clock();
-    clock_t clockAllTaken = endTime - startTime;
-    clock_t clockEventTaken = endTime - start_events;
+		gemcMainWidget gemcW(&gemcOpt, ExpHall->SeDe_Map, &hallMap, mats);
+		gemcW.setWindowTitle(GEMC_VERSION);
+		vector<string> wpos = get_info(gemcOpt.optMap["GUIPOS"].args);
 
-    if (nEventsToProcess > 10) {
-        clockEventTaken = clockEventTaken * (nEventsToProcess + 1) / nEventsToProcess;
-    }
+		gemcW.move(get_number(wpos[0]), get_number(wpos[1]));
+		gemcW.show();
 
-    cout << " > Total gemc time: " << clockAllTaken / (double) CLOCKS_PER_SEC << " seconds. "
-         << " Events only time: " << clockEventTaken / (double) CLOCKS_PER_SEC << " seconds. " << endl;
+		// splash can finish once gemcW is up
+		gemc_splash.splash->finish(&gemcW);
 
-    // closing db connection
-    closeGdb();
+		gemc_splash.message(" Executing initial visual directives...\n");
+		vector<string> init_vcommands = init_dvmesg(gemcOpt, visManager);
+		for (unsigned int i = 0; i < init_vcommands.size(); i++) {
+			gemc_splash.message(" Now executing: " + init_vcommands[i]);
 
-    delete runManager;
-    return 0;
+			UImanager->ApplyCommand(init_vcommands[i].c_str());
+		}
+
+		if (exec_macro != "/control/execute no") {
+			UImanager->ApplyCommand(exec_macro.c_str());
+		}
+
+		if (nEventsToProcess > 0) {
+			start_events = clock();
+			char command[100];
+			// starting clock after the first event is much more precise
+			if (nEventsToProcess > 10) {
+				snprintf(command, 100, "/run/beamOn 1");
+				UImanager->ApplyCommand(command);
+				start_events = clock();
+				nEventsToProcess--;
+			}
+			snprintf(command, 100, "/run/beamOn %ld", nEventsToProcess);
+			UImanager->ApplyCommand(command);
+		}
+
+		return qApp->exec();
+		// deleting runManager is now taken care
+		// in the gemc_quit slot
+		delete visManager;
+		if (session != nullptr) delete session;
+	}
+	else {
+		if (exec_macro != "/control/execute no") UImanager->ApplyCommand(exec_macro.c_str());
+		start_events = clock();
+		if (nEventsToProcess > 0) {
+			start_events = clock();
+			char command[100];
+			// starting clock after the first event is much more precise
+			if (nEventsToProcess > 10) {
+				snprintf(command, 100, "/run/beamOn 1");
+				UImanager->ApplyCommand(command);
+				start_events = clock();
+				nEventsToProcess--;
+			}
+			snprintf(command, 100, "/run/beamOn %ld", nEventsToProcess);
+			UImanager->ApplyCommand(command);
+		}
+	}
+
+	clock_t endTime         = clock();
+	clock_t clockAllTaken   = endTime - startTime;
+	clock_t clockEventTaken = endTime - start_events;
+
+	if (nEventsToProcess > 10) {
+		clockEventTaken = clockEventTaken * (nEventsToProcess + 1) / nEventsToProcess;
+	}
+
+	cout << " > Total gemc time: " << clockAllTaken / (double)CLOCKS_PER_SEC << " seconds. "
+		<< " Events only time: " << clockEventTaken / (double)CLOCKS_PER_SEC << " seconds. " << endl;
+
+	// closing db connection
+	closeGdb();
+
+	delete runManager;
+	return 0;
 }
 
 
