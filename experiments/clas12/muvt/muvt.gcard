@@ -4,7 +4,7 @@
 
 
 
-    <detector name="experiments/clas12/muvt"                 factory="TEXT" variation="default"/>
+    <detector name="geometry_source/muvt/muvt"                 factory="TEXT" variation="default"/>
     
 
 
