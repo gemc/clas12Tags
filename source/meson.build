@@ -98,15 +98,15 @@ foreach L : LD
 
 endforeach
 
-#gemc = executable(
-#    'gemc',
-#    ['gemc.cc'],
-#    install : true,
-#    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep, lz4_dep],
-#    include_directories : all_includes,
-#    link_with : all_libs,
-#    override_options : ['b_pie=true']
-#)
+gemc = executable(
+    'gemc',
+    ['gemc.cc'],
+    install : true,
+    dependencies : [qt6_deps, clhep_deps, xercesc_deps, geant4_deps, ogl_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep],
+    include_directories : all_includes,
+    link_with : all_libs,
+    override_options : ['b_pie=true']
+)
 
 #install_subdir('../api', install_dir: get_option('prefix'))
 #install_subdir('../experiments', install_dir: get_option('prefix'))
