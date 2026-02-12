@@ -44,7 +44,7 @@ done
 shift $((OPTIND - 1))        # drop parsed options
 
 export CCDB_CONNECTION=$ccdb_conn
-echo CCDB_CONNECTION: $CCDB_CONNECTION
+echo "CCDB_CONNECTION=$CCDB_CONNECTION"
 
 # Positional argument = detector (optional)
 if [[ $# -gt 0 ]]; then
