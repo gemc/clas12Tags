@@ -95,8 +95,9 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	bmtc.nb_sigma=4;
 	//bmtc.changeFieldScale(-1);  // this needs to be read from DB
 	
-	bmtc.Lor_Angle->Initialize(runno);
-	
+	bmtc.Lor_Angle.Initialize(runno);
+
+
 	// get hit time distribution parameters
     snprintf(bmtc.database, sizeof(bmtc.database), "/calibration/mvt/bmt_time:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,bmtc.database);
@@ -214,13 +215,13 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 		G4ThreeVector BField(fieldValue[0],fieldValue[1],fieldValue[2]);
 		G4ThreeVector qEField(cos(phi_p),sin(phi_p),0); //Product qE
 		G4ThreeVector Fdir=qEField.cross(BField); //Direction of lorentz drift
-		bmtc.ThetaL=bmtc.Lor_Angle->GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+		bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 		bmtc.Theta_Ls_Z=Fdir.angle(dm_Z);
 		bmtc.Theta_Ls_C=dm_C.angle(Fdir);
 		
 		if(bmtc.runNo == 0){
 			cout << " > BMT: Field found with value " << fieldValue[2]/gauss << " gauss. Setting Lorentz angle accordingly." << endl;
-			bmtc.ThetaL=bmtc.Lor_Angle->GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+			bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 			bmtc.Theta_Ls_Z=Fdir.angle(dm_Z);
 			bmtc.Theta_Ls_C=dm_C.angle(Fdir);
 		}

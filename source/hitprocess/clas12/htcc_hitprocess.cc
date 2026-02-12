@@ -351,7 +351,7 @@ vector<MHit*> htcc_HitProcess :: electronicNoise()
 }
 
 
-map< string, vector <int> >  htcc_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  htcc_HitProcess :: multiDgt([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map< string, vector <int> > MH;
 	return MH;

@@ -24,7 +24,10 @@ using namespace std;
 class bmtConstants
 {
 public:
-	
+
+	bmtConstants() = default;
+	~bmtConstants() = default;
+
 	// database
 	int    runNo;
 	string date;
@@ -72,7 +75,7 @@ public:
 	double nt=104.1; //cm-1 number of total ionizations
 	double averA=36.4143;
 	double averZ=16.4429;
-	std::unique_ptr<Lorentz> Lor_Angle;
+	Lorentz Lor_Angle;
 	
 	// TODO: VARIATION SHOULD NOT BE HARDCODED
 	// target position from (hardcoded for now) variation rga_fall2018

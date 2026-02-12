@@ -12,7 +12,6 @@ using namespace ccdb;
 #include "ctof_hitprocess.h"
 
 // CLHEP units
-#include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
 static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false) {
@@ -433,7 +432,7 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 	return dgtz;
 }
 
-vector<identifier> ctof_HitProcess::processID(vector<identifier> id, G4Step* aStep, detector Detector) {	
+vector<identifier> ctof_HitProcess::processID(vector<identifier> id, [[ maybe_unused ]] G4Step* aStep, [[ maybe_unused ]] detector Detector) {
 	
 	vector<identifier> yid = id;
 	
@@ -492,7 +491,7 @@ vector<MHit*> ctof_HitProcess::electronicNoise() {
 	return noiseHits;
 }
 
-map< string, vector <int> > ctof_HitProcess::multiDgt(MHit* aHit, int hitn) {
+map< string, vector <int> > ctof_HitProcess::multiDgt([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn) {
 	map< string, vector <int> > MH;
 	
 	return MH;

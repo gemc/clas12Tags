@@ -659,7 +659,7 @@ double cnd_HitProcess::BirksAttenuation(double destep, double stepl, int charge,
 }
 
 
-map< string, vector <int> >  cnd_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  cnd_HitProcess :: multiDgt([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map< string, vector <int> > MH;
 	

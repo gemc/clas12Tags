@@ -7,13 +7,7 @@
 #include <iostream>
 using namespace ccdb;
 
-Lorentz::Lorentz(){
-	
-}
 
-Lorentz::~Lorentz(){
-	
-}
 
 void Lorentz::Initialize(int runno){
 	

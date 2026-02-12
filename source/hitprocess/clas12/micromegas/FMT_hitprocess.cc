@@ -10,7 +10,6 @@
 #include "Randomize.hh"
 
 // CLHEP units
-#include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
 // ccdb
@@ -20,7 +19,7 @@ using namespace CLHEP;
 using namespace ccdb;
 
 //static fmtConstants initializeFMTConstants(int runno)
-static fmtConstants initializeFMTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static fmtConstants initializeFMTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", [[ maybe_unused ]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	fmtConstants fmtc;
@@ -77,8 +76,8 @@ static fmtConstants initializeFMTConstants(int runno, string digiVariation = "de
 		fmtc.HV_STRIPS_OUT[i]=520;
 	}
 	
-	fmtc.Lor_Angle->Initialize(runno);
-	
+	fmtc.Lor_Angle.Initialize(runno);
+
 	// get hit time distribution parameters
 	snprintf(fmtc.database, sizeof(fmtc.database), "/calibration/mvt/fmt_time:%d:%s%s", fmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,fmtc.database);
@@ -88,7 +87,7 @@ static fmtConstants initializeFMTConstants(int runno, string digiVariation = "de
 	return fmtc;
 }
 
-map<string, double>FMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double>FMT_HitProcess :: integrateDgt(MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();
@@ -151,7 +150,7 @@ map<string, double>FMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 
 
 
-vector<identifier>  FMT_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  FMT_HitProcess :: processID(vector<identifier> id, G4Step* aStep, [[ maybe_unused ]] detector Detector)
 {
 	G4ThreeVector   xyz    = aStep->GetPostStepPoint()->GetPosition();
 	G4ThreeVector  lxyz    = aStep->GetPreStepPoint()->GetTouchableHandle()->GetHistory()->GetTopTransform().TransformPoint(xyz); ///< Local Coordinates of interaction
@@ -176,12 +175,12 @@ vector<identifier>  FMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 		G4ThreeVector qEField(0,0,1); //Product q*v
 		G4ThreeVector Fdir=qEField.cross(BField); //Direction of lorentz drift
 		fmanager->GetDetectorField()->GetFieldValue(point, fieldValue);
-		fmtc.ThetaL=fmtc.Lor_Angle->GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+		fmtc.ThetaL=fmtc.Lor_Angle.GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 		fmtc.Theta_Ls=atan2(Fdir.y(),Fdir.x());
 		
 		if(fmtc.runNo == 0){
 			cout << " > FMT: Field found with value " << fieldValue[2]/gauss << " gauss. Setting Lorentz angle accordingly." << endl;
-			fmtc.ThetaL=fmtc.Lor_Angle->GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+			fmtc.ThetaL=fmtc.Lor_Angle.GetAngle(fmtc.HV_DRIFT[layer-1]/fmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 			fmtc.Theta_Ls=atan2(Fdir.y(),Fdir.x());
 		}
 	} else {
@@ -256,7 +255,7 @@ vector<MHit*> FMT_HitProcess :: electronicNoise()
 }
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > FMT_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > FMT_HitProcess :: chargeTime([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -266,12 +265,12 @@ map< int, vector <double> > FMT_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double FMT_HitProcess :: voltage(double charge, double time, double forTime)
+double FMT_HitProcess :: voltage([[ maybe_unused ]] double charge, [[ maybe_unused ]] double time, [[ maybe_unused ]] double forTime)
 {
 	return 0.0;
 }
 
-map< string, vector <int> >  FMT_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  FMT_HitProcess :: multiDgt([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map< string, vector <int> > MH;
 	

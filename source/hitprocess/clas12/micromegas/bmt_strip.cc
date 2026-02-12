@@ -5,8 +5,6 @@
 // c++ headers
 #include <iostream>
 #include <cmath>
-#include <cstdlib>
-#include <time.h>
 
 // Veronique Ziegler (Dec. 3 2015)
 // Note: this method only contains the constants for the third micromegas region,
@@ -174,7 +172,7 @@ int bmt_strip::getStripGroup(int layer, int strip,const bmtConstants& bmtc){
 //
 // WARNING: This routine is not used?
 //
-double bmt_strip::GetStripInfo(int layer, int sector, int strip, const bmtConstants& bmtc)
+double bmt_strip::GetStripInfo(int layer, [[ maybe_unused ]] int sector, int strip, const bmtConstants& bmtc)
 {
 	int num_strip = strip - 1;     			// index of the strip (starts at 0)
 	double var=0.;

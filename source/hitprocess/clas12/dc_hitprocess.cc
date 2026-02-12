@@ -496,7 +496,7 @@ double dc_HitProcess::doca(G4ThreeVector pos, int layer, int wire, double dlayer
     return sqrt(pow(pos.y()-wireline.y(),2.0)+pow(pos.z()-wireline.z(),2.0));
 }
  
-map< string, vector <int> >  dc_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  dc_HitProcess :: multiDgt([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map< string, vector <int> > MH;
 	

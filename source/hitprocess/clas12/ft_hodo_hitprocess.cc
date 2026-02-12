@@ -235,7 +235,7 @@ map<string, double> ft_hodo_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	return dgtz;
 }
 
-vector<identifier>  ft_hodo_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  ft_hodo_HitProcess :: processID(vector<identifier> id, [[ maybe_unused ]] G4Step* aStep, [[ maybe_unused ]] detector Detector)
 {
 	id[id.size()-1].id_sharing = 1;
 	return id;
@@ -262,7 +262,7 @@ vector<MHit*> ft_hodo_HitProcess :: electronicNoise()
 
 
 
-map< string, vector <int> >  ft_hodo_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  ft_hodo_HitProcess :: multiDgt([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map< string, vector <int> > MH;
 	

@@ -16,7 +16,10 @@ using namespace std;
 class fmtConstants
 {
 public:
-	
+
+	fmtConstants() = default;
+	~fmtConstants() = default;
+
 	// database
 	int    runNo;
 	string date;
@@ -57,7 +60,7 @@ public:
 	vector<vector<double> >     STRIP_EFFICIENCY; // Give the efficiency (correlated to gain fluctuation)
 	
 	double w_i=20; //ionization potential assumed to be 25 eV
-	std::unique_ptr<Lorentz> Lor_Angle;
+	Lorentz Lor_Angle;
 
 };
 

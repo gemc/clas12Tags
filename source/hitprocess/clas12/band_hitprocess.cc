@@ -351,7 +351,7 @@ map<string, double> band_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	return dgtz;
 }
 
-vector<identifier>  band_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  band_HitProcess :: processID(vector<identifier> id, [[ maybe_unused ]] G4Step* aStep, [[ maybe_unused ]] detector Detector)
 {
 	vector<identifier> yid = id;
 	yid[0].id_sharing = 1; // sector (paddle number)
@@ -494,7 +494,7 @@ vector<MHit*> band_HitProcess :: electronicNoise()
 
 
 
-map< string, vector <int> >  band_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  band_HitProcess :: multiDgt([[ maybe_unused ]] MHit* aHit, [[ maybe_unused ]] int hitn)
 {
 	map< string, vector <int> > MH;
 	

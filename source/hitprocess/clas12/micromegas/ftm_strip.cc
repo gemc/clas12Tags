@@ -8,6 +8,7 @@
 
 vector<double> ftm_strip::FindStrip(int layer, double x, double y, double z, double Edep, detector Detector,ftmConstants ftmcc)
 {
+
 	// the return vector is always in pairs.
 	// The first number is the ID,
 	// the second number is the sharing percentage

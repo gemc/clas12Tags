@@ -37,7 +37,9 @@ zlib_dep = dependency('zlib', static : false, required : true)  # Use shared lib
 clhep_deps = dependency('clhep', version : '>=2.4.7.1', include_type : 'system') # treat as system include paths - no warnings
 
 # pkg-config --cflags --libs xerces-c
-xercesc_deps = dependency('xerces-c', version : '>=3.2.5', include_type : 'system') # treat as system include paths - no warnings
+xercesc_deps = dependency('xerces-c', version : '>=3.2.5',  static : false, include_type : 'system') # treat as system include paths - no warnings
+xerces_libdir = xercesc_deps.get_variable(pkgconfig: 'libdir')
+message('xerces libdir: ' + xerces_libdir)
 
 # geant4.pc if not found
 fs = import('fs')
@@ -64,22 +66,49 @@ if sys == 'linux'
 endif
 
 cmake = import('cmake')
-opt_var = cmake.subproject_options()
+cmake_opts = cmake.subproject_options()
+cmake_opts.add_cmake_defines({
+                                 'BUILD_STATIC_LIBS' : true,
+                                 'ZLIB_USE_STATIC_LIBS' : false, # prefer shared zlib
+                                 'CMAKE_POSITION_INDEPENDENT_CODE' : true,
+                                 'CMAKE_C_STANDARD' : 17, # avoid C23 warnings in bundled zlib if you ever enable it
+                                 'CMAKE_POLICY_VERSION_MINIMUM' : '4.0',
+                             })
 
-opt_var.add_cmake_defines({
-                              'BUILD_SHARED_LIBS' : 'OFF',
-                              'BUILD_STATIC_LIBS' : 'ON',
-                              'CMAKE_POLICY_VERSION_MINIMUM' : '4.0',
-                          })
+
+use_sharedl = false
+cmake_opts.add_cmake_defines({
+                                 'BUILD_SHARED_LIBS' : use_sharedl,
+                                 # Avoid pulling GUI/sample/tooling deps like X11
+                                 'ASSIMP_BUILD_ASSIMP_TOOLS' : false,
+                                 'ASSIMP_BUILD_SAMPLES' : false,
+                                 'ASSIMP_BUILD_TESTS' : false,
+                             })
+
+
+if host_machine.system() == 'darwin'
+    # there's a macro collision in Assimp’s bundled zlib on macOS.
+    # Using system zlib is fine on macos
+    cmake_opts.add_cmake_defines({
+                                     'ASSIMP_BUILD_ZLIB' : false,
+                                 })
+else
+    # Ubuntu: zlib is not compiled with fPic on the system. Let Assimp compile it.
+    cmake_opts.add_cmake_defines({
+                                     'ASSIMP_BUILD_ZLIB' : true,
+                                 })
+endif
+
 
 # TODO: remove temp workaround for _LIBCPP_ENABLE_ASSERTIONS deprecation
-opt_var.append_compile_args('cpp',
-                            '-Wno-shadow',
-                            '-U_LIBCPP_ENABLE_ASSERTIONS',
-                            '-D_LIBCPP_HARDENING_MODE_DEBUG=true',
+cmake_opts.append_compile_args('cpp',
+                               '-fPIC',
+                               '-Wno-shadow',
+                               '-U_LIBCPP_ENABLE_ASSERTIONS',
+                               '-D_LIBCPP_HARDENING_MODE_DEBUG=true',
 )
 
-assimp_proj = cmake.subproject('assimp', options : opt_var)
+assimp_proj = cmake.subproject('assimp', options : cmake_opts)
 assimp_dep = assimp_proj.dependency('assimp')
 
 # Platform-specific: Add Homebrew paths on macOS for zstd and openssl
@@ -89,13 +118,13 @@ if host_machine.system() == 'darwin'
     zstd_lib = run_command('brew', '--prefix', 'zstd').stdout().strip() + '/lib'
     openssl_lib = run_command('brew', '--prefix', 'openssl').stdout().strip() + '/lib'
 
-    opt_var.append_link_args('-L' + zstd_lib, '-L' + openssl_lib)
+    cmake_opts.append_link_args('-L' + zstd_lib, '-L' + openssl_lib)
 
     message('Using zstd lib dir: ' + zstd_lib)
     message('Using openssl lib dir: ' + openssl_lib)
 endif
 
-ccdb_proj = cmake.subproject('ccdb', options : opt_var)
+ccdb_proj = cmake.subproject('ccdb', options : cmake_opts)
 ccdb_dep = ccdb_proj.dependency('ccdb', include_type : 'system')
 
 
