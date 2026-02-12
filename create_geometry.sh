@@ -28,7 +28,7 @@ EOF
 
 coatjava_args=("-l")         # default behaviour = latest tag
 explicit_coatjava=0          # did the user pass a coatjava flag?
-ccdb_conn="mysql://clas12reader@clasdb-farm.jlab.org/clas12"
+ccdb_conn="mysql://clas12reader@clasdb.jlab.org/clas12"
 
 while getopts ":lt:g:c:h" opt; do
   case "$opt" in
