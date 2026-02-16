@@ -41,6 +41,11 @@ public:
        	// adc time offsets
 	vector<double> adcoffset[1][1][2];
         
+	// tdc jitter parameters
+	double jitter_period;
+	int    jitter_phase;
+	int    jitter_cycles;
+
 	// veff: effective velocity
 	vector<double> veff[1][1][2];
 	
@@ -50,8 +55,10 @@ public:
 	// countsForMIP: Desired ADC channel for MIP peak calibration
 	vector<double> countsForMIP[1][1][2];
 	
-	// twlk: Time walk correction, 3 constants each for L and R
-	vector<double> twlk[1][1][6];
+	// hpos parameters
+	vector<double> hpos[1][1][2];
+	vector<double> hposbin[1][1][101];
+	unsigned hposbins = 100;
 	
 	vector<double> toff_UD[1][1];
 	vector<double> toff_RFpad[1][1];

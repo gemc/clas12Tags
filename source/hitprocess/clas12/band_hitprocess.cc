@@ -93,6 +93,14 @@ static bandHitConstants initializeBANDHitConstants(int runno, string digiVariati
     calib->GetCalib(data, bhc.database);
     bhc.tdcconv = data[0][3];
 
+        snprintf(bhc.database, sizeof(bhc.database),  "/calibration/band/time_jitter:%d:%s%s", bhc.runNo, digiVariation.c_str(), timestamp.c_str());
+        cout << "BAND:Getting time_jitter" << endl;
+        data.clear();
+        calib->GetCalib(data, bhc.database);
+        bhc.jitter_period = data[0][3];
+        bhc.jitter_phase  = data[0][4];
+        bhc.jitter_cycles = data[0][5];
+
 	// These are not in the CCDB
 	// Fill with constant values
 	//cout<<"BAND:Getting MeV->ADC conversions"<<endl;
@@ -294,9 +302,12 @@ map<string, double> band_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	int ADC       = (int) ( adcFactor*(side == 0 ? eTotL : eTotR) );
 	int amplitude = (int) ( adcFactor*(side == 0 ? xHit  : zHit)  );
 	time_in_ns   = (side == 0 ? tL_fadc : tR_fadc);
-    double fadc_time = convert_to_precision(time_in_ns);
 
-    int TDC       = (int) ( adcFactor*(side == 0 ? tL_tdc : tR_tdc)/tdcconv );
+	double fadc_time = convert_to_precision(time_in_ns);
+
+        double tdc_jitter = 0;
+        if(bhc.jitter_cycles != 0) tdc_jitter = bhc.jitter_period * ((0 + bhc.jitter_phase) % bhc.jitter_cycles);  // assumes event timestamp is zero
+        int TDC       = (int) ( adcFactor*((side == 0 ? tL_tdc : tR_tdc)+tdc_jitter)/tdcconv );
 	
 	dgtz["hitn"]          = (int) hitn;
 	dgtz["sector"]        = (int) sector;
