@@ -163,9 +163,17 @@ variations_for_run_and_system()  {
 
 # if we are in the docker container, we need to load the modules
 if [[ -z "${AUTOBUILD}" ]]; then
-	echo "\nNot in container"
+	echo "\nNot in container, loading gemc/dev - assuing we are on a mac with homebrew modules"
+	source /opt/homebrew/opt/modules/init/zsh
+	module purge
+	module load gemc/dev
+	echo
+	echo  "G4INSTALL=$G4INSTALL"
+	echo "GEMC=$GEMC"
+	echo "DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH:-}"
+	echo
 else
-	echo "\nIn docker container."
+	echo "\nIn docker container, sourcing local setup and loading gemc, ccdb and hipo"
 	if [[ -n "${GITHUB_WORKFLOW}" ]]; then
 		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 	fi

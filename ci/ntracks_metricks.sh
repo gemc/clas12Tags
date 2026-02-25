@@ -3,11 +3,12 @@
 # Purpose: runs gemc using all the gcards in clas12-config dev branch
 
 # Container run:
-# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
+# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-almalinux94 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/ntracks_metricks.sh
 
 source ci/env.sh
+target_vz="-3.0*cm"
 
 Help() {
 	# Display Help
@@ -84,10 +85,6 @@ else
 	./ci/generated_events/randomize_particles.py --nevents $nevents -o $event_lund_file --theta-min 7 --theta-max 120 --seed 123 $lund_file
 fi
 
-echo " Content of $event_lund_file :" > $gemc_log
-cat $event_lund_file >> $gemc_log
-
-
 # --- build gemc options as an ARRAY (zsh) ---
 typeset -a gemc_opts
 gemc_opts=(
@@ -98,16 +95,14 @@ gemc_opts=(
   -PRINT_EVENT=10
   -GEN_VERBOSITY=10
   -OUTPUT="hipo, gemc.hipo"
-
-  # vertex block
-  -RANDOMIZE_LUND_VZ="-1.94*cm, 2.5*cm, reset"
+  -RANDOMIZE_LUND_VZ="$target_vz, 2.5*cm, reset"
   -BEAM_SPOT="0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset"
   -RASTER_VERTEX="0.0*cm, 0.0*cm, reset"
-
-  # fields block
   -SCALE_FIELD="binary_torus, -1.00"
   -SCALE_FIELD="binary_solenoid, -1.00"
 )
+
+
 
 # conditional flags (append safely)
 if [[ $ntracks != "clasdis_all_no_int" ]]; then
@@ -119,10 +114,13 @@ if [[ $ntracks == "clasdis_all_savemothers" ]]; then
   gemc_opts+=(-SAVE_ALL_MOTHERS="1")
 fi
 
-echo "Running gemc with options: ${gemc_opts} and gcard: ${gcard}"
+gemc_bin=$(which gemc)
 
+print -r -- "Running command:"
+print -r -- "$gemc_bin" "${gemc_opts[@]}" "$gcard"
 # prevent filename globbing (expansion of *); pass each arg as its own argv word
-noglob gemc "${gemc_opts[@]}" "${gcard}" | sed '/G4Exception-START/,/G4Exception-END/d' >> "${gemc_log}"
+noglob "$gemc_bin" "${gemc_opts[@]}" "$gcard" | sed '/G4Exception-START/,/G4Exception-END/d' >> "${gemc_log}"
+
 
 exitCode=$?
 
