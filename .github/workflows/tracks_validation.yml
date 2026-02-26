@@ -1,0 +1,93 @@
+name: Tracks Validation
+permissions:
+  contents: read
+  pull-requests: write
+
+# Triggers the workflow on all pushes to main and all pull requests
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches: [ main ]
+    tags: [ '*' ]
+    paths-ignore:
+      - "**/*.md"
+      - "release_notes/**"
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+  # Allows this workflow to be called by other workflows
+  # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
+  workflow_call:
+    inputs:
+      branch:
+        required: false
+        type: string
+
+jobs:
+  detect-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set effective branch
+        id: vars
+        run: |
+          echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
+
+
+  ntracks-metrics:
+    runs-on: ubuntu-latest
+    container: jeffersonlab/gemc:dev-almalinux94
+    strategy:
+      fail-fast: false
+      matrix:
+        gen_type:
+          - 'electronproton'
+          - 'electrongamma'
+          - 'electronprotonC'
+          - 'electronneutronC'
+          - 'electronFTpion'
+        gcard:
+          - 'clas12-default'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@main
+        with:
+          repository: ${{ 'gemc/clas12Tags' }}
+      - name: Fix Java Version
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+      - name: Install Git LFS
+        run: |
+          dnf -y install git-lfs 
+      - name: Build Coatjava
+        run: |
+          cd ./geometry_source
+          git lfs install
+          ./install_coatjava.sh -l
+      - name: Build Gemc
+        run: |
+          ./ci/build_gemc.sh
+      - name: ${{ matrix.gen_type }} # notice: assuming same clas12-default gcard
+        env:
+          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
+        run: |
+          ./ci/tracks_validation.sh -g ${{ matrix.gcard }} -l ${{ matrix.gen_type }}
+      - name: Efficiency summary (eff.log)
+        if: always()
+        shell: bash
+        run: |
+          ./ci/eff_summary.sh /root/logs/eff.log
+      - name: Upload logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: tracklogs-${{ matrix.gen_type }}
+          path: |
+            /root/logs/
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
+            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+
