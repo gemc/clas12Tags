@@ -287,14 +287,20 @@ are available on [DockerHub](https://hub.docker.com/repository/docker/jeffersonl
 
 To run the docker image (for example dev-fedora):
 
-```
+```shell
 docker run -it --rm jeffersonlab/gemc:dev-almalinux94 bash
 ```
 
 On MacOS the additional option `--platform linux/amd64` is needed:
 
-```
+```shell
 docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-almalinux94 bash
+```
+
+For i/o to and from the image, you can include a mounting point by adding the `-v` option to the above command
+
+```shell
+-v ~/mywork:/usr/local/mywork 
 ```
 
 <br/>
