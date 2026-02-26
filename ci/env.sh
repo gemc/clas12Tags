@@ -1,5 +1,51 @@
 #!/usr/bin/env zsh
 
+
+die_with_code () {
+  # Usage:
+  #   some_command ... ; die_with_code /path/to/log
+  #   some_command ... ; die_with_code /path/to/log "extra message"
+  #   die_with_code /path/to/log "msg" 42   # explicit code override (optional)
+  #
+  # Behavior:
+  #   - If last exit code is 0: return 0 (do nothing)
+  #   - Otherwise: print error + code, print log (if readable), exit with code
+
+  local log_file="${1:-}"
+  local extra_msg="${2:-}"
+  local code
+
+  # Optional explicit code override as 3rd arg; otherwise take $?
+  if [[ -n "${3:-}" ]]; then
+    code="$3"
+  else
+    code="$?"
+  fi
+
+  # If success, do nothing
+  (( code == 0 )) && return 0
+
+  # Error header
+  if [[ -n "$extra_msg" ]]; then
+    print -u2 -- "ERROR: ${extra_msg} (exit code: ${code})"
+  else
+    print -u2 -- "ERROR: command failed (exit code: ${code})"
+  fi
+
+  # Dump log if provided
+  if [[ -n "$log_file" ]]; then
+    if [[ -r "$log_file" ]]; then
+      print -u2 -- "----- BEGIN LOG: $log_file -----"
+      cat -- "$log_file" >&2
+      print -u2 -- "----- END LOG: $log_file -----"
+    else
+      print -u2 -- "NOTE: log file not readable: $log_file"
+    fi
+  fi
+
+  exit "$code"
+}
+
 DetectorDirNotExisting() {
 	echo "System directory: $system not existing"
 	exit 3
@@ -163,9 +209,13 @@ variations_for_run_and_system()  {
 
 # if we are in the docker container, we need to load the modules
 if [[ -z "${AUTOBUILD}" ]]; then
-	echo "\nNot in container"
+	echo "\nNot in container, loading gemc/dev - assuing we are on a mac with homebrew modules"
+	source /opt/homebrew/opt/modules/init/zsh
+	module purge
+	module load gemc/dev
+	echo
 else
-	echo "\nIn docker container."
+	echo "\nIn docker container, sourcing local setup and loading gemc, ccdb and hipo"
 	if [[ -n "${GITHUB_WORKFLOW}" ]]; then
 		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 	fi

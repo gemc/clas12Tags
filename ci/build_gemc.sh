@@ -56,7 +56,6 @@ function create_geo_dbs {
 		exit 1
 	fi
 
-
 	echo
 	echo "Changes after creation:"
 	echo END_CREATE_GEOMETRY $(date) | tee -a $geo_log
