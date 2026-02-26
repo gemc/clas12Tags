@@ -5,6 +5,9 @@
 
 	<detector name="experiments/clas12/ddvcs/ddvcs"     factory="TEXT" variation="newScattChamber"/>
 <!--	<detector name="experiments/clas12/ddvcs/cad/"    factory="CAD"/>-->
+	<detector name="experiments/clas12/muvt/muvt"                 factory="TEXT" variation="default"/>
+        <detector name="experiments/clas12/ddvcs/ddvcsts"   factory="TEXT" variation="torusShield"/>
+        <detector name="experiments/clas12/ddvcs/fluxDets"    factory="TEXT" variation="ddvcs"/>
 
 	<detector name="experiments/clas12/beamline/beamline"          factory="TEXT" variation="ddvcs"/>
 	<detector name="experiments/clas12/beamline/cad/" factory="CAD"  variation="ddvcs"/>
@@ -15,7 +18,7 @@
 
 	<detector name="experiments/clas12/cnd/cnd"                       factory="TEXT" variation="default"/>
 
-	<detector name="experiments/clas12/uRwell/uRwell"             factory="TEXT" variation="default_1R"/>
+	<detector name="experiments/clas12/urwt/urwt"                 factory="TEXT" variation="default"/>
 	<detector name="experiments/clas12/dc/dc"                     factory="TEXT" variation="default"/>
 	<detector name="experiments/clas12/ftof/ftof"                 factory="TEXT" variation="rga_spring2018"/>
 	<detector name="experiments/clas12/ec/ec"                     factory="TEXT" variation="rga_spring2018"/>
