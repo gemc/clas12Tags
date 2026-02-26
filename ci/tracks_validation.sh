@@ -80,7 +80,7 @@ efficiency_log=$logs_dir/eff.log
 list_file=geometry_source/coatjava_src/validation/advanced-tests/src/eb/scripts/list.txt
 gen_script=geometry_source/coatjava_src/validation/advanced-tests/src/eb/scripts/gen.sh
 input=$(grep "$lund_type " $list_file | sed 's/.* -pid/-pid/' )
-nevents=20
+nevents=200
 event_lund_file="$lund_type.txt"
 gemc_output="gemc_$lund_type.hipo"
 
