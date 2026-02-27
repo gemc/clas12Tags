@@ -43,8 +43,7 @@ def additional_software(image: str) -> str:
     Install extra tooling: Java 21 + git-lfs.
     Distro-specific package managers are handled here.
     """
-    if image in ("ubuntu", "debian"):
-        # git-lfs is in the standard repos for modern Ubuntu/Debian.
+    if image == "ubuntu":
         return (
             "\n# Additional software: Java 21 + git-lfs\n"
             "RUN set -euo pipefail \\\n"
@@ -53,6 +52,24 @@ def additional_software(image: str) -> str:
             "      openjdk-21-jdk \\\n"
             "      git-lfs \\\n"
             "      ca-certificates \\\n"
+            " && git lfs install --system \\\n"
+            " && rm -rf /var/lib/apt/lists/*\n"
+        )
+
+    if image == "debian":
+        # Debian stable may not ship openjdk-21-jdk in main; use backports if needed.
+        return (
+            "\n# Additional software: Java 21 + git-lfs (Debian uses backports if needed)\n"
+            "RUN set -euo pipefail \\\n"
+            " && . /etc/os-release \\\n"
+            " && apt-get update \\\n"
+            " && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \\\n"
+            "      ca-certificates \\\n"
+            "      git-lfs \\\n"
+            " && (DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-21-jdk \\\n"
+            "     || (echo \"deb http://deb.debian.org/debian ${VERSION_CODENAME}-backports main\" > /etc/apt/sources.list.d/backports.list \\\n"
+            "         && apt-get update \\\n"
+            "         && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends -t ${VERSION_CODENAME}-backports openjdk-21-jdk)) \\\n"
             " && git lfs install --system \\\n"
             " && rm -rf /var/lib/apt/lists/*\n"
         )
@@ -70,7 +87,6 @@ def additional_software(image: str) -> str:
         )
 
     if image == "almalinux":
-        # git-lfs may require EPEL on Alma/RHEL-like images. Try direct install first, then fallback.
         return (
             "\n# Additional software: Java 21 + git-lfs\n"
             "RUN set -euo pipefail \\\n"
@@ -93,7 +109,6 @@ def additional_software(image: str) -> str:
             " && pacman -Scc --noconfirm\n"
         )
 
-    # Should be unreachable because of is_valid_image(), but keep it safe.
     return "\n# Additional software: (none)\n"
 
 
