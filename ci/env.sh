@@ -1,49 +1,58 @@
 #!/usr/bin/env zsh
 
+# enable git describe --tags, needed by meson
+function enable_git_describe {
+	is_shallow=$(git rev-parse --is-shallow-repository)
+	if [ "$is_shallow" = "true" ]; then
+		echo "Repository is_shallow: $is_shallow"
+		echo " > Fetching all tags"
+		git fetch --tags --unshallow
+	fi
+}
 
-die_with_code () {
-  # Usage:
-  #   some_command ... ; die_with_code /path/to/log
-  #   some_command ... ; die_with_code /path/to/log "extra message"
-  #   die_with_code /path/to/log "msg" 42   # explicit code override (optional)
-  #
-  # Behavior:
-  #   - If last exit code is 0: return 0 (do nothing)
-  #   - Otherwise: print error + code, print log (if readable), exit with code
+die_with_code()  {
+	# Usage:
+	#   some_command ... ; die_with_code /path/to/log
+	#   some_command ... ; die_with_code /path/to/log "extra message"
+	#   die_with_code /path/to/log "msg" 42   # explicit code override (optional)
+	#
+	# Behavior:
+	#   - If last exit code is 0: return 0 (do nothing)
+	#   - Otherwise: print error + code, print log (if readable), exit with code
 
-  local log_file="${1:-}"
-  local extra_msg="${2:-}"
-  local code
+	local log_file="${1:-}"
+	local extra_msg="${2:-}"
+	local code
 
-  # Optional explicit code override as 3rd arg; otherwise take $?
-  if [[ -n "${3:-}" ]]; then
-    code="$3"
-  else
-    code="$?"
-  fi
+	# Optional explicit code override as 3rd arg; otherwise take $?
+	if [[ -n "${3:-}" ]]; then
+		code="$3"
+	else
+		code="$?"
+	fi
 
-  # If success, do nothing
-  (( code == 0 )) && return 0
+	# If success, do nothing
+	((code == 0))  && return 0
 
-  # Error header
-  if [[ -n "$extra_msg" ]]; then
-    print -u2 -- "ERROR: ${extra_msg} (exit code: ${code})"
-  else
-    print -u2 -- "ERROR: command failed (exit code: ${code})"
-  fi
+	# Error header
+	if [[ -n "$extra_msg" ]]; then
+		print -u2 -- "ERROR: ${extra_msg} (exit code: ${code})"
+	else
+		print -u2 -- "ERROR: command failed (exit code: ${code})"
+	fi
 
-  # Dump log if provided
-  if [[ -n "$log_file" ]]; then
-    if [[ -r "$log_file" ]]; then
-      print -u2 -- "----- BEGIN LOG: $log_file -----"
-      cat -- "$log_file" >&2
-      print -u2 -- "----- END LOG: $log_file -----"
-    else
-      print -u2 -- "NOTE: log file not readable: $log_file"
-    fi
-  fi
+	# Dump log if provided
+	if [[ -n "$log_file" ]]; then
+		if [[ -r "$log_file" ]]; then
+			print  -u2 -- "----- BEGIN LOG: $log_file -----"
+			cat  -- "$log_file" >&2
+			print  -u2 -- "----- END LOG: $log_file -----"
+		else
+			print  -u2 -- "NOTE: log file not readable: $log_file"
+		fi
+	fi
 
-  exit "$code"
+	exit "$code"
 }
 
 DetectorDirNotExisting() {
@@ -72,8 +81,8 @@ log_gemc_info() {
 	echo "   Instrospection: $(gemc --version | grep -v Connecting | grep -v RTPC)"
 	echo
 	echo " Java version:" $(java -version) $(which java)
-    echo " JAVA_HOME=${JAVA_HOME:-<unset>}"
-    echo " Groovy version: " $(groovy -version)
+	echo  " JAVA_HOME=${JAVA_HOME:-<unset>}"
+	echo  " Groovy version: " $(groovy -version)
 	echo
 	echo "========================================"
 	echo "========================================"
@@ -163,13 +172,13 @@ variations_for_run_and_system()  {
 		echo "rgc_fall2022"
 	elif [[ $1 == "17471" ]]; then
 		echo "rgc_spring2023"
-	elif [[ $1 == "18347" || $1 == "18372"  || $1 == "18560" || $1 == "18660" || $1 == "18874"  || $1 == "19061" ]]; then
+	elif [[ $1 == "18347" || $1 == "18372" || $1 == "18560" || $1 == "18660" || $1 == "18874" || $1 == "19061" ]]; then
 		echo "rgd_fall2023_CuSn"
-	elif [[ $1 == "18339" || $1 == "18369"  || $1 == "18400" || $1 == "18440" || $1 == "18440"  || $1 == "18440" ]]; then
+	elif [[ $1 == "18339" || $1 == "18369" || $1 == "18400" || $1 == "18440" || $1 == "18440" || $1 == "18440" ]]; then
 		echo "rgd_fall2023_CxC"
-	elif [[ $1 == "18305" || $1 == "18318"  || $1 == "18419" || $1 == "18528" || $1 == "18644"  || $1 == "18764" || $1 == "18851"  || $1 == "19021" ]]; then
+	elif [[ $1 == "18305" || $1 == "18318" || $1 == "18419" || $1 == "18528" || $1 == "18644" || $1 == "18764" || $1 == "18851" || $1 == "19021"  ]]; then
 		echo "rgd_fall2023_lD2"
-	elif [[ $1 == "18316" || $1 == "18399"  || $1 == "19060" ]]; then
+	elif [[ $1 == "18316" || $1 == "18399" || $1 == "19060" ]]; then
 		echo "rgd_fall2023_empty"
 	elif [[ $1 == "19200" ]]; then
 		echo "rgk_fall2023"
@@ -183,11 +192,11 @@ variations_for_run_and_system()  {
 		echo "rge_spring2024_Empty_Pb"
 	elif [[ $1 == "20435" ]]; then
 		echo "rge_spring2024_LD2_Al"
-	elif [[ $1 == "20021" || $1 == "20131"  || $1 == "20508" ]]; then
+	elif [[ $1 == "20021" || $1 == "20131" || $1 == "20508" ]]; then
 		echo "rge_spring2024_LD2_C"
 	elif [[ $1 == "20177" ]]; then
 		echo "rge_spring2024_LD2_Cu"
-	elif [[ $1 == "20041" || $1 == "20074"  || $1 == "20232" || $1 == "20282" || $1 == "20494"  || $1 == "20520" ]]; then
+	elif [[ $1 == "20041" || $1 == "20074" || $1 == "20232" || $1 == "20282" || $1 == "20494" || $1 == "20520" ]]; then
 		echo "rge_spring2024_LD2_Pb"
 	elif [[ $1 == "20331" ]]; then
 		echo "rge_spring2024_LD2_Sn"
@@ -204,36 +213,41 @@ variations_for_run_and_system()  {
 	fi
 }
 
-# show environment
-# export
+
+
+log_dir=$SIM_HOME/logs
 
 # if we are in the docker container, we need to load the modules
 if [[ -z "${AUTOBUILD}" ]]; then
-	echo "\nNot in container, loading gemc/dev - assuing we are on a mac with homebrew modules"
-	source /opt/homebrew/opt/modules/init/zsh
-	module purge
-	module load gemc/dev
-	echo
+	echo "\nNot in container"
 else
-	echo "\nIn docker container, sourcing local setup and loading gemc, ccdb and hipo"
-	if [[ -n "${GITHUB_WORKFLOW}" ]]; then
-		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
-	fi
-	source /etc/profile.d/localSetup.sh
-
+	echo "\nIn docker container."
 	# recent versions of Git refuse to touch a repository whose on-disk owner
 	# doesn’t match the UID that is running the command
 	# mark the workspace (and any nested path) as safe
 	echo "Marking workspace as safe for Git"
 	git config --global --add safe.directory '*'
-
-	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
-	export GEMC=$SIM_HOME/gemc/dev
-	export GEMC_DATA_DIRC=$GEMC
-	export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
-	export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
-	export PATH=${PATH}:${GEMC}/bin
-
-	export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
-
+	enable_git_describe
+	log_dir=/root/src/logs
 fi
+
+echo  "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
+export  GEMC=$SIM_HOME/gemc/dev
+export  GEMC_DATA_DIRC=$GEMC
+export  PYTHONPATH=${PYTHONPATH}:${GEMC}/api
+export  PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
+export  PATH=${PATH}:${GEMC}/bin
+
+# detect cores and cap at 16
+cores=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)
+jobs=$((cores < 16 ? cores : 16))
+
+mkdir -p $log_dir
+setup_log=$log_dir/setup.log
+compile_log=$log_dir/build.log
+install_log=$log_dir/install.log
+gemc_install_show=$log_dir/gemc.log
+geo_log=$log_dir/geo.log
+
+touch $setup_log $compile_log $install_log $test_log
+echo
