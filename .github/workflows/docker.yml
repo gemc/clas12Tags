@@ -1,0 +1,246 @@
+# Build & Publish GitHub Container Registry (GHCR) Images
+name: Build GEMC Images
+permissions:
+  contents: read
+  packages: write
+
+# default versions. This is overwritten by distros_tags.sh
+env:
+  GEMC_TAG: dev           # default gemc tag
+  GEANT4_TAG: 11.4.0      # default geant4 tag
+
+concurrency:
+  group: gemc-images-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ meson ]  # publish on main updates
+    tags: [ '*' ]        # also publish on version tags
+  pull_request:          # PRs: build only (no push)
+
+jobs:
+  overview:
+    if: ${{ github.event_name != 'pull_request' }}
+    name: Workflow Overview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Write overview
+        shell: bash
+        run: |
+          : "${GITHUB_STEP_SUMMARY:=$RUNNER_TEMP/summary.md}"
+          bash ci/summary.sh "$GITHUB_STEP_SUMMARY"
+
+  discover:
+    if: ${{ github.event_name != 'pull_request' }}
+    name: Create Job Matrices
+    runs-on: ubuntu-latest
+    outputs:
+      matrix_build: ${{ steps.scan.outputs.matrix_build }}
+      matrix_manifest: ${{ steps.scan.outputs.matrix_manifest }}
+      image: ${{ steps.scan.outputs.image }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - id: scan
+        name: Build matrix
+        run: ci/distros_tags.sh
+
+  # arch build jobs
+  # uses matrix_build
+  build_arch:
+    if: ${{ github.event_name != 'pull_request' }}
+    name: ${{ matrix.arch }} ${{ matrix.gemc_tag }} ${{ matrix.geant4_tag }} ${{ matrix.image }}:${{ matrix.image_tag }}
+    needs: [ overview, discover ]
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix_build) }}
+
+    env:
+      CACHE_REF: type=registry,ref=${{ needs.discover.outputs.image }}:cache-${{ matrix.arch }}
+      TAG4: ${{ format('{0}-{1}-{2}-{3}', matrix.gemc_tag, matrix.geant4_tag, matrix.image, matrix.image_tag) }}
+      LOGNAME: ${{ format('{0}-{1}-{2}-{3}-{4}', matrix.gemc_tag, matrix.geant4_tag, matrix.image, matrix.image_tag, matrix.arch) }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Free up disk space
+        uses: ./.github/actions/free-disk-space
+        with:
+          prune_docker: "true"
+          show_tree: "true"
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        name: Docker metadata (base tag)
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ needs.discover.outputs.image }}
+          tags: |
+            type=raw,value=${{ env.TAG4 }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.description=GEMC ${{ matrix.gemc_tag }} ${{ matrix.geant4_tag }} on ${{ matrix.image }}:${{ matrix.image_tag }} (${{ matrix.arch }})
+
+      - name: Generate Dockerfile
+        run: |
+          python3 ci/dockerfile_creator.py \
+          -i "${{ matrix.image }}" \
+          -t "${{ matrix.image_tag }}" \
+          --gemc-version "${{ matrix.gemc_tag || env.GEMC_TAG }}" \
+          --geant4-version "${{ matrix.geant4_tag || env.GEANT4_TAG }}" \
+          > Dockerfile.generated
+          cat Dockerfile.generated
+
+      # later pass it in the step below so that it's executed for every commit
+      - name: Get upstream commit
+        run: echo "UPSTREAM_REV=$(git ls-remote https://github.com/gemc/src HEAD | cut -f1)" >> $GITHUB_ENV
+
+      - name: Build & Push
+        uses: docker/build-push-action@v5
+        with:
+          # ensure we have the latest base image
+          pull: true
+          # force a full rebuild regardless of any local cache from previous workflow runs
+          no-cache: true
+          build-args: |
+            UPSTREAM_REV=${{ env.UPSTREAM_REV }}
+          context: .
+          file: ./Dockerfile.generated
+          target: final
+          platforms: ${{ matrix.platform }}
+          push: true
+          # Add suffix to the arch-specific image tag
+          tags: ${{ steps.meta.outputs.tags }}${{ matrix.suffix }}
+          labels: ${{ steps.meta.outputs.labels }}
+          # build layers are imported from a previously exported BuildKit cache
+          # cache-from: ${{ env.CACHE_REF }}
+          # publishes the BuildKit cache to your container registry under that tag
+          cache-to: ${{ env.CACHE_REF }},mode=max
+
+      # export logs from the logs-export stage in the dockerfile to the runner’s filesystem (no docker pull)
+      - name: Export logs (runner artifact)
+        uses: docker/build-push-action@v5
+        with:
+          pull: true
+          context: .
+          file: ./Dockerfile.generated
+          target: logs-export
+          push: false
+          cache-from: ${{ env.CACHE_REF }}
+          outputs: type=local,dest=${{ runner.temp }}/artifacts/${{ matrix.logs_dir }}
+
+      - name: Pack logs
+        shell: bash
+        run: |
+          LOGROOT="${{ runner.temp }}/artifacts/${{ matrix.logs_dir }}"
+          TAR="logs-${LOGNAME}.tgz"
+          cd "$LOGROOT"
+          tar -czf "$TAR" logs
+          echo "LOG_TAR=$LOGROOT/$TAR" >> "$GITHUB_ENV"
+
+      - name: Upload logs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-${{ env.LOGNAME }}
+          path: ${{ env.LOG_TAR }}
+          if-no-files-found: ignore
+
+
+  # Manifest stitch
+  # uses matrix_manifest so it's not repeated for each arch
+  # docker buildx imagetools create: assembles an OCI manifest list
+  # from already-pushed per-arch image tags.
+  manifest:
+    if: ${{ github.event_name != 'pull_request' }}
+    name: Manifest ${{ matrix.gemc_tag }} ${{ matrix.geant4_tag }} ${{ matrix.image }}:${{ matrix.image_tag }}
+    needs: [ build_arch, discover ]
+    runs-on: ubuntu-latest
+    # If arm64 was skipped (e.g., archlinux), still publish amd64-only manifest.
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix_manifest) }}
+    env:
+      TAG4: ${{ format('{0}-{1}-{2}-{3}', matrix.gemc_tag, matrix.geant4_tag, matrix.image, matrix.image_tag) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - id: meta
+        name: Docker metadata (base tag)
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ needs.discover.outputs.image }}
+          tags: |
+            type=raw,value=${{ env.TAG4 }}
+
+      - name: Create multi-arch manifest
+        shell: bash
+        run: |
+          BASE_TAG="${{ steps.meta.outputs.tags }}"
+          AMD_TAG="${BASE_TAG}-amd64"
+          ARM_TAG="${BASE_TAG}-arm64"
+
+          # If the arm64 build was skipped (e.g., archlinux), only include amd64
+          if docker buildx imagetools inspect "$ARM_TAG" >/dev/null 2>&1; then
+            docker buildx imagetools create -t "$BASE_TAG" "$AMD_TAG" "$ARM_TAG"
+          else
+            docker buildx imagetools create -t "$BASE_TAG" "$AMD_TAG"
+          fi
+
+      - name: Download logs artifacts (all arches)
+        if: ${{ always() }}
+        uses: actions/download-artifact@v4
+        with:
+          pattern: logs-${{ env.TAG4 }}-*
+          path: ${{ runner.temp }}/downloaded-logs
+          merge-multiple: true
+
+      - name: Summary (manifest)
+        if: ${{ always() }}
+        shell: bash
+        env:
+          IMAGE: ${{ needs.discover.outputs.image }}
+          TAG: ${{ env.TAG4 }}
+        run: |
+          SUMMARY_FILE="${GITHUB_STEP_SUMMARY:-$RUNNER_TEMP/manifest_summary.md}"
+          echo "MANIFEST_SUMMARY_FILE=$SUMMARY_FILE" >> "$GITHUB_ENV"
+          bash ci/manifest.sh "$SUMMARY_FILE" "$IMAGE" "$TAG" "${{ runner.temp }}/downloaded-logs"
+          
+          mkdir -p "$GITHUB_WORKSPACE/summaries"
+          OUT="$GITHUB_WORKSPACE/summaries/summary-${TAG}-${{ job.status }}.md"
+          cp "$SUMMARY_FILE" "$OUT" || true
+          echo "Wrote $OUT"
+
+      - name: Upload summary artifact (manifest)
+        uses: actions/upload-artifact@v4
+        with:
+          name: summary-${{ env.TAG4 }}-manifest
+          path: ${{ env.MANIFEST_SUMMARY_FILE }}
+          if-no-files-found: warn
+
+

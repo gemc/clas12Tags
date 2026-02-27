@@ -3,36 +3,42 @@
 # Purpose: compiles and installs gemc
 
 # Container run:
-# docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
+# docker run --rm -it  ghcr.io/gemc/g4install:11.4.0-fedora-40  bash -li
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/build_gemc.sh
 
 source ci/env.sh
 
-debug=""
-# if the option $1 is set to "DEBUG" then set debug to "DEBUG=1"
-if [ "$1" = "DEBUG" ]; then
-	debug="DEBUG=1"
-fi
-
-
 function compile_gemc {
 
 	build_log=gemc_build.log
-
+	local install_dir="${GEMC:?GEMC not set}"
+	local args=(
+		"--native-file=core.ini"
+		"-Dprefix=${install_dir}"
+		"-Dpkg_config_path=${PKG_CONFIG_PATH}:${install_dir}/lib/pkgconfig"
+		"-Dbuildtype=release"
+	)
 	cd source
 	# getting number of available CPUS
-	copt=" -j"$(getconf _NPROCESSORS_ONLN)" OPT=1"
 	echo
-	echo Compiling GEMC with options: "$copt" "$debug"
 	echo START_GEMC_COMPILATION $(date) | tee $build_log
-	echo Compiling GEMC with options: "$copt" "$debug" | tee -a $build_log
-	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" | tee -a $build_log
-	if [ $? -ne 0 ]; then
-		echo "scons failed. Log: "
-		cat $build_log
-		exit 1
-	fi
+
+	# detect cores and cap at 16
+	cores=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)
+	jobs=$((cores < 16 ? cores : 16))
+
+	rm -rf build
+	mkdir build
+
+	echo
+	echo Running: meson setup build "${args[@]}"
+	meson setup build "${args[@]}"
+	echo Running meson compile -C build -j "$jobs"
+	meson compile -C build -j "$jobs"
+	echo Running meson install " -C build"
+	meson install -C build
+
 	echo END_GEMC_COMPILATION $(date) | tee -a $build_log
 	# checking existence of executable
 	echo "Created executable: " $(ls gemc)
@@ -70,6 +76,7 @@ function create_geo_dbs {
 
 compile_gemc
 create_geo_dbs
+
 log_gemc_info
 echo
 echo "Content of $GEMC after geo creation:"

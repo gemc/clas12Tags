@@ -220,11 +220,6 @@ else
 		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 	fi
 	source /etc/profile.d/localSetup.sh
-	module switch gemc/dev
-
-	module load hipo
-	module load ccdb
-	echo
 
 	# recent versions of Git refuse to touch a repository whose on-disk owner
 	# doesn’t match the UID that is running the command
@@ -232,10 +227,13 @@ else
 	echo "Marking workspace as safe for Git"
 	git config --global --add safe.directory '*'
 
-	export GEMC=$(pwd)
-	export GEMC_DATA_DIR=$GEMC
-	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $GEMC"
-	export PATH=$GEMC/bin:$PATH
+	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
+	export GEMC=$SIM_HOME/gemc/dev
+	export GEMC_DATA_DIRC=$GEMC
+	export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
+	export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
+	export PATH=${PATH}:${GEMC}/bin
+
 	export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 fi
