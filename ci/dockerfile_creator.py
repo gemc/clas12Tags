@@ -101,9 +101,9 @@ def install_gemc(geant4_version: str, gemc_version: str) -> str:
     clone_arguments = '-c advice.detachedHead=false --recurse-submodules --single-branch'
     if gemc_version == "dev":
         clone_arguments += " --depth 1"
-    else:
         clone_arguments += f' --branch meson'
-#        clone_arguments += f' --branch "{gemc_version}"'
+    else:
+        clone_arguments += f' --branch "{gemc_version}"'
 
     commands = (
         f"\nRUN  git clone {clone_arguments} http://github.com/gemc/clas12Tags /root/clas12Tags \\\n"
