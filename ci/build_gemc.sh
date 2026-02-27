@@ -17,12 +17,18 @@ function show_gemc_installation {
 	echo "- Content of \$GEMC/bin=$GEMC/bin" >>$gemc_install_show
 	ls -lrt $GEMC/bin >>$gemc_install_show
 
+	echo "- Content of \$GEMC_DATA_DIR=$GEMC_DATA_DIR" >>$gemc_install_show
+	ls -lrt $GEMC_DATA_DIR >>$gemc_install_show
+
 	if [ -d $GEMC/lib ]; then
 		echo "- Content of \$GEMC/lib=$GEMC/lib" >>$gemc_install_show
 		ls -lrt $GEMC/lib >>$gemc_install_show
 	fi
 
 	echo " ldd of $GEMC/bin/gemc:" >>$gemc_install_show
+
+	echo "   Instrospection: $(gemc --version)"
+
 
 	# if on unix, use ldd , if on mac, use otool -L
 	if [[ "$(uname)" == "Darwin" ]]; then

@@ -67,19 +67,6 @@ log_gemc_info() {
 	echo "============= log_gemc_info ============"
 	echo "========================================"
 	echo
-	echo "\n > GCard: $gcard"
-	echo " > GEMC: $GEMC top level content:\n\n $(ls -l $GEMC/) \n"
-	# if GEMC_DATA_DIR different from GEMC, then print it
-	if [[ $GEMC_DATA_DIR != $GEMC ]]; then
-		echo " > GEMC_DATA_DIR: $GEMC_DATA_DIR top level content:\n\n $(ls -l $GEMC_DATA_DIR/) \n"
-	else
-		echo " > GEMC_DATA_DIR is the same as GEMC"
-	fi
-
-	echo " > gemc: $(which gemc) "
-	echo "   Compiled on $(date)"
-	echo "   Instrospection: $(gemc --version | grep -v Connecting | grep -v RTPC)"
-	echo
 	echo " Java version:" $(java -version) $(which java)
 	echo  " JAVA_HOME=${JAVA_HOME:-<unset>}"
 	echo  " Groovy version: " $(groovy -version)
@@ -233,7 +220,7 @@ fi
 
 echo  "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
 export  GEMC=$SIM_HOME/gemc/dev
-export  GEMC_DATA_DIRC=$GEMC
+export  GEMC_DATA_DIRC=${GEMC}
 export  PYTHONPATH=${PYTHONPATH}:${GEMC}/api
 export  PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
 export  PATH=${PATH}:${GEMC}/bin

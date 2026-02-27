@@ -37,6 +37,58 @@ def docker_header(image: str, image_tag: str, geant4_tag: str) -> str:
     commands += "ENV AUTOBUILD=1\n"
     return commands
 
+def coatjava_deps(image: str) -> str:
+    """
+    coatjava dependencies + Groovy (tarball/zip) install.
+    Installs:
+      - maven, jq
+      - perl DBI, DBD::SQLite, XML::LibXML
+      - curl, unzip
+      - Groovy 4.0.26 into /usr/local/groovy, symlink /usr/bin/groovy
+    """
+    groovy_zip = "apache-groovy-binary-4.0.26.zip"
+    groovy_url = f"https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/{groovy_zip}"
+    groovy_dir = "groovy-4.0.26"
+
+    if image in ("fedora", "almalinux"):
+        pkg_install = (
+            "dnf -y install --allowerasing "
+            "maven jq perl-DBI perl-DBD-SQLite perl-XML-LibXML curl unzip"
+        )
+        pkg_clean = (
+            "dnf -y clean all && rm -rf /var/cache/dnf"
+        )
+
+    elif image in ("ubuntu", "debian"):
+        pkg_install = (
+            "apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "
+            "maven jq libdbi-perl libdbd-sqlite3-perl libxml-libxml-perl curl unzip ca-certificates"
+        )
+        pkg_clean = "rm -rf /var/lib/apt/lists/*"
+
+    elif image == "archlinux":
+        pkg_install = (
+            "pacman -Syu --noconfirm && pacman -S --noconfirm --needed "
+            "maven jq perl-dbi perl-dbd-sqlite perl-xml-libxml curl unzip"
+        )
+        pkg_clean = "pacman -Scc --noconfirm"
+
+    else:
+        # Should be unreachable if you validate images earlier.
+        return "\n# coatjava deps: (unsupported image)\n"
+
+    return (
+        "\n# coatjava dependencies + Groovy (tarball/zip)\n"
+        "RUN set -euo pipefail \\\n"
+        f" && {pkg_install} \\\n"
+        f" && curl -L -o {groovy_zip} {groovy_url} \\\n"
+        f" && unzip -q {groovy_zip} \\\n"
+        f" && rm -f {groovy_zip} \\\n"
+        f" && rm -rf /usr/local/groovy \\\n"
+        f" && mv {groovy_dir} /usr/local/groovy \\\n"
+        f" && ln -sf /usr/local/groovy/bin/groovy /usr/bin/groovy \\\n"
+        f" && {pkg_clean}\n"
+    )
 
 def additional_software(image: str) -> str:
     """
@@ -141,7 +193,8 @@ def log_exporters() -> str:
 def create_dockerfile(image: str, image_tag: str, geant4_version: str, gemc_version: str) -> str:
     commands = ""
     commands += docker_header(image, image_tag, geant4_version)
-    commands += additional_software(image)
+    commands += additional_software(image)     # Java 21 + git-lfs
+    commands += coatjava_deps(image)           # maven/jq/perl deps + Groovy
     commands += install_gemc(geant4_version, gemc_version)
     commands += log_exporters()
     return commands
