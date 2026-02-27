@@ -117,7 +117,7 @@ function create_geo_dbs {
 }
 
 compile_gemc
-create_geo_dbs
+#create_geo_dbs
 
 log_gemc_info
 echo
