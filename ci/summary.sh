@@ -13,7 +13,7 @@ fi
 
 {
   printf '# GEMC Images — Overview\n'
-  printf 'Repository: [gemc images](https://github.com/gemc/clas12Tags/pkgs/container/src)\n'
+  printf 'Repository: [gemc images](https://github.com/gemc/clas12Tags/pkgs/container/clas12Tags)\n'
   printf 'Except for archlinux (amd64-only), all images are built for both the *amd64* and *arm64* architectures.\n'
   printf '\n'
   printf '\n'
