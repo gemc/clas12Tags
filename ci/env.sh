@@ -65,7 +65,7 @@ log_java_info() {
 	echo
 	echo "============= log_java_info ============"
 	echo
-	echo "Java path: $(which java)"
+	echo "Java path: $(command -v java)"
 	java -version
 	echo "JAVA_HOME=${JAVA_HOME:-<unset>}"
 	echo "Groovy:"
@@ -211,7 +211,7 @@ else
 	echo "Marking workspace as safe for Git"
 	git config --global --add safe.directory '*'
 	enable_git_describe
-	log_dir=/root/src/logs
+	log_dir=/root/clas12Tags/logs
 fi
 
 echo  "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
@@ -234,5 +234,5 @@ install_log=$log_dir/install.log
 gemc_install_show=$log_dir/show_install.log
 geo_log=$log_dir/geo.log
 
-touch $setup_log $compile_log $install_log $test_log
+touch $setup_log $compile_log $install_log $gemc_install_show $geo_log
 echo
