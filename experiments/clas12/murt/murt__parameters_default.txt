@@ -1,0 +1,44 @@
+mm_radius_layer1   		|  76.2  | mm  |  center radii of barrel MM 					| Sebastien Procureur   | sebastien.procureur@cea.fr | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12
+MURT_mothervol_InnerRadius 	|  75 | mm	 | Mother volume inner radius					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+MURT_mothervol_OutRadius 	|  240.000 | mm  | Mother volume outer radius 					| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+MURT_mothervol_HalfLength 	|  385.000 | mm  | Mother volume half length (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 09/08/2016
+MURT_endPCB_zpos			|  282.300 | mm  | Position of detector (PCB) downstream end 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 11/08/2016
+MURT_nlayer		 	|    6	   | na  | Number of layers     					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+MURT_ntile		 	|    3	   | na  | Number of tiles per layer     				| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+MURT_radius_layer1 		|  76.2    | mm  | Radius of the 1st layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_radius_layer2 		|  108     | mm  | Radius of the 2nd layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_radius_layer3 		|  139.8   | mm  | Radius of the 3rd layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_radius_layer4 		|  171.6   | mm  | Radius of the 4th layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_radius_layer5 		|  203.4   | mm  | Radius of the 5th layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_radius_layer6 		|  235.4   | mm  | Radius of the 6th layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_zpos_layer1 		| -134.070 | mm  | Position of the 1st layer (in z) (active zone only)		| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+MURT_zpos_layer2 		| -135.770 | mm  | Position of the 2nd layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+MURT_zpos_layer3 		| -156.690 | mm  | Position of the 3rd layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+MURT_zpos_layer4			| -156.230 | mm  | Position of the 4th layer (in z) 				| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+MURT_zpos_layer5 		| -177.600 | mm  | Position of the 5th layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+MURT_zpos_layer6 		| -177.550 | mm  | Position of the 6th layer (in z) 				| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+MURT_zlength_layer1		|  90.8116 | mm  | Length of the 1st layer (in z)   (active zone only)   	| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+MURT_zlength_layer2		|  128.709 | mm  | Length of the 2nd layer (in z) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_zlength_layer3		|  166.607 | mm  | Length of the 3rd layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+MURT_zlength_layer4		|  204.505 | mm  | Length of the 4th layer (in z) 				| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+MURT_zlength_layer5		|  242.403 | mm  | Length of the 5th layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+MURT_zlength_layer6		|  280.539 | mm  | Length of the 6th layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+MURT_theta_layer1		| -150.000 | deg | Starting angle of the 1st tile of 1st layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+MURT_theta_layer2		| -150.000 | deg | Starting angle of the 1st tile of 2nd layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+MURT_theta_layer3		| -150.000 | deg | Starting angle of the 1st tile of 3rd layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+MURT_theta_layer4		| -150.000 | deg | Starting angle of the 1st tile of 4th layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+MURT_theta_layer5		| -150.000 | deg | Starting angle of the 1st tile of 5th layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+MURT_theta_layer6		| -150.000 | deg | Starting angle of the 1st tile of 6th layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+MURT_Coverlay_width		|    0.050 | mm  | Coverlay width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_CuGround_width		|    0.012 | mm  | Copper (ground) width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_PCBGround_width		|    0.100 | mm  | PCB width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_CuStrips_width		|    0.012 | mm  | Cu Strips width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_KaptonStrips_width		|    0.075 | mm  | Kapton width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_ResistStrips_width		|    0.020 | mm  | Resist Strips width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_Gas1_width			|    0.128 | mm  | Gas1 width (radially) 					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+MURT_Mesh_width			|    0.018 | mm  | Mesh width (radially) 					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+MURT_Gas2_width			|    3.000 | mm  | Gas2 width (radially) 					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+MURT_DriftCuElectrode_width	|    0.005 | mm  | Drift Cu Electrode width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_DriftKapton_width		|    0.250 | mm  | Drift Kapton width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_DriftCuGround_width		|    0.005 | mm  | Drift Cu Ground width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+MURT_mothervol_zmax              |  290.300 | mm  | Mother volume zmax                                          | Michel Garcon         | michel.garcon@cea.fr        | - | - | - | 09/08/2016
