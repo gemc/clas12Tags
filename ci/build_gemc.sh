@@ -102,18 +102,18 @@ function create_geo_dbs {
 	echo "Creating all geometry databases with: create_geometry.sh"
 	echo START_CREATE_GEOMETRY $(date) | tee $geo_log
 	./create_geometry.sh | tee -a $geo_log
-	ls -lrt | tee -a $geo_log
 	if [ $? -ne 0 ]; then
 		echo "create_geometry failed. Log:"
 		cat $geo_log
 		exit 1
 	fi
+	ls -lrt | tee -a $geo_log
 
 	echo
 	echo "Changes after creation:"
 	echo END_CREATE_GEOMETRY $(date) | tee -a $geo_log
 	git branch
-	git        status -s | tee -a $geo_log
+	git status -s | tee -a $geo_log
 
 	echo Final experiments/clas12 content | tee -a $geo_log
 	ls -R experiments/clas12 | tee -a $geo_log
