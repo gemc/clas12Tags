@@ -224,6 +224,7 @@ export  GEMC_DATA_DIRC=${GEMC}
 export  PYTHONPATH=${PYTHONPATH}:${GEMC}/api
 export  PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
 export  PATH=${PATH}:${GEMC}/bin
+export  LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${GEMC}/lib
 
 # detect cores and cap at 16
 cores=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)

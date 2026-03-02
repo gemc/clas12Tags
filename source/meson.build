@@ -102,7 +102,7 @@ gemc = executable(
     'gemc',
     ['gemc.cc'],
     install : true,
-    dependencies : [qt6_deps, clhep_deps, geant4_deps, ogl_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep, xercesc_deps],
+    dependencies : [qt6_deps, clhep_deps, geant4_deps, ogl_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep, xercesc_deps, expat_dep],
     include_directories : all_includes,
     link_with : all_libs,
     override_options : ['b_pie=true'],
