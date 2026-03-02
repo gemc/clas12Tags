@@ -39,7 +39,7 @@ def docker_header(image: str, image_tag: str, geant4_tag: str) -> str:
 	if image == "almalinux":
 		commands += "ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk\n"
 		commands += 'ENV PATH="${JAVA_HOME}/bin:${PATH}"\n'
-		return commands
+	return commands
 
 
 def coatjava_deps(image: str) -> str:
