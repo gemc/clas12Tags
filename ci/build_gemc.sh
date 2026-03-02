@@ -91,6 +91,9 @@ function compile_gemc {
 		echo
 	fi
 	cd ..
+
+	# installing api into $GEMC
+	cp -r api $GEMC
 }
 
 function create_geo_dbs {

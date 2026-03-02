@@ -215,11 +215,12 @@ else
 fi
 
 echo  "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
-export  GEMC=$SIM_HOME/gemc/dev
-export  GEMC_DATA_DIRC=${GEMC}
-export  PYTHONPATH=${PYTHONPATH}:${GEMC}/api
-export  PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
-export  PATH=${PATH}:${GEMC}/bin
+export GEMC=$SIM_HOME/gemc/dev
+export GEMC_DATA_DIRC=${GEMC}
+export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
+export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
+export PATH=${PATH}:${GEMC}/bin
+export LD_LIBRARY_PATH=${PATH}:${GEMC}/lib
 export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 # detect cores and cap at 16
