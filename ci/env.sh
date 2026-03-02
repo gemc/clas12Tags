@@ -230,7 +230,7 @@ mkdir -p $log_dir
 setup_log=$log_dir/setup.log
 compile_log=$log_dir/build.log
 install_log=$log_dir/install.log
-gemc_install_show=$log_dir/gemc.log
+gemc_install_show=$log_dir/show_install.log
 geo_log=$log_dir/geo.log
 
 touch $setup_log $compile_log $install_log $test_log
