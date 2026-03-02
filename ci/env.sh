@@ -32,7 +32,7 @@ die_with_code()  {
 	fi
 
 	# If success, do nothing
-	((code == 0))  && return 0
+	((code == 0)) && return 0
 
 	# Error header
 	if [[ -n "$extra_msg" ]]; then
@@ -44,11 +44,11 @@ die_with_code()  {
 	# Dump log if provided
 	if [[ -n "$log_file" ]]; then
 		if [[ -r "$log_file" ]]; then
-			print  -u2 -- "----- BEGIN LOG: $log_file -----"
-			cat  -- "$log_file" >&2
-			print  -u2 -- "----- END LOG: $log_file -----"
+			print -u2 -- "----- BEGIN LOG: $log_file -----"
+			cat -- "$log_file" >&2
+			print -u2 -- "----- END LOG: $log_file -----"
 		else
-			print  -u2 -- "NOTE: log file not readable: $log_file"
+			print -u2 -- "NOTE: log file not readable: $log_file"
 		fi
 	fi
 
@@ -60,19 +60,17 @@ DetectorDirNotExisting() {
 	exit 3
 }
 
-log_gemc_info() {
+log_java_info() {
 	echo
 	echo
-	echo "========================================"
-	echo "============= log_gemc_info ============"
-	echo "========================================"
+	echo "============= log_java_info ============"
 	echo
-	echo " Java version:" $(java -version) $(which java)
-	echo  " JAVA_HOME=${JAVA_HOME:-<unset>}"
-	echo  " Groovy version: " $(groovy -version)
+	echo "Java path: $(which java)"
+	java -version
+	echo "JAVA_HOME=${JAVA_HOME:-<unset>}"
+	echo "Groovy:"
+	groovy -version
 	echo
-	echo "========================================"
-	echo "========================================"
 	echo "========================================"
 	echo
 	echo
@@ -163,7 +161,7 @@ variations_for_run_and_system()  {
 		echo "rgd_fall2023_CuSn"
 	elif [[ $1 == "18339" || $1 == "18369" || $1 == "18400" || $1 == "18440" || $1 == "18440" || $1 == "18440" ]]; then
 		echo "rgd_fall2023_CxC"
-	elif [[ $1 == "18305" || $1 == "18318" || $1 == "18419" || $1 == "18528" || $1 == "18644" || $1 == "18764" || $1 == "18851" || $1 == "19021"  ]]; then
+	elif [[ $1 == "18305" || $1 == "18318" || $1 == "18419" || $1 == "18528" || $1 == "18644" || $1 == "18764" || $1 == "18851" || $1 == "19021" ]]; then
 		echo "rgd_fall2023_lD2"
 	elif [[ $1 == "18316" || $1 == "18399" || $1 == "19060" ]]; then
 		echo "rgd_fall2023_empty"
@@ -200,8 +198,6 @@ variations_for_run_and_system()  {
 	fi
 }
 
-
-
 log_dir=$SIM_HOME/logs
 
 # if we are in the docker container, we need to load the modules
@@ -224,7 +220,7 @@ export  GEMC_DATA_DIRC=${GEMC}
 export  PYTHONPATH=${PYTHONPATH}:${GEMC}/api
 export  PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
 export  PATH=${PATH}:${GEMC}/bin
-export  LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${GEMC}/lib
+export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 # detect cores and cap at 16
 cores=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)

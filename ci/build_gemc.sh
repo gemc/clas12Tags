@@ -27,8 +27,9 @@ function show_gemc_installation {
 
 	echo " ldd of $GEMC/bin/gemc:" >>$gemc_install_show
 
-	echo "   Instrospection: $(gemc --version)"
-
+	echo
+	echo "Instrospection: Running GEMC"
+	echo $(gemc --version)
 
 	# if on unix, use ldd , if on mac, use otool -L
 	if [[ "$(uname)" == "Darwin" ]]; then
@@ -37,7 +38,8 @@ function show_gemc_installation {
 		ldd $GEMC/bin/gemc >>$gemc_install_show
 	fi
 
-	echo " > To check gemc installation:  cat $gemc_install_show"
+	echo
+	echo "  To check gemc installation:  cat $gemc_install_show"
 
 }
 
@@ -92,8 +94,6 @@ function compile_gemc {
 		echo " > Meson Install Successful"
 		echo
 	fi
-
-	show_gemc_installation
 }
 
 function create_geo_dbs {
@@ -123,9 +123,14 @@ function create_geo_dbs {
 }
 
 compile_gemc
-#create_geo_dbs
 
-log_gemc_info
+# log info
+show_gemc_installation
+log_java_info
+
+# create geometry
+create_geo_dbs
+
 echo
 echo "Content of $GEMC after geo creation:"
 ls -lrt $GEMC
@@ -134,7 +139,7 @@ echo "Content of artifacts dir $ARTIFACT_DIR:"
 ls -lrt $ARTIFACT_DIR
 echo
 # copying executable, api and sqlite database for artifact retrieval
-echo "Copying executable, experiments, api, sqlite database and mlibrary for artifact retrieval"
+echo "Copying executable, experiments, api, sqlite database for artifact retrieval"
 mkdir -p $ARTIFACT_DIR/bin
 cp $GEMC/bin/gemc $ARTIFACT_DIR/bin
 cp -r experiments $ARTIFACT_DIR
