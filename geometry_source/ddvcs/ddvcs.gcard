@@ -6,6 +6,7 @@
 	<detector name="experiments/clas12/ddvcs/ddvcs"     factory="TEXT" variation="newScattChamber"/>
 <!--	<detector name="experiments/clas12/ddvcs/cad/"    factory="CAD"/>-->
 	<detector name="experiments/clas12/muvt/muvt"                 factory="TEXT" variation="default"/>
+	<detector name="experiments/clas12/murt/murt"                 factory="TEXT" variation="default"/>
         <detector name="experiments/clas12/ddvcs/ddvcsts"   factory="TEXT" variation="torusShield"/>
         <detector name="experiments/clas12/ddvcs/fluxDets"    factory="TEXT" variation="ddvcs"/>
 
@@ -23,7 +24,6 @@
 	<detector name="experiments/clas12/ftof/ftof"                 factory="TEXT" variation="rga_spring2018"/>
 	<detector name="experiments/clas12/ec/ec"                     factory="TEXT" variation="rga_spring2018"/>
 	<detector name="experiments/clas12/pcal/pcal"                 factory="TEXT" variation="rga_spring2018"/>
-
 
 
 	<!-- you can scale the fields here. Remember torus -1 means e- INBENDING  -->
