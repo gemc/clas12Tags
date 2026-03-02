@@ -208,9 +208,11 @@ HipoSchema::HipoSchema() {
     schemasToLoad["RTPC::pos"] = rtpcPOSSchema;
     schemasToLoad["HEL::flip"] = helFLIPSchema;
     schemasToLoad["RASTER::adc"] = rasterADCSchema;
-   // schemasToLoad["URWELL::adc"] = urwellADCSchema;
     schemasToLoad["URWT::adc"] = urwtADCSchema;
     schemasToLoad["MUVT::adc"] = muvtADCSchema;
+    schemasToLoad["MUCAL::adc"] = mucalADCSchema;
+    schemasToLoad["MURT::adc"] = murtADCSchema;
+    schemasToLoad["MURH::adc"] = murhADCSchema;
     schemasToLoad["RECOIL::adc"]  = recoilADCSchema;
 
     cout << " Done defining Hipo4 schemas." << endl;
@@ -256,7 +258,7 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
             return false;
         }
     } else if (type == 1) { // non tdc detectors
-        if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "recoil" || schemaName == "flux") {
+        if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "murt"|| schemaName == "murh"|| schemaName == "recoil" || schemaName == "flux") {
             return false;
         }
     } else if (type == 2) { // non wf detectors
