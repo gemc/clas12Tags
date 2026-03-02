@@ -123,15 +123,23 @@ def additional_software(image: str) -> str:
         )
 
     if image == "almalinux":
-        return (
-            "\n# Additional software: Java 21 + git-lfs\n"
-            "RUN set -euo pipefail \\\n"
-            " && dnf -y install java-21-openjdk-devel \\\n"
-            " && (dnf -y install git-lfs || (dnf -y install epel-release && dnf -y install git-lfs)) \\\n"
-            " && git lfs install --system \\\n"
-            " && dnf -y clean all \\\n"
-            " && rm -rf /var/cache/dnf\n"
-        )
+	    return (
+		    "\n# Additional software: Java 21 + git-lfs\n"
+		    "RUN set -euo pipefail \\\n"
+		    " && dnf -y install java-21-openjdk-devel \\\n"
+		    " && (dnf -y install git-lfs || (dnf -y install epel-release && dnf -y install git-lfs)) \\\n"
+		    " && git lfs install --system \\\n"
+		    " && JAVA21_BIN=$(rpm -ql java-21-openjdk-headless | grep -E '/bin/java$' | head -n 1) \\\n"
+		    " && if alternatives --display java >/dev/null 2>&1; then \\\n"
+		    "      alternatives --set java \"${JAVA21_BIN}\"; \\\n"
+		    "    else \\\n"
+		    "      alternatives --install /usr/bin/java java \"${JAVA21_BIN}\" 21000; \\\n"
+		    "    fi \\\n"
+		    " && echo \"export JAVA_HOME=$(dirname $(dirname ${JAVA21_BIN}))\" > /etc/profile.d/java.sh \\\n"
+		    " && echo 'export PATH=\"$JAVA_HOME/bin:$PATH\"' >> /etc/profile.d/java.sh \\\n"
+		    " && dnf -y clean all \\\n"
+		    " && rm -rf /var/cache/dnf\n"
+	    )
 
     if image == "archlinux":
         return (
