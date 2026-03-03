@@ -11,6 +11,8 @@ use bank;
 use math;
 use materials;
 use Math::Trig;
+use POSIX;
+use File::Copy;
 use lib ("../");
 use clas12_configuration_string;
 
@@ -113,7 +115,6 @@ foreach my $variation (@variations) {
 
 
 # Handling directory changes
-use File::Copy;
 use File::Path qw(make_path remove_tree);
 
 # Use glob to expand javacad* into actual paths

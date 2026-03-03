@@ -131,6 +131,9 @@ log_java_info
 # create geometry
 create_geo_dbs
 
+# install magnetic fields
+ci/install_fields.zsh
+
 echo
 echo "Content of $GEMC after geo creation:"
 ls -lrt $GEMC

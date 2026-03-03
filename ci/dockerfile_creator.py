@@ -59,7 +59,7 @@ def coatjava_deps(image: str) -> str:
 	if image in ("fedora", "almalinux"):
 		pkg_install = (
 			"dnf -y install --allowerasing "
-			"maven jq perl-DBI perl-DBD-SQLite perl-XML-LibXML curl unzip"
+			"maven jq perl perl-DBI perl-DBD-SQLite perl-XML-LibXML curl unzip"
 		)
 		pkg_clean = (
 			"dnf -y clean all && rm -rf /var/cache/dnf"

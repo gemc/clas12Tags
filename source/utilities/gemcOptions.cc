@@ -153,13 +153,6 @@ void goptions::print_version() {
     } else {
         cout << "  > GEMC_DATA_DIR: not set" << endl;
     }
-    // print env variables G4DATA_DIR, G4_VERSION, G4INSTALL
-    char *g4data_dir = getenv("G4DATA_DIR");
-    if(g4data_dir) {
-        cout << "  > G4DATA_DIR: " << g4data_dir << endl;
-    } else {
-        cout << "  > G4DATA_DIR: not set" << endl;
-    }
     char *g4_version = getenv("G4_VERSION");
     if(g4_version) {
         cout << "  > G4_VERSION: " << g4_version << endl;
