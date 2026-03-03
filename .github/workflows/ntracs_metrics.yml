@@ -8,7 +8,7 @@ on:
   pull_request:
   merge_group:
   push:
-    branches: [ main, meson ]
+    branches: [ main ]
     tags: [ '*' ]
     paths-ignore:
       - "**/*.md"
