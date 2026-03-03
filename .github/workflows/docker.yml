@@ -13,11 +13,16 @@ concurrency:
   group: gemc-images-${{ github.ref }}
   cancel-in-progress: true
 
+# Triggers the workflow on all pushes to main and all pull requests
 on:
+  pull_request:
+  merge_group:
   push:
-    branches: [ meson ]  # publish on main updates
-    tags: [ '*' ]        # also publish on version tags
-  pull_request:          # PRs: build only (no push)
+    branches: [ main, meson ]
+    tags: [ '*' ]
+    paths-ignore:
+      - "**/*.md"
+      - "release_notes/**"
 
 jobs:
   overview:

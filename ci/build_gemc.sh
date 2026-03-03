@@ -134,17 +134,14 @@ create_geo_dbs
 # install magnetic fields
 ci/install_fields.zsh
 
+
 echo
-echo "Content of $GEMC after geo creation:"
-ls -lrt $GEMC
-echo
-echo "Content of artifacts dir $ARTIFACT_DIR:"
-ls -lrt $ARTIFACT_DIR
-echo
-# copying executable, api and sqlite database for artifact retrieval
 echo "Copying executable, experiments, api, sqlite database for artifact retrieval"
 mkdir -p $ARTIFACT_DIR/bin
 cp $GEMC/bin/gemc $ARTIFACT_DIR/bin
 cp -r experiments $ARTIFACT_DIR
 cp -r api $ARTIFACT_DIR
 cp clas12.sqlite $ARTIFACT_DIR
+echo
+echo "Content of artifacts dir $ARTIFACT_DIR:"
+ls -lrt $ARTIFACT_DIR
