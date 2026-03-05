@@ -302,9 +302,9 @@ void urwt_HitProcess::initWithRunNumber(int runno)
   {
 
     cout << " > Initializing " << HCname
-         << " run=" << urwtC.runNo
-         << " variation=" << urwtC.digiVariation
-         << " timestamp=" << urwtC.digiSnapshotTime
+         << " run=" << runno
+         << " variation=" << var
+         << " timestamp=" << ts
          << endl;
 
     urwtC = initializeurwtConstants(runno, var, ts, accountForHardwareStatus);
@@ -317,4 +317,4 @@ void urwt_HitProcess::initWithRunNumber(int runno)
 }
 
 // this static function will be loaded first thing by the executable
-StripConstants urwt_HitProcess::urwtC = initializeurwtConstants(-1);
+StripConstants urwt_HitProcess::urwtC = initializeurwtConstants(1);

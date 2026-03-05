@@ -260,7 +260,7 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
     } else if (type == 1) { // non tdc detectors
         if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || 
             schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "murt"|| schemaName == "murh"|| 
-            schemaName == "muecal"|| schemaName == "murh"|| schemaName == "recoil" || schemaName == "flux") {
+            schemaName == "mucal"|| schemaName == "murh"|| schemaName == "recoil" || schemaName == "flux") {
             return false;
         }
     } else if (type == 2) { // non wf detectors
