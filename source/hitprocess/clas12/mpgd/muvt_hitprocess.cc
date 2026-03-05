@@ -107,7 +107,7 @@ map<string, double> muvt_HitProcess::integrateDgt(MHit *aHit, int hitn)
 
   dgtz["hitn"] = hitn;
   dgtz["sector"] = identity[1].id;
-  dgtz["layer"] = identity[2].id;
+  dgtz["layer"] = (identity[0].id-1)*2 + identity[2].id;
   dgtz["component"] = identity[3].id;
 
   // No sentinel IDs: every entry corresponds to a real strip
