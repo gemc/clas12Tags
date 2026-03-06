@@ -1,287 +1,321 @@
-##########################################################
-# CMake configuration for Gemc                           #
-#                                                        #
-# @author Maurik Holtrop, University of New Hampshire    #
-#                                                        #
-##########################################################
+cmake_minimum_required(VERSION 4.1)
+project(source)
 
-# minimum version of CMake, which is determined by Geant4's requirements
-cmake_minimum_required(VERSION 3.12)
-cmake_policy(VERSION 3.12)
-if(${CMAKE_VERSION} VERSION_GREATER "3.17.0")
-	cmake_policy(SET CMP0100 OLD) # Do not process *.hh files with moc, uic
-endif()
+set(CMAKE_CXX_STANDARD 14)
 
-project(GEMC VERSION 2.8)
+include_directories(detector)
+include_directories(fields)
+include_directories(generator)
+include_directories(gui/src)
+include_directories(gui/src/docs)
+include_directories(gui/src/images)
+include_directories(gui/src/runControl)
+include_directories(hitprocess)
+include_directories(hitprocess/bdx)
+include_directories(hitprocess/clas12)
+include_directories(hitprocess/clas12/alert)
+include_directories(hitprocess/clas12/micromegas)
+include_directories(hitprocess/clas12/mpgd)
+include_directories(hitprocess/clas12/recoil)
+include_directories(hitprocess/clas12/svt)
+include_directories(hitprocess/eic)
+include_directories(hitprocess/GlueX)
+include_directories(hitprocess/HPS)
+include_directories(hitprocess/injector)
+include_directories(materials)
+include_directories(mirrors)
+include_directories(output)
+include_directories(parameters)
+include_directories(physics)
+include_directories(sensitivity)
+include_directories(src)
+include_directories(utilities)
 
-if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9.3)
-	message(STATUS "*************************************************************************************************************")
-	message(STATUS "* ERROR:: Please use a later version of GCC.                                                                *")
-	message(STATUS "* Your version of ${CMAKE_CXX_COMPILER_VERSION} will not compile GEANT4 code.                                                       *")
-	message(STATUS "* Erase the current cache (just do rm -rf * :-) then rerun cmake adding the arguments:                      *")
-	message(STATUS "*   -DCMAKE_C_COMPILER=/apps/gcc/9.2.0/bin/gcc -DCMAKE_CXX_COMPILER=/apps/gcc/9.2.0/bin/g++                 *")
-	message(STATUS "*************************************************************************************************************")
-	message(FATAL_ERROR "Compiler level too low.")
-endif()
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-message(STATUS "COMPILERS Used:")
-message(STATUS "CC = ${CMAKE_C_COMPILER}")
-message(STATUS "CXX= ${CMAKE_CXX_COMPILER}")
-message(STATUS "CMAKE_SHARED_LIBRARY_SUFFIX=${CMAKE_SHARED_LIBRARY_SUFFIX}")
-
-if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-	message(STATUS  "GEMC requires an out-of-source build.")
-	message(STATUS "Please remove these files from ${CMAKE_BINARY_DIR} first:")
-	message(STATUS "CMakeCache.txt")
-	message(STATUS "CMakeFiles")
-	message(STATUS "Once these files are removed, create a separate directory, eg mkdir build")
-	message(STATUS "and run CMake from there")
-	message(FATAL_ERROR "in-source build detected")
-endif()
-
-
-if(APPLE)
-    # use, i.e. don't skip the full RPATH for the build tree
-    set(CMAKE_SKIP_BUILD_RPATH  FALSE)
-
-    # when building, don't use the install RPATH already
-    # (but later on when installing)
-    set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-
-    set(CMAKE_INSTALL_RPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-
-    # add the automatically determined parts of the RPATH
-    # which point to directories outside the build tree to the install RPATH
-    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
-
-    # the RPATH to be used when installing, but only if it's not a system directory
-    list(FIND CMAKE_PLATFORM_IMPLICIT_LINK_DIRECTORIES "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" isSystemDir)
-    IF("${isSystemDir}" STREQUAL "-1")
-        set(CMAKE_INSTALL_RPATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-	ENDIF("${isSystemDir}" STREQUAL "-1")
-endif(APPLE)
-
-# include CMake macros
-include(ExternalProject)
-include(FindPackageHandleStandardArgs)
-
-# add path containing CMake macros for this project
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-
-# external dependencies are added as dependencies of this target
-add_custom_target(dependencies)
-
-include(Geant4)
-include(Qt5)
-# include(XercesC)
-include(ccdb)
-include(eviocxx)
-include(mlibrary)
-include(hipo4)
-
-if(DEPENDENCIES_RERUN_CMAKE)
-	add_custom_target(build_ext_deps DEPENDS Geant4 ccdb evioxx hipo4)
-	message(STATUS "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-	message(STATUS "+ One or more of the dependency packages was not found.  +")
-	message(STATUS "+ Run: make                                              +")
-	message(STATUS "+ Then run cmake again                                   +")
-	message(STATUS "+ Then finally run make once more to complete the build. +")
-	message(STATUS "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-else()
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_AUTORCC ON)
-	set(CMAKE_AUTOUIC ON)
-
-	add_definitions(${Geant4_DEFINITIONS})
-	
-	include_directories(
-			${Qt5Xml_INCLUDE_DIRS}
-			${Qt5Widgets_INCLUDE_DIRS}
-			${Qt5Sql_INCLUDE_DIRS}
-			${Geant4_INCLUDE_DIRS}
-			)
-
-	set(GEMC_ALL_LIBRARIES
-		${Qt5Xml_LIBRARIES}
-		${Qt5Widgets_LIBRARIES}
-		${Qt5Sql_LIBRARIES}
-		${Geant4_LIBRARIES}
-		)
-
-	set(GEMC_ALL_TARGETS
-		ccdb
-		eviocxx
-		mlibrary
-		hipo4
-		)
-
-	set(materials_sources
-		materials/material_factory.cc
-		materials/cpp_materials.cc
-		materials/mysql_materials.cc
-		materials/text_materials.cc)
-	include_directories(materials)
-	set(GEMC_ALL_SOURCES ${materials_sources})
-
-	set(mirrors_sources
-		mirrors/mirrors_factory.cc
-		mirrors/mysql_mirrors.cc
-		mirrors/text_mirrors.cc)
-	include_directories(mirrors)
-	list(APPEND GEMC_ALL_SOURCES ${mirrors_sources})
-
-	set(parameters_sources
-		parameters/parameter_factory.cc
-		parameters/mysql_parameters.cc
-		parameters/text_parameters.cc)
-	include_directories(parameters)
-	list(APPEND GEMC_ALL_SOURCES ${parameters_sources})
-
-	set(utilities_sources
-		utilities/string_utilities.cc
-		utilities/gemcUtils.cc
-		utilities/lStdHep.cc
-		utilities/lXDR.cc
-		utilities/gemcOptions.cc)
-	include_directories(utilities)
-	list(APPEND GEMC_ALL_SOURCES ${utilities_sources})
-
-	# Do not process these files with moc, setting this avoids the policy warning.
-	set_property(SOURCE "utilities/lStdHep.hh" PROPERTY SKIP_AUTOMOC ON)
-	set_property(SOURCE "utilities/lXDR.hh" PROPERTY SKIP_AUTOMOC ON)
-
-	set(detector_sources
-		detector/detector.cc
-		detector/detector_factory.cc
-		detector/mysql_det_factory.cc
-		detector/gdml_det_factory.cc
-		detector/cad_det_factory.cc
-		detector/clara_det_factory.cc
-		detector/text_det_factory.cc)
-	include_directories(detector)
-	list(APPEND GEMC_ALL_SOURCES ${detector_sources})
-
-
-	set(sensitivity_sources
-		sensitivity/sensitiveDetector.cc
-		sensitivity/identifier.cc
-		sensitivity/Hit.cc
-		sensitivity/backgroundHits.cc
-		sensitivity/HitProcess.cc
-		sensitivity/sensitiveID.cc)
-	include_directories(sensitivity)
-	list(APPEND GEMC_ALL_SOURCES ${sensitivity_sources})
-
-	set(physics_sources
-		physics/PhysicsList.cc
-		physics/GammaNuclearPhysics.cc
-		physics/PhysicsListMessenger.cc)
-	include_directories(physics)
-	list(APPEND GEMC_ALL_SOURCES ${physics_sources})
-
-	set(fields_sources
-		fields/field.cc
-		fields/fieldFactory.cc
-		fields/asciiField.cc
-		fields/mappedField.cc
-		fields/multipoleField.cc
-		fields/symmetries/dipole.cc
-		fields/symmetries/cylindrical.cc
-		fields/symmetries/phi-segmented.cc
-		fields/symmetries/cartesian_3d.cc)
-	include_directories(fields)
-	list(APPEND GEMC_ALL_SOURCES ${fields_sources})
-
-	set(hitprocess_sources
-		hitprocess/HitProcess_MapRegister.cc
-		hitprocess/flux_hitprocess.cc
-		hitprocess/mirror_hitprocess.cc
-		hitprocess/counter_hitprocess.cc
-		hitprocess/clas12/micromegas/Lorentz.cc
-		hitprocess/clas12/micromegas/FMT_hitprocess.cc
-		hitprocess/clas12/micromegas/fmt_strip.cc
-		hitprocess/clas12/micromegas/BMT_hitprocess.cc
-		hitprocess/clas12/micromegas/bmt_strip.cc
-		hitprocess/clas12/micromegas/ftm_hitprocess.cc
-		hitprocess/clas12/micromegas/ftm_strip.cc
-		hitprocess/clas12/rtpc_hitprocess.cc
-		hitprocess/clas12/svt/bst_hitprocess.cc
-		hitprocess/clas12/svt/bst_strip.cc
-		hitprocess/clas12/alert/myatof_hitprocess.cc
-		hitprocess/clas12/alert/ahdc_hitprocess.cc
-		hitprocess/clas12/ctof_hitprocess.cc
-		hitprocess/clas12/cnd_hitprocess.cc
-		hitprocess/clas12/dc_hitprocess.cc
-		hitprocess/clas12/ecal_hitprocess.cc
-		hitprocess/clas12/ftof_hitprocess.cc
-		hitprocess/clas12/ft_cal_hitprocess.cc
-		hitprocess/clas12/ft_hodo_hitprocess.cc
-		hitprocess/clas12/htcc_hitprocess.cc
-		hitprocess/clas12/ltcc_hitprocess.cc
-		hitprocess/clas12/rich_hitprocess.cc
-		hitprocess/bdx/cormo_hitprocess.cc
-		hitprocess/bdx/veto_hitprocess.cc
-		hitprocess/bdx/crs_hitprocess.cc
-		hitprocess/eic/eic_compton_hitprocess.cc
-		hitprocess/eic/eic_dirc_hitprocess.cc
-		hitprocess/eic/eic_ec_hitprocess.cc
-		hitprocess/eic/eic_preshower_hitprocess.cc
-		hitprocess/eic/eic_rich_hitprocess.cc
-		hitprocess/injector/bubble_hitprocess.cc
-		hitprocess/HPS/ECAL_hitprocess.cc
-		hitprocess/HPS/SVT_hitprocess.cc
-		hitprocess/HPS/muon_hodo_hitprocess.cc)
-	include_directories(hitprocess)
-	list(APPEND GEMC_ALL_SOURCES ${hitprocess_sources})
-
-	set(output_sources
-		output/outputFactory.cc
-		output/evio_output.cc
-		output/hipo_output.cc
-		output/hipoSchemas.cc
-		output/txt_output.cc
-		output/txt_simple_output.cc
-		output/gbank.cc)
-	include_directories(output)
-	list(APPEND GEMC_ALL_SOURCES ${output_sources})
-
-	set(gui_sources
-		gui/src/gemc_MainGui.cc
-		gui/src/detector_editor.cc
-		gui/src/runControl/run_control.cc
-		gui/src/runControl/primaryTab.cc
-		gui/src/runControl/momControls.cc
-		gui/src/runControl/vtxControls.cc
-		gui/src/camera_control.cc
-		gui/src/detector_tree.cc
-		gui/src/infos.cc
-		gui/src/g4dialog.cc
-		gui/src/gsignal.cc
-		gui/src/physicsListGui.cc
-		gui/src//gtrigger.cc
-		utilities/graph.cc)
-	include_directories(gui/src)
-	list(APPEND GEMC_ALL_SOURCES ${gui_sources})
-
-	set(gemc_sources
-		gemc.cc
-		src/dmesg_init.cc
-		src/run_conditions.cc
-		src/gemc_options.cc
-		src/MDetectorConstruction.cc
-		src/MEventAction.cc
-		src/MPrimaryGeneratorAction.cc
-		src/ActionInitialization.cc
-		src/MSteppingAction.cc)
-	include_directories(src)
-	list(APPEND GEMC_ALL_SOURCES ${gemc_sources})
-
-	add_executable(gemc ${GEMC_ALL_SOURCES})
-	add_dependencies(gemc dependencies)
-	target_link_libraries(gemc ${GEMC_ALL_TARGETS} ${GEMC_ALL_LIBRARIES})
-
-	install(TARGETS gemc )
-endif()
+add_executable(source
+        detector/cad_det_factory.cc
+        detector/cad_det_factory.h
+        detector/clara_det_factory.cc
+        detector/clara_det_factory.h
+        detector/detector.cc
+        detector/detector.h
+        detector/detector_factory.cc
+        detector/detector_factory.h
+        detector/gdml_det_factory.cc
+        detector/gdml_det_factory.h
+        detector/mysql_det_factory.cc
+        detector/mysql_det_factory.h
+        detector/sqlite_cad_factory.cc
+        detector/sqlite_cad_factory.h
+        detector/sqlite_det_factory.cc
+        detector/sqlite_det_factory.h
+        detector/text_det_factory.cc
+        detector/text_det_factory.h
+        fields/symmetries/cartesian_3d.cc
+        fields/symmetries/cylindrical.cc
+        fields/symmetries/dipole.cc
+        fields/symmetries/phi-segmented.cc
+        fields/asciiField.cc
+        fields/asciiField.h
+        fields/bclas12MappedField.cc
+        fields/bclas12MappedField.h
+        fields/clas12BinField.cc
+        fields/clas12BinField.h
+        fields/field.cc
+        fields/field.h
+        fields/fieldFactory.cc
+        fields/fieldFactory.h
+        fields/mappedField.cc
+        fields/mappedField.h
+        fields/multipoleField.cc
+        fields/multipoleField.h
+        generator/particle.cc
+        generator/particle.h
+        gui/src/docs/about.h
+        gui/src/docs/lund.h
+        gui/src/docs/particles_color.h
+        gui/src/images/aboutControl_xpm.h
+        gui/src/images/cameraControl_xpm.h
+        gui/src/images/detectorControl_xpm.h
+        gui/src/images/dialogControl_xpm.h
+        gui/src/images/g4Box_xpm.h
+        gui/src/images/g4BREPSolidPCone_xpm.h
+        gui/src/images/g4Cons_xpm.h
+        gui/src/images/g4Copy_xpm.h
+        gui/src/images/g4EllipticalTube_xpm.h
+        gui/src/images/g4Operation_xpm.h
+        gui/src/images/g4Sphere_xpm.h
+        gui/src/images/g4Torus_xpm.h
+        gui/src/images/g4Trap_xpm.h
+        gui/src/images/g4Trd_xpm.h
+        gui/src/images/g4Tubs_xpm.h
+        gui/src/images/generatorControl_xpm.h
+        gui/src/images/physicsControl_xpm.h
+        gui/src/images/signalsControl_xpm.h
+        gui/src/images/trigger_xpm.h
+        gui/src/runControl/moc_momControls.cc
+        gui/src/runControl/moc_primaryTab.cc
+        gui/src/runControl/moc_run_control.cc
+        gui/src/runControl/moc_vtxControls.cc
+        gui/src/runControl/momControls.cc
+        gui/src/runControl/momControls.h
+        gui/src/runControl/primaryTab.cc
+        gui/src/runControl/primaryTab.h
+        gui/src/runControl/run_control.cc
+        gui/src/runControl/run_control.h
+        gui/src/runControl/vtxControls.cc
+        gui/src/runControl/vtxControls.h
+        gui/src/camera_control.cc
+        gui/src/camera_control.h
+        gui/src/detector_editor.cc
+        gui/src/detector_editor.h
+        gui/src/detector_tree.cc
+        gui/src/detector_tree.h
+        gui/src/g4dialog.cc
+        gui/src/g4dialog.h
+        gui/src/gemc_MainGui.cc
+        gui/src/gemc_MainGui.h
+        gui/src/gsignal.cc
+        gui/src/gsignal.h
+        gui/src/gtrigger.cc
+        gui/src/gtrigger.h
+        gui/src/infos.cc
+        gui/src/infos.h
+        gui/src/moc_camera_control.cc
+        gui/src/moc_detector_editor.cc
+        gui/src/moc_detector_tree.cc
+        gui/src/moc_g4dialog.cc
+        gui/src/moc_gemc_MainGui.cc
+        gui/src/moc_gsignal.cc
+        gui/src/moc_gtrigger.cc
+        gui/src/moc_infos.cc
+        gui/src/moc_physicsListGui.cc
+        gui/src/physicsListGui.cc
+        gui/src/physicsListGui.h
+        hitprocess/bdx/cormo_hitprocess.cc
+        hitprocess/bdx/cormo_hitprocess.h
+        hitprocess/bdx/crs_hitprocess.cc
+        hitprocess/bdx/crs_hitprocess.h
+        hitprocess/bdx/veto_hitprocess.cc
+        hitprocess/bdx/veto_hitprocess.h
+        hitprocess/clas12/alert/ahdc_hitprocess.cc
+        hitprocess/clas12/alert/ahdc_hitprocess.h
+        hitprocess/clas12/alert/alertshell_hitprocess.cc
+        hitprocess/clas12/alert/alertshell_hitprocess.h
+        hitprocess/clas12/alert/atof_hitprocess.cc
+        hitprocess/clas12/alert/atof_hitprocess.h
+        hitprocess/clas12/micromegas/BMT_hitprocess.cc
+        hitprocess/clas12/micromegas/BMT_hitprocess.h
+        hitprocess/clas12/micromegas/bmt_strip.cc
+        hitprocess/clas12/micromegas/bmt_strip.h
+        hitprocess/clas12/micromegas/example.cc
+        hitprocess/clas12/micromegas/FMT_hitprocess.cc
+        hitprocess/clas12/micromegas/FMT_hitprocess.h
+        hitprocess/clas12/micromegas/fmt_strip.cc
+        hitprocess/clas12/micromegas/fmt_strip.h
+        hitprocess/clas12/micromegas/ftm_hitprocess.cc
+        hitprocess/clas12/micromegas/ftm_hitprocess.h
+        hitprocess/clas12/micromegas/ftm_strip.cc
+        hitprocess/clas12/micromegas/ftm_strip.h
+        hitprocess/clas12/micromegas/Lorentz.cc
+        hitprocess/clas12/micromegas/Lorentz.h
+        hitprocess/clas12/mpgd/muvt_hitprocess.cc
+        hitprocess/clas12/mpgd/muvt_hitprocess.h
+        hitprocess/clas12/mpgd/StripConstants.h
+        hitprocess/clas12/mpgd/StripDigitizer.cc
+        hitprocess/clas12/mpgd/StripDigitizer.h
+        hitprocess/clas12/mpgd/urwt_hitprocess.cc
+        hitprocess/clas12/mpgd/urwt_hitprocess.h
+        hitprocess/clas12/recoil/recoil_hitprocess.cc
+        hitprocess/clas12/recoil/recoil_hitprocess.h
+        hitprocess/clas12/recoil/recoil_strip.cc
+        hitprocess/clas12/recoil/recoil_strip.h
+        hitprocess/clas12/svt/bst_hitprocess.cc
+        hitprocess/clas12/svt/bst_hitprocess.h
+        hitprocess/clas12/svt/bst_strip.cc
+        hitprocess/clas12/svt/bst_strip.h
+        hitprocess/clas12/svt/example.cc
+        hitprocess/clas12/band_hitprocess.cc
+        hitprocess/clas12/band_hitprocess.h
+        hitprocess/clas12/cnd_hitprocess.cc
+        hitprocess/clas12/cnd_hitprocess.h
+        hitprocess/clas12/ctof_hitprocess.cc
+        hitprocess/clas12/ctof_hitprocess.h
+        hitprocess/clas12/dc_hitprocess.cc
+        hitprocess/clas12/dc_hitprocess.h
+        hitprocess/clas12/ecal_hitprocess.cc
+        hitprocess/clas12/ecal_hitprocess.h
+        hitprocess/clas12/ecal_hitprocess_rr.cc
+        hitprocess/clas12/ecal_hitprocess_rr.h
+        hitprocess/clas12/ft_cal_hitprocess.cc
+        hitprocess/clas12/ft_cal_hitprocess.h
+        hitprocess/clas12/ft_hodo_hitprocess.cc
+        hitprocess/clas12/ft_hodo_hitprocess.h
+        hitprocess/clas12/ftof_hitprocess.cc
+        hitprocess/clas12/ftof_hitprocess.h
+        hitprocess/clas12/htcc_hitprocess.cc
+        hitprocess/clas12/htcc_hitprocess.h
+        hitprocess/clas12/IC_hitprocess.cc
+        hitprocess/clas12/IC_hitprocess.h
+        hitprocess/clas12/ltcc_hitprocess.cc
+        hitprocess/clas12/ltcc_hitprocess.h
+        hitprocess/clas12/rich_hitprocess.cc
+        hitprocess/clas12/rich_hitprocess.h
+        hitprocess/clas12/rtpc_hitprocess.cc
+        hitprocess/clas12/rtpc_hitprocess.h
+        hitprocess/eic/eic_compton_hitprocess.cc
+        hitprocess/eic/eic_compton_hitprocess.h
+        hitprocess/eic/eic_dirc_hitprocess.cc
+        hitprocess/eic/eic_dirc_hitprocess.h
+        hitprocess/eic/eic_ec_hitprocess.cc
+        hitprocess/eic/eic_ec_hitprocess.h
+        hitprocess/eic/eic_preshower_hitprocess.cc
+        hitprocess/eic/eic_preshower_hitprocess.h
+        hitprocess/eic/eic_rich_hitprocess.cc
+        hitprocess/eic/eic_rich_hitprocess.h
+        hitprocess/GlueX/CVRT_hitprocess.cc
+        hitprocess/GlueX/CVRT_hitprocess.h
+        hitprocess/HPS/ECAL_hitprocess.cc
+        hitprocess/HPS/ECAL_hitprocess.h
+        hitprocess/HPS/muon_hodo_hitprocess.cc
+        hitprocess/HPS/muon_hodo_hitprocess.h
+        hitprocess/HPS/SVT_hitprocess.cc
+        hitprocess/HPS/SVT_hitprocess.h
+        hitprocess/injector/bubble_hitprocess.cc
+        hitprocess/injector/bubble_hitprocess.h
+        hitprocess/counter_hitprocess.cc
+        hitprocess/counter_hitprocess.h
+        hitprocess/flux_hitprocess.cc
+        hitprocess/flux_hitprocess.h
+        hitprocess/HitProcess_MapRegister.cc
+        hitprocess/HitProcess_MapRegister.h
+        hitprocess/mirror_hitprocess.cc
+        hitprocess/mirror_hitprocess.h
+        materials/cpp_materials.cc
+        materials/cpp_materials.h
+        materials/material_factory.cc
+        materials/material_factory.h
+        materials/mysql_materials.cc
+        materials/mysql_materials.h
+        materials/sqlite_materials.cc
+        materials/sqlite_materials.h
+        materials/text_materials.cc
+        materials/text_materials.h
+        mirrors/mirrors_factory.cc
+        mirrors/mirrors_factory.h
+        mirrors/mysql_mirrors.cc
+        mirrors/mysql_mirrors.h
+        mirrors/sqlite_mirrors.cc
+        mirrors/sqlite_mirrors.h
+        mirrors/text_mirrors.cc
+        mirrors/text_mirrors.h
+        output/evio_output.cc
+        output/evio_output.h
+        output/gbank.cc
+        output/gbank.h
+        output/hipo_output.cc
+        output/hipo_output.h
+        output/hipoSchemas.cc
+        output/hipoSchemas.h
+        output/outputFactory.cc
+        output/outputFactory.h
+        output/txt_output.cc
+        output/txt_output.h
+        output/txt_simple_output.cc
+        output/txt_simple_output.h
+        parameters/mysql_parameters.cc
+        parameters/mysql_parameters.h
+        parameters/parameter_factory.cc
+        parameters/parameter_factory.h
+        parameters/text_parameters.cc
+        parameters/text_parameters.h
+        physics/GammaNuclearPhysics.cc
+        physics/GammaNuclearPhysics.h
+        physics/PhysicsList.cc
+        physics/PhysicsList.h
+        physics/PhysicsListMessenger.cc
+        physics/PhysicsListMessenger.h
+        sensitivity/backgroundHits.cc
+        sensitivity/backgroundHits.h
+        sensitivity/Hit.cc
+        sensitivity/Hit.h
+        sensitivity/HitProcess.cc
+        sensitivity/HitProcess.h
+        sensitivity/identifier.cc
+        sensitivity/identifier.h
+        sensitivity/sensitiveDetector.cc
+        sensitivity/sensitiveDetector.h
+        sensitivity/sensitiveID.cc
+        sensitivity/sensitiveID.h
+        sensitivity/voltage.C
+        src/ActionInitialization.cc
+        src/ActionInitialization.h
+        src/cosmicMacro.C
+        src/dmesg_init.cc
+        src/dmesg_init.h
+        src/gemc_options.cc
+        src/MDetectorConstruction.cc
+        src/MDetectorConstruction.h
+        src/MEventAction.cc
+        src/MEventAction.h
+        src/MPrimaryGeneratorAction.cc
+        src/MPrimaryGeneratorAction.h
+        src/MSteppingAction.cc
+        src/MSteppingAction.h
+        src/run_conditions.cc
+        src/run_conditions.h
+        utilities/gemcOptions.cc
+        utilities/gemcOptions.h
+        utilities/gemcUtils.cc
+        utilities/gemcUtils.h
+        utilities/graph.cc
+        utilities/graph.h
+        utilities/json.hpp
+        utilities/lStdHep.cc
+        utilities/lStdHep.hh
+        utilities/lXDR.cc
+        utilities/lXDR.hh
+        utilities/moc_graph.cc
+        utilities/splash.h
+        utilities/string_utilities.cc
+        utilities/string_utilities.h
+        gemc.cc)
