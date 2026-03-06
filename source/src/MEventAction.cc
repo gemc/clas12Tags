@@ -465,25 +465,6 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 	}
 	outputFactory* processOutputFactory = getOutputFactory(outputFactoryMap, outContainer->outType);
 
-	// configuration contains:
-	// number of hits in the hit collection for each sensitive detector
-	map<string, double> configuration;
-	for (map<string, sensitiveDetector*>::iterator it = SeDe_Map.begin(); it != SeDe_Map.end(); it++) {
-		MHC = it->second->GetMHitCollection();
-
-		if (MHC) {
-			if (MHC->GetSize() > 0) {
-				string hitType = it->first;
-
-				if (WRITE_INTRAW.find(hitType) != string::npos || WRITE_INTRAW == "*") {
-					configuration[hitType] = MHC->GetSize();
-				}
-			}
-		}
-	}
-
-
-	processOutputFactory->prepareEvent(outContainer, &configuration);
 
 	// Header Bank contains event number
 	// Need to change this to read DB header bank
@@ -605,12 +586,14 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 
 
 	map<int, vector<hitOutput>> hit_outputs_from_AllSD;
+	map<string, vector<int>>    hit_skipped_for_detector;
 
 	// loop over sensitive detectors
 	// if there are hits, process them and/or write true infos out
 	for (map<string, sensitiveDetector*>::iterator it = SeDe_Map.begin(); it != SeDe_Map.end(); it++) {
-		int nhits = 0;
-		MHC       = it->second->GetMHitCollection();
+		int nhits                           = 0;
+		MHC                                 = it->second->GetMHitCollection();
+		hit_skipped_for_detector[it->first] = vector<int>();
 
 		// adding background if existing
 		// adding background noise to hits
@@ -739,6 +722,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 								" digitization routine." << endl;
 						}
 						hitsToSkip.push_back(h);
+						hit_skipped_for_detector[it->first].push_back(h);
 					}
 
 					string vname = aHit->GetId()[aHit->GetId().size() - 1].name;
@@ -753,6 +737,48 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 				}
 				processOutputFactory->writeG4DgtIntegrated(outContainer, allDgtOutput, hitType, banksMap);
 			} // end of geant4 integrated digitized information
+
+
+			if (VERB > 4) {
+				cout << " Event Action: detector " << it->first << " skipped " << hit_skipped_for_detector[it->first].
+					size() << " hits" << endl;
+			}
+
+			delete hitProcessRoutine;
+		}
+	}
+
+	// configuration contains:
+	// number of hits in the hit collection for each sensitive detector
+	map<string, double> configuration;
+	for (map<string, sensitiveDetector*>::iterator it = SeDe_Map.begin(); it != SeDe_Map.end(); it++) {
+		MHC = it->second->GetMHitCollection();
+
+		if (MHC) {
+			if (MHC->GetSize() > 0) {
+				string hitType = it->first;
+
+				if (WRITE_INTRAW.find(hitType) != string::npos || WRITE_INTRAW == "*") {
+					configuration[hitType] = MHC->GetSize() - hit_skipped_for_detector[hitType].size();
+				}
+			}
+		}
+	}
+
+	processOutputFactory->prepareEvent(outContainer, &configuration);
+
+	for (map<string, sensitiveDetector*>::iterator it = SeDe_Map.begin(); it != SeDe_Map.end(); it++) {
+		int nhits = 0;
+		MHC       = it->second->GetMHitCollection();
+		if (MHC) nhits = MHC->GetSize();
+		if (nhits) {
+			string hitType = it->first;
+
+			vector<int> hitsToSkip = hit_skipped_for_detector[it->first];
+
+			HitProcess* hitProcessRoutine = getHitProcess(hitProcessMap, hitType);
+			if (!hitProcessRoutine)
+				return;
 
 			// geant4 integrated raw information
 			// by default they are all DISABLED
@@ -812,7 +838,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 					cout << "   Total energy deposited: " << Etot / MeV << " MeV" << endl;
 				}
 			}
-			
+
 			if (WRITE_TRUE_INTEGRATED) {
 				processOutputFactory->writeG4RawIntegrated(outContainer, allRawOutput, hitType, banksMap);
 			}
@@ -914,40 +940,42 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 
 
 			// Check whether to save RNG
-			if (ssp.enabled && ssp.decision == false)
-				for (int h = 0; h < nhits; ++h) {
-					// Check if masked ID matches targetId
-					int id  = allDgtOutput[h].getIntDgtVar("id");
-					int id2 = id;
-					int j   = ssp.tIdsize - 1;
-
-					for (; j >= 0; --j) {
-						if (ssp.targetId[j] != 'x' && id2 % 10 != atoi(ssp.targetId.substr(j, 1).c_str()))
-							break;
-						id2 /= 10;
-					}
-					if (j >= 0)
-						continue;
-
-					// Check pid
-					int pid = allRawOutput[h].getIntRawVar("pid");
-					if (pid != ssp.targetPid)
-						continue;
-
-					// Check given variable
-					double varval = allRawOutput[h].getIntRawVar(ssp.variable);
-					if (varval == -99)
-						varval = allDgtOutput[h].getIntDgtVar(ssp.variable);
-					if (varval == -99) {
-						cout << "Unknown variable " << ssp.variable << " for SAVE_SELECTED, exiting" << endl;
-						exit(0);
-					}
-
-					if (varval >= ssp.lowLim && varval <= ssp.hiLim) {
-						ssp.decision = true;
-						break;
-					}
-				}
+			// saving it but disabling it for now due to the splitting of loops for raw and dgtz
+			// if (ssp.enabled && ssp.decision == false) {
+			// 	for (int h = 0; h < nhits; ++h) {
+			// 		// Check if masked ID matches targetId
+			// 		int id  = allDgtOutput[h].getIntDgtVar("id");
+			// 		int id2 = id;
+			// 		int j   = ssp.tIdsize - 1;
+			//
+			// 		for (; j >= 0; --j) {
+			// 			if (ssp.targetId[j] != 'x' && id2 % 10 != atoi(ssp.targetId.substr(j, 1).c_str()))
+			// 				break;
+			// 			id2 /= 10;
+			// 		}
+			// 		if (j >= 0)
+			// 			continue;
+			//
+			// 		// Check pid
+			// 		int pid = allRawOutput[h].getIntRawVar("pid");
+			// 		if (pid != ssp.targetPid)
+			// 			continue;
+			//
+			// 		// Check given variable
+			// 		double varval = allRawOutput[h].getIntRawVar(ssp.variable);
+			// 		if (varval == -99)
+			// 			varval = allDgtOutput[h].getIntDgtVar(ssp.variable);
+			// 		if (varval == -99) {
+			// 			cout << "Unknown variable " << ssp.variable << " for SAVE_SELECTED, exiting" << endl;
+			// 			exit(0);
+			// 		}
+			//
+			// 		if (varval >= ssp.lowLim && varval <= ssp.hiLim) {
+			// 			ssp.decision = true;
+			// 			break;
+			// 		}
+			// 	}
+			// }
 
 			delete hitProcessRoutine;
 		}
