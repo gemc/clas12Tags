@@ -65,10 +65,12 @@ HipoSchema::HipoSchema() {
     helADCSchema = hipo::schema("HEL::adc", 22000, 11);
     helFLIPSchema = hipo::schema("HEL::flip", 22000, 12);
     helONLINESchema = hipo::schema("HEL::online", 22000, 13);
-    //urwellADCSchema = hipo::schema("URWELL::adc", 22300, 11);
     urwtADCSchema = hipo::schema("URWT::adc", 22300, 11);
-    muvtADCSchema = hipo::schema("MUVT::adc", 22900, 11);
     recoilADCSchema   = hipo::schema("RECOIL::adc",  22600, 11);
+    mucalADCSchema = hipo::schema("MUCAL::adc", 22800, 11);
+    muvtADCSchema = hipo::schema("MUVT::adc", 22900, 11);
+    murtADCSchema = hipo::schema("MURT::adc", 23000, 11);
+    murhADCSchema = hipo::schema("MURH::adc", 23100, 11);
     rawADCSchema = hipo::schema("RAW::adc", 20000, 11);
     rawTDCSchema = hipo::schema("RAW::tdc", 20000, 12);
     rawSCALERSchema = hipo::schema("RAW::scaler", 20000, 13);
@@ -148,8 +150,11 @@ HipoSchema::HipoSchema() {
 
    // urwellADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
     urwtADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
-    muvtADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
     recoilADCSchema.parse(  "sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+    mucalADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+    muvtADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+    murtADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
+    murhADCSchema.parse("sector/B, layer/B, component/S, order/B, ADC/I, time/F, ped/S");
 
     rawADCSchema.parse("crate/B, slot/B, channel/S, order/B, ADC/I, time/F, ped/S");
     rawTDCSchema.parse("crate/B, slot/B, channel/S, order/B, TDC/I");
@@ -203,9 +208,11 @@ HipoSchema::HipoSchema() {
     schemasToLoad["RTPC::pos"] = rtpcPOSSchema;
     schemasToLoad["HEL::flip"] = helFLIPSchema;
     schemasToLoad["RASTER::adc"] = rasterADCSchema;
-   // schemasToLoad["URWELL::adc"] = urwellADCSchema;
     schemasToLoad["URWT::adc"] = urwtADCSchema;
     schemasToLoad["MUVT::adc"] = muvtADCSchema;
+    schemasToLoad["MUCAL::adc"] = mucalADCSchema;
+    schemasToLoad["MURT::adc"] = murtADCSchema;
+    schemasToLoad["MURH::adc"] = murhADCSchema;
     schemasToLoad["RECOIL::adc"]  = recoilADCSchema;
 
     cout << " Done defining Hipo4 schemas." << endl;
@@ -251,14 +258,18 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
             return false;
         }
     } else if (type == 1) { // non tdc detectors
-        if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "recoil" || schemaName == "flux") {
+        if (schemaName == "bmt" || schemaName == "fmt" || schemaName == "rtpc" || schemaName == "bst" || 
+            schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "murt"|| schemaName == "murh"|| 
+            schemaName == "mucal"|| schemaName == "murh"|| schemaName == "recoil" || schemaName == "flux") {
             return false;
         }
     } else if (type == 2) { // non wf detectors
         if (schemaName == "atof" || schemaName == "band" || schemaName == "bmt" || schemaName == "fmt" || schemaName == "ftm"
             || schemaName == "dc" || schemaName == "bst" || schemaName == "cnd" || schemaName == "ctof" || schemaName == "ecal"
             || schemaName == "ftof" || schemaName == "ft_cal" || schemaName == "ft_hodo" || schemaName == "ft_trk"
-            || schemaName == "htcc" || schemaName == "ltcc" || schemaName == "rich" || schemaName == "rtpc" || schemaName == "urwt"|| schemaName == "muvt"|| schemaName == "recoil" || schemaName == "flux") {
+            || schemaName == "htcc" || schemaName == "ltcc" || schemaName == "rich" || schemaName == "rtpc" 
+            || schemaName == "urwt"|| schemaName == "mucal"|| schemaName == "muvt"|| schemaName == "murt"|| schemaName == "murh"
+            || schemaName == "recoil" || schemaName == "flux") {
             return false;
         }
     }

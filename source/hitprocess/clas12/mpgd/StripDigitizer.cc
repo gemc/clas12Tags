@@ -313,7 +313,7 @@ void StripDigitizer::BuildCache(const StripConstants &c)
         tmp.push_back(s);
     }
 
-    // Local numbering: stripID=1 is the strip with the most negative LOCAL X midpoint.
+/*    // Local numbering: stripID=1 is the strip with the most negative LOCAL X midpoint.
     std::sort(tmp.begin(), tmp.end(),
               [](const StripGeom &a, const StripGeom &b)
               {
@@ -321,6 +321,7 @@ void StripDigitizer::BuildCache(const StripConstants &c)
                       return a.orderX_local < b.orderX_local;
                   return a.internalIndex < b.internalIndex; // stable tie-breaker
               });
+*/
 
     strips.reserve(tmp.size());
     for (size_t i = 0; i < tmp.size(); ++i)

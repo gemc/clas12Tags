@@ -54,12 +54,14 @@ public:
 	hipo::schema helADCSchema;
 	hipo::schema helFLIPSchema;
 	hipo::schema helONLINESchema;
-	//hipo::schema urwellADCSchema;
 	hipo::schema urwtADCSchema;
-	hipo::schema muvtADCSchema;
-    hipo::schema recoilADCSchema;
+        hipo::schema recoilADCSchema;
 	hipo::schema rasterADCSchema;
-	hipo::schema rawADCSchema;
+	hipo::schema mucalADCSchema;
+    	hipo::schema muvtADCSchema;
+    	hipo::schema murtADCSchema;
+    	hipo::schema murhADCSchema;
+    	hipo::schema rawADCSchema;
 	hipo::schema rawTDCSchema;
 	hipo::schema rawSCALERSchema;
 	hipo::schema rawVTPSchema;
