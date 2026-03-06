@@ -116,7 +116,7 @@ map<string, double> urwt_HitProcess::integrateDgt(MHit *aHit, int hitn)
   dgtz["ADC_time"] = identity[3].time;
   dgtz["ADC_ped"] = 0;
 
-  if((1.0 * (int)(urwtC.gain * 1e6 * tInfos.eTot / urwtC.w_i))<2){
+  if(1e6 * tInfos.eTot / urwtC.w_i < 10){
       rejectHitConditions =true;
   }
 
