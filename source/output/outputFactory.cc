@@ -56,6 +56,9 @@ outputContainer::outputContainer(goptions Opts)
 void outputFactory::prepareEvent(outputContainer* output, map<string, double> *configuration){
 }
 
+void outputFactory::prepareRawBanks(outputContainer* output, map<string, double> *configuration){
+}
+
 
 outputContainer::~outputContainer()
 {

@@ -264,6 +264,10 @@ public:
 	// prepare event 
 	virtual void prepareEvent(outputContainer* output, map<string, double> *configuration) ;
 
+	// some output schema may have custom raw banks - for example collected them all in a giant bank
+	virtual void prepareRawBanks(outputContainer* output, map<string, double> *configuration) ;
+
+
 	// record the simulation conditions on the file
 	virtual void recordSimConditions(outputContainer*, map<string, string>) = 0;
 

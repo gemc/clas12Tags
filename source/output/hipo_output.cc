@@ -89,9 +89,6 @@ void hipo_output::recordSimConditions(outputContainer *output, map <string, stri
         bigData += b + string("\n");
     }
 
-    // file need to be opened after user configuration is added
-    output->hipoWriter->addUserConfig("GEMC::config",  bigData);
-
     output->initializeHipo(true);
 
 
@@ -306,7 +303,7 @@ void hipo_output::writeRFSignal(outputContainer *output, FrequencySyncSignal rfs
 
     runRFBank.putShort("id", 0, (short) idsRF1.front());
     runRFBank.putFloat("time", 0, (float) timesRF1.front());
-    runRFBank.putShort("id", 1, (short) idsRF2.front());
+    runRFBank.putShort("id", 1, (short) idsRF2.front() + 1);
     runRFBank.putFloat("time", 1, (float) timesRF2.front());
 
     if (verbosity > 2) {
