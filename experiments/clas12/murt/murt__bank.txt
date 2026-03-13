@@ -1,0 +1,9 @@
+                murt  |              bankid  |                                      murt bank ID  | 3000   |                  Di  
+                murt  |              sector  |                                     sector number  |    1   |                  Di  
+                murt  |               layer  |                                      layer number  |    2   |                  Di  
+                murt  |           component  |                                      strip number  |    3   |                  Di  
+                murt  |           ADC_order  |                                          always 0  |    4   |                  Di  
+                murt  |             ADC_ADC  |                                               ADC  |    5   |                  Di  
+                murt  |            ADC_time  |                                              time  |    6   |                  Dd  
+                murt  |             ADC_ped  |                                          always 0  |    7   |                  Di  
+                murt  |                hitn  |                                        hit number  |   99   |                  Di  

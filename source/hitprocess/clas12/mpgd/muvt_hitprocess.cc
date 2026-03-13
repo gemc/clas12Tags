@@ -107,7 +107,7 @@ map<string, double> muvt_HitProcess::integrateDgt(MHit *aHit, int hitn)
 
   dgtz["hitn"] = hitn;
   dgtz["sector"] = identity[1].id;
-  dgtz["layer"] = identity[2].id;
+  dgtz["layer"] = (identity[0].id-1)*2 + identity[2].id;
   dgtz["component"] = identity[3].id;
 
   // No sentinel IDs: every entry corresponds to a real strip
@@ -115,7 +115,7 @@ map<string, double> muvt_HitProcess::integrateDgt(MHit *aHit, int hitn)
   dgtz["ADC_time"] = identity[3].time;
   dgtz["ADC_ped"] = 0;
 
-  if((1.0 * (int)(muvtC.gain * 1e6 * tInfos.eTot / muvtC.w_i))<2){
+  if(1e6 * tInfos.eTot / muvtC.w_i < 1){
       rejectHitConditions =true;
   }
 

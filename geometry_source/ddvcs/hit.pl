@@ -9,8 +9,8 @@ sub define_mucal_hit
 {
 	# uploading the hit definition
 	my %hit = init_hit();
-	$hit{"name"}            = "ft_cal";
-	$hit{"description"}     = "forward tagger calorimeter hit definition";
+	$hit{"name"}            = "mucal";
+	$hit{"description"}     = "mucal calorimeter hit definition";
 	$hit{"identifiers"}     = "idx idy";
 	$hit{"signalThreshold"} = "0.5*MeV";
 	$hit{"timeWindow"}      = "50*ns";

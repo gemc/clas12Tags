@@ -23,10 +23,12 @@
 #include "clas12/ltcc_hitprocess.h"             ///< Low Threshold Cherenkov Counter
 #include "clas12/micromegas/FMT_hitprocess.h"   ///< forward micromegas
 #include "clas12/micromegas/BMT_hitprocess.h"   ///< barrel micromegas
+#include "clas12/mucal_hitprocess.h"           ///< mucal Calorimeter
 #include "clas12/rich_hitprocess.h"             ///< Pre-shower calorimeter
 #include "clas12/rtpc_hitprocess.h"             ///< Radial Time Projection Chamber (RTPC)
 #include "clas12/mpgd/urwt_hitprocess.h"    	///< urwt detector urwt
 #include "clas12/mpgd/muvt_hitprocess.h"    	///< muvt detector muvt
+#include "clas12/murt/murt_hitprocess.h"    	///< murt detector murt
 #include "clas12/recoil/recoil_hitprocess.h"    ///< RGH recoil detector
 
 // Beam Dump eXperiment
@@ -92,8 +94,10 @@ map<string, HitProcess_Factory> HitProcess_Map(string experiments)
 			hitMap["ltcc"]      = &ltcc_HitProcess::createHitClass;
 			hitMap["rich"]      = &rich_HitProcess::createHitClass;
 			hitMap["rtpc"]      = &rtpc_HitProcess::createHitClass;
-			hitMap["urwt"]   	= &urwt_HitProcess::createHitClass;
-			hitMap["muvt"]   	= &muvt_HitProcess::createHitClass;
+			hitMap["urwt"]      = &urwt_HitProcess::createHitClass;
+			hitMap["mucal"]     = &mucal_HitProcess::createHitClass;
+           		hitMap["muvt"]      = &muvt_HitProcess::createHitClass;
+           		hitMap["murt"]      = &murt_HitProcess::createHitClass;
 			hitMap["recoil"]    = &recoil_HitProcess::createHitClass;
 		} else if(EXP == "HPS") {
 			// Aprime

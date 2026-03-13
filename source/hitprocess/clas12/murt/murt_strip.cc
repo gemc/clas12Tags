@@ -1,0 +1,258 @@
+// gemc headers
+#include "murt_strip.h"
+#include "Randomize.hh"
+
+// c++ headers
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
+#include <time.h>
+
+// Veronique Ziegler (Dec. 3 2015)
+// Note: this method only contains the constants for the third micromegas region,
+// the constants for the other 2 are missing...
+// M. Ungaro (Jan 26 2016)
+// Updated to read constants at the beginning of each run
+// M. Defurne (May 5 2017)
+// Removed the loop over the number of electrons
+// M. Ungaro (Jun 14 2019)
+// Added target position 
+
+// the routine to find the strip
+vector<double> murt_strip::FindStrip(int layer, int sector, G4ThreeVector lxyz, double Edep, murtConstants murtc)
+{
+	double lx = lxyz.x()/mm;
+	double ly = lxyz.y()/mm;
+	double lz = lxyz.z()/mm;
+	
+	int Nel = (int) (1e6*Edep/murtc.w_i);
+	// the return vector is always in pairs the first index is the strip number, the second is the Edep on the strip
+	if (murtc.HV_DRIFT[layer-1][sector-1]==0||murtc.HV_STRIPS[layer-1][sector-1]==0) Nel=0;
+	vector<double> strip_id;
+	
+	double Delta_drift = sqrt( lx*lx+ly*ly) - murtc.RADIUS[layer-1];
+	
+	double phi = atan2(ly,lx) + Delta_drift*tan(murtc.ThetaL)*cos(murtc.Theta_Ls_Z)/murtc.RADIUS[layer-1]; // Already apply the Lorentz Angle to find the ClosestStrip
+	lz=lz + Delta_drift * tan(murtc.ThetaL) * cos(murtc.Theta_Ls_C); // Not sure useful, but take into account LorentzAngle deviation if
+	
+	int sector_bis=isInSector(layer,atan2(ly,lx),murtc);
+	// if(sector_bis!=0) cout << "WARNING: BMT hit outside active area" << endl;
+	int strip_num = getClosestStrip(layer, sector_bis, phi, lz, murtc);
+	sigma = getSigma(layer, lx, ly, murtc);
+	sigma_phi = sigma/murtc.RADIUS[layer-1];
+	int cluster_size=0;
+	if (murtc.AXIS[layer-1]==0) cluster_size=murtc.nb_sigma*sigma/murtc.PITCH[layer-1][5]+1; //Compare to smallest pitch in C
+	if (murtc.AXIS[layer-1]==1) cluster_size=murtc.nb_sigma*sigma_phi/murtc.PITCH[layer-1][0]+1;
+	
+	double weight=0;
+	if (strip_num>=1&&strip_num<=murtc.NSTRIPS[layer-1]) weight=Weight_td(layer, strip_num, phi, lz, murtc);
+	
+	if(Nel>0&&weight>0) { // if the track deposited energy is greater than the assumed ionization potential digitize
+		
+		strip_id.push_back(strip_num);
+		strip_id.push_back(weight);
+		
+		// if the strip is found (i.e. the hit is within acceptance
+		for(int istrip=1;istrip< cluster_size+1;istrip++) {
+			//Check the strip after the closest strip
+			if (strip_num+istrip<=murtc.NSTRIPS[layer-1]) {
+				weight=Weight_td(layer, strip_num+istrip, phi, lz, murtc);
+				if (weight>0){
+					strip_id.push_back(strip_num+istrip);
+					strip_id.push_back(weight);
+					
+				}
+			}
+			// Check the strip before the closest strip
+			if (strip_num-istrip>=1) {
+				weight=Weight_td(layer, strip_num-istrip, phi, lz, murtc);
+				if (weight>0){
+					strip_id.push_back(strip_num-istrip);
+					strip_id.push_back(weight);
+				}
+			}
+		}
+		
+		// We have computed the weight with a gaussian distribution. But considering the few electrons, it makes no sense.
+		int Nel_left=Nel;
+		double renorm=0;
+		double weight_this_strip;
+		int Nel_this_strip=0;
+		for (unsigned int i=0;i<strip_id.size()/2;i++){
+			if (Nel_left==0||renorm==1){
+				strip_id.at(2*i+1)=0;
+			}
+			if (renorm!=1&&Nel_left!=0){
+				weight_this_strip=strip_id.at(2*i+1)/(1-renorm);
+				Nel_this_strip=GetBinomial(Nel_left,weight_this_strip);
+				if (Nel_this_strip==-1) cout<<Nel_left<<" -1  "<<weight_this_strip<<endl;
+				renorm+=strip_id.at(2*i+1);
+				strip_id.at(2*i+1)=Nel_this_strip;
+				Nel_left-=Nel_this_strip;
+				//cout<<layer<<" "<<sector_bis<<" "<<strip_id.at(2*i)<<"  "<<strip_id.at(2*i+1)<<endl;
+			}
+		}
+		
+		//Final check... Energy must be conserved unfortunately
+		if (Nel_left<0) cout<<"Warning in BMT hitprocess!!!!!!!!"<<endl;
+	}
+	if (strip_id.size()==0)
+	{ // Nel=0, consider the Edep is 0
+		strip_id.push_back(-1);
+		strip_id.push_back(-1);
+	}
+	
+	return strip_id;
+}
+
+
+//
+// param layer
+// param x x-coordinate of the hit in the lab frame
+// param y y-coordinate of the hit in the lab frame
+// return the sigma in the azimuth direction taking the Lorentz angle into account
+//
+double murt_strip::getSigma(int layer, double x, double y,  murtConstants murtc)
+{ // sigma for Z-detectors
+	
+	double sigma = murtc.SigmaDrift*(sqrt(x*x+y*y) - murtc.RADIUS[layer-1])/cos(murtc.ThetaL);
+	
+	return sigma;
+	
+}
+
+int murt_strip::getClosestStrip(int layer, int sector, double angle, double z, murtConstants murtc){
+	double var=0;
+	double var_min=0;
+	double var_max=0; //var=z if it is a C detector, var=angle if Z detector
+	int group=0;
+	double strip_offset=0; //For C because of the variable pitch
+	int ClosestStrip=-1;
+	
+	if(angle<0) angle+=2*pi; // from 0 to 2Pi
+	
+	// To deal with the sector covering 0 degree
+	double angle_i = murtc.EDGE1[layer-1]; // first angular boundary of sector
+	double angle_f = murtc.EDGE2[layer-1]; // second angular boundary of sector
+	
+	if (sector>=0&&angle>angle_i&&angle<angle_f&&z<murtc.ZMAX[layer-1]&&z>murtc.ZMIN[layer-1]) {
+		if (murtc.AXIS[layer-1]==0){//Then it is a C detector
+			var=z;
+			var_min=murtc.ZMIN[layer-1];
+			var_max=var_min+murtc.GROUP[layer-1][0]*murtc.PITCH[layer-1][0];
+		}
+		if (murtc.AXIS[layer-1]==1){//Then it is a Z detector
+			var=angle;
+			var_min=angle_i;
+			var_max=angle_f;
+		}
+		while (var>var_max){
+			strip_offset+=murtc.GROUP[layer-1][group];
+			var_min+=murtc.GROUP[layer-1][group]*murtc.PITCH[layer-1][group];
+			var_max+=murtc.GROUP[layer-1][group+1]*murtc.PITCH[layer-1][group+1];
+			group++;
+		}
+		ClosestStrip=strip_offset+floor((var-var_min)/murtc.PITCH[layer-1][group])+1;
+	}
+	return ClosestStrip;
+}
+
+// Return the group of equally separated strips in which the strip is
+int murt_strip::getStripGroup(int layer, int strip, murtConstants murtc){
+	int group=0; //Z is always one group
+	int total_strip=murtc.GROUP[layer-1][group];
+	while (strip>total_strip){
+		group++;
+		total_strip+=murtc.GROUP[layer-1][group];
+	}
+	return group;
+}
+
+// param layer the hit layer
+// param strip the hit strip
+// return the z position in mm for the C-detectors
+//
+// WARNING: This routine is not used?
+//
+double murt_strip::GetStripInfo(int layer, int sector, int strip, murtConstants murtc)
+{
+	int num_strip = strip - 1;     			// index of the strip (starts at 0)
+	double var=0.;
+	if (murtc.AXIS[layer-1]==0) var=murtc.ZMIN[layer-1];  // C detector so we look at Z
+	if (murtc.AXIS[layer-1]==1) var=murtc.EDGE1[layer-1]; // Z detector so we look at phi
+	
+	int group=0;
+	int limit = murtc.GROUP[layer-1][group];
+	
+	if (num_strip>0){
+		for (int j=1;j<num_strip;j++)
+		{
+			var += murtc.PITCH[layer-1][group];
+			if (j>=limit)
+			{ //test if we change the width
+				group++;
+				limit += murtc.GROUP[layer-1][group];
+			}
+			var += murtc.PITCH[layer-1][group];
+		}
+	}
+	var+=0.5*murtc.PITCH[layer-1][group];
+	return var;
+}
+
+
+int murt_strip::isInSector(int layer, double angle, murtConstants murtc)
+{
+	int num_detector = -1;
+	
+	if(angle>=murtc.EDGE1[layer-1] && angle<=murtc.EDGE2[layer-1]) num_detector=0;
+	
+	return num_detector;
+}
+
+double murt_strip::Weight_td(int layer,int strip, double angle, double z, murtConstants murtc){
+	double wght=0;
+	int group=getStripGroup(layer, strip, murtc);
+	
+	// To deal with the sector covering 0 degree
+	double angle_i = murtc.EDGE1[layer-1]; // first angular boundary of sector
+	double angle_f = murtc.EDGE2[layer-1]; // second angular boundary of sector
+	
+	if(murtc.AXIS[layer-1]==1){ // if it is a Z-detector
+		double strip_phi=angle_i+(strip-0.5)*murtc.PITCH[layer-1][0];
+		double strip_z=(murtc.ZMIN[layer-1]+murtc.ZMAX[layer-1])/2.;
+		double strip_length=murtc.ZMAX[layer-1]-murtc.ZMIN[layer-1];
+		wght=(erf((strip_phi+murtc.PITCH[layer-1][0]/2.-angle)/sigma_phi/sqrt(2))-erf((strip_phi-murtc.PITCH[layer-1][0]/2.-angle)/sigma_phi/sqrt(2)))*(erf((strip_z+strip_length/2.-z)/sigma/sqrt(2))-erf((strip_z-strip_length/2.-z)/sigma/sqrt(2)))/2./2.;
+	}
+	if(murtc.AXIS[layer-1]==0){ // if it is a C-detector
+		double strip_phi=(angle_i+angle_f)/2.;
+		double strip_z=murtc.ZMIN[layer-1];
+		int strip_offset=0;
+		for (int i=0;i<group;i++){
+			strip_z+=murtc.GROUP[layer-1][i]*murtc.PITCH[layer-1][i];
+			strip_offset+=murtc.GROUP[layer-1][i];
+		}
+		strip_z+=(strip-strip_offset-0.5)*murtc.PITCH[layer-1][group];
+		double strip_length=murtc.EDGE2[layer-1]-murtc.EDGE1[layer-1];
+		wght=(erf((strip_z+murtc.PITCH[layer-1][group]/2.-z)/sigma/sqrt(2))-erf((strip_z-murtc.PITCH[layer-1][group]/2.-z)/sigma/sqrt(2)))*(erf((strip_phi+strip_length/2.-angle)/sigma_phi/sqrt(2))-erf((strip_phi-strip_length/2.-angle)/sigma_phi/sqrt(2)))/2./2.;
+	}
+	if (wght<0) wght=-wght;
+	return wght;
+}
+
+double murt_strip::GetBinomial(double n, double p){
+	double answer;
+	answer=CLHEP::RandBinomial::shoot(n,p);
+	// Very bad method when n=0 or p close to 0 or 1... return easily -1 in these case.
+	// So need to help in the limit condition
+	if (answer==-1){
+		answer=n;
+		if (p==0) answer=0;
+	}
+	return answer;
+}
+
+
+
+
+
