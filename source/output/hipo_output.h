@@ -117,12 +117,14 @@ public:
 		{"rich",    18},
 		{"rtpc",    19},
 		{"band",    21},
-	//	{"urwell",  23},
-		{"urwt",  	23},
-		{"muvt",	29},
+		{"urwt",    23},
 		{"atof",    24},
 		{"ahdc",    25},
 		{"recoil",  26},
+		{"mucal",   28},
+		{"muvt",    29},
+		{"murt",    30},
+		{"murh",    31},
 		{"flux",   100}
 	};
 

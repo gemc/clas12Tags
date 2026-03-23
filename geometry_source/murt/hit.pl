@@ -1,17 +1,22 @@
 use strict;
 use warnings;
+use hit;
 
 our %configuration;
 
-sub define_hit
+
+
+
+sub define_BMT_hit
 {
 	# uploading the hit definition
 	my %hit = init_hit();
-	$hit{"name"}            = "urwell";
-	$hit{"description"}     = "urwell hit definitions ";
-	$hit{"identifiers"}     = "sector chamber layer component";
-	$hit{"signalThreshold"} = "2*KeV";
-	$hit{"timeWindow"}      = "50*ns";
+	$hit{"name"}            = "murt";
+	$hit{"description"}     = "muCLAS12 Recoil Tracker";
+# 	$hit{"identifiers"}     = "superlayer  type  segment  strip";
+	$hit{"identifiers"}     = "layer sector strip";
+	$hit{"signalThreshold"} = "2.0*KeV";
+	$hit{"timeWindow"}      = "132*ns";
 	$hit{"prodThreshold"}   = "1*mm";
 	$hit{"maxStep"}         = "100*um";
 	$hit{"delay"}           = "50*ns";
@@ -21,4 +26,11 @@ sub define_hit
 	$hit{"pedestal"}        = -20;
 	print_hit(\%configuration, \%hit);
 }
+
+
+sub define_hit
+{
+	define_BMT_hit();
+}
+
 

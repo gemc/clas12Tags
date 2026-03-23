@@ -111,17 +111,17 @@ foreach my $conf ( @allConfs )
 		make_mu_cal();
 		buildBeamPipe();
 		buildBeamShield();
-		define_mucal_bank();
 		define_mucal_hit();
 	} elsif($configuration{"variation"} eq "scorer") {
 		makeScorer();
 	} else{
 		make_scatt_chambers();
-        makeBigCone();
-        makeEcal();
-    }
+                makeBigCone();
+                makeEcal();
+        }
 
 }
+		define_mucal_bank();
 
 
 
