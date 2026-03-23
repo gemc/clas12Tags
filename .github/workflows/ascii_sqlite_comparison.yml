@@ -59,7 +59,7 @@ jobs:
         run: |
           ./ci/txt_sql_geometry_comparison.sh -d ${{ matrix.detector }}
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
@@ -118,7 +118,7 @@ jobs:
         run: |
           ./ci/txt_sql_run_comparison.sh -d ${{ matrix.detector }} -v ${{ matrix.variation }}
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/

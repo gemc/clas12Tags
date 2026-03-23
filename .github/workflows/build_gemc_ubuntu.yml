@@ -43,7 +43,7 @@ jobs:
           ./ci/build_gemc.sh
           echo "github.event.head_commit.committer.name: ${{ github.event.head_commit.committer.name }}"
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: gemc-ubuntu
           path: |
