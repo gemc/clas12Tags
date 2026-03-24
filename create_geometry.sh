@@ -132,4 +132,3 @@ for dete in $=all_dets; do
 	cd ..
 done
 
-cp geometry_source/ddvcs/fluxDets__geometry_ddvcs.txt  experiments/clas12/ddvcs/
