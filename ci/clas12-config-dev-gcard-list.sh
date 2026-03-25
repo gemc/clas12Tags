@@ -14,7 +14,6 @@
 
 # gcards is an array containing the list of files in clas12-config/gemc/dev
 gcards=($(ls clas12-config/gemc/dev | grep -v sqlite))
-gcards=($(ls clas12-config/gemc/dev | grep ddvcs))
 
 # lastg is last element of the array
 lastg=${gcards[-1]}
