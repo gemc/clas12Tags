@@ -37,14 +37,17 @@ function compile_gemc {
 	# checking existence of executable
 	echo "Created executable: " $(ls gemc)
 
-	cp gemc $GEMC/bin
+	gemc_exe=$GEMC/bin/gemc
+	cp gemc $gemc_exe
 	cd ..
-	echo "Copying gemc to $GEMC/bin for CI"
+	echo "Copying gemc to $gemc_exe for CI"
 
 
-	echo "$GEMC: "$GEMC
-	echo "Executable is "$gemc_exe ":"
+	echo "GEMC: "$GEMC
+	echo "Executable is $gemc_exe :"
+	echo
 	ls -l $gemc_exe
+	echo
 	echo "gemc: " $(which gemc)
 
 }

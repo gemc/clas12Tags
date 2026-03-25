@@ -221,7 +221,6 @@ else
 	fi
 	source /etc/profile.d/localSetup.sh
 	module switch gemc/dev
-
 	module load hipo
 	module load ccdb
 	echo
@@ -234,8 +233,10 @@ else
 
 	export GEMC=$(pwd)
 	export GEMC_DATA_DIR=$GEMC
+	if [[ ! -d "$GEMC/bin" ]]; then
+		mkdir -p "$GEMC/bin"
+	fi
 	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $GEMC"
-	export PATH=$GEMC/bin:$PATH
 	export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 
 fi
