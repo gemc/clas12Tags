@@ -72,8 +72,6 @@ jobs:
         run: |
           ./ci/build_gemc.sh
       - name: ${{ matrix.gen_type }} # notice: assuming same clas12-default gcard
-        env:
-          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           ./ci/tracks_validation.sh -g ${{ matrix.gcard }} -l ${{ matrix.gen_type }}
       - name: Efficiency summary (eff.log)

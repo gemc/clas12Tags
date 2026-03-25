@@ -27,7 +27,7 @@ function compile_gemc {
 	echo Compiling GEMC with options: "$copt" "$debug"
 	echo START_GEMC_COMPILATION $(date) | tee $build_log
 	echo Compiling GEMC with options: "$copt" "$debug" | tee -a $build_log
-	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" | tee -a $build_log
+	scons SHOWENV=1 SHOWBUILD=1 "$=copt" "$=debug" >> $build_log
 	if [ $? -ne 0 ]; then
 		echo "scons failed. Log: "
 		cat $build_log
@@ -40,6 +40,13 @@ function compile_gemc {
 	cp gemc $GEMC/bin
 	cd ..
 	echo "Copying gemc to $GEMC/bin for CI"
+
+
+	echo "$GEMC: "$GEMC
+	echo "Executable is "$gemc_exe ":"
+	ls -l $gemc_exe
+	echo "gemc: " $(which gemc)
+
 }
 
 function create_geo_dbs {
