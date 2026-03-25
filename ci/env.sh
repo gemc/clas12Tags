@@ -233,6 +233,9 @@ else
 
 	export GEMC=$(pwd)
 	export GEMC_DATA_DIR=$GEMC
+	if [[ ! -d $GEMC ]] then;
+		mkdir -p $GEMC/bin
+	fi
 	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $GEMC"
 	export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 

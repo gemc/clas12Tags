@@ -45,7 +45,9 @@ function compile_gemc {
 
 	echo "GEMC: "$GEMC
 	echo "Executable is $gemc_exe :"
+	echo
 	ls -l $gemc_exe
+	echo
 	echo "gemc: " $(which gemc)
 
 }
