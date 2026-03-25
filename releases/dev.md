@@ -1,4 +1,4 @@
-Based on [Coatjava Release](https://github.com/JeffersonLab/coatjava/releases) 13.5.0
+Based on [Coatjava Release](https://github.com/JeffersonLab/coatjava/releases) 13.7.1
 
 ## In progress
 
