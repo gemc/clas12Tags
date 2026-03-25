@@ -71,7 +71,10 @@ sub build_target {
         build_alert_targets();
     }
     elsif ($configuration_string eq "rgc_summer2022"
-        or $configuration_string eq "APOLLOnd3") {
+	   or $configuration_string eq "APOLLOnd3"
+	   or $configuration_string eq "rgc_fall2022"
+	   or $configuration_string eq "rgc_spring2023"
+	) {
         build_apollo_targets();
     }
     elsif ($configuration_string eq "rgm_fall2021_H"

@@ -43,6 +43,10 @@ my $SpheresCenter = $BathWallZ0 + 3;
 sub apollo {
     my $configuration_string = clas12_configuration_string(\%configuration);
 
+    if ($configuration_string eq "rgc_fall2022") {
+	$TargetRadius = 10;
+    }
+    
     # mother volume
     my $Rout = $VacuumRadius;
     my $Zlength = $SpheresCenter + $VacuumRadius;
