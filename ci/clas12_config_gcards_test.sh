@@ -59,8 +59,17 @@ fi
 
 echo "Gcard:"
 cat $gcard
-echo "Running gemc with options:  -BEAM_P=\"e-, 4*GeV, 60*deg, 25*deg\" -SPREAD_P=\"0*GeV, 40*deg, 180*deg\" -USE_GUI=0 -N=1000 -PRINT_EVENT=10 $gcard"
-gemc -BEAM_P="e-, 4*GeV, 60*deg, 25*deg" -SPREAD_P="0*GeV, 40*deg, 180*deg" -USE_GUI=0 -N=1000 -PRINT_EVENT=10 $gcard
+
+gemc_exe=$GEMC/bin/gemc
+
+echo "$GEMC: "$GEMC
+echo "Executable is "$gemc_exe ":"
+ls -l $gemc_exe
+echo "gemc: " $(which gemc)
+
+
+echo "Running $gemc_exe with options:  -BEAM_P=\"e-, 4*GeV, 60*deg, 25*deg\" -SPREAD_P=\"0*GeV, 40*deg, 180*deg\" -USE_GUI=0 -N=1000 -PRINT_EVENT=10 $gcard"
+$gemc_exe -BEAM_P="e-, 4*GeV, 60*deg, 25*deg" -SPREAD_P="0*GeV, 40*deg, 180*deg" -USE_GUI=0 -N=1000 -PRINT_EVENT=10 $gcard
 exitCode=$?
 
 if [[ $exitCode != 0 ]]; then
