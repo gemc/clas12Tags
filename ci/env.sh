@@ -221,7 +221,6 @@ else
 	fi
 	source /etc/profile.d/localSetup.sh
 	module switch gemc/dev
-
 	module load hipo
 	module load ccdb
 	echo

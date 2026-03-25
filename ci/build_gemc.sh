@@ -42,8 +42,8 @@ function compile_gemc {
 	echo "Copying gemc to $GEMC/bin for CI"
 
 
-	echo "$GEMC: "$GEMC
-	echo "Executable is "$gemc_exe ":"
+	echo "GEMC: "$GEMC
+	echo "Executable is $gemc_exe >> ls"
 	ls -l $gemc_exe
 	echo "gemc: " $(which gemc)
 
