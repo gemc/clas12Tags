@@ -61,7 +61,6 @@ echo "Gcard:"
 cat $gcard
 
 gemc_exe=$GEMC/bin/gemc
-
 echo "GEMC: "$GEMC
 echo "Executable is $gemc_exe :"
 ls -l $gemc_exe
