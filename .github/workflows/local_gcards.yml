@@ -20,6 +20,7 @@ on:
 jobs:
 
   local-gcards-test:
+    name: (${{ matrix.detector }})
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -74,6 +75,7 @@ jobs:
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
 
   local-gcards-test-final:
+    name: Local Gcards Test
     needs:
       - local-gcards-test
     runs-on: ubuntu-latest

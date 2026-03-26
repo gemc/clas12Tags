@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-SINCE="${DEVMD_SINCE:-2026-03-23}"   # e.g. 2024-01-01
+SINCE="${DEVMD_SINCE:-2026-03-26}"   # e.g. 2024-01-01
 
 set -euo pipefail
 
