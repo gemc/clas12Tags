@@ -18,7 +18,7 @@ jobs:
     container: jeffersonlab/gemc:dev-almalinux94
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: Notary
         run: |
           ./ci/report_runs_and_variations.sh  > Summary.md
@@ -51,7 +51,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh
@@ -102,7 +102,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: Fix Java Version
         uses: actions/setup-java@v5
         with:

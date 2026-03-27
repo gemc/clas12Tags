@@ -38,7 +38,7 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Creates list of gcards
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - id: set-matrix
@@ -50,7 +50,7 @@ jobs:
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
   gcard-test:
-    name: GCard Test (${{ matrix.gcard }})
+    name: ${{ matrix.gcard }}
     needs: generate-matrix
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -59,7 +59,7 @@ jobs:
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: Fix Java Version

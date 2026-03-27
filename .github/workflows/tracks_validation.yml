@@ -53,7 +53,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: Fix Java Version
