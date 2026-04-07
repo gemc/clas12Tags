@@ -78,7 +78,7 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	
 	//********************************************
 	//reading reference and current-run pressure:
-	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_to_distance/ref_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/v2/ref_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data, dcc.database);
 	double ref_pressure = data[0][3];
@@ -89,7 +89,7 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
         double dpressure = current_pressure - ref_pressure;
 	//********************************************
 	//calculating distance to time:
-	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_to_distance/t2d_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/v2/t2d_pressure:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data, dcc.database);
 	
@@ -126,7 +126,7 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	dcc.vprop = 29.97924580*0.7*cm/ns; // hardcoded in reconstruction too
 	
 	// T0 corrections: a delay to be introduced (plus sign) to the TDC timing
-	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_corrections/T0Corrections:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/v2/t0:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear();
 	calib->GetCalib(data,  dcc.database);
 	
@@ -139,6 +139,12 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	}
 	//********************************************
 	
+        snprintf(dcc.database, sizeof(dcc.database),  "/calibration/dc/time_jitter:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
+        data.clear();
+        calib->GetCalib(data, dcc.database);
+        dcc.jitter_period = data[0][3];
+        dcc.jitter_phase  = data[0][4];
+        dcc.jitter_cycles = data[0][5];
 	
 	
 	// reading DC core parameters
@@ -250,6 +256,9 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double signal_t = 0;
 	double hit_signal_t = 0;
 	double prop_t = 0;
+        double tdc_jitter = 0;
+        if(dcc.jitter_cycles != 0) tdc_jitter = dcc.jitter_period * ((0 + dcc.jitter_phase) % dcc.jitter_cycles);  // assumes event timestamp is zero
+
 	
 	for(unsigned int s=0; s<nsteps; s++)
 	{
@@ -271,8 +280,8 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 			// new hit time
 			// (w/o the drift time)
 		// TODO: After coatjava real run numner
-//			hit_signal_t = stepTime[s]/ns;
-//			prop_t = tprop/ns;
+			hit_signal_t = stepTime[s]/ns;
+			prop_t = tprop/ns;
 
 			if(Edep[s] >= dcc.dcThreshold*eV) {
 
@@ -381,7 +390,7 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	
 	// Now calculate the smeared time:
 	// adding the time of hit from the start of the event (signal_t), which also has the drift velocity into it
-	double smeared_time = unsmeared_time + dt_random + hit_signal_t + prop_t + dcc.get_T0(SECI, SLI, LAYI, nwire);
+	double smeared_time = unsmeared_time + dt_random + hit_signal_t + prop_t + dcc.get_T0(SECI, SLI, LAYI, nwire) + tdc_jitter;
 	
 	// cout << " DC TIME stime: " << smeared_time << " X: " << X << "  doca: " << doca/cm << "  dmax: " << dcc.dmaxsuperlayer[SLI] << "    tmax: " << dcc.tmaxsuperlayer[SECI][SLI] << "   alpha: " << alpha << "   thisMgnf: " << thisMgnf << " SECI: " << SECI << " SLI: " << SLI << endl;
 	

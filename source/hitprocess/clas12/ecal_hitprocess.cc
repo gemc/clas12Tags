@@ -122,6 +122,12 @@ static ecConstants initializeECConstants(int runno, string digiVariation = "defa
 		ecc.global_time_walk[isec-1][ilay-1].push_back(data[row][3]);
 	}
 	
+        snprintf(ecc.database, sizeof(ecc.database),  "/calibration/ec/time_jitter:%d:%s%s", ecc.runNo, digiVariation.c_str(), timestamp.c_str());
+        data.clear(); calib->GetCalib(data, ecc.database);
+        ecc.jitter_period = data[0][3];
+        ecc.jitter_phase  = data[0][4];
+        ecc.jitter_cycles = data[0][5];
+
 	snprintf(ecc.database, sizeof(ecc.database), "/calibration/ec/fadc_offset:%d:%s%s", ecc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data, ecc.database);
 	for(unsigned row = 0; row < data.size(); row++)
@@ -402,6 +408,9 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	double dtres2  = ecc.dtres[sector-1][layer-1][2][0];
 	double dtres3  = ecc.dtres[sector-1][layer-1][3][0];
 
+        double tdc_jitter = 0;
+        if(ecc.jitter_cycles != 0) tdc_jitter = ecc.jitter_period * ((0 + ecc.jitter_phase) % ecc.jitter_cycles);  // assumes event timestamp is zero
+
 	for(unsigned int s=0; s<tInfos.nsteps; s++) {
 		double xlocal = Lpos[s].x();
 		if(view==1) latt = pDx2 + xlocal;
@@ -437,7 +446,7 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 				double ftim =  (fa4==0||fa6==0)         ? 0 : fa0 +           fa2+exp(-(radc-fa3)/fa4)+1-exp( (radc-fa5)/fa6);
 				double dtim =  (da4==0||da6==0||da7==0) ? 0 : da0 + gtw/radc +da2+exp(-(radc-da3)/da4)+1-exp(-(da5-radc)/da6)-exp(-(radc-da3*0.95)/da7)*pow(radc,da8);
 				ftime_in_ns = FTIME_raw + ftim + tgo - FTOFFSET - tmf - fo;
-				dtime_in_ns = DTIME_raw + dtim + tgo;
+				dtime_in_ns = DTIME_raw + dtim + tgo + tdc_jitter;
 				ftime_in_ns_res = G4RandGauss::shoot(ftime_in_ns,getTRES(ADC,ftres0,ftres2,ftres3,ftres1));
 				dtime_in_ns_res = G4RandGauss::shoot(dtime_in_ns,getTRES(ADC,dtres0,dtres2,dtres3,dtres1));
 			}
@@ -478,6 +487,7 @@ map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// simulated at present.
 	
 	double fadc_time = convert_to_precision(ftime_in_ns);
+
 	int tdc = dtime_in_ns/da1;
 	
 	dgtz["hitn"]      = hitn;
