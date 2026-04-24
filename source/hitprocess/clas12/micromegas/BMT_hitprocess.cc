@@ -80,13 +80,19 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 				}
 			}
 		}
-		
-		for (int j = 0; j <bmtc.NSECTORS ; ++j)
-		{
-			if (bmtc.AXIS[layer]==1) bmtc.HV_DRIFT[layer][j]=1800;
-			if (bmtc.AXIS[layer]==0) bmtc.HV_DRIFT[layer][j]=1500;
-			bmtc.HV_STRIPS[layer][j]=520;
-		}
+	}
+
+
+
+	// load drift HV for Lorentz angle calculation
+	snprintf(bmtc.database, sizeof(bmtc.database), "/calibration/mvt/bmt_voltage:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
+	data.clear(); calib->GetCalib(data,bmtc.database);
+	for(unsigned row = 0; row < data.size(); row++)
+	{
+		int sector = data[row][0];
+		int layer  = data[row][1];
+		bmtc.HV_DRIFT[layer-1][sector-1] = data[row][3];
+		bmtc.HV_STRIPS[layer-1][sector-1]=520;
 	}
 	
 	// all dimensions are in mm
@@ -234,7 +240,8 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 	}
 	
 	double depe = aStep->GetTotalEnergyDeposit();
-	
+	if(bmtc.HV_DRIFT[layer-1][sector-1]==0) depe=0;
+
 	// resetting depe for geantinos
 	if (aStep->GetTrack()->GetDefinition() == G4ChargedGeantino::ChargedGeantinoDefinition() ){
 		int np=G4Poisson( (aStep->GetStepLength()/cm) *1e4); // Warning... StepLength must be in cm... because it is 10 e- per cm for MIP
