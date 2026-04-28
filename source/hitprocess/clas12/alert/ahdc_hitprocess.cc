@@ -2,6 +2,7 @@
 #include "G4Poisson.hh"
 #include "Randomize.hh"
 
+
 #include <math.h>
 #include <random>
 
@@ -62,35 +63,19 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 	data.clear();
 
 	// read the time2distance table
-	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_to_distance:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_to_distance_wire:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	calib->GetCalib(data, ahdcc.database);
 	for(unsigned row = 0; row < data.size(); row++) {
-		//int sector = data[row][0];
-		//int layer  = data[row][1];
-		//int component  = data[row][2]; // wire id
-		ahdcc.T2D[0] = data[row][3];	
-		ahdcc.T2D[1] = data[row][4];	
-		ahdcc.T2D[2] = data[row][5];	
-		ahdcc.T2D[3] = data[row][6];	
-		ahdcc.T2D[4] = data[row][7];	
-		ahdcc.T2D[5] = data[row][8];
-		std::cout << "p0 : " << ahdcc.T2D[0] << std::endl;
-		std::cout << "p1 : " << ahdcc.T2D[1] << std::endl;
-		std::cout << "p2 : " << ahdcc.T2D[2] << std::endl;
-		std::cout << "p3 : " << ahdcc.T2D[3] << std::endl;
-		std::cout << "p4 : " << ahdcc.T2D[4] << std::endl;
-		std::cout << "p5 : " << ahdcc.T2D[5] << std::endl;
-		// for now we only have one row this table
-		// I add this condition in case the t2d table grows to act channel by channel
-		// If this happens, I will need to change the structure of the T2D
-		if (row > 1) break;
+		int sector = data[row][0];
+		int layer  = data[row][1];
+		int component  = data[row][2]; // wire id
+		for(int i = 0; i < 10; i++){
+			ahdcc.T2D[i][ahdcConstants::getUniqueId(sector, layer, component)] = data[row][i+3];
+		}
 	}
 	data.clear();
-	// inverse the time2distance
-	for (int i = 0; i < 50; i++) {
-		ahdcc.xi[i] = i*(350.0/50);
-		ahdcc.yi[i] = ahdcc.eval_t2d(ahdcc.xi[i]);
-	}
+	//after constants are loaded for T2D, we need the inverse function
+	ahdcc.initializeInverseT2D();
 	
 	return ahdcc;
 }
@@ -237,6 +222,13 @@ ahdcConstants ahdc_HitProcess::ahdcc = initializeAHDCConstants(-1);
 // -------------
 
 void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
+	vector<identifier> identity = aHit->GetId();
+	int sector    = 1;
+	int layer     = 10 * identity[0].id + identity[1].id ; // 10*superlayer + layer
+	int component = identity[2].id;
+	int wireid = ahdcConstants::getUniqueId(sector, layer, component);
+	
+	
 	vector<G4ThreeVector> Lpos        = aHit->GetLPos();
 	int nsteps = Lpos.size();
 	double LposX, LposY, LposZ;
@@ -315,7 +307,7 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 		//double new_H_abh = docadist(dseed);
 		//std::cout << "H_abh : " << H_abh << ", docasig : " << docasig << " ";
 		// Compute time
-		double driftTime = ahdcc_ptr->eval_inv_t2d(H_abh);
+		double driftTime = ahdcc_ptr->eval_inv_t2d(wireid, H_abh);
 		DriftTime.push_back(driftTime);
 		if (H_abh < doca) { 
 			doca = H_abh;

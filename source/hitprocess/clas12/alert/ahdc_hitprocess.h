@@ -3,6 +3,7 @@
 
 // gemc headers
 #include "HitProcess.h"
+#include "G4AdjointInterpolator.hh" //Geant 4 interpolation tools
 
 
 class ahdcConstants
@@ -53,28 +54,69 @@ public:
 	double get_T0(int sector, int layer, int component) { return T0Correction[getUniqueId(sector, layer, component)];}
 	double get_T0(int wireId) { return T0Correction[wireId];}
 	// time2distance 
-	double T2D[6]; // contains the coefficients of a polynomial fit : p0 + p1*x + ... + p5*x^5
-	double eval_t2d(double x) { return T2D[0] + T2D[1]*pow(x, 1.0) + T2D[2]*pow(x, 2.0) + T2D[3]*pow(x, 3.0) + T2D[4]*pow(x, 4.0) + T2D[5]*pow(x, 5.0);}
-	double xi[50];
-	double yi[50]; 
-	// inverse of the time2distance	
-	double eval_inv_t2d(double y) {
-		if (y < 0) {
-			return ((xi[1]-xi[0])/(yi[1]-yi[0]))*(y - yi[0]) + xi[0];
-		} 
-		else if (y >= yi[49]) {
-			return ((xi[49]-xi[48])/(yi[49]-yi[48]))*(y - yi[48]) + xi[48];
-		} else {
-			int i = 0;
-			while (i < 48) {
-				if ((y >= yi[i]) && (y < yi[i+1])) {
-					break;
-				}
-				i++;
+	double T2D[10][576]; // contains the coefficients of a fit per wire
+	double eval_t2d(int wireId, double t){
+		// T2D function consists of three 1st order polynomials (p1, p2, p3) and two transition functions (t1, t2).
+		double p1 = (T2D[0][wireId] + T2D[1][wireId]*t);
+		double p2 = (T2D[2][wireId] + T2D[3][wireId]*t);
+		double p3 = (T2D[4][wireId] + T2D[5][wireId]*t);
+		
+		double t1 = 1.0/(1.0 + exp(-(t - T2D[6][wireId])/T2D[7][wireId]));
+		double t2 = 1.0/(1.0 + exp(-(t - T2D[8][wireId])/T2D[9][wireId]));
+		
+		double retval = (p1)*(1.0 - t1) + (t1)*(p2)*(1.0 - t2) + (t2)*(p3);
+		return retval;
+	};
+	/*
+	vector<c2_ptr<double>> c2ps;
+	void initializeInverseT2D(){
+		c2_ptr<double> c2p;
+		c2_factory<double> cp;
+		double tmin = 0.0;
+		double tmax = 5.0;
+		double nstep = 50;
+		double tstep = (tmax - tmin)/nstep;
+		for(int i = 0; i < 576; i++){
+			vector<double> x;
+			vector<double> y;
+			for(int j = 0; j < nstep + 1; j++){
+				double t = tmin + (double)j*tstep;
+				x.push_back(t);
+				y.push_back(eval_t2d(i,t));
 			}
-			return ((xi[i+1]-xi[i])/(yi[i+1]-yi[i]))*(y - yi[i]) + xi[i];
+			c2p inverseT2D = c2.interpolating_function().load(y, x, true, 0, true, 0);
+			c2ps.psuh_back(inverseT2D);
+		}
+	};
+	*/
+	//distance to time variables:
+	vector<vector<double>> D2Tx;
+	vector<vector<double>> D2Ty;
+	void initializeInverseT2D(){
+		double tmin = 0.0;
+		double tmax = 5.0;
+		double nstep = 50;
+		double tstep = (tmax - tmin)/nstep;
+		for(int i = 0; i < 576; i++){
+			vector<double> x; //time
+			vector<double> y; //distance
+			for(int j = 0; j < nstep + 1; j++){
+				double t = tmin + (double)j*tstep;
+				x.push_back(t);
+				y.push_back(eval_t2d(i,t));
+			}
+			D2Tx.push_back(y); //x is now distance
+			D2Ty.push_back(x); //y is now time
 		}
 	}
+	
+	//G4AdjointInterpolator *interpolator = new G4AdjointInterpolator();
+	static G4AdjointInterpolator interpolator;
+	double eval_inv_t2d(int wireId, double dist){
+		//return c2ps[wireId](dist);
+		double retval = interpolator.Interpolate(dist, D2Tx[wireId], D2Ty[wireId], "Log");
+		return retval;
+	};
 };
 
 
@@ -318,7 +360,3 @@ class ahdcSignal {
 
 
 #endif
-
-
-
-
