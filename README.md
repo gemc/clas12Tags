@@ -3,7 +3,7 @@
 
 ## QuickStart
 
-Create the CLAS12 geometry database for the CND detector:
+Create the CLAS12 geometry database for the a detector (here we use CND)
 
 ```bash
 git clone https://github.com/gemc/clas12Tags
@@ -11,12 +11,11 @@ cd clas12Tags
 ./create_geometry.sh cnd     # build & install the CND detector databases
 ```
 
-Setup the environment at Jefferson Lab, load a tagged or the dev version of gemc:
+Setup the environment at Jefferson Lab, load a tagged version of gemc:
 
 ```bash
 module use /scigroup/cvmfs/geant4/modules
-module load gemc/5.11
-module load gemc/dev
+module load gemc/5.14
 ```
 
 Alternatively, use the [clas12 environment](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Environment_@_JLab)
@@ -106,9 +105,9 @@ module switch gemc/dev
 > 1) If you are testing perl API changes, point **GEMC** to your cloned clas12Tags directory.
 > 2) If you are testing geometry changes, point **GEMC_DATA_DIR** the cloned clas12Tags directory.
 > 3) If you are testing changes within the geometry_source directory, you do not need to set any  
-	 > additional variables, as the detectors gcards load the local geometry database.
+>    aditional variables, as the detectors gcards load the local geometry database.
 > 4) If you're testing changes in gemc code, make sure to use the `gemc` executable
-	 > in the cloned repository, or the one from the environment will be used instead.
+>    in your cloned repository (source/gemc), or the one from the environment will be used instead.
 
 ## Procedure:
 
@@ -119,7 +118,7 @@ git clone https://github.com/gemc/clas12Tags
 cd clas12Tags
 ```
 
-At this point you can either:
+At this point you can:
 
 1. create and install the geometry databases into the `experiments` directory
 2. debug / test a detector database inside the `geometry_source`
@@ -151,11 +150,13 @@ otherwise all will be processed.
 The script will install (if not present) the desired tagged coatjava in the directory
 `geometry_source` and run the geometry service for the requested detector(s).
 
+<br/>
 
 > [!Warning]
 > By default, the latest coatjava tag is used. This is also the suggested option.
 > Other tags can be used but they are not guaranteed to work.
 
+<br/>
 
 Examples:
 
@@ -199,6 +200,7 @@ cd geometry_source/ftof
 You will see in the local directory the ASCII databases (geometry and materials txt files),
 and the SQLite database `clas12.sqlite` will be updated with the new detector.
 
+<br/>
 
 > [!NOTE]
 > Each detector subdir has two sets of gcards:
@@ -275,6 +277,8 @@ installed on cvmfs. For example:
 ```bash
 gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
 ```
+
+<br/>
 
 > [!NOTE]
 > - Make sure that the clas12-config version is production for a tagged release,
@@ -374,6 +378,9 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 ## Citations
 
+Please make sure to cite the following paper if you use GEMC:
+
+
 - [Nucl. Instrum. Meth. A, Volume 959, 163422 (2020)](https://inspirehep.net/literature/1780020)
 - [EPJ Web of Conf. Volume 295, 05505 (2024)](https://www.epj-conferences.org/articles/epjconf/abs/2024/05/epjconf_chep2024_05005/epjconf_chep2024_05005.html)
 
@@ -403,10 +410,10 @@ Maurizio Ungaro
 
 - [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
 - [![Clas12-Config GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml)
-- [![Coatjava Validation](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/validation.yml)
 - [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
 - [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
 - [![Local Gcards Tests](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml)
+- [![Tracks Validation](https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml)
 
 ### Nightly
 
