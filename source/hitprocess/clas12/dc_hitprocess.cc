@@ -99,7 +99,8 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 		dcc.v0[sec][sl] = data[row][3] + data[row][4]*dpressure + data[row][5]*dpressure*dpressure;
 		dcc.vmid[sec][sl] = data[row][6] + data[row][7]*dpressure + data[row][8]*dpressure*dpressure;
 		dcc.tmaxsuperlayer[sec][sl] = data[row][9] + data[row][10]*dpressure + data[row][11]*dpressure*dpressure;
-		// Row left out, corresponds to distbeta
+		// Row corresponding to distbeta
+                dcc.distbeta[sec][sl] = data[row][12] + data[row][13]*dpressure + data[row][14]*dpressure*dpressure;
 		dcc.delta_bfield_coefficient[sec][sl] = data[row][15] + data[row][16]*dpressure + data[row][17]*dpressure*dpressure;
 		dcc.deltatime_bfield_par1[sec][sl] = data[row][18] + data[row][19]*dpressure + data[row][20]*dpressure*dpressure;
 		dcc.deltatime_bfield_par2[sec][sl] = data[row][21] + data[row][22]*dpressure + data[row][23]*dpressure*dpressure;
@@ -382,6 +383,12 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// unsmeared time, based on the dist-time-function and alpha;
 	double unsmeared_time = calc_Time(doca/cm,dcc.dmaxsuperlayer[SLI],dcc.tmaxsuperlayer[SECI][SLI],alpha,thisMgnf,SECI,SLI);
 	
+        // add beta-dependent time-walk:
+        double beta_timewalk = calc_TimeBeta(doca/cm, beta_particle, SECI, SLI);
+        
+        // add it to the unsmeared time:
+        unsmeared_time += beta_timewalk;
+
 	// Include time smearing calculated from doca resolution
 	double dt_random_in = doca_smearing(X, beta_particle, SECI, SLI);
 	//double dt_random = dt_random_in*CLHEP::RandLandau::shoot();
@@ -564,7 +571,7 @@ double dc_HitProcess :: calc_Time_exp(double x, double dmax, double tmax, double
 	return rtime;
 }
 
-// NEW Polynomial function: returns a time in ns give:
+// NEW Polynomial function: returns a time in ns given:
 // x      = distance from the wire, in cm
 // dmax   = cell size in superlayer
 // tmax   = t max in superlayer
@@ -606,6 +613,20 @@ double dc_HitProcess :: calc_Time(double x, double dmax, double tmax, double alp
 	return time;
 }
 
+
+// Beta-dependent timewalk: returns a time in ns given:
+// x            = distance from the wire, in cm
+// beta         = beta of the particle
+// sector       = sector
+// superlayer   = superlayer
+double dc_HitProcess :: calc_TimeBeta(double x, double beta, int sector, int superlayer)
+{       double v0 = dcc.v0[sector][superlayer];
+        double distbeta = dcc.distbeta[sector][superlayer]; 
+
+        double time = (0.5*pow(beta*beta*distbeta,3)*x/(pow(beta*beta*distbeta,3)+x*x*x))/v0;
+
+        return time;
+}
 // Define DOCA smearing based on data parameterization
 // x: distance from the wire normalized to the cell size
 // beta: beta of the particle
