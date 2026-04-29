@@ -92,8 +92,8 @@ map<string, HitProcess_Factory> HitProcess_Map(string experiments)
 			hitMap["rtpc"]      = &rtpc_HitProcess::createHitClass;
 			hitMap["urwt"]      = &urwt_HitProcess::createHitClass;
 			hitMap["mucal"]     = &mucal_HitProcess::createHitClass;
-           		hitMap["muvt"]      = &muvt_HitProcess::createHitClass;
-           		hitMap["murt"]      = &murt_HitProcess::createHitClass;
+           	hitMap["muvt"]      = &muvt_HitProcess::createHitClass;
+           	hitMap["murt"]      = &murt_HitProcess::createHitClass;
 			hitMap["recoil"]    = &recoil_HitProcess::createHitClass;
 		} else if(EXP == "HPS") {
 			// Aprime

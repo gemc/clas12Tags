@@ -204,7 +204,17 @@ log_dir=$SIM_HOME/logs
 if [[ -z "${AUTOBUILD}" ]]; then
 	echo "\nNot in container"
 else
-	echo "\nIn docker container."
+
+	echo "\nIn docker container, sourcing local setup and loading gemc, ccdb and hipo"
+	if [[ -n "${GITHUB_WORKFLOW}" ]]; then
+		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
+	fi
+	source /etc/profile.d/localSetup.sh
+	module switch gemc/dev
+	module load hipo
+	module load ccdb
+	echo
+
 	# recent versions of Git refuse to touch a repository whose on-disk owner
 	# doesn’t match the UID that is running the command
 	# mark the workspace (and any nested path) as safe
@@ -212,27 +222,28 @@ else
 	git config --global --add safe.directory '*'
 	enable_git_describe
 	log_dir=/root/clas12Tags/logs
-fi
+	mkdir -p $log_dir
+	setup_log=$log_dir/setup.log
+	compile_log=$log_dir/build.log
+	install_log=$log_dir/install.log
+	gemc_install_show=$log_dir/show_install.log
+	geo_log=$log_dir/geo.log
+	touch $setup_log $compile_log $install_log $gemc_install_show $geo_log
 
-echo  "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
-export GEMC=$SIM_HOME/gemc/dev
-export GEMC_DATA_DIRC=${GEMC}
-export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
-export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
-export PATH=${PATH}:${GEMC}/bin
-export LD_LIBRARY_PATH=${PATH}:${GEMC}/lib
-export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
+	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
+	export GEMC=$SIM_HOME/gemc/dev
+	export GEMC_DATA_DIRC=${GEMC}
+	export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
+	export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
+	export PATH=${PATH}:${GEMC}/bin
+	export LD_LIBRARY_PATH=${PATH}:${GEMC}/lib
+
+	export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
+
+fi
 
 # detect cores and cap at 16
 cores=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)
 jobs=$((cores < 16 ? cores : 16))
 
-mkdir -p $log_dir
-setup_log=$log_dir/setup.log
-compile_log=$log_dir/build.log
-install_log=$log_dir/install.log
-gemc_install_show=$log_dir/show_install.log
-geo_log=$log_dir/geo.log
-
-touch $setup_log $compile_log $install_log $gemc_install_show $geo_log
 echo

@@ -30,6 +30,7 @@
 
 const char* GEMC_VERSION = "gemc dev";
 
+
 // G4 headers
 #include "G4RunManagerFactory.hh"
 #include "G4UImanager.hh"

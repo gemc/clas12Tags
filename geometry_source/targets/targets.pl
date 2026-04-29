@@ -63,6 +63,8 @@ my @rgb = qw(
 
 my @rgc = qw(
     rgc_summer2022
+    rgc_fall2022
+    rgc_spring2023
 );
 
 my @rge = qw(

@@ -56,7 +56,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: Fix Java Version
@@ -76,12 +76,10 @@ jobs:
         run: |
           ./ci/build_gemc.sh
       - name: ${{ matrix.ntracks }} test
-        env:
-          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           ./ci/ntracks_metricks.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tracklogs-${{ matrix.ntracks }}
           path: |

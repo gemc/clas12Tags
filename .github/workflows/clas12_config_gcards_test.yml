@@ -3,7 +3,6 @@ permissions:
   contents: read
   pull-requests: write
 
-# Triggers the workflow on all pushes to main and all pull requests
 on:
   pull_request:
   merge_group:
@@ -14,11 +13,8 @@ on:
       - "**/*.md"
       - "release_notes/**"
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-  # Allows this workflow to be called by other workflows
-  # Thus the checkout with repository: ${{ 'gemc/clas12Tags' }} is added
   workflow_call:
     inputs:
       branch:
@@ -35,13 +31,14 @@ jobs:
           echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
 
   generate-matrix:
+    name: Generate GCards Matrix
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-fedora36
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Creates list of gcards
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - id: set-matrix
@@ -53,6 +50,7 @@ jobs:
           echo "matrix=$( echo "$JSON" | tr -d '\n' )" >> $GITHUB_OUTPUT
 
   gcard-test:
+    name: ${{ matrix.gcard }}
     needs: generate-matrix
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -61,7 +59,7 @@ jobs:
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: Fix Java Version
@@ -71,7 +69,7 @@ jobs:
           distribution: 'zulu'
       - name: Install Git LFS
         run: |
-          dnf -y install git-lfs 
+          dnf -y install git-lfs
       - name: Build Coatjava
         run: |
           cd ./geometry_source
@@ -81,12 +79,10 @@ jobs:
         run: |
           ./ci/build_gemc.sh
       - name: ${{ matrix.gcard }} tests
-        env:
-          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           ./ci/clas12_config_gcards_test.sh -g ${{ matrix.gcard }}
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildlogs-${{ matrix.gcard }}
           path: |
@@ -95,6 +91,7 @@ jobs:
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
 
   clas12-config-gcards-test-final:
+    name: Clas12-Config GCards Tests
     needs:
       - generate-matrix
       - gcard-test

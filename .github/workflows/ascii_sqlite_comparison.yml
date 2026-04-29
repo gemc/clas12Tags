@@ -18,7 +18,7 @@ jobs:
     container: jeffersonlab/gemc:dev-almalinux94
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: Notary
         run: |
           ./ci/report_runs_and_variations.sh  > Summary.md
@@ -51,7 +51,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh
@@ -59,7 +59,7 @@ jobs:
         run: |
           ./ci/txt_sql_geometry_comparison.sh -d ${{ matrix.detector }}
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: geologs-${{ matrix.detector }}
           path: /root/logs/
@@ -102,7 +102,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: Fix Java Version
         uses: actions/setup-java@v5
         with:
@@ -118,7 +118,7 @@ jobs:
         run: |
           ./ci/txt_sql_run_comparison.sh -d ${{ matrix.detector }} -v ${{ matrix.variation }}
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: gemclogs-${{ matrix.detector }}-${{ matrix.variation }}
           path: /root/logs/

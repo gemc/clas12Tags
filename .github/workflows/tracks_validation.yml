@@ -35,7 +35,8 @@ jobs:
           echo "BRANCH_NAME=${{ inputs.branch || github.ref_name }}" >> $GITHUB_OUTPUT
 
 
-  ntracks-metrics:
+  tracks-validation:
+    name: Validation (${{ matrix.gen_type }})
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -52,7 +53,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
       - name: Fix Java Version
@@ -72,8 +73,6 @@ jobs:
         run: |
           ./ci/build_gemc.sh
       - name: ${{ matrix.gen_type }} # notice: assuming same clas12-default gcard
-        env:
-          BRANCH_NAME: ${{ steps.vars.outputs.BRANCH_NAME }}
         run: |
           ./ci/tracks_validation.sh -g ${{ matrix.gcard }} -l ${{ matrix.gen_type }}
       - name: Efficiency summary (eff.log)
@@ -82,7 +81,7 @@ jobs:
         run: |
           ./ci/eff_summary.sh /root/logs/eff.log
       - name: Upload logs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: tracklogs-${{ matrix.gen_type }}
           path: |
@@ -91,3 +90,18 @@ jobs:
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
 
+  tracks-validation-final:
+    name: Tracks Validation
+    needs:
+      - tracks-validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: fail
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        run: |
+          echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
+          exit 1
+      - name: pass
+        run: |
+          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          exit 0

@@ -12,7 +12,16 @@ HitProcess *getHitProcess(map<string, HitProcess_Factory> *hitProcessMap, string
 	}
 	
 	if(hitProcessMap->find(HCname) == hitProcessMap->end()) {
-		cout << endl << "  !!! Error: >" << HCname << "< NOT FOUND IN  ProcessHit Map - exiting." << endl;
+		cout << endl << "  !!! Error: >" << HCname << "< NOT FOUND IN  ProcessHit Map" << endl;
+
+		// list entries in hitProcessMap
+		cout << " List of entries in the map:" << endl;
+		for (auto& [name, pointer]: *hitProcessMap) {
+			cout << name << ": " << pointer << endl;
+		}
+
+		cout << endl << " exiting." << endl;
+
 		exit(1);
 	}
 	return (*hitProcessMap)[HCname]();

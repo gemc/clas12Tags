@@ -56,7 +56,6 @@ function compile_gemc {
 	echo
 
 	cd source
-
 	echo
 	echo " > Running meson setup build $=meson_option" | tee -a $setup_log
 	meson setup build $=meson_option >>$setup_log

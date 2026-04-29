@@ -20,6 +20,7 @@ on:
 jobs:
 
   local-gcards-test:
+    name: (${{ matrix.detector }})
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -44,7 +45,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@main
+        uses: actions/checkout@v6
       - name: Fix Java Version
         uses: actions/setup-java@v5
         with:
@@ -65,7 +66,7 @@ jobs:
         run: |
           ./ci/local_gcards_test.sh -d ${{ matrix.detector }}
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: buildlogs-${{ matrix.detector }}
           path: |
@@ -74,6 +75,7 @@ jobs:
             /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
 
   local-gcards-test-final:
+    name: Local Gcards Test
     needs:
       - local-gcards-test
     runs-on: ubuntu-latest
