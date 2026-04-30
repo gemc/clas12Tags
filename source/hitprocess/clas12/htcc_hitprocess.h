@@ -35,6 +35,9 @@ public:
 	// veff: time shift
 	vector<double> tshift[6][2];
 	
+       	// ring time shift
+        vector<double> rshift;
+        
 	// nephe to ADC conversion factors
 	vector<double> gain[6][2];
 
