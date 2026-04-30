@@ -120,6 +120,9 @@ public:
 	// returns a time given a distance: neew polynomial function
 	double calc_Time(double x, double dmax, double tmax, double alpha, double bfield, int sector, int superlayer);
 	
+	// beta-dependent ttime walk
+	double calc_TimeBeta(double x, double beta, int sector, int superlayer);
+
 	// returns time walks according to ionisation process:
 	double doca_smearing(double x, double beta, int sector, int superlayer);
 	
