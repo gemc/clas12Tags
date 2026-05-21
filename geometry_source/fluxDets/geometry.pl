@@ -49,7 +49,7 @@ sub makeFlux {
         my $material = "G4_Galactic";
 
 
-	# pokyvone in the central region
+	# polycone in the central region
         my $central_nplanes = 3;
         my @central_iradius = (250.0, 250.0, 57.6);
         my @central_zpos_root = (-400.0, 333.0, 416.0);
@@ -78,43 +78,47 @@ sub makeFlux {
         print_det(\%configuration, \%detector);
 
     
-	# cone before and after the shield
-        my $shield_nplanes = 2;
+	# trapezoid before and after the shield
+        my $shield_nsectors = 6;
+        my $shield_nlayers = 2;
+        my @shield_distance = (580, 1400);
 	my $shield_theta = 25 * $pi/180;
-	my @shield_angle = (40, 7);
-        my @shield_distance = (596, 1400);
-        my @shield_oradius = (882.7, 150.3);
-        my @shield_zpos_root = (1132.3, 1473.8);
-    
-        for(my $ishield=0; $ishield<2; $ishield++) {
-	        $dimen = "0.0*deg 360*deg $shield_nplanes*counts";
-	        for(my $i = 0; $i <$shield_nplanes; $i++) {
-			my $shield_iradius = $shield_distance[$ishield] * (sin($shield_theta) + cos($shield_theta)*tan($shield_angle[$i]*$pi/180-$shield_theta)); 
-			$dimen = $dimen ." $shield_iradius*mm";
-		}
-	        for(my $i = 0; $i <$shield_nplanes; $i++) {
-			my $shield_oradius = $shield_distance[$ishield] * (sin($shield_theta) + cos($shield_theta)*tan($shield_angle[$i]*$pi/180-$shield_theta)) + $thickness; 
-			$dimen = $dimen ." $shield_oradius*mm";
-		}
-	        for(my $i = 0; $i <$shield_nplanes; $i++) {
-			my $shield_z = $shield_distance[$ishield] * (cos($shield_theta) - sin($shield_theta)*tan($shield_angle[$i]*$pi/180-$shield_theta)); 
-			$dimen = $dimen ." $shield_z*mm";
-		}
-		my $shield = $ishield+1;
-	        %detector = init_det();
-    		$detector{"name"}        = "ddvcs_shield_flux$shield";
- 	   	$detector{"mother"}      = "root";
-	    	$detector{"description"} = "ddvcs shield flux $shield";
-    		$detector{"color"}       = "aa0088";
-    		$detector{"type"}        = "Polycone";
-    		$detector{"dimensions"}  = $dimen;
-        	$detector{"pos"}         = "0.0*cm 0.0*cm 0.0*cm";
-        	$detector{"material"}    = $material;
-        	$detector{"style"}       = 1;
-        	$detector{"sensitivity"} = "flux";
-        	$detector{"hit_type"}    = "flux";
-        	$detector{"identifiers"} = "id manual 2$shield";
-        	print_det(\%configuration, \%detector);
+	my @shield_angle = (7, 37);
+
+        for(my $il=0; $il<$shield_nlayers; $il++) {
+		my $shield_r1 = $shield_distance[$il] * (sin($shield_theta) + cos($shield_theta)*tan($shield_angle[0]*$pi/180-$shield_theta)); 
+        	my $shield_z1 = $shield_distance[$il] * (cos($shield_theta) - sin($shield_theta)*tan($shield_angle[0]*$pi/180-$shield_theta)); 
+                my $shield_w1 = $shield_r1*tan($pi*0.999/6);
+                my $shield_r2 = $shield_distance[$il] * (sin($shield_theta) + cos($shield_theta)*tan($shield_angle[1]*$pi/180-$shield_theta)); 
+        	my $shield_z2 = $shield_distance[$il] * (cos($shield_theta) - sin($shield_theta)*tan($shield_angle[1]*$pi/180-$shield_theta)); 
+                my $shield_w2 = $shield_r2*tan($pi*0.999/6);
+                my $shield_dh = ($shield_r2-$shield_r1)/2/cos($shield_theta);
+                my $shield_dz = $thickness/2;
+
+                for(my $is=0; $is<$shield_nsectors; $is++) {
+        
+        		my $shield = ($is+1)*10+$il+1;
+                        my $shield_ph = 90-$is*60;
+                        my $shield_xc = ($shield_r2+$shield_r1)/2*cos($is*$pi/3);
+                        my $shield_yc = ($shield_r2+$shield_r1)/2*sin($is*$pi/3);        
+                        my $shield_zc = ($shield_z2+$shield_z1)/2;
+
+                        %detector = init_det();
+                        $detector{"name"}        = "ddvcs_shield_flux$shield";
+                        $detector{"mother"}      = "root";
+                        $detector{"description"} = "ddvcs shield flux $shield";
+                        $detector{"color"}       = "aa0088";
+                        $detector{"type"}        = "G4Trap";
+                        $detector{"dimensions"}  = "$shield_dz*mm -$shield_theta*rad 90*deg $shield_dh*mm $shield_w1*mm $shield_w2*mm 0 $shield_dh*mm $shield_w1*mm $shield_w2*mm 0";
+                        $detector{"pos"}         = "$shield_xc*mm $shield_yc*mm $shield_zc*mm";
+                        $detector{"rotation"}    = "ordered: zyx $shield_ph*deg 0 $shield_theta*rad";
+                        $detector{"material"}    = $material;
+                        $detector{"style"}       = 1;
+                        $detector{"sensitivity"} = "flux";
+                        $detector{"hit_type"}    = "flux";
+                        $detector{"identifiers"} = "id manual $shield";
+                        print_det(\%configuration, \%detector);
+                }
 	}
 
 	# cone before FTOF
