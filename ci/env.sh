@@ -98,7 +98,7 @@ runs_for_system() {
 	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" || $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "micromegas" ]]; then
-		echo "11 11620 15016"
+		echo "11 11620 15016 19200"
 	elif [[ $system == "ltcc" ]]; then
 		echo "11 3029 4763 6150 11323 15016"
 	elif [[ $system == "rich" ]]; then
@@ -202,6 +202,22 @@ variations_for_run_and_system()  {
 	elif [[ $1 == "21003" ]]; then
 		echo "rgl_spring2025"
 	fi
+}
+
+run_number_for_gcard() {
+	local gcard_name=$1
+
+	case $gcard_name in
+		rgk_winter2023*)
+			echo 19200
+			;;
+		rgk_spring2024*)
+			echo 19300
+			;;
+		*)
+			echo 11
+			;;
+	esac
 }
 
 # show environment
