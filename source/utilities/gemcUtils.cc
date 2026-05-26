@@ -18,6 +18,7 @@ using namespace gstring;
 
 
 // C++ headers
+#include <algorithm>
 #include "dirent.h"
 
 gui_splash::gui_splash(goptions opts) {
@@ -210,6 +211,7 @@ int get_sql_run_number(QSqlDatabase db, string system_name, string v, int run, s
     string dbexecute = " select DISTINCT run from " + table_name;
     dbexecute += " where variation = '" + v;
     dbexecute += "' and system = '" + system_name + "'";
+    dbexecute += " order by run";
 
     vector<int> run_numbers;
 
@@ -231,6 +233,7 @@ int get_sql_run_number(QSqlDatabase db, string system_name, string v, int run, s
     }
 
     // Find largest run number <= run
+    sort(run_numbers.begin(), run_numbers.end());
     auto it = upper_bound(run_numbers.begin(), run_numbers.end(), run);
     if (it != run_numbers.begin()) {
         --it;
