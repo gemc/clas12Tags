@@ -83,6 +83,11 @@ my @rgf = qw(
     rgf_spring2020
 );
 
+my @rgk = qw(
+    rgk_fall2023
+    rgk_spring2024
+);
+
 my @rgl = qw(
     rgl_spring2025_H2
     rgl_spring2025_D2
@@ -107,7 +112,7 @@ my @rgd = qw(
   rgd_fall2023_empty
 );
 
-my @variations = ("default", @rga, @rgb, @rgc, @rge, @rgf, @rgl, @rgm, @rgd);
+my @variations = ("default", @rga, @rgb, @rgc, @rge, @rgf, @rgk, @rgl, @rgm, @rgd);
 
 my @runs = clas12_runs(@variations);
 my $system = $configuration{'detector_name'};
@@ -153,10 +158,31 @@ foreach my $run (@runs) {
 # port gxml to sqlite
 require "gxml_to_sqlite.pl";
 
-# default is the same for rga/rgb/rgf and the rgm targets
-foreach my $variation ("default") {
-    $configuration{"run_number"} = clas12_run($variation);
-    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/targets/cad");
+sub process_target_cad {
+    my $variation = shift;
+    my $gxml_file = shift;
+    my $cad_dir = shift;
+
+    $configuration{"variation"} = "default";
+    foreach my $run (clas12_runs_for_variations($variation)) {
+        $configuration{"run_number"} = $run;
+        process_gxml($gxml_file, $cad_dir);
+    }
 }
 
+# default is the same for rga/rgb/rgf and the liquid rgm targets
+foreach my $variation ("default", @rga, @rgb, @rgf) {
+    process_target_cad($variation, "cad/cad_default.gxml", "experiments/clas12/targets/cad");
+}
 
+foreach my $variation (@rgk) {
+    process_target_cad($variation, "cad/cad_$variation.gxml", "experiments/clas12/targets/cad");
+}
+
+foreach my $variation (@rgd) {
+    process_target_cad($variation, "cad/cad_$variation.gxml", "experiments/clas12/targets/cad");
+}
+
+foreach my $variation (@rge) {
+    process_target_cad($variation, "cad_rge/cad_$variation.gxml", "experiments/clas12/targets/cad_rge");
+}

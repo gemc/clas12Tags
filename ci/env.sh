@@ -110,7 +110,7 @@ runs_for_system() {
 	elif [[ $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "targets" ]]; then
-		echo "11 3029 4763 6150 6608 11093 $rgm_runs $rgd_runs $rge_runs $rgl_runs"
+		echo "11 3029 4763 6150 6608 11093 19200 19300 $rgm_runs $rgd_runs $rge_runs $rgl_runs"
 	fi
 }
 

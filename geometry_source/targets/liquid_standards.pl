@@ -130,6 +130,8 @@ sub build_liquid_standard_cell {
         or $configuration_string eq "rga_spring2018"
         or $configuration_string eq "rga_fall2018"
         or $configuration_string eq "rga_spring2019"
+        or $configuration_string eq "rgk_fall2023"
+        or $configuration_string eq "rgk_spring2024"
         or $configuration_string eq "lH2e") {
         $detector{"material"} = "G4_lH2";
     }
