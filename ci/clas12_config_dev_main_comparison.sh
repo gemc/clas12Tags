@@ -96,6 +96,7 @@ log_file_summary=/root/logs/"$experiment"_output_summary.log
 touch  $log_file_run $log_file_compare $log_file_detail $log_file_summary
 
 nevents=100
+run_number=$(run_number_for_gcard "$gcard")
 
 # running gemc with TEXT factory, $digi_var, and compare it with SQLITE factory, default
 
@@ -107,11 +108,11 @@ outfile2="main_"$experiment".hipo"
 
 echo   "Running gemc for dev gcard: $gcard_dev, log to $log_file_run "
 echo   "Running gemc for dev gcard: $gcard_dev " >>$log_file_run
-gemc   -USE_GUI=0 "$gcard_dev"  -N="$nevents" -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="11" -DIGITIZATION_VARIATION="default" -BEAM_P="e-, 4*GeV, 50*deg, 20*deg" -SPREAD_P="1*GeV, 30*deg, 180*deg" >>$log_file_run
+gemc   -USE_GUI=0 "$gcard_dev"  -N="$nevents" -OUTPUT="hipo, $outfile1" -RANDOM=123 -RUNNO="$run_number" -DIGITIZATION_VARIATION="default" -BEAM_P="e-, 4*GeV, 50*deg, 20*deg" -SPREAD_P="1*GeV, 30*deg, 180*deg" >>$log_file_run
 
 echo   "Running gemc for main gcard: $gcard_main, log to $log_file_run"
 echo   "Running gemc for main gcard: $gcard_main " >>$log_file_run
-gemc   -USE_GUI=0 "$gcard_main" -N="$nevents" -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="11" -DIGITIZATION_VARIATION="default" -BEAM_P="e-, 4*GeV, 50*deg, 20*deg" -SPREAD_P="1*GeV, 30*deg, 180*deg" >>$log_file_run
+gemc   -USE_GUI=0 "$gcard_main" -N="$nevents" -OUTPUT="hipo, $outfile2" -RANDOM=123 -RUNNO="$run_number" -DIGITIZATION_VARIATION="default" -BEAM_P="e-, 4*GeV, 50*deg, 20*deg" -SPREAD_P="1*GeV, 30*deg, 180*deg" >>$log_file_run
 
 echo
 echo   "\n\nContent of directory after running gemc: "

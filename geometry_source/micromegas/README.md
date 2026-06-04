@@ -1,5 +1,7 @@
 # Geometry 
 
+
+
 The geometry consists of central barrel (BMT) and a forward one (FMT) of micromegas detectors.
 
 # Run Configurations
@@ -29,6 +31,28 @@ This will:
 2. add detector run entries to the ../../clas12.sqlite database
 
 
+# Z positions
+
+The z positions of `BMT` are determined by these parameters:
+
+- BMT_endPCB_zpos
+- BMT_zpos_layer1
+- BMT_zpos_layer2
+- BMT_zpos_layer3
+- BMT_zpos_layer4
+- BMT_zpos_layer5
+- BMT_zpos_layer6
+
+
+The z positions of `FMT` are determined by these parameters:
+
+- FMT_mothervol_zmin
+- FMT_mothervol_zmax
+
+
+To match the positions assigned in the clas12-config gcards of BMT and FMT,
+the spring2018 parameters have been subtracted by -1.94 cm. All the remaining
+non default ones by -3cm.
 
 ## Geometry comparison:
 

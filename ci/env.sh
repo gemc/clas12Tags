@@ -98,7 +98,7 @@ runs_for_system() {
 	elif [[ $system == "htcc" || $system == "ctof" || $system == "cnd" || $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "micromegas" ]]; then
-		echo "11 11620 15016"
+		echo "11 11620 15016 19200"
 	elif [[ $system == "ltcc" ]]; then
 		echo "11 3029 4763 6150 11323 15016"
 	elif [[ $system == "rich" ]]; then
@@ -106,11 +106,11 @@ runs_for_system() {
 	elif [[ $system == "ft" ]]; then
 		echo "11 5874 6150 11620 16043 20000"
 	elif [[ $system == "beamline" ]]; then
-		echo "11 5874 6150 11620 16043 16843 20000 21000"
+		echo "11 3029 5874 6150 11620 16000 16843 18304 20000 21000"
 	elif [[ $system == "magnets" ]]; then
 		echo "11 3029 4763"
 	elif [[ $system == "targets" ]]; then
-		echo "11 3029 4763 6150 6608 11093 $rgm_runs $rgd_runs $rge_runs $rgl_runs"
+		echo "11 3029 4763 6150 6608 11093 19200 19300 $rgm_runs $rgd_runs $rge_runs $rgl_runs"
 	fi
 }
 
@@ -125,7 +125,7 @@ variations_for_run_and_system()  {
 		echo "rgk_fall2018"
 	elif [[ $1 == "5874" ]]; then
 		echo "rgk_winter2018"
-	elif [[ $1 == "6141" ]]; then
+	elif [[ $1 == "6150" ]]; then
 		echo "rgb_spring2019"
 	elif [[ $1 == "6607" ]]; then
 		echo "rga_spring2019"
@@ -133,7 +133,7 @@ variations_for_run_and_system()  {
 		echo "rgb_fall2019"
 	elif [[ $1 == "11323" ]]; then
 		echo "rgb_spring2020"
-	elif [[ $1 == "11607" ]]; then
+	elif [[ $1 == "11620" ]]; then
 		echo "rgf_spring2020"
 	elif [[ $1 == "12321" ]]; then
 		echo "rgf_summer2020"
@@ -163,6 +163,8 @@ variations_for_run_and_system()  {
 		echo "rgc_fall2022"
 	elif [[ $1 == "17471" ]]; then
 		echo "rgc_spring2023"
+	elif [[ $1 == "18304" ]]; then
+		echo "rgd_fall2023"
 	elif [[ $1 == "18347" || $1 == "18372"  || $1 == "18560" || $1 == "18660" || $1 == "18874"  || $1 == "19061" ]]; then
 		echo "rgd_fall2023_CuSn"
 	elif [[ $1 == "18339" || $1 == "18369"  || $1 == "18400" || $1 == "18440" || $1 == "18440"  || $1 == "18440" ]]; then
@@ -175,6 +177,8 @@ variations_for_run_and_system()  {
 		echo "rgk_fall2023"
 	elif [[ $1 == "19300" ]]; then
 		echo "rgk_spring2024"
+	elif [[ $1 == "20000" ]]; then
+		echo "rge_spring2024"
 	elif [[ $1 == "20070" ]]; then
 		echo "rge_spring2024_Empty_C"
 	elif [[ $1 == "20035" || $1 == "20507" ]]; then
@@ -202,6 +206,22 @@ variations_for_run_and_system()  {
 	elif [[ $1 == "21003" ]]; then
 		echo "rgl_spring2025"
 	fi
+}
+
+run_number_for_gcard() {
+	local gcard_name=$1
+
+	case $gcard_name in
+		rgk_winter2023*)
+			echo 19200
+			;;
+		rgk_spring2024*)
+			echo 19300
+			;;
+		*)
+			echo 11
+			;;
+	esac
 }
 
 # show environment
