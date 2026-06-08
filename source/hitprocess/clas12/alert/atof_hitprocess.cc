@@ -66,9 +66,9 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     ilay = data[row][1];
     icomponent = data[row][2];
     atc.timeOffsetTable[isec][ilay][icomponent].value = data[row][4];
-    atc.timeOffsetTable[isec][ilay][icomponent].dvalue = data[row][7];
+    atc.timeOffsetTable[isec][ilay][icomponent].dvalue = 0.150;//150ps resolution
     atc.timeUDTable[isec][ilay][icomponent].value = data[row][5];
-    atc.timeUDTable[isec][ilay][icomponent].dvalue = data[row][8];
+    atc.timeUDTable[isec][ilay][icomponent].dvalue = 0.212132;///sqrt(2)*150ps resolution
   }
   return atc;
 }
@@ -146,7 +146,14 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
   //Time offset between up/downstream bar channels
   double tUD = G4RandGauss::shoot(atc.timeUDTable[atof_sector][atof_layer][atof_component].value,
 				  atc.timeUDTable[atof_sector][atof_layer][atof_component].dvalue);
+  
+  //Run-dependent radiation damage slope
+  double slope = G4RandGauss::shoot(atc.slopeTable[atof_sector][atof_layer][atof_component].value,
+				    atc.slopeTable[atof_sector][atof_layer][atof_component].dvalue);
+  double intersect = G4RandGauss::shoot(atc.intersectTable[atof_sector][atof_layer][atof_component].value,
+					atc.intersectTable[atof_sector][atof_layer][atof_component].dvalue);
 
+  
   //---Looping over steps---//
   for(unsigned int s=0; s<tInfos.nsteps; s++)
     {
@@ -194,6 +201,10 @@ map<string, double> atof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
     if(atof_order==1) time += tUD/2;
     else time += -tUD/2;
   }
+
+  //run-dependent slope correction (set to 0 for run 11, but is used for actual run numbers)
+  double dt   = (atc.runNo - intersect) * slope;
+  time =  time + dt;
   
   dgtz["hitn"]      = hitn;
   dgtz["sector"]    = atof_sector; //Sector ranges from 0 to 14 counterclockwise when z is pointing towards us
