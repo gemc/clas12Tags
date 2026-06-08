@@ -40,7 +40,12 @@ public:
 	 double ecalD[24][3][2];
 	 double ecalN[24][3][2];
 	 */
-	
+
+	// tdc jitter parameters
+	double jitter_period;
+	int    jitter_phase;
+	int    jitter_cycles;
+
 	int status_L[24][3][2];
 	int status_R[24][3][2];
 	double threshold_L[24][3][2];

@@ -1135,8 +1135,8 @@ void MEventAction::setup_clas12_RF(int runno) {
 		cout << " Connecting to " << database << endl;
 		data.clear();
 		calib->GetCalib(data, database);
-		double offset1 = data[0][3];
-		double offset2 = data[1][3];
+		double offset1 = -data[0][3];
+		double offset2 = -data[1][3];
 
 		rfvalue_strings = {to_string(clock), to_string(prescale), to_string(offset1), "20", to_string(offset2)};
 		set_and_show_rf_setup();

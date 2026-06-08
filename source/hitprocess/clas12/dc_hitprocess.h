@@ -43,8 +43,13 @@ public:
 	//parameters for time to distance:
 	double deltanm[6][6], v0[6][6], delta_bfield_coefficient[6][6],tmaxsuperlayer[6][6];
 	double deltatime_bfield_par1[6][6], deltatime_bfield_par2[6][6], deltatime_bfield_par3[6][6], deltatime_bfield_par4[6][6];
-	double vmid[6][6], R[6][6];
+	double vmid[6][6], R[6][6], distbeta[6][6];
 	double dmaxsuperlayer[6];
+
+	// tdc jitter parameters
+	double jitter_period;
+	int    jitter_phase;
+	int    jitter_cycles;
 	
 	// sector, SL, slot, cable
 	double T0Correction[6][6][7][6];
@@ -114,6 +119,9 @@ public:
 	
 	// returns a time given a distance: neew polynomial function
 	double calc_Time(double x, double dmax, double tmax, double alpha, double bfield, int sector, int superlayer);
+
+	// beta-dependent time walk
+	double calc_TimeBeta(double x, double beta, int sector, int superlayer);
 	
 	// returns time walks according to ionisation process:
 	double doca_smearing(double x, double beta, int sector, int superlayer);
