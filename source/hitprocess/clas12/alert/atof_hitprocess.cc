@@ -69,6 +69,10 @@ static atofConstants initializeATOFConstants(int runno, string digiVariation = "
     atc.timeOffsetTable[isec][ilay][icomponent].dvalue = 0.150;//150ps resolution
     atc.timeUDTable[isec][ilay][icomponent].value = data[row][5];
     atc.timeUDTable[isec][ilay][icomponent].dvalue = 0.212132;///sqrt(2)*150ps resolution
+    atc.slopeTable[isec][ilay][icomponent].value = data[row][7];
+    atc.slopeTable[isec][ilay][icomponent].dvalue = 0;
+    atc.intersectTable[isec][ilay][icomponent].value = data[row][8];
+    atc.intersectTable[isec][ilay][icomponent].dvalue = 0;
   }
   return atc;
 }
