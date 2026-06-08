@@ -35,6 +35,9 @@ public:
   // value: effective velocity
   //sector,layer,component,(value,dvalue)
   entryWithError veffTable[NSECT][NLAY][NCOMP];
+  //run-dependent slope
+  entryWithError slopeTable[NSECT][NLAY][NCOMP];
+  entryWithError intersectTable[NSECT][NLAY][NCOMP];
   // translation table TBD
   //TranslationTable TT;
 };
