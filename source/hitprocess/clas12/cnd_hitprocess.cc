@@ -83,7 +83,7 @@ static cndConstants initializeCNDConstants(int runno, string digiVariation = "de
 	cndc.jitter_period = data[0][3];
 	cndc.jitter_phase  = data[0][4];
 	cndc.jitter_cycles = data[0][5];
-	
+
 	cout<<"CND:Getting attenuation"<<endl;
 	snprintf(cndc.database, sizeof(cndc.database), "/calibration/cnd/Attenuation:%d:%s%s", cndc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,cndc.database);
@@ -596,12 +596,13 @@ map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	// standardizing fadc time and tdc info
 	double fadc_time = convert_to_precision(time_in_ns);
 
-	
+
 	dgtz["hitn"]      = hitn;
 	dgtz["sector"]    = sector;
 	dgtz["layer"]     = layer;
 	dgtz["component"] = 1;
 	dgtz["ADC_order"] = adc_order ; // 0 = left 1 = right
+
 	dgtz["ADC_ADC"]   = ADC;
 	dgtz["ADC_time"]  = fadc_time;
 	dgtz["ADC_ped"]   = 0;

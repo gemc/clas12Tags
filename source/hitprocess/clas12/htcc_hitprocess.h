@@ -38,6 +38,9 @@ public:
 	// ring time shift
 	vector<double> rshift;
 	
+       	// ring time shift
+        vector<double> rshift;
+        
 	// nephe to ADC conversion factors
 	vector<double> gain[6][2];
 

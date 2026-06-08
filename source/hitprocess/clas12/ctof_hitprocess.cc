@@ -114,8 +114,6 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 		ctc.efficiency[isec - 1][ilay - 1][1].push_back(data[row][3]);
 	}
 	
-	
-	
 	snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/gain_balance:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
 	cout << "CTOF:Getting gain_balance" << endl;
 	data.clear();
@@ -188,7 +186,7 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 	ctc.jitter_period = data[0][3];
 	ctc.jitter_phase  = data[0][4];
 	ctc.jitter_cycles = data[0][5];
-	
+
         snprintf(ctc.database, sizeof(ctc.database),  "/calibration/ctof/fadc_offset:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
         cout << "CTOF:Getting adc_offsets" << endl;
         data.clear();

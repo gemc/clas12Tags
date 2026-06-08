@@ -197,7 +197,7 @@ static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "
 	ftc.jitter_period = data[0][3];
 	ftc.jitter_phase  = data[0][4];
 	ftc.jitter_cycles = data[0][5];
-	
+
         cout << "FTOF:Getting adc_offsets" << endl;
         snprintf(ftc.database, sizeof(ftc.database),  "/calibration/ftof/fadc_offset:%d:%s%s", ftc.runNo, digiVariation.c_str(), timestamp.c_str());
         data.clear();

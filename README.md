@@ -104,10 +104,10 @@ module switch gemc/dev
 > Notice:
 > 1) If you are testing perl API changes, point **GEMC** to your cloned clas12Tags directory.
 > 2) If you are testing geometry changes, point **GEMC_DATA_DIR** the cloned clas12Tags directory.
-> 3) If you are testing changes within the geometry_source directory, you do not need to set any  
->    aditional variables, as the detectors gcards load the local geometry database.
+> 3) If you are testing changes within the geometry_source directory, you do not need to set any
+>    additional variables, as the detectors gcards load the local geometry database.
 > 4) If you're testing changes in gemc code, make sure to use the `gemc` executable
->    in your cloned repository (source/gemc), or the one from the environment will be used instead.
+>     in your cloned repository (source/gemc), or the one from the environment will be used instead.
 
 ## Procedure:
 
@@ -380,7 +380,10 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 Please make sure to cite the following paper if you use GEMC:
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 - [Nucl. Instrum. Meth. A, Volume 959, 163422 (2020)](https://inspirehep.net/literature/1780020)
 - [EPJ Web of Conf. Volume 295, 05505 (2024)](https://www.epj-conferences.org/articles/epjconf/abs/2024/05/epjconf_chep2024_05005/epjconf_chep2024_05005.html)
 

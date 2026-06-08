@@ -46,6 +46,11 @@ public:
 	int    jitter_phase;
 	int    jitter_cycles;
         
+	// tdc jitter parameters
+	double jitter_period;
+	int    jitter_phase;
+	int    jitter_cycles;
+
 	// veff: effective velocity
 	vector<double> veff[1][1][2];
 	

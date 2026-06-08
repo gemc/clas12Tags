@@ -150,8 +150,6 @@ static dcConstants initializeDCConstants(int runno, string digiVariation = "defa
 	dcc.jitter_phase  = data[0][4];
 	dcc.jitter_cycles = data[0][5];
 	
-	
-	
 	// reading DC core parameters
 	snprintf(dcc.database, sizeof(dcc.database),  "/geometry/dc/superlayer:%d:%s%s", dcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	unique_ptr<Assignment> dcCoreModel(calib->GetAssignment(dcc.database));
@@ -572,7 +570,7 @@ double dc_HitProcess :: calc_Time_exp(double x, double dmax, double tmax, double
 	return rtime;
 }
 
-// NEW Polynomial function: returns a time in ns give:
+// NEW Polynomial function: returns a time in ns given:
 // x      = distance from the wire, in cm
 // dmax   = cell size in superlayer
 // tmax   = t max in superlayer

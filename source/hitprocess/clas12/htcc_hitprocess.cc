@@ -308,7 +308,7 @@ map<string, double> htcc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
     time_in_ns = tInfos.time + htccc.tshift[idsector-1][idhalf-1][idring-1] + htccc.rshift[idring-1];
 
 	double fadc_time = convert_to_precision(time_in_ns);
-    int tdc  = time_in_ns / tdcconv;
+        int tdc  = time_in_ns / tdcconv;
 
 	
 	dgtz["hitn"]   = hitn;

@@ -40,7 +40,7 @@ public:
 	double jitter_period;
 	int    jitter_phase;
 	int    jitter_cycles;
-	
+
 	// adc time offsets
 	vector<double> adcoffset[6][3][2];
 	

@@ -4,7 +4,7 @@
 	<option name="DATABASE" value="clas12.sqlite"/>
 
 	<detector name="solenoid"    factory="SQLITE"/>
-	<detector name="torus_cad"   factory="SQLITECAD" />
+	<detector name="magnets_cad" factory="SQLITECAD" />
 	<detector name="ft"          factory="SQLITE"/>
 	<detector name="beamline"    factory="SQLITE"/>
 
@@ -14,4 +14,3 @@
 	<option name="RUNNO" value="11"/>
 
 </gcard>
-
