@@ -18,7 +18,7 @@ on:
 
   merge_group:
   push:
-    branches: [ main ]
+    branches: [ meson ]
     paths-ignore:
       - "**/*.md"
 

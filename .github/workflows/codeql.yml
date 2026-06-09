@@ -1,18 +1,17 @@
-name: CodeQL Advanced
-permissions:
-  contents: read
-  pull-requests: write
+name: "CodeQL Advanced"
 
-# Triggers the workflow on all pushes to main and all pull requests
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
-  pull_request:
-  merge_group:
   push:
-    branches: [ main, meson ]
-    tags: [ '*' ]
+    branches: [ "meson" ]
     paths-ignore:
       - "**/*.md"
-      - "release_notes/**"
+  pull_request:
+    branches: [ "main" ]
+    paths-ignore:
+      - "**/*.md"
 
 jobs:
   analyze:
@@ -34,18 +33,16 @@ jobs:
       actions: read
       contents: read
 
-    container: jeffersonlab/gemc:dev-almalinux94
-
     strategy:
       fail-fast: false
       matrix:
         include:
-        - language: actions
-          build-mode: none
-        - language: c-cpp
-          build-mode: manual
-        - language: python
-          build-mode: none
+          - language: actions
+            build-mode: none
+          - language: c-cpp
+            build-mode: none
+          - language: python
+            build-mode: none
         # CodeQL supports the following values keywords for 'language': 'actions', 'c-cpp', 'csharp', 'go', 'java-kotlin', 'javascript-typescript', 'python', 'ruby', 'swift'
         # Use `c-cpp` to analyze code written in C, C++ or both
         # Use 'java-kotlin' to analyze code written in Java, Kotlin or both
@@ -54,52 +51,47 @@ jobs:
         # see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/customizing-your-advanced-setup-for-code-scanning.
         # If you are analyzing a compiled language, you can modify the 'build-mode' for that language to customize how
         # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
+    # Skip this entire job if the commit was made by the merge queue bot
+    if: github.event.head_commit.committer.name != 'github-merge-queue[bot]'
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
-    - name: Fix Ownership
-      run: |
-        # recent versions of Git refuse to touch a repository whose on-disk owner 
-        # doesn’t match the UID that is running the command
-        # mark the workspace (and any nested path) as safe
-        git config --global --add safe.directory "$GITHUB_WORKSPACE"
-        git config --global --add safe.directory "$GITHUB_WORKSPACE"/src
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
-    # Add any setup steps before running the `github/codeql-action/init` action.
-    # This includes steps like installing compilers or runtimes (`actions/setup-node`
-    # or others). This is typically only required for manual builds.
-    # - name: Setup runtime (example)
-    #   uses: actions/setup-example@v1
+      - name: Trust checkout directory
+        shell: bash
+        run: git config --global --add safe.directory "${GITHUB_WORKSPACE}"
 
-    # Initializes the CodeQL tools for scanning.
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v4
-      with:
-        languages: ${{ matrix.language }}
-        build-mode: ${{ matrix.build-mode }}
-        # If you wish to specify custom queries, you can do so here or in a config file.
-        # By default, queries listed here will override any specified in a config file.
-        # Prefix the list here with "+" to use these queries and those in the config file.
+      - name: Verify CodeQL source root
+        shell: bash
+        run: |
+          git rev-parse --show-toplevel
+          test "$(git rev-parse --show-toplevel)" = "${GITHUB_WORKSPACE}"
 
-        # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-        # queries: security-extended,security-and-quality
+      # Add any setup steps before running the `GitHub/codeql-action/init` action.
+      # This includes steps like installing compilers or runtimes (`actions/setup-node`
+      # or others). This is typically only required for manual builds.
+      # - name: Setup runtime (example)
+      #   uses: actions/setup-example@v1
 
-    # If the analyze step fails for one of the languages you are analyzing with
-    # "We were unable to automatically build your code", modify the matrix above
-    # to set the build mode to "manual" for that language. Then modify this step
-    # to build your code.
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-    - if: matrix.build-mode == 'manual'
-      shell: bash
-      run: |
-        echo "Starting manual build for CodeQL..."
-        chmod +x ./ci/build_gemc.sh
-        ./ci/build_gemc.sh
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+          config-file: .github/codeql_config.yml
+          # If you wish to specify custom queries, you can do so here or in a config file.
+          # By default, queries listed here will override any specified in a config file.
+          # Prefix the list here with "+" to use these queries and those in the config file.
 
-        echo "Manual build finished."
+          # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
+          # queries: security-extended,security-and-quality
 
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v4
-      with:
-        category: "/language:${{matrix.language}}"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        env:
+          LD_PRELOAD: ""        # suppress trace‑library warning
+        with:
+          category: "/language:${{matrix.language}}"
