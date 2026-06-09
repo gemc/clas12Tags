@@ -27,7 +27,7 @@
 
 
 // Hipo
-#include "writer.h"
+#include "hipo4/writer.h"
 #include "hipoSchemas.h"
 
 // geant4

@@ -50,11 +50,6 @@ public:
 	double jitter_period;
 	int    jitter_phase;
 	int    jitter_cycles;
-	
-        // tdc jitter parameters
-        double jitter_period;
-        int    jitter_phase;
-        int    jitter_cycles;
 
 	// sector, SL, slot, cable
 	double T0Correction[6][6][7][6];
@@ -126,9 +121,6 @@ public:
 	double calc_Time(double x, double dmax, double tmax, double alpha, double bfield, int sector, int superlayer);
 
 	// beta-dependent time walk
-	double calc_TimeBeta(double x, double beta, int sector, int superlayer);
-	
-	// beta-dependent ttime walk
 	double calc_TimeBeta(double x, double beta, int sector, int superlayer);
 
 	// returns time walks according to ionisation process:

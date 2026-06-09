@@ -11,7 +11,7 @@ using namespace CLHEP;
 // c++
 #include <vector>
 #include <string>
-#include "Lorentz.h"
+#include "../micromegas/Lorentz.h"
 using namespace std;
 
 /// \class murt_strip
