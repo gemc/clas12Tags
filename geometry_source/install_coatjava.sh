@@ -21,10 +21,17 @@ githubRepo="https://github.com/JeffersonLab/coatjava"
 
 REPO="JeffersonLab/coatjava"
 # wait a bit before retrying to avoid rate limiting
+_retry=0
 while [[ "$LATEST_RELEASE" == "null" || -z "$LATEST_RELEASE" ]]; do
   echo "Fetching latest release from $REPO..."
-  LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" | jq -r .tag_name)
+  LATEST_RELEASE=$(curl -s "https://api.github.com/repos/$REPO/releases/latest" \
+    | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('tag_name',''))" 2>/dev/null)
 
+  (( _retry++ ))
+  if (( _retry >= 5 )); then
+    echo "Error: could not fetch latest release from $REPO after $_retry attempts. Aborting."
+    exit 1
+  fi
   [[ -z "$LATEST_RELEASE" ]] && sleep 2
 done
 
