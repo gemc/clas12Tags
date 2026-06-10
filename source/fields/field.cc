@@ -50,8 +50,8 @@ void gfield::create_MFM()
 		G4MagneticField *pCachedMagField = new G4CachedMagneticField(map, g4fieldCacheSize);
 		MFM = new G4FieldManager(pCachedMagField, iChordFinder);
 		
-		G4double minEps = 0.1;  //   Minimum & value for smallest steps
-		G4double maxEps = 1.0;  //   Maximum & value for largest steps
+		G4double minEps = 1e-4;  //   Minimum epsilon for field integration (G4 11.x max: 0.01)
+		G4double maxEps = 1e-3;  //   Maximum epsilon for field integration
 		
 		MFM->SetMinimumEpsilonStep( minEps );
 		MFM->SetMaximumEpsilonStep( maxEps );
@@ -70,8 +70,8 @@ void gfield::create_MFM()
 		G4MagneticField *pCachedMagField = new G4CachedMagneticField(bc12map, g4fieldCacheSize);
 		MFM = new G4FieldManager(pCachedMagField, iChordFinder);
 		
-		G4double minEps = 0.1;  //   Minimum & value for smallest steps
-		G4double maxEps = 1.0;  //   Maximum & value for largest steps
+		G4double minEps = 1e-4;  //   Minimum epsilon for field integration (G4 11.x max: 0.01)
+		G4double maxEps = 1e-3;  //   Maximum epsilon for field integration
 		
 		MFM->SetMinimumEpsilonStep( minEps );
 		MFM->SetMaximumEpsilonStep( maxEps );

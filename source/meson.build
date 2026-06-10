@@ -141,6 +141,25 @@ gemc_test_env.set(
     ).stdout().strip(),
 )
 
+# FIELD_DIR: prefer the value already in the caller's environment;
+# fall back to the field-map files bundled in the repo via coatjava.
+_field_dir = run_command(
+    python_exe, '-c',
+    'import os; print(os.environ.get("FIELD_DIR", ""))',
+    check: false,
+).stdout().strip()
+if _field_dir == ''
+    _field_dir = run_command(
+        python_exe, '-c',
+        'import os, sys; p = os.path.realpath(sys.argv[1]); print(p if os.path.isdir(p) else "")',
+        join_paths(meson.project_source_root(), '..', 'geometry_source', 'coatjava', 'etc', 'data', 'magfield'),
+        check: false,
+    ).stdout().strip()
+endif
+if _field_dir != ''
+    gemc_test_env.set('FIELD_DIR', _field_dir)
+endif
+
 foreach det : [
     'ec', 'pcal', 'dc', 'ftof', 'ctof', 'cnd', 'bst', 'htcc',
     'micromegas', 'ltcc', 'rich', 'ft', 'beamline', 'magnets', 'targets',

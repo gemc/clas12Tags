@@ -625,7 +625,9 @@ void MDetectorConstruction::assignProductionCuts(vector <string> volumes) {
                 map<string, G4Region *>::iterator itrr = SeRe_Map.find(regionName);
 
                 // if not found, add new region. Otherwise it's already there.
-                if (itrr == SeRe_Map.end()) {
+                // Also skip if the logical volume is already root of another region
+                // (can happen when multiple physical volumes share the same logical via CopyOf).
+                if (itrr == SeRe_Map.end() && regionDet.GetLogical()->GetRegion() == nullptr) {
                     // Creating G4 Region, assigning Production Cut to it.
                     // assigning the logical volume to the region (this will apply the region to all daughters)
                     SeRe_Map[regionName] = new G4Region(regionName);
