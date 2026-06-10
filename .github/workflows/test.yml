@@ -87,7 +87,7 @@ jobs:
         run: |
           set -euo pipefail
           echo "LOG_TAR=" >> "$GITHUB_ENV"
-          LOGROOT="/root/src"
+          LOGROOT="/root/clas12Tags"
           OUTDIR="$GITHUB_WORKSPACE/_artifacts"
           TAR="logs-${{ matrix.gemc_tag }}-${{ matrix.image }}-${{ matrix.image_tag }}"
           TAR="${TAR}-${{ matrix.arch }}.tgz"

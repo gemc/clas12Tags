@@ -166,11 +166,22 @@ def additional_software(image: str) -> str:
 	return "\n# Additional software: (none)\n"
 
 
-def install_gemc(geant4_version: str, gemc_version: str) -> str:
+def install_gemc(geant4_version: str, gemc_version: str, source: str = "clone") -> str:
+	if source == "context":
+		commands = (
+			"\nCOPY . /root/clas12Tags\n"
+			"RUN  cd /root/clas12Tags \\\n"
+			f"     && DOCKER_ENTRYPOINT_SOURCE_ONLY=1 . {remote_entrypoint()} \\\n"
+			f"     && module load geant4/{geant4_version} \\\n"
+			f"     && ./ci/build.sh \\\n"
+			f'     && echo "export PATH=\\${{SIM_HOME}}/gemc/dev/bin:\\${{PATH}}" >> {remote_entrypoint_addon()}\n'
+		)
+		return commands
+
 	clone_arguments = '-c advice.detachedHead=false --recurse-submodules --single-branch'
 	if gemc_version == "dev":
 		clone_arguments += " --depth 1"
-		clone_arguments += f' --branch meson'
+		clone_arguments += ' --branch meson'
 	else:
 		clone_arguments += f' --branch "{gemc_version}"'
 
@@ -179,8 +190,8 @@ def install_gemc(geant4_version: str, gemc_version: str) -> str:
 		f"     && cd /root/clas12Tags \\\n"
 		f"     && DOCKER_ENTRYPOINT_SOURCE_ONLY=1 . {remote_entrypoint()} \\\n"
 		f"     && module load geant4/{geant4_version} \\\n"
-		f"     && ./ci/build_gemc.sh \\\n"
-		f'     && echo "module load gemc" >> {remote_entrypoint_addon()}\n'
+		f"     && ./ci/build.sh \\\n"
+		f'     && echo "export PATH=\\${{SIM_HOME}}/gemc/dev/bin:\\${{PATH}}" >> {remote_entrypoint_addon()}\n'
 	)
 	return commands
 
@@ -192,13 +203,19 @@ def log_exporters() -> str:
 	return commands
 
 
-def create_dockerfile(image: str, image_tag: str, geant4_version: str, gemc_version: str) -> str:
+def create_dockerfile(
+	image: str,
+	image_tag: str,
+	geant4_version: str,
+	gemc_version: str,
+	source: str = "clone",
+) -> str:
 	commands = ""
 	commands += docker_header(image, image_tag, geant4_version)
 	commands += coatjava_deps(image)  # maven/jq/perl deps + Groovy
 	commands += additional_software(image)  # Java 21 + git-lfs
 	commands += "\nRUN java -version 2>&1 | head -n 1 && javac -version 2>&1 | head -n 1\n"
-	commands += install_gemc(geant4_version, gemc_version)
+	commands += install_gemc(geant4_version, gemc_version, source)
 	commands += log_exporters()
 	return commands
 
@@ -232,6 +249,12 @@ def main():
 		default="dev",
 		help="Version of GEMC to install (default: %(default)s)",
 	)
+	parser.add_argument(
+		"--source",
+		choices=["clone", "context"],
+		default="clone",
+		help="Build clas12Tags from a GitHub clone or from the Docker build context (default: %(default)s)",
+	)
 
 	args = parser.parse_args()
 
@@ -246,6 +269,7 @@ def main():
 		args.image_tag,
 		args.geant4_version,
 		args.gemc_version,
+		args.source,
 	)
 	print(dockerfile)
 

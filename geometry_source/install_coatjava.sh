@@ -86,10 +86,20 @@ echo "Marking workspace as safe for Git"
 git config --global --add safe.directory '*'
 
 cd $src_dir
+
+# Ensure git-lfs is available; install it if not (containers run as root)
+if ! command -v git-lfs &>/dev/null; then
+	echo "git-lfs not found, installing..."
+	if   command -v apt-get &>/dev/null; then apt-get install -y -q git-lfs
+	elif command -v dnf     &>/dev/null; then dnf     install -y -q git-lfs
+	elif command -v pacman  &>/dev/null; then pacman  -S --noconfirm git-lfs
+	else echo "WARNING: unknown package manager — cannot install git-lfs"; fi
+fi
+
 paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
 paralllel=" -T1"
-echo "Running coatjava build with options: --lfs --no-progress --nomaps  $paralllel" >> ../build_coatjava.log | tee -a ../build_coatjava.log
-./build-coatjava.sh --lfs --no-progress --nomaps  $paralllel &>> ../build_coatjava.log
+echo "Running coatjava build with options: --lfs --no-progress --nomaps $paralllel" >> ../build_coatjava.log
+./build-coatjava.sh --lfs --no-progress --nomaps $paralllel &>> ../build_coatjava.log
 if [[ $? -ne 0 ]]; then
 	echo "Error: coatjava build failed. Log:"
 	cat ../build_coatjava.log

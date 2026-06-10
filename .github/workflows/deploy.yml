@@ -1,0 +1,263 @@
+# Build and publish GitHub Container Registry (GHCR) images after tests pass.
+name: Deploy
+permissions:
+  contents: write
+  packages: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: gemc-deploy-${{ github.event.workflow_run.id }}
+  cancel-in-progress: true
+
+on:
+  workflow_run:
+    workflows: [ "Test" ]
+    types: [ completed ]
+
+jobs:
+  overview:
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push'
+      }}
+    name: Workflow Overview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Write overview
+        shell: bash
+        run: |
+          : "${GITHUB_STEP_SUMMARY:=$RUNNER_TEMP/summary.md}"
+          bash ci/summary.sh "$GITHUB_STEP_SUMMARY"
+
+  discover:
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push'
+      }}
+    name: Create Job Matrices
+    runs-on: ubuntu-latest
+    outputs:
+      matrix_build: ${{ steps.scan.outputs.matrix_build }}
+      matrix_manifest: ${{ steps.scan.outputs.matrix_manifest }}
+      image: ${{ steps.scan.outputs.image }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - id: scan
+        name: Build matrix
+        run: ci/distros_tags.sh
+
+  # Per-arch image builds
+  build_arch:
+    name: ${{ matrix.image }}/${{ matrix.image_tag }} ${{ matrix.arch }}
+    needs: [ overview, discover ]
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix_build) }}
+
+    env:
+      CACHE_REF: type=registry,ref=${{ needs.discover.outputs.image }}:cache-${{ matrix.arch }}
+      TAG4: ${{ format('{0}-{1}-{2}', matrix.gemc_tag, matrix.image, matrix.image_tag) }}
+      LOGNAME: ${{ format('{0}-{1}-{2}-{3}', matrix.gemc_tag, matrix.image, matrix.image_tag, matrix.arch) }}
+      DOCKER_BUILD_SUMMARY: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Free up disk space
+        uses: ./.github/actions/free-disk-space
+        with:
+          prune_docker: "true"
+          show_tree: "true"
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        name: Docker metadata (base tag)
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ needs.discover.outputs.image }}
+          tags: |
+            type=raw,value=${{ env.TAG4 }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.description=clas12Tags ${{ matrix.gemc_tag }} ${{ matrix.arch }}
+
+      - name: Generate Dockerfile
+        run: |
+          python3 ci/dockerfile_creator.py \
+            -i "${{ matrix.image }}" \
+            -t "${{ matrix.image_tag }}" \
+            --gemc-version "${{ matrix.gemc_tag }}" \
+            --geant4-version "${{ matrix.geant4_tag }}" \
+            --source context \
+            > Dockerfile.generated
+          cat Dockerfile.generated
+
+      - name: Build & Push
+        uses: docker/build-push-action@v7
+        with:
+          pull: true
+          no-cache: true
+          context: .
+          file: ./Dockerfile.generated
+          target: final
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}${{ matrix.suffix }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-to: ${{ env.CACHE_REF }},mode=max
+
+      - name: Export logs (runner artifact)
+        uses: docker/build-push-action@v7
+        with:
+          pull: true
+          context: .
+          file: ./Dockerfile.generated
+          target: logs-export
+          push: false
+          cache-from: ${{ env.CACHE_REF }}
+          outputs: type=local,dest=${{ runner.temp }}/artifacts/${{ matrix.logs_dir }}
+
+      - name: Pack logs
+        shell: bash
+        run: |
+          LOGROOT="${{ runner.temp }}/artifacts/${{ matrix.logs_dir }}"
+          TAR="logs-${LOGNAME}.tgz"
+          cd "$LOGROOT"
+          tar -czf "$TAR" logs
+          echo "LOG_TAR=$LOGROOT/$TAR" >> "$GITHUB_ENV"
+
+      - name: Upload logs artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: logs-${{ env.LOGNAME }}
+          path: ${{ env.LOG_TAR }}
+          if-no-files-found: ignore
+
+  # Multi-arch manifest stitch
+  # docker buildx imagetools create assembles an OCI manifest list
+  # from already-pushed per-arch image tags.
+  manifest:
+    name: ${{ matrix.image }}/${{ matrix.image_tag }}
+    needs: [ build_arch, discover ]
+    runs-on: ubuntu-latest
+    # If arm64 was skipped (e.g., archlinux), still publish amd64-only manifest.
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix_manifest) }}
+    env:
+      TAG4: ${{ format('{0}-{1}-{2}', matrix.gemc_tag, matrix.image, matrix.image_tag) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - id: meta
+        name: Docker metadata (base tag)
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ needs.discover.outputs.image }}
+          tags: |
+            type=raw,value=${{ env.TAG4 }}
+
+      - name: Create multi-arch manifest
+        shell: bash
+        run: |
+          BASE_TAG="${{ steps.meta.outputs.tags }}"
+          AMD_TAG="${BASE_TAG}-amd64"
+          ARM_TAG="${BASE_TAG}-arm64"
+
+          # If the arm64 build was skipped (e.g., archlinux), only include amd64
+          if docker buildx imagetools inspect "$ARM_TAG" >/dev/null 2>&1; then
+            docker buildx imagetools create -t "$BASE_TAG" "$AMD_TAG" "$ARM_TAG"
+          else
+            docker buildx imagetools create -t "$BASE_TAG" "$AMD_TAG"
+          fi
+
+      - name: Download logs artifacts (all arches)
+        if: ${{ always() }}
+        uses: actions/download-artifact@v7
+        with:
+          pattern: logs-${{ env.TAG4 }}-*
+          path: ${{ runner.temp }}/downloaded-logs
+          merge-multiple: true
+
+      - name: Summary (manifest)
+        if: ${{ always() }}
+        shell: bash
+        env:
+          IMAGE: ${{ needs.discover.outputs.image }}
+          TAG: ${{ env.TAG4 }}
+        run: |
+          SUMMARY_FILE="${GITHUB_STEP_SUMMARY:-$RUNNER_TEMP/manifest_summary.md}"
+          echo "MANIFEST_SUMMARY_FILE=$SUMMARY_FILE" >> "$GITHUB_ENV"
+          bash ci/manifest.sh "$SUMMARY_FILE" "$IMAGE" "$TAG" "${{ runner.temp }}/downloaded-logs"
+
+          mkdir -p "$GITHUB_WORKSPACE/summaries"
+          OUT="$GITHUB_WORKSPACE/summaries/summary-${TAG}-${{ job.status }}.md"
+          cp "$SUMMARY_FILE" "$OUT" || true
+          echo "Wrote $OUT"
+
+      - name: Upload summary artifact (manifest)
+        uses: actions/upload-artifact@v7
+        with:
+          name: summary-${{ env.TAG4 }}-manifest
+          path: ${{ env.MANIFEST_SUMMARY_FILE }}
+          if-no-files-found: warn
+
+  final:
+    name: Deploy - summary
+    if: >-
+      ${{
+        always() &&
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push'
+      }}
+    needs: [ build_arch, manifest ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if any required job failed
+        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: |
+          echo "### Some clas12Tags deploy jobs failed or were cancelled." >> "$GITHUB_STEP_SUMMARY"
+          exit 1
+
+      - name: Pass
+        run: |
+          echo "### clas12Tags deploy workflow passed." >> "$GITHUB_STEP_SUMMARY"

@@ -33,11 +33,11 @@ for the full CLAS12 software stack, which includes the latest tagged gemc versio
 		- [Step 3: Build the geometry database](#step-3-build-the-geometry-database)
 	- [1. Create and Install the geometry database into the experiments directory](#1-create-and-install-the-geometry-database-into-the-experiments-directory)
 	- [2. Debug / test a detector geometry in the geometry_source directory](#2-debug--test-a-detector-geometry-in-the-geometry_source-directory)
-- [How compile the source code at JLab](#how-compile-the-source-code-at-jlab)
+- [How to build and install with Meson](#how-to-build-and-install-with-meson)
 - [Release workflow](#release-workflow)
 	- [Pull requests](#pull-requests)
 	- [Run at JLab:](#run-at-jlab)
-- [Docker Images](#docker-images)
+- [Container images](#container-images)
 - [Portal to Off-site farms CLAS12 Simulations](#portal-to-off-site-farms-clas12-simulations)
 - [Profiling](#profiling)
 	- [Time per track](#time-per-track)
@@ -216,27 +216,40 @@ and the SQLite database `clas12.sqlite` will be updated with the new detector.
 
 <br/>
 
-# How to compile the source code 
+# How to build and install with Meson
 
-### Pre-requisites: 
+### Prerequisites
 
-- [clhep](https://gitlab.cern.ch/CLHEP/CLHEP), [xercesc](https://github.com/apache/xerces-c.git), [geant4](https://github.com/Geant4/geant4.git). For their installation see also [^1].
+- [clhep](https://gitlab.cern.ch/CLHEP/CLHEP), [xercesc](https://github.com/apache/xerces-c.git),
+  [geant4](https://github.com/Geant4/geant4.git). For their installation see also [^1].
 - [hipo](https://code.jlab.org/hallb/clas12/hipo-cpp)
 - [ccdb](https://code.jlab.org/hallb/clas12/ccdb)
 
 > [!NOTE]
-> These pre-requisites are satisfied at JLab by using `module load geant4 ccdb hipo'
+> These prerequisites are satisfied at JLab with `module load geant4 ccdb hipo`.
 
-Then, change directory to the `source` directory and run:
+Configure, compile, install, and run the gcard tests from the `source` directory:
 
 ```bash
 cd source
-scons -jN OPT=1
+meson setup build --prefix=/path/to/install
+meson compile -C build
+meson install -C build
+meson test -C build --print-errorlogs
 ```
 
-where N is the number of cores available. At JLab, N=40 is a good choice.
+The `api` and `experiments` directories are installed into `<prefix>/` alongside the `gemc` binary.
+`GEMC_DATA_DIR` must be set in the calling environment (e.g. via `module load gemc/dev`) so that
+gemc can find field maps and cross-detector geometry files at test time.
 
-[^1]: the [g4install](https://github.com/gemc/g4install) provides modules environment and installation scripts for Geant4
+To run only a specific detector's tests:
+
+```bash
+meson test -C build --suite ec --print-errorlogs
+```
+
+[^1]: the [g4install](https://github.com/gemc/g4install) provides modules environment and installation
+scripts for Geant4.
 
 
 <br/>
@@ -288,30 +301,51 @@ gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2
 
 <br/>
 
-## Docker images
+## Container images
 
-Docker images for Almalinux and Fedora  based OS systems
-are available on [DockerHub](https://hub.docker.com/repository/docker/jeffersonlab/gemc/general).
+Images are published to the **GitHub Container Registry** after every successful push to `main`:
 
-- dev-fedora36
-- dev-almalinux94
-
-To run the docker image (for example dev-fedora):
-
-```shell
-docker run -it --rm jeffersonlab/gemc:dev-almalinux94 bash
+```text
+ghcr.io/gemc/clas12tags:<gemc-tag>-<os>-<os-version>[-<arch>]
 ```
 
-On MacOS the additional option `--platform linux/amd64` is needed:
+Available tags (current Geant4 version `11.4.1`, gemc tag `dev`):
+
+| Image | Tag example |
+| --- | --- |
+| Ubuntu 24.04 | `ghcr.io/gemc/clas12tags:dev-ubuntu-24.04` |
+| Ubuntu 26.04 | `ghcr.io/gemc/clas12tags:dev-ubuntu-26.04` |
+| Fedora 44 | `ghcr.io/gemc/clas12tags:dev-fedora-44` |
+| AlmaLinux 9.4 | `ghcr.io/gemc/clas12tags:dev-almalinux-9.4` |
+| AlmaLinux 10 | `ghcr.io/gemc/clas12tags:dev-almalinux-10` |
+| Debian 13 | `ghcr.io/gemc/clas12tags:dev-debian-13` |
+| Arch Linux | `ghcr.io/gemc/clas12tags:dev-archlinux-latest` |
+
+Multi-arch manifests (`amd64` + `arm64`) are assembled automatically; append `-amd64` or `-arm64`
+to pull a specific architecture.
+
+To start an interactive shell:
 
 ```shell
-docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-almalinux94 bash
+docker run -it --rm ghcr.io/gemc/clas12tags:dev-almalinux-9.4 bash
 ```
 
-For i/o to and from the image, you can include a mounting point by adding the `-v` option to the above command
+On Apple Silicon add `--platform linux/amd64` if you need the x86-64 variant:
 
 ```shell
--v ~/mywork:/usr/local/mywork 
+docker run -it --rm --platform linux/amd64 ghcr.io/gemc/clas12tags:dev-almalinux-9.4 bash
+```
+
+Mount a local directory for input/output with `-v`:
+
+```shell
+docker run -it --rm -v ~/mywork:/root/mywork ghcr.io/gemc/clas12tags:dev-almalinux-9.4 bash
+```
+
+The base Geant4 images used to build these containers come from:
+
+```text
+ghcr.io/gemc/g4install:<geant4-tag>-<os>-<os-version>
 ```
 
 <br/>
@@ -380,10 +414,6 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 Please make sure to cite the following paper if you use GEMC:
 
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 - [Nucl. Instrum. Meth. A, Volume 959, 163422 (2020)](https://inspirehep.net/literature/1780020)
 - [EPJ Web of Conf. Volume 295, 05505 (2024)](https://www.epj-conferences.org/articles/epjconf/abs/2024/05/epjconf_chep2024_05005/epjconf_chep2024_05005.html)
 
@@ -409,18 +439,55 @@ Maurizio Ungaro
 
 # CI
 
-### Pull requests
+[![Test][badge-test]][workflow-test]
+[![Deploy][badge-deploy]][workflow-deploy]
+[![CodeQL Advanced][badge-codeql]][workflow-codeql]
+[![Clas12-Config GCards Tests][badge-gcards]][workflow-gcards]
+[![Local GCards Tests][badge-local-gcards]][workflow-local-gcards]
+[![Tracks Validation][badge-tracks]][workflow-tracks]
+[![Ntracks Metrics][badge-metrics]][workflow-metrics]
+[![Nightly Dev Release][badge-dev-release]][workflow-dev-release]
+[![Valgrind Profile][badge-valgrind]][workflow-valgrind]
+[![ASCII vs SQLite][badge-ascii-sqlite]][workflow-ascii-sqlite]
+[![Clas12-Config Dev/Main Comparison][badge-dev-main]][workflow-dev-main]
 
-- [![Almalinux Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_almalinux.yml) [![Fedora Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_fedora.yml) [![Ubuntu Build](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/build_gemc_ubuntu.yml)
-- [![Clas12-Config GCards Tests](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml)
-- [![CodeQL Advanced](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml)
-- [![Ntracks Metrics](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
-- [![Local Gcards Tests](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml)
-- [![Tracks Validation](https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml)
+[badge-test]: https://github.com/gemc/clas12Tags/actions/workflows/test.yml/badge.svg
+[badge-deploy]: https://github.com/gemc/clas12Tags/actions/workflows/deploy.yml/badge.svg
+[badge-codeql]: https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml/badge.svg
+[badge-gcards]: https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml/badge.svg
+[badge-local-gcards]: https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml/badge.svg
+[badge-tracks]: https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml/badge.svg
+[badge-metrics]: https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg
+[badge-dev-release]: https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg
+[badge-valgrind]: https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml/badge.svg
+[badge-ascii-sqlite]: https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml/badge.svg
+[badge-dev-main]: https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml/badge.svg
+
+[workflow-test]: https://github.com/gemc/clas12Tags/actions/workflows/test.yml
+[workflow-deploy]: https://github.com/gemc/clas12Tags/actions/workflows/deploy.yml
+[workflow-codeql]: https://github.com/gemc/clas12Tags/actions/workflows/codeql.yml
+[workflow-gcards]: https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_gcards_test.yml
+[workflow-local-gcards]: https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml
+[workflow-tracks]: https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml
+[workflow-metrics]: https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml
+[workflow-dev-release]: https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml
+[workflow-valgrind]: https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml
+[workflow-ascii-sqlite]: https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml
+[workflow-dev-main]: https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml
+
+### On pull requests
+
+- **Test** — build across Ubuntu, Fedora, AlmaLinux, Debian, Arch Linux (amd64 + arm64)
+- **CodeQL Advanced** — static analysis (C/C++, Python, Actions)
+- **Clas12-Config GCards Tests** — run gemc on all gcards in the clas12-config dev branch
+- **Local GCards Tests** — run `meson test` on all geometry-source gcards in this repository
+- **Tracks Validation** — physics validation with particle tracking
 
 ### Nightly
 
-- [![Nightly Dev Release](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml)
-- [![Valgrind-Profile](https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml)
-- [![Ascii vs Sqlite](https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml)
-- [![Clas12-config Dev Main Comparison](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml/badge.svg)](https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml)
+- **Deploy** — build and push container images to `ghcr.io/gemc/clas12tags` after tests pass
+- **Nightly Dev Release** — package and publish the `dev` release artifact
+- **Valgrind Profile** — memory and performance profiling
+- **ASCII vs SQLite** — geometry consistency check between text and database representations
+- **Clas12-Config Dev/Main Comparison** — detect geometry regressions between branches
+- **Ntracks Metrics** — time-per-track benchmarks across generator configurations

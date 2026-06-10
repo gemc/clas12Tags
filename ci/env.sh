@@ -227,14 +227,10 @@ if [[ -z "${AUTOBUILD}" ]]; then
 	echo "\nNot in container"
 else
 
-	echo "\nIn docker container, sourcing local setup and loading gemc, ccdb and hipo"
+	echo "\nIn docker container"
 	if [[ -n "${GITHUB_WORKFLOW}" ]]; then
 		echo "GITHUB_WORKFLOW: ${GITHUB_WORKFLOW}"
 	fi
-	source /etc/profile.d/localSetup.sh
-	module switch gemc/dev
-	module load hipo
-	module load ccdb
 	echo
 
 	# recent versions of Git refuse to touch a repository whose on-disk owner
@@ -249,8 +245,9 @@ else
 	compile_log=$log_dir/build.log
 	install_log=$log_dir/install.log
 	gemc_install_show=$log_dir/show_install.log
+	test_log=$log_dir/test.log
 	geo_log=$log_dir/geo.log
-	touch $setup_log $compile_log $install_log $gemc_install_show $geo_log
+	touch $setup_log $compile_log $install_log $gemc_install_show $test_log $geo_log
 
 	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
 	export GEMC=$SIM_HOME/gemc/dev

@@ -100,9 +100,12 @@ else
 endif
 
 
+# -w suppresses all warnings from cmake subprojects (ccdb, assimp)
+cmake_opts.append_compile_args('c',   '-fPIC', '-w')
 # TODO: remove temp workaround for _LIBCPP_ENABLE_ASSERTIONS deprecation
 cmake_opts.append_compile_args('cpp',
                                '-fPIC',
+                               '-w',
                                '-Wno-shadow',
                                '-U_LIBCPP_ENABLE_ASSERTIONS',
                                '-D_LIBCPP_HARDENING_MODE_DEBUG=true',
@@ -128,16 +131,18 @@ ccdb_proj = cmake.subproject('ccdb', options : cmake_opts)
 ccdb_dep = ccdb_proj.dependency('ccdb', include_type : 'system')
 
 
-# passing dataframes=false,no need for ROOT support
-hipo_cpp_sp = subproject('hipo-cpp',
-                         default_options: [
-                             'buildtype=release',
-                             'default_library=static',
-                             'cpp_std=c++17',
-                             'dataframes=false',
-                         ]
+# passing dataframes=false, no need for ROOT support
+hipo_cpp_sp = subproject(
+    'hipo-cpp',
+    default_options : [
+        'buildtype=release',
+        'default_library=static',
+        'cpp_std=c++17',
+        'dataframes=false',
+        'warning_level=0',
+    ],
 )
 
-hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep')
+hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep').as_system()
 
-clas12_cmag_dep = dependency('clas12-cmag', include_type : 'system')
+clas12_cmag_dep = dependency('clas12-cmag', include_type : 'system', default_options : ['warning_level=0'])

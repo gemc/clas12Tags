@@ -111,7 +111,58 @@ gemc = executable(
     install_rpath: xerces_libdir,
 )
 
-#install_subdir('../api', install_dir: get_option('prefix'))
-#install_subdir('../experiments', install_dir: get_option('prefix'))
+install_subdir('../api',         install_dir: get_option('prefix'))
+install_subdir('../experiments', install_dir: get_option('prefix'))
 #install_data(['../clas12.sqlite'],  install_dir: join_paths(get_option('prefix'), 'experiments', 'clas12'))
-#
+
+
+# ─── Gcard simulation tests ───────────────────────────────────────────────────
+# Gcards are discovered from the filesystem at configure time, so any new gcard
+# added under geometry_source/<det>/ is automatically included on the next
+# `meson setup`.  Run a subset with: meson test --suite ec
+# Run all detectors with:            meson test
+
+gemc_run_args = [
+    '-BEAM_P=e-, 4*GeV, 60*deg, 25*deg',
+    '-SPREAD_P=0*GeV, 40*deg, 180*deg',
+    '-USE_GUI=0',
+    '-N=100',
+    '-PRINT_EVENT=10',
+]
+
+gemc_test_env = environment()
+gemc_test_env.set(
+    'GEMC_DATA_DIR',
+    run_command(
+        python_exe, '-c',
+        'import os, sys; print(os.path.dirname(os.path.realpath(sys.argv[1])))',
+        meson.project_source_root(),
+        check: true,
+    ).stdout().strip(),
+)
+
+foreach det : [
+    'ec', 'pcal', 'dc', 'ftof', 'ctof', 'cnd', 'bst', 'htcc',
+    'micromegas', 'ltcc', 'rich', 'ft', 'beamline', 'magnets', 'targets',
+]
+    det_dir = join_paths(meson.project_source_root(), '..', 'geometry_source', det)
+    gcard_result = run_command(
+        python_exe, '-c',
+        'import os, sys; d=sys.argv[1]; [print(f) for f in sorted(os.listdir(d)) if f.endswith(".gcard") and "sqlite" not in f]',
+        det_dir,
+        check: true,
+    )
+    foreach gcard : gcard_result.stdout().strip().split('\n')
+        if gcard != ''
+            test(
+                det + '_' + gcard.replace('.gcard', ''),
+                gemc,
+                args    : gemc_run_args + [join_paths(det_dir, gcard)],
+                workdir : det_dir,
+                suite   : det,
+                timeout : 600,
+                env     : gemc_test_env,
+            )
+        endif
+    endforeach
+endforeach

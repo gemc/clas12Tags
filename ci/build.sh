@@ -39,6 +39,19 @@ function show_gemc_installation {
 
 }
 
+function run_meson_test_with_retry {
+	local label="$1"
+	shift
+	for attempt in 1 2; do
+		echo " > Running ${label} (attempt ${attempt}/2):" "$@" | tee -a "$test_log"
+		"$@" >> "$test_log"
+		local exit_code=$?
+		if [ $exit_code -eq 0 ]; then return 0; fi
+		if [ $attempt -eq 2 ]; then return $exit_code; fi
+		echo " > ${label} failed; retrying once" | tee -a "$test_log"
+	done
+}
+
 function compile_gemc {
 
 	local install_dir="${GEMC:?GEMC not set}"
@@ -89,6 +102,29 @@ function compile_gemc {
 		echo " > Meson Install Successful"
 		echo
 	fi
+
+	local test_options=(
+		-C build
+		--print-errorlogs
+		-j 1
+		--no-rebuild
+		--num-processes 1
+		-v
+	)
+	: > "$test_log"
+	if ! run_meson_test_with_retry "meson test" meson test "${test_options[@]}"; then
+		echo " > Meson Tests failed. Log: "
+		cat $test_log
+		exit 1
+	else
+		echo " > Meson Tests Successful"
+		echo
+	fi
+
+	echo "   - Successful: $(grep 'Ok:' "$test_log" | awk '{sum += $2} END {print sum + 0}')" | tee -a "$test_log"
+	echo "   - Failures:   $(grep 'Fail:' "$test_log" | awk '{sum += $2} END {print sum + 0}')" | tee -a "$test_log"
+	echo " > Complete test log: $test_log"
+
 	cd ..
 
 	# installing api into $GEMC
@@ -112,10 +148,9 @@ function create_geo_dbs {
 	echo "Changes after creation:"
 	echo END_CREATE_GEOMETRY $(date) | tee -a $geo_log
 	git branch
-	git status -s | tee -a $geo_log
+	git status -s >> $geo_log
 
-	echo Final experiments/clas12 content | tee -a $geo_log
-	ls -R experiments/clas12 | tee -a $geo_log
+	echo Final experiments/clas12 content >> $geo_log
 
 	echo "Copying experiments ASCII DB and sqlite file to $ARTIFACT_DIR for CI"
 	cp -r experiments clas12.sqlite source/gemc_build.log geo_build.log geometry_source/build_coatjava.log $ARTIFACT_DIR
