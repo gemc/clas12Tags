@@ -151,6 +151,6 @@ clas12_cmag_dep = dependency('clas12-cmag', include_type : 'system', default_opt
 fields_dir = get_option('prefix') / 'fields'
 meson.add_install_script(
     python_exe,
-    meson.project_source_root() / 'meson' / 'install_fields.py',
+    meson.current_source_dir() / 'install_fields.py',
     install_tag : 'fields',
 )
