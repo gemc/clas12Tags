@@ -146,7 +146,14 @@ foreach det : [
     'ec', 'pcal', 'dc', 'ftof', 'ctof', 'cnd', 'bst', 'htcc',
     'micromegas', 'ltcc', 'rich', 'ft', 'beamline', 'magnets', 'targets',
 ]
-    det_dir = join_paths(meson.project_source_root(), '..', 'geometry_source', det)
+    # Resolve to a clean absolute path (no '..' components) so meson passes
+    # a valid workdir to the test runner on all platforms.
+    det_dir = run_command(
+        python_exe, '-c',
+        'import os, sys; print(os.path.realpath(sys.argv[1]))',
+        join_paths(meson.project_source_root(), '..', 'geometry_source', det),
+        check: true,
+    ).stdout().strip()
     gcard_result = run_command(
         python_exe, '-c',
         'import os, sys; d=sys.argv[1]; [print(f) for f in sorted(os.listdir(d)) if f.endswith(".gcard") and "sqlite" not in f]',
