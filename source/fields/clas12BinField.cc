@@ -5,6 +5,7 @@
 #include "gemcUtils.h"
 
 // c++
+#include <fstream>
 #include <string>
 using namespace std;
 
@@ -41,15 +42,28 @@ gfield clas12BinField::loadField(string file, goptions opts)
 	gf.unit        = "kilogauss";
 	gf.symmetry    = "cMag";
 
-	if(gf.bc12map == nullptr) {
-		gf.bc12map = new gclas12BinaryMappedField(file);
-		
-		if(getenv("FIELD_DIR") != nullptr) {
-			string fieldDir=getenv("FIELD_DIR");
-			gf.bc12map->defineNamesAndType(fieldDir);
+	// FIELD_DIR must be set and every component .dat file must exist on disk.
+	// Return "na" symmetry so fieldFactory skips this field gracefully rather than crashing.
+	if(getenv("FIELD_DIR") == nullptr) {
+		cout << "  clas12BinField: FIELD_DIR not set — skipping binary field " << file << endl;
+		gf.symmetry = "na";
+		return gf;
+	}
+	string fieldDir = getenv("FIELD_DIR");
+	for(const auto& part : getStringVectorFromStringWithDelimiter(file, ":")) {
+		string filepath = fieldDir + "/" + part + ".dat";
+		if(!ifstream(filepath).good()) {
+			cout << "  clas12BinField: skipping " << file << " — missing " << filepath << endl;
+			gf.symmetry = "na";
+			return gf;
 		}
 	}
-	
+
+	if(gf.bc12map == nullptr) {
+		gf.bc12map = new gclas12BinaryMappedField(file);
+		gf.bc12map->defineNamesAndType(fieldDir);
+	}
+
 	// initialize field and bc12map field map
 	gf.initialize(opts);
 

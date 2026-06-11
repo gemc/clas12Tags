@@ -103,6 +103,17 @@ function compile_gemc {
 		echo
 	fi
 
+	# Install field maps before tests so gcards using HALL_FIELD can run.
+	# FIELD_DIR is set by the gemc module in CI; skip silently if absent locally.
+	if [[ -n "${FIELD_DIR:-}" ]]; then
+		echo " > Installing field maps into FIELD_DIR=$FIELD_DIR" | tee -a $install_log
+		cd ..
+		ci/install_fields.zsh | tee -a $install_log
+		cd source
+	else
+		echo " > FIELD_DIR not set — skipping field map download (some tests may fail)" | tee -a $install_log
+	fi
+
 	local test_options=(
 		-C build
 		--print-errorlogs
@@ -164,9 +175,6 @@ log_java_info
 
 # create geometry
 create_geo_dbs
-
-# install magnetic fields
-ci/install_fields.zsh
 
 
 echo
