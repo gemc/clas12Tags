@@ -160,7 +160,7 @@ foreach det : [
                 gemc,
                 args    : gemc_run_args + [join_paths(det_dir, gcard)],
                 workdir : det_dir,
-                suite   : det,
+                suite   : [det, 'clas12'],
                 timeout : 600,
                 env     : gemc_test_env,
             )

@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # Downloads CLAS12 magnetic field maps into $MESON_INSTALL_PREFIX/fields.
-# Each file is skipped when it already exists, so re-running meson install
-# is cheap and idempotent.
+# Each file is skipped when it already exists (idempotent).
+# Download order: wget → curl → urllib (server blocks Python-urllib UA).
 
 import os
 import shutil
+import subprocess
 import sys
 import urllib.request
 from pathlib import Path
@@ -27,13 +28,29 @@ binary_maps = [
 ascii_maps = ['TorusSymmetric', 'clas12NewSolenoidFieldMap']
 
 
-def fetch(url: str, dest: Path) -> None:
+def fetch(url: str, dest: Path) -> bool:
     print(f'  downloading {url}')
+    for cmd in (
+        ['wget', '-q', '-O', str(dest), url],
+        ['curl', '-fsSL', '-o', str(dest), url],
+    ):
+        if shutil.which(cmd[0]) is None:
+            continue
+        result = subprocess.run(cmd, capture_output=True)
+        if result.returncode == 0 and dest.exists() and dest.stat().st_size > 0:
+            return True
+        dest.unlink(missing_ok=True)
+
+    # Last-resort: urllib with a wget-like User-Agent
     try:
-        urllib.request.urlretrieve(url, dest)
+        req = urllib.request.Request(url, headers={'User-Agent': 'Wget/1.21.1'})
+        with urllib.request.urlopen(req) as resp, open(dest, 'wb') as fh:
+            fh.write(resp.read())
+        return True
     except Exception as exc:
         print(f'  WARNING: could not download {url}: {exc}', file=sys.stderr)
         dest.unlink(missing_ok=True)
+        return False
 
 
 for name in binary_maps:

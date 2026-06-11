@@ -105,6 +105,7 @@ function compile_gemc {
 
 	local test_options=(
 		-C build
+		--suite clas12
 		--print-errorlogs
 		-j 1
 		--no-rebuild
