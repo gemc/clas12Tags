@@ -146,3 +146,11 @@ hipo_cpp_sp = subproject(
 hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep').as_system()
 
 clas12_cmag_dep = dependency('clas12-cmag', include_type : 'system', default_options : ['warning_level=0'])
+
+# Download field maps to prefix/fields during `meson install` (skips existing files).
+fields_dir = get_option('prefix') / 'fields'
+meson.add_install_script(
+    python_exe,
+    meson.project_source_root() / 'meson' / 'install_fields.py',
+    install_tag : 'fields',
+)
