@@ -154,17 +154,17 @@ function create_geo_dbs {
 	echo Final experiments/clas12 content >> $geo_log
 
 	echo "Copying experiments ASCII DB and sqlite file to $ARTIFACT_DIR for CI"
-	cp -r experiments clas12.sqlite source/gemc_build.log geo_build.log geometry_source/build_coatjava.log $ARTIFACT_DIR
+	cp -r experiments clas12.sqlite geo_build.log geometry_source/build_coatjava.log $ARTIFACT_DIR
 }
+
+# create geometry first — meson tests need the generated .txt files
+create_geo_dbs
 
 compile_gemc
 
 # log info
 show_gemc_installation
 log_java_info
-
-# create geometry
-create_geo_dbs
 
 
 echo
