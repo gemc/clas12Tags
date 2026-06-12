@@ -20,8 +20,8 @@ if [[ ! -d "$GEMC/api/perl" ]]; then
 	exit 1
 fi
 
-if ! perl -MDBI -e 1 >/dev/null 2>&1; then
-	echo "Error: Perl DBI module not found. Install DBI before running create_geometry.sh." >&2
+if ! perl -MDBI -MDBD::SQLite -MXML::LibXML -e 1 >/dev/null 2>&1; then
+	echo "Error: missing Perl geometry modules: DBI, DBD::SQLite, or XML::LibXML." >&2
 	exit 1
 fi
 

@@ -126,6 +126,51 @@ jobs:
           javac --release 21 /tmp/JdkCheck.java
           rm -f /tmp/JdkCheck.java /tmp/JdkCheck.class
 
+      - name: Install geometry build dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          install_groovy() {
+            if command -v groovy >/dev/null 2>&1; then
+              groovy -version
+              return
+            fi
+
+            groovy_version=5.0.4
+            groovy_zip="apache-groovy-binary-${groovy_version}.zip"
+            groovy_url="https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/${groovy_zip}"
+            curl -L -o "$groovy_zip" "$groovy_url"
+            unzip -q "$groovy_zip"
+            rm -f "$groovy_zip"
+            rm -rf /usr/local/groovy
+            mv "groovy-${groovy_version}" /usr/local/groovy
+            ln -sf /usr/local/groovy/bin/groovy /usr/bin/groovy
+            groovy -version
+          }
+
+          if command -v apt-get >/dev/null 2>&1; then
+            apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+              maven jq libdbi-perl libdbd-sqlite3-perl libxml-libxml-perl curl unzip \
+              ca-certificates
+          elif command -v dnf >/dev/null 2>&1; then
+            dnf -y install --allowerasing \
+              maven jq perl perl-DBI perl-DBD-SQLite perl-XML-LibXML curl unzip
+          elif command -v pacman >/dev/null 2>&1; then
+            pacman_install() {
+              pacman -Syu --noconfirm --needed "$@" ||
+                (pacman -Syy --noconfirm && pacman -S --noconfirm --needed "$@")
+            }
+            pacman_install maven jq perl-dbi perl-dbd-sqlite perl-xml-libxml curl unzip
+          else
+            echo "No supported package manager found to install geometry dependencies." >&2
+            exit 1
+          fi
+
+          install_groovy
+          perl -MDBI -MDBD::SQLite -MXML::LibXML -e 1
+
       - name: Build and test
         shell: bash
 
