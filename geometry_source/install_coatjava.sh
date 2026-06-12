@@ -11,6 +11,40 @@ function mwget() {
 
 }
 
+function install_package() {
+	local package="$1"
+
+	echo "Installing $package..."
+	if command -v apt-get &>/dev/null; then
+		apt-get update
+		DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends "$package"
+	elif command -v dnf &>/dev/null; then
+		dnf -y -q install "$package" || {
+			dnf -y -q install epel-release
+			dnf -y -q install "$package"
+		}
+	elif command -v pacman &>/dev/null; then
+		pacman -Sy --noconfirm --needed "$package"
+	else
+		echo "ERROR: no supported package manager found to install $package"
+		exit 1
+	fi
+}
+
+function ensure_command() {
+	local command_name="$1"
+	local package="$2"
+
+	if ! command -v "$command_name" &>/dev/null; then
+		echo "$command_name not found."
+		install_package "$package"
+	fi
+	if ! command -v "$command_name" &>/dev/null; then
+		echo "ERROR: $command_name not found after installing $package"
+		exit 1
+	fi
+}
+
 echo START_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
 
 rm -rf coat*jar jcsg*jar vecmath*jar
@@ -87,14 +121,9 @@ git config --global --add safe.directory '*'
 
 cd $src_dir
 
-# Ensure git-lfs is available; install it if not (containers run as root)
-if ! command -v git-lfs &>/dev/null; then
-	echo "git-lfs not found, installing..."
-	if   command -v apt-get &>/dev/null; then apt-get install -y -q git-lfs
-	elif command -v dnf     &>/dev/null; then dnf     install -y -q git-lfs
-	elif command -v pacman  &>/dev/null; then pacman  -S --noconfirm git-lfs
-	else echo "WARNING: unknown package manager — cannot install git-lfs"; fi
-fi
+# Ensure build dependencies are available; containers run as root in CI.
+ensure_command git-lfs git-lfs
+ensure_command mvn maven
 
 paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
 paralllel=" -T1"
