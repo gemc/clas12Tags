@@ -93,6 +93,30 @@ jobs:
           fi
           git lfs install --system
 
+      - name: Install JDK 21
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if command -v apt-get >/dev/null 2>&1; then
+            apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-21-jdk
+          elif command -v dnf >/dev/null 2>&1; then
+            dnf -y install java-21-openjdk-devel
+          elif command -v pacman >/dev/null 2>&1; then
+            pacman -Syu --noconfirm
+            pacman -S --noconfirm --needed jdk21-openjdk
+          else
+            echo "No supported package manager found to install JDK 21." >&2
+            exit 1
+          fi
+
+          JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v javac)")")")"
+          echo "JAVA_HOME=$JAVA_HOME" >> "$GITHUB_ENV"
+          echo "$JAVA_HOME/bin" >> "$GITHUB_PATH"
+          java -version
+          javac -version
+
       - name: Build and test
         shell: bash
 
