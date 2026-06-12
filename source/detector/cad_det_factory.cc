@@ -148,9 +148,7 @@ map <string, detector> cad_det_factory::loadDetectors() {
         }
 
         // checking that file exists
-        if (!gxml->exists()) {
-            cout << hd_msg << " " << possibleGXML[g] << " not found. Cad volumes will be imported as original." << endl;
-        } else {
+        if (gxml->exists())  {
             no_gxml_found = false;
             QDomDocument domDocument;
             // opening gcard and filling domDocument

@@ -2,10 +2,16 @@
 # Forcing suffix lib instead of variants like lib64
 project('clas12Tags', 'cpp',
         default_options : ['default_library=static', 'default_both_libraries=static', 'libdir=lib'],
-        version : run_command('git', 'describe', '--tags', '--abbrev=0', '--always', check : true).stdout().strip(),
+        version : run_command(
+            'git', 'describe', '--tags', '--abbrev=0', '--always',
+            check : true,
+        ).stdout().strip(),
         meson_version : '>= 1.10.1'
 )
-project_description = 'GEMC (GEant Monte-Carlo) is a program based on Geant4 to simulate the passage of particles through matter. '
+project_description = (
+    'GEMC (GEant Monte-Carlo) is a program based on Geant4 to simulate the passage of particles '
+    + 'through matter. '
+)
 
 # additional debug options useful for profiling
 if get_option('buildtype') == 'debug'
@@ -102,7 +108,10 @@ gemc = executable(
     'gemc',
     ['gemc.cc'],
     install : true,
-    dependencies : [qt6_deps, clhep_deps, geant4_deps, ogl_deps, hipo_cpp_dep, ccdb_dep, clas12_cmag_dep, assimp_dep, xercesc_deps, expat_dep],
+    dependencies : [
+        qt6_deps, clhep_deps, geant4_deps, ogl_deps, hipo_cpp_dep, ccdb_dep,
+        clas12_cmag_dep, assimp_dep, xercesc_deps, expat_dep,
+    ],
     include_directories : all_includes,
     link_with : all_libs,
     override_options : ['b_pie=true'],
@@ -116,9 +125,9 @@ install_subdir('../experiments', install_dir: get_option('prefix'))
 #install_data(['../clas12.sqlite'],  install_dir: join_paths(get_option('prefix'), 'experiments', 'clas12'))
 
 
-# ─── Gcard simulation tests ───────────────────────────────────────────────────
+# Gcard simulation tests
 # Gcards are discovered from the filesystem at configure time, so any new gcard
-# added under geometry_source/<det>/ is automatically included on the next
+# added under experiments/clas12/<det>/ is automatically included on the next
 # `meson setup`.  Run a subset with: meson test --suite ec
 # Run all detectors with:            meson test
 
@@ -130,17 +139,20 @@ gemc_run_args = [
     '-PRINT_EVENT=10',
 ]
 
-gemc_test_env = environment()
-gemc_test_env.set(
-    'GEMC_DATA_DIR',
-    run_command(
-        python_exe, '-c',
-        'import os, sys; print(os.path.dirname(os.path.realpath(sys.argv[1])))',
-        meson.project_source_root(),
-        check: true,
-    ).stdout().strip(),
-)
-gemc_test_env.set('FIELD_DIR', fields_dir)
+gcard_scan_script = '''
+import os, sys
+d = sys.argv[1]
+for f in sorted(os.listdir(d)):
+    if f.endswith(".gcard") and "sqlite" not in f:
+        print(f)
+'''
+
+clas12_data_dir = run_command(
+    python_exe, '-c',
+    'import os, sys; print(os.path.realpath(sys.argv[1]))',
+    join_paths(meson.project_source_root(), '..'),
+    check: true,
+).stdout().strip()
 
 foreach det : [
     'ec', 'pcal', 'dc', 'ftof', 'ctof', 'cnd', 'bst', 'htcc',
@@ -148,16 +160,19 @@ foreach det : [
 ]
     # Resolve to a clean absolute path (no '..' components) so meson passes
     # a valid workdir to the test runner on all platforms.
-    det_dir = run_command(
+    test_det_dir = run_command(
         python_exe, '-c',
         'import os, sys; print(os.path.realpath(sys.argv[1]))',
-        join_paths(meson.project_source_root(), '..', 'geometry_source', det),
+        join_paths(meson.project_source_root(), '..', 'experiments', 'clas12', det),
         check: true,
     ).stdout().strip()
+    det_test_env = environment()
+    det_test_env.set('FIELD_DIR', fields_dir)
+    det_test_env.set('GEMC_DATA_DIR', clas12_data_dir)
     gcard_result = run_command(
         python_exe, '-c',
-        'import os, sys; d=sys.argv[1]; [print(f) for f in sorted(os.listdir(d)) if f.endswith(".gcard") and "sqlite" not in f]',
-        det_dir,
+        gcard_scan_script,
+        test_det_dir,
         check: true,
     )
     foreach gcard : gcard_result.stdout().strip().split('\n')
@@ -165,11 +180,11 @@ foreach det : [
             test(
                 det + '_' + gcard.replace('.gcard', ''),
                 gemc,
-                args    : gemc_run_args + [join_paths(det_dir, gcard)],
-                workdir : det_dir,
+                args    : gemc_run_args + [join_paths(test_det_dir, gcard)],
+                workdir : test_det_dir,
                 suite   : [det, 'clas12'],
                 timeout : 600,
-                env     : gemc_test_env,
+                env     : det_test_env,
             )
         endif
     endforeach

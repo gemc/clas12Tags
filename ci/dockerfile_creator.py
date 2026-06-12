@@ -157,10 +157,11 @@ def additional_software(image: str) -> str:
 		return (
 			"\n# Additional software: Java 21 + git-lfs\n"
 			"RUN set -euo pipefail \\\n"
-			" && pacman -Syu --noconfirm \\\n"
-			" && pacman -S --noconfirm --needed \\\n"
-			"      jdk21-openjdk \\\n"
-			"      git-lfs \\\n"
+			" && pacman_install() { \\\n"
+			"      pacman -Syu --noconfirm --needed \"$@\" \\\n"
+			"        || (pacman -Syy --noconfirm && pacman -S --noconfirm --needed \"$@\"); \\\n"
+			"    } \\\n"
+			" && pacman_install jdk21-openjdk git-lfs \\\n"
 			" && git lfs install --system \\\n"
 			" && pacman -Scc --noconfirm\n"
 		)

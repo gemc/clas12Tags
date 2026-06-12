@@ -77,8 +77,9 @@ of the CLAS12 detectors**, built using the **latest tagged version of coatjava**
 - [Clas12-config repository with the various experiments steering cards](https://github.com/JeffersonLab/clas12-config)
 - [CLAS12 Software Center Wiki](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Center#tab=Communications)
 - [CCDB Viewer](https://clasweb.jlab.org/cgi-bin/ccdb/objects)
-
-<br/>
+- Migration to [GEMC3](https://gemc.github.io/home/): check the [clas12-systems](https://github.com/gemc/clas12-systems)
+  repository and [roadmap](https://github.com/orgs/gemc/projects/1/views/4). 
+- <br/>
 
 # How to create the CLAS12 geometry databases
 

@@ -85,8 +85,11 @@ jobs:
           elif command -v dnf >/dev/null 2>&1; then
             dnf -y install git-lfs || (dnf -y install epel-release && dnf -y install git-lfs)
           elif command -v pacman >/dev/null 2>&1; then
-            pacman -Syu --noconfirm
-            pacman -S --noconfirm --needed git-lfs
+            pacman_install() {
+              pacman -Syu --noconfirm --needed "$@" ||
+                (pacman -Syy --noconfirm && pacman -S --noconfirm --needed "$@")
+            }
+            pacman_install git-lfs
           else
             echo "No supported package manager found to install git-lfs." >&2
             exit 1
@@ -104,8 +107,11 @@ jobs:
           elif command -v dnf >/dev/null 2>&1; then
             dnf -y install java-21-openjdk-devel || dnf -y install java-latest-openjdk-devel
           elif command -v pacman >/dev/null 2>&1; then
-            pacman -Syu --noconfirm
-            pacman -S --noconfirm --needed jdk21-openjdk
+            pacman_install() {
+              pacman -Syu --noconfirm --needed "$@" ||
+                (pacman -Syy --noconfirm && pacman -S --noconfirm --needed "$@")
+            }
+            pacman_install jdk21-openjdk
           else
             echo "No supported package manager found to install JDK 21." >&2
             exit 1
