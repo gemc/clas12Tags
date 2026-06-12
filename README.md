@@ -8,7 +8,7 @@ Create the CLAS12 geometry database for the a detector (here we use CND)
 ```bash
 git clone https://github.com/gemc/clas12Tags
 cd clas12Tags
-./build.sh installpath       # build and test gemc, install in <installpath>
+./build.sh -i installpath       # build and test gemc, install in <installpath>
 ./create_geometry.sh cnd     # build & install the CND detector databases
 ```
 
@@ -80,7 +80,8 @@ of the CLAS12 detectors**, built using the **latest tagged version of coatjava**
 - [CCDB Viewer](https://clasweb.jlab.org/cgi-bin/ccdb/objects)
 - Migration to [GEMC3](https://gemc.github.io/home/): check the [clas12-systems](https://github.com/gemc/clas12-systems)
   repository and [roadmap](https://github.com/orgs/gemc/projects/1/views/4). 
-- <br/>
+
+<br/>
 
 # How to create the CLAS12 geometry databases
 

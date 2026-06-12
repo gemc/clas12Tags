@@ -1,12 +1,34 @@
 #!/bin/zsh
 
-cdir=$(pwd)
+script_dir=${0:A:h}
+cdir=$script_dir
+cd "$cdir" || exit 1
+
+if [[ -z "${GEMC}" && -f "$cdir/ci/env.sh" ]]; then
+	source "$cdir/ci/env.sh"
+fi
+
+export GEMC=${GEMC:-$cdir/install}
+export GEMC_DATA_DIR=${GEMC_DATA_DIR:-$GEMC}
+export PERL5LIB=${PERL5LIB:-}:$GEMC/api/perl
 export COATJAVA=$cdir/geometry_source/coatjava
 export PATH=$PATH:$COATJAVA/bin
-export GEMC=$SIM_HOME/clas12Tags/dev
+
+if [[ ! -d "$GEMC/api/perl" ]]; then
+	echo "Error: GEMC API directory not found: $GEMC/api/perl" >&2
+	echo "Set GEMC to a valid GEMC install directory before running create_geometry.sh." >&2
+	exit 1
+fi
+
+if ! perl -MDBI -e 1 >/dev/null 2>&1; then
+	echo "Error: Perl DBI module not found. Install DBI before running create_geometry.sh." >&2
+	exit 1
+fi
 
 # CLAS12
-all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets murt upstream"
+all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft"
+all_dets+=" ftof ftofShield htcc ltcc magnets micromegas pcal rich"
+all_dets+=" rtpc targets murt upstream"
 
 function printHelp() {
     cat <<EOF
@@ -132,4 +154,3 @@ for dete in $=all_dets; do
 
 	cd ..
 done
-
