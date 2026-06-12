@@ -251,7 +251,7 @@ else
 
 	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
 	export GEMC=$SIM_HOME/gemc/dev
-	export GEMC_DATA_DIRC=${GEMC}
+	export GEMC_DATA_DIR=${GEMC}
 	export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
 	export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
 	export PATH=${PATH}:${GEMC}/bin
