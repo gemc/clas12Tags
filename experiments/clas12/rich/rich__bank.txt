@@ -1,0 +1,7 @@
+                rich  |              bankid  |                                      rich bank ID  | 1800   |                  Di  
+                rich  |              sector  |                                     clas12 sector  |    1   |                  Di  
+                rich  |               layer  |                                           tile id  |    2   |                  Di  
+                rich  |           component  |                                  maroc channel id  |    3   |                  Di  
+                rich  |           TDC_order  |                        order: 2 - TDCL , 3 - TDCR  |    4   |                  Di  
+                rich  |             TDC_TDC  |                                         TDC value  |    5   |                  Di  
+                rich  |                hitn  |                                        hit number  |   99   |                  Di  
