@@ -86,37 +86,8 @@ function test_gemc {
 	cd ..
 }
 
-function create_geo_dbs {
-
-	echo
-	echo "Creating all geometry databases with: create_geometry.sh"
-	echo START_CREATE_GEOMETRY $(date) | tee $geo_log
-	./create_geometry.sh 2>&1 | tee -a $geo_log
-	local pipeline_status=($pipestatus)
-	if [[ ${pipeline_status[1]} -ne 0 || ${pipeline_status[2]} -ne 0 ]]; then
-		fail_with_log "create_geometry failed. Log:" "$geo_log"
-	fi
-	ls -lrt | tee -a $geo_log
-
-	echo
-	echo "Changes after creation:"
-	echo END_CREATE_GEOMETRY $(date) | tee -a $geo_log
-	git branch
-	git status -s >> $geo_log
-
-	echo Final experiments/clas12 content >> $geo_log
-
-	echo "Copying experiments ASCII DB and sqlite file to $ARTIFACT_DIR for CI"
-	cp -r experiments clas12.sqlite geo_build.log geometry_source/build_coatjava.log $ARTIFACT_DIR ||
-		fail_with_log "Copying geometry artifacts failed. Log:" "$geo_log"
-}
-
 compile_gemc
 
-# create_geometry.sh needs the API installed first.
-create_geo_dbs
-
-# Meson tests need the generated .txt files.
 test_gemc
 
 # log info

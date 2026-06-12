@@ -102,7 +102,7 @@ jobs:
             apt-get update
             DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-21-jdk
           elif command -v dnf >/dev/null 2>&1; then
-            dnf -y install java-21-openjdk-devel
+            dnf -y install java-21-openjdk-devel || dnf -y install java-latest-openjdk-devel
           elif command -v pacman >/dev/null 2>&1; then
             pacman -Syu --noconfirm
             pacman -S --noconfirm --needed jdk21-openjdk
@@ -116,6 +116,9 @@ jobs:
           echo "$JAVA_HOME/bin" >> "$GITHUB_PATH"
           java -version
           javac -version
+          printf 'class JdkCheck {}\n' > /tmp/JdkCheck.java
+          javac --release 21 /tmp/JdkCheck.java
+          rm -f /tmp/JdkCheck.java /tmp/JdkCheck.class
 
       - name: Build and test
         shell: bash
@@ -127,6 +130,35 @@ jobs:
           . /usr/local/bin/docker-entrypoint.sh
           module load geant4/"${{ matrix.geant4_tag || env.GEANT4_TAG }}"
           ./ci/build.sh
+
+      - name: Create geometry
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DOCKER_ENTRYPOINT_SOURCE_ONLY=1
+          . /usr/local/bin/docker-entrypoint.sh
+          module load geant4/"${{ matrix.geant4_tag || env.GEANT4_TAG }}"
+          zsh -c '
+            source ci/env.sh
+            echo
+            echo "Creating all geometry databases with: create_geometry.sh"
+            echo START_CREATE_GEOMETRY $(date) | tee "$geo_log"
+            ./create_geometry.sh 2>&1 | tee -a "$geo_log"
+            pipeline_status=($pipestatus)
+            if [[ ${pipeline_status[1]} -ne 0 || ${pipeline_status[2]} -ne 0 ]]; then
+              fail_with_log "create_geometry failed. Log:" "$geo_log"
+            fi
+            ls -lrt | tee -a "$geo_log"
+            echo
+            echo "Changes after creation:"
+            echo END_CREATE_GEOMETRY $(date) | tee -a "$geo_log"
+            git branch
+            git status -s >> "$geo_log"
+            echo "Final experiments/clas12 content" >> "$geo_log"
+            echo "Copying experiments ASCII DB and sqlite file to $ARTIFACT_DIR for CI"
+            cp -r experiments clas12.sqlite geo_build.log geometry_source/build_coatjava.log "$ARTIFACT_DIR" ||
+              fail_with_log "Copying geometry artifacts failed. Log:" "$geo_log"
+          '
 
       - name: Pack logs
         if: ${{ always() }}

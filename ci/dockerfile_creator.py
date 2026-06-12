@@ -120,10 +120,12 @@ def additional_software(image: str) -> str:
 		return (
 			"\n# Additional software: Java 21 + git-lfs\n"
 			"RUN set -euo pipefail \\\n"
-			" && dnf -y install \\\n"
-			"      java-21-openjdk-devel \\\n"
-			"      git-lfs \\\n"
+			" && (dnf -y install java-21-openjdk-devel || dnf -y install java-latest-openjdk-devel) \\\n"
+			" && dnf -y install git-lfs \\\n"
 			" && git lfs install --system \\\n"
+			" && printf 'class JdkCheck {}\\n' > /tmp/JdkCheck.java \\\n"
+			" && javac --release 21 /tmp/JdkCheck.java \\\n"
+			" && rm -f /tmp/JdkCheck.java /tmp/JdkCheck.class \\\n"
 			" && dnf -y clean all \\\n"
 			" && rm -rf /var/cache/dnf\n"
 		)
@@ -226,8 +228,14 @@ import sys
 
 def main():
 	parser = argparse.ArgumentParser(
-		description="Print a dockerfile with install commands for a given base image and tag, gemc and geant4 versions",
-		epilog="Example: python3 ./ci/dockerfile_creator.py -i fedora -t 40 --geant4-version 11.4.0 --gemc-version dev",
+		description=(
+			"Print a dockerfile with install commands for a given base image and tag, gemc and "
+			"geant4 versions"
+		),
+		epilog=(
+			"Example: python3 ./ci/dockerfile_creator.py -i fedora -t 40 "
+			"--geant4-version 11.4.0 --gemc-version dev"
+		),
 	)
 	parser.add_argument(
 		"-i",

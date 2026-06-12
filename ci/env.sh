@@ -313,7 +313,7 @@ else
 	geo_log=$log_dir/geo.log
 	touch $setup_log $compile_log $install_log $gemc_install_show $test_log $geo_log
 
-	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
+	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/clas12Tags/dev"
 	export GEMC=$SIM_HOME/clas12Tags/dev
 	export GEMC_DATA_DIR=${GEMC}
 	export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
