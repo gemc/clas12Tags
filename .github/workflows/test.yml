@@ -70,6 +70,29 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install Git LFS
+        shell: bash
+        run: |
+          set -euo pipefail
+          if command -v git-lfs >/dev/null 2>&1; then
+            git lfs install --system
+            exit 0
+          fi
+
+          if command -v apt-get >/dev/null 2>&1; then
+            apt-get update
+            DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git-lfs
+          elif command -v dnf >/dev/null 2>&1; then
+            dnf -y install git-lfs || (dnf -y install epel-release && dnf -y install git-lfs)
+          elif command -v pacman >/dev/null 2>&1; then
+            pacman -Syu --noconfirm
+            pacman -S --noconfirm --needed git-lfs
+          else
+            echo "No supported package manager found to install git-lfs." >&2
+            exit 1
+          fi
+          git lfs install --system
+
       - name: Build and test
         shell: bash
 
