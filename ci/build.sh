@@ -9,6 +9,19 @@
 
 source ci/env.sh
 
+function fail_with_log {
+	local message="$1"
+	local log_file="$2"
+
+	echo "$message"
+	if [[ -f "$log_file" ]]; then
+		cat "$log_file"
+	else
+		echo "Log file not found: $log_file"
+	fi
+	exit 1
+}
+
 function show_gemc_installation {
 
 	echo "- Content of \$GEMC=$GEMC" | tee $gemc_install_show
@@ -44,7 +57,7 @@ function run_meson_test_with_retry {
 	shift
 	for attempt in 1 2; do
 		echo " > Running ${label} (attempt ${attempt}/2):" "$@" | tee -a "$test_log"
-		"$@" >> "$test_log"
+		"$@" >> "$test_log" 2>&1
 		local exit_code=$?
 		if [ $exit_code -eq 0 ]; then return 0; fi
 		if [ $attempt -eq 2 ]; then return $exit_code; fi
@@ -71,33 +84,27 @@ function compile_gemc {
 	cd source
 	echo
 	echo " > Running meson setup build $=meson_option" | tee -a $setup_log
-	meson setup build $=meson_option >>$setup_log
+	meson setup build $=meson_option >>$setup_log 2>&1
 	if [ $? -ne 0 ]; then
-		echo " > Meson Configure failed. Log: "
-		cat $setup_log
-		exit 1
+		fail_with_log " > Meson Configure failed. Log: " "$setup_log"
 	else
 		echo " > Meson Configure Successful"
 		echo
 	fi
 
 	echo " > Running meson compile -C build -v -j $jobs " | tee -a $compile_log
-	meson compile -C build -v -j $jobs >>$compile_log
+	meson compile -C build -v -j $jobs >>$compile_log 2>&1
 	if [ $? -ne 0 ]; then
-		echo " > Meson Compile failed. Log: "
-		cat $compile_log
-		exit 1
+		fail_with_log " > Meson Compile failed. Log: " "$compile_log"
 	else
 		echo " > Meson Compile Successful"
 		echo
 	fi
 
 	echo " > Running meson install -C build " | tee -a $install_log
-	meson install -C build >>$install_log
+	meson install -C build >>$install_log 2>&1
 	if [ $? -ne 0 ]; then
-		echo " > Meson Install failed. Log: "
-		cat $install_log
-		exit 1
+		fail_with_log " > Meson Install failed. Log: " "$install_log"
 	else
 		echo " > Meson Install Successful"
 		echo
@@ -114,22 +121,21 @@ function compile_gemc {
 	)
 	: > "$test_log"
 	if ! run_meson_test_with_retry "meson test" meson test "${test_options[@]}"; then
-		echo " > Meson Tests failed. Log: "
-		cat $test_log
-		exit 1
+		fail_with_log " > Meson Tests failed. Log: " "$test_log"
 	else
 		echo " > Meson Tests Successful"
 		echo
 	fi
 
 	echo "   - Successful: $(grep 'Ok:' "$test_log" | awk '{sum += $2} END {print sum + 0}')" | tee -a "$test_log"
-	echo "   - Failures:   $(grep 'Fail:' "$test_log" | awk '{sum += $2} END {print sum + 0}')" | tee -a "$test_log"
+	echo "   - Failures:   $(grep 'Fail:' "$test_log" |
+		awk '{sum += $2} END {print sum + 0}')" | tee -a "$test_log"
 	echo " > Complete test log: $test_log"
 
 	cd ..
 
 	# installing api into $GEMC
-	cp -r api $GEMC
+	cp -r api $GEMC || fail_with_log " > API install failed. Log: " "$install_log"
 }
 
 function create_geo_dbs {
@@ -137,11 +143,10 @@ function create_geo_dbs {
 	echo
 	echo "Creating all geometry databases with: create_geometry.sh"
 	echo START_CREATE_GEOMETRY $(date) | tee $geo_log
-	./create_geometry.sh | tee -a $geo_log
-	if [ $? -ne 0 ]; then
-		echo "create_geometry failed. Log:"
-		cat $geo_log
-		exit 1
+	./create_geometry.sh 2>&1 | tee -a $geo_log
+	local pipeline_status=($pipestatus)
+	if [[ ${pipeline_status[1]} -ne 0 || ${pipeline_status[2]} -ne 0 ]]; then
+		fail_with_log "create_geometry failed. Log:" "$geo_log"
 	fi
 	ls -lrt | tee -a $geo_log
 
@@ -154,7 +159,8 @@ function create_geo_dbs {
 	echo Final experiments/clas12 content >> $geo_log
 
 	echo "Copying experiments ASCII DB and sqlite file to $ARTIFACT_DIR for CI"
-	cp -r experiments clas12.sqlite geo_build.log geometry_source/build_coatjava.log $ARTIFACT_DIR
+	cp -r experiments clas12.sqlite geo_build.log geometry_source/build_coatjava.log $ARTIFACT_DIR ||
+		fail_with_log "Copying geometry artifacts failed. Log:" "$geo_log"
 }
 
 # create geometry first — meson tests need the generated .txt files
@@ -169,11 +175,11 @@ log_java_info
 
 echo
 echo "Copying executable, experiments, api, sqlite database for artifact retrieval"
-mkdir -p $ARTIFACT_DIR/bin
-cp $GEMC/bin/gemc $ARTIFACT_DIR/bin
-cp -r experiments $ARTIFACT_DIR
-cp -r api $ARTIFACT_DIR
-cp clas12.sqlite $ARTIFACT_DIR
+mkdir -p $ARTIFACT_DIR/bin || fail_with_log "Creating artifact bin directory failed. Log:" "$install_log"
+cp $GEMC/bin/gemc $ARTIFACT_DIR/bin || fail_with_log "Copying GEMC executable failed. Log:" "$install_log"
+cp -r experiments $ARTIFACT_DIR || fail_with_log "Copying experiments failed. Log:" "$geo_log"
+cp -r api $ARTIFACT_DIR || fail_with_log "Copying API failed. Log:" "$install_log"
+cp clas12.sqlite $ARTIFACT_DIR || fail_with_log "Copying clas12.sqlite failed. Log:" "$geo_log"
 echo
 echo "Content of artifacts dir $ARTIFACT_DIR:"
-ls -lrt $ARTIFACT_DIR
+ls -lrt $ARTIFACT_DIR || fail_with_log "Listing artifact directory failed. Log:" "$install_log"
