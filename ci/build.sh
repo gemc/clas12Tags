@@ -9,62 +9,6 @@
 
 source ci/env.sh
 
-function fail_with_log {
-	local message="$1"
-	local log_file="$2"
-
-	echo "$message"
-	if [[ -f "$log_file" ]]; then
-		cat "$log_file"
-	else
-		echo "Log file not found: $log_file"
-	fi
-	exit 1
-}
-
-function show_gemc_installation {
-
-	echo "- Content of \$GEMC=$GEMC" | tee $gemc_install_show
-	ls -lrt $GEMC | tee -a $gemc_install_show
-
-	echo "- Content of \$GEMC/bin=$GEMC/bin" | tee -a $gemc_install_show
-	ls -lrt $GEMC/bin | tee -a $gemc_install_show
-
-	echo "- Content of \$GEMC_DATA_DIR=$GEMC_DATA_DIR" | tee -a $gemc_install_show
-	ls -lrt $GEMC_DATA_DIR | tee -a $gemc_install_show
-
-	if [ -d $GEMC/lib ]; then
-		echo "- Content of \$GEMC/lib=$GEMC/lib" | tee -a $gemc_install_show
-		ls -lrt $GEMC/lib | tee -a $gemc_install_show
-	fi
-
-	# if on unix, use ldd , if on mac, use otool -L
-	if [[ "$(uname)" == "Darwin" ]]; then
-		otool -L $GEMC/bin/gemc | tee -a $gemc_install_show
-	else
-		ldd $GEMC/bin/gemc | tee -a $gemc_install_show
-	fi
-	echo
-	echo "Instrospection: Running GEMC" | tee -a $gemc_install_show
-	echo $(gemc --version) | tee -a $gemc_install_show
-
-	echo "  To check gemc installation:  cat $gemc_install_show"
-
-}
-
-function run_meson_test_with_retry {
-	local label="$1"
-	shift
-	for attempt in 1 2; do
-		echo " > Running ${label} (attempt ${attempt}/2):" "$@" | tee -a "$test_log"
-		"$@" >> "$test_log" 2>&1
-		local exit_code=$?
-		if [ $exit_code -eq 0 ]; then return 0; fi
-		if [ $attempt -eq 2 ]; then return $exit_code; fi
-		echo " > ${label} failed; retrying once" | tee -a "$test_log"
-	done
-}
-
 function compile_gemc {
 
 	local install_dir="${GEMC:?GEMC not set}"
@@ -110,6 +54,13 @@ function compile_gemc {
 		echo
 	fi
 
+	cd ..
+}
+
+function test_gemc {
+
+	cd source
+
 	local test_options=(
 		-C build
 		--suite clas12
@@ -120,7 +71,7 @@ function compile_gemc {
 		-v
 	)
 	: > "$test_log"
-	if ! run_meson_test_with_retry "meson test" meson test "${test_options[@]}"; then
+	if ! retry_command "meson test" "$test_log" meson test "${test_options[@]}"; then
 		fail_with_log " > Meson Tests failed. Log: " "$test_log"
 	else
 		echo " > Meson Tests Successful"
@@ -133,9 +84,6 @@ function compile_gemc {
 	echo " > Complete test log: $test_log"
 
 	cd ..
-
-	# installing api into $GEMC
-	cp -r api $GEMC || fail_with_log " > API install failed. Log: " "$install_log"
 }
 
 function create_geo_dbs {
@@ -163,10 +111,13 @@ function create_geo_dbs {
 		fail_with_log "Copying geometry artifacts failed. Log:" "$geo_log"
 }
 
-# create geometry first — meson tests need the generated .txt files
+compile_gemc
+
+# create_geometry.sh needs the API installed first.
 create_geo_dbs
 
-compile_gemc
+# Meson tests need the generated .txt files.
+test_gemc
 
 # log info
 show_gemc_installation

@@ -55,6 +55,62 @@ die_with_code()  {
 	exit "$code"
 }
 
+fail_with_log() {
+	local message="$1"
+	local log_file="$2"
+
+	echo "$message"
+	if [[ -f "$log_file" ]]; then
+		cat "$log_file"
+	else
+		echo "Log file not found: $log_file"
+	fi
+	exit 1
+}
+
+show_gemc_installation() {
+	echo "- Content of \$GEMC=$GEMC" | tee $gemc_install_show
+	ls -lrt $GEMC | tee -a $gemc_install_show
+
+	echo "- Content of \$GEMC/bin=$GEMC/bin" | tee -a $gemc_install_show
+	ls -lrt $GEMC/bin | tee -a $gemc_install_show
+
+	echo "- Content of \$GEMC_DATA_DIR=$GEMC_DATA_DIR" | tee -a $gemc_install_show
+	ls -lrt $GEMC_DATA_DIR | tee -a $gemc_install_show
+
+	if [ -d $GEMC/lib ]; then
+		echo "- Content of \$GEMC/lib=$GEMC/lib" | tee -a $gemc_install_show
+		ls -lrt $GEMC/lib | tee -a $gemc_install_show
+	fi
+
+	# if on unix, use ldd, if on mac, use otool -L
+	if [[ "$(uname)" == "Darwin" ]]; then
+		otool -L $GEMC/bin/gemc | tee -a $gemc_install_show
+	else
+		ldd $GEMC/bin/gemc | tee -a $gemc_install_show
+	fi
+	echo
+	echo "Introspection: Running GEMC" | tee -a $gemc_install_show
+	echo $(gemc --version) | tee -a $gemc_install_show
+
+	echo "  To check gemc installation:  cat $gemc_install_show"
+}
+
+retry_command() {
+	local label="$1"
+	local log_file="$2"
+	shift 2
+
+	for attempt in 1 2; do
+		echo " > Running ${label} (attempt ${attempt}/2):" "$@" | tee -a "$log_file"
+		"$@" >> "$log_file" 2>&1
+		local exit_code=$?
+		if [ $exit_code -eq 0 ]; then return 0; fi
+		if [ $attempt -eq 2 ]; then return $exit_code; fi
+		echo " > ${label} failed; retrying once" | tee -a "$log_file"
+	done
+}
+
 DetectorDirNotExisting() {
 	echo "System directory: $system not existing"
 	exit 3
@@ -78,10 +134,13 @@ log_java_info() {
 
 # returns runs to test
 runs_for_system() {
-	rgm_runs="15016 15043 15108 15165 15178 15318 15356 15434 15458 15534 15566 15637 15643 15671 15732 15733 15734"
+	rgm_runs="15016 15043 15108 15165 15178 15318 15356 15434 15458"
+	rgm_runs+=" 15534 15566 15637 15643 15671 15732 15733 15734"
 	rge_runs="20035 20041 20070 20074 20131 20177 20232 20269 20282 20331 20435 20494 20506 20507 20508 20520"
 	rgl_runs="21000 21001 21002 21003"
-	rgd_runs="18347 18372 18560 18660 18874 19061 18339 18369 18400 18440 18756 18796 18316 18399 19060 18305 18318 18419 18528 18644 18764 18851 19021"
+	rgd_runs="18347 18372 18560 18660 18874 19061 18339 18369 18400"
+	rgd_runs+=" 18440 18756 18796 18316 18399 19060 18305 18318 18419"
+	rgd_runs+=" 18528 18644 18764 18851 19021"
 
 	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
@@ -159,11 +218,15 @@ variations_for_run_and_system()  {
 		echo "rgc_spring2023"
 	elif [[ $1 == "18304" ]]; then
 		echo "rgd_fall2023"
-	elif [[ $1 == "18347" || $1 == "18372"  || $1 == "18560" || $1 == "18660" || $1 == "18874"  || $1 == "19061" ]]; then
+	elif [[ $1 == "18347" || $1 == "18372" || $1 == "18560" ||
+		$1 == "18660" || $1 == "18874" || $1 == "19061" ]]; then
 		echo "rgd_fall2023_CuSn"
-	elif [[ $1 == "18339" || $1 == "18369" || $1 == "18400" || $1 == "18440" || $1 == "18440" || $1 == "18440" ]]; then
+	elif [[ $1 == "18339" || $1 == "18369" || $1 == "18400" ||
+		$1 == "18440" || $1 == "18440" || $1 == "18440" ]]; then
 		echo "rgd_fall2023_CxC"
-	elif [[ $1 == "18305" || $1 == "18318" || $1 == "18419" || $1 == "18528" || $1 == "18644" || $1 == "18764" || $1 == "18851" || $1 == "19021" ]]; then
+	elif [[ $1 == "18305" || $1 == "18318" || $1 == "18419" ||
+		$1 == "18528" || $1 == "18644" || $1 == "18764" ||
+		$1 == "18851" || $1 == "19021" ]]; then
 		echo "rgd_fall2023_lD2"
 	elif [[ $1 == "18316" || $1 == "18399" || $1 == "19060" ]]; then
 		echo "rgd_fall2023_empty"
@@ -185,7 +248,8 @@ variations_for_run_and_system()  {
 		echo "rge_spring2024_LD2_C"
 	elif [[ $1 == "20177" ]]; then
 		echo "rge_spring2024_LD2_Cu"
-	elif [[ $1 == "20041" || $1 == "20074" || $1 == "20232" || $1 == "20282" || $1 == "20494" || $1 == "20520" ]]; then
+	elif [[ $1 == "20041" || $1 == "20074" || $1 == "20232" ||
+		$1 == "20282" || $1 == "20494" || $1 == "20520" ]]; then
 		echo "rge_spring2024_LD2_Pb"
 	elif [[ $1 == "20331" ]]; then
 		echo "rge_spring2024_LD2_Sn"
@@ -250,7 +314,7 @@ else
 	touch $setup_log $compile_log $install_log $gemc_install_show $test_log $geo_log
 
 	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/gemc/dev"
-	export GEMC=$SIM_HOME/gemc/dev
+	export GEMC=$SIM_HOME/clas12Tags/dev
 	export GEMC_DATA_DIR=${GEMC}
 	export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
 	export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig

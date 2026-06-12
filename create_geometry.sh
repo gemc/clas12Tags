@@ -3,6 +3,7 @@
 cdir=$(pwd)
 export COATJAVA=$cdir/geometry_source/coatjava
 export PATH=$PATH:$COATJAVA/bin
+export GEMC=$SIM_HOME/clas12Tags/dev
 
 # CLAS12
 all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets murt upstream"
