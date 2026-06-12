@@ -125,7 +125,11 @@ log_java_info() {
 	java -version
 	echo "JAVA_HOME=${JAVA_HOME:-<unset>}"
 	echo "Groovy:"
-	groovy -version
+	if command -v groovy >/dev/null 2>&1; then
+		groovy -version
+	else
+		echo "groovy not found"
+	fi
 	echo
 	echo "========================================"
 	echo
@@ -286,9 +290,12 @@ run_number_for_gcard() {
 # show environment
 # export
 
-# if we are in the docker container, we need to load the modules
+repo_root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 if [[ -z "${AUTOBUILD}" ]]; then
 	echo "\nNot in container"
+	log_dir=${log_dir:-$repo_root/logs}
+	default_gemc=$repo_root/install
+	default_artifact_dir=$repo_root/_artifacts
 else
 
 	echo "\nIn docker container"
@@ -303,27 +310,31 @@ else
 	echo "Marking workspace as safe for Git"
 	git config --global --add safe.directory '*'
 	enable_git_describe
-	log_dir=/root/clas12Tags/logs
-	mkdir -p $log_dir
-	setup_log=$log_dir/setup.log
-	compile_log=$log_dir/build.log
-	install_log=$log_dir/install.log
-	gemc_install_show=$log_dir/show_install.log
-	test_log=$log_dir/test.log
-	geo_log=$log_dir/geo.log
-	touch $setup_log $compile_log $install_log $gemc_install_show $test_log $geo_log
-
-	echo "Setting GEMC and GEMC_DATA_DIR to this directory: $SIM_HOME/clas12Tags/dev"
-	export GEMC=$SIM_HOME/clas12Tags/dev
-	export GEMC_DATA_DIR=${GEMC}
-	export PYTHONPATH=${PYTHONPATH}:${GEMC}/api
-	export PKG_CONFIG_PATH=${PKG_CONFIG_PATH}:${GEMC}/lib/pkgconfig
-	export PATH=${PATH}:${GEMC}/bin
-	export LD_LIBRARY_PATH=${PATH}:${GEMC}/lib
-
-	export ARTIFACT_DIR=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
-
+	log_dir=${log_dir:-/root/clas12Tags/logs}
+	default_gemc=$SIM_HOME/clas12Tags/dev
+	default_artifact_dir=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
 fi
+
+mkdir -p $log_dir
+setup_log=$log_dir/setup.log
+compile_log=$log_dir/build.log
+install_log=$log_dir/install.log
+gemc_install_show=$log_dir/show_install.log
+test_log=$log_dir/test.log
+geo_log=$log_dir/geo.log
+touch $setup_log $compile_log $install_log $gemc_install_show $test_log $geo_log
+
+export GEMC=${GEMC:-$default_gemc}
+export GEMC_DATA_DIR=${GEMC_DATA_DIR:-$GEMC}
+export PYTHONPATH=${PYTHONPATH:-}:$GEMC/api
+export PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}:$GEMC/lib/pkgconfig
+export PATH=${PATH}:$GEMC/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:$GEMC/lib
+export ARTIFACT_DIR=${ARTIFACT_DIR:-$default_artifact_dir}
+
+echo "GEMC=$GEMC"
+echo "GEMC_DATA_DIR=$GEMC_DATA_DIR"
+echo "ARTIFACT_DIR=$ARTIFACT_DIR"
 
 # detect cores and cap at 16
 cores=$(getconf _NPROCESSORS_ONLN 2>/dev/null || nproc)

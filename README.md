@@ -8,6 +8,7 @@ Create the CLAS12 geometry database for the a detector (here we use CND)
 ```bash
 git clone https://github.com/gemc/clas12Tags
 cd clas12Tags
+./build.sh installpath       # build and test gemc, install in <installpath>
 ./create_geometry.sh cnd     # build & install the CND detector databases
 ```
 

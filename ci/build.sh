@@ -7,6 +7,46 @@
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/build_gemc.sh
 
+function usage {
+	cat <<'EOF'
+Usage: ./ci/build.sh [--install-dir DIR]
+
+Options:
+  -i, --install-dir DIR  Install prefix for local builds. Defaults to $repo_root/install.
+  -h, --help             Show this help message.
+EOF
+}
+
+repo_root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+local_install_dir=
+
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+		-i|--install-dir)
+			if [[ $# -lt 2 || -z "$2" ]]; then
+				echo "Missing value for $1" >&2
+				usage
+				exit 2
+			fi
+			local_install_dir=$2
+			shift 2
+			;;
+		-h|--help)
+			usage
+			exit 0
+			;;
+		*)
+			echo "Unknown option: $1" >&2
+			usage
+			exit 2
+			;;
+	esac
+done
+
+if [[ -z "${AUTOBUILD}" && -n "$local_install_dir" ]]; then
+	export GEMC=${local_install_dir:a}
+fi
+
 source ci/env.sh
 
 function compile_gemc {
@@ -96,12 +136,11 @@ log_java_info
 
 
 echo
-echo "Copying executable, experiments, api, sqlite database for artifact retrieval"
+echo "Copying executable, experiments, and api for artifact retrieval"
 mkdir -p $ARTIFACT_DIR/bin || fail_with_log "Creating artifact bin directory failed. Log:" "$install_log"
 cp $GEMC/bin/gemc $ARTIFACT_DIR/bin || fail_with_log "Copying GEMC executable failed. Log:" "$install_log"
 cp -r experiments $ARTIFACT_DIR || fail_with_log "Copying experiments failed. Log:" "$geo_log"
 cp -r api $ARTIFACT_DIR || fail_with_log "Copying API failed. Log:" "$install_log"
-cp clas12.sqlite $ARTIFACT_DIR || fail_with_log "Copying clas12.sqlite failed. Log:" "$geo_log"
 echo
 echo "Content of artifacts dir $ARTIFACT_DIR:"
 ls -lrt $ARTIFACT_DIR || fail_with_log "Listing artifact directory failed. Log:" "$install_log"
