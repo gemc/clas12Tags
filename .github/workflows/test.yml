@@ -242,7 +242,7 @@ jobs:
           name: logs-${{ matrix.gemc_tag }}-${{ matrix.image }}-${{ matrix.image_tag }}-${{ matrix.arch }}
           path: ${{ env.LOG_TAR }}
           if-no-files-found: warn
-          retention-days: 14
+          retention-days: 7
 
   final:
     name: Test - summary
