@@ -19,15 +19,10 @@ on:
   workflow_run:
     workflows: [ "Deploy" ]
     types: [ completed ]
-    branches: [ meson ]
 
 jobs:
   release-tarballs:
-    if: >-
-      ${{
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.event == 'push'
-      }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Attach clas12Tags tarballs to dev release
     runs-on: ubuntu-latest
     env:
@@ -65,11 +60,7 @@ jobs:
           gh release upload "${TAG_NAME}" --repo "$REPO" "${tarballs[@]}" --clobber
 
   discover:
-    if: >-
-      ${{
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.event == 'push'
-      }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Create Job Matrix
     runs-on: ubuntu-latest
     outputs:
