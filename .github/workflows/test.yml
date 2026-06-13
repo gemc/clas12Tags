@@ -207,8 +207,14 @@ jobs:
             git status -s >> "$geo_log"
             echo "Final experiments/clas12 content" >> "$geo_log"
             echo "Copying experiments ASCII DB and sqlite file to $ARTIFACT_DIR for CI"
-            cp -r experiments clas12.sqlite geo_build.log geometry_source/build_coatjava.log "$ARTIFACT_DIR" ||
+            cp -r experiments clas12.sqlite "$ARTIFACT_DIR" ||
               fail_with_log "Copying geometry artifacts failed. Log:" "$geo_log"
+            cp "$geo_log" "$ARTIFACT_DIR/geo.log" ||
+              fail_with_log "Copying geometry log failed. Log:" "$geo_log"
+            if [[ -f geometry_source/build_coatjava.log ]]; then
+              cp geometry_source/build_coatjava.log "$ARTIFACT_DIR" ||
+                fail_with_log "Copying coatjava log failed. Log:" "$geo_log"
+            fi
           '
 
       - name: Pack logs
