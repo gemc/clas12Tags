@@ -1,0 +1,161 @@
+# Upload and test clas12Tags binary tarballs.
+name: Binary Tarballs
+
+run-name: Triggered by successful deploy workflow
+
+permissions:
+  actions: read
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: clas12tags-binary-tarballs-${{ github.event.workflow_run.id }}
+  cancel-in-progress: true
+
+on:
+  workflow_run:
+    workflows: [ "Deploy" ]
+    types: [ completed ]
+    branches: [ meson ]
+
+jobs:
+  release-tarballs:
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push'
+      }}
+    name: Attach clas12Tags tarballs to dev release
+    runs-on: ubuntu-latest
+    env:
+      TAG_NAME: dev
+    steps:
+      - name: Download clas12Tags tarballs from deploy run
+        uses: actions/download-artifact@v7
+        with:
+          pattern: clas12tags-tarball-*
+          path: ${{ runner.temp }}/clas12tags-release-artifacts
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Upload clas12Tags tarballs to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          shopt -s nullglob
+          tarballs=("${{ runner.temp }}/clas12tags-release-artifacts/"*.tar.gz)
+          shopt -u nullglob
+          if (( ${#tarballs[@]} == 0 )); then
+            echo "No clas12Tags tarballs found"
+            exit 1
+          fi
+          gh release view "${TAG_NAME}" --repo "$REPO" >/dev/null 2>&1 || \
+            gh release create "${TAG_NAME}" \
+              --repo "$REPO" \
+              --title "Dev Nightly" \
+              --prerelease \
+              --notes "Dev nightly release."
+          gh release upload "${TAG_NAME}" --repo "$REPO" "${tarballs[@]}" --clobber
+
+  discover:
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'push'
+      }}
+    name: Create Job Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix_build: ${{ steps.scan.outputs.matrix_build }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+      - id: scan
+        name: Build matrix
+        run: ./ci/distros_tags.sh
+
+  test-tarball:
+    if: ${{ always() && needs.discover.result == 'success' && needs.release-tarballs.result == 'success' }}
+    name: ${{ matrix.image }}:${{ matrix.image_tag }} ${{ matrix.arch }}
+    needs: [ discover, release-tarballs ]
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix_build) }}
+    env:
+      TEST_IMAGE: clas12tags-binary-test:${{ matrix.image }}-${{ matrix.image_tag }}-${{ matrix.arch }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Generate minimal package Dockerfile
+        shell: bash
+        run: |
+          python3 - "${{ matrix.image }}" "${{ matrix.image_tag }}" > Dockerfile.clas12tags-binary-test <<'PY'
+          import sys
+
+          sys.path.insert(0, "ci")
+          from binary_packages import map_family, packages_install_command
+
+          image = sys.argv[1]
+          tag = sys.argv[2]
+          family = map_family(image)
+
+          print(f"FROM {image}:{tag}")
+          print('SHELL ["/bin/bash", "-c"]')
+
+          if family == "archlinux":
+              print("RUN pacman-key --init && pacman-key --populate")
+              print("RUN pacman -Sy --noconfirm archlinux-keyring")
+          elif image == "almalinux":
+              print("RUN dnf install -y 'dnf-command(config-manager)' \\")
+              print("    && dnf config-manager --set-enabled crb")
+
+          print(packages_install_command(image, tag))
+          PY
+          cat Dockerfile.clas12tags-binary-test
+
+      - name: Build minimal package image
+        shell: bash
+        run: |
+          docker build \
+            --pull \
+            --platform "${{ matrix.platform }}" \
+            -f Dockerfile.clas12tags-binary-test \
+            -t "${TEST_IMAGE}" \
+            .
+
+      - name: Test clas12Tags binary tarball installation
+        shell: bash
+        run: |
+          archive="clas12Tags-${{ matrix.gemc_tag }}-geant4-${{ matrix.geant4_tag }}"
+          archive="${archive}-${{ matrix.image }}-${{ matrix.image_tag }}-${{ matrix.arch }}.tar.gz"
+          url="https://github.com/gemc/clas12Tags/releases/download/${{ matrix.gemc_tag }}/${archive}"
+
+          docker run --rm \
+            --platform "${{ matrix.platform }}" \
+            -e CLAS12TAGS_TARBALL_URL="${url}" \
+            -e CLAS12TAGS_TARBALL_ARCHIVE="${archive}" \
+            "${TEST_IMAGE}" \
+            bash -lc '
+              set -euo pipefail
+              clas12tags_home=/root/clas12Tags
+              mkdir -p "$clas12tags_home"
+              cd "$clas12tags_home"
+              curl -L -o "$CLAS12TAGS_TARBALL_ARCHIVE" "$CLAS12TAGS_TARBALL_URL"
+              tar -xzf "$CLAS12TAGS_TARBALL_ARCHIVE" -C "$clas12tags_home" --strip-components=1
+              ./install_geant4_data.sh
+              source /root/clas12Tags/clas12tags.env
+              gemc -v
+              test -d "$GEMC_DATA_DIR/experiments/clas12"
+            '

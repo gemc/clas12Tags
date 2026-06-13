@@ -177,7 +177,7 @@ def install_gemc(geant4_version: str, gemc_version: str, source: str = "clone") 
 			f"     && DOCKER_ENTRYPOINT_SOURCE_ONLY=1 . {remote_entrypoint()} \\\n"
 			f"     && module load geant4/{geant4_version} \\\n"
 			f"     && ./ci/build.sh \\\n"
-			f'     && echo "export PATH=\\${{SIM_HOME}}/gemc/dev/bin:\\${{PATH}}" >> {remote_entrypoint_addon()}\n'
+			f'     && echo "export PATH=\\${{SIM_HOME}}/clas12Tags/dev/bin:\\${{PATH}}" >> {remote_entrypoint_addon()}\n'
 		)
 		return commands
 
@@ -194,7 +194,30 @@ def install_gemc(geant4_version: str, gemc_version: str, source: str = "clone") 
 		f"     && DOCKER_ENTRYPOINT_SOURCE_ONLY=1 . {remote_entrypoint()} \\\n"
 		f"     && module load geant4/{geant4_version} \\\n"
 		f"     && ./ci/build.sh \\\n"
-		f'     && echo "export PATH=\\${{SIM_HOME}}/gemc/dev/bin:\\${{PATH}}" >> {remote_entrypoint_addon()}\n'
+		f'     && echo "export PATH=\\${{SIM_HOME}}/clas12Tags/dev/bin:\\${{PATH}}" >> {remote_entrypoint_addon()}\n'
+	)
+	return commands
+
+
+def package_install(
+	geant4_version: str,
+	gemc_version: str,
+	image: str,
+	image_tag: str,
+	package_arch: str,
+) -> str:
+	package_name = f"clas12Tags-{gemc_version}-geant4-{geant4_version}-{image}-{image_tag}"
+	package_name += f"-{package_arch}"
+	commands = "\n# release tarball build \n"
+	commands += "FROM final AS package-build \n"
+	commands += "RUN  cd /root/clas12Tags \\\n"
+	commands += f"     && DOCKER_ENTRYPOINT_SOURCE_ONLY=1 . {remote_entrypoint()} \\\n"
+	commands += f"     && module load geant4/{geant4_version} \\\n"
+	commands += "     && eval \"$(geant4-config --sh)\" \\\n"
+	commands += f"     && GEANT4_VERSION={geant4_version} CLAS12TAGS_PACKAGE_VERSION={gemc_version} \\\n"
+	commands += (
+		f"        bash ./ci/package_install.sh \"${{SIM_HOME}}/clas12Tags/dev\" "
+		f"/root/clas12Tags/dist \"{package_name}\" \n"
 	)
 	return commands
 
@@ -206,12 +229,21 @@ def log_exporters() -> str:
 	return commands
 
 
+def package_exporters() -> str:
+	commands = "\n# release package exporter \n"
+	commands += "FROM scratch AS package-export \n"
+	commands += "COPY --from=package-build /root/clas12Tags/dist / \n"
+	return commands
+
+
 def create_dockerfile(
 	image: str,
 	image_tag: str,
 	geant4_version: str,
 	gemc_version: str,
 	source: str = "clone",
+	with_package: bool = False,
+	package_arch: str = "amd64",
 ) -> str:
 	commands = ""
 	commands += docker_header(image, image_tag, geant4_version)
@@ -220,6 +252,9 @@ def create_dockerfile(
 	commands += "\nRUN java -version 2>&1 | head -n 1 && javac -version 2>&1 | head -n 1\n"
 	commands += install_gemc(geant4_version, gemc_version, source)
 	commands += log_exporters()
+	if with_package:
+		commands += package_install(geant4_version, gemc_version, image, image_tag, package_arch)
+		commands += package_exporters()
 	return commands
 
 
@@ -264,6 +299,17 @@ def main():
 		default="clone",
 		help="Build clas12Tags from a GitHub clone or from the Docker build context (default: %(default)s)",
 	)
+	parser.add_argument(
+		"--with-package",
+		action="store_true",
+		help="Add a package-export stage that emits a clas12Tags install tarball",
+	)
+	parser.add_argument(
+		"--package-arch",
+		choices=["amd64", "arm64"],
+		default="amd64",
+		help="Architecture suffix to use in the package artifact name",
+	)
 
 	args = parser.parse_args()
 
@@ -279,6 +325,8 @@ def main():
 		args.geant4_version,
 		args.gemc_version,
 		args.source,
+		args.with_package,
+		args.package_arch,
 	)
 	print(dockerfile)
 

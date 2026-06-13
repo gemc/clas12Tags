@@ -17,6 +17,7 @@ on:
   workflow_run:
     workflows: [ "Test" ]
     types: [ completed ]
+    branches: [ meson ]
 
 jobs:
   overview:
@@ -116,7 +117,9 @@ jobs:
             -t "${{ matrix.image_tag }}" \
             --gemc-version "${{ matrix.gemc_tag }}" \
             --geant4-version "${{ matrix.geant4_tag }}" \
+            --with-package \
             --source context \
+            --package-arch "${{ matrix.arch }}" \
             > Dockerfile.generated
           cat Dockerfile.generated
 
@@ -145,6 +148,17 @@ jobs:
           cache-from: ${{ env.CACHE_REF }}
           outputs: type=local,dest=${{ runner.temp }}/artifacts/${{ matrix.logs_dir }}
 
+      - name: Export clas12Tags tarball (runner artifact)
+        uses: docker/build-push-action@v7
+        with:
+          pull: true
+          context: .
+          file: ./Dockerfile.generated
+          target: package-export
+          push: false
+          cache-from: ${{ env.CACHE_REF }}
+          outputs: type=local,dest=${{ runner.temp }}/artifacts/package-${{ env.LOGNAME }}
+
       - name: Pack logs
         shell: bash
         run: |
@@ -160,6 +174,13 @@ jobs:
           name: logs-${{ env.LOGNAME }}
           path: ${{ env.LOG_TAR }}
           if-no-files-found: ignore
+
+      - name: Upload clas12Tags tarball artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: clas12tags-tarball-${{ env.LOGNAME }}
+          path: ${{ runner.temp }}/artifacts/package-${{ env.LOGNAME }}/*.tar.gz
+          if-no-files-found: error
 
   # Multi-arch manifest stitch
   # docker buildx imagetools create assembles an OCI manifest list
