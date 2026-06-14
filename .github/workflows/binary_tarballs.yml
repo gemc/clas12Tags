@@ -69,7 +69,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          # restore when main merged: ref: ${{ github.event.workflow_run.head_sha }}
+          ref: meson
       - id: scan
         name: Build matrix
         run: ./ci/distros_tags.sh
@@ -88,7 +89,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_sha }}
+          # restore when main merged: ref: ${{ github.event.workflow_run.head_sha }}
+          ref: meson
 
       - name: Generate minimal package Dockerfile
         shell: bash
