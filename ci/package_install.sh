@@ -38,6 +38,26 @@ trap 'rm -rf "${stage}"' EXIT
 package_root="${stage}/${package_name}"
 cp -a "${install_prefix}" "${package_root}"
 
+copy_external_linked_libraries() {
+	local executable="${package_root}/bin/gemc"
+	local lib_path
+
+	[[ -x "${executable}" ]] || return 0
+	[[ -d "${package_root}/lib" ]] || mkdir -p "${package_root}/lib"
+
+	while IFS= read -r lib_path; do
+		[[ -f "${lib_path}" ]] || continue
+		case "${lib_path}" in
+			/lib/* | /lib64/* | /usr/lib/* | /usr/lib64/* | "${package_root}"/*)
+				continue
+				;;
+		esac
+		cp -n "${lib_path}" "${package_root}/lib/"
+	done < <(ldd "${executable}" | awk '/=> \// { print $3 }')
+}
+
+copy_external_linked_libraries
+
 archive_name_from_data_dir() {
 	local directory="$1"
 	local prefix version

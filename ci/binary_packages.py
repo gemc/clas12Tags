@@ -29,9 +29,9 @@ pkg_sections = {
 		"archlinux": ["ca-certificates", "curl", "gzip", "tar"],
 	},
 	"core_runtime": {
-		"fedora": ["expat", "sqlite-libs", "zlib"],
-		"debian": ["libexpat1", "libsqlite3-0", "zlib1g"],
-		"archlinux": ["expat", "sqlite", "zlib"],
+		"fedora": ["expat", "mariadb-connector-c", "sqlite-libs", "zlib"],
+		"debian": ["libexpat1", "libmariadb3", "libsqlite3-0", "zlib1g"],
+		"archlinux": ["expat", "mariadb-libs", "sqlite", "zlib"],
 	},
 	"x11_gl": {
 		"fedora": ["libX11", "libXext", "libXmu", "libXt", "mesa-libEGL", "mesa-libGL"],
@@ -43,10 +43,12 @@ pkg_sections = {
 		"debian": [
 			"libqt6core6t64",
 			"libqt6gui6",
-			"libqt6widgets6",
 			"libqt6opengl6",
 			"libqt6openglwidgets6",
+			"libqt6sql6",
 			"libqt6svg6",
+			"libqt6widgets6",
+			"libqt6xml6",
 		],
 		"archlinux": ["qt6-base", "qt6-svg"],
 	},
