@@ -39,21 +39,31 @@ package_root="${stage}/${package_name}"
 cp -a "${install_prefix}" "${package_root}"
 
 copy_external_linked_libraries() {
-	local executable="${package_root}/bin/gemc"
-	local lib_path
+	local target lib_path lib_name
 
-	[[ -x "${executable}" ]] || return 0
 	[[ -d "${package_root}/lib" ]] || mkdir -p "${package_root}/lib"
 
-	while IFS= read -r lib_path; do
-		[[ -f "${lib_path}" ]] || continue
-		case "${lib_path}" in
-			/lib/* | /lib64/* | /usr/lib/* | /usr/lib64/* | "${package_root}"/*)
-				continue
-				;;
-		esac
-		cp -n "${lib_path}" "${package_root}/lib/"
-	done < <(ldd "${executable}" | awk '/=> \// { print $3 }')
+	while IFS= read -r -d '' target; do
+		while IFS= read -r lib_path; do
+			[[ -f "${lib_path}" ]] || continue
+			lib_name="$(basename "${lib_path}")"
+			case "${lib_name}" in
+				libmysqlclient.so.* | libmariadb.so.*)
+					cp -n "${lib_path}" "${package_root}/lib/"
+					continue
+					;;
+			esac
+			case "${lib_path}" in
+				/lib/* | /lib64/* | /usr/lib/* | /usr/lib64/* | "${package_root}"/*)
+					continue
+					;;
+			esac
+			cp -n "${lib_path}" "${package_root}/lib/"
+		done < <(ldd "${target}" 2>/dev/null | awk '/=> \// { print $3 }')
+	done < <(
+		find "${package_root}/bin" "${package_root}/lib" \
+			\( -type f -o -type l \) -print0 2>/dev/null
+	)
 }
 
 copy_external_linked_libraries
