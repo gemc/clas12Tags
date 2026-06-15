@@ -1,0 +1,168 @@
+# Build and publish a single per-PR GHCR image for preview/testing.
+#
+# Unlike Deploy (which builds every OS/arch and stitches multi-arch manifests),
+# this workflow targets one image only: amd64 on the latest AlmaLinux produced by
+# the ci/distros configuration (currently almalinux 10). The published tag carries
+# a `pr-<number>` suffix so each PR gets its own image. When the PR is closed the
+# image is deleted from GHCR.
+name: PR Docker Image
+
+run-name: PR #${{ github.event.pull_request.number }} image
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: pr-docker-image-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, closed ]
+
+jobs:
+  resolve:
+    if: ${{ github.event.action != 'closed' }}
+    name: Resolve build parameters
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.cfg.outputs.image }}
+      gemc_tag: ${{ steps.cfg.outputs.gemc_tag }}
+      geant4_tag: ${{ steps.cfg.outputs.geant4_tag }}
+      alma_tag: ${{ steps.cfg.outputs.alma_tag }}
+      tag: ${{ steps.cfg.outputs.tag }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - id: cfg
+        name: Resolve image ref, tags and latest AlmaLinux
+        run: |
+          source ci/tags_config.sh
+          image="$(build_image_ref)"
+          gemc_tag="$(get_gemc_tags | awk '{print $1}')"
+          geant4_tag="$(get_geant4_tags | awk '{print $1}')"
+          alma_tag="$(get_latest_almalinux)"
+          tag="${gemc_tag}-almalinux-${alma_tag}-pr-${{ github.event.pull_request.number }}"
+          {
+            echo "image=$image"
+            echo "gemc_tag=$gemc_tag"
+            echo "geant4_tag=$geant4_tag"
+            echo "alma_tag=$alma_tag"
+            echo "tag=$tag"
+          } >> "$GITHUB_OUTPUT"
+          echo "Will build and push ${image}:${tag}"
+
+  build:
+    if: ${{ github.event.action != 'closed' }}
+    name: almalinux/${{ needs.resolve.outputs.alma_tag }} amd64
+    needs: resolve
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_BUILD_SUMMARY: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Free up disk space
+        uses: ./.github/actions/free-disk-space
+        with:
+          prune_docker: "true"
+          show_tree: "true"
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        name: Docker metadata (PR tag)
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ needs.resolve.outputs.image }}
+          tags: |
+            type=raw,value=${{ needs.resolve.outputs.tag }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.description=clas12Tags PR #${{ github.event.pull_request.number }} (almalinux ${{ needs.resolve.outputs.alma_tag }}, amd64)
+
+      - name: Generate Dockerfile
+        run: |
+          python3 ci/dockerfile_creator.py \
+            -i almalinux \
+            -t "${{ needs.resolve.outputs.alma_tag }}" \
+            --gemc-version "${{ needs.resolve.outputs.gemc_tag }}" \
+            --geant4-version "${{ needs.resolve.outputs.geant4_tag }}" \
+            --source context \
+            --package-arch amd64 \
+            > Dockerfile.generated
+          cat Dockerfile.generated
+
+      - name: Build & Push
+        uses: docker/build-push-action@v7
+        with:
+          pull: true
+          no-cache: true
+          context: .
+          file: ./Dockerfile.generated
+          target: final
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Summary
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          echo "### clas12Tags PR image" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ needs.resolve.outputs.image }}:${{ needs.resolve.outputs.tag }}" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+
+  cleanup:
+    if: ${{ github.event.action == 'closed' }}
+    name: Delete PR image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Delete pr-<number> image from GHCR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OWNER: ${{ github.repository_owner }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          source ci/tags_config.sh
+          package="$(lc "${GITHUB_REPOSITORY##*/}")"
+          # Every tag this workflow publishes ends with "-pr-<number>".
+          pr_suffix="-pr-${PR}"
+          echo "Searching ${OWNER}/${package} for versions tagged *${pr_suffix}"
+
+          # gemc is an organisation, so use the orgs packages endpoint.
+          ids="$(gh api --paginate \
+            "/orgs/${OWNER}/packages/container/${package}/versions" \
+            --jq "[.[] | select(any(.metadata.container.tags[]?; endswith(\"${pr_suffix}\"))) | .id] | .[]" \
+            2>/dev/null || true)"
+
+          if [[ -z "$ids" ]]; then
+            echo "No matching package versions found; nothing to delete."
+            exit 0
+          fi
+
+          for id in $ids; do
+            echo "Deleting version ${id}"
+            gh api -X DELETE "/orgs/${OWNER}/packages/container/${package}/versions/${id}"
+          done

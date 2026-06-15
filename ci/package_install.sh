@@ -39,31 +39,43 @@ package_root="${stage}/${package_name}"
 cp -a "${install_prefix}" "${package_root}"
 
 copy_external_linked_libraries() {
-	local target lib_path lib_name
+	local copied target lib_path lib_name destination
 
 	[[ -d "${package_root}/lib" ]] || mkdir -p "${package_root}/lib"
 
-	while IFS= read -r -d '' target; do
-		while IFS= read -r lib_path; do
-			[[ -f "${lib_path}" ]] || continue
-			lib_name="$(basename "${lib_path}")"
-			case "${lib_name}" in
-				libQt6*.so.* | libmysqlclient.so.* | libmariadb.so.*)
-					cp -n "${lib_path}" "${package_root}/lib/"
-					continue
-					;;
-			esac
-			case "${lib_path}" in
-				/lib/* | /lib64/* | /usr/lib/* | /usr/lib64/* | "${package_root}"/*)
-					continue
-					;;
-			esac
-			cp -n "${lib_path}" "${package_root}/lib/"
-		done < <(ldd "${target}" 2>/dev/null | awk '/=> \// { print $3 }')
-	done < <(
-		find "${package_root}/bin" "${package_root}/lib" \
-			\( -type f -o -type l \) -print0 2>/dev/null
-	)
+	copied=1
+	while (( copied > 0 )); do
+		copied=0
+		while IFS= read -r -d '' target; do
+			while IFS= read -r lib_path; do
+				[[ -f "${lib_path}" ]] || continue
+				lib_name="$(basename "${lib_path}")"
+				destination="${package_root}/lib/${lib_name}"
+
+				case "${lib_name}" in
+					libQt6*.so.* | libicu*.so.* | libmysqlclient.so.* | libmariadb.so.*)
+						if [[ ! -e "${destination}" ]]; then
+							cp "${lib_path}" "${destination}"
+							copied=$((copied + 1))
+						fi
+						continue
+						;;
+				esac
+				case "${lib_path}" in
+					/lib/* | /lib64/* | /usr/lib/* | /usr/lib64/* | "${package_root}"/*)
+						continue
+						;;
+				esac
+				if [[ ! -e "${destination}" ]]; then
+					cp "${lib_path}" "${destination}"
+					copied=$((copied + 1))
+				fi
+			done < <(ldd "${target}" 2>/dev/null | awk '/=> \// { print $3 }')
+		done < <(
+			find "${package_root}/bin" "${package_root}/lib" \
+				\( -type f -o -type l \) -print0 2>/dev/null
+		)
+	done
 }
 
 copy_external_linked_libraries

@@ -39,6 +39,7 @@ for the full CLAS12 software stack, which includes the latest tagged gemc versio
 	- [Pull requests](#pull-requests)
 	- [Run at JLab:](#run-at-jlab)
 - [Container images](#container-images)
+	- [Pull request preview images](#pull-request-preview-images)
 - [Portal to Off-site farms CLAS12 Simulations](#portal-to-off-site-farms-clas12-simulations)
 - [Profiling](#profiling)
 	- [Time per track](#time-per-track)
@@ -283,6 +284,10 @@ main branch pending passing the CI:
 - coatjava validation with 500 events
 - run gemc on 1000 events using all gcards in clas12-config/gemc/dev development branch
 
+Each pull request additionally publishes a ready-to-run container image tagged with the PR number, so the
+submitter and reviewers can test the branch without building locally. See
+[Pull request preview images](#pull-request-preview-images).
+
 ### Run at JLab:
 
 The available modules can be listed using `module avail gemc`.
@@ -350,6 +355,37 @@ The base Geant4 images used to build these containers come from:
 ```text
 ghcr.io/gemc/g4install:<geant4-tag>-<os>-<os-version>
 ```
+
+### Pull request preview images
+
+Every pull request also gets its **own ready-to-run container image**, published by the
+[`pr-docker-image`](.github/workflows/pr-docker-image.yml) workflow as soon as the PR is opened and on each
+new push to it. The image is built for `amd64` on the latest AlmaLinux base (currently AlmaLinux 10) and is
+tagged with the PR number:
+
+```text
+ghcr.io/gemc/clas12tags:dev-almalinux-10-pr-<number>
+```
+
+For example, PR #123 publishes `ghcr.io/gemc/clas12tags:dev-almalinux-10-pr-123`, which anyone can pull and
+run exactly like the released images:
+
+```shell
+docker run -it --rm ghcr.io/gemc/clas12tags:dev-almalinux-10-pr-123 bash
+```
+
+Why this is useful:
+
+- **Ready for additional testing by the PR submitter** — the exact code in the branch is compiled and
+  installed in a clean container, so authors and reviewers can validate behavior without building anything
+  locally.
+- **Reproducible review** — reviewers, detector experts, and CI all exercise the *same* artifact, removing
+  "works on my machine" ambiguity.
+- **No local toolchain required** — testing only needs Docker, not a full Geant4/gemc build environment.
+- **Fast and isolated** — a single image (one OS, `amd64`) keeps the build quick, and each PR's image is
+  independent of the others and of the released `main` tags.
+- **Self-cleaning** — when the PR is closed or merged, the workflow automatically deletes the
+  `…-pr-<number>` image from the registry, so stale preview tags do not accumulate.
 
 <br/>
 
