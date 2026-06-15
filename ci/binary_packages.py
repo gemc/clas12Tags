@@ -66,7 +66,9 @@ def packages_to_be_installed(image: str, tag: str = "") -> str:
 
 	family = map_family(image)
 	packages = []
-	for section in pkg_sections.values():
+	for section_name, section in pkg_sections.items():
+		if image == "almalinux" and section_name == "qt6":
+			continue
 		packages.extend(section.get(family, []))
 
 	return " ".join(unique_preserve_order(packages))

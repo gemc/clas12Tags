@@ -48,7 +48,7 @@ copy_external_linked_libraries() {
 			[[ -f "${lib_path}" ]] || continue
 			lib_name="$(basename "${lib_path}")"
 			case "${lib_name}" in
-				libmysqlclient.so.* | libmariadb.so.*)
+				libQt6*.so.* | libmysqlclient.so.* | libmariadb.so.*)
 					cp -n "${lib_path}" "${package_root}/lib/"
 					continue
 					;;
