@@ -34,7 +34,14 @@ pkg_sections = {
 		"archlinux": ["expat", "mariadb-libs", "sqlite", "zlib"],
 	},
 	"x11_gl": {
-		"fedora": ["libX11", "libXext", "libXmu", "libXt", "mesa-libEGL", "mesa-libGL"],
+		"fedora": [
+			"libX11",
+			"libXext",
+			"libXmu",
+			"libXt",
+			"mesa-libEGL",
+			"mesa-libGL",
+		],
 		"debian": ["libegl1", "libgl1", "libx11-6", "libxext6", "libxmu6", "libxt6"],
 		"archlinux": ["libx11", "libxext", "libxmu", "libxt", "mesa"],
 	},
@@ -70,6 +77,8 @@ def packages_to_be_installed(image: str, tag: str = "") -> str:
 		if image == "almalinux" and section_name == "qt6":
 			continue
 		packages.extend(section.get(family, []))
+	if image == "almalinux":
+		packages.append("libglvnd-opengl")
 
 	return " ".join(unique_preserve_order(packages))
 
