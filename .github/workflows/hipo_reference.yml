@@ -47,25 +47,42 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        # Geometry (gcard + TEXT/CAD files) is taken from the image's installed
+        # clas12Tags, so no LFS pull is needed here; this checkout is only for the
+        # workflow context and provenance.
         with:
-          fetch-depth: 0
-          lfs: true
+          fetch-depth: 1
 
       - name: Run GEMC2
-        shell: zsh {0}
+        shell: bash
         run: |
-          set -e
-          # ci/env.sh (zsh) exports GEMC / GEMC_DATA_DIR / PATH for the installed gemc.
-          source ci/env.sh
+          set -euo pipefail
+          # GitHub `container:` steps do not run the image entrypoint, so SIM_HOME and the
+          # gemc runtime are not set up (that is why ci/env.sh guessed an empty SIM_HOME).
+          # Source the gemc base entrypoint (sets SIM_HOME + geant4) and add the installed
+          # clas12Tags bin to PATH. gemc lives at $SIM_HOME/clas12Tags/dev/bin
+          # (see clas12Tags ci/dockerfile_creator.py: install_gemc).
+          export DOCKER_ENTRYPOINT_SOURCE_ONLY=1
+          . /usr/local/bin/docker-entrypoint.sh
+          if command -v module >/dev/null 2>&1; then
+            module load geant4 2>/dev/null || true
+          fi
+          export PATH="$SIM_HOME/clas12Tags/dev/bin:$PATH"
+          export GEMC_DATA_DIR="${GEMC_DATA_DIR:-$SIM_HOME/clas12Tags/dev}"
           command -v gemc >/dev/null || { echo "ERROR: gemc not found in image" >&2; exit 1; }
+          gemc -v 2>&1 | tee "$GITHUB_WORKSPACE/gemc_version.txt" || true
 
-          # Gun comes from the committed gcard; only override event count and output name.
+          # Run from the image's installed clas12Tags so the gcard's TEXT/CAD geometry
+          # resolves consistently. Gun comes from the committed gcard; only override event
+          # count and output. Write the HIPO to the workspace for the release upload.
+          out="$GITHUB_WORKSPACE/${{ matrix.system }}_reference.hipo"
+          cd "$GEMC_DATA_DIR"
           gemc \
             -USE_GUI=0 \
             -N=${{ matrix.n_events }} \
-            -OUTPUT="hipo, ${{ matrix.system }}_reference.hipo" \
+            -OUTPUT="hipo, $out" \
             ${{ matrix.gcard }}
-          ls -l "${{ matrix.system }}_reference.hipo"
+          ls -l "$out"
 
       - name: Write provenance sidecar
         shell: bash
@@ -76,6 +93,8 @@ jobs:
             echo "system: ${{ matrix.system }}"
             echo "n_events: ${{ matrix.n_events }}"
             echo "gcard: ${{ matrix.gcard }}"
+            echo "image: ghcr.io/gemc/clas12tags:dev-almalinux-10 (geometry from image install)"
+            echo "gemc: $(head -n1 gemc_version.txt 2>/dev/null || echo unknown)"
           } > "${{ matrix.system }}_reference.txt"
           cat "${{ matrix.system }}_reference.txt"
 
