@@ -29,7 +29,14 @@ pkg_sections = {
 		"archlinux": ["ca-certificates", "curl", "gzip", "tar"],
 	},
 	"core_runtime": {
-		"fedora": ["expat", "mariadb-connector-c", "sqlite-libs", "zlib"],
+		"fedora": [
+			"double-conversion",
+			"expat",
+			"libicu",
+			"mariadb-connector-c",
+			"sqlite-libs",
+			"zlib",
+		],
 		"debian": ["libexpat1", "libmariadb3", "libsqlite3-0", "zlib1g"],
 		"archlinux": ["expat", "mariadb-libs", "sqlite", "zlib"],
 	},
@@ -74,8 +81,6 @@ def packages_to_be_installed(image: str, tag: str = "") -> str:
 	family = map_family(image)
 	packages = []
 	for section_name, section in pkg_sections.items():
-		if image == "almalinux" and section_name == "qt6":
-			continue
 		packages.extend(section.get(family, []))
 	if image == "almalinux":
 		packages.append("libglvnd-opengl")

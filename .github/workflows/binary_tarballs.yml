@@ -112,7 +112,7 @@ jobs:
               print("RUN pacman-key --init && pacman-key --populate")
               print("RUN pacman -Sy --noconfirm archlinux-keyring")
           elif image == "almalinux":
-              print("RUN dnf install -y 'dnf-command(config-manager)' \\")
+              print("RUN dnf install -y 'dnf-command(config-manager)' epel-release \\")
               print("    && dnf config-manager --set-enabled crb")
 
           print(packages_install_command(image, tag))

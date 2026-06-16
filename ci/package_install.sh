@@ -52,15 +52,6 @@ copy_external_linked_libraries() {
 				lib_name="$(basename "${lib_path}")"
 				destination="${package_root}/lib/${lib_name}"
 
-				case "${lib_name}" in
-					libQt6*.so.* | libicu*.so.* | libmysqlclient.so.* | libmariadb.so.*)
-						if [[ ! -e "${destination}" ]]; then
-							cp "${lib_path}" "${destination}"
-							copied=$((copied + 1))
-						fi
-						continue
-						;;
-				esac
 				case "${lib_path}" in
 					/lib/* | /lib64/* | /usr/lib/* | /usr/lib64/* | "${package_root}"/*)
 						continue
