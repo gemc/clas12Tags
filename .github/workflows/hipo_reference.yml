@@ -1,0 +1,108 @@
+# Produce the GEMC2 reference HIPO that gemc/clas12-systems (GEMC3) compares against
+# with hipo-histos. clas12Tags is the source of truth: this publishes the LATEST
+# reference (rolling release, never pinned) — clas12-systems plays catch-up.
+#
+# For each supported system the job runs gemc with the committed default gcard
+# (the gun is taken from the gcard, unchanged) for n_events, and uploads the HIPO as
+# an asset of the rolling `histo-reference` release. n_events is part of the matrix and
+# is reported in the run metrics. DC uses 10,000 events.
+name: HIPO Reference
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  REFERENCE_TAG: histo-reference
+
+concurrency:
+  # Serialize so parallel matrix jobs do not race on the shared release.
+  group: hipo-reference-${{ github.ref }}
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ meson ]
+    paths:
+      - "experiments/clas12/dc/**"
+      - ".github/workflows/hipo_reference.yml"
+  schedule:
+    # Nightly, so the reference tracks the latest clas12Tags even without DC changes.
+    - cron: "17 3 * * *"
+
+jobs:
+  reference:
+    name: Reference ${{ matrix.system }} (${{ matrix.n_events }} events)
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/gemc/clas12tags:dev-almalinux-10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - system: dc
+            gcard: experiments/clas12/dc/dc_text_default.gcard
+            n_events: 10000
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Run GEMC2
+        shell: zsh {0}
+        run: |
+          set -e
+          # ci/env.sh (zsh) exports GEMC / GEMC_DATA_DIR / PATH for the installed gemc.
+          source ci/env.sh
+          command -v gemc >/dev/null || { echo "ERROR: gemc not found in image" >&2; exit 1; }
+
+          # Gun comes from the committed gcard; only override event count and output name.
+          gemc \
+            -USE_GUI=0 \
+            -N=${{ matrix.n_events }} \
+            -OUTPUT="hipo, ${{ matrix.system }}_reference.hipo" \
+            ${{ matrix.gcard }}
+          ls -l "${{ matrix.system }}_reference.hipo"
+
+      - name: Write provenance sidecar
+        shell: bash
+        run: |
+          {
+            echo "source: ${GITHUB_REPOSITORY}@${GITHUB_SHA} (${GITHUB_REF_NAME})"
+            echo "date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "system: ${{ matrix.system }}"
+            echo "n_events: ${{ matrix.n_events }}"
+            echo "gcard: ${{ matrix.gcard }}"
+          } > "${{ matrix.system }}_reference.txt"
+          cat "${{ matrix.system }}_reference.txt"
+
+      - name: Metrics summary
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          {
+            echo "### HIPO Reference — ${{ matrix.system }}"
+            echo
+            echo "| Metric | Value |"
+            echo "| --- | --- |"
+            echo "| System | ${{ matrix.system }} |"
+            echo "| Events simulated | ${{ matrix.n_events }} |"
+            echo "| Source commit | ${GITHUB_SHA} |"
+            echo "| gcard | ${{ matrix.gcard }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish rolling reference release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.REFERENCE_TAG }}
+          name: HIPO comparison reference (rolling)
+          body: |
+            Rolling GEMC2 reference HIPO files for hipo-histos comparison in gemc/clas12-systems.
+            Always the latest clas12Tags output; assets are overwritten on each run.
+          prerelease: true
+          files: |
+            ${{ matrix.system }}_reference.hipo
+            ${{ matrix.system }}_reference.txt
