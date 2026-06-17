@@ -69,6 +69,15 @@ jobs:
           fi
           export PATH="$SIM_HOME/clas12Tags/dev/bin:$PATH"
           export GEMC_DATA_DIR="${GEMC_DATA_DIR:-$SIM_HOME/clas12Tags/dev}"
+          # Transitional: the gemc executable now carries an install rpath ($ORIGIN/../lib) so
+          # it finds its own libccdb.so — but the published image only picks that up after a
+          # rebuild. Until then, locate libccdb.so and add it to the runtime path. This becomes
+          # a redundant no-op once the rebuilt image ships the rpath, and can be removed then.
+          ccdb_so="$(find "$SIM_HOME" -name 'libccdb.so*' -print -quit 2>/dev/null || true)"
+          if [[ -n "$ccdb_so" ]]; then
+            export LD_LIBRARY_PATH="$(dirname "$ccdb_so"):${LD_LIBRARY_PATH:-}"
+            echo "Added ccdb lib dir to LD_LIBRARY_PATH: $(dirname "$ccdb_so")"
+          fi
           command -v gemc >/dev/null || { echo "ERROR: gemc not found in image" >&2; exit 1; }
           gemc -v 2>&1 | tee "$GITHUB_WORKSPACE/gemc_version.txt" || true
 

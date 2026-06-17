@@ -104,6 +104,13 @@ foreach L : LD
 
 endforeach
 
+# ccdb (and other CMake-subproject shared libs) install to <prefix>/lib, while gemc installs
+# to <prefix>/bin. On macOS gemc links libccdb.dylib by absolute install name, but on Linux it
+# is resolved by SONAME via rpath. Add a loader-relative rpath (<prefix>/bin -> ../lib) so the
+# installed gemc finds libccdb.so without needing LD_LIBRARY_PATH. $ORIGIN on ELF/Linux,
+# @loader_path on macOS.
+gemc_lib_rpath = (host_machine.system() == 'darwin' ? '@loader_path' : '$ORIGIN') + '/../lib'
+
 gemc = executable(
     'gemc',
     ['gemc.cc'],
@@ -117,7 +124,7 @@ gemc = executable(
     override_options : ['b_pie=true'],
     # critical:
     build_rpath  : xerces_libdir,
-    install_rpath: xerces_libdir,
+    install_rpath: xerces_libdir + ':' + gemc_lib_rpath,
 )
 
 install_subdir('../api',         install_dir: get_option('prefix'))

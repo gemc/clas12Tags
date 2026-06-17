@@ -128,6 +128,11 @@ if host_machine.system() == 'darwin'
 endif
 
 ccdb_proj = cmake.subproject('ccdb', options : cmake_opts)
+# NOTE: ccdb exposes a static target (ccdb_static), but it bundles its own vendored
+# sqlite3 (ccdb_sqlite). gemc already links the system sqlite3 (see sqlite_dep above), so
+# linking ccdb statically pulls a SECOND sqlite3 into the gemc binary and crashes at
+# startup (duplicate global state). Keep the shared `ccdb` target, which hides ccdb's
+# sqlite3 inside libccdb.so; ensure libccdb.so is on the runtime path instead.
 ccdb_dep = ccdb_proj.dependency('ccdb', include_type : 'system')
 
 
