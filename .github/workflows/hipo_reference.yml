@@ -44,6 +44,9 @@ jobs:
           - system: dc
             gcard: experiments/clas12/dc/dc_text_default.gcard
             n_events: 10000
+            # Field maps referenced by the gcard's HALL_FIELD. Not bundled in the image
+            # (~1.5 GB total); downloaded on demand below. DC needs only these two.
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -52,6 +55,33 @@ jobs:
         # workflow context and provenance.
         with:
           fetch-depth: 1
+
+      - name: Cache field maps
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/fields
+          key: clas12-fields-${{ matrix.system }}-${{ hashFiles('.github/workflows/hipo_reference.yml') }}
+          restore-keys: |
+            clas12-fields-${{ matrix.system }}-
+
+      - name: Download field maps
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Field maps are not in the image; fetch just the ones this gcard needs
+          # (ci/install_fields.zsh would pull all ~1.5 GB). Source: clasweb.jlab.org.
+          field_dir="$GITHUB_WORKSPACE/fields"
+          mkdir -p "$field_dir"
+          base="https://clasweb.jlab.org/clas12offline/magfield"
+          for map in ${{ matrix.fields }}; do
+            if [[ ! -s "$field_dir/$map.dat" ]]; then
+              echo "Downloading $map.dat"
+              curl -fSL "$base/$map.dat" -o "$field_dir/$map.dat"
+            else
+              echo "Using cached $map.dat"
+            fi
+          done
+          ls -lh "$field_dir"
 
       - name: Run GEMC2
         shell: bash
@@ -69,6 +99,8 @@ jobs:
           fi
           export PATH="$SIM_HOME/clas12Tags/dev/bin:$PATH"
           export GEMC_DATA_DIR="${GEMC_DATA_DIR:-$SIM_HOME/clas12Tags/dev}"
+          # Field maps downloaded above; gemc locates them via FIELD_DIR.
+          export FIELD_DIR="$GITHUB_WORKSPACE/fields"
           # Transitional: the gemc executable now carries an install rpath ($ORIGIN/../lib) so
           # it finds its own libccdb.so — but the published image only picks that up after a
           # rebuild. Until then, locate libccdb.so and add it to the runtime path. This becomes
