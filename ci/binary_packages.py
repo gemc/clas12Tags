@@ -38,14 +38,13 @@ pkg_sections = {
 			"zlib",
 		],
 		"almalinux": [
-			"double-conversion-libs",
 			"expat",
 			"libicu",
 			"mariadb-connector-c",
 			"sqlite-libs",
 			"zlib",
 		],
-		"ubuntu": ["libexpat1", "libmariadb3", "libsqlite3-0", "zlib1g"],
+		"ubuntu": ["default-libmysqlclient-dev", "libexpat1", "libsqlite3-0", "zlib1g"],
 		"debian": ["libexpat1", "libmariadb3", "libsqlite3-0", "zlib1g"],
 		"archlinux": ["expat", "mariadb-libs", "sqlite", "zlib"],
 	},
@@ -63,7 +62,6 @@ pkg_sections = {
 	},
 	"qt6": {
 		"fedora": ["qt6-qtbase", "qt6-qtsvg"],
-		"almalinux": ["qt6-qtbase-gui"],
 		"debian": [
 			"libqt6core6t64",
 			"libqt6gui6",
@@ -91,6 +89,8 @@ def packages_to_be_installed(image: str, tag: str = "") -> str:
 	family = map_family(image)
 	packages = []
 	for section_name, section in pkg_sections.items():
+		if image == "almalinux" and section_name == "qt6":
+			continue
 		packages.extend(section.get(image, section.get(family, [])))
 	if image == "almalinux":
 		packages.append("libglvnd-opengl")
