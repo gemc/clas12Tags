@@ -81,16 +81,21 @@ jobs:
           command -v gemc >/dev/null || { echo "ERROR: gemc not found in image" >&2; exit 1; }
           gemc -v 2>&1 | tee "$GITHUB_WORKSPACE/gemc_version.txt" || true
 
-          # Run from the image's installed clas12Tags so the gcard's TEXT/CAD geometry
-          # resolves consistently. Gun comes from the committed gcard; only override event
-          # count and output. Write the HIPO to the workspace for the release upload.
+          # GEMC2's TEXT factory resolves a bare detector name (e.g. <detector name="dc"/>)
+          # against the current directory, so gemc must run from the system's experiment dir
+          # (which holds dc__geometry_default.txt). Path-qualified detectors in the gcard
+          # (experiments/clas12/beamline/...) resolve via GEMC_DATA_DIR, kept set above.
+          # Gun comes from the committed gcard; only override event count and output.
           out="$GITHUB_WORKSPACE/${{ matrix.system }}_reference.hipo"
-          cd "$GEMC_DATA_DIR"
+          gcard_dir="$GEMC_DATA_DIR/$(dirname '${{ matrix.gcard }}')"
+          gcard_file="$(basename '${{ matrix.gcard }}')"
+          echo "Running gemc from $gcard_dir with $gcard_file"
+          cd "$gcard_dir"
           gemc \
             -USE_GUI=0 \
             -N=${{ matrix.n_events }} \
             -OUTPUT="hipo, $out" \
-            ${{ matrix.gcard }}
+            "$gcard_file"
           ls -l "$out"
 
       - name: Write provenance sidecar
