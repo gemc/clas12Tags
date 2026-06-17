@@ -127,6 +127,7 @@ jobs:
             -USE_GUI=0 \
             -N=${{ matrix.n_events }} \
             -OUTPUT="hipo, $out" \
+            -NO_FIELD=all
             "$gcard_file"
           ls -l "$out"
 
