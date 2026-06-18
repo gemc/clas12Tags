@@ -119,46 +119,8 @@ jobs:
           PY
           cat Dockerfile.clas12tags-binary-test
 
-      - name: Probe AlmaLinux tarball runtime packages
-        if: ${{ matrix.image == 'almalinux' }}
-        shell: bash
-        run: |
-          docker run --rm \
-            --platform "${{ matrix.platform }}" \
-            "${{ matrix.image }}:${{ matrix.image_tag }}" \
-            bash -lc '
-              set -euo pipefail
-              dnf install -y "dnf-command(config-manager)" epel-release
-              dnf config-manager --set-enabled crb
-
-              missing=0
-              for lib in \
-                "libQt6Core.so.6()(64bit)" \
-                "libQt6Gui.so.6()(64bit)" \
-                "libQt6Widgets.so.6()(64bit)" \
-                "libQt6Xml.so.6()(64bit)" \
-                "libQt6Sql.so.6()(64bit)" \
-                "libQt6OpenGL.so.6()(64bit)" \
-                "libQt6OpenGLWidgets.so.6()(64bit)" \
-                "libdouble-conversion.so.3()(64bit)"
-              do
-                if ! dnf repoquery --whatprovides "$lib"; then
-                  echo "Missing AlmaLinux runtime provider: $lib"
-                  missing=1
-                fi
-              done
-
-              if [ "$missing" -eq 0 ]; then
-                echo "AlmaLinux runtime dependencies are now available."
-                echo "Re-enable the AlmaLinux binary tarball smoke test."
-                exit 1
-              fi
-
-              echo "AlmaLinux runtime dependencies are still unavailable; skipping as expected."
-            '
 
       - name: Build minimal package image
-        if: ${{ matrix.image != 'almalinux' }}
         shell: bash
         run: |
           docker build \
@@ -168,14 +130,7 @@ jobs:
             -t "${TEST_IMAGE}" \
             .
 
-      - name: Skip AlmaLinux tarball smoke test
-        if: ${{ matrix.image == 'almalinux' }}
-        run: |
-          echo "Skipping AlmaLinux tarball smoke test."
-          echo "Qt6 runtime packages are not available in the enabled Alma/EPEL/CRB repos."
-
       - name: Test clas12Tags binary tarball installation
-        if: ${{ matrix.image != 'almalinux' }}
         shell: bash
         run: |
           archive="clas12Tags-${{ matrix.gemc_tag }}-geant4-${{ matrix.geant4_tag }}"

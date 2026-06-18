@@ -44,7 +44,9 @@ pkg_sections = {
 			"sqlite-libs",
 			"zlib",
 		],
-		"ubuntu": ["default-libmysqlclient-dev", "libexpat1", "libsqlite3-0", "zlib1g"],
+		# ubuntu links libmariadb.so.3 like debian (the g4install base now builds the
+		# whole debian family against libmariadb-dev), so the runtime package is libmariadb3.
+		"ubuntu": ["libmariadb3", "libexpat1", "libsqlite3-0", "zlib1g"],
 		"debian": ["libexpat1", "libmariadb3", "libsqlite3-0", "zlib1g"],
 		"archlinux": ["expat", "mariadb-libs", "sqlite", "zlib"],
 	},
