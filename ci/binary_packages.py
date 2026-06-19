@@ -38,6 +38,7 @@ pkg_sections = {
 			"zlib",
 		],
 		"almalinux": [
+			"double-conversion-libs",
 			"expat",
 			"libicu",
 			"mariadb-connector-c",
@@ -91,8 +92,6 @@ def packages_to_be_installed(image: str, tag: str = "") -> str:
 	family = map_family(image)
 	packages = []
 	for section_name, section in pkg_sections.items():
-		if image == "almalinux" and section_name == "qt6":
-			continue
 		packages.extend(section.get(image, section.get(family, [])))
 	if image == "almalinux":
 		packages.append("libglvnd-opengl")
