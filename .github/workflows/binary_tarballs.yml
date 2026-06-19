@@ -112,10 +112,12 @@ jobs:
               print("RUN pacman-key --init && pacman-key --populate")
               print("RUN pacman -Sy --noconfirm archlinux-keyring")
           elif image == "almalinux":
-              # Mirror the g4install base image repo setup: qt6-qtsvg,
-              # double-conversion-libs and friends live in AlmaLinux Synergy
-              # (not BaseOS/AppStream/EPEL), so CRB + Synergy are both required.
-              print("RUN dnf install -y 'dnf-command(config-manager)' \\")
+              # The Qt6 runtime lands in different repos per release: on el9
+              # qt6-qtbase/qt6-qtsvg come from EPEL (or AlmaLinux Synergy) and
+              # double-conversion from AppStream; on el10 Qt6 is in AppStream but
+              # double-conversion is EPEL-only. Enable AppStream + CRB + EPEL +
+              # Synergy so every provider is reachable regardless of release.
+              print("RUN dnf install -y 'dnf-command(config-manager)' epel-release \\")
               print("    && dnf config-manager --set-enabled crb \\")
               print("    && dnf install -y almalinux-release-synergy")
 

@@ -37,14 +37,6 @@ pkg_sections = {
 			"sqlite-libs",
 			"zlib",
 		],
-		"almalinux": [
-			"double-conversion-libs",
-			"expat",
-			"libicu",
-			"mariadb-connector-c",
-			"sqlite-libs",
-			"zlib",
-		],
 		# ubuntu links libmariadb.so.3 like debian (the g4install base now builds the
 		# whole debian family against libmariadb-dev), so the runtime package is libmariadb3.
 		"ubuntu": ["libmariadb3", "libexpat1", "libsqlite3-0", "zlib1g"],
