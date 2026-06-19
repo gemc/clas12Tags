@@ -112,8 +112,12 @@ jobs:
               print("RUN pacman-key --init && pacman-key --populate")
               print("RUN pacman -Sy --noconfirm archlinux-keyring")
           elif image == "almalinux":
-              print("RUN dnf install -y 'dnf-command(config-manager)' epel-release \\")
-              print("    && dnf config-manager --set-enabled crb")
+              # Mirror the g4install base image repo setup: qt6-qtsvg,
+              # double-conversion-libs and friends live in AlmaLinux Synergy
+              # (not BaseOS/AppStream/EPEL), so CRB + Synergy are both required.
+              print("RUN dnf install -y 'dnf-command(config-manager)' \\")
+              print("    && dnf config-manager --set-enabled crb \\")
+              print("    && dnf install -y almalinux-release-synergy")
 
           print(packages_install_command(image, tag))
           PY
