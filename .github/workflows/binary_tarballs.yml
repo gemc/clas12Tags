@@ -60,7 +60,7 @@ jobs:
           gh release upload "${TAG_NAME}" --repo "$REPO" "${tarballs[@]}" --clobber
 
   discover:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     name: Create Job Matrix
     runs-on: ubuntu-latest
     outputs:
@@ -76,7 +76,7 @@ jobs:
         run: ./ci/distros_tags.sh
 
   test-tarball:
-    if: ${{ always() && needs.discover.result == 'success' && needs.release-tarballs.result == 'success' }}
+    if: ${{ always() && needs.discover.result == 'success' && (needs.release-tarballs.result == 'success' || needs.release-tarballs.result == 'skipped') }}
     name: ${{ matrix.image }}:${{ matrix.image_tag }} ${{ matrix.arch }}
     needs: [ discover, release-tarballs ]
     runs-on: ${{ matrix.runner }}
