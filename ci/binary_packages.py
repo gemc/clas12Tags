@@ -30,9 +30,7 @@ pkg_sections = {
 	},
 	"core_runtime": {
 		"fedora": [
-			"double-conversion",
 			"expat",
-			"libicu",
 			"mariadb-connector-c",
 			"sqlite-libs",
 			"zlib",
@@ -77,6 +75,20 @@ pkg_sections = {
 }
 
 
+def almalinux_adjustments(pkgs: list[str]) -> list[str]:
+	# Match the Qt package selectors used by the working g4install AlmaLinux
+	# base images. The -devel packages pull in the runtime libraries needed by
+	# the tarball while avoiding the unavailable qt6-qtbase runtime selector.
+	rep = {
+		"qt6-qtbase": "qt6-qtbase-devel",
+		"qt6-qtsvg": "qt6-qtsvg-devel",
+	}
+	out = []
+	for p in pkgs:
+		out.append(rep.get(p, p))
+	return out
+
+
 def packages_to_be_installed(image: str, tag: str = "") -> str:
 	if image not in valid_images:
 		raise SystemExit(f"invalid image '{image}'; valid images: {', '.join(sorted(valid_images))}")
@@ -86,6 +98,7 @@ def packages_to_be_installed(image: str, tag: str = "") -> str:
 	for section_name, section in pkg_sections.items():
 		packages.extend(section.get(image, section.get(family, [])))
 	if image == "almalinux":
+		packages = almalinux_adjustments(packages)
 		packages.append("libglvnd-opengl")
 
 	return " ".join(unique_preserve_order(packages))

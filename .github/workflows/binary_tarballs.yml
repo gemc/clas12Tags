@@ -76,7 +76,12 @@ jobs:
         run: ./ci/distros_tags.sh
 
   test-tarball:
-    if: ${{ always() && needs.discover.result == 'success' && (needs.release-tarballs.result == 'success' || needs.release-tarballs.result == 'skipped') }}
+    if: >-
+      ${{
+        always() &&
+        needs.discover.result == 'success' &&
+        (needs.release-tarballs.result == 'success' || needs.release-tarballs.result == 'skipped')
+      }}
     name: ${{ matrix.image }}:${{ matrix.image_tag }} ${{ matrix.arch }}
     needs: [ discover, release-tarballs ]
     runs-on: ${{ matrix.runner }}
@@ -112,12 +117,9 @@ jobs:
               print("RUN pacman-key --init && pacman-key --populate")
               print("RUN pacman -Sy --noconfirm archlinux-keyring")
           elif image == "almalinux":
-              # The Qt6 runtime lands in different repos per release: on el9
-              # qt6-qtbase/qt6-qtsvg come from EPEL (or AlmaLinux Synergy) and
-              # double-conversion from AppStream; on el10 Qt6 is in AppStream but
-              # double-conversion is EPEL-only. Enable AppStream + CRB + EPEL +
-              # Synergy so every provider is reachable regardless of release.
-              print("RUN dnf install -y 'dnf-command(config-manager)' epel-release \\")
+              # Match the AlmaLinux repository bootstrap used by the working
+              # g4install deploy images that produce the exported tarballs.
+              print("RUN dnf install -y 'dnf-command(config-manager)' \\")
               print("    && dnf config-manager --set-enabled crb \\")
               print("    && dnf install -y almalinux-release-synergy")
 
