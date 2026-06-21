@@ -69,8 +69,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          # restore when main merged: ref: ${{ github.event.workflow_run.head_sha }}
-          ref: meson
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
       - id: scan
         name: Build matrix
         run: ./ci/distros_tags.sh
@@ -94,39 +93,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          # restore when main merged: ref: ${{ github.event.workflow_run.head_sha }}
-          ref: meson
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
 
       - name: Generate minimal package Dockerfile
         shell: bash
         run: |
-          python3 - "${{ matrix.image }}" "${{ matrix.image_tag }}" > Dockerfile.clas12tags-binary-test <<'PY'
-          import sys
-
-          sys.path.insert(0, "ci")
-          from binary_packages import map_family, packages_install_command
-
-          image = sys.argv[1]
-          tag = sys.argv[2]
-          family = map_family(image)
-
-          print(f"FROM {image}:{tag}")
-          print('SHELL ["/bin/bash", "-c"]')
-
-          if family == "archlinux":
-              print("RUN pacman-key --init && pacman-key --populate")
-              print("RUN pacman -Sy --noconfirm archlinux-keyring")
-          elif image == "almalinux":
-              # Match the AlmaLinux repository bootstrap used by the working
-              # g4install deploy images that produce the exported tarballs.
-              print("RUN dnf install -y 'dnf-command(config-manager)' \\")
-              print("    && dnf config-manager --set-enabled crb \\")
-              print("    && dnf install -y almalinux-release-synergy")
-
-          print(packages_install_command(image, tag))
-          PY
+          python3 ci/binary_test_dockerfile.py \
+            -i "${{ matrix.image }}" \
+            -t "${{ matrix.image_tag }}" \
+            > Dockerfile.clas12tags-binary-test
           cat Dockerfile.clas12tags-binary-test
-
 
       - name: Build minimal package image
         shell: bash
