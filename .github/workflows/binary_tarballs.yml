@@ -60,7 +60,7 @@ jobs:
           gh release upload "${TAG_NAME}" --repo "$REPO" "${tarballs[@]}" --clobber
 
   discover:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     name: Create Job Matrix
     runs-on: ubuntu-latest
     outputs:
@@ -69,14 +69,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          # restore when main merged: ref: ${{ github.event.workflow_run.head_sha }}
-          ref: meson
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
       - id: scan
         name: Build matrix
         run: ./ci/distros_tags.sh
 
   test-tarball:
-    if: ${{ always() && needs.discover.result == 'success' && needs.release-tarballs.result == 'success' }}
+    if: >-
+      ${{
+        always() &&
+        needs.discover.result == 'success' &&
+        (needs.release-tarballs.result == 'success' || needs.release-tarballs.result == 'skipped')
+      }}
     name: ${{ matrix.image }}:${{ matrix.image_tag }} ${{ matrix.arch }}
     needs: [ discover, release-tarballs ]
     runs-on: ${{ matrix.runner }}
@@ -89,34 +93,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          # restore when main merged: ref: ${{ github.event.workflow_run.head_sha }}
-          ref: meson
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
 
       - name: Generate minimal package Dockerfile
         shell: bash
         run: |
-          python3 - "${{ matrix.image }}" "${{ matrix.image_tag }}" > Dockerfile.clas12tags-binary-test <<'PY'
-          import sys
-
-          sys.path.insert(0, "ci")
-          from binary_packages import map_family, packages_install_command
-
-          image = sys.argv[1]
-          tag = sys.argv[2]
-          family = map_family(image)
-
-          print(f"FROM {image}:{tag}")
-          print('SHELL ["/bin/bash", "-c"]')
-
-          if family == "archlinux":
-              print("RUN pacman-key --init && pacman-key --populate")
-              print("RUN pacman -Sy --noconfirm archlinux-keyring")
-          elif image == "almalinux":
-              print("RUN dnf install -y 'dnf-command(config-manager)' \\")
-              print("    && dnf config-manager --set-enabled crb")
-
-          print(packages_install_command(image, tag))
-          PY
+          python3 ci/binary_test_dockerfile.py \
+            -i "${{ matrix.image }}" \
+            -t "${{ matrix.image_tag }}" \
+            -b "${{ matrix.container }}" \
+            > Dockerfile.clas12tags-binary-test
           cat Dockerfile.clas12tags-binary-test
 
       - name: Build minimal package image
