@@ -125,17 +125,28 @@ jobs:
           # (experiments/clas12/beamline/...) resolve via GEMC_DATA_DIR, kept set above.
           # Gun comes from the committed gcard; only override event count and output.
           out="$GITHUB_WORKSPACE/${{ matrix.system }}_reference.hipo"
+          out_nofield="$GITHUB_WORKSPACE/${{ matrix.system }}_reference_nofield.hipo"
           gcard_dir="$GEMC_DATA_DIR/$(dirname '${{ matrix.gcard }}')"
           gcard_file="$(basename '${{ matrix.gcard }}')"
           echo "Running gemc from $gcard_dir with $gcard_file"
           cd "$gcard_dir"
+
+          echo "Running reference with configured fields"
           gemc \
             -USE_GUI=0 \
             -N=${{ matrix.n_events }} \
             -OUTPUT="hipo, $out" \
-            -NO_FIELD=all \
             "$gcard_file"
           ls -l "$out"
+
+          echo "Running reference without magnetic fields"
+          gemc \
+            -USE_GUI=0 \
+            -N=${{ matrix.n_events }} \
+            -OUTPUT="hipo, $out_nofield" \
+            -NO_FIELD=all \
+            "$gcard_file"
+          ls -l "$out_nofield"
 
       - name: Write provenance sidecar
         shell: bash
@@ -177,4 +188,5 @@ jobs:
           prerelease: true
           files: |
             ${{ matrix.system }}_reference.hipo
+            ${{ matrix.system }}_reference_nofield.hipo
             ${{ matrix.system }}_reference.txt
