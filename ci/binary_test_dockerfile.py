@@ -5,7 +5,16 @@ import sys
 from binary_packages import map_family, packages_install_command
 
 
-def dockerfile(image: str, tag: str) -> str:
+def dockerfile(image: str, tag: str, base_image: str = "") -> str:
+	if base_image:
+		return "\n".join(
+			[
+				f"FROM {base_image}",
+				'SHELL ["/bin/bash", "-c"]',
+				"RUN command -v curl && command -v tar && command -v gzip",
+			]
+		)
+
 	family = map_family(image)
 	lines = [
 		f"FROM {image}:{tag}",
@@ -28,9 +37,15 @@ def main() -> int:
 	parser = argparse.ArgumentParser(description="Generate a clas12Tags binary tarball test Dockerfile")
 	parser.add_argument("-i", "--image", required=True, help="Target base OS")
 	parser.add_argument("-t", "--tag", required=True, help="Target base OS tag")
+	parser.add_argument(
+		"-b",
+		"--base-image",
+		default="",
+		help="Existing image to use as the tarball test base instead of a raw OS image",
+	)
 	args = parser.parse_args()
 
-	print(dockerfile(args.image, args.tag))
+	print(dockerfile(args.image, args.tag, args.base_image))
 	return 0
 
 

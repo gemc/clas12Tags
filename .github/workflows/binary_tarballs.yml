@@ -101,6 +101,7 @@ jobs:
           python3 ci/binary_test_dockerfile.py \
             -i "${{ matrix.image }}" \
             -t "${{ matrix.image_tag }}" \
+            -b "${{ matrix.container }}" \
             > Dockerfile.clas12tags-binary-test
           cat Dockerfile.clas12tags-binary-test
 
