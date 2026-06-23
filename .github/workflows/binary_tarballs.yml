@@ -1,7 +1,9 @@
 # Upload and test clas12Tags binary tarballs.
 name: Binary Tarballs
 
-run-name: Triggered by successful deploy workflow
+run-name: >-
+  Binary tarballs from ${{ github.event.workflow_run.head_branch || github.ref_name }} @
+  ${{ github.event.workflow_run.head_sha || github.sha }}
 
 permissions:
   actions: read
@@ -19,10 +21,15 @@ on:
   workflow_run:
     workflows: [ "Deploy" ]
     types: [ completed ]
+    branches: [ meson ]
 
 jobs:
   release-tarballs:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.head_branch == 'meson'
+      }}
     name: Attach clas12Tags tarballs to dev release
     runs-on: ubuntu-latest
     env:
@@ -60,7 +67,14 @@ jobs:
           gh release upload "${TAG_NAME}" --repo "$REPO" "${tarballs[@]}" --clobber
 
   discover:
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    if: >-
+      ${{
+        (github.event_name == 'workflow_dispatch' && github.ref_name == 'meson') ||
+        (
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'meson'
+        )
+      }}
     name: Create Job Matrix
     runs-on: ubuntu-latest
     outputs:
