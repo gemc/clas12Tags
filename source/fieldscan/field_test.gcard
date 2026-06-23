@@ -1,0 +1,26 @@
+<!-- Minimal field-verification gcard.
+     No detectors: HALL_FIELD assigns the field to the auto-generated 'root' world box.
+     Exactly the field options requested: torus+solenoid binary maps, both scaled -1,
+     FIELD_VERBOSITY=99 so the first field evaluation (at the beam vertex) is printed.
+     No DISPLACE_FIELDMAP, no SPREAD_V, so the print position equals the requested vertex. -->
+<gcard>
+
+	<option name="SCALE_FIELD" value="binary_torus, -1"/>
+	<option name="SCALE_FIELD" value="binary_solenoid, -1"/>
+	<option name="HALL_FIELD"  value="Symm_solenoid_r601_phi1_z1201_13June2018:Symm_torus_r2501_phi16_z251_24Apr2018"/>
+
+	<option name="FIELD_VERBOSITY" value="99"/>
+
+	<!-- big vacuum world so any sample point is inside and field-carrying -->
+	<option name="HALL_MATERIAL"   value="G4_Galactic"/>
+	<option name="HALL_DIMENSIONS" value="20*m, 20*m, 20*m"/>
+
+	<!-- charged primary so the field is evaluated; vertex overridden per run on the CLI -->
+	<option name="BEAM_P"   value="e-, 2.0*GeV, 0*deg, 0*deg"/>
+	<option name="BEAM_V"   value="(0, 0, 0)cm"/>
+	<option name="SPREAD_V" value="(0, 0)cm"/>
+
+	<option name="PHYSICS" value="FTFP_BERT"/>
+	<option name="OUTPUT"  value="no"/>
+
+</gcard>
