@@ -44,15 +44,24 @@ jobs:
           - system: dc
             gcard: experiments/clas12/dc/dc_text_default.gcard
             n_events: 10000
-            # Field maps referenced by the gcard's HALL_FIELD. Not bundled in the image
-            # (~1.5 GB total); downloaded on demand below. DC needs only these two.
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
             fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
           - system: ec
             gcard: experiments/clas12/ec/ec_text_default.gcard
             n_events: 10000
-            # Field maps referenced by the gcard's HALL_FIELD. Not bundled in the image
-            # (~1.5 GB total); downloaded on demand below. DC needs only these two.
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
             fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+          - system: pcal
+            gcard: experiments/clas12/pcal/pcal_text_default.gcard
+            n_events: 10000
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+          - system: ftof
+            gcard: experiments/clas12/ftof/ftof_text_default.gcard
+            n_events: 10000
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

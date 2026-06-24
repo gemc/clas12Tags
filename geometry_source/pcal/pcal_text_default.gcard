@@ -4,7 +4,7 @@
 
 
 	<detector name="pcal"     factory="TEXT" />
-	<detector name="../ec/ec" factory="TEXT" />
+
 
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
