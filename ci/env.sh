@@ -153,7 +153,7 @@ runs_for_system() {
 
 	if [[ $system == "ec" || $system == "pcal" || $system == "ftof" ]]; then
 		echo "11 3029"
-	elif [[ $system == "dc" || $system == "alert" ]]; then
+	elif [[ $system == "dc" || $system == "alert" || $system == "band" ]]; then
 		echo "11"
 	elif [[ $system == "bst" ]]; then
 		echo "11 20000"
