@@ -11,8 +11,6 @@ use bank;
 use math;
 use materials;
 use Math::Trig;
-use lib ("../");
-use clas12_configuration_string;
 
 # Help Message
 sub help() {
@@ -43,35 +41,45 @@ require "./bank.pl";
 require "./hit.pl";
 require "./geometry.pl";
 
-# subroutines create_system with arguments (variation, run number)
+# subroutine create_system with argument (exists)
 sub create_system {
+    my $exist = shift;
+    $exist = 1 unless defined $exist;
+
     materials();
     define_hit();
+
     # BAND, frame, and lead shielding upstream of target
     # Hole in mother volume allows beampipe to fit through BAND
-    build_bandMother();
+    build_bandMother($exist);
 }
 
-# BAND geometry is run/variation independent: a single "default" variation and
-# its run (11) are sufficient. The SQLITE factory resolves any later run to the
-# latest row with run <= RUNNO, so the run-11 row serves every subsequent run.
-my @variations = ("default");
-my @runs = clas12_runs(@variations);
+# BAND uses only the default variation. The SQLITE factory resolves the latest row with
+# run <= RUNNO, so each presence transition needs an explicit row.
+my @band_run_states = (
+    [11, 0],
+    [6141, 1],
+    [11572, 0],
+    [14776, 1],
+    [15885, 0],
+    [18305, 1],
+    [23066, 0],
+);
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
 define_bank();
-my $runNumber = 11;
-foreach my $variation (@variations) {
-    $configuration{"variation"} = $variation;
-    create_system($variation, $runNumber);
-}
+$configuration{"variation"} = "default";
+$configuration{"run_number"} = 6141;
+create_system(1);
 
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
 define_bank();
-foreach my $run (@runs) {
+foreach my $run_state (@band_run_states) {
+    my ($run, $exist) = @$run_state;
+
     $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
-    create_system("default", $run);
+    create_system($exist);
 }
