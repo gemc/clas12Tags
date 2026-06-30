@@ -41,7 +41,6 @@ require "./bank.pl";
 require "./hit.pl";
 require "./geometry.pl";
 require "./mirrors.pl";
-require "./cad.pl";
 
 # subroutines create_system with arguments (variation, run number)
 sub create_system {
@@ -54,10 +53,6 @@ sub create_system {
 
     makeHTCC();
     buildMirrorsSurfaces();
-
-    if ($configuration{"factory"} eq "SQLITE") {
-        define_cads();
-    }
 }
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018");
@@ -82,3 +77,9 @@ foreach my $run (@runs) {
     create_system("default", $run);
 }
 
+# port gxml to sqlite
+require "gxml_to_sqlite.pl";
+foreach my $variation (@variations) {
+    $configuration{"run_number"} = clas12_run($variation);
+    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/htcc/cad");
+}

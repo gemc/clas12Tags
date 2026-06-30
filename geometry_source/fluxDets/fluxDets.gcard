@@ -2,7 +2,7 @@
 	
 	<option name="geometry" value="1400x1200"/>
 	
-	<detector name="fluxDets" factory="TEXT" variation="beamline"/>
+	<detector name="fluxDets" factory="TEXT" variation="ddvcs"/>
 	
 	<option name="INTEGRATEDRAW" value="flux"/>
 	

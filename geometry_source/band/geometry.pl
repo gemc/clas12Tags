@@ -35,6 +35,9 @@ my $STARTcart = -462.3;
 
 sub build_bandMother
 {
+	my $exist = shift;
+	$exist = 1 unless defined $exist;
+
 	my %detector = init_det();
 	$detector{"name"}        = "band";
 	$detector{"mother"}      = "root";
@@ -45,8 +48,11 @@ sub build_bandMother
 	$detector{"type"}        = "Pgon";
 	$detector{"dimensions"}  = "-45*deg 360*deg 4*counts 3*counts 160*mm 160*mm 160*mm 1500*mm 1500*mm 1500*mm -462.3*mm 0*mm 900*mm";
 	$detector{"material"}    = "G4_AIR";
+	$detector{"exist"}       = $exist;
 	$detector{"style"}       = 0;
 	print_det(\%configuration, \%detector);
+
+	return unless $exist;
 
 	build_scintillators();
 	build_frame();
