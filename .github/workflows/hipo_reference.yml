@@ -8,6 +8,10 @@
 # is reported in the run metrics. DC uses 10,000 events.
 name: HIPO Reference
 
+run-name: >-
+  HIPO reference from ${{ github.event.workflow_run.head_branch || github.ref_name }} @
+  ${{ github.event.workflow_run.head_sha || github.sha }}
+
 permissions:
   contents: write
 
@@ -17,22 +21,26 @@ env:
 
 concurrency:
   # Serialize so parallel matrix jobs do not race on the shared release.
-  group: hipo-reference-${{ github.ref }}
+  group: hipo-reference-${{ github.event.workflow_run.id || github.run_id }}
   cancel-in-progress: false
 
 on:
   workflow_dispatch:
-  push:
+  workflow_run:
+    workflows: [ "Deploy" ]
+    types: [ completed ]
     branches: [ meson ]
-    paths:
-      - "experiments/clas12/dc/**"
-      - ".github/workflows/hipo_reference.yml"
-  schedule:
-    # Nightly, so the reference tracks the latest clas12Tags even without DC changes.
-    - cron: "17 3 * * *"
 
 jobs:
   reference:
+    if: >-
+      ${{
+        github.event_name != 'workflow_run' ||
+        (
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'meson'
+        )
+      }}
     name: Reference ${{ matrix.system }} (${{ matrix.n_events }} events)
     runs-on: ubuntu-latest
     container:
@@ -69,6 +77,7 @@ jobs:
         # clas12Tags, so no LFS pull is needed here; this checkout is only for the
         # workflow context and provenance.
         with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 1
 
       - name: Cache field maps
@@ -161,7 +170,8 @@ jobs:
         shell: bash
         run: |
           {
-            echo "source: ${GITHUB_REPOSITORY}@${GITHUB_SHA} (${GITHUB_REF_NAME})"
+            echo "source: ${GITHUB_REPOSITORY}@${{ github.event.workflow_run.head_sha || github.sha }}"
+            echo "branch: ${{ github.event.workflow_run.head_branch || github.ref_name }}"
             echo "date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             echo "system: ${{ matrix.system }}"
             echo "n_events: ${{ matrix.n_events }}"
@@ -182,7 +192,7 @@ jobs:
             echo "| --- | --- |"
             echo "| System | ${{ matrix.system }} |"
             echo "| Events simulated | ${{ matrix.n_events }} |"
-            echo "| Source commit | ${GITHUB_SHA} |"
+            echo "| Source commit | ${{ github.event.workflow_run.head_sha || github.sha }} |"
             echo "| gcard | ${{ matrix.gcard }} |"
           } >> "$GITHUB_STEP_SUMMARY"
 
