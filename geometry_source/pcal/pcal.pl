@@ -18,7 +18,8 @@ sub help() {
     print "\n Usage: \n";
     print "   pcal.pl <configuration filename>\n";
     print "   Will create the CLAS12 PCAL geometry, materials, bank and hit definitions\n";
-    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
+    print "   Note: if the sqlite file does not exist, create one with:\n";
+    print "         \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
     exit;
 }
 
@@ -33,6 +34,7 @@ our %configuration = load_configuration($ARGV[0]);
 
 # import scripts
 require "./materials.pl";
+require "./bank.pl";
 require "./hit.pl";
 require "./geometry_java.pl";
 
@@ -60,6 +62,7 @@ my @runs = clas12_runs(@variations);
 
 # TEXT Factory
 $configuration{"factory"} = "TEXT";
+define_bank();
 
 my $runNumber = 11;
 foreach my $variation (@variations) {
@@ -69,10 +72,9 @@ foreach my $variation (@variations) {
 
 # SQLITE Factory
 $configuration{"factory"} = "SQLITE";
+define_bank();
 foreach my $run (@runs) {
     $configuration{"variation"} = "default";
     $configuration{"run_number"} = $run;
     create_system("default", $run);
 }
-
-
