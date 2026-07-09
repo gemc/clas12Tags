@@ -126,34 +126,30 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 		ctc.countsForMIP[isec - 1][ilay - 1][1].push_back(data[row][4]);
 	}
 
-	snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/hpos:%d:%s%s", ctc.runNo,
-			 digiVariation.c_str(), timestamp.c_str());
-	cout<<"CTOF: Getting hpos parameters"<<endl;
-	data.clear();
-	calib->GetCalib(data, ctc.database);
-	for(unsigned row = 0; row < data.size(); row++)
-	{
-		isec = data[row][0];
-		ilay = data[row][1];
-		ctc.hpos[isec-1][ilay-1][0].push_back(data[row][3]);
-		ctc.hpos[isec-1][ilay-1][1].push_back(data[row][4]);
-	}
-
-	snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/hposbin:%d:%s%s", ctc.runNo,
-			 digiVariation.c_str(), timestamp.c_str());
-	cout<<"CTOF: Getting hposbin parameters"<<endl;
-	data.clear();
-	calib->GetCalib(data, ctc.database);
-	for(unsigned row = 0; row < data.size(); row++)
-	{
-		isec = data[row][0];
-		ilay = data[row][1];
-		for(unsigned bin = 0; bin <= ctc.hposbins; bin++) {
+	 snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/hpos:%d:%s%s",ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+	 cout<<"CTOF: Getting hpos parameters"<<endl;
+	 data.clear() ; calib->GetCalib(data,ctc.database);
+	 for(unsigned row = 0; row < data.size(); row++)
+	 {
+ 	 	 isec   = data[row][0];
+		 ilay   = data[row][1];
+		 ctc.hpos[isec-1][ilay-1][0].push_back(data[row][3]);
+		 ctc.hpos[isec-1][ilay-1][1].push_back(data[row][4]);
+	 }
+	
+         snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/hposbin:%d:%s%s",ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+         cout<<"CTOF: Getting hpos parameters"<<endl;
+         data.clear() ; calib->GetCalib(data,ctc.database);
+         for(unsigned row = 0; row < data.size(); row++)
+         {
+                 isec   = data[row][0]; 
+                 ilay   = data[row][1]; 
+                 for(unsigned bin=0; bin<=ctc.hposbins; bin++) {
 			ctc.hposbin[isec-1][ilay-1][bin].push_back(data[row][3+bin]);
-		}
-	}
-
-    snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/time_offsets:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
+		 }
+         }
+        
+        snprintf(ctc.database, sizeof(ctc.database), "/calibration/ctof/time_offsets:%d:%s%s", ctc.runNo, digiVariation.c_str(), timestamp.c_str());
 	cout << "CTOF:Getting time_offsets" << endl;
 	data.clear();
 	calib->GetCalib(data, ctc.database);
@@ -220,6 +216,7 @@ static ctofConstants initializeCTOFConstants(int runno, string digiVariation = "
 	calib->GetCalib(data, ctc.database);
 	for (unsigned row = 0; row < data.size(); row++) {
 		double sigma = data[row][3];
+
 		ctc.tres.push_back(sigma);
 	}
 	
@@ -382,11 +379,11 @@ map<string, double> ctof_HitProcess::integrateDgt(MHit* aHit, int hitn)
 		//double            B = ctc.twlk[sector-1][layer-1][1][paddle-1];
 		//double            C = ctc.twlk[sector-1][layer-1][2][paddle-1];
 		//double   timeWalkUp = A/(B+C*sqrt(adcu));
-		double hpos = ctc.hpos[sector-1][layer-1][0][paddle-1] *
-					  exp(ctc.hpos[sector-1][layer-1][1][paddle-1]/cm * y);
-		if(ctc.hposbin[sector-1][layer-1][0][paddle-1] > 0) {
-			int bin = (int) floor(y/cm) + ctc.hposbins/2;
-			hpos += ctc.hposbin[sector-1][layer-1][bin+1][paddle-1];
+		double ylab = tInfos.z;
+		double hpos = ctc.hpos[sector-1][layer-1][0][paddle-1] * exp(ctc.hpos[sector-1][layer-1][1][paddle-1]/cm * ylab);
+		if(ctc.hposbin[sector-1][layer-1][0][paddle-1]>0) {
+			int bin = (int) floor(ylab/cm) + ctc.hposbins/2;
+			hpos = ctc.hposbin[sector-1][layer-1][bin+1][paddle-1];
 		}
 		
 		double tU = tInfos.time + d/ctc.veff[sector-1][layer-1][side][paddle-1]/cm +  (1. - 2. * side)*ctc.toff_UD[sector-1][layer-1][paddle-1]/2.
