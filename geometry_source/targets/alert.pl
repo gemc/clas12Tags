@@ -179,7 +179,7 @@ sub build_alert_mats {
         $mat{"description"} = "5.6 atm helium gas";
         $mat{"density"} = "0.000931"; # in g/cm3
         $mat{"ncomponents"} = "1";
-        $mat{"components"} = "He 1";
+        $mat{"components"} = "G4_He 1";
         print_mat(\%configuration, \%mat);
     }
 
