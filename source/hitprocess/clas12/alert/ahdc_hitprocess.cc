@@ -27,7 +27,6 @@ using namespace CLHEP;
 // this method is for connection to calibration database and extraction of calibration parameters
 static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no") {
 	ahdcConstants ahdcc;
-	
 	// do not initialize at the beginning, only after the end of the first event,
 	// with the proper run number coming from options or run table
 	if (runno == -1) return ahdcc;
@@ -76,6 +75,7 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 	data.clear();
 	//after constants are loaded for T2D, we need the inverse function
 	ahdcc.initializeInverseT2D();
+	cout << "done initializing inverse T2D tables" << endl;
 	
 	return ahdcc;
 }
