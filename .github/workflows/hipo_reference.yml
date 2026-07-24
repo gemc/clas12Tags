@@ -1,0 +1,211 @@
+# Produce the GEMC2 reference HIPO that gemc/clas12-systems (GEMC3) compares against
+# with hipo-histos. clas12Tags is the source of truth: this publishes the LATEST
+# reference (rolling release, never pinned) — clas12-systems plays catch-up.
+#
+# For each supported system the job runs gemc with the committed default gcard
+# (the gun is taken from the gcard, unchanged) for n_events, and uploads the HIPO as
+# an asset of the rolling `histo-reference` release. n_events is part of the matrix and
+# is reported in the run metrics. DC uses 10,000 events.
+name: HIPO Reference
+
+run-name: >-
+  HIPO reference from ${{ github.event.workflow_run.head_branch || github.ref_name }} @
+  ${{ github.event.workflow_run.head_sha || github.sha }}
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  REFERENCE_TAG: histo-reference
+
+concurrency:
+  # Serialize so parallel matrix jobs do not race on the shared release.
+  group: hipo-reference-${{ github.event.workflow_run.id || github.run_id }}
+  cancel-in-progress: false
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [ "Deploy" ]
+    types: [ completed ]
+    branches: [ meson ]
+
+jobs:
+  reference:
+    if: >-
+      ${{
+        github.event_name != 'workflow_run' ||
+        (
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'meson'
+        )
+      }}
+    name: Reference ${{ matrix.system }} (${{ matrix.n_events }} events)
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/gemc/clas12tags:dev-almalinux-10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - system: dc
+            gcard: experiments/clas12/dc/dc_text_default.gcard
+            n_events: 20000
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+          - system: ec
+            gcard: experiments/clas12/ec/ec_text_default.gcard
+            n_events: 20000
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+          - system: pcal
+            gcard: experiments/clas12/pcal/pcal_text_default.gcard
+            n_events: 20000
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+          - system: ftof
+            gcard: experiments/clas12/ftof/ftof_text_default.gcard
+            n_events: 20000
+            # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        # Geometry (gcard + TEXT/CAD files) is taken from the image's installed
+        # clas12Tags, so no LFS pull is needed here; this checkout is only for the
+        # workflow context and provenance.
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 1
+
+      - name: Cache field maps
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/fields
+          key: clas12-fields-${{ matrix.system }}-${{ hashFiles('.github/workflows/hipo_reference.yml') }}
+          restore-keys: |
+            clas12-fields-${{ matrix.system }}-
+
+      - name: Download field maps
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Field maps are not in the image; fetch just the ones this gcard needs
+          # (ci/install_fields.zsh would pull all ~1.5 GB). Source: clasweb.jlab.org.
+          field_dir="$GITHUB_WORKSPACE/fields"
+          mkdir -p "$field_dir"
+          base="https://clasweb.jlab.org/clas12offline/magfield"
+          for map in ${{ matrix.fields }}; do
+            if [[ ! -s "$field_dir/$map.dat" ]]; then
+              echo "Downloading $map.dat"
+              curl -fSL "$base/$map.dat" -o "$field_dir/$map.dat"
+            else
+              echo "Using cached $map.dat"
+            fi
+          done
+          ls -lh "$field_dir"
+
+      - name: Run GEMC2
+        shell: bash
+        run: |
+          set -euo pipefail
+          # GitHub `container:` steps do not run the image entrypoint, so SIM_HOME and the
+          # gemc runtime are not set up (that is why ci/env.sh guessed an empty SIM_HOME).
+          # Source the gemc base entrypoint (sets SIM_HOME + geant4) and add the installed
+          # clas12Tags bin to PATH. gemc lives at $SIM_HOME/clas12Tags/dev/bin
+          # (see clas12Tags ci/dockerfile_creator.py: install_gemc).
+          export DOCKER_ENTRYPOINT_SOURCE_ONLY=1
+          . /usr/local/bin/docker-entrypoint.sh
+          if command -v module >/dev/null 2>&1; then
+            module load geant4 2>/dev/null || true
+          fi
+          export PATH="$SIM_HOME/clas12Tags/dev/bin:$PATH"
+          export GEMC_DATA_DIR="${GEMC_DATA_DIR:-$SIM_HOME/clas12Tags/dev}"
+          # Field maps downloaded above; gemc locates them via FIELD_DIR.
+          export FIELD_DIR="$GITHUB_WORKSPACE/fields"
+          # Transitional: the gemc executable now carries an install rpath ($ORIGIN/../lib) so
+          # it finds its own libccdb.so — but the published image only picks that up after a
+          # rebuild. Until then, locate libccdb.so and add it to the runtime path. This becomes
+          # a redundant no-op once the rebuilt image ships the rpath, and can be removed then.
+          ccdb_so="$(find "$SIM_HOME" -name 'libccdb.so*' -print -quit 2>/dev/null || true)"
+          if [[ -n "$ccdb_so" ]]; then
+            export LD_LIBRARY_PATH="$(dirname "$ccdb_so"):${LD_LIBRARY_PATH:-}"
+            echo "Added ccdb lib dir to LD_LIBRARY_PATH: $(dirname "$ccdb_so")"
+          fi
+          command -v gemc >/dev/null || { echo "ERROR: gemc not found in image" >&2; exit 1; }
+          gemc -v 2>&1 | tee "$GITHUB_WORKSPACE/gemc_version.txt" || true
+
+          # GEMC2's TEXT factory resolves a bare detector name (e.g. <detector name="dc"/>)
+          # against the current directory, so gemc must run from the system's experiment dir
+          # (which holds dc__geometry_default.txt). Path-qualified detectors in the gcard
+          # (experiments/clas12/beamline/...) resolve via GEMC_DATA_DIR, kept set above.
+          # Gun comes from the committed gcard; only override event count and output.
+          out="$GITHUB_WORKSPACE/${{ matrix.system }}_reference.hipo"
+          out_nofield="$GITHUB_WORKSPACE/${{ matrix.system }}_reference_nofield.hipo"
+          gcard_dir="$GEMC_DATA_DIR/$(dirname '${{ matrix.gcard }}')"
+          gcard_file="$(basename '${{ matrix.gcard }}')"
+          echo "Running gemc from $gcard_dir with $gcard_file"
+          cd "$gcard_dir"
+
+          echo "Running reference with configured fields"
+          gemc \
+            -USE_GUI=0 \
+            -N=${{ matrix.n_events }} \
+            -OUTPUT="hipo, $out" \
+            "$gcard_file"
+          ls -l "$out"
+
+          echo "Running reference without magnetic fields"
+          gemc \
+            -USE_GUI=0 \
+            -N=${{ matrix.n_events }} \
+            -OUTPUT="hipo, $out_nofield" \
+            -NO_FIELD=all \
+            "$gcard_file"
+          ls -l "$out_nofield"
+
+      - name: Write provenance sidecar
+        shell: bash
+        run: |
+          {
+            echo "source: ${GITHUB_REPOSITORY}@${{ github.event.workflow_run.head_sha || github.sha }}"
+            echo "branch: ${{ github.event.workflow_run.head_branch || github.ref_name }}"
+            echo "date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "system: ${{ matrix.system }}"
+            echo "n_events: ${{ matrix.n_events }}"
+            echo "gcard: ${{ matrix.gcard }}"
+            echo "image: ghcr.io/gemc/clas12tags:dev-almalinux-10 (geometry from image install)"
+            echo "gemc: $(head -n1 gemc_version.txt 2>/dev/null || echo unknown)"
+          } > "${{ matrix.system }}_reference.txt"
+          cat "${{ matrix.system }}_reference.txt"
+
+      - name: Metrics summary
+        if: ${{ always() }}
+        shell: bash
+        run: |
+          {
+            echo "### HIPO Reference — ${{ matrix.system }}"
+            echo
+            echo "| Metric | Value |"
+            echo "| --- | --- |"
+            echo "| System | ${{ matrix.system }} |"
+            echo "| Events simulated | ${{ matrix.n_events }} |"
+            echo "| Source commit | ${{ github.event.workflow_run.head_sha || github.sha }} |"
+            echo "| gcard | ${{ matrix.gcard }} |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish rolling reference release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.REFERENCE_TAG }}
+          name: HIPO comparison reference (rolling)
+          body: |
+            Rolling GEMC2 reference HIPO files for hipo-histos comparison in gemc/clas12-systems.
+            Always the latest clas12Tags output; assets are overwritten on each run.
+          prerelease: true
+          files: |
+            ${{ matrix.system }}_reference.hipo
+            ${{ matrix.system }}_reference_nofield.hipo
+            ${{ matrix.system }}_reference.txt

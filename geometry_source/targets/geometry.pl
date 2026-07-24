@@ -54,6 +54,8 @@ sub build_target {
         or $configuration_string eq "rgb_spring2019"
         or $configuration_string eq "rga_spring2019"
         or $configuration_string eq "rgb_fall2019"
+        or $configuration_string eq "rgk_fall2023"
+        or $configuration_string eq "rgk_spring2024"
         or $configuration_string eq "rgm_fall2021_He"
         or $configuration_string eq "lH2e"
         or $configuration_string eq "rgd_fall2023_lD2"

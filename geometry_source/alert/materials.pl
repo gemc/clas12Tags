@@ -40,7 +40,7 @@ sub materials {
     %mat = init_mat();
     $mat{"name"} = "He4_gas_3atm";
     $mat{"description"} = "Target gas";
-    $mat{"density"} = "0.000487"; # in g/cm3
+    $mat{"density"} = "0.0007305"; # in g/cm3
     $mat{"ncomponents"} = "1";
     $mat{"components"} = "G4_He 1";
     print_mat(\%configuration, \%mat);

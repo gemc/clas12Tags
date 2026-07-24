@@ -20,6 +20,11 @@ public:
 	int nlayer;
 	int ncomp;
 	
+        // tdc jitter parameters
+        double jitter_period;
+        int    jitter_phase;
+        int    jitter_cycles;
+
 	double mev_adc[6][6][7];
 	double eff_vel_tdc[6][6][7];
 	double eff_vel_fadc[6][6][7];
