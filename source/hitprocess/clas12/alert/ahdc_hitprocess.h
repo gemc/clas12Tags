@@ -3,8 +3,6 @@
 
 // gemc headers
 #include "HitProcess.h"
-#include "G4AdjointInterpolator.hh" //Geant 4 interpolation tools
-
 
 class ahdcConstants
 {
@@ -15,6 +13,56 @@ public:
 	string date;
 	string connection;
 	char   database[80];
+
+	double cubicInterpolate (double p[4], double x) {
+		return p[1] + 0.5 * x*(p[2] - p[0] + x*(2.0*p[0] - 5.0*p[1] + 4.0*p[2] - p[3] + x*(3.0*(p[1] - p[2]) + p[3] - p[0])));
+	}
+	double linearInterpolate(double p[2], double x) {
+		return p[0] + x*(p[1] - p[0]);
+	}
+	double interpolate(vector<double> x, vector<double> y, double val){
+
+		if(val < x[0]){
+			return y[0];
+		}
+		if(val > x[(int)x.size() -1]){
+			return y[(int)y.size() -1];
+		}
+		//find appropriate bibn to start interpolation:
+		int low = 0;
+		int high = x.size() - 1;
+		while (low <= high) {
+			int mid = low + (high - low) / 2;
+			// Check if x is present at mid, if so exactvalue is known.
+			if (x[mid] == val){
+				return y[mid]; 
+			}
+			// If x greater, ignore left half
+			if (x[mid] < val) low = mid + 1;
+
+			// If x is smaller, ignore right half
+			else high = mid - 1;
+		}
+	
+		low--;
+		high++;
+
+		if(low != high -1) cout << "issue with interpolation of AHDC T2D function" << endl;
+
+		if(low >= 1 && high < (int)x.size() -2){
+			vector<double> yv = {y[low-1], y[low], y[low+1],y[low+2]};
+			val = (val - x[low])/(x[low+1] - x[low]);
+			double yret = cubicInterpolate(&yv[0],val);
+			return yret;
+		}else{
+			vector<double> yv = {y[low],y[low +1]};
+			val = (val - x[low])/(x[low+1] - x[low]);
+			double yret = linearInterpolate(&yv[0],val);
+                        return yret;
+		}
+		
+		return -1;
+	}
 
 	// convert each (sector, layer, component) to a number between 0 and 575 (we have 576 wires)
 	static int getUniqueId(int sector, int layer, int component) {
@@ -55,6 +103,7 @@ public:
 	double get_T0(int wireId) { return T0Correction[wireId];}
 	// time2distance 
 	double T2D[10][576]; // contains the coefficients of a fit per wire
+	double t2dmax[576]; //contains the maximum value for distance from T2D function for each wire.
 	double eval_t2d(int wireId, double t){
 		// T2D function consists of three 1st order polynomials (p1, p2, p3) and two transition functions (t1, t2).
 		double p1 = (T2D[0][wireId] + T2D[1][wireId]*t);
@@ -67,54 +116,47 @@ public:
 		double retval = (p1)*(1.0 - t1) + (t1)*(p2)*(1.0 - t2) + (t2)*(p3);
 		return retval;
 	};
-	/*
-	vector<c2_ptr<double>> c2ps;
-	void initializeInverseT2D(){
-		c2_ptr<double> c2p;
-		c2_factory<double> cp;
-		double tmin = 0.0;
-		double tmax = 5.0;
-		double nstep = 50;
-		double tstep = (tmax - tmin)/nstep;
-		for(int i = 0; i < 576; i++){
-			vector<double> x;
-			vector<double> y;
-			for(int j = 0; j < nstep + 1; j++){
-				double t = tmin + (double)j*tstep;
-				x.push_back(t);
-				y.push_back(eval_t2d(i,t));
-			}
-			c2p inverseT2D = c2.interpolating_function().load(y, x, true, 0, true, 0);
-			c2ps.psuh_back(inverseT2D);
-		}
-	};
-	*/
 	//distance to time variables:
 	vector<vector<double>> D2Tx;
 	vector<vector<double>> D2Ty;
 	void initializeInverseT2D(){
 		double tmin = 0.0;
-		double tmax = 5.0;
-		double nstep = 50;
+		double tmax = 500.0;
+		double nstep = 100;
 		double tstep = (tmax - tmin)/nstep;
 		for(int i = 0; i < 576; i++){
+			t2dmax[i] = 0;
 			vector<double> x; //time
 			vector<double> y; //distance
+			int jmax = 0;
 			for(int j = 0; j < nstep + 1; j++){
 				double t = tmin + (double)j*tstep;
 				x.push_back(t);
 				y.push_back(eval_t2d(i,t));
+				if(y[j] >  t2dmax[i]){
+					t2dmax[i] = y[j];
+					jmax = j;
+				}
 			}
+			//to create an invertible function, we need the slope of the function to be positive always.  At larger t, the function can turn over, so we look for the maximum value of the function, and then force all additional points to follow the from the last positive slope before the inflection.
+			double slope = (y[jmax] - y[jmax -1])/(x[jmax] - x[jmax -1]);
+			if(slope <=0){
+				cout << "issue with inversion  of T2D function in ALERT AHDC" << endl;
+			}
+			double yint = y[jmax] - slope*x[jmax];
+			for(int j = jmax +1; j < nstep + 1; j++){
+				y[j] = yint + slope*x[j];
+			}
+
 			D2Tx.push_back(y); //x is now distance
 			D2Ty.push_back(x); //y is now time
 		}
 	}
 	
-	//G4AdjointInterpolator *interpolator = new G4AdjointInterpolator();
-	static G4AdjointInterpolator interpolator;
 	double eval_inv_t2d(int wireId, double dist){
-		//return c2ps[wireId](dist);
-		double retval = interpolator.Interpolate(dist, D2Tx[wireId], D2Ty[wireId], "Log");
+		//cout << "starting inverse " << wireId << "  " << dist << endl;
+		double retval = interpolate(D2Tx[wireId],D2Ty[wireId],dist);
+		//cout << "found inverse: " << retval << endl;
 		return retval;
 	};
 };
