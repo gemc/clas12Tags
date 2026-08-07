@@ -1,0 +1,9 @@
+               mucal  |              bankid  |                                     mucal bank ID  | 2800   |                  Di  
+               mucal  |              sector  |                                       sector (=1)  |    1   |                  Di  
+               mucal  |               layer  |                                        layer (=1)  |    2   |                  Di  
+               mucal  |           component  |                                           crystal  |    3   |                  Di  
+               mucal  |           ADC_order  |                                          always 0  |    4   |                  Di  
+               mucal  |             ADC_ADC  |                       ADC integral from pulse fit  |    5   |                  Di  
+               mucal  |            ADC_time  |                               time from pulse fit  |    6   |                  Dd  
+               mucal  |             ADC_ped  |                      pedestal from pulse analysis  |    7   |                  Di  
+               mucal  |                hitn  |                                        hit number  |   99   |                  Di  

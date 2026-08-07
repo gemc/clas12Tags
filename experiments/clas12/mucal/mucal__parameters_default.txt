@@ -1,0 +1,21 @@
+mucalVolume.dimension0 | 0.000 | rad | dimension 0 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension1 | 6.283 | rad | dimension 1 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension2 | 4.000 | counts | dimension 2 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension3 | 30.100 | cm | dimension 3 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension4 | 7.280 | cm | dimension 4 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension5 | 8.150 | cm | dimension 5 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension6 | 9.870 | cm | dimension 6 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension7 | 30.110 | cm | dimension 7 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension8 | 36.060 | cm | dimension 8 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension9 | 40.100 | cm | dimension 9 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension10 | 9.880 | cm | dimension 10 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension11 | 52.000 | cm | dimension 11 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension12 | 62.500 | cm | dimension 12 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension13 | 69.600 | cm | dimension 13 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.dimension14 | 83.600 | cm | dimension 14 | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.positionx | 0.000 | cm | position along x axis | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.positiony | 0.000 | cm | position along y axis | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.positionz | 0.000 | cm | position along z axis | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.rotationx | 0.000 | rad | rotation along x axis | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.rotationy | 0.000 | rad | rotation along y axis | cline | ewcline@mit.edu | none | none | none | 3/23/26
+mucalVolume.rotationz | 0.000 | rad | rotation along z axis | cline | ewcline@mit.edu | none | none | none | 3/23/26
