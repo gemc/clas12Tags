@@ -240,11 +240,8 @@ map <string, gBank> read_banks(goptions gemcOpt, map <string, string> allSystems
             string fname = systemName + "__bank.txt";
             ifstream IN(fname.c_str());
             if (!IN) {
-                // if file is not found, maybe it's in the GEMC_DATA_DIR directory
-                if (getenv("GEMC_DATA_DIR") != nullptr) {
-                    fname = (string) getenv("GEMC_DATA_DIR") + "/" + fname;
-                    IN.open(fname.c_str());
-                }
+                fname = gemcDataDir() + "/" + fname;
+                IN.open(fname.c_str());
             }
 
             // now file should be loaded

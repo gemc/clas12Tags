@@ -5,3 +5,7 @@ revision = v1.99.7
 depth = 1
 clone-recursive = true
 method = cmake
+# Applied after clone so a clean fetch keeps the fix: when built against mariadb-connector-c,
+# do not enforce TLS, so ccdb can connect to the non-SSL clasdb.jlab.org server. See
+# subprojects/packagefiles/ccdb_ssl_no_enforce.patch.
+diff_files = ccdb_ssl_no_enforce.patch

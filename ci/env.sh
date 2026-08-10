@@ -75,9 +75,6 @@ show_gemc_installation() {
 	echo "- Content of \$GEMC/bin=$GEMC/bin" | tee -a $gemc_install_show
 	ls -lrt $GEMC/bin | tee -a $gemc_install_show
 
-	echo "- Content of \$GEMC_DATA_DIR=$GEMC_DATA_DIR" | tee -a $gemc_install_show
-	ls -lrt $GEMC_DATA_DIR | tee -a $gemc_install_show
-
 	if [ -d $GEMC/lib ]; then
 		echo "- Content of \$GEMC/lib=$GEMC/lib" | tee -a $gemc_install_show
 		ls -lrt $GEMC/lib | tee -a $gemc_install_show
@@ -330,7 +327,6 @@ geo_log=$log_dir/geo.log
 touch $setup_log $compile_log $install_log $gemc_install_show $test_log $geo_log
 
 export GEMC=${GEMC:-$default_gemc}
-export GEMC_DATA_DIR=${GEMC_DATA_DIR:-$GEMC}
 export PYTHONPATH=${PYTHONPATH:-}:$GEMC/api
 export PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}:$GEMC/lib/pkgconfig
 export PATH=${PATH}:$GEMC/bin
@@ -338,7 +334,6 @@ export LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}:$GEMC/lib
 export ARTIFACT_DIR=${ARTIFACT_DIR:-$default_artifact_dir}
 
 echo "GEMC=$GEMC"
-echo "GEMC_DATA_DIR=$GEMC_DATA_DIR"
 echo "ARTIFACT_DIR=$ARTIFACT_DIR"
 
 # detect cores and cap at 16

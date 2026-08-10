@@ -38,20 +38,8 @@ map<string, mirror*> text_mirrors::initMirrors(runConditions rc, goptions opts)
 		
 		ifstream IN(filename.c_str());
 		if(!IN) {
-			// if file is not found, maybe it's in the GEMC_DATA_DIR directory
-			if(getenv("GEMC_DATA_DIR")  != nullptr) {
-				
-				string maybeHere = (string) getenv("GEMC_DATA_DIR") + "/" + filename;
-				
-				IN.open(maybeHere.c_str());
-				if(!IN) {
-					if(verbosity>1)
-						cout << hd_msg << "Warning: The system >" << dname
-						     << "< does not have a mirror file associated with it. " << endl;
-					continue;
-				}
-			}
-			
+			string maybeHere = gemcDataDir() + "/" + filename;
+			IN.open(maybeHere.c_str());
 			if(!IN) {
 				if(verbosity>1)
 					cout << hd_msg << "Warning: The system >" << dname

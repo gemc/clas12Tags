@@ -37,10 +37,8 @@ map <string, detector> cad_det_factory::loadDetectors() {
             DIR *thisDir = opendir(dir.c_str());
 
             if (thisDir == nullptr) {
-                if (getenv("GEMC_DATA_DIR") != nullptr) {
-                    string maybeHere = (string) getenv("GEMC_DATA_DIR") + "/" + dir;
-                    thisDir = opendir(maybeHere.c_str());
-                }
+                string maybeHere = gemcDataDir() + "/" + dir;
+                thisDir = opendir(maybeHere.c_str());
             }
 
             if (thisDir != nullptr) {
@@ -60,13 +58,10 @@ map <string, detector> cad_det_factory::loadDetectors() {
                         if (thisFileName != "na") {
                             cadFiles.push_back(thisFileName);
                         } else {
-                            // trying GEMC_DATA_DIR
-                            if (getenv("GEMC_DATA_DIR") != nullptr) {
-                                string envLoc = (string) getenv("GEMC_DATA_DIR") + "/";
-                                thisFileName = checkFormat(envLoc + dname + thisRootFileName);
-                                if (thisFileName != "na") {
-                                    cadFiles.push_back(thisFileName);
-                                }
+                            string dataLocation = gemcDataDir() + "/";
+                            thisFileName = checkFormat(dataLocation + dname + thisRootFileName);
+                            if (thisFileName != "na") {
+                                cadFiles.push_back(thisFileName);
                             }
                         }
                     }
@@ -75,7 +70,8 @@ map <string, detector> cad_det_factory::loadDetectors() {
                 }
 
             } else {
-                cout << " !! Error: directory " << dir << " cannot be read. Did you set GEMC_DATA_DIR to point to the location containing the experiments folder? Exiting." << endl;
+                cout << " !! Error: directory " << dir << " cannot be read locally or relative to "
+                     << gemcExecutablePath() << ". Exiting." << endl;
                 exit(1);
             }
             closedir(thisDir);
@@ -142,9 +138,8 @@ map <string, detector> cad_det_factory::loadDetectors() {
         QFile *gxml = new QFile(possibleGXML[g].c_str());
 
         if (!gxml->exists()) {
-            // trying GEMC_DATA_DIR
-            string envLoc = (string) getenv("GEMC_DATA_DIR") + "/" + possibleGXML[g];
-            gxml = new QFile(envLoc.c_str());
+            string dataLocation = gemcDataDir() + "/" + possibleGXML[g];
+            gxml = new QFile(dataLocation.c_str());
         }
 
         // checking that file exists

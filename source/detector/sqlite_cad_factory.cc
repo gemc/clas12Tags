@@ -95,13 +95,10 @@ map <string, detector> sqlitecad_det_factory::loadDetectors() {
 			string last_subdir = (pos == std::string::npos) ? cad_subdir : cad_subdir.substr(pos + 1);
 			string filename = checkFormat(last_subdir + "/" + name);
 
-			// if local cad dir is not found, try full path using GEMC_DATA_DIR
+			// If the local CAD directory is not found, try the executable-relative data root.
 			if (filename == "na") {
-				if (getenv("GEMC_DATA_DIR") != nullptr) {
-					string gemc_data_dir = getenv("GEMC_DATA_DIR");
-					string full_path = gemc_data_dir + '/' + cad_subdir + '/' + name;
-					filename = checkFormat(gemc_data_dir + '/' + cad_subdir + '/' + name);
-				}
+				string dataDirectory = gemcDataDir();
+				filename = checkFormat(dataDirectory + '/' + cad_subdir + '/' + name);
 			}
 
 			if (filename != "na") {

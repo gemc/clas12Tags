@@ -48,6 +48,13 @@ public:
     ~gui_splash();
 };
 
+// Initialize and query data paths derived from the running gemc executable.
+void initializeGemcPaths(const string &argv0);
+string gemcExecutablePath();
+string gemcDataDir();
+string gemcFieldsDir();
+string gemcFieldsDir(const goptions &opts);
+
 // merging two <string, string>
 void mergeMaps(map <string, string> &lhs, const map <string, string> &rhs);
 

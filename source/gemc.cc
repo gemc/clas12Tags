@@ -106,6 +106,7 @@ QCoreApplication* createApplication(int& argc, char* argv[], double use_gui) {
 int main(int argc, char** argv) {
 	clock_t startTime = clock();
 	cout << endl;
+	initializeGemcPaths(argv[0]);
 
 	goptions gemcOpt;
 	gemcOpt.setGoptions();

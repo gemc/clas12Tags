@@ -141,6 +141,8 @@ install_subdir('../experiments', install_dir: get_option('prefix'))
 gemc_run_args = [
     '-BEAM_P=e-, 4*GeV, 60*deg, 25*deg',
     '-SPREAD_P=0*GeV, 40*deg, 180*deg',
+    # source/build/gemc finds repository data from its executable, while maps are installed under prefix.
+    '-FIELD_DIR=' + fields_dir,
     '-USE_GUI=0',
     '-N=100',
     '-PRINT_EVENT=10',
@@ -154,13 +156,6 @@ for f in sorted(os.listdir(d)):
         print(f)
 '''
 
-clas12_data_dir = run_command(
-    python_exe, '-c',
-    'import os, sys; print(os.path.realpath(sys.argv[1]))',
-    join_paths(meson.project_source_root(), '..'),
-    check: true,
-).stdout().strip()
-
 foreach det : [
     'ec', 'pcal', 'dc', 'ftof', 'ctof', 'cnd', 'bst', 'htcc',
     'micromegas', 'ltcc', 'rich', 'ft', 'beamline', 'magnets', 'targets',
@@ -173,9 +168,6 @@ foreach det : [
         join_paths(meson.project_source_root(), '..', 'experiments', 'clas12', det),
         check: true,
     ).stdout().strip()
-    det_test_env = environment()
-    det_test_env.set('FIELD_DIR', fields_dir)
-    det_test_env.set('GEMC_DATA_DIR', clas12_data_dir)
     gcard_result = run_command(
         python_exe, '-c',
         gcard_scan_script,
@@ -191,7 +183,6 @@ foreach det : [
                 workdir : test_det_dir,
                 suite   : [det, 'clas12'],
                 timeout : 600,
-                env     : det_test_env,
             )
         endif
     endforeach

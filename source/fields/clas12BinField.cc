@@ -42,14 +42,9 @@ gfield clas12BinField::loadField(string file, goptions opts)
 	gf.unit        = "kilogauss";
 	gf.symmetry    = "cMag";
 
-	// FIELD_DIR must be set and every component .dat file must exist on disk.
+	// Every component .dat file must exist in the selected field directory.
 	// Return "na" symmetry so fieldFactory skips this field gracefully rather than crashing.
-	if(getenv("FIELD_DIR") == nullptr) {
-		cout << "  clas12BinField: FIELD_DIR not set — skipping binary field " << file << endl;
-		gf.symmetry = "na";
-		return gf;
-	}
-	string fieldDir = getenv("FIELD_DIR");
+	string fieldDir = gemcFieldsDir(opts);
 	for(const auto& part : getStringVectorFromStringWithDelimiter(file, ":")) {
 		string filepath = fieldDir + "/" + part + ".dat";
 		if(!ifstream(filepath).good()) {
@@ -140,7 +135,6 @@ void clas12BinField::loadFieldMap(gclas12BinaryMappedField* b12map, double v) {
 	cout << endl << "  ####  Binary Field Maps for " << b12map->identifier << " loading complete." << endl << endl;
 
 }
-
 
 
 

@@ -9,7 +9,6 @@ if [[ -z "${GEMC}" && -f "$cdir/ci/env.sh" ]]; then
 fi
 
 export GEMC=${GEMC:-$cdir/install}
-export GEMC_DATA_DIR=${GEMC_DATA_DIR:-$GEMC}
 export PERL5LIB=${PERL5LIB:-}:$GEMC/api/perl
 export COATJAVA=$cdir/geometry_source/coatjava
 export PATH=$PATH:$COATJAVA/bin

@@ -23,7 +23,6 @@ cd "$(dirname "$0")"
 source /opt/homebrew/opt/modules/init/zsh
 module use /opt/projects/ceInstall/modules
 module load gemc/dev
-export FIELD_DIR=/opt/projects/ceInstall/noarch/data/magfield
 export DYLD_LIBRARY_PATH="$LD_LIBRARY_PATH"   # macOS dyld uses DYLD_*, module sets LD_*
 
 IN=input.txt

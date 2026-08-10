@@ -1,0 +1,33 @@
+diff --git a/src/Library/Providers/MySQLDataProvider.cc b/src/Library/Providers/MySQLDataProvider.cc
+index cfca857..159e381 100644
+--- a/src/Library/Providers/MySQLDataProvider.cc
++++ b/src/Library/Providers/MySQLDataProvider.cc
+@@ -98,7 +98,27 @@ bool ccdb::MySQLDataProvider::Connect(MySQLConnectionInfo connection)
+ 		Error(CCDB_ERROR_CONNECTION_INITIALIZATION, "MySQLDataProvider::Connect(DMySQLConnectionInfo)", "mysql_init() returned NULL, probably memory allocation problem");
+ 		return false;
+ 	}
+-	
++
++#ifdef LIBMARIADB
++	// Compatibility bridge for clasdb's current configuration:
++	// - MySQL 9 removed mysql_native_password, which clas12reader currently uses. Meson therefore prefers
++	//   MariaDB Connector/C, which supports both mysql_native_password and caching_sha2_password.
++	// - MariaDB Connector/C enforces TLS by default, but clasdb currently has no TLS, so allow plaintext
++	//   fallback. Enabling TLS alone will not make MySQL 9 work while the account uses mysql_native_password.
++	//
++	// Long-term server fix: enable TLS, migrate clas12reader to caching_sha2_password, and verify that every
++	// client supports it.
++	//
++	// Guarded to MariaDB: Oracle removed MYSQL_OPT_SSL_ENFORCE in 8.0 and does not enforce TLS by default,
++	// so Oracle's client needs neither the option nor this code.
++	{
++		my_bool ccdb_ssl_enforce = 0;
++		mysql_options(mMySQLHnd, MYSQL_OPT_SSL_ENFORCE, &ccdb_ssl_enforce);
++		my_bool ccdb_ssl_verify = 0;
++		mysql_options(mMySQLHnd, MYSQL_OPT_SSL_VERIFY_SERVER_CERT, &ccdb_ssl_verify);
++	}
++#endif
++
+ 	//Try to connect to server
+ 	if(!mysql_real_connect (
+ 		mMySQLHnd,						//pointer to connection handler

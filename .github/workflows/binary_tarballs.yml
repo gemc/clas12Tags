@@ -151,5 +151,5 @@ jobs:
               ./install_geant4_data.sh
               source /root/clas12Tags/clas12tags.env
               gemc -v
-              test -d "$GEMC_DATA_DIR/experiments/clas12"
+              test -d "$CLAS12TAGS_HOME/experiments/clas12"
             '

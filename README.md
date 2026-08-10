@@ -1,70 +1,29 @@
-# The clas12Tags repository
+# clas12Tags
 
+[![Test][badge-test]][workflow-test]
+[![Deploy][badge-deploy]][workflow-deploy]
+[![CodeQL Advanced][badge-codeql]][workflow-codeql]
+[![CLAS12-config GCards Tests][badge-gcards]][workflow-gcards]
+[![Local GCards Tests][badge-local-gcards]][workflow-local-gcards]
+[![Tracks Validation][badge-tracks]][workflow-tracks]
+[![Ntracks Metrics][badge-metrics]][workflow-metrics]
+[![Valgrind Profile][badge-valgrind]][workflow-valgrind]
+[![ASCII vs SQLite][badge-ascii-sqlite]][workflow-ascii-sqlite]
+[![CLAS12-config Dev/Main Comparison][bdm]][workflow-dev-main]
+[![Nightly Dev Release][badge-dev-release]][workflow-dev-release]
 
-## QuickStart
+`clas12Tags` is the GEMC2 reference implementation for CLAS12. It contains the source code, detector geometry,
+and configuration databases used to simulate CLAS12 experiments at Jefferson Lab.
 
-Create the CLAS12 geometry database for the a detector (here we use CND)
+The repository provides:
 
-```bash
-git clone https://github.com/gemc/clas12Tags
-cd clas12Tags
-./build.sh -i installpath       # build and test gemc, install in <installpath>
-./create_geometry.sh cnd     # build & install the CND detector databases
-```
+- tagged CLAS12 geometry databases in ASCII and SQLite formats
+- the geometry source used to generate those databases
+- detector steering cards (gcards) for debugging and validation
+- the GEMC2 C++ source and Perl API
 
-Setup the environment at Jefferson Lab, load a tagged version of gemc:
-
-```bash
-module use /scigroup/cvmfs/geant4/modules
-module load gemc/5.14
-```
-
-Alternatively, use the [clas12 environment](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Environment_@_JLab)
-for the full CLAS12 software stack, which includes the latest tagged gemc version.
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [General Information](#general-information)
-- [How to create the CLAS12 detector geometry database](#how-to-create-the-clas12-detector-geometry-database)
-	- [Pre-requisites](#pre-requisites)
-	- [Procedure](#procedure)
-		- [Step 1: Clone the repository](#step-1-clone-the-repository)
-		- [Step 2: Install coatjava](#step-2-install-coatjava)
-		- [Step 3: Build the geometry database](#step-3-build-the-geometry-database)
-	- [1. Create and Install the geometry database into the experiments directory](#1-create-and-install-the-geometry-database-into-the-experiments-directory)
-	- [2. Debug / test a detector geometry in the geometry_source directory](#2-debug--test-a-detector-geometry-in-the-geometry_source-directory)
-- [How to build and install with Meson](#how-to-build-and-install-with-meson)
-- [Release workflow](#release-workflow)
-	- [Pull requests](#pull-requests)
-	- [Run at JLab:](#run-at-jlab)
-- [Container images](#container-images)
-	- [Pull request preview images](#pull-request-preview-images)
-- [Portal to Off-site farms CLAS12 Simulations](#portal-to-off-site-farms-clas12-simulations)
-- [Profiling](#profiling)
-	- [Time per track](#time-per-track)
-- [Utilities](#utilities)
-	- [Changing a material](#changing-a-material)
-	- [Removing a detector or a volume](#removing-a-detector-or-a-volume)
-- [Citations](#citations)
-- [Maurizio Ungaro](#maurizio-ungaro)
-
-<br/>
-
-## Introduction
-
-The clas12Tags repository collects the databases and source code for the Geant4 simulation of the CLAS12 experiments
-at Jefferson Lab, providing:
-
-- Tagged version of the geometry database, in the form of ASCII and SQLite files.
-- The CLAS12 geometry source code used to create the geometry databases.
-- Detectors steering cards (GCARDS) for debugging and testing.
-- The GEMC C++ source code and perl API.
-
-The `experiments` directory contains the **development version of the geometry database
-of the CLAS12 detectors**, built using the **latest tagged version of coatjava**.
-
-
+The `experiments` directory contains the development version of the CLAS12 detector geometry database, generated
+with the latest tagged Coatjava release.
 
 <p align="center">
   <img src="clas12.png?raw=true" alt="CLAS12 detector rendering" width="600">
@@ -72,252 +31,239 @@ of the CLAS12 detectors**, built using the **latest tagged version of coatjava**
   <em>Figure&nbsp;1: The CLAS12 detector simulation. The electron beam travels left&nbsp;→&nbsp;right.</em>
 </p>
 
-## General Information:
+<br/>
 
-- [GEMC Documentation Page](https://gemc.jlab.org/gemc/html/index.html)
-- [CLAS12 Discourse Forum: Simulation](https://clas12.discourse.group/c/simulation/9)
-- [Clas12-config repository with the various experiments steering cards](https://github.com/JeffersonLab/clas12-config)
-- [CLAS12 Software Center Wiki](https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Center#tab=Communications)
-- [CCDB Viewer](https://clasweb.jlab.org/cgi-bin/ccdb/objects)
-- Migration to [GEMC3](https://gemc.github.io/home/): check the [clas12-systems](https://github.com/gemc/clas12-systems)
-  repository and [roadmap](https://github.com/orgs/gemc/projects/1/views/4). 
+## Highlights
+
+- Run-dependent CLAS12 detector geometry and variations
+- ASCII and SQLite geometry databases
+- Geometry generation through the Coatjava geometry service
+- Local detector gcards for focused development and validation
+- Meson-based GEMC2 build and test suite
+- CI-tested container images for Linux `amd64` and `arm64`
+- Validation against the CLAS12-config production and development gcards
 
 <br/>
 
-# How to create the CLAS12 geometry databases
+## Quickstart
 
-## Pre-requisites
+Add the selected GEMC installation to `PATH`, then run a matching gcard from CLAS12-config:
 
-You will need:
+```shell
+export PATH="/absolute/path/to/clas12Tags-install/bin:$PATH"
 
-- `maven`, `java (openjdk >= 17)` and `groovy` to install and run the coatjava geometry service.
-- gemc `dev` environment.
-
-The above requirements are met at JLab by loading the usual **clas12 module**,
-then switching to gemc/dev:
-
-```bash
-module use /scigroup/cvmfs/hallb/clas12/sw/modulefiles
-module load clas12
-module switch gemc/dev
+gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard \
+  -N=100 -USE_GUI=0
 ```
 
-> [!Caution]
-> This will set the environment variables `GEMC` (used by the perl API; `GEMC`/bin added to your path) and
-> `GEMC_DATA_DIR` (used by gemc to find the databases) to the /scigroup location.
-> Notice:
-> 1) If you are testing perl API changes, point **GEMC** to your cloned clas12Tags directory.
-> 2) If you are testing geometry changes, point **GEMC_DATA_DIR** the cloned clas12Tags directory.
-> 3) If you are testing changes within the geometry_source directory, you do not need to set any
->    additional variables, as the detectors gcards load the local geometry database.
-> 4) If you're testing changes in gemc code, make sure to use the `gemc` executable
->     in your cloned repository (source/gemc), or the one from the environment will be used instead.
-
-## Procedure:
-
-Clone the clas12Tags repository:
-
-```bash
-git clone https://github.com/gemc/clas12Tags
-cd clas12Tags
-```
-
-At this point you can:
-
-1. create and install the geometry databases into the `experiments` directory
-2. debug / test a detector database inside the `geometry_source`
-   directory.
+Use a tagged GEMC installation instead of `dev` for production work, and select CLAS12-config gcards matching
+that GEMC version.
 
 <br/>
 
-## 1. Create and Install the geometry databases into the `experiments` directory:
-
-The script `create_geometry.sh` will create a single detector or all geometry databases:
-
-```
-Usage: create_geometry.sh [coatjava release options] [detector]
-
-Coatjava options (optional – at most one of -d|-l|-t|-g):
-  -l               use latest tag (default)
-  -t <tag>         use specific tag, like 12.0.4t
-  -g <github_url>  use custom github URL
-  -h               show this help
-
-If a detector is given (from the list below), only that detector will be built; 
-otherwise all will be processed.
-
-  alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof 
-  ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets 
-  uRwell upstream
-```
-
-The script will install (if not present) the desired tagged coatjava in the directory
-`geometry_source` and run the geometry service for the requested detector(s).
-
-<br/>
-
-> [!Warning]
-> By default, the latest coatjava tag is used. This is also the suggested option.
-> Other tags can be used but they are not guaranteed to work.
-
-<br/>
-
-Examples:
-
-- `./create_geometry.sh cnd`:
-	- install if not present the latest coatjava tag,
-	- create, and install in the `experiments` dir, the CND geometry ASCII database
-	- create or update the SQLite database
-
-
-- `./create_geometry.sh`:
-	- install if not present the latest coatjava tag
-	- create, and install in the `experiments` dir, all the CLAS12 detectors geometry ASCII database
-	- create or update the SQLite database
-
-
-- `./create_geometry.sh -t 12.0.4t bst`:
-	- install the coatjava tag 12.0.4t
-	- create, and install in the `experiments` dir, the BST geometry ASCII database
-	- create or update the SQLite database
-
-<br/>
-
-## 2. Debug / test a detector geometry in the `geometry_source` directory:
-
-If you didn't run `create_geometry.sh`, install coatjava first, and create the sqlite geometry database:
-
-```bash
-cd geometry_source 
-./install_coatjava.sh -l
-$GEMC/api/perl/sqlite.py -n ../clas12.sqlite
-```
-
-Change directory to detector of interest inside `geometry_source` and run
-the geometry script to create the ASCII and SQLite databases: For example, for ftof:
-
-```bash
-cd geometry_source/ftof
-./ftof.pl config.dat
-```
-
-You will see in the local directory the ASCII databases (geometry and materials txt files),
-and the SQLite database `clas12.sqlite` will be updated with the new detector.
-
-<br/>
-
-> [!NOTE]
-> Each detector subdir has two sets of gcards:
-> - `<detector>_text_<variation>.gcard`: for debugging the detector geometry
->   or a specific variation using the ASCII database.
-> - `<dectector>_sqlite.gcard`: for running the detector geometry for a
->   specific run number using the SQLite database `clas12.sqlite`
->   in the `geometry_source` directory.
-> - These gcards contain their detector's geometry but not
->   other CLAS12 components and will only load the detector geometry database in
->   the local directory.
-
-
-<br/>
-
-# How to build and install with Meson
+## Installation
 
 ### Prerequisites
 
-- [clhep](https://gitlab.cern.ch/CLHEP/CLHEP), [xercesc](https://github.com/apache/xerces-c.git),
-  [geant4](https://github.com/Geant4/geant4.git). For their installation see also [^1].
-- [hipo](https://code.jlab.org/hallb/clas12/hipo-cpp)
-- [ccdb](https://code.jlab.org/hallb/clas12/ccdb)
+The C++ build requires:
 
-> [!NOTE]
-> These prerequisites are satisfied at JLab with `module load geant4 ccdb hipo`.
+- Meson 1.10.1 or newer and a C++17 compiler
+- Geant4 11.3.2 or newer
+- CLHEP 2.4.7.1 or newer
+- Xerces-C 3.2.5 or newer
+- Qt 6, OpenGL, SQLite, Expat, and zlib
 
-Configure, compile, install, and run the gcard tests from the `source` directory:
+Meson resolves Assimp, CCDB, HIPO, and `clas12-cmag` through the wraps under `source/subprojects`. A first build
+therefore needs network access unless those subprojects are already present.
 
-```bash
+At Jefferson Lab, this is the only environment setup needed to compile GEMC:
+
+```shell
+module use /scigroup/cvmfs/geant4/g4install/modules
+module load geant4
+```
+
+### Build, test, and install
+
+Configure from `source` with an explicit installation prefix, release mode, and sanitizers disabled:
+
+```shell
 cd source
-meson setup build --prefix=/path/to/install
+meson setup build \
+  --native-file=core.ini \
+  --prefix=/absolute/path/to/clas12Tags-install \
+  --buildtype=release \
+  -Db_sanitize=none
 meson compile -C build
 meson install -C build
-meson test -C build --print-errorlogs
+meson test -C build --suite clas12 --print-errorlogs -j 1
 ```
 
-The `api` and `experiments` directories are installed into `<prefix>/` alongside the `gemc` binary.
-`GEMC_DATA_DIR` must be set in the calling environment (e.g. via `module load gemc/dev`) so that
-gemc can find field maps and cross-detector geometry files at test time.
+The explicit prefix prevents a loaded GEMC installation from becoming the destination accidentally. Installation
+also places the field maps under the selected prefix, where tests using `source/build/gemc` can find them.
 
-To run only a specific detector's tests:
+The tests use the default remote CCDB connection. To use a local snapshot, set it before `meson test`:
 
-```bash
-meson test -C build --suite ec --print-errorlogs
+```shell
+export CCDB_CONNECTION="sqlite:////absolute/path/to/ccdb.sqlite"
+meson test -C build --suite clas12 --print-errorlogs -j 1
 ```
 
-[^1]: the [g4install](https://github.com/gemc/g4install) provides modules environment and installation
-scripts for Geant4.
+The four slashes are intentional for an absolute SQLite path. Compilation and installation do not require a CCDB
+connection, but simulation tests do. A first build and any missing field-map downloads require network access.
 
+To run only one detector suite:
+
+```shell
+meson test -C build --suite ec --print-errorlogs -j 1
+```
+
+### Run an installed GEMC
+
+The installation places the executable in `<prefix>/bin`, the APIs in `<prefix>/api`, geometry and gcards in
+`<prefix>/experiments`, and magnetic field maps in `<prefix>/fields`. GEMC derives its data and field locations
+from the executable. For the GEMC executable itself, the only GEMC-specific runtime setup is adding it to
+`PATH`:
+
+```shell
+export PATH="/absolute/path/to/clas12Tags-install/bin:$PATH"
+```
+
+`GEMC_DATA_DIR`, the `FIELD_DIR` environment variable, and `GEMC` are not required to run GEMC. Additional setup
+is needed only for these cases:
+
+- Geant4 dataset variables must be available if they are not already provided by the system installation.
+- `CCDB_CONNECTION` selects a nondefault CCDB server or local SQLite snapshot.
+- `-FIELD_DIR=/path/to/fields` selects field maps outside the standard executable-relative installation.
+- `GEMC`, `PERL5LIB`, or `PYTHONPATH` may be needed for geometry-generation scripts and the Perl or Python APIs;
+  they are not used to locate runtime geometry or field data.
+
+The [g4install repository][g4install] provides the Geant4 installation scripts and module environment used
+by GEMC.
 
 <br/>
 
-# Release workflow
+## Generating CLAS12 geometry
 
-Merging changes in the repository will trigger various CI validation workflows and the
-**creation of artifacts** containing the new executable and the
-geometry databases.
+### Requirements and environment
 
-These are installed at JLAB in /scigroup/cvmfs using a **cronjob that runs every couple of hours**.
+Geometry generation requires Maven, OpenJDK 17 or newer, Groovy, the GEMC Perl API, and a CCDB connection.
+Configure the API separately from the GEMC executable when generating detector geometry:
 
-As a result these JLAB installations are up-to-date with this timelines:
-
-- `/scigroup/cvmfs` (used on ifarms) : 2-8 hours after the commit, passing through the CI validation and
-  merge queue when necessary.
-- `/cvmfs/oasis.opensciencegrid.org` (used on OSG): an additional 4-8 hours after the JLAB
-  installation once the CVMFS sync runs.
-
-The GitHub `dev` release is also created nightly by the CI.
-
-### Pull requests
-
-The pull requests will be reviewed and queue for auto-merging into the
-main branch pending passing the CI:
-
-- compilation for fedora36, almalinux94 and ubuntu24
-- coatjava validation with 500 events
-- run gemc on 1000 events using all gcards in clas12-config/gemc/dev development branch
-
-Each pull request additionally publishes a ready-to-run container image tagged with the PR number, so the
-submitter and reviewers can test the branch without building locally. See
-[Pull request preview images](#pull-request-preview-images).
-
-### Run at JLab:
-
-The available modules can be listed using `module avail gemc`.
-
-To run GEMC you can select one of the gcards in the clas12-config
-installed on cvmfs. For example:
-
-```bash
-gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard  -N=nevents -USE_GUI=0 
+```shell
+export GEMC=/absolute/path/to/clas12Tags-install
+export PERL5LIB="$GEMC/api/perl:${PERL5LIB:-}"
 ```
+
+When developing locally:
+
+- Set `GEMC` to the local install when testing Perl API changes.
+- Detector gcards under `geometry_source` already load their databases from the local detector directory.
+- The local `source/build/gemc` finds the repository `experiments` directory automatically. Pass
+  `-FIELD_DIR=/path/to/fields` when its maps are not in the repository.
+- Use the local `source/build/gemc` or `<prefix>/bin/gemc` when testing C++ changes; otherwise the
+  module-provided executable may be selected first.
+
+### Create geometry databases
+
+`create_geometry.sh` generates one detector or all detectors and installs the results under
+`experiments/clas12`:
+
+```text
+Usage: create_geometry.sh [coatjava release options] [detector]
+
+Coatjava options (optional; at most one of -l|-t|-g):
+  -l                 use the latest tag (default)
+  -t <tag>           use a specific tag, such as 12.0.4t
+  -g <github_url>    use a custom GitHub repository
+  -c <connection>    use a custom CCDB_CONNECTION
+  -h                 show help
+
+Detectors:
+  alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft ftof
+  ftofShield htcc ltcc magnets micromegas pcal rich rtpc targets
+  murt upstream
+```
+
+The script installs the selected Coatjava release under `geometry_source` when needed, runs the requested
+geometry services, writes the ASCII databases to `experiments/clas12/<detector>`, and creates or updates
+`clas12.sqlite`.
+
+> [!WARNING]
+> The latest Coatjava tag is the supported default. Other tags may not work with the current geometry source.
+
+Examples:
+
+- `./create_geometry.sh cnd` installs the latest Coatjava release if needed and generates the CND ASCII and
+  SQLite geometry.
+- `./create_geometry.sh` generates every supported CLAS12 detector.
+- `./create_geometry.sh -t 12.0.4t bst` generates BST with Coatjava tag `12.0.4t`.
+- `./create_geometry.sh -c "sqlite:////absolute/path/to/ccdb.sqlite" cnd` uses a local CCDB snapshot.
+
+### Develop one detector locally
+
+If `create_geometry.sh` has not already installed Coatjava, install it and initialize the SQLite geometry
+database:
+
+```shell
+cd geometry_source
+./install_coatjava.sh -l
+"$GEMC/api/perl/sqlite.py" -n ../clas12.sqlite
+```
+
+Then run the detector geometry script. For example:
+
+```shell
+cd ftof
+./ftof.pl config.dat
+```
+
+The detector directory receives the ASCII geometry and material files, and the repository-level
+`clas12.sqlite` is updated with the detector geometry.
+
+Each detector directory contains two kinds of gcard:
+
+- `<detector>_text_<variation>.gcard` loads an ASCII database for a particular variation.
+- `<detector>_sqlite.gcard` loads the run-dependent geometry from `clas12.sqlite`.
+
+These focused gcards load only their detector, not the other CLAS12 systems.
 
 <br/>
 
-> [!NOTE]
-> - Make sure that the clas12-config version is production for a tagged release,
-	> or dev for the latest development version.
-> - For **gemc/dev**, you will need to use the subdir `clas12-config/dev/gemc/dev`
+## Running at Jefferson Lab
 
+Add the `bin` directory of either a tagged production installation or the `dev` installation to `PATH`. No GEMC
+module is required. The matching CLAS12-config path must also be used:
+
+- use the production CLAS12-config tree with a tagged GEMC release
+- use `clas12-config/dev/gemc/dev` with the GEMC `dev` installation
+
+<br/>
+
+## Documentation
+
+Useful resources:
+
+- [GEMC documentation][gemc-documentation]
+- [CLAS12 simulation forum][simulation-forum]
+- [CLAS12-config steering cards][clas12-config]
+- [CLAS12 Software Center][clas12-software-center]
+- [CCDB Viewer][ccdb-viewer]
+- [GEMC3 migration and documentation][gemc3-home]
+- [CLAS12 systems for GEMC3][clas12-systems]
+- [GEMC roadmap][roadmap]
 
 <br/>
 
 ## Container images
 
-Images are published to the **GitHub Container Registry** after every successful push to `main`:
+Images are published to the GitHub Container Registry after every successful push to `main`:
 
 ```text
 ghcr.io/gemc/clas12tags:<gemc-tag>-<os>-<os-version>[-<arch>]
 ```
 
-Available tags (current Geant4 version `11.4.1`, gemc tag `dev`):
+The current development matrix uses Geant4 11.4.2 and the following image tags:
 
 | Image | Tag example |
 | --- | --- |
@@ -329,28 +275,28 @@ Available tags (current Geant4 version `11.4.1`, gemc tag `dev`):
 | Debian 13 | `ghcr.io/gemc/clas12tags:dev-debian-13` |
 | Arch Linux | `ghcr.io/gemc/clas12tags:dev-archlinux-latest` |
 
-Multi-arch manifests (`amd64` + `arm64`) are assembled automatically; append `-amd64` or `-arm64`
-to pull a specific architecture.
+Multi-architecture manifests combine `amd64` and `arm64`, except for Arch Linux, which is `amd64` only. Append
+`-amd64` or `-arm64` to select an architecture-specific image.
 
-To start an interactive shell:
+Start an interactive shell:
 
 ```shell
 docker run -it --rm ghcr.io/gemc/clas12tags:dev-almalinux-9.4 bash
 ```
 
-On Apple Silicon add `--platform linux/amd64` if you need the x86-64 variant:
+On Apple Silicon, request the x86-64 variant when needed:
 
 ```shell
 docker run -it --rm --platform linux/amd64 ghcr.io/gemc/clas12tags:dev-almalinux-9.4 bash
 ```
 
-Mount a local directory for input/output with `-v`:
+Mount a local input/output directory:
 
 ```shell
 docker run -it --rm -v ~/mywork:/root/mywork ghcr.io/gemc/clas12tags:dev-almalinux-9.4 bash
 ```
 
-The base Geant4 images used to build these containers come from:
+The containers are built from:
 
 ```text
 ghcr.io/gemc/g4install:<geant4-tag>-<os>-<os-version>
@@ -358,90 +304,103 @@ ghcr.io/gemc/g4install:<geant4-tag>-<os>-<os-version>
 
 ### Pull request preview images
 
-Every pull request also gets its **own ready-to-run container image**, published by the
-[`pr-docker-image`](.github/workflows/pr-docker-image.yml) workflow as soon as the PR is opened and on each
-new push to it. The image is built for `amd64` on the latest AlmaLinux base (currently AlmaLinux 10) and is
-tagged with the PR number:
+The [`pr-docker-image`](.github/workflows/pr-docker-image.yml) workflow publishes an `amd64` AlmaLinux 10
+image for each pull request and refreshes it after every push:
 
 ```text
 ghcr.io/gemc/clas12tags:dev-almalinux-10-pr-<number>
 ```
 
-For example, PR #123 publishes `ghcr.io/gemc/clas12tags:dev-almalinux-10-pr-123`, which anyone can pull and
-run exactly like the released images:
+For example:
 
 ```shell
 docker run -it --rm ghcr.io/gemc/clas12tags:dev-almalinux-10-pr-123 bash
 ```
 
-Why this is useful:
-
-- **Ready for additional testing by the PR submitter** — the exact code in the branch is compiled and
-  installed in a clean container, so authors and reviewers can validate behavior without building anything
-  locally.
-- **Reproducible review** — reviewers, detector experts, and CI all exercise the *same* artifact, removing
-  "works on my machine" ambiguity.
-- **No local toolchain required** — testing only needs Docker, not a full Geant4/gemc build environment.
-- **Fast and isolated** — a single image (one OS, `amd64`) keeps the build quick, and each PR's image is
-  independent of the others and of the released `main` tags.
-- **Self-cleaning** — when the PR is closed or merged, the workflow automatically deletes the
-  `…-pr-<number>` image from the registry, so stale preview tags do not accumulate.
+The preview gives authors, reviewers, and CI the same isolated build without requiring a local Geant4 toolchain.
+The workflow removes the image when the pull request is closed or merged.
 
 <br/>
 
-# Portal to off-site farms CLAS12 Simulations
+## Off-site simulations
 
-CLAS12 GEMC simulations can be run on the Open Science Grid (OSG) using the
-<a href="https://gemc.jlab.org/web_interface/index.php"> CLAS12 Simulation Submission Portal</a>.
-
-
-<br/>
-
-# Profiling
-
-## Time per track
-
-The profile table below is obtained by a [metrics action](https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml)
-that runs gemc nightly with the RGA Spring 2018 configuration, with a mix of 1, 2, 3, 5, 10, 15, 20 tracks,
-and by using clasdis.
-
-The events come from a picking single tracks from a the following clas12 mcgen generators: clasdis, dvcsgen, las12-elspectro, gibuu, genKandOnePione, onepigen, twopeg.
-
-The clasdis files are:
-
-- clasdis_all : generated with no options
-- clasdis_acc: generated with --t 15 35 option (electron theta between 15 and 35)
-
-![Track Profiling](ci/tracks_profile.png?raw=true "Time per track for various configurations")
-
-
+CLAS12 GEMC simulations can run on the Open Science Grid through the
+[CLAS12 Simulation Submission Portal][simulation-portal].
 
 <br/>
 
-# Utilities
+## Release and CI workflow
 
-### Changing a material
+Merges to `main` run the validation workflows and produce artifacts containing the executable and geometry
+databases. A periodic job installs successful builds at Jefferson Lab:
 
-The option `SWITCH_MATERIALTO` can be used to change a material of a volume
-For example, to change the `G4_lH2` to vacuum:
+- `/scigroup/cvmfs` on the ifarm is normally updated 2–8 hours after a merge passes CI and the merge queue.
+- `/cvmfs/oasis.opensciencegrid.org` is normally updated another 4–8 hours after the Jefferson Lab
+  installation, when CVMFS synchronization runs.
 
-```
+CI also refreshes the GitHub `dev` prerelease nightly.
+
+Pull requests are reviewed and enter the merge queue after the required checks pass. The current build matrix
+covers Ubuntu, Fedora, AlmaLinux, Debian, and Arch Linux on supported `amd64` and `arm64` runners. Validation
+also includes Coatjava geometry generation, local gcards, CLAS12-config gcards, track comparisons, and geometry
+consistency checks.
+
+### Pull request checks
+
+- **Test** builds the supported Linux matrix.
+- **CodeQL Advanced** performs static analysis of C/C++, Python, and GitHub Actions.
+- **CLAS12-config GCards Tests** runs the CLAS12-config development gcards.
+- **Local GCards Tests** runs the repository's geometry-source gcards.
+- **Tracks Validation** performs particle-tracking validation.
+
+### Scheduled checks
+
+- **Deploy** publishes container images after successful tests.
+- **Nightly Dev Release** packages and publishes the `dev` release artifact.
+- **Valgrind Profile** performs memory and performance profiling.
+- **ASCII vs SQLite** checks geometry consistency between database representations.
+- **CLAS12-config Dev/Main Comparison** detects geometry regressions between branches.
+- **Ntracks Metrics** benchmarks time per track across generator configurations.
+
+<br/>
+
+## Profiling
+
+The [nightly metrics workflow][workflow-metrics] runs the RGA Spring 2018 configuration with 1, 2, 3, 5, 10, 15,
+and 20 tracks per event. Events are sampled from the CLAS12 Monte Carlo generators `clasdis`, `dvcsgen`,
+`clas12-elspectro`, `gibuu`, `genKandOnePione`, `onepigen`, and `twopeg`.
+
+The two CLASDIS samples are:
+
+- `clasdis_all`, generated without additional options
+- `clasdis_acc`, generated with `--t 15 35` to restrict the electron polar angle to 15–35 degrees
+
+![Time per track for various configurations](ci/tracks_profile.png?raw=true)
+
+<br/>
+
+## Utilities
+
+### Change a material
+
+`SWITCH_MATERIALTO` replaces a material everywhere. For example, replace liquid hydrogen with vacuum:
+
+```xml
 <option name="SWITCH_MATERIALTO" value="G4_lH2, G4_Galactic"/>
 ```
 
-The option `CHANGEVOLUMEMATERIALTO` can be used to change the material of a volume.
-For example, to change the target cell `lh2` material from LH2 to a vacuum:
+`CHANGEVOLUMEMATERIALTO` changes one named volume. For example, change the `lh2` target cell to vacuum:
 
-```
+```xml
 <option name="CHANGEVOLUMEMATERIALTO" value="lh2, G4_Galactic"/>
 ```
 
-### Removing a detector or a volume
+### Remove a detector or volume
 
-You can remove/comment out the ```<detector>``` tag in the gcard to remove a whole system.
-To remove individual elements, use the existance tag in the gcard. For example, to remove the forward micromegas:
+Remove or comment out a `<detector>` element to remove an entire system. To disable one volume and its
+daughters, set its existence flag. For example, disable the forward micromegas:
 
-```
+```xml
 <detector name="FMT">
     <existence exist="no" />
 </detector>
@@ -449,46 +408,19 @@ To remove individual elements, use the existance tag in the gcard. For example, 
 
 <br/>
 
-## Citations
+## Citation
 
-Please make sure to cite the following paper if you use GEMC:
+If you use GEMC in scientific work, cite:
 
-- [Nucl. Instrum. Meth. A, Volume 959, 163422 (2020)](https://inspirehep.net/literature/1780020)
-- [EPJ Web of Conf. Volume 295, 05505 (2024)](https://www.epj-conferences.org/articles/epjconf/abs/2024/05/epjconf_chep2024_05005/epjconf_chep2024_05005.html)
+- [*Nuclear Instruments and Methods in Physics Research Section A* 959, 163422 (2020)][nim-paper]
+- [*EPJ Web of Conferences* 295, 05005 (2024)][epj-paper]
 
 <br/>
 
 ## Author
 
-Maurizio Ungaro
-
-<a href="https://scholar.google.com/citations?user=zkWYILYAAAAJ&amp;hl=en" target="_blank"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/gscholar.png"> </a>
-<a href="https://github.com/maureeungaro" target="_blank"><a href="mailto:ungaro@jlab.org"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/github.png"> </a>
-<a href="https://inspirehep.net/authors/1322331" target="_blank"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/inspire.png"> </a>
-<a href="mailto:ungaro@jlab.org"><img class="zoomIcon" src="https://maureeungaro.github.io/home/assets/images/home/email.png"> </a>
-
-
-<br/>
-<br/>
-
-<hr>
-
-<br/>
-<br/>
-
-# CI
-
-[![Test][badge-test]][workflow-test]
-[![Deploy][badge-deploy]][workflow-deploy]
-[![CodeQL Advanced][badge-codeql]][workflow-codeql]
-[![Clas12-Config GCards Tests][badge-gcards]][workflow-gcards]
-[![Local GCards Tests][badge-local-gcards]][workflow-local-gcards]
-[![Tracks Validation][badge-tracks]][workflow-tracks]
-[![Ntracks Metrics][badge-metrics]][workflow-metrics]
-[![Nightly Dev Release][badge-dev-release]][workflow-dev-release]
-[![Valgrind Profile][badge-valgrind]][workflow-valgrind]
-[![ASCII vs SQLite][badge-ascii-sqlite]][workflow-ascii-sqlite]
-[![Clas12-Config Dev/Main Comparison][badge-dev-main]][workflow-dev-main]
+Maurizio Ungaro — [Google Scholar][author-scholar], [GitHub][author-github], [INSPIRE][author-inspire],
+[ungaro@jlab.org](mailto:ungaro@jlab.org)
 
 [badge-test]: https://github.com/gemc/clas12Tags/actions/workflows/test.yml/badge.svg
 [badge-deploy]: https://github.com/gemc/clas12Tags/actions/workflows/deploy.yml/badge.svg
@@ -497,10 +429,10 @@ Maurizio Ungaro
 [badge-local-gcards]: https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml/badge.svg
 [badge-tracks]: https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml/badge.svg
 [badge-metrics]: https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml/badge.svg
-[badge-dev-release]: https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg
 [badge-valgrind]: https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml/badge.svg
 [badge-ascii-sqlite]: https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml/badge.svg
-[badge-dev-main]: https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml/badge.svg
+[bdm]: https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml/badge.svg
+[badge-dev-release]: https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml/badge.svg
 
 [workflow-test]: https://github.com/gemc/clas12Tags/actions/workflows/test.yml
 [workflow-deploy]: https://github.com/gemc/clas12Tags/actions/workflows/deploy.yml
@@ -509,24 +441,23 @@ Maurizio Ungaro
 [workflow-local-gcards]: https://github.com/gemc/clas12Tags/actions/workflows/local_gcards.yml
 [workflow-tracks]: https://github.com/gemc/clas12Tags/actions/workflows/tracks_validation.yml
 [workflow-metrics]: https://github.com/gemc/clas12Tags/actions/workflows/ntracs_metrics.yml
-[workflow-dev-release]: https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml
 [workflow-valgrind]: https://github.com/gemc/clas12Tags/actions/workflows/valgrind_profile.yml
+[workflow-dev-release]: https://github.com/gemc/clas12Tags/actions/workflows/dev_release.yml
 [workflow-ascii-sqlite]: https://github.com/gemc/clas12Tags/actions/workflows/ascii_sqlite_comparison.yml
 [workflow-dev-main]: https://github.com/gemc/clas12Tags/actions/workflows/clas12_config_dev_main_comparison.yml
 
-### On pull requests
-
-- **Test** — build across Ubuntu, Fedora, AlmaLinux, Debian, Arch Linux (amd64 + arm64)
-- **CodeQL Advanced** — static analysis (C/C++, Python, Actions)
-- **Clas12-Config GCards Tests** — run gemc on all gcards in the clas12-config dev branch
-- **Local GCards Tests** — run `meson test` on all geometry-source gcards in this repository
-- **Tracks Validation** — physics validation with particle tracking
-
-### Nightly
-
-- **Deploy** — build and push container images to `ghcr.io/gemc/clas12tags` after tests pass
-- **Nightly Dev Release** — package and publish the `dev` release artifact
-- **Valgrind Profile** — memory and performance profiling
-- **ASCII vs SQLite** — geometry consistency check between text and database representations
-- **Clas12-Config Dev/Main Comparison** — detect geometry regressions between branches
-- **Ntracks Metrics** — time-per-track benchmarks across generator configurations
+[g4install]: https://github.com/gemc/g4install
+[gemc-documentation]: https://gemc.jlab.org/gemc/html/index.html
+[simulation-forum]: https://clas12.discourse.group/c/simulation/9
+[clas12-config]: https://github.com/JeffersonLab/clas12-config
+[clas12-software-center]: https://clasweb.jlab.org/wiki/index.php/CLAS12_Software_Center#tab=Communications
+[ccdb-viewer]: https://clasweb.jlab.org/cgi-bin/ccdb/objects
+[gemc3-home]: https://gemc.github.io/home/
+[clas12-systems]: https://github.com/gemc/clas12-systems
+[roadmap]: https://github.com/orgs/gemc/projects/1/views/4
+[simulation-portal]: https://gemc.jlab.org/web_interface/index.php
+[nim-paper]: https://inspirehep.net/literature/1780020
+[epj-paper]: https://doi.org/10.1051/epjconf/202429505005
+[author-scholar]: https://scholar.google.com/citations?user=zkWYILYAAAAJ&hl=en
+[author-github]: https://github.com/maureeungaro
+[author-inspire]: https://inspirehep.net/authors/1322331

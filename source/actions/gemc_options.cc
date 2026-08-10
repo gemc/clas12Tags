@@ -982,8 +982,8 @@ void goptions::setGoptions()
 	optMap["HALL_FIELD"].type = 1;
 	optMap["HALL_FIELD"].ctgr = "fields";
 
-	optMap["FIELD_DIR"].args = "env";
-	optMap["FIELD_DIR"].help = "Magnetic Field Maps Location. \n";
+	optMap["FIELD_DIR"].args = "default";
+	optMap["FIELD_DIR"].help = "Magnetic field maps location. Defaults to ../fields relative to gemc. \n";
 	optMap["FIELD_DIR"].name = "Magnetic Field Maps Location";
 	optMap["FIELD_DIR"].type = 1;
 	optMap["FIELD_DIR"].ctgr = "fields";

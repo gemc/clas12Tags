@@ -1,5 +1,6 @@
 // gemc headers
 #include "gemcOptions.h"
+#include "gemcUtils.h"
 #include "string_utilities.h"
 
 // C++ headers
@@ -138,21 +139,11 @@ void goptions::scanGcard(string file)
 
 void goptions::print_version() {
     cout << "  > gemc version: " << VERSION << endl << endl;
-    cout << "  > Environment:" << endl << endl;
+    cout << "  > Runtime paths and environment:" << endl << endl;
 
-    // print the env variables FIELD_DIR and GEMC_DATA_DIR
-    char *field_dir = getenv("FIELD_DIR");
-    if(field_dir) {
-        cout << "  > FIELD_DIR: " << field_dir << endl;
-    } else {
-        cout << "  > FIELD_DIR: not set" << endl;
-    }
-    char *gemc_data_dir = getenv("GEMC_DATA_DIR");
-    if(gemc_data_dir) {
-        cout << "  > GEMC_DATA_DIR: " << gemc_data_dir << endl;
-    } else {
-        cout << "  > GEMC_DATA_DIR: not set" << endl;
-    }
+    cout << "  > Executable: " << gemcExecutablePath() << endl;
+    cout << "  > Data directory: " << gemcDataDir() << endl;
+    cout << "  > Fields directory: " << gemcFieldsDir() << endl;
     char *g4_version = getenv("G4_VERSION");
     if(g4_version) {
         cout << "  > G4_VERSION: " << g4_version << endl;

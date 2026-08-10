@@ -45,22 +45,8 @@ map<string, G4Material *> text_materials::initMaterials(runConditions rc, goptio
 
         ifstream IN(filename.c_str());
         if (!IN) {
-            // if file is not found, maybe it's in the GEMC_DATA_DIR directory
-            if (getenv("GEMC_DATA_DIR") != nullptr) {
-
-                string maybeHere = (string) getenv("GEMC_DATA_DIR") + "/" + filename;
-
-                IN.open(maybeHere.c_str());
-                if (!IN) {
-                    if (verbosity > 1)
-                        cout << hd_msg << "Warning: The system >" << dname
-                             << "< does not have a material file associated with it. "
-                             << "Probably it's using default Geant4 parameters." << endl;
-                    continue;
-                }
-            }
-
-
+            string maybeHere = gemcDataDir() + "/" + filename;
+            IN.open(maybeHere.c_str());
             if (!IN) {
                 if (verbosity > 1)
                     cout << hd_msg << "Warning: The system >" << dname

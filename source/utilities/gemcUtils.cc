@@ -19,7 +19,119 @@ using namespace gstring;
 
 // C++ headers
 #include <algorithm>
+#include <filesystem>
 #include "dirent.h"
+
+#if defined(__APPLE__)
+#include <mach-o/dyld.h>
+#elif defined(__linux__)
+#include <unistd.h>
+#endif
+
+namespace fs = std::filesystem;
+
+namespace {
+
+fs::path executablePathFromSystem() {
+#if defined(__APPLE__)
+    uint32_t pathSize = 0;
+    _NSGetExecutablePath(nullptr, &pathSize);
+    vector<char> path(pathSize);
+    if (_NSGetExecutablePath(path.data(), &pathSize) == 0) {
+        return path.data();
+    }
+#elif defined(__linux__)
+    vector<char> path(1024);
+    while (true) {
+        const ssize_t length = readlink("/proc/self/exe", path.data(), path.size());
+        if (length < 0) {
+            break;
+        }
+        if (static_cast<size_t>(length) < path.size()) {
+            return string(path.data(), static_cast<size_t>(length));
+        }
+        path.resize(path.size() * 2);
+    }
+#endif
+    return {};
+}
+
+fs::path executablePathFromArgv(const string &argv0) {
+    const fs::path command(argv0);
+    fs::path candidate = command;
+    if (candidate.is_absolute() || candidate.has_parent_path()) {
+        return fs::absolute(candidate);
+    }
+
+    const char *pathEnvironment = getenv("PATH");
+    if (pathEnvironment != nullptr) {
+        stringstream pathEntries(pathEnvironment);
+        string entry;
+        while (getline(pathEntries, entry, ':')) {
+            candidate = fs::path(entry.empty() ? "." : entry) / argv0;
+            if (fs::is_regular_file(candidate)) {
+                return fs::absolute(candidate);
+            }
+        }
+    }
+
+    return fs::absolute(command);
+}
+
+fs::path canonicalPath(const fs::path &path) {
+    error_code error;
+    fs::path canonical = fs::canonical(path, error);
+    return error ? fs::weakly_canonical(path) : canonical;
+}
+
+fs::path runningExecutable;
+fs::path dataRoot;
+
+}
+
+void initializeGemcPaths(const string &argv0) {
+    fs::path executable = executablePathFromSystem();
+    if (executable.empty()) {
+        executable = executablePathFromArgv(argv0);
+    }
+    runningExecutable = canonicalPath(executable);
+
+    const fs::path executableDirectory = runningExecutable.parent_path();
+    const vector<fs::path> candidates = {
+        executableDirectory.parent_path(),
+        executableDirectory.parent_path().parent_path(),
+    };
+    for (const fs::path &candidate: candidates) {
+        if (fs::is_directory(candidate / "experiments")) {
+            dataRoot = canonicalPath(candidate);
+            return;
+        }
+    }
+
+    // Preserve the installed-layout convention even when the installation is incomplete.
+    dataRoot = canonicalPath(executableDirectory.parent_path());
+}
+
+string gemcExecutablePath() {
+    return runningExecutable.string();
+}
+
+string gemcDataDir() {
+    return dataRoot.string();
+}
+
+string gemcFieldsDir() {
+    return (dataRoot / "fields").string();
+}
+
+string gemcFieldsDir(const goptions &opts) {
+    const auto fieldDirectory = opts.optMap.find("FIELD_DIR");
+    if (fieldDirectory != opts.optMap.end() && fieldDirectory->second.args != "default"
+        && fieldDirectory->second.args != "env") {
+        return fieldDirectory->second.args;
+    }
+    return gemcFieldsDir();
+}
 
 gui_splash::gui_splash(goptions opts) {
     qt = (bool) opts.optMap["USE_GUI"].arg;
@@ -252,18 +364,12 @@ QSqlDatabase openGdb(goptions gemcOpt) {
     string database = gemcOpt.optMap["DATABASE"].args;
     string dbPath = database;
     if (!QFile::exists(QString::fromStdString(dbPath))) {
-        // Try $GEMC_DATA_DIR
-        const char* gemcEnv = getenv("GEMC_DATA_DIR");
-        if (gemcEnv != nullptr) {
-            string altPath = string(gemcEnv) + "/" + database;
-            if (QFile::exists(QString::fromStdString(altPath))) {
-                dbPath = altPath;
-            } else {
-                cerr << "   Error! Database file not found: " << database << " or " << altPath << ". Exiting." << endl;
-                exit(404);
-            }
+        string altPath = gemcDataDir() + "/" + database;
+        if (QFile::exists(QString::fromStdString(altPath))) {
+            dbPath = altPath;
         } else {
-            cerr << "   Error! Database file not found and $GEMC_DATA_DIR is not set. Exiting." << endl;
+            cerr << "   Error! Database file not found: " << database << " or " << altPath << ". Exiting."
+                 << endl;
             exit(404);
         }
     }

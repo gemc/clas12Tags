@@ -32,18 +32,9 @@ map<string, fieldFactoryInMap> registerFieldFactories()
 map<string, gfield> loadAllFields(map<string, fieldFactoryInMap> fieldFactoryMap, goptions opts)
 {
 	double verbosity = opts.optMap["FIELD_VERBOSITY"].arg ;
-	// get list of files in directories in:
-	//
-	// - GEMC_DATA_DIR environment variable if exists
-	// - FIELD_DIR gemc option if set other than "env", otherwise FIELD_DIR environment variable if exists
+	// Get the list of files from the executable-relative field directory or the FIELD_DIR option.
 	map<string, string> filesMap;
-
-	if(getenv("GEMC_DATA_DIR") != nullptr) mergeMaps(filesMap, getFilesInDirectory((string) getenv("GEMC_DATA_DIR") ));
-	if(opts.optMap["FIELD_DIR"].args != "env") {
-		mergeMaps(filesMap, getFilesInDirectory(opts.optMap["FIELD_DIR"].args));
-	} else {
-		if(getenv("FIELD_DIR") != nullptr) mergeMaps(filesMap, getFilesInDirectory((string) getenv("FIELD_DIR") ));
-	}
+	mergeMaps(filesMap, getFilesInDirectory(gemcFieldsDir(opts)));
 
 	// checking eligibility of each file
 	// if eligible, load field definitions
@@ -81,4 +72,3 @@ map<string, gfield> loadAllFields(map<string, fieldFactoryInMap> fieldFactoryMap
 	
 	return gfields;
 }
-

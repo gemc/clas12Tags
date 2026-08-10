@@ -1,13 +1,14 @@
 #!/bin/zsh
 
-# if the environment variables EVIO and EVIO_VERSION are not set, exit
-if [[ -z "$FIELD_DIR" ]]; then
-	echo "$red > FIELD_DIR environment variables is not set. Load it with module load gemc. Exiting.$reset"
+# Locate the field directory next to the active GEMC installation.
+gemc_path=${commands[gemc]}
+if [[ -z "$gemc_path" ]]; then
+	echo "$red > gemc is not in PATH. Load it with module load gemc. Exiting.$reset"
 	exit 1
 fi
 
-mkdir -p $FIELD_DIR
-base_dir="$FIELD_DIR"
+base_dir="${gemc_path:A:h:h}/fields"
+mkdir -p "$base_dir"
 
 # fieds used for data:
 # https://github.com/JeffersonLab/clas12-offline-software/blob/development/etc/services/data.yaml
@@ -36,4 +37,3 @@ done
 
 echo " > Fields are installed."
 echo
-
