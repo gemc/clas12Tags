@@ -28,7 +28,7 @@
 /// \author \n &copy; Maurizio Ungaro
 /// \author e-mail: ungaro@jlab.org\n\n\n
 
-const char *GEMC_VERSION = "gemc 6.0" ;
+const char *GEMC_VERSION = "gemc 6.2" ;
 
 // G4 headers
 #include "G4RunManager.hh"
@@ -310,7 +310,13 @@ int main(int argc, char **argv) {
     for (unsigned int i = 0; i < init_commands.size(); i++) {
         UImanager->ApplyCommand(init_commands[i].c_str());
     }
-    string exec_macro = "/control/execute " + gemcOpt.optMap["EXEC_MACRO"].args;
+    vector <string> exec_macros;
+    vector <aopt> exec_macro_options = gemcOpt.getArgs("EXEC_MACRO");
+    for (const auto &exec_macro_option : exec_macro_options) {
+        if (exec_macro_option.args != "no") {
+            exec_macros.push_back("/control/execute " + exec_macro_option.args);
+        }
+    }
 
     clock_t start_events;
 
@@ -344,7 +350,7 @@ int main(int argc, char **argv) {
             UImanager->ApplyCommand(init_vcommands[i].c_str());
         }
 
-        if (exec_macro != "/control/execute no") {
+        for (const auto &exec_macro : exec_macros) {
             UImanager->ApplyCommand(exec_macro.c_str());
         }
 
@@ -368,7 +374,9 @@ int main(int argc, char **argv) {
         delete visManager;
         if (session != nullptr) delete session;
     } else {
-        if (exec_macro != "/control/execute no") UImanager->ApplyCommand(exec_macro.c_str());
+        for (const auto &exec_macro : exec_macros) {
+            UImanager->ApplyCommand(exec_macro.c_str());
+        }
         start_events = clock();
         if (nEventsToProcess > 0) {
             start_events = clock();
