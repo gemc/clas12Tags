@@ -1,0 +1,5 @@
+# The upstream ccdb source file this patch targets (MySQLDataProvider.cc, v1.99.7) ships with CRLF
+# line endings. GNU patch on Linux CI refuses to apply a patch whose line endings differ from the
+# target ("Hunk FAILED ... different line endings"), so the patch must stay CRLF to match. Marking
+# it -text (binary) keeps git from ever renormalizing it to LF on checkout or re-add.
+ccdb_ssl_no_enforce.patch -text
