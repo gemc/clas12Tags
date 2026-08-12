@@ -27,7 +27,7 @@ fi
 # CLAS12
 all_dets="alert band beamline bst cnd ctof dc ddvcs ec fluxDets ft"
 all_dets+=" ftof ftofShield htcc ltcc magnets micromegas pcal rich"
-all_dets+=" rtpc targets murt upstream"
+all_dets+=" rtpc targets murt mucal upstream"
 
 function printHelp() {
     cat <<EOF
