@@ -1,3 +1,8 @@
+// G4 headers
+#include "G4Poisson.hh"
+#include "Randomize.hh"
+
+
 #include <math.h>
 #include <random>
 
@@ -13,6 +18,7 @@ using namespace ccdb;
 #include "ahdc_hitprocess.h"
 
 // CLHEP units
+#include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
 // V. Sergeyeva, started on 29 May 2020
@@ -21,7 +27,6 @@ using namespace CLHEP;
 // this method is for connection to calibration database and extraction of calibration parameters
 static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no") {
 	ahdcConstants ahdcc;
-	
 	// do not initialize at the beginning, only after the end of the first event,
 	// with the proper run number coming from options or run table
 	if (runno == -1) return ahdcc;
@@ -57,35 +62,20 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 	data.clear();
 
 	// read the time2distance table
-	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_to_distance:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
+	snprintf(ahdcc.database, sizeof(ahdcc.database), "/calibration/alert/ahdc/time_to_distance_wire:%d:%s%s", ahdcc.runNo, digiVariation.c_str(), timestamp.c_str());
 	calib->GetCalib(data, ahdcc.database);
 	for(unsigned row = 0; row < data.size(); row++) {
-		//int sector = data[row][0];
-		//int layer  = data[row][1];
-		//int component  = data[row][2]; // wire id
-		ahdcc.T2D[0] = data[row][3];	
-		ahdcc.T2D[1] = data[row][4];	
-		ahdcc.T2D[2] = data[row][5];	
-		ahdcc.T2D[3] = data[row][6];	
-		ahdcc.T2D[4] = data[row][7];	
-		ahdcc.T2D[5] = data[row][8];
-		std::cout << "p0 : " << ahdcc.T2D[0] << std::endl;
-		std::cout << "p1 : " << ahdcc.T2D[1] << std::endl;
-		std::cout << "p2 : " << ahdcc.T2D[2] << std::endl;
-		std::cout << "p3 : " << ahdcc.T2D[3] << std::endl;
-		std::cout << "p4 : " << ahdcc.T2D[4] << std::endl;
-		std::cout << "p5 : " << ahdcc.T2D[5] << std::endl;
-		// for now we only have one row this table
-		// I add this condition in case the t2d table grows to act channel by channel
-		// If this happens, I will need to change the structure of the T2D
-		if (row > 1) break;
+		int sector = data[row][0];
+		int layer  = data[row][1];
+		int component  = data[row][2]; // wire id
+		for(int i = 0; i < 10; i++){
+			ahdcc.T2D[i][ahdcConstants::getUniqueId(sector, layer, component)] = data[row][i+3];
+		}
 	}
 	data.clear();
-	// inverse the time2distance
-	for (int i = 0; i < 50; i++) {
-		ahdcc.xi[i] = i*(350.0/50);
-		ahdcc.yi[i] = ahdcc.eval_t2d(ahdcc.xi[i]);
-	}
+	//after constants are loaded for T2D, we need the inverse function
+	ahdcc.initializeInverseT2D();
+	cout << "done initializing inverse T2D tables" << endl;
 	
 	return ahdcc;
 }
@@ -164,7 +154,7 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 
 
 
-vector<identifier> ahdc_HitProcess::processID(vector<identifier> id, [[ maybe_unused ]] G4Step* aStep,  [[ maybe_unused ]] detector Detector) {
+vector<identifier> ahdc_HitProcess::processID(vector<identifier> id, G4Step* aStep, detector Detector) {
 
 	id[id.size()-1].id_sharing = 1;
 	return id;
@@ -188,7 +178,7 @@ vector<MHit*> ahdc_HitProcess::electronicNoise() {
 	return noiseHits;
 }
 
-map< string, vector <int> > ahdc_HitProcess::multiDgt( [[ maybe_unused ]] MHit* aHit,  [[ maybe_unused ]] int hitn) {
+map< string, vector <int> > ahdc_HitProcess::multiDgt(MHit* aHit, int hitn) {
 	map< string, vector <int> > MH;
 	
 	return MH;
@@ -197,7 +187,7 @@ map< string, vector <int> > ahdc_HitProcess::multiDgt( [[ maybe_unused ]] MHit* 
 // - charge: returns charge/time digitized information / step
 // this method is implemented in ftof, but information from this bank is not translated into the root format right now (29/05/2020)
 // the output is only visible in .txt output of gemc simulation + <option name="SIGNALVT" value="ftof"/> into gcard
-map< int, vector <double> > ahdc_HitProcess::chargeTime( [[ maybe_unused ]] MHit* aHit,  [[ maybe_unused ]] int hitn) {
+map< int, vector <double> > ahdc_HitProcess::chargeTime(MHit* aHit, int hitn) {
 	map< int, vector <double> >  CT;
 	
 	return CT;
@@ -207,7 +197,7 @@ map< int, vector <double> > ahdc_HitProcess::chargeTime( [[ maybe_unused ]] MHit
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
 
-double ahdc_HitProcess::voltage( [[ maybe_unused ]] double charge,  [[ maybe_unused ]] double time,  [[ maybe_unused ]] double forTime) {
+double ahdc_HitProcess::voltage(double charge, double time, double forTime) {
 	return 0.0;
 }
 
@@ -232,8 +222,15 @@ ahdcConstants ahdc_HitProcess::ahdcc = initializeAHDCConstants(-1);
 // -------------
 
 void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
+	vector<identifier> identity = aHit->GetId();
+	int sector    = 1;
+	int layer     = 10 * identity[0].id + identity[1].id ; // 10*superlayer + layer
+	int component = identity[2].id;
+	int wireid = ahdcConstants::getUniqueId(sector, layer, component);
+
+
 	vector<G4ThreeVector> Lpos        = aHit->GetLPos();
-	nsteps = Lpos.size();
+	int nsteps = Lpos.size();
 	double LposX, LposY, LposZ;
 	
 	// ALERT geometry
@@ -291,11 +288,11 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 	L_ab = sqrt(pow(X_sigwire_top-X_sigwire_bot,2) + pow(Y_sigwire_top-Y_sigwire_bot,2) + pow(Z_sigwire_top-Z_sigwire_bot,2));
 	doca = 1e10; // arbitray big number
 	docaTime = -99; // arbitrary negative value
-	for (int hs=0;hs<nsteps;hs++) {
+	for (int s=0;s<nsteps;s++) {
 		// Load current hit positions
-		LposX = Lpos[hs].x();
-		LposY = Lpos[hs].y();
-		LposZ = Lpos[hs].z();
+		LposX = Lpos[s].x();
+		LposY = Lpos[s].y();
+		LposZ = Lpos[s].z();
 		// Compute distance
 		L_ah = sqrt(pow(X_sigwire_top-LposX,2) + pow(Y_sigwire_top-LposY,2) + pow(Z_sigwire_top-LposZ,2));
 		L_bh = sqrt(pow(X_sigwire_bot-LposX,2) + pow(Y_sigwire_bot-LposY,2) + pow(Z_sigwire_bot-LposZ,2));
@@ -310,7 +307,7 @@ void ahdcSignal::ComputeDocaAndTime(MHit * aHit){
 		//double new_H_abh = docadist(dseed);
 		//std::cout << "H_abh : " << H_abh << ", docasig : " << docasig << " ";
 		// Compute time
-		double driftTime = ahdcc_ptr->eval_inv_t2d(H_abh);
+		double driftTime = ahdcc_ptr->eval_inv_t2d(wireid, H_abh);
 		DriftTime.push_back(driftTime);
 		if (H_abh < doca) { 
 			doca = H_abh;
@@ -352,10 +349,10 @@ double ahdcSignal::GetDocaValue() {
 double ahdcSignal::GetMeanTimeValue(){
 	if (nsteps == 0){ return 0; }
 	double mctime = 0;
-	Etot = 0;
-	for (int hs=0;hs<nsteps;hs++){
-		mctime += DriftTime.at(hs)*Edep.at(hs);
-		Etot += Edep.at(hs);
+	double Etot = 0;
+	for (int s=0;s<nsteps;s++){
+		mctime += DriftTime.at(s)*Edep.at(s);
+		Etot += Edep.at(s);
 	}
 	mctime = mctime/Etot;
 	return mctime;
