@@ -130,6 +130,9 @@ my @penergyQ = ( "1.9074494*eV",  "1.9372533*eV",  "1.9680033*eV",  "1.9997453*e
 "4.9593684*eV",  "5.1660088*eV",  "5.3906179*eV",  "5.6356459*eV",  "5.9040100*eV",
 "6.1992105*eV",  "6.5254848*eV",  "6.8880107*eV",  "7.2931878*eV" );
 
+# Once a photon enters the PMT window, treat it as detected and absorb it within the glass.
+my @abslengthLTCCpmt = ("1.0*cm") x scalar(@penergyQ);
+
 # Index of refraction of HTCC PMT quartz window:
 # Note that this is not the refraction info for p-terphenyl, but this is a small
 # effect anyway, and as noted below, already included in the PMT Q.E.
@@ -218,6 +221,7 @@ sub materials
 	$mat{"photonEnergy"} = arrayToString(@penergyQ);
 	$mat{"efficiency"}   = arrayToString(@qeLTCCpmt);
 	$mat{"indexOfRefraction"} = arrayToString(@rindexLTCCpmt);
+	$mat{"absorptionLength"} = arrayToString(@abslengthLTCCpmt);
 	print_mat(\%configuration, \%mat);
 
 	$mat{"name"}          = "ltcc_WC_material";
@@ -225,6 +229,8 @@ sub materials
 	$mat{"density"}       = "8.75";
 	$mat{"ncomponents"}   = "3";
 	$mat{"components"}    = "G4_Ni 0.85 G4_Mo 0.04 G4_Fe 0.11";
+	# Do not carry the quartz-glass absorption length into the Winston-cone alloy.
+	$mat{"absorptionLength"} = "none";
 	print_mat(\%configuration, \%mat);
 
 	%mat = init_mat();
@@ -238,4 +244,3 @@ sub materials
 		"G4_STAINLESS-STEEL 0.9464 G4_C 0.0408 G4_H 0.0043 G4_O 0.0085";
 	print_mat(\%configuration, \%mat);
 }
-

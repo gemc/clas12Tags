@@ -15,6 +15,8 @@ This is an upgrade to the meson build system, that replaces scons:
 - updated installation uses `-prefix` for installation location
 - updated the LTCC geometry with the fitted mother volume and the current CAD meshes for the Winston cones,
   back wall, side walls, and nose; the GEMC2 GXML placements and nose material now match GEMC3
+- set the LTCC PMT quartz-glass absorption length to 1 cm, matching GEMC3 and treating photons entering
+  the PMT window as detected
 - The new STL files are an optimization of the originals
 
 
