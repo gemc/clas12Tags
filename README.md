@@ -45,7 +45,7 @@ with the latest tagged Coatjava release.
 
 <br/>
 
-## Quickstart
+## Quickstart at JLab
 
 Add the selected GEMC installation to `PATH`, then run a matching gcard from CLAS12-config:
 

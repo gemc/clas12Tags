@@ -17,6 +17,8 @@ This is an upgrade to the meson build system, that replaces scons:
   back wall, side walls, and nose; the GEMC2 GXML placements and nose material now match GEMC3
 - set the LTCC PMT quartz-glass absorption length to 1 cm, matching GEMC3 and treating photons entering
   the PMT window as detected
+- initialized executable-relative runtime paths before parsing options, restoring data-file lookups in Meson
+  simulation tests and installed layouts
 - The new STL files are an optimization of the originals
 
 

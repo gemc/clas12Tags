@@ -107,6 +107,8 @@ int main(int argc, char **argv) {
     clock_t startTime = clock();
     cout << endl;
 
+    initializeGemcPaths(argv[0]);
+
     goptions gemcOpt;
     gemcOpt.setGoptions();
     gemcOpt.setOptMap(argc, argv, GEMC_VERSION);
