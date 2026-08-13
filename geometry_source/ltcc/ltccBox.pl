@@ -80,152 +80,40 @@ our @rgm_fall2021_H_materials;
 sub build_ltcc_box() {
     my $configuration_string = clas12_configuration_string(\%configuration);
 
-    my $DIFF = 235;
+    # Coordinates are in the sector frame: x is azimuthal, y radial and z along the beam. The
+    # asymmetric y half-lengths closely follow the LTCC outline, while 680 mm of normal half-depth
+    # contains the native detector and CAD frame. Derive the four x half-widths from the 29.9 degree
+    # sector half-angle so the G4Trap side faces remain exactly planar.
+    my $half_z = 680.0;
+    my $half_y_minus_z = 1930.0;
+    my $half_y_plus_z = 1500.0;
+    my $center_y = 1800.0;
+    my $center_z = 3900.0;
+    my $tilt = 25.0;
+    my $sector_half_angle = 29.9;
 
-    my $pDx1 = 240;
-    my $pDx2 = 2000;
-    my $pDz = 500;
-    my $pTheta = 0;
-    my $pPhi = 0;
-    my $pDy1 = 1700;
-    my $pDy2 = 1700;
-    my $pDx3 = $pDx1 - $DIFF;
-    my $pDx4 = $pDx2 - $DIFF;
-    my $pAlp1 = 0;
+    my $tilt_rad = $tilt * $pi / 180.0;
+    my $sector_half_angle_rad = $sector_half_angle * $pi / 180.0;
+    my $wedge_tangent = tan($sector_half_angle_rad);
+    my $side_slope = cos($tilt_rad) * $wedge_tangent;
+    my $radial_minus_z = $center_y + sin($tilt_rad) * $half_z;
+    my $radial_plus_z = $center_y - sin($tilt_rad) * $half_z;
+    my $dx1 = $radial_minus_z * $wedge_tangent - $half_y_minus_z * $side_slope;
+    my $dx2 = $radial_minus_z * $wedge_tangent + $half_y_minus_z * $side_slope;
+    my $dx3 = $radial_plus_z * $wedge_tangent - $half_y_plus_z * $side_slope;
+    my $dx4 = $radial_plus_z * $wedge_tangent + $half_y_plus_z * $side_slope;
 
     my %detector = init_det();
     $detector{"name"} = "ltccTrap";
     $detector{"mother"} = "root";
-    $detector{"description"} = "Light Threshold Cerenkov Counter";
+    $detector{"description"} = "Light Threshold Cerenkov Counter sector";
+    $detector{"pos"} = "0*mm $center_y*mm $center_z*mm";
+    $detector{"rotation"} = "$tilt*deg 180*deg 0*deg";
     $detector{"color"} = "110088";
     $detector{"type"} = "G4Trap";
-    $detector{"dimensions"} = "$pDz*mm $pTheta*deg $pPhi*deg $pDy1*mm $pDx1*mm $pDx2*mm $pAlp1*deg $pDy2*mm $pDx3*mm $pDx4*mm $pAlp1*deg";
-    $detector{"material"} = "Component";
-    print_det(\%configuration, \%detector);
-
-    # Subtract box at 45ish degrees from the top
-    # The upper coordinate is at:
-    # x = 0
-    # y = $dy1
-    # z = depth/2
-
-    my $y_upper = $pDy1;
-    my $z_upper = $pDz;
-
-    my $box_x = 3000.0;
-    my $box_y = 600.0;
-    my $box_z = 3000.0;
-
-
-    # box angle on the top is 45 - 25
-    my $box_angle = -20 * $pi / 180.0;
-    my $absbox_angle = 20 * $pi / 180.0;
-
-    my $y_box_p = $y_upper - ($box_z * sin($absbox_angle) - $box_y * cos($absbox_angle));
-    my $z_box_p = -$z_upper + ($box_z * cos($absbox_angle) + $box_y * sin($absbox_angle));
-
-    %detector = init_det();
-    $detector{"name"} = "ltccTopBox";
-    $detector{"mother"} = "root";
-    $detector{"description"} = "Box to subtract from LTCC";
-    $detector{"pos"} = "0*mm $y_box_p*mm $z_box_p*mm";
-    $detector{"rotation"} = "$box_angle*rad 0*deg 0*deg";
-    $detector{"color"} = "110088";
-    $detector{"type"} = "Box";
-    $detector{"dimensions"} = "$box_x*mm $box_y*mm $box_z*mm";
-    $detector{"material"} = "Component";
-    print_det(\%configuration, \%detector);
-
-    # Trap - Box
-    %detector = init_det();
-    $detector{"name"} = "ltccMinusTopBox";
-    $detector{"mother"} = "root";
-    $detector{"description"} = "Trap minus Top Box ";
-    $detector{"color"} = "110088";
-    $detector{"type"} = "Operation:  ltccTrap - ltccTopBox";
-    $detector{"dimensions"} = "0";
-    $detector{"material"} = "Component";
-    print_det(\%configuration, \%detector);
-
-
-    # Subtract tube
-    my $R = 3250;
-    my $DZ = 4500;
-
-    my $zpos = 3500;
-    my $ypos = -600;
-
-    %detector = init_det();
-    $detector{"name"} = "ltccTubeHole";
-    $detector{"mother"} = "root";
-    $detector{"description"} = "Tube to subtract from LTCC ";
-    $detector{"pos"} = "0*mm $ypos*mm $zpos*mm";
-    $detector{"rotation"} = "0*deg 90*deg 0*deg";
-    $detector{"color"} = "110088";
-    $detector{"type"} = "Tube";
-    $detector{"dimensions"} = "0*mm $R*mm $DZ*mm 0*deg 360*deg";
-    $detector{"material"} = "Component";
-    print_det(\%configuration, \%detector);
-
-
-    # Trap - Box - Tube
-    %detector = init_det();
-    $detector{"name"} = "ltccTrapMinusHole";
-    $detector{"mother"} = "root";
-    $detector{"description"} = "Trap minus Top Box minus Tube";
-    $detector{"color"} = "110088";
-    $detector{"type"} = "Operation:  ltccMinusTopBox - ltccTubeHole";
-    $detector{"dimensions"} = "0";
-    $detector{"material"} = "Component";
-    print_det(\%configuration, \%detector);
-
-
-    # Subtract box at 25ish degrees from the bottom
-    # The upper coordinate is at:
-    # x = 0
-    # y = -$c_d
-    # z = depth/2
-
-    $y_upper = -$pDy1 - 100;
-    $z_upper = $pDz;
-
-    $box_x = 3000.0;
-    $box_y = 800.0;
-    $box_z = 3000.0;
-
-    $box_angle = 25 * $pi / 180.0;
-    $absbox_angle = 25 * $pi / 180.0;
-
-    $y_box_p = $y_upper + ($box_z * sin($absbox_angle) - $box_y * cos($absbox_angle));
-    $z_box_p = -$z_upper + ($box_z * cos($absbox_angle) + $box_y * sin($absbox_angle));
-
-    %detector = init_det();
-    $detector{"name"} = "ltccBottomBox";
-    $detector{"mother"} = "root";
-    $detector{"description"} = "Box to subtract from LTCC";
-    $detector{"pos"} = "0*mm $y_box_p*mm $z_box_p*mm";
-    $detector{"rotation"} = "$box_angle*rad 0*deg 0*deg";
-    $detector{"color"} = "110088";
-    $detector{"type"} = "Box";
-    $detector{"dimensions"} = "$box_x*mm $box_y*mm $box_z*mm";
-    $detector{"material"} = "Component";
-    print_det(\%configuration, \%detector);
-
-
-    # Trap - Box - Tube - Box 2
-    # these numbers are empirical to match
-    # by eyes the box to the mirror position
-    my $tBoxZ = 3900;
-    my $tBoxY = 1800;
-    %detector = init_det();
-    $detector{"name"} = "trapBox";
-    $detector{"mother"} = "root";
-    $detector{"description"} = "Trap minus Top Box minus Tube minus Bottom Box";
-    $detector{"pos"} = "0*mm $tBoxY*mm $tBoxZ*mm";
-    $detector{"rotation"} = "25*deg 180*deg 0*deg";
-    $detector{"color"} = "110088";
-    $detector{"type"} = "Operation:  ltccTrapMinusHole - ltccBottomBox";
-    $detector{"dimensions"} = "0";
+    $detector{"dimensions"} =
+        "$half_z*mm 0*deg 0*deg $half_y_minus_z*mm $dx1*mm $dx2*mm 0*deg " .
+        "$half_y_plus_z*mm $dx3*mm $dx4*mm 0*deg";
     $detector{"material"} = "Component";
     print_det(\%configuration, \%detector);
 
@@ -243,7 +131,7 @@ sub build_ltcc_box() {
         my $c6toc12Z = 1973;
         #my $c6toc12Z = 0;
         my $rotPhi = 90 - ($s - 1) * 60;
-        # Final box - Big Box * TrapBox
+        # Final box - Big Box * fitted trap
         %detector = init_det();
         $detector{"name"} = "ltccS$s";
         $detector{"mother"} = "root";
@@ -251,7 +139,7 @@ sub build_ltcc_box() {
         $detector{"pos"} = "0*mm 0*mm $c6toc12Z*mm";
         $detector{"rotation"} = "0*deg 0*deg $rotPhi*deg";
         $detector{"color"} = "110088";
-        $detector{"type"} = "Operation:  ltcc_big_box * trapBox";
+        $detector{"type"} = "Operation:  ltcc_big_box * ltccTrap";
         $detector{"visible"} = 0;
 
         # print("ltcc configuration string = $configuration_string\n");
@@ -303,7 +191,6 @@ sub build_ltcc_box() {
 }
 
 return 1;
-
 
 
 

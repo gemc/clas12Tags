@@ -50,5 +50,7 @@ TODO:
 
 CAD Notes:
 
-- The frame model is from sector 2. It is rotated in cad.gxml to sector 3.
-- The nose model is from sector 1. It is rotated in cad.gxml to sector 2.
+- Sector 3 contains the mesh-backed `backwall`, `rightwall`, `leftwall`, and `nose` source volumes.
+- The other enabled sectors reuse those sources through `CopyOf` placements in `ltcc_frame.pl`.
+- The cured and decimated Winston-cone meshes are reused for segments 1 through 17 on both sides.
+- The unmodified engineering drawings used to derive the active meshes are retained in `original_drawings/`.
