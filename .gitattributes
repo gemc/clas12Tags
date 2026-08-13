@@ -1,0 +1,2 @@
+# CCDB v1.99.7 stores MySQLDataProvider.cc with CRLF line endings. Preserve the patch's mixed endings.
+source/subprojects/packagefiles/ccdb_ssl_no_enforce.patch -text
