@@ -53,10 +53,8 @@ function compile_gemc {
 
 	local install_dir="${GEMC:?GEMC not set}"
 	local meson_option=(
-		"--native-file=core.ini"
 		"-Dprefix=${install_dir}"
 		"-Dpkg_config_path=${PKG_CONFIG_PATH}:${install_dir}/lib/pkgconfig"
-		"-Dbuildtype=release"
 	)
 
 	echo " > Geant-config: $(which geant4-config) : $(geant4-config --version)" | tee $setup_log

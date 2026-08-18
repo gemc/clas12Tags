@@ -1,7 +1,21 @@
 # Notice: if both static and dynamic libraries are present, the dynamic library will be used
 # Forcing suffix lib instead of variants like lib64
+#
+# These default_options replace the core.ini native file and the extra `meson setup`
+# flags: with them baked in, only `--prefix` needs to be passed on the command line.
+# All of these remain overridable on the command line (e.g. -Dbuildtype=debug).
 project('clas12Tags', 'cpp',
-        default_options : ['default_library=static', 'default_both_libraries=static', 'libdir=lib'],
+        default_options : [
+            'default_library=static',       # was: core.ini
+            'default_both_libraries=static', # was: core.ini
+            'libdir=lib',                    # forcing lib instead of lib64
+            'cpp_std=c++17',                 # was: core.ini
+            'prefer_static=true',            # was: core.ini
+            'b_lundef=false',                # was: core.ini (no -Wl,--no-undefined)
+            'b_asneeded=false',              # was: core.ini (no -Wl,--no-as-needed)
+            'buildtype=release',             # was: --buildtype=release
+            'b_sanitize=none',               # was: -Db_sanitize=none (also the meson default)
+        ],
         version : run_command(
             'git', 'describe', '--tags', '--abbrev=0', '--always',
             check : true,

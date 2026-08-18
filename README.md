@@ -85,15 +85,14 @@ module load geant4
 
 ### Build, test, and install
 
-Configure from `source` with an explicit installation prefix, release mode, and sanitizers disabled:
+Configure from `source` with an explicit installation prefix. Release mode, static linking, C++17,
+and disabled sanitizers are baked into the project defaults (see `default_options` in `source/meson.build`),
+so only the prefix is required. Any default can still be overridden on the command line (e.g. `-Dbuildtype=debug`):
 
 ```shell
 cd source
 meson setup build \
-  --native-file=core.ini \
-  --prefix=/absolute/path/to/clas12Tags-install \
-  --buildtype=release \
-  -Db_sanitize=none
+  --prefix=/absolute/path/to/clas12Tags-install
 meson compile -C build
 meson install -C build
 meson test -C build --suite clas12 --print-errorlogs -j 1
