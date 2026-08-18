@@ -7,10 +7,12 @@ Writes:
   - geant4_core.pc   : libs with graphical/GUI/vis/X11/OpenGL/Qt removed
 
 Usage:
-    ./g4_pkgconfig.py <install-prefix>
+    ./g4_pkgconfig.py <output-dir>
+
+The two .pc files are written directly into <output-dir> (created if missing).
 
 Example:
-    ./g4_pkgconfig.py $GEMC
+    ./g4_pkgconfig.py build/pkgconfig
 """
 import subprocess
 import sys
@@ -131,7 +133,7 @@ def filter_graphical_libs(flags: str) -> str:
 	return " ".join(kept)
 
 
-def generate_pkgconfig(install_prefix: Path,
+def generate_pkgconfig(out_dir: Path,
 					   config_cmd: str,
 					   output_filename: str,
 					   name: str,
@@ -139,7 +141,7 @@ def generate_pkgconfig(install_prefix: Path,
 					   root_lbs: Optional[List[str]] = None,
 					   cflags_filter=None,
 					   libs_filter=None) -> None:
-	"""Create <install_prefix>/lib/pkgconfig/<output_filename>."""
+	"""Create <out_dir>/<output_filename>."""
 	prefix = run_config(config_cmd, "--prefix")
 
 	libs = filter_unwanted_flags(run_config(config_cmd, "--libs"))
@@ -166,7 +168,7 @@ Cflags: {cflags}
 Libs:  {libs}
 """
 
-	pc_path = install_prefix / "lib" / "pkgconfig" / output_filename
+	pc_path = out_dir / output_filename
 	pc_path.parent.mkdir(parents=True, exist_ok=True)
 	pc_path.write_text(pc_content + "\n")
 	print(f"Generated {pc_path}")
@@ -175,17 +177,17 @@ Libs:  {libs}
 # ────────────────────────── main ──────────────────────────
 if __name__ == "__main__":
 	if len(sys.argv) != 2:
-		sys.exit(f"Usage: {sys.argv[0]} <install-prefix>")
+		sys.exit(f"Usage: {sys.argv[0]} <output-dir>")
 
-	install_dir = Path(sys.argv[1]).expanduser().resolve()
-	if not install_dir.exists():
-		print(f"Creating installation directory {install_dir}")
-		install_dir.mkdir(parents=True, exist_ok=True)
+	out_dir = Path(sys.argv[1]).expanduser().resolve()
+	if not out_dir.exists():
+		print(f"Creating output directory {out_dir}")
+		out_dir.mkdir(parents=True, exist_ok=True)
 
-	generate_pkgconfig(install_dir, "geant4-config",
+	generate_pkgconfig(out_dir, "geant4-config",
 					   "geant4.pc", "Geant4", "Geant4 Simulation Toolkit")
 
-	generate_pkgconfig(install_dir, "geant4-config",
+	generate_pkgconfig(out_dir, "geant4-config",
 					   "geant4_core.pc", "Geant4 Core",
 					   "Geant4 Simulation Toolkit (core, no graphical/GUI libs)",
 					   cflags_filter=filter_graphical_cflags,

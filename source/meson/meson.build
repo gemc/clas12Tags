@@ -41,19 +41,67 @@ xercesc_deps = dependency('xerces-c', version : '>=3.2.5',  static : false, incl
 xerces_libdir = xercesc_deps.get_variable(pkgconfig: 'libdir')
 message('xerces libdir: ' + xerces_libdir)
 
-# geant4.pc if not found
+# Geant4 ships no pkg-config file, so we generate geant4.pc / geant4_core.pc ourselves. These are a
+# build-time helper for locating Geant4, so they live in a hardcoded directory inside the build tree
+# (not tied to the install prefix). A fresh `rm -rf build` drops them, so they regenerate cleanly when
+# the build dir is recreated - e.g. after switching Geant4 versions.
 fs = import('fs')
-gemc_prefix = get_option('prefix')
-geant4_pc_path = gemc_prefix / 'lib/pkgconfig'
+geant4_pc_path = meson.project_build_root() / 'pkgconfig'
 geant4_core_pc = geant4_pc_path / 'geant4_core.pc'
 geant4_pc = geant4_pc_path / 'geant4.pc'
 g4_pkgconfig_script = meson.project_source_root() / 'meson/g4_pkgconfig.py'
 if not fs.exists(geant4_pc) or not fs.exists(geant4_core_pc)
-    message('geant4.pc or geant4_core.pc  not found in ' + geant4_pc_path + ', running install script to install it in ' + gemc_prefix)
-    run_command(g4_pkgconfig_script, gemc_prefix, check : true)
+    message('Generating geant4.pc / geant4_core.pc in ' + geant4_pc_path)
+    run_command(g4_pkgconfig_script, geant4_pc_path, check : true)
 endif
-geant4_dep = dependency('geant4', version : '>=11.3.2', method : 'pkg-config', include_type : 'system') # treat as system include paths - no warnings
-geant4_core_dep = dependency('geant4_core', version : '>=11.3.2', method : 'pkg-config')
+# The generated .pc files are not on the default pkg-config search path. Rather than requiring the
+# caller to pass -Dpkg_config_path / export PKG_CONFIG_PATH, add that directory internally: meson.build
+# cannot mutate the pkg_config_path option or its own environment for dependency(), so we resolve
+# geant4 by running pkg-config ourselves with an augmented PKG_CONFIG_PATH and wrap the result in
+# declare_dependency. env.append() adds to (does not replace) the inherited PKG_CONFIG_PATH, so
+# module-provided paths still resolve. The generated .pc files carry flat Cflags/Libs with no Requires,
+# so this is faithful to a plain pkg-config lookup.
+g4_min_version = '11.3.2'
+pkgconf = find_program('pkg-config', required : true)
+g4_pc_env = environment()
+g4_pc_env.append('PKG_CONFIG_PATH', geant4_pc_path, separator : ':')
+
+g4_built = {}
+foreach g4 : [
+    { 'pc' : 'geant4',      'system' : true  }, # treat includes as system paths - no warnings
+    { 'pc' : 'geant4_core', 'system' : false },
+]
+    pcname = g4['pc']
+    ver = run_command(pkgconf, '--modversion', pcname, env : g4_pc_env, check : true).stdout().strip()
+    if not ver.version_compare('>=' + g4_min_version)
+        error(pcname + ' ' + ver + ' found in ' + geant4_pc_path + ', but >= ' + g4_min_version + ' is required')
+    endif
+    cflags = run_command(pkgconf, '--cflags', pcname, env : g4_pc_env, check : true).stdout().split()
+    libs = run_command(pkgconf, '--libs', pcname, env : g4_pc_env, check : true).stdout().split()
+    compile_args = []
+    foreach f : cflags
+        if g4['system'] and f.startswith('-I')
+            compile_args += ['-isystem', f.substring(2)] # -I<path> -> -isystem <path>
+        else
+            compile_args += f
+        endif
+    endforeach
+    g4_built += { pcname : declare_dependency(compile_args : compile_args, link_args : libs) }
+endforeach
+geant4_dep = g4_built['geant4']
+geant4_core_dep = g4_built['geant4_core']
+
+# Ship the generated .pc into <prefix>/lib/pkgconfig. Downstream GEMC projects (e.g. clas12-systems)
+# resolve geant4_core straight from the installed GEMC's lib/pkgconfig, and ci/env.sh /
+# ci/package_install.sh export $GEMC/lib/pkgconfig, so the installed tree must carry these files.
+# An install script (rather than install_data) is used because the .pc are generated build-tree files,
+# which install_data deprecates. $MESON_INSTALL_DESTDIR_PREFIX is set by meson at install time.
+meson.add_install_script(
+    'sh', '-c',
+    'set -e; d="$MESON_INSTALL_DESTDIR_PREFIX/$1"; mkdir -p "$d"; shift; cp "$@" "$d"',
+    'install_geant4_pc', get_option('libdir') / 'pkgconfig', geant4_pc, geant4_core_pc,
+)
+
 geant4_deps = [geant4_dep]
 geant4_core_deps = [geant4_core_dep]
 if sys == 'linux'

@@ -87,16 +87,23 @@ module load geant4
 
 Configure from `source` with an explicit installation prefix. Release mode, static linking, C++17,
 and disabled sanitizers are baked into the project defaults (see `default_options` in `source/meson.build`),
-so only the prefix is required. Any default can still be overridden on the command line (e.g. `-Dbuildtype=debug`):
+so those never need to be passed. Any default can still be overridden on the command line (e.g.
+`-Dbuildtype=debug`). Use an absolute path for the prefix — meson does not expand `~`:
 
 ```shell
 cd source
 meson setup build \
-  --prefix=/absolute/path/to/clas12Tags-install
+  --prefix=$HOME/clas12Tags-install
 meson compile -C build
 meson install -C build
 meson test -C build --suite clas12 --print-errorlogs -j 1
 ```
+
+Geant4 ships no `pkg-config` file, so `meson setup` generates `geant4.pc` / `geant4_core.pc` into the
+build tree (`build/pkgconfig`) and puts that directory on the `pkg-config` search path internally — no
+`PKG_CONFIG_PATH` export or `-Dpkg_config_path` flag is needed. The files are also installed to
+`<prefix>/lib/pkgconfig`, where downstream GEMC projects resolve `geant4_core` from the installed tree.
+CLHEP, Xerces-C, and Qt are still located through the environment set by `module load geant4`.
 
 The explicit prefix prevents a loaded GEMC installation from becoming the destination accidentally. Installation
 also places the field maps under the selected prefix, where tests using `source/build/gemc` can find them.

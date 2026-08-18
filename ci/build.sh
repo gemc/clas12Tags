@@ -52,9 +52,10 @@ source ci/env.sh
 function compile_gemc {
 
 	local install_dir="${GEMC:?GEMC not set}"
+	# meson/meson.build generates geant4.pc into the build tree and puts it on the pkg-config search
+	# path internally (and installs it to <prefix>/lib/pkgconfig), so only the prefix is needed here.
 	local meson_option=(
 		"-Dprefix=${install_dir}"
-		"-Dpkg_config_path=${PKG_CONFIG_PATH}:${install_dir}/lib/pkgconfig"
 	)
 
 	echo " > Geant-config: $(which geant4-config) : $(geant4-config --version)" | tee $setup_log
