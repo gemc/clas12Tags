@@ -9,7 +9,6 @@ use parameters;
 use geometry;
 use hit;
 use bank;
-use materials;
 use Math::Trig;
 use lib ("../");
 use clas12_configuration_string;
@@ -17,7 +16,7 @@ use clas12_configuration_string;
 # Help Message
 sub help() {
     print "\n Usage: \n";
-    print "   init_mucal.pl <configuration filename>\n";
+    print "   mucal.pl <configuration filename>\n";
     print "   Will create the CLAS12 MUCAL geometry, materials, bank and hit definitions\n";
     print "   Note: if the sqlite file does not exist, create one with:  ../../api/perl/sqlite.py -n ../../clas12.sqlite\n";
     exit;
