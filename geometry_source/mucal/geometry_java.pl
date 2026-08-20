@@ -25,7 +25,7 @@ sub makeMUCAL {
 
     ($mothers, $positions, $rotations, $types, $dimensions, $ids) = @main::volumes;
 
-    $panel1a_n = 391;#$main::parameters{"mucal.panel1a.ncounters"};
+    $panel1a_n = 43;#$main::parameters{"mucal.panel1a.ncounters"};
     # $panel1b_n = $main::parameters{"mucal.panel1b.ncounters"};
     # $panel2_n = $main::parameters{"mucal.panel2.ncounters"};
 
@@ -135,8 +135,8 @@ sub build_panel1a_counters {
     my $sector = shift;
     my $mother = "mucalVolume";
 
-    for (my $n = 1; $n <= $panel1a_n; $n++) {
-        for(my $m = 1; $m <= $panel1a_n;$m++){
+    for (my $n = 100; $n <= $panel1a_n; $n++) {
+        for(my $m = 100; $m <= $panel1a_n;$m++){
         my %detector = init_det();
 
         my $vname = "mucal_$n" . "_" . $m;
