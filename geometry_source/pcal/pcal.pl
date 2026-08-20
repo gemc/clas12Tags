@@ -2,7 +2,8 @@
 
 use strict;
 use warnings;
-use lib ("$ENV{GEMC}/api/perl");
+use FindBin;
+use lib "$FindBin::RealBin/../../api/perl";
 use utils;
 use parameters;
 use geometry;
@@ -19,7 +20,7 @@ sub help() {
     print "   pcal.pl <configuration filename>\n";
     print "   Will create the CLAS12 PCAL geometry, materials, bank and hit definitions\n";
     print "   Note: if the sqlite file does not exist, create one with:\n";
-    print "         \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
+    print "         ../../api/perl/sqlite.py -n ../../clas12.sqlite\n";
     exit;
 }
 

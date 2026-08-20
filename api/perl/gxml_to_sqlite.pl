@@ -1,7 +1,8 @@
 use strict;
 use warnings;
 use XML::LibXML;
-use lib ("$ENV{GEMC}/api/perl");
+use File::Basename;
+use lib dirname(__FILE__);
 use cad;
 
 our %configuration;

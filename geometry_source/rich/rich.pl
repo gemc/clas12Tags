@@ -1,7 +1,8 @@
 #!/usr/bin/perl -w
 
 use strict;
-use lib ("$ENV{GEMC}/api/perl");
+use FindBin;
+use lib "$FindBin::RealBin/../../api/perl";
 use utils;
 use parameters;
 use geometry;
@@ -20,7 +21,7 @@ sub help() {
     print "\n Usage: \n";
     print "   rich.pl <configuration filename>\n";
     print "   Will create the CLAS12 Ring Imaging Cherenkov (rich) using the variation specified in the configuration file\n";
-    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
+    print "   Note: if the sqlite file does not exist, create one with:  ../../api/perl/sqlite.py -n ../../clas12.sqlite\n";
     exit;
 }
 

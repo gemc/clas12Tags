@@ -1,7 +1,8 @@
 package bank;
 require Exporter;
 
-use lib ("$ENV{GEMC}/io");
+use File::Basename;
+use lib dirname(__FILE__);
 use utils;
 use 5.010;
 

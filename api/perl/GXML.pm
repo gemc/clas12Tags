@@ -1,5 +1,7 @@
 package GXML;
 
+use File::Basename;
+use lib dirname(__FILE__);
 use utils;
 use geometry;
 

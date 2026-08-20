@@ -4,18 +4,14 @@ script_dir=${0:A:h}
 cdir=$script_dir
 cd "$cdir" || exit 1
 
-if [[ -z "${GEMC}" && -f "$cdir/ci/env.sh" ]]; then
-	source "$cdir/ci/env.sh"
-fi
-
-export GEMC=${GEMC:-$cdir/install}
-export PERL5LIB=${PERL5LIB:-}:$GEMC/api/perl
+# The Perl API lives alongside this script, so use it directly - no GEMC variable needed. The
+# geometry scripts (./<det>.pl) still need api/perl on PERL5LIB to resolve the api modules.
+export PERL5LIB=${PERL5LIB:-}:$cdir/api/perl
 export COATJAVA=$cdir/geometry_source/coatjava
 export PATH=$PATH:$COATJAVA/bin
 
-if [[ ! -d "$GEMC/api/perl" ]]; then
-	echo "Error: GEMC API directory not found: $GEMC/api/perl" >&2
-	echo "Set GEMC to a valid GEMC install directory before running create_geometry.sh." >&2
+if [[ ! -d "$cdir/api/perl" ]]; then
+	echo "Error: Perl API directory not found: $cdir/api/perl" >&2
 	exit 1
 fi
 
@@ -128,6 +124,10 @@ fi
 
 # loop over all dets
 for dete in $=all_dets; do
+	if [[ ! -d "$dete" ]]; then
+		echo "Error: detector directory '$dete' not found." >&2
+		exit 1
+	fi
 	cd $dete
 	echo
 	echo " > Removing $cdir/experiments/clas12/$dete"
@@ -141,13 +141,17 @@ for dete in $=all_dets; do
 		root -q -b mirrors.C
 	fi
 
-	# main run
-	if [[ -f "./$dete.pl" ]]; then
-		./"$dete.pl" config.dat
-	if [[ $? -ne 0 ]]; then
-		echo "Error: building $dete failed. Check the geometry build log for details."
+	# main run - every detector in the list must provide a matching <det>.pl.
+	# A missing script is a hard error: silently skipping it is how a broken
+	# detector (e.g. a renamed script) can slip past CI unnoticed.
+	if [[ ! -f "./$dete.pl" ]]; then
+		echo "Error: geometry script ./$dete.pl not found for detector '$dete'." >&2
 		exit 1
 	fi
+	./"$dete.pl" config.dat
+	if [[ $? -ne 0 ]]; then
+		echo "Error: building $dete failed. Check the geometry build log for details." >&2
+		exit 1
 	fi
 	copyFilesAndCadDirsTo "$cdir/experiments/clas12/$dete"
 

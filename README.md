@@ -141,8 +141,8 @@ is needed only for these cases:
 - Geant4 dataset variables must be available if they are not already provided by the system installation.
 - `CCDB_CONNECTION` selects a nondefault CCDB server or local SQLite snapshot.
 - `-FIELD_DIR=/path/to/fields` selects field maps outside the standard executable-relative installation.
-- `GEMC`, `PERL5LIB`, or `PYTHONPATH` may be needed for geometry-generation scripts and the Perl or Python APIs;
-  they are not used to locate runtime geometry or field data.
+- `PYTHONPATH` (for the Python API) or `PERL5LIB` (for geometry-generation scripts that live outside
+  `api/perl`) may be added to use the APIs. The API modules self-locate, and `GEMC` is not used anywhere.
 
 The [g4install repository][g4install] provides the Geant4 installation scripts and module environment used
 by GEMC.
@@ -154,16 +154,17 @@ by GEMC.
 ### Requirements and environment
 
 Geometry generation requires Maven, OpenJDK 17 or newer, Groovy, the GEMC Perl API, and a CCDB connection.
-Configure the API separately from the GEMC executable when generating detector geometry:
+The Perl API modules self-locate, so only the geometry scripts that live outside `api/perl` need that
+directory on `PERL5LIB`. `create_geometry.sh` sets this up automatically from its own location; to run the
+scripts by hand, point `PERL5LIB` at the install (no `GEMC` variable needed):
 
 ```shell
-export GEMC=/absolute/path/to/clas12Tags-install
-export PERL5LIB="$GEMC/api/perl:${PERL5LIB:-}"
+export PERL5LIB="/absolute/path/to/clas12Tags-install/api/perl:${PERL5LIB:-}"
 ```
 
 When developing locally:
 
-- Set `GEMC` to the local install when testing Perl API changes.
+- The Perl and Python APIs load their modules from the repository `api/` directory; no `GEMC` is needed.
 - Detector gcards under `geometry_source` already load their databases from the local detector directory.
 - The local `source/build/gemc` finds the repository `experiments` directory automatically. Pass
   `-FIELD_DIR=/path/to/fields` when its maps are not in the repository.
@@ -214,7 +215,7 @@ database:
 ```shell
 cd geometry_source
 ./install_coatjava.sh -l
-"$GEMC/api/perl/sqlite.py" -n ../clas12.sqlite
+../api/perl/sqlite.py -n ../clas12.sqlite
 ```
 
 Then run the detector geometry script. For example:

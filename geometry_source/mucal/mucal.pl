@@ -2,7 +2,8 @@
 
 use strict;
 use warnings;
-use lib ("$ENV{GEMC}/api/perl");
+use FindBin;
+use lib "$FindBin::RealBin/../../api/perl";
 use utils;
 use parameters;
 use geometry;
@@ -18,7 +19,7 @@ sub help() {
     print "\n Usage: \n";
     print "   init_mucal.pl <configuration filename>\n";
     print "   Will create the CLAS12 MUCAL geometry, materials, bank and hit definitions\n";
-    print "   Note: if the sqlite file does not exist, create one with:  \$GEMC/api/perl/sqlite.py -n ../../clas12.sqlite\n";
+    print "   Note: if the sqlite file does not exist, create one with:  ../../api/perl/sqlite.py -n ../../clas12.sqlite\n";
     exit;
 }
 
@@ -33,7 +34,6 @@ our %configuration = load_configuration($ARGV[0]);
  our %parameters;
 
 # import scripts
-require "./materials.pl";
 require "./bank.pl";
 require "./hit.pl";
 require "./geometry_java.pl";
@@ -44,7 +44,6 @@ sub create_system {
     my $runNumber = shift;
 
     # materials, hits
-    materials();
     define_mucal_hit();
 
     # run EC factory from COATJAVA to produce volumes

@@ -128,7 +128,11 @@ else
 fi
 
 export CLAS12TAGS_HOME="${CLAS12TAGS_HOME:-${CLAS12TAGS_ENV_DIR}}"
-export GEMC="${GEMC:-${CLAS12TAGS_HOME}}"
+# gemc self-locates its data/fields from the executable and the Python API only needs api/ on
+# PYTHONPATH, so no GEMC variable is exported. CLAS12TAGS_HOME anchors the remaining paths that a
+# relocatable install still needs (bundled Geant4 data below, the shared libccdb.so in lib, and the
+# pkgconfig used by downstream GEMC builds). PERL5LIB is optional (the Perl API self-locates) but
+# kept for scripts that import the api modules from elsewhere.
 export PATH="${CLAS12TAGS_HOME}/bin:${PATH}"
 export PYTHONPATH="${CLAS12TAGS_HOME}/api:${PYTHONPATH:-}"
 export PERL5LIB="${CLAS12TAGS_HOME}/api/perl:${PERL5LIB:-}"

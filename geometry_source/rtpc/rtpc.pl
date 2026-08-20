@@ -1,7 +1,8 @@
 #!/usr/bin/perl -w
 
 use strict;
-use lib ("$ENV{GEMC}/api/perl"); # added on 12/23/20 by KA
+use FindBin;
+use lib "$FindBin::RealBin/../../api/perl"; # added on 12/23/20 by KA
 use utils;
 use geometry;
 use math;

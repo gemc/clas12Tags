@@ -1,7 +1,8 @@
 #!/usr/bin/perl -w
 
 use strict;
-use lib ("$ENV{GEMC}/io");
+use File::Basename;
+use lib dirname(__FILE__);
 use utils;
 use parameters;
 
