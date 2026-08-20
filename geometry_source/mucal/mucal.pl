@@ -33,7 +33,6 @@ our %configuration = load_configuration($ARGV[0]);
  our %parameters;
 
 # import scripts
-require "./materials.pl";
 require "./bank.pl";
 require "./hit.pl";
 require "./geometry_java.pl";
@@ -44,7 +43,6 @@ sub create_system {
     my $runNumber = shift;
 
     # materials, hits
-    materials();
     define_mucal_hit();
 
     # run EC factory from COATJAVA to produce volumes
