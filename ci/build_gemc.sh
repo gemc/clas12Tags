@@ -7,6 +7,10 @@
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/build_gemc.sh
 
+# pipefail: without it, a piped command's exit status reflects only the last stage (e.g. tee),
+# masking failures such as create_geometry.sh exiting non-zero through `| tee`.
+set -o pipefail
+
 source ci/env.sh
 
 debug=""
@@ -59,12 +63,12 @@ function create_geo_dbs {
 	echo "Creating all geometry databases with: create_geometry.sh"
 	echo START_CREATE_GEOMETRY $(date) | tee $geo_log
 	./create_geometry.sh | tee -a $geo_log
-	ls -lrt | tee -a $geo_log
 	if [ $? -ne 0 ]; then
 		echo "create_geometry failed. Log:"
 		cat $geo_log
 		exit 1
 	fi
+	ls -lrt | tee -a $geo_log
 
 	echo
 	echo "Changes after creation:"
