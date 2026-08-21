@@ -7,6 +7,10 @@
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/build_gemc.sh
 
+# pipefail: without it, a piped command's exit status reflects only the last stage (e.g. tee),
+# masking failures such as create_geometry.sh exiting non-zero through `| tee`.
+set -o pipefail
+
 source ci/env.sh
 
 debug=""
