@@ -2,6 +2,7 @@
 
 # Detector name and variation
 detector_name: mucal
+comment: CLAS12 MU Calorimeter
 variation:     original
 
 # Factory can be MYQL or TEXT
@@ -12,7 +13,7 @@ rmin:       1
 rmax:       10000
 
 # MYSQL server and databse if MYSQL factory is selected
-dbhost: clasdb.jlab.org
+dbhost: ../../clas12.sqlite
 
 # Comments/Description
 comment:       This is the first implementation of the HTCC
