@@ -90,9 +90,19 @@ jobs:
     # to build your code.
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-    # The manual c-cpp build runs create_geometry.sh -> install_coatjava.sh, which builds coatjava with
-    # `--lfs`; that requires the git-lfs binary. Every other geometry-building workflow installs it, so
-    # CodeQL must too, otherwise the coatjava build aborts with "git-lfs not found".
+    # The manual c-cpp build runs create_geometry.sh -> install_coatjava.sh, which builds coatjava.
+    # coatjava's Maven enforcer requires Java 21+, but the container defaults to Java 17, so pin 21
+    # here just as the other geometry-building workflows do.
+    - name: Fix Java Version
+      if: matrix.build-mode == 'manual'
+      uses: actions/setup-java@v5
+      with:
+        java-version: '21'
+        distribution: 'zulu'
+
+    # That same coatjava build uses `--lfs`, which requires the git-lfs binary. Every other
+    # geometry-building workflow installs it, so CodeQL must too, otherwise the coatjava build
+    # aborts with "git-lfs not found".
     - name: Install Git LFS
       if: matrix.build-mode == 'manual'
       run: |
