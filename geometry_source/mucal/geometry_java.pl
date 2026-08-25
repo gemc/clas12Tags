@@ -94,7 +94,7 @@ sub build_panel1a_counters {
         my %detector = init_det();
 
         my $vname = "mucal_$n" . "_" . $m;
-        if($mothers->{$vname} eq "mucalVolume"){
+        if(($mothers->{$vname} // "") eq "mucalVolume"){
             $detector{"name"} = $vname;
             $detector{"mother"} = $mothers->{$vname};
             $detector{"pos"} = $positions->{$vname};
