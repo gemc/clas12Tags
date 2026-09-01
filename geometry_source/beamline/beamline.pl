@@ -39,6 +39,7 @@ require "./vacuumLine.pl";
 require "./ELMOline.pl";
 require "./rghline.pl";
 require "./transverseUpstreamBeampipe.pl";
+require "./ddvcsTungstenCone.pl";
 
 sub create_system {
     my $variation = clas12_configuration_string(\%configuration);
@@ -51,6 +52,10 @@ sub create_system {
     }
     elsif ($variation eq "rghFTOut" || $variation eq "rghFTOn") {
         rghline();
+    }
+    elsif ($variation eq "ddvcs") {
+	ddvcsTungstenCone();
+        vacuumLine();
     }
     else {
         vacuumLine();
