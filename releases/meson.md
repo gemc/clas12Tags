@@ -13,6 +13,10 @@ This is an upgrade to the meson build system, that replaces scons:
 - geant4 version updated from 10.7.4 to the latest (11.4.0)
 - g4install modules are used instead of ceInstall modules
 - updated installation uses `-prefix` for installation location
+- Geant4 ships no pkg-config file, so `geant4.pc` / `geant4_core.pc` are generated into the build tree and
+  resolved by running pkg-config with an augmented `PKG_CONFIG_PATH`; building no longer needs the caller to
+  export `PKG_CONFIG_PATH`. Each Geant4 library is resolved through `find_library` so Meson deduplicates the
+  archives on the link line instead of repeating the same `-lG4*` once per static module, keeping links fast
 - updated the LTCC geometry with the fitted mother volume and the current CAD meshes for the Winston cones,
   back wall, side walls, and nose; the GEMC2 GXML placements and nose material now match GEMC3
 - set the LTCC PMT quartz-glass absorption length to 1 cm, matching GEMC3 and treating photons entering
