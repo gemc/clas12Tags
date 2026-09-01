@@ -116,13 +116,11 @@ foreach my $conf ( @allConfs )
 		makeScorer();
 	} else{
 		make_scatt_chambers();
-                makeBigCone();
+		buildBigCone();
                 makeEcal();
         }
-
 }
-		define_mucal_bank();
-
+define_mucal_bank();
 
 
 
