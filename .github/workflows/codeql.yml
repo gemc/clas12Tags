@@ -75,23 +75,43 @@ jobs:
       # - name: Setup runtime (example)
       #   uses: actions/setup-example@v1
 
-      # Initializes the CodeQL tools for scanning.
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v4
+      # If the analyze step fails for one of the languages you are analyzing with
+      # "We were unable to automatically build your code", modify the matrix above
+      # to set the build mode to "manual" for that language. Then modify this step
+      # to build your code.
+      # ℹ️ Command-line programs to run using the OS shell.
+      # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
+      # The manual c-cpp build runs create_geometry.sh -> install_coatjava.sh, which builds coatjava.
+      # coatjava's Maven enforcer requires Java 21+, but the container defaults to Java 17, so pin 21
+      # here just as the other geometry-building workflows do.
+      - name: Fix Java Version
+        if: matrix.build-mode == 'manual'
+        uses: actions/setup-java@v5
         with:
-          languages: ${{ matrix.language }}
-          build-mode: ${{ matrix.build-mode }}
-          config-file: .github/codeql_config.yml
-          # If you wish to specify custom queries, you can do so here or in a config file.
-          # By default, queries listed here will override any specified in a config file.
-          # Prefix the list here with "+" to use these queries and those in the config file.
+          java-version: '21'
+          distribution: 'zulu'
+
+      # That same coatjava build uses `--lfs`, which requires the git-lfs binary. Every other
+      # geometry-building workflow installs it, so CodeQL must too, otherwise the coatjava build
+      # aborts with "git-lfs not found".
+      - name: Install Git LFS
+        if: matrix.build-mode == 'manual'
+        run: |
+          dnf -y install git-lfs
+
+      - if: matrix.build-mode == 'manual'
+        shell: bash
+        run: |
+          echo "Starting manual build for CodeQL..."
+          chmod +x ./ci/build_gemc.sh
+          ./ci/build_gemc.sh
 
           # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
           # queries: security-extended,security-and-quality
 
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v4
-        env:
-          LD_PRELOAD: ""        # suppress trace‑library warning
-        with:
-          category: "/language:${{matrix.language}}"
+          - name: Perform CodeQL Analysis
+            uses: github/codeql-action/analyze@v4
+            env:
+              LD_PRELOAD: ""        # suppress trace‑library warning
+            with:
+              category: "/language:${{matrix.language}}"

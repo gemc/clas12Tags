@@ -94,9 +94,7 @@ sub build_panel1a_counters {
         my %detector = init_det();
 
         my $vname = "mucal_$n" . "_" . $m;
-        # the $panel1a_n x $panel1a_n grid over-covers the volumes coatjava actually produced, so
-        # most $vname keys are absent; skip them instead of warning on an undef string compare.
-        if(defined $mothers->{$vname} && $mothers->{$vname} eq "mucalVolume"){
+        if(($mothers->{$vname} // "") eq "mucalVolume"){
             $detector{"name"} = $vname;
             $detector{"mother"} = $mothers->{$vname};
             $detector{"pos"} = $positions->{$vname};
