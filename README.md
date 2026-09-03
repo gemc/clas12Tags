@@ -47,10 +47,10 @@ with the latest tagged Coatjava release.
 
 ## Quickstart at JLab
 
-Add the selected GEMC installation to `PATH`, then run a matching gcard from CLAS12-config:
+Load the gemc meson module:
 
 ```shell
-export PATH="/absolute/path/to/clas12Tags-install/bin:$PATH"
+module load gemc/meson
 
 gemc /scigroup/cvmfs/hallb/clas12/sw/noarch/clas12-config/dev/gemc/dev/rga_fall2018.gcard \
   -N=100 -USE_GUI=0
@@ -73,46 +73,45 @@ The C++ build requires:
 - Xerces-C 3.2.5 or newer
 - Qt 6, OpenGL, SQLite, Expat, and zlib
 
-Meson resolves Assimp, CCDB, HIPO, and `clas12-cmag` through the wraps under `source/subprojects`. A first build
-therefore needs network access unless those subprojects are already present.
-
-At Jefferson Lab, this is the only environment setup needed to compile GEMC:
+At Jefferson Lab, this accomplished by loading the `gemc/meson` module,
 
 ```shell
-module use /scigroup/cvmfs/geant4/g4install/modules
-module load geant4
+module load gemc/meson
 ```
 
-### Build, test, and install
+For local installations, we suggest using the [g4install repository](https://github.com/gemc/g4install) to install the 
+Geant4 toolchain, but that is not required. A valid Geant4 installation, wich `geant4-config` in the user path, is
+sufficient.
 
-Configure from `source` with an explicit installation prefix. Release mode, static linking, C++17,
-and disabled sanitizers are baked into the project defaults (see `default_options` in `source/meson.build`),
-so those never need to be passed. Any default can still be overridden on the command line (e.g.
-`-Dbuildtype=debug`). Use an absolute path for the prefix — meson does not expand `~`:
+<br/>
+
+
+### Build  and install
+
+Setup from within `source`. Here we use a `build` directory for the build. Replace the `--prefix` path with
+the desired installation path.
 
 ```shell
 cd source
-meson setup build \
-  --prefix=$HOME/clas12Tags-install
-meson compile -C build
-meson install -C build
-meson test -C build --suite clas12 --print-errorlogs -j 1
+meson setup build --prefix=$HOME/clas12Tags-install
+meson install -C build --quiet
 ```
 
-Geant4 ships no `pkg-config` file, so `meson setup` generates `geant4.pc` / `geant4_core.pc` into the
-build tree (`build/pkgconfig`) and puts that directory on the `pkg-config` search path internally — no
-`PKG_CONFIG_PATH` export or `-Dpkg_config_path` flag is needed. The files are also installed to
-`<prefix>/lib/pkgconfig`, where downstream GEMC projects resolve `geant4_core` from the installed tree.
-CLHEP, Xerces-C, and Qt are still located through the environment set by `module load geant4`.
+<br/>
 
-The explicit prefix prevents a loaded GEMC installation from becoming the destination accidentally. Installation
-also places the field maps under the selected prefix, where tests using `source/build/gemc` can find them.
+### Tests
+
+Meson tests are provided to execute the various subsystems gcards. To run all tests:
+
+```shell
+meson test -C build --suite clas12
+```
 
 The tests use the default remote CCDB connection. To use a local snapshot, set it before `meson test`:
 
 ```shell
 export CCDB_CONNECTION="sqlite:////absolute/path/to/ccdb.sqlite"
-meson test -C build --suite clas12 --print-errorlogs -j 1
+meson test -C build --suite clas12 
 ```
 
 The four slashes are intentional for an absolute SQLite path. Compilation and installation do not require a CCDB
@@ -121,8 +120,10 @@ connection, but simulation tests do. A first build and any missing field-map dow
 To run only one detector suite:
 
 ```shell
-meson test -C build --suite ec --print-errorlogs -j 1
+meson test -C build --suite ec
 ```
+
+<br/>
 
 ### Run an installed GEMC
 
@@ -135,7 +136,7 @@ from the executable. For the GEMC executable itself, the only GEMC-specific runt
 export PATH="/absolute/path/to/clas12Tags-install/bin:$PATH"
 ```
 
-`GEMC_DATA_DIR`, the `FIELD_DIR` environment variable, and `GEMC` are not required to run GEMC. Additional setup
+`GEMC_DATA_DIR`, the `FIELD_DIR` environment variable, and `GEMC` are no longer required to run GEMC. Additional setup
 is needed only for these cases:
 
 - Geant4 dataset variables must be available if they are not already provided by the system installation.
@@ -144,9 +145,7 @@ is needed only for these cases:
 - `PYTHONPATH` (for the Python API) or `PERL5LIB` (for geometry-generation scripts that live outside
   `api/perl`) may be added to use the APIs. The API modules self-locate, and `GEMC` is not used anywhere.
 
-The [g4install repository][g4install] provides the Geant4 installation scripts and module environment used
-by GEMC.
-
+  
 <br/>
 
 ## Generating CLAS12 geometry
@@ -237,15 +236,6 @@ These focused gcards load only their detector, not the other CLAS12 systems.
 
 <br/>
 
-## Running at Jefferson Lab
-
-Add the `bin` directory of either a tagged production installation or the `dev` installation to `PATH`. No GEMC
-module is required. The matching CLAS12-config path must also be used:
-
-- use the production CLAS12-config tree with a tagged GEMC release
-- use `clas12-config/dev/gemc/dev` with the GEMC `dev` installation
-
-<br/>
 
 ## Documentation
 

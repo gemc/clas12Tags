@@ -5,8 +5,7 @@ cdir=$script_dir
 cd "$cdir" || exit 1
 
 # The Perl API lives alongside this script, so use it directly - no GEMC variable needed. The
-# geometry scripts (./<det>.pl) still need api/perl on PERL5LIB to resolve the api modules.
-export PERL5LIB=${PERL5LIB:-}:$cdir/api/perl
+# geometry scripts (./<det>.pl) self-locate api/perl via FindBin, so PERL5LIB is not required.
 export COATJAVA=$cdir/geometry_source/coatjava
 export PATH=$PATH:$COATJAVA/bin
 
