@@ -18,22 +18,35 @@ use Math::Trig;
 # Loading configuration file from argument
 our %configuration = load_configuration($ARGV[0]);
 
+my $toRad = 3.14156/180;
+my $Dat25deg = 596; # distance of the upstream face from the target at 25 deg
+my $ThetaU   = 25 * $toRad; # deg
+my $ThetaMin =  7 * $toRad; # deg
+my $ThetaMax = 30 * $toRad; # deg
+my $ThetaCut = 30 * $toRad; # deg
+my $CwidthU = 13;
+my $CwidthD = 17;
+my $Clength = 190;
 
 
 sub buildEcal_motherVolume
 {
- 
+    my $otheta = $ThetaCut + 0.0*$toRad;;
+    my $itheta = $ThetaMin - 0.3*$toRad;;
+
+    my $rminU = ($Dat25deg         +1 ) * ( tan($ThetaU) - tan($ThetaU - $itheta) )*cos($ThetaU);
+    my $rmaxU = ($Dat25deg         +1 ) * ( tan($ThetaU) + tan($otheta - $ThetaU) )*cos($ThetaU);
+    my $rminD = ($Dat25deg+$Clength+14) * ( tan($ThetaU) - tan($ThetaU - $itheta) )*cos($ThetaU);
+    my $rmaxD = ($Dat25deg+$Clength+14) * ( tan($ThetaU) + tan($otheta - $ThetaU) )*cos($ThetaU);
+    my @zs = ($rmaxU/tan($otheta), $rminU/tan($itheta), $rmaxD/tan($otheta), $rminD/tan($itheta));
+    my @ir = ($rmaxU, $rminU, $zs[2]*tan($itheta), $rminD);	
+    my @or = ($rmaxU, $zs[1]*tan($otheta), $rmaxD, $rminD);	
+
     my $nplanes = 4;
-    my @ecal_iradius = (301, 72.8, 81.5, 98.7 );
-    my @ecal_oradius = (301.1, 360.6, 401, 98.8 );
-    my @ecal_zpos_root = (520, 625, 696, 836);
-
-
     my $dimen = "0.0*deg 360*deg $nplanes*counts";
-    
-    for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $ecal_iradius[$i]*mm";}
-    for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $ecal_oradius[$i]*mm";}
-    for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $ecal_zpos_root[$i]*mm";}
+    for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $ir[$i]*mm";}
+    for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $or[$i]*mm";}
+    for(my $i = 0; $i <$nplanes; $i++) {$dimen = $dimen ." $zs[$i]*mm";}
     
     
     my %detector = init_det();
@@ -57,19 +70,12 @@ sub buildEcal_motherVolume
 # PbWO4 Crystal;
 sub make_mucal_crystals
 {
-        my $toRad = 3.14156/180;
-        my $Dat25deg = 596; # distance of the upstream face from the target at 25 deg
-        my $ThetaU   = 25 * $toRad; # deg
-        my $ThetaMin =  7 * $toRad; # deg
-        my $ThetaMax = 30 * $toRad; # deg
-        my $CwidthU = 13;
-        my $CwidthD = 17;
-        my $Clength = 190;
-        my $CrminU = ($Dat25deg+$Clength/2) * ( tan($ThetaU) - tan($ThetaU - $ThetaMin) )*cos($ThetaU);
-        my $CrmaxU = ($Dat25deg+$Clength/2) * ( tan($ThetaU) + tan($ThetaMax - $ThetaU) )*cos($ThetaU);
+        my $Crmin = ($Dat25deg+$Clength/2) * ( tan($ThetaU) - tan($ThetaU - $ThetaMin) )*cos($ThetaU);
+        my $Crmax = ($Dat25deg+$Clength/2) * ( tan($ThetaU) + tan($ThetaMax - $ThetaU) )*cos($ThetaU);
+        my $Crcut = ($Dat25deg+$Clength/2) * ( tan($ThetaU) + tan($ThetaCut - $ThetaU) )*cos($ThetaU);
 	my $microgap = 0.5;
         my $Cwidth = ($CwidthU+$CwidthD)/2 + $microgap;
-	my $nCrystal = 2*(int($CrmaxU / $Cwidth)+0);
+	my $nCrystal = 2*(int($Crmax / $Cwidth)+0);
 
 	for(my $iX = 0; $iX < $nCrystal; $iX++)
 	{
@@ -88,10 +94,10 @@ sub make_mucal_crystals
 			my $rad3 = sqrt($x12 + $y22);
 			my $rad4 = sqrt($x22 + $y12);
 			
-			if($rad1 > $CrminU + $microgap && $rad1 < $CrmaxU - $microgap &&
-				$rad2 > $CrminU + $microgap && $rad2 < $CrmaxU - $microgap &&
-				$rad3 > $CrminU + $microgap && $rad3 < $CrmaxU - $microgap &&
-				$rad4 > $CrminU + $microgap && $rad4 < $CrmaxU - $microgap
+			if($rad1 > $Crmin + $microgap && $rad1 < $Crcut - $microgap &&
+				$rad2 > $Crmin + $microgap && $rad2 < $Crcut - $microgap &&
+				$rad3 > $Crmin + $microgap && $rad3 < $Crcut - $microgap &&
+				$rad4 > $Crmin + $microgap && $rad4 < $Crcut - $microgap
 				)
 			{
 				
@@ -136,6 +142,9 @@ sub make_mucal_crystals
 
 sub  makeEcal{
     
+    $ThetaCut = shift;
+    $ThetaCut *= $toRad;
+
     buildEcal_motherVolume();
     make_mucal_crystals();
     
