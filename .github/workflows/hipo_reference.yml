@@ -75,7 +75,7 @@ jobs:
             # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
             fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
           - system: ft
-            gcard: experiments/clas12/ltcc/ft_text_default.gcard
+            gcard: experiments/clas12/ft/ft_text_default.gcard
             n_events: 20000
             # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
             fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
@@ -91,7 +91,7 @@ jobs:
           fetch-depth: 1
 
       - name: Cache field maps
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: ${{ github.workspace }}/fields
           key: clas12-fields-${{ matrix.system }}-${{ hashFiles('.github/workflows/hipo_reference.yml') }}
@@ -206,7 +206,7 @@ jobs:
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish rolling reference release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: ${{ env.REFERENCE_TAG }}
           name: HIPO comparison reference (rolling)
