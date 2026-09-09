@@ -6,6 +6,18 @@ use clas12_configuration_string;
 
 our %configuration;
 
+# The FT calorimeter and hodoscope are read out only for a subset of run periods.
+# For the configurations below the FT is off: the volumes are still built (so the
+# passive material is present) but no sensitivity is assigned to ft_cal and ft_hodo.
+# This is the same set of configurations for which the FT tracker is not installed.
+sub ft_is_off {
+    my $configuration_string = clas12_configuration_string(\%configuration);
+    return ($configuration_string eq "rgk_winter2018"
+        || $configuration_string eq "rgf_spring2020"
+        || $configuration_string eq "rgd_fall2023"
+        || $configuration_string eq "rgc_summer2022");
+}
+
 
 ###########################################################################################
 ###########################################################################################
@@ -496,6 +508,7 @@ sub make_ft_cal_crystals_volume {
 
 # Loop over all crystals and define their positions
 sub make_ft_cal_crystals {
+    my $ft_off = ft_is_off();
     my $centX = (int $Nx / 2) + 0.5;
     my $centY = (int $Ny / 2) + 0.5;
     my $locX = 0.;
@@ -579,9 +592,11 @@ sub make_ft_cal_crystals {
                 $detector{"dimensions"} = "$dX*mm $dY*mm $dZ*mm";
                 $detector{"material"} = "G4_PbWO4";
                 $detector{"style"} = "1";
-                $detector{"sensitivity"} = "ft_cal";
-                $detector{"hit_type"} = "ft_cal";
-                $detector{"identifiers"} = "ih manual $iX iv manual $iY";
+                unless ($ft_off) {
+                    $detector{"sensitivity"} = "ft_cal";
+                    $detector{"hit_type"} = "ft_cal";
+                    $detector{"identifiers"} = "ih manual $iX iv manual $iY";
+                }
                 print_det(\%configuration, \%detector);
 
                 # LED housing
@@ -1167,6 +1182,7 @@ sub make_ft_hodo {
     if ($configuration_string eq "rgc_fall2022") {
         return;
     }
+    my $ft_off = ft_is_off();
 
     my %detector = init_det();
     $detector{"name"} = "ft_hodo";
@@ -1289,9 +1305,11 @@ sub make_ft_hodo {
                 $detector{"dimensions"} = "$WW_TILE*mm $WW_TILE*mm $TILE_TN*mm";
                 $detector{"material"} = "scintillator";
                 $detector{"style"} = 1;
-                $detector{"sensitivity"} = "ft_hodo";
-                $detector{"hit_type"} = "ft_hodo";
-                $detector{"identifiers"} = "sector manual $S layer manual $L component manual $I";
+                unless ($ft_off) {
+                    $detector{"sensitivity"} = "ft_hodo";
+                    $detector{"hit_type"} = "ft_hodo";
+                    $detector{"identifiers"} = "sector manual $S layer manual $L component manual $I";
+                }
                 print_det(\%configuration, \%detector);
 
             }
@@ -1349,9 +1367,11 @@ sub make_ft_hodo {
                 $detector{"dimensions"} = "$WW_TILE*mm $WW_TILE*mm $TILE_TN*mm";
                 $detector{"material"} = "scintillator";
                 $detector{"style"} = 1;
-                $detector{"sensitivity"} = "ft_hodo";
-                $detector{"hit_type"} = "ft_hodo";
-                $detector{"identifiers"} = "sector manual $S layer manual $L component manual $I";
+                unless ($ft_off) {
+                    $detector{"sensitivity"} = "ft_hodo";
+                    $detector{"hit_type"} = "ft_hodo";
+                    $detector{"identifiers"} = "sector manual $S layer manual $L component manual $I";
+                }
                 print_det(\%configuration, \%detector);
 
             }
@@ -2128,12 +2148,7 @@ sub make_ft_trk_fee_boxes {
 }
 
 sub make_ft_trk {
-    my $configuration_string = clas12_configuration_string(\%configuration);
-
-    if ($configuration_string eq "rgk_winter2018"
-        || $configuration_string eq "rgf_spring2020"
-        || $configuration_string eq "rgd_fall2023"
-        || $configuration_string eq "rgc_summer2022") {
+    if (ft_is_off()) {
         return;
     }
     make_ft_trk_mother();
