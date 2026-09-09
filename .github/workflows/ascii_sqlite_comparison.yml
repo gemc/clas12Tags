@@ -52,6 +52,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
+
+      - name: Fix Java Version
+        uses: actions/setup-java@v5
+        with:
+          java-version: '21'
+          distribution: 'zulu'
+
+      - name: Install Git LFS
+        run: |
+          dnf -y install git-lfs
+
+      - name: Build Coatjava
+        run: |
+          cd ./geometry_source
+          git lfs install
+          ./install_coatjava.sh -l
+          
       - name: Build GEMC
         run: |
           ./ci/build_gemc.sh

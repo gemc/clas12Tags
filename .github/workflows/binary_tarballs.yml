@@ -69,7 +69,7 @@ jobs:
   discover:
     if: >-
       ${{
-        (github.event_name == 'workflow_dispatch' && github.ref_name == 'meson') ||
+        github.event_name == 'workflow_dispatch' ||
         (
           github.event.workflow_run.conclusion == 'success' &&
           github.event.workflow_run.head_branch == 'meson'
@@ -80,6 +80,13 @@ jobs:
     outputs:
       matrix_build: ${{ steps.scan.outputs.matrix_build }}
     steps:
+      - name: Require meson for manual runs
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref_name != 'meson' }}
+        shell: bash
+        run: |
+          echo "::error title=Unsupported branch::Select meson in the Run workflow branch dropdown."
+          exit 1
+
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
