@@ -47,7 +47,7 @@ with the latest tagged Coatjava release.
 
 ## Quickstart at JLab
 
-Load the gemc meson module:
+Load the gemc meson module. This will load geant4 and put the installed gemc in your path.
 
 ```shell
 module load gemc/meson
@@ -61,7 +61,7 @@ that GEMC version.
 
 <br/>
 
-## Installation
+## Installation from source
 
 ### Prerequisites
 
@@ -73,14 +73,14 @@ The C++ build requires:
 - Xerces-C 3.2.5 or newer
 - Qt 6, OpenGL, SQLite, Expat, and zlib
 
-At Jefferson Lab, this accomplished by loading the `gemc/meson` module,
+At Jefferson Lab, this is accomplished by loading the `gemc/meson` and the `python` modules.
 
 ```shell
-module load gemc/meson
+module load gemc/meson python
 ```
 
 For local installations, we suggest using the [g4install repository](https://github.com/gemc/g4install) to install the 
-Geant4 toolchain, but that is not required. A valid Geant4 installation, wich `geant4-config` in the user path, is
+Geant4 toolchain, but that is not required. A valid Geant4 installation, with `geant4-config` in the user path, is
 sufficient.
 
 <br/>
@@ -93,9 +93,12 @@ the desired installation path.
 
 ```shell
 cd source
-meson setup build --prefix=$HOME/clas12Tags-install
-meson install -C build --quiet
+meson setup build --prefix=<clas12Tags-install-path>
+meson install -C build 
 ```
+
+The install directive will install the executable, includes, libraries, geometry databases. 
+It will also downloaded field maps.
 
 <br/>
 
@@ -107,25 +110,21 @@ Meson tests are provided to execute the various subsystems gcards. To run all te
 meson test -C build --suite clas12
 ```
 
-The tests use the default remote CCDB connection. To use a local snapshot, set it before `meson test`:
-
-```shell
-export CCDB_CONNECTION="sqlite:////absolute/path/to/ccdb.sqlite"
-meson test -C build --suite clas12 
-```
-
-The four slashes are intentional for an absolute SQLite path. Compilation and installation do not require a CCDB
-connection, but simulation tests do. A first build and any missing field-map downloads require network access.
-
 To run only one detector suite:
 
 ```shell
 meson test -C build --suite ec
 ```
 
+To list all available tests:
+
+```shell
+meson test -C build --list
+```
+
 <br/>
 
-### Run an installed GEMC
+### Run the installed GEMC
 
 The installation places the executable in `<prefix>/bin`, the APIs in `<prefix>/api`, geometry and gcards in
 `<prefix>/experiments`, and magnetic field maps in `<prefix>/fields`. GEMC derives its data and field locations
@@ -133,42 +132,24 @@ from the executable. For the GEMC executable itself, the only GEMC-specific runt
 `PATH`:
 
 ```shell
-export PATH="/absolute/path/to/clas12Tags-install/bin:$PATH"
+export PATH="<clas12Tags-install-path>/bin:$PATH"
 ```
 
-`GEMC_DATA_DIR`, the `FIELD_DIR` environment variable, and `GEMC` are no longer required to run GEMC. Additional setup
-is needed only for these cases:
-
-- Geant4 dataset variables must be available if they are not already provided by the system installation.
-- `CCDB_CONNECTION` selects a nondefault CCDB server or local SQLite snapshot.
-- `-FIELD_DIR=/path/to/fields` selects field maps outside the standard executable-relative installation.
-- `PYTHONPATH` (for the Python API) or `PERL5LIB` (for geometry-generation scripts that live outside
-  `api/perl`) may be added to use the APIs. The API modules self-locate, and `GEMC` is not used anywhere.
+The `GEMC_DATA_DIR`, `FIELD_DIR` and `GEMC` environment variables are no longer required to run GEMC, but can still be
+used to override the default locations of the geometry databases and field maps locations.
 
   
 <br/>
 
 ## Generating CLAS12 geometry
 
+
 ### Requirements and environment
 
-Geometry generation requires Maven, OpenJDK 17 or newer, Groovy, the GEMC Perl API, and a CCDB connection.
-The Perl API modules self-locate, so only the geometry scripts that live outside `api/perl` need that
-directory on `PERL5LIB`. `create_geometry.sh` sets this up automatically from its own location; to run the
-scripts by hand, point `PERL5LIB` at the install (no `GEMC` variable needed):
+Geometry generation requires Maven, OpenJDK 17 or newer, Groovy, a GEMC installation, and a CCDB connection.
+At JLab, this is accomplished by loading the `jdk` and `groovy` modules.
 
-```shell
-export PERL5LIB="/absolute/path/to/clas12Tags-install/api/perl:${PERL5LIB:-}"
-```
-
-When developing locally:
-
-- The Perl and Python APIs load their modules from the repository `api/` directory; no `GEMC` is needed.
-- Detector gcards under `geometry_source` already load their databases from the local detector directory.
-- The local `source/build/gemc` finds the repository `experiments` directory automatically. Pass
-  `-FIELD_DIR=/path/to/fields` when its maps are not in the repository.
-- Use the local `source/build/gemc` or `<prefix>/bin/gemc` when testing C++ changes; otherwise the
-  module-provided executable may be selected first.
+<br/>
 
 ### Create geometry databases
 
@@ -191,7 +172,7 @@ Detectors:
   murt upstream
 ```
 
-The script installs the selected Coatjava release under `geometry_source` when needed, runs the requested
+The script installs, if not already present, the selected Coatjava release under `geometry_source` when needed, runs the requested
 geometry services, writes the ASCII databases to `experiments/clas12/<detector>`, and creates or updates
 `clas12.sqlite`.
 
@@ -200,11 +181,13 @@ geometry services, writes the ASCII databases to `experiments/clas12/<detector>`
 
 Examples:
 
-- `./create_geometry.sh cnd` installs the latest Coatjava release if needed and generates the CND ASCII and
+- `./create_geometry.sh cnd` installs the latest Coatjava release (if needed) and generates the CND ASCII and
   SQLite geometry.
 - `./create_geometry.sh` generates every supported CLAS12 detector.
 - `./create_geometry.sh -t 12.0.4t bst` generates BST with Coatjava tag `12.0.4t`.
 - `./create_geometry.sh -c "sqlite:////absolute/path/to/ccdb.sqlite" cnd` uses a local CCDB snapshot.
+
+<br/>
 
 ### Develop one detector locally
 
@@ -332,10 +315,10 @@ Merges to `main` run the validation workflows and produce artifacts containing t
 databases. A periodic job installs successful builds at Jefferson Lab:
 
 - `/scigroup/cvmfs` on the ifarm is normally updated 2–8 hours after a merge passes CI and the merge queue.
-- `/cvmfs/oasis.opensciencegrid.org` is normally updated another 4–8 hours after the Jefferson Lab
-  installation, when CVMFS synchronization runs.
+- `/cvmfs/oasis.opensciencegrid.org` is normally synced another 4–8 hours after the Jefferson Lab
+  installation.
 
-CI also refreshes the GitHub `dev` prerelease nightly.
+CI also refreshes the GitHub `dev` prerelease nightly, which is then installed in /scigroup.
 
 Pull requests are reviewed and enter the merge queue after the required checks pass. The current build matrix
 covers Ubuntu, Fedora, AlmaLinux, Debian, and Arch Linux on supported `amd64` and `arm64` runners. Validation
