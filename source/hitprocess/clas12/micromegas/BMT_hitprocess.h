@@ -72,8 +72,6 @@ private:
 	// constants initialized with initWithRunNumber
 	static bmtConstants bmtc;
 
-	[[maybe_unused]] double fieldScale;
-
 	void initWithRunNumber(int runno) override;
 
 	// - electronicNoise: returns a vector of hits generated / by electronics.

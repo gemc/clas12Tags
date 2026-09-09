@@ -69,11 +69,6 @@ private:
 	int cacheVersion = 0;
 	CacheSignature sig{};
 
-	// cache signature (rebuild if any changes)
-	[[maybe_unused]] double sig_xSmall = 0, sig_xLarge = 0, sig_y = 0, sig_z = 0;
-	[[maybe_unused]] double sig_zReadout = 0, sig_pitch = 0, sig_width = 0, sig_stereoY = 0;
-	[[maybe_unused]] std::array<double, 9> sig_rot{{0, 0, 0, 0, 0, 0, 0, 0, 0}};
-
 	std::vector<StripGeom> strips;		  // index = stripID-1
 	std::unordered_map<int, int> idxToID; // internalIndex -> stripID
 
