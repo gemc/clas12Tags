@@ -30,7 +30,7 @@ std::unordered_map<int, StripDigitizer> muvt_HitProcess::digiV_byLayer;
 static StripConstants initializemuvtConstants(int runno,
                                               string digiVariation = "default",
                                               string digiSnapshotTime = "no",
-                                              bool accountForHardwareStatus = false)
+                                              [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 
   StripConstants muvtC;
@@ -128,7 +128,7 @@ map<string, double> muvt_HitProcess::integrateDgt(MHit *aHit, int hitn)
   return dgtz;
 }
 
-vector<identifier> muvt_HitProcess::processID(vector<identifier> id, G4Step *aStep, detector Detector)
+vector<identifier> muvt_HitProcess::processID(vector<identifier> id, G4Step *aStep, [[maybe_unused]] detector Detector)
 {
 
   if (muvtC.runNo == -1)
@@ -283,7 +283,7 @@ vector<MHit *> muvt_HitProcess ::electronicNoise()
 }
 
 // - charge: returns charge/time digitized information / step
-map<int, vector<double>> muvt_HitProcess ::chargeTime(MHit *aHit, int hitn)
+map<int, vector<double>> muvt_HitProcess ::chargeTime([[maybe_unused]] MHit *aHit, [[maybe_unused]] int hitn)
 {
   map<int, vector<double>> CT;
 
@@ -293,12 +293,12 @@ map<int, vector<double>> muvt_HitProcess ::chargeTime(MHit *aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double muvt_HitProcess ::voltage(double charge, double time, double forTime)
+double muvt_HitProcess ::voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
   return 0.0;
 }
 
-map<string, vector<int>> muvt_HitProcess ::multiDgt(MHit *aHit, int hitn)
+map<string, vector<int>> muvt_HitProcess ::multiDgt([[maybe_unused]] MHit *aHit, [[maybe_unused]] int hitn)
 {
   map<string, vector<int>> MH;
 

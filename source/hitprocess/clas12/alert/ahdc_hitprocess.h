@@ -65,7 +65,7 @@ public:
 	}
 
 	// convert each (sector, layer, component) to a number between 0 and 575 (we have 576 wires)
-	static int getUniqueId(int sector, int layer, int component) {
+	static int getUniqueId([[maybe_unused]] int sector, int layer, int component) {
 		if      (layer == 11) {
 			return component - 1;
 		} 

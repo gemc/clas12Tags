@@ -11,7 +11,7 @@ using namespace gstring;
 using namespace CLHEP;
 
 
-vtxControls::vtxControls(goptions *Opts, string type)
+vtxControls::vtxControls([[maybe_unused]] goptions *Opts, [[maybe_unused]] string type)
 {	
 	// vector of string - filled from the various option
 	vector<string> values;

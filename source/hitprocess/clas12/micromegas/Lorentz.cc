@@ -9,7 +9,7 @@ using namespace ccdb;
 
 
 
-void Lorentz::Initialize(int runno){
+void Lorentz::Initialize([[maybe_unused]] int runno){
 	
 	if(getenv ("CCDB_CONNECTION") != nullptr) {
 		connection = (string) getenv("CCDB_CONNECTION");

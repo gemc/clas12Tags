@@ -74,8 +74,8 @@ private:
 	
 	// constants initialized with initWithRunNumber
 	static murtConstants murtc;
-	
-	double fieldScale;
+
+	[[maybe_unused]] double fieldScale;
 	
 	void initWithRunNumber(int runno);
 	

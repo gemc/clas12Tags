@@ -118,7 +118,7 @@ string hipo_output::getHipoVariableName(string trueInfoVar) {
 
 // instantiates hipo event
 // write run::config bank
-void hipo_output::writeHeader(outputContainer *output, map<string, double> data, gBank bank) {
+void hipo_output::writeHeader(outputContainer *output, map<string, double> data, [[maybe_unused]] gBank bank) {
     int verbosity = int(output->gemcOpt.optMap["BANK_VERBOSITY"].arg);
 
     //	for(auto &fieldScale: fieldScales) {
@@ -279,7 +279,7 @@ void hipo_output::writeUserInfoseHeader(outputContainer *output, map<string, dou
 }
 
 
-void hipo_output::writeRFSignal(outputContainer *output, FrequencySyncSignal rfsignals, gBank bank) {
+void hipo_output::writeRFSignal(outputContainer *output, FrequencySyncSignal rfsignals, [[maybe_unused]] gBank bank) {
     int verbosity = int(output->gemcOpt.optMap["BANK_VERBOSITY"].arg);
 
     // Create runRFBank with 1 row based on schema
@@ -313,7 +313,7 @@ void hipo_output::writeRFSignal(outputContainer *output, FrequencySyncSignal rfs
     outEvent->addStructure(runRFBank);
 }
 
-void hipo_output::writeGenerated(outputContainer *output, vector <generatedParticle> MGP, map <string, gBank> *banksMap, vector <userInforForParticle> userInfo) {
+void hipo_output::writeGenerated(outputContainer *output, vector <generatedParticle> MGP, [[maybe_unused]] map <string, gBank> *banksMap, vector <userInforForParticle> userInfo) {
     double MAXP = output->gemcOpt.optMap["NGENP"].arg;
     int verbosity = int(output->gemcOpt.optMap["BANK_VERBOSITY"].arg);
 
@@ -470,7 +470,7 @@ void hipo_output::writeGenerated(outputContainer *output, vector <generatedParti
 
 }
 
-void hipo_output::writeAncestors(outputContainer *output, vector <ancestorInfo> ainfo, gBank bank) {
+void hipo_output::writeAncestors([[maybe_unused]] outputContainer *output, vector <ancestorInfo> ainfo, [[maybe_unused]] gBank bank) {
     vector<int> pid;
     vector<int> tid;
     vector<int> mtid;
@@ -498,7 +498,7 @@ void hipo_output::writeAncestors(outputContainer *output, vector <ancestorInfo> 
 
 }
 
-void hipo_output::initBank(outputContainer *output, gBank thisHitBank, int what) {
+void hipo_output::initBank([[maybe_unused]] outputContainer *output, [[maybe_unused]] gBank thisHitBank, [[maybe_unused]] int what) {
 
 }
 
@@ -881,19 +881,19 @@ void hipo_output::writeChargeTime(outputContainer *output, vector <hitOutput> HO
 }
 
 
-void hipo_output::writeG4RawAll(outputContainer *output, vector <hitOutput> HO, string hitType, map <string, gBank> *banksMap) {
+void hipo_output::writeG4RawAll([[maybe_unused]] outputContainer *output, [[maybe_unused]] vector <hitOutput> HO, [[maybe_unused]] string hitType, [[maybe_unused]] map <string, gBank> *banksMap) {
 }
 
-void hipo_output::writeFADCMode1(map<int, vector<hitOutput> > HO, int ev_number) {
+void hipo_output::writeFADCMode1([[maybe_unused]] map<int, vector<hitOutput> > HO, [[maybe_unused]] int ev_number) {
 }
 
 
-void hipo_output::writeFADCMode1(outputContainer *output, vector <hitOutput> HO, int ev_number) {
+void hipo_output::writeFADCMode1([[maybe_unused]] outputContainer *output, [[maybe_unused]] vector <hitOutput> HO, [[maybe_unused]] int ev_number) {
 }
 
 
 // write fadc mode 7 (integrated mode) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
-void hipo_output::writeFADCMode7(outputContainer *output, vector <hitOutput> HO, int ev_number) {
+void hipo_output::writeFADCMode7([[maybe_unused]] outputContainer *output, [[maybe_unused]] vector <hitOutput> HO, [[maybe_unused]] int ev_number) {
 }
 
 void hipo_output::writeEvent(outputContainer *output) {

@@ -154,7 +154,7 @@ map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 
 
 
-vector<identifier> ahdc_HitProcess::processID(vector<identifier> id, G4Step* aStep, detector Detector) {
+vector<identifier> ahdc_HitProcess::processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector) {
 
 	id[id.size()-1].id_sharing = 1;
 	return id;
@@ -178,7 +178,7 @@ vector<MHit*> ahdc_HitProcess::electronicNoise() {
 	return noiseHits;
 }
 
-map< string, vector <int> > ahdc_HitProcess::multiDgt(MHit* aHit, int hitn) {
+map< string, vector <int> > ahdc_HitProcess::multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn) {
 	map< string, vector <int> > MH;
 	
 	return MH;
@@ -187,7 +187,7 @@ map< string, vector <int> > ahdc_HitProcess::multiDgt(MHit* aHit, int hitn) {
 // - charge: returns charge/time digitized information / step
 // this method is implemented in ftof, but information from this bank is not translated into the root format right now (29/05/2020)
 // the output is only visible in .txt output of gemc simulation + <option name="SIGNALVT" value="ftof"/> into gcard
-map< int, vector <double> > ahdc_HitProcess::chargeTime(MHit* aHit, int hitn) {
+map< int, vector <double> > ahdc_HitProcess::chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn) {
 	map< int, vector <double> >  CT;
 	
 	return CT;
@@ -197,7 +197,7 @@ map< int, vector <double> > ahdc_HitProcess::chargeTime(MHit* aHit, int hitn) {
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
 
-double ahdc_HitProcess::voltage(double charge, double time, double forTime) {
+double ahdc_HitProcess::voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime) {
 	return 0.0;
 }
 

@@ -258,7 +258,7 @@ vector<MHit*> rich_HitProcess :: electronicNoise()
 
 
 // - charge: returns charge/time digitized information / step
-map<int, vector<double> > rich_HitProcess::chargeTime(MHit *aHit, int hitn) {
+map<int, vector<double> > rich_HitProcess::chargeTime([[maybe_unused]] MHit *aHit, [[maybe_unused]] int hitn) {
     map<int, vector<double> > CT;
 
     return CT;
@@ -613,7 +613,7 @@ void RichPixel::ChargeToDuration()
   return;
 }
 /* ---------------------------------------------------*/
-bool RichPixel::GenerateTDCfromADC(double qadc, double t0)
+bool RichPixel::GenerateTDCfromADC(double qadc, [[maybe_unused]] double t0)
 {
 
   /* PMT time response */

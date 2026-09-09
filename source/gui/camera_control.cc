@@ -528,7 +528,7 @@ void camera_control::set_perspective(int index)
 	UImanager->ApplyCommand(command);
 }
 
-void camera_control::switch_antialiasing(int index)
+void camera_control::switch_antialiasing([[maybe_unused]] int index)
 {
 //	if(index == 0)
 //	{

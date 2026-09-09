@@ -18,7 +18,7 @@ using namespace ccdb;
 
 double BARLENGTHS[]  = {163.7,201.9,51.2,51.2,201.9};
 
-static bandHitConstants initializeBANDHitConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static bandHitConstants initializeBANDHitConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	bandHitConstants bhc;
@@ -392,7 +392,7 @@ vector<identifier>  band_HitProcess :: processID(vector<identifier> id, [[ maybe
 	return yid;}
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > band_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > band_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, int hitn)
 {
 	
 	// All hits within

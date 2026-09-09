@@ -79,7 +79,7 @@ void txt_output :: writeUserInfoseHeader(outputContainer* output, map<string, do
 
 
 
-void txt_output :: writeRFSignal(outputContainer* output, FrequencySyncSignal rfsignals, gBank bank)
+void txt_output :: writeRFSignal(outputContainer* output, FrequencySyncSignal rfsignals, [[maybe_unused]] gBank bank)
 {
 	ofstream *txtout = output->txtoutput ;
 
@@ -168,7 +168,7 @@ void txt_output :: writeGenerated(outputContainer* output, vector<generatedParti
 	*txtout << " --- End of Generated Particles Bank -- " << endl;
 }
 
-void txt_output :: writeAncestors (outputContainer* output, vector<ancestorInfo> ainfo, gBank bank)
+void txt_output :: writeAncestors (outputContainer* output, vector<ancestorInfo> ainfo, [[maybe_unused]] gBank bank)
 {
   ofstream *txtout = output->txtoutput ;
 
@@ -380,7 +380,7 @@ void txt_output :: writeChargeTime(outputContainer* output, vector<hitOutput> HO
 }
 
 // write fadc mode 1 (full signal shape) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
-void txt_output :: writeFADCMode1(outputContainer* output, vector<hitOutput> HO, int event_number)
+void txt_output :: writeFADCMode1([[maybe_unused]] outputContainer* output, [[maybe_unused]] vector<hitOutput> HO, [[maybe_unused]] int event_number)
 {
 }
 
@@ -390,7 +390,7 @@ void txt_output :: writeFADCMode1( map<int, vector<hitOutput> >, int)
 }
 
 // write fadc mode 7 (integrated mode) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
-void txt_output :: writeFADCMode7(outputContainer* output, vector<hitOutput> HO, int event_number)
+void txt_output :: writeFADCMode7([[maybe_unused]] outputContainer* output, [[maybe_unused]] vector<hitOutput> HO, [[maybe_unused]] int event_number)
 {
 }
 

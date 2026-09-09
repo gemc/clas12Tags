@@ -69,16 +69,16 @@ public:
 private:
 
 	// RTPC geometry parameters (constant) These should be consistant with PadVector.java in coatjava.
-	const float PAD_W = 2.79;
+	[[maybe_unused]] const float PAD_W = 2.79;
 	const float PAD_L = 4.0;
-	const float PAD_S = 79.0; // old value was 80.0
+	[[maybe_unused]] const float PAD_S = 79.0; // old value was 80.0
 	const float RTPC_L = 384.0;
 	const float phi_per_pad = (2.0*PI)/180;
 	
 	// parameters for drift and diffustion equations for drift time, 
 	// drift angle, and diffusion in z
-	float a_t, b_t, c_t, diff_at, diff_bt;
-	float a_phi, b_phi, c_phi, diff_aphi, diff_bphi;
+	float a_t, b_t, c_t [[maybe_unused]], diff_at, diff_bt;
+	float a_phi, b_phi, c_phi [[maybe_unused]], diff_aphi, diff_bphi;
 	float a_z, b_z;
 	
 	// variables for storing drift times and diffusion in time

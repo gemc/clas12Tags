@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 #if defined(__APPLE_CC__)
 #include <sys/types.h>
@@ -82,8 +83,7 @@ void lXDR::setFileName(const char *filename, bool open_for_write)
 
    int n = (int)strlen(filename);
    _fileName = new char [n + 1];
-   strncpy(_fileName, filename, n);
-   _fileName[n] = '\0';
+   memcpy(_fileName, filename, n + 1);   // copies the string plus its terminating nul
 
    _openForWrite = open_for_write;
 
@@ -252,13 +252,15 @@ double *lXDR::readFloatArray(long &length)
    // je: FIXME what happens if _hasNetworkOrder == true?!
    if (_hasNetworkOrder == false) {
       for (long i = 0; i < length; i++) {
-         long l = ntohl(st[i]);
          // je: FIXME this will cause problems in architectures where long isn't 4 byte long
-         // 6/09/2025: I tried this w/o success:
-		 //  uint32_t l = /* … */;   // the 32‑bit pattern of a float
-		 // float     f = std::bit_cast<float>(l);
-		 // s[i] = static_cast<double>(f);
-         s[i] = (double) (*((float *) &l));
+         // The 32-bit pattern read as a long represents an IEEE-754 float. Copy those
+         // bits into a float via memcpy: this reinterprets the pattern without violating
+         // strict-aliasing rules (std::bit_cast is unusable here because long and float
+         // differ in size on this platform).
+         uint32_t bits = (uint32_t) ntohl(st[i]);
+         float    f;
+         memcpy(&f, &bits, sizeof(f));
+         s[i] = (double) f;
       }
    }
    _error = LXDR_SUCCESS;

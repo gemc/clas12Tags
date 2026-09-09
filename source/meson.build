@@ -142,7 +142,7 @@ gemc = executable(
 )
 
 install_subdir('../api',         install_dir: get_option('prefix'))
-install_subdir('../experiments', install_dir: get_option('prefix'))
+#install_subdir('../experiments', install_dir: get_option('prefix'))
 #install_data(['../clas12.sqlite'],  install_dir: join_paths(get_option('prefix'), 'experiments', 'clas12'))
 
 

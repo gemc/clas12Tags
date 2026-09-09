@@ -174,7 +174,7 @@ int murt_strip::getStripGroup(int layer, int strip, murtConstants murtc){
 //
 // WARNING: This routine is not used?
 //
-double murt_strip::GetStripInfo(int layer, int sector, int strip, murtConstants murtc)
+double murt_strip::GetStripInfo(int layer, [[maybe_unused]] int sector, int strip, murtConstants murtc)
 {
 	int num_strip = strip - 1;     			// index of the strip (starts at 0)
 	double var=0.;

@@ -16,7 +16,7 @@ using namespace ccdb;
 #include "Randomize.hh"
 
 
-static dcConstants initializeDCConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static dcConstants initializeDCConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	dcConstants dcc;
@@ -630,7 +630,7 @@ double dc_HitProcess :: calc_TimeBeta(double x, double beta, int sector, int sup
 // sector: DC sector
 // superlayer: DC superlayer
 // returns time smearing in ns
-double dc_HitProcess :: doca_smearing(double x, double beta, int sector, int superlayer){
+double dc_HitProcess :: doca_smearing(double x, [[maybe_unused]] double beta, int sector, int superlayer){
 	double doca_smear = 0.0;
 	
 	double dmax = 1;
@@ -678,7 +678,7 @@ G4ThreeVector dc_HitProcess :: psmear(G4ThreeVector p)
 
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > dc_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > dc_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	

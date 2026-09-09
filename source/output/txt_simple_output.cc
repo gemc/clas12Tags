@@ -78,7 +78,7 @@ void txt_simple_output :: writeUserInfoseHeader(outputContainer* output, map<str
 
 
 
-void txt_simple_output :: writeRFSignal(outputContainer* output, FrequencySyncSignal rfsignals, gBank bank)
+void txt_simple_output :: writeRFSignal(outputContainer* output, FrequencySyncSignal rfsignals, [[maybe_unused]] gBank bank)
 {
 	ofstream *txtout = output->txtoutput ;
 
@@ -178,7 +178,7 @@ void txt_simple_output :: writeGenerated(outputContainer* output, vector<generat
 	*txtout << indent(1) << "}" << endl;
 }
 
-void txt_simple_output :: writeAncestors (outputContainer* output, vector<ancestorInfo> ainfo, gBank bank)
+void txt_simple_output :: writeAncestors (outputContainer* output, vector<ancestorInfo> ainfo, [[maybe_unused]] gBank bank)
 {
   ofstream *txtout = output->txtoutput ;
 
@@ -228,7 +228,7 @@ void txt_simple_output :: writeAncestors (outputContainer* output, vector<ancest
 
 }
 
-void txt_simple_output ::  initBank(outputContainer* output, gBank thisHitBank)
+void txt_simple_output ::  initBank([[maybe_unused]] outputContainer* output, [[maybe_unused]] gBank thisHitBank)
 {
 }
 
@@ -409,7 +409,7 @@ void txt_simple_output :: writeChargeTime(outputContainer* output, vector<hitOut
 }
 
 // write fadc mode 1 (full signal shape) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
-void txt_simple_output :: writeFADCMode1(outputContainer* output, vector<hitOutput> HO, int event_number)
+void txt_simple_output :: writeFADCMode1([[maybe_unused]] outputContainer* output, [[maybe_unused]] vector<hitOutput> HO, [[maybe_unused]] int event_number)
 {
 }
 
@@ -419,7 +419,7 @@ void txt_simple_output :: writeFADCMode1( map<int, vector<hitOutput> >, int)
 }
 
 // write fadc mode 7 (integrated mode) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
-void txt_simple_output :: writeFADCMode7(outputContainer* output, vector<hitOutput> HO, int event_number)
+void txt_simple_output :: writeFADCMode7([[maybe_unused]] outputContainer* output, [[maybe_unused]] vector<hitOutput> HO, [[maybe_unused]] int event_number)
 {
 }
 

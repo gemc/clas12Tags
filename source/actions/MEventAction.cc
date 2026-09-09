@@ -185,7 +185,7 @@ MEventAction::~MEventAction() {
 		lundOutput->close();
 }
 
-void MEventAction::BeginOfEventAction(const G4Event* evt) {
+void MEventAction::BeginOfEventAction([[maybe_unused]] const G4Event* evt) {
 	G4RunManager* runManager = G4RunManager::GetRunManager();;
 	if (gen_action->isFileOpen() == false) {
 		runManager->AbortRun();
@@ -274,7 +274,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 		for (map<string, sensitiveDetector*>::iterator it = SeDe_Map.begin(); it != SeDe_Map.end(); it++) {
 			MHC = it->second->GetMHitCollection();
 			if (MHC) {
-				for (int h = 0; h < MHC->GetSize(); h++) {
+				for (int h = 0; h < (int) MHC->GetSize(); h++) {
 					vector<int> pids = (*MHC)[h]->GetPIDs();
 					for (vector<int>::const_iterator pit = pids.begin(); pit != pids.end(); pit++) {
 						if ((FILTER_HADRONS == 1 && abs(*pit) > 99) || *pit == FILTER_HADRONS) {
@@ -296,7 +296,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 		for (map<string, sensitiveDetector*>::iterator it = SeDe_Map.begin(); it != SeDe_Map.end(); it++) {
 			MHC = it->second->GetMHitCollection();
 			if (MHC) {
-				for (int h = 0; h < MHC->GetSize(); h++) {
+				for (int h = 0; h < (int) MHC->GetSize(); h++) {
 					vector<G4ThreeVector> mmts = (*MHC)[h]->GetMoms();
 					for (unsigned int t = 0; t < mmts.size(); t++) {
 						// 		      	cout << "mom " << mmts[t].mag() << endl;
@@ -325,7 +325,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 		for (map<string, sensitiveDetector*>::iterator it = SeDe_Map.begin(); it != SeDe_Map.end(); it++) {
 			MHC = it->second->GetMHitCollection();
 			if (MHC) {
-				for (int h = 0; h < MHC->GetSize(); h++) {
+				for (int h = 0; h < (int) MHC->GetSize(); h++) {
 					vector<int> tids = (*MHC)[h]->GetTIds();
 
 					for (unsigned int t = 0; t < tids.size(); t++) {

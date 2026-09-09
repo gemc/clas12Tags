@@ -208,7 +208,7 @@ map<string, double> cormo_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]
 }
 
 
-vector<identifier>  cormo_HitProcess :: processID(vector<identifier> id, G4Step *step, detector Detector)
+vector<identifier>  cormo_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step *step, [[maybe_unused]] detector Detector)
 {
 	id[id.size()-1].id_sharing = 1;
 	return id;

@@ -162,7 +162,7 @@ public:
 class fastMCForParticle
 {
 public:
-	fastMCForParticle(string detector)
+	fastMCForParticle([[maybe_unused]] string detector)
 	{
 		pOrig  = G4ThreeVector(0,0,0);
 		pSmear = G4ThreeVector(0,0,0);

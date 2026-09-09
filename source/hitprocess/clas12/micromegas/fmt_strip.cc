@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cmath>
 
-vector<double> fmt_strip::FindStrip(int layer, int sector, double x, double y, double z, double Edep, const fmtConstants& fmtc)
+vector<double> fmt_strip::FindStrip(int layer, [[maybe_unused]] int sector, double x, double y, double z, double Edep, const fmtConstants& fmtc)
 {
 	
 	// the return vector is always in pairs.
@@ -148,7 +148,7 @@ void fmt_strip::Carac_strip(int strip, const fmtConstants& fmtc){
 }
 
 
-double fmt_strip::Weight_td(int strip, double x, double y, double z, const fmtConstants& fmtc){
+double fmt_strip::Weight_td(int strip, double x, double y, [[maybe_unused]] double z, const fmtConstants& fmtc){
 	Carac_strip(strip,fmtc);
 	double wght=(erf((strip_y+fmtc.pitch/2.-y)/sigma_td/sqrt(2))-erf((strip_y-fmtc.pitch/2.-y)/sigma_td/sqrt(2)))*(erf((strip_x+strip_length/2.-x)/sigma_td/sqrt(2))-erf((strip_x-strip_length/2.-x)/sigma_td/sqrt(2)))/2./2.;
 	if (wght<0) wght=-wght;

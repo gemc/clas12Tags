@@ -30,7 +30,7 @@ std::unordered_map<int, StripDigitizer> urwt_HitProcess::digiV_byLayer;
 static StripConstants initializeurwtConstants(int runno,
                                               string digiVariation = "default",
                                               string digiSnapshotTime = "no",
-                                              bool accountForHardwareStatus = false)
+                                              [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 
   StripConstants urwtC;
@@ -129,7 +129,7 @@ map<string, double> urwt_HitProcess::integrateDgt(MHit *aHit, int hitn)
   return dgtz;
 }
 
-vector<identifier> urwt_HitProcess ::processID(vector<identifier> id, G4Step *aStep, detector Detector)
+vector<identifier> urwt_HitProcess ::processID(vector<identifier> id, G4Step *aStep, [[maybe_unused]] detector Detector)
 {
 
   if (urwtC.runNo == -1)
@@ -270,7 +270,7 @@ vector<MHit *> urwt_HitProcess ::electronicNoise()
 }
 
 // - charge: returns charge/time digitized information / step
-map<int, vector<double>> urwt_HitProcess ::chargeTime(MHit *aHit, int hitn)
+map<int, vector<double>> urwt_HitProcess ::chargeTime([[maybe_unused]] MHit *aHit, [[maybe_unused]] int hitn)
 {
   map<int, vector<double>> CT;
 
@@ -280,12 +280,12 @@ map<int, vector<double>> urwt_HitProcess ::chargeTime(MHit *aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double urwt_HitProcess ::voltage(double charge, double time, double forTime)
+double urwt_HitProcess ::voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
   return 0.0;
 }
 
-map<string, vector<int>> urwt_HitProcess ::multiDgt(MHit *aHit, int hitn)
+map<string, vector<int>> urwt_HitProcess ::multiDgt([[maybe_unused]] MHit *aHit, [[maybe_unused]] int hitn)
 {
   map<string, vector<int>> MH;
 

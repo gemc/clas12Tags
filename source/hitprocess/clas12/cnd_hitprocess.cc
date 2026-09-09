@@ -629,7 +629,7 @@ map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 // side   = identity[2].id; // side: 1 = left, 2 = right
 // direct = identity[3].id; // direct = 0, indirect = 1  << what we need to duplcate to 1 here
 
-vector<identifier>  cnd_HitProcess :: processID(vector<identifier> id, G4Step *step, detector Detector)
+vector<identifier>  cnd_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step *step, [[maybe_unused]] detector Detector)
 {
 	vector<identifier> yid = id;
 	yid[0].id_sharing = 1; // sector (paddle number)
@@ -681,7 +681,7 @@ map< string, vector <int> >  cnd_HitProcess :: multiDgt([[ maybe_unused ]] MHit*
 }
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > cnd_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > cnd_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -691,7 +691,7 @@ map< int, vector <double> > cnd_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double cnd_HitProcess :: voltage(double charge, double time, double forTime)
+double cnd_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return 0.0;
 }

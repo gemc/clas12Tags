@@ -72,7 +72,7 @@ private:
 	// constants initialized with initWithRunNumber
 	static bmtConstants bmtc;
 
-	double fieldScale;
+	[[maybe_unused]] double fieldScale;
 
 	void initWithRunNumber(int runno) override;
 

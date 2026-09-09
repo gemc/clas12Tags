@@ -451,7 +451,7 @@ std::vector<StripHit> StripDigitizer::FindStrips(const G4ThreeVector &localPos,
 }
 
 int StripDigitizer::GetNumberOfStrips(const StripConstants &c,
-                                      const G4AffineTransform &globalToLocal)
+                                      [[maybe_unused]] const G4AffineTransform &globalToLocal)
 {
     EnsureCache(c);
     return static_cast<int>(strips.size());
