@@ -62,19 +62,23 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: ${{ 'gemc/clas12Tags' }}
+
       - name: Fix Java Version
         uses: actions/setup-java@v5
         with:
           java-version: '21'
           distribution: 'zulu'
+
       - name: Install Git LFS
         run: |
           dnf -y install git-lfs
+
       - name: Build Coatjava
         run: |
           cd ./geometry_source
           git lfs install
           ./install_coatjava.sh -l
+
       - name: Build Gemc
         run: |
           ./ci/build_gemc.sh
