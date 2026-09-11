@@ -1,0 +1,10 @@
+[wrap-git]
+directory = magfield
+url = https://code.jlab.org/hallb/clas12/magfield.git
+# The repository has no tags; main is the only branch. The field maps are stored with git-lfs,
+# so a working git-lfs (git lfs install) is required for the clone to fetch the actual .dat data.
+revision = main
+depth = 1
+# Data-only repository: packagefiles/magfield/meson.build overlays a minimal meson project so that
+# subproject('magfield') can expose the directory holding the field-map .dat files.
+patch_directory = magfield

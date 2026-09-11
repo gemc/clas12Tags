@@ -3,6 +3,7 @@ directory = hipo-cpp
 url = https://code.jlab.org/hallb/clas12/hipo-cpp.git
 revision = 4.4.1
 depth = 1
+diff_files = hipo_install_option.patch
 
 # makes dependency auto-fallback as long as the
 # subproject calls meson.override_dependency

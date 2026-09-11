@@ -1,0 +1,142 @@
+diff --git a/examples/meson.build b/examples/meson.build
+index a4cb51f..e89304d 100644
+--- a/examples/meson.build
++++ b/examples/meson.build
+@@ -48,11 +48,11 @@ foreach ex : example_sources
+       example_name,
+       sources:      ex['sources'],
+       dependencies: [ hipo_dep ] + ex.get('deps', []),
+-      install:      get_option('install_examples'),
++      install:      get_option('include-subproject-install') and get_option('install_examples'),
+     )
+     if(ex.get('test_this', true))
+       test(
+         example_name,
+         example_exe,
+-        suite:       [ 'example' ],
++        suite:       [ 'hipo' ],
+         args:        ex.get('test_args', []),
+diff --git a/examples/root/meson.build b/examples/root/meson.build
+index d30a940..4f649ca 100644
+--- a/examples/root/meson.build
++++ b/examples/root/meson.build
+@@ -11,6 +11,6 @@ foreach ex : example_root_sources
+     example_name,
+     sources:      ex['sources'],
+     dependencies: [ hipo_dep, ROOT_dep ],
+-    install:      ex['install_this'],
++    install:      get_option('include-subproject-install') and ex['install_this'],
+   )
+ endforeach
+diff --git a/extensions/dataframes/meson.build b/extensions/dataframes/meson.build
+index d794123..2b08e41 100644
+--- a/extensions/dataframes/meson.build
++++ b/extensions/dataframes/meson.build
+@@ -21,7 +21,7 @@ dataframe_dict_tgt = custom_target(
+     get_option('libdir'), # generated .pcm file
+     get_option('libdir'), # generated .rootmap file
+   ],
+-  install: true,
++  install: get_option('include-subproject-install'),
+   command: [
+     ROOT_cling,
+     '--v2',
+@@ -39,7 +39,9 @@ dataframe_lib = library(
+   dataframe_basename,
+   dataframe_sources + [ dataframe_dict_tgt[0] ],
+   dependencies: [ hipo_dep, ROOT_dep ],
+-  install:      true
++  install:      get_option('include-subproject-install')
+ )
+-install_headers(dataframe_headers, subdir: meson.project_name())
++if(get_option('include-subproject-install'))
++  install_headers(dataframe_headers, subdir: meson.project_name())
++endif
+ project_libs += dataframe_lib
+diff --git a/hipo4/meson.build b/hipo4/meson.build
+index 4c23dac..18e22e4 100644
+--- a/hipo4/meson.build
++++ b/hipo4/meson.build
+@@ -46,10 +46,12 @@ hipo_lib = library(
+   meson.project_name(),
+   hipo_sources,
+   dependencies: [ lz4_dep, fmt_dep],
+-  install: true
++  install: get_option('include-subproject-install')
+ )
+ 
+-install_headers(hipo_headers, subdir: meson.project_name())
++if(get_option('include-subproject-install'))
++  install_headers(hipo_headers, subdir: meson.project_name())
++endif
+ project_libs += hipo_lib
+ 
+ hipo_dep = declare_dependency(
+diff --git a/meson.build b/meson.build
+index e90804c..67cf4bb 100644
+--- a/meson.build
++++ b/meson.build
+@@ -78,8 +78,8 @@ project_libs = []
+ project_libs = []
+ subdir('hipo4')
+ 
+ # build examples
+-if(get_option('build_examples'))
++if(get_option('include-subproject-tests') and get_option('build_examples'))
+   subdir('examples')
+ endif
+ if(ROOT_dep.found() and get_option('install_root_tools'))
+@@ -92,6 +92,7 @@ if(build_dataframes)
+   subdir('extensions' / 'dataframes')
+ endif
+ 
+ # packaging
++if(get_option('include-subproject-install'))
+ pkg.generate(
+   name:        meson.project_name(),
+@@ -103,4 +104,5 @@ pkg.generate(
+     f'with_dataframes=@build_dataframes@',
+   ],
+ )
+ subdir('meson')
++endif
+diff --git a/meson.options b/meson.options
+index df457d1..866b2d1 100644
+--- a/meson.options
++++ b/meson.options
+@@ -1,1 +1,13 @@
++# installation
++option(
++  'include-subproject-install', type: 'boolean', value: true, yield: true,
++  description: 'install HIPO libraries, headers, tools, and metadata when used as a subproject',
++)
++
++# testing
++option(
++  'include-subproject-tests', type: 'boolean', value: true, yield: true,
++  description: 'build and register HIPO tests when used as a subproject',
++)
++
+ # examples
+diff --git a/meson/meson.build b/meson/meson.build
+index 9662d72..6d186ad 100644
+--- a/meson/meson.build
++++ b/meson/meson.build
+@@ -1,7 +1,7 @@
+ configure_file(
+   input:       'this_hipo.sh.in',
+   output:      'this_hipo.sh',
+-  install:     true,
++  install:     get_option('include-subproject-install'),
+   install_dir: get_option('libexecdir'),
+   configuration: {
+     'ld_path': host_machine.system() != 'darwin' ? 'LD_LIBRARY_PATH' : 'DYLD_LIBRARY_PATH',
+@@ -14,7 +14,7 @@ foreach shell : [ 'csh', 'tcsh' ]
+   configure_file(
+     input:         'this_hipo.csh.in',
+     output:        f'this_hipo.@shell@',
+-    install:       true,
++    install:       get_option('include-subproject-install'),
+     install_dir:   get_option('libexecdir'),
+     configuration: {'shell': shell},
+   )

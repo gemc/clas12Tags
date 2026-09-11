@@ -1,0 +1,59 @@
+diff --git a/meson.build b/meson.build
+index 4b9a2db..4d66e08 100644
+--- a/meson.build
++++ b/meson.build
+@@ -28,7 +28,7 @@ lib_cmag = static_library(
+   'cMag',                    # -> libcMag.a
+   lib_sources,
+   include_directories: inc,
+-  install: true,
++  install: get_option('include-subproject-install'),
+ )
+ 
+ cc = meson.get_compiler('c')
+@@ -40,20 +40,22 @@ executable(
+   include_directories: inc,
+   link_with: lib_cmag,
+   dependencies: m_dep,
+-  install: true,
++  install: get_option('include-subproject-install'),
+ )
+ 
+ # Optional: install headers (recommended)
+-install_headers(
+-  'includes/magfield.h',
+-  'includes/magfielddraw.h',
+-  'includes/magfieldio.h',
+-  'includes/magfieldutil.h',
+-  'includes/maggrid.h',
+-  'includes/mapcolor.h',
+-  'includes/munittest.h',
+-  'includes/svg.h',
+-  'includes/testdata.h',
+-)
++if(get_option('include-subproject-install'))
++  install_headers(
++    'includes/magfield.h',
++    'includes/magfielddraw.h',
++    'includes/magfieldio.h',
++    'includes/magfieldutil.h',
++    'includes/maggrid.h',
++    'includes/mapcolor.h',
++    'includes/munittest.h',
++    'includes/svg.h',
++    'includes/testdata.h',
++  )
++endif
+ 
+ # Exported dependency object (parent can use dependency('clas12-cmag'))
+ clas12_cmag_dep = declare_dependency(
+diff --git a/meson_options.txt b/meson_options.txt
+new file mode 100644
+index 0000000..0f5b8f2
+--- /dev/null
++++ b/meson_options.txt
+@@ -0,0 +1,4 @@
++option(
++  'include-subproject-install', type: 'boolean', value: true, yield: true,
++  description: 'install cMag libraries, headers, and tools when used as a subproject',
++)

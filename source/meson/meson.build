@@ -158,6 +158,11 @@ endif
 
 cmake = import('cmake')
 cmake_opts = cmake.subproject_options()
+include_subproject_install = get_option('include-subproject-install')
+subproject_install_option = include_subproject_install ? 'true' : 'false'
+include_subproject_tests = get_option('include-subproject-tests')
+subproject_tests_option = include_subproject_tests ? 'true' : 'false'
+cmake_opts.set_install(include_subproject_install)
 cmake_opts.add_cmake_defines({
                                  'BUILD_STATIC_LIBS' : true,
                                  'ZLIB_USE_STATIC_LIBS' : false, # prefer shared zlib
@@ -207,24 +212,50 @@ assimp_dep = assimp_proj.dependency('assimp')
 
 # Platform-specific: Add Homebrew paths on macOS for zstd and openssl
 # Needed by ccdb
+ccdb_platform_link_args = []
 if host_machine.system() == 'darwin'
 
     zstd_lib = run_command('brew', '--prefix', 'zstd').stdout().strip() + '/lib'
     openssl_lib = run_command('brew', '--prefix', 'openssl').stdout().strip() + '/lib'
 
     cmake_opts.append_link_args('-L' + zstd_lib, '-L' + openssl_lib)
+    ccdb_platform_link_args += ['-L' + zstd_lib, '-L' + openssl_lib]
 
     message('Using zstd lib dir: ' + zstd_lib)
     message('Using openssl lib dir: ' + openssl_lib)
 endif
 
+# Use the same SQLite library as gemc so ccdb can be linked statically without duplicate SQLite state.
+cmake_opts.add_cmake_defines({
+                                 'CCDB_USE_SYSTEM_SQLITE' : true,
+                             })
+
+# Meson's CMake converter otherwise treats CCDB's internal object archive, tests, and benchmark as
+# installable targets when subproject installation is enabled. Only its public libraries belong in a prefix.
+foreach target : ['ccdb_objs', 'ccdb_tests', 'CCDB_bn_sqlite']
+    cmake_opts.set_install(false, target : target)
+endforeach
+
 ccdb_proj = cmake.subproject('ccdb', options : cmake_opts)
-# NOTE: ccdb exposes a static target (ccdb_static), but it bundles its own vendored
-# sqlite3 (ccdb_sqlite). gemc already links the system sqlite3 (see sqlite_dep above), so
-# linking ccdb statically pulls a SECOND sqlite3 into the gemc binary and crashes at
-# startup (duplicate global state). Keep the shared `ccdb` target, which hides ccdb's
-# sqlite3 inside libccdb.so; ensure libccdb.so is on the runtime path instead.
-ccdb_dep = ccdb_proj.dependency('ccdb', include_type : 'system')
+if ccdb_proj.target_list().contains('ccdb_sqlite_static')
+    error('The CCDB system-SQLite wrap patch is missing from the existing subproject checkout. ' +
+          'Run `meson subprojects purge --confirm ccdb`, then configure a clean build directory.')
+endif
+ccdb_static_dep = ccdb_proj.dependency('ccdb_static', include_type : 'system')
+
+# CMake's legacy FindMySQL module supplies raw linker flags. Meson's CMake converter does not propagate
+# those flags through a static library. Keep compile-only CCDB usage separate so the static archive and the
+# exact platform linker flags are added only once, when linking the gemc executable.
+ccdb_mysql_config = find_program('mysql_config', 'mariadb_config', required : true)
+ccdb_mysql_link_args = run_command(ccdb_mysql_config, '--libs', check : true).stdout().split()
+ccdb_dep = ccdb_static_dep.partial_dependency(
+    compile_args : true,
+    includes : true,
+).as_system()
+ccdb_link_dep = declare_dependency(
+    dependencies : ccdb_static_dep,
+    link_args : ccdb_platform_link_args + ccdb_mysql_link_args,
+)
 
 
 # passing dataframes=false, no need for ROOT support
@@ -235,18 +266,39 @@ hipo_cpp_sp = subproject(
         'default_library=static',
         'cpp_std=c++17',
         'dataframes=false',
+        'include-subproject-install=' + subproject_install_option,
+        'include-subproject-tests=' + subproject_tests_option,
         'warning_level=0',
     ],
 )
 
 hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep').as_system()
 
-clas12_cmag_dep = dependency('clas12-cmag', include_type : 'system', default_options : ['warning_level=0'])
-
-# Download field maps to prefix/fields during `meson install` (skips existing files).
-fields_dir = get_option('prefix') / 'fields'
-meson.add_install_script(
-    python_exe,
-    meson.current_source_dir() / 'install_fields.py',
-    install_tag : 'fields',
+clas12_cmag_dep = dependency(
+    'clas12-cmag',
+    include_type : 'system',
+    default_options : [
+        'include-subproject-install=' + subproject_install_option,
+        'warning_level=0',
+    ],
 )
+
+# CLAS12 magnetic field maps.
+# With -Duse-fields-location=<dir> the build uses an existing external maps directory as-is:
+# nothing is fetched and FIELD_DIR points there. Otherwise the maps are taken from the magfield
+# git-lfs subproject and installed under <prefix>/fields (the usual location) at `meson install`.
+fields_location = get_option('use-fields-location')
+if fields_location != ''
+    fields_dir = fields_location
+    message('Using external CLAS12 field maps at ' + fields_dir + ' (field-map install skipped).')
+else
+    fields_dir = get_option('prefix') / 'fields'
+    magfield_proj = subproject('magfield')
+    magfield_source_dir = magfield_proj.get_variable('magfield_source_dir')
+    meson.add_install_script(
+        python_exe,
+        meson.current_source_dir() / 'install_fields.py',
+        magfield_source_dir,
+        install_tag : 'fields',
+    )
+endif

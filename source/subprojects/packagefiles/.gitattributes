@@ -3,3 +3,8 @@
 # target ("Hunk FAILED ... different line endings"), so the patch must stay CRLF to match. Marking
 # it -text (binary) keeps git from ever renormalizing it to LF on checkout or re-add.
 ccdb_ssl_no_enforce.patch -text
+
+# Unified-diff context lines contain a format-significant leading space.
+ccdb_system_sqlite.patch whitespace=-blank-at-eol
+hipo_install_option.patch whitespace=-blank-at-eol
+clas12_cmag_install_option.patch whitespace=-blank-at-eol
