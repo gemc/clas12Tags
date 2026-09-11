@@ -84,8 +84,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         # Geometry (gcard + TEXT/CAD files) is taken from the image's installed
-        # clas12Tags, so no LFS pull is needed here; this checkout is only for the
-        # workflow context and provenance.
+        # clas12Tags (meson installs experiments/ into the prefix), so no LFS pull is
+        # needed here; this checkout is only for the workflow context and provenance.
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
           fetch-depth: 1
