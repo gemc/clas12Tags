@@ -79,9 +79,9 @@ At Jefferson Lab, this is accomplished by loading the `gemc/meson` and the `pyth
 module load gemc/meson python
 ```
 
-For local installations, we suggest using the [g4install repository](https://github.com/gemc/g4install) to install the 
-Geant4 toolchain, but that is not required. A valid Geant4 installation, with `geant4-config` in the user path, is
-sufficient.
+For local installations, we suggest using the
+[g4install repository](https://github.com/gemc/g4install) to install the Geant4 toolchain, but that is not
+required. A valid Geant4 installation, with `geant4-config` in the user path, is sufficient.
 
 <br/>
 
@@ -94,26 +94,42 @@ the desired installation path.
 ```shell
 cd source
 meson setup build --prefix=<clas12Tags-install-path>
-meson install -C build 
+meson install -C build
 ```
 
-The install directive will install the executable, includes, libraries, geometry databases. 
-It will also downloaded field maps.
+The install command installs the executable, public GEMC headers and libraries, APIs, and field maps. Bundled
+subprojects provide static build dependencies and are not installed by default. Configure with
+`-Dinclude-subproject-install=true` to also install their libraries, headers, tools, and metadata.
+
+By default the magnetic field maps are taken from the `magfield` git-lfs subproject
+([code.jlab.org/hallb/clas12/magfield](https://code.jlab.org/hallb/clas12/magfield)) and installed under
+`<prefix>/fields`; a working `git-lfs` (run `git lfs install` once) is therefore required for the clone to
+fetch the actual map data. To reuse a set of maps already present on disk instead, pass
+`-Duse-fields-location=<dir>` at `meson setup`: the build then skips the subproject entirely and points
+`FIELD_DIR` at `<dir>`.
 
 <br/>
 
 ### Tests
 
-Meson tests are provided to execute the various subsystems gcards. To run all tests:
+Meson tests are provided to execute the various subsystem gcards. Bundled subproject tests are excluded by
+default, so an unqualified test command runs only the CLAS12 tests:
 
 ```shell
-meson test -C build --suite clas12
+meson test -C build
 ```
 
 To run only one detector suite:
 
 ```shell
 meson test -C build --suite ec
+```
+
+Configure with `-Dinclude-subproject-tests=true` to also build and register the HIPO tests. Those tests can
+then be selected independently:
+
+```shell
+meson test -C build --suite hipo
 ```
 
 To list all available tests:

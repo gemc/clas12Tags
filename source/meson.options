@@ -1,0 +1,25 @@
+option(
+    'use-fields-location',
+    type : 'string',
+    value : '',
+    description : 'Path to an existing CLAS12 magnetic field-maps directory. When set, the build skips '
+                + 'fetching the maps (no download, no magfield subproject) and points FIELD_DIR at this '
+                + 'location instead of <prefix>/fields. When empty (default), the maps are taken from the '
+                + 'magfield git-lfs subproject and installed under <prefix>/fields.',
+)
+
+option(
+    'include-subproject-install',
+    type : 'boolean',
+    value : false,
+    description : 'Install bundled subproject libraries, headers, tools, and metadata. Disabled by default '
+                + 'because these are build-time dependencies of the statically linked GEMC executable.',
+)
+
+option(
+    'include-subproject-tests',
+    type : 'boolean',
+    value : false,
+    description : 'Build and register bundled subproject tests. Disabled by default so an unqualified '
+                + '`meson test` runs only the CLAS12 test suites.',
+)

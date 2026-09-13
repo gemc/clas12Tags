@@ -45,6 +45,10 @@ python_exe = import('python').find_installation('python3')
 
 subdir('meson')
 
+# Qt's aggregate dependency contains repeated framework link arguments for its module graph. Apply it once
+# at project scope; passing it through every static library would reproduce that graph for every archive.
+add_project_dependencies(qt6_deps, language : 'cpp')
+
 # Fill dictionary
 #################
 subdir('options')
@@ -81,6 +85,20 @@ foreach L : LD
     qrc_compiled_sources = []
     qrc_examples_compiled_sources = []
 
+    # Internal modules are static archives, and gemc links all of their external dependencies explicitly.
+    # Retain only what is needed to compile each module so those dependencies are not propagated into the
+    # final link once per archive.
+    this_compile_deps = []
+    foreach dep : this_deps.flatten()
+        if dep.name() != qt6_deps.name()
+            this_compile_deps += dep.partial_dependency(
+                compile_args : true,
+                includes : true,
+                sources : true,
+            )
+        endif
+    endforeach
+
     if not moc_headers.contains('')
         moc_sources = qt6.compile_moc(headers : moc_headers,
                                       dependencies : this_deps)
@@ -94,7 +112,7 @@ foreach L : LD
             this_lib_name,
             sources + moc_sources + qrc_compiled_sources,
             install : true,
-            dependencies : this_deps,
+            dependencies : this_compile_deps,
             include_directories : all_includes + additional_includes
         )
         if not all_libs.contains(this_library)
@@ -118,19 +136,12 @@ foreach L : LD
 
 endforeach
 
-# ccdb (and other CMake-subproject shared libs) install to <prefix>/lib, while gemc installs
-# to <prefix>/bin. On macOS gemc links libccdb.dylib by absolute install name, but on Linux it
-# is resolved by SONAME via rpath. Add a loader-relative rpath (<prefix>/bin -> ../lib) so the
-# installed gemc finds libccdb.so without needing LD_LIBRARY_PATH. $ORIGIN on ELF/Linux,
-# @loader_path on macOS.
-gemc_lib_rpath = (host_machine.system() == 'darwin' ? '@loader_path' : '$ORIGIN') + '/../lib'
-
 gemc = executable(
     'gemc',
     ['gemc.cc'],
     install : true,
     dependencies : [
-        qt6_deps, clhep_deps, geant4_deps, ogl_deps, hipo_cpp_dep, ccdb_dep,
+        clhep_deps, geant4_deps, ogl_deps, hipo_cpp_dep, ccdb_link_dep,
         clas12_cmag_dep, assimp_dep, xercesc_deps, expat_dep,
     ],
     include_directories : all_includes,
@@ -138,11 +149,11 @@ gemc = executable(
     override_options : ['b_pie=true'],
     # critical:
     build_rpath  : xerces_libdir,
-    install_rpath: xerces_libdir + ':' + gemc_lib_rpath,
+    install_rpath: xerces_libdir,
 )
 
 install_subdir('../api',         install_dir: get_option('prefix'))
-#install_subdir('../experiments', install_dir: get_option('prefix'))
+install_subdir('../experiments', install_dir: get_option('prefix'))
 #install_data(['../clas12.sqlite'],  install_dir: join_paths(get_option('prefix'), 'experiments', 'clas12'))
 
 
