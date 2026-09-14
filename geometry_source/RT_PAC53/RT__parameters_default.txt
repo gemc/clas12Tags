@@ -1,0 +1,96 @@
+mm_radius_layer1   		|  76.2  | mm  |  center radii of barrel MM 					| Sebastien Procureur   | sebastien.procureur@cea.fr | link to pdf drawing | variable name on the drawing | David Kashy | 12/12/12
+BMT_mothervol_InnerRadius 	|  75 | mm	 | Mother volume inner radius					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+BMT_mothervol_OutRadius 	|  240.000 | mm  | Mother volume outer radius 					| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+BMT_mothervol_HalfLength 	|  385.000 | mm  | Mother volume half length (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 09/08/2016
+BMT_endPCB_zpos			|  282.300 | mm  | Position of detector (PCB) downstream end 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 11/08/2016
+BMT_nlayer		 	|    6	   | na  | Number of layers     					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+BMT_ntile		 	|    3	   | na  | Number of tiles per layer     				| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+BMT_radius_layer1 		|  76.2    | mm  | Radius of the 1st layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_radius_layer2 		|  108     | mm  | Radius of the 2nd layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_radius_layer3 		|  139.8   | mm  | Radius of the 3rd layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_radius_layer4 		|  171.6   | mm  | Radius of the 4th layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_radius_layer5 		|  203.4   | mm  | Radius of the 5th layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_radius_layer6 		|  235.4   | mm  | Radius of the 6th layer of MM		 		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_zpos_layer1 		| -134.070 | mm  | Position of the 1st layer (in z) (active zone only)		| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+BMT_zpos_layer2 		| -135.770 | mm  | Position of the 2nd layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+BMT_zpos_layer3 		| -156.690 | mm  | Position of the 3rd layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+BMT_zpos_layer4			| -156.230 | mm  | Position of the 4th layer (in z) 				| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+BMT_zpos_layer5 		| -177.600 | mm  | Position of the 5th layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+BMT_zpos_layer6 		| -177.550 | mm  | Position of the 6th layer (in z) 				| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+BMT_zlength_layer1		|  90.8116 | mm  | Length of the 1st layer (in z)   (active zone only)   	| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+BMT_zlength_layer2		|  128.709 | mm  | Length of the 2nd layer (in z) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_zlength_layer3		|  166.607 | mm  | Length of the 3rd layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+BMT_zlength_layer4		|  204.505 | mm  | Length of the 4th layer (in z) 				| Maxime Defurne	| maxime.defurne@cea.fr       | - | - | - | ??/08/2017
+BMT_zlength_layer5		|  242.403 | mm  | Length of the 5th layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+BMT_zlength_layer6		|  280.539 | mm  | Length of the 6th layer (in z) 				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 24/11/2016
+BMT_theta_layer1		| -150.000 | deg | Starting angle of the 1st tile of 1st layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+BMT_theta_layer2		| -150.000 | deg | Starting angle of the 1st tile of 2nd layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+BMT_theta_layer3		| -150.000 | deg | Starting angle of the 1st tile of 3rd layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+BMT_theta_layer4		| -150.000 | deg | Starting angle of the 1st tile of 4th layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+BMT_theta_layer5		| -150.000 | deg | Starting angle of the 1st tile of 5th layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+BMT_theta_layer6		| -150.000 | deg | Starting angle of the 1st tile of 6th layer 			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 05/08/2016
+BMT_Coverlay_width		|    0.050 | mm  | Coverlay width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_CuGround_width		|    0.012 | mm  | Copper (ground) width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_PCBGround_width		|    0.100 | mm  | PCB width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_CuStrips_width		|    0.012 | mm  | Cu Strips width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_KaptonStrips_width		|    0.075 | mm  | Kapton width (radially) 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_ResistStrips_width		|    0.020 | mm  | Resist Strips width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_Gas1_width			|    0.128 | mm  | Gas1 width (radially) 					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+BMT_Mesh_width			|    0.018 | mm  | Mesh width (radially) 					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+BMT_Gas2_width			|    3.000 | mm  | Gas2 width (radially) 					| Sebastien Procureur	| sebastien.procureur@cea.fr  | - | - | - | 07/06/12
+BMT_DriftCuElectrode_width	|    0.005 | mm  | Drift Cu Electrode width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_DriftKapton_width		|    0.250 | mm  | Drift Kapton width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+BMT_DriftCuGround_width		|    0.005 | mm  | Drift Cu Ground width (radially) 				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 18/08/2015
+FMT_mothervol_InnerRadius 	|   22.000 | mm	 | Mother volume inner radius					| Maurizio Ungaro	|                             | - | - | - | ??/11/2017
+FMT_mothervol_OutRadius 	|  250.000 | mm  | Mother volume outer radius 					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_mothervol_zmin		|  290.300 | mm  | Mother volume zmin (BMT_mothervol_zmax set to same value)	| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 09/08/2016
+FMT_mothervol_zmax		|  365.000 | mm  | Mother volume zmax						| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 09/08/2016
+FMT_nlayer		 	|    6	   | na  | Number of layers     					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_zpos_layer1 		|  292.300 | mm  | Position of the first layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016
+FMT_zpos_layer2 		|  304.200 | mm  | Position of the second layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016
+FMT_zpos_layer3 		|  316.100 | mm  | Position of the third layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016
+FMT_zpos_layer4 		|  330.000 | mm  | Position of the fourth layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016 
+FMT_zpos_layer5 		|  341.900 | mm  | Position of the fifth layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016  
+FMT_zpos_layer6 		|  353.800 | mm  | Position of the sixth layer of MM center (in z) 		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 14/11/2016
+FMT_DetInnerRadius 		|   25.000 | mm  | Inner Radius of the MM disk					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_DetOuterRadius 		|  225.000 | mm  | Outer Radius of the MM disk					| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_ActInnerRadius 		|   42.000 | mm  | Inner Radius of the active area				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_ActOuterRadius 		|  185.000 | mm  | Outer Radius of the active area				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_innerFR4OuterRadius		|   40.000 | mm  | Outer Radius of the inner FR4 Rohacell support		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 25/05/2016
+FMT_outerFR4InnerRadius		|  195.000 | mm  | Inner Radius of the outer FR4 Rohacell support		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 25/05/2016
+FMT_innerPhResistOuterRadius	|   48.000 | mm  | Outer Radius of the inner photoresist support       		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 25/05/2016
+FMT_outerPhResistInnerRadius	|  193.000 | mm  | Inner Radius of the outer photoresist support       		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 25/05/2016
+FMT_innerPEEKInnerRadius 	|   26.000 | mm  | Inner Radius of the inner PEEK supports			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_innerPEEKOuterRadius 	|   39.000 | mm  | Outer Radius of the inner PEEK supports			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_outerPEEKInnerRadius 	|  195.000 | mm  | Inner Radius of the outer Al supports			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_outerPEEKOuterRadius 	|  204.000 | mm  | Outer Radius of the outer Al supports			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_CuGround_Dz    		|   0.005  | mm  | Copper (ground) width (in z) * 41% filling fraction		| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_PCBGround_Dz    		|    0.200 | mm  | PCB (ground) width (in z)   					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_Rohacell_Dz    		|   2.000  | mm  | Rohacell width (in z)   					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_PCBDetector_Dz    		|    0.200 | mm  | PCB (detector) width (in z)   				| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_Strips_Dz    		|    0.012 | mm  | Strips (copper) width (in z) (filling fract. in the density)	| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_Kapton_Dz    		|    0.050 | mm  | kapton width (in z)   					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_ResistStrips_Dz    		|    0.020 | mm  | Strips (resistiv) width (in z)(filling fract. in the density)| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_PhotoResist128_Dz  		|    0.128 | mm  | Amplification gap (in z)   	      				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 25/05/2016
+FMT_Mesh_Dz    			|    0.018 | mm  | Mesh width (in z)   						| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_PhotoResist64_Dz  		|    0.064 | mm  | Third layer of photoresist (in z)   	      			| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 25/05/2016
+FMT_Peek_Dz    			|    5.000 | mm  | Drift length (in z) (real DL = Peek_Dz + PhotoResist64_Dz)	| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 25/05/2016  
+FMT_DriftCuElectrode_Dz    	|    0.012 | mm  | Drift Cu electrode width (in z)   				| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 20/05/2016
+FMT_DriftPCB_Dz    		|    0.200 | mm  | Drift pcb width (in z)   					| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_DriftCuGround_Dz    	|    0.005 | mm  | Drift Cu Ground  width (in z) * 44% filling fraction		| Frederic Georges	| frederic.georges@cea.fr     | - | - | - | 22/07/2015
+FMT_overall_disks_rotation	|   60.000 | deg | Rotation of the 6 disks wrt (arbitrarily chosen) nominal	| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 16/11/2016
+FMT_overall_spacers_rotation	|    0.000 | deg | Rotation of FMT supports and interdisks spacers wrt nominal	| Michel Garcon		| michel.garcon@cea.fr        | - | - | - | 30/05/2016
+FTT_M_mothervol_InnerRadius 	|   64.000 | mm	 | Mother volume inner radius					| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_mothervol_OutRadius 	|  161.000 | mm  | Mother volume outer radius 					| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_nlayer		 	|    2	   | na  | Number of layers     					| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_zpos_layer1 		| 1763.000 | mm  | Positon of the first layer of MM center (in z) 		| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_zpos_layer2 		| 1783.000 | mm  | Positon of the second layer of MM center (in z) 		| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_InnerRadius 		|   65.000 | mm  | Inner Radius of the MM disk					| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_OuterRadius 		|  142.000 | mm  | Outer Radius of the MM disk					| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_Epoxy_Dz    		|  0.300   | mm  | Epoxy width (in z) 						| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_PCB_Dz      		|  0.100   | mm  | PCB width (in z) 						| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_Strips_Dz   		|  0.015   | mm  | Strips width (in z) 						| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_Gas1_Dz     		|  0.128   | mm  | Gas1 width (in z) 						| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_Mesh_Dz     		|  0.030   | mm  | Mesh width (in z) 						| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_Gas2_Dz     		|  5.350   | mm  | Gas2 width (in z) 						| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
+FTT_M_Drift_Dz    		|  0.100   | mm  | Drift width (in z) 						| Gabriel Charles	| gabriel.charles@cea.fr     | - | - | - | 13/04/12
