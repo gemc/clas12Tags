@@ -58,7 +58,6 @@ our $pipeIR = 30;
 our $pipeOR = 32.5;
 our $pipeL  = 1000;
 
-
 # shield
 our $TSThick  = 300;
 our $TSLength = 1500;
@@ -98,7 +97,7 @@ require "./ddvcs_ecal.pl";
 require "./ddvcs_bigcone.pl";
 
 # all the scripts must be run for every configuration
-my @allConfs = ("30_cm_TST", "scorer", "mucalActive", "newScattChamber");
+my @allConfs = ("30_cm_TST", "scorer", "mucalActive", "newScattChamber", "15deg");
 
 foreach my $conf ( @allConfs )
 {
@@ -116,14 +115,16 @@ foreach my $conf ( @allConfs )
 	} elsif($configuration{"variation"} eq "scorer") {
 		makeScorer();
 	} else{
+		my $thetaCut = 30;
+                if($configuration{"variation"} eq "15deg") {
+		   $thetaCut = 15;
+                }
 		make_scatt_chambers();
-                makeBigCone();
-                makeEcal();
+		buildBigCone($thetaCut);
+                makeEcal($thetaCut);
         }
-
 }
-		define_mucal_bank();
-
+define_mucal_bank();
 
 
 
