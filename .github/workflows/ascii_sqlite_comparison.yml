@@ -6,14 +6,32 @@ permissions:
 on:
   schedule:
     # every day at 2:44
-    # This takes about 3 hours to run. Currently at 142 jobs
+    # Only compare detectors affected by commits in the last 24 hours.
     - cron: '44 2 * * *'
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Manual runs always compare every detector.
   workflow_dispatch:
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      geometry: ${{ steps.matrix.outputs.geometry }}
+      run: ${{ steps.matrix.outputs.run }}
+      has_geometry: ${{ steps.matrix.outputs.has_geometry }}
+      has_run: ${{ steps.matrix.outputs.has_run }}
+    steps:
+      - name: Checkout history
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Select detector matrices
+        id: matrix
+        run: python3 ci/ascii_sqlite_matrix.py
+
   Notary:
+    needs: changes
+    if: needs.changes.outputs.has_geometry == 'true'
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     steps:
@@ -25,29 +43,14 @@ jobs:
           cat Summary.md >> $GITHUB_STEP_SUMMARY
 
   txt-sql-geo:
-    needs: Notary
+    needs: [changes, Notary]
+    if: needs.changes.outputs.has_geometry == 'true'
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
       fail-fast: false
       matrix:
-        detector:
-          - ec
-          - pcal
-          - dc
-          - ftof
-          - ctof
-          - cnd
-          - bst
-          - htcc
-          - micromegas
-          - ltcc
-          - rich
-          - ft
-          - beamline
-          - magnets
-          - targets
-          - alert
+        detector: ${{ fromJSON(needs.changes.outputs.geometry) }}
 
     steps:
       - name: Checkout
@@ -83,30 +86,16 @@ jobs:
           path: /root/logs/
 
   txt-sql-run:
-    needs: Notary
+    needs: [changes, Notary]
+    if: needs.changes.outputs.has_run == 'true'
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
       fail-fast: false
       matrix:
-        detector:
-          - ec
-          - pcal
-          - dc
-          - ftof
-          - ctof
-          - cnd
-          - bst
-          - htcc
-          - micromegas
-          - ltcc
-          - rich
-          - ft
-          - beamline
-          - alert
-          - targets
+        detector: ${{ fromJSON(needs.changes.outputs.run) }}
 
-        # obtained with awk -F'value="' '/DIGITIZATION_VARIATION/ {split($2, a, "\""); print a[1]}' /opt/projects/clas12-config/gemc/dev/*  | sort -u
+        # Digitization variations from the clas12-config dev gcards.
         variation:
           - default
           - rga_spring2018_mc
@@ -175,6 +164,7 @@ jobs:
             echo "| $detector | $variation | $run | $pass |" >> Summary.md
           done < comparison.log
           cat Summary.md >> $GITHUB_STEP_SUMMARY
+          if grep -q '❌' comparison.log; then exit 1; fi
 
   txt-sql-run-result:
     needs: txt-sql-run
@@ -189,7 +179,8 @@ jobs:
           ls */*output_details.log
           cat */*output_details.log > comparison.log
           echo "| Detector | Geometry Variation | Run | Bank | Digitization Variations | Status  |" > Summary.md
-          echo "|----------|--------------------|-----|------|-------------------------|---------|" >> Summary.md
+          echo "|----------|--------------------|-----|------|-------------------------|---------|" \
+            >> Summary.md
           while IFS=: read -r detector variation run bank dvariations  pass; do
             echo "| $detector | $variation | $run | $bank | $dvariations | $pass |" >> Summary.md
           done < comparison.log
@@ -219,20 +210,26 @@ jobs:
             fi
           done
           cat Summary.md >> $GITHUB_STEP_SUMMARY
+          if grep -q '❌' */*output_summary.log; then exit 1; fi
   
 
   txt-sql-final:
+    if: always()
     needs:
+      - changes
+      - Notary
+      - txt-sql-geo
+      - txt-sql-run
       - txt-sql-geo-result
       - txt-sql-run-result
     runs-on: ubuntu-latest
     steps:
       - name: fail
-        if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'skipped') }}
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
         run: |
           echo "### Some tests failed." >> $GITHUB_STEP_SUMMARY
           exit 1
       - name: pass
         run: |
-          echo "### All tests passed." >> $GITHUB_STEP_SUMMARY
+          echo "### All selected tests passed (unchanged detectors skipped)." >> $GITHUB_STEP_SUMMARY
           exit 0
