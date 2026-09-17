@@ -210,6 +210,52 @@ cmake_opts.append_compile_args('cpp',
 assimp_proj = cmake.subproject('assimp', options : cmake_opts)
 assimp_dep = assimp_proj.dependency('assimp')
 
+# Explicit installation paths bypass dependency discovery and the corresponding subprojects.
+external_deps = {}
+foreach name, spec : {
+    'ccdb' : ['ccdb', 'CCDB/Calibration.h'],
+    'hipo' : ['hipo4', 'hipo4/writer.h'],
+    'clas12-cmag' : ['cMag', 'magfield.h'],
+}
+    location = get_option('use-' + name + '-location')
+    if location == ''
+        continue
+    endif
+    if not fs.is_absolute(location)
+        error('-Duse-' + name + '-location must be an absolute installation path.')
+    endif
+    incdir = location / 'include'
+    if name == 'clas12-cmag' and not fs.is_file(incdir / spec[1])
+        incdir = location / 'includes'
+    endif
+    if not fs.is_file(incdir / spec[1])
+        error('Missing ' + spec[1] + ' in the ' + name + ' installation at ' + location)
+    endif
+    # Check the requested prefix before find_library, which can also search system directories.
+    libdir = ''
+    static_lib = false
+    suffixes = sys == 'darwin' ? ['.dylib', '.a'] : ['.so', '.a']
+    if get_option('prefer_static')
+        suffixes = ['.a'] + suffixes
+    endif
+    foreach suffix : suffixes
+        foreach dirname : ['lib', 'lib64']
+            if libdir == '' and fs.is_file(location / dirname / ('lib' + spec[0] + suffix))
+                libdir = location / dirname
+                static_lib = suffix == '.a'
+            endif
+        endforeach
+    endforeach
+    if libdir == ''
+        error('Missing library lib' + spec[0] + ' in ' + location + '/lib or /lib64')
+    endif
+    external_deps += {name : declare_dependency(
+        include_directories : include_directories(incdir, is_system : true),
+        dependencies : cpp.find_library(spec[0], dirs : libdir, static : static_lib),
+    )}
+    message('Using installed ' + name + ' at ' + location)
+endforeach
+
 # Platform-specific: Add Homebrew paths on macOS for zstd and openssl
 # Needed by ccdb
 ccdb_platform_link_args = []
@@ -225,23 +271,27 @@ if host_machine.system() == 'darwin'
     message('Using openssl lib dir: ' + openssl_lib)
 endif
 
-# Use the same SQLite library as gemc so ccdb can be linked statically without duplicate SQLite state.
-cmake_opts.add_cmake_defines({
-                                 'CCDB_USE_SYSTEM_SQLITE' : true,
-                             })
+if external_deps.has_key('ccdb')
+    ccdb_static_dep = external_deps['ccdb']
+else
+    # Use the same SQLite library as gemc so ccdb can be linked statically without duplicate SQLite state.
+    cmake_opts.add_cmake_defines({
+                                     'CCDB_USE_SYSTEM_SQLITE' : true,
+                                 })
 
-# Meson's CMake converter otherwise treats CCDB's internal object archive, tests, and benchmark as
-# installable targets when subproject installation is enabled. Only its public libraries belong in a prefix.
-foreach target : ['ccdb_objs', 'ccdb_tests', 'CCDB_bn_sqlite']
-    cmake_opts.set_install(false, target : target)
-endforeach
+    # Meson's CMake converter otherwise treats CCDB's internal object archive, tests, and benchmark as
+    # installable targets when subproject installation is enabled. Only its public libraries belong in a prefix.
+    foreach target : ['ccdb_objs', 'ccdb_tests', 'CCDB_bn_sqlite']
+        cmake_opts.set_install(false, target : target)
+    endforeach
 
-ccdb_proj = cmake.subproject('ccdb', options : cmake_opts)
-if ccdb_proj.target_list().contains('ccdb_sqlite_static')
-    error('The CCDB system-SQLite wrap patch is missing from the existing subproject checkout. ' +
-          'Run `meson subprojects purge --confirm ccdb`, then configure a clean build directory.')
+    ccdb_proj = cmake.subproject('ccdb', options : cmake_opts)
+    if ccdb_proj.target_list().contains('ccdb_sqlite_static')
+        error('The CCDB system-SQLite wrap patch is missing from the existing subproject checkout. ' +
+              'Run `meson subprojects purge --confirm ccdb`, then configure a clean build directory.')
+    endif
+    ccdb_static_dep = ccdb_proj.dependency('ccdb_static', include_type : 'system')
 endif
-ccdb_static_dep = ccdb_proj.dependency('ccdb_static', include_type : 'system')
 
 # CMake's legacy FindMySQL module supplies raw linker flags. Meson's CMake converter does not propagate
 # those flags through a static library. Keep compile-only CCDB usage separate so the static archive and the
@@ -253,35 +303,52 @@ ccdb_dep = ccdb_static_dep.partial_dependency(
     includes : true,
 ).as_system()
 ccdb_link_dep = declare_dependency(
-    dependencies : ccdb_static_dep,
+    dependencies : [ccdb_static_dep, sqlite_dep, dependency('threads')],
     link_args : ccdb_platform_link_args + ccdb_mysql_link_args,
 )
 
 
-# passing dataframes=false, no need for ROOT support
-hipo_cpp_sp = subproject(
-    'hipo-cpp',
-    default_options : [
-        'buildtype=release',
-        'default_library=static',
-        'cpp_std=c++17',
-        'dataframes=false',
-        'include-subproject-install=' + subproject_install_option,
-        'include-subproject-tests=' + subproject_tests_option,
-        'warning_level=0',
-    ],
-)
+if external_deps.has_key('hipo')
+    hipo_cpp_dep = declare_dependency(
+        dependencies : [
+            external_deps['hipo'],
+            dependency('liblz4', version : '>=1.9', allow_fallback : false),
+            dependency('fmt', version : '>=10.2.1', allow_fallback : false),
+        ],
+    ).as_system()
+else
+    # passing dataframes=false, no need for ROOT support
+    hipo_cpp_sp = subproject(
+        'hipo-cpp',
+        default_options : [
+            'buildtype=release',
+            'default_library=static',
+            'cpp_std=c++17',
+            'dataframes=false',
+            'include-subproject-install=' + subproject_install_option,
+            'include-subproject-tests=' + subproject_tests_option,
+            'warning_level=0',
+        ],
+    )
 
-hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep').as_system()
+    hipo_cpp_dep = hipo_cpp_sp.get_variable('hipo_dep').as_system()
 
-clas12_cmag_dep = dependency(
-    'clas12-cmag',
-    include_type : 'system',
-    default_options : [
-        'include-subproject-install=' + subproject_install_option,
-        'warning_level=0',
-    ],
-)
+endif
+
+if external_deps.has_key('clas12-cmag')
+    clas12_cmag_dep = declare_dependency(
+        dependencies : [external_deps['clas12-cmag'], cpp.find_library('m', required : false)],
+    )
+else
+    clas12_cmag_dep = dependency(
+        'clas12-cmag',
+        include_type : 'system',
+        default_options : [
+            'include-subproject-install=' + subproject_install_option,
+            'warning_level=0',
+        ],
+    )
+endif
 
 # CLAS12 magnetic field maps.
 # With -Duse-fields-location=<dir> the build uses an existing external maps directory as-is:
@@ -290,6 +357,8 @@ clas12_cmag_dep = dependency(
 fields_location = get_option('use-fields-location')
 if fields_location != ''
     fields_dir = fields_location
+    fields_dir_literal = fields_dir.replace('\\', '\\\\').replace('"', '\\"')
+    add_project_arguments('-DGEMC_DEFAULT_FIELD_DIR="' + fields_dir_literal + '"', language : 'cpp')
     message('Using external CLAS12 field maps at ' + fields_dir + ' (field-map install skipped).')
 else
     fields_dir = get_option('prefix') / 'fields'

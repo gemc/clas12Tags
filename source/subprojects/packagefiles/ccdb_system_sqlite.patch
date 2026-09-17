@@ -1,3 +1,12 @@
+# After applying this patch, enable system SQLite from the CCDB source root with:
+#   cmake -S . -B build -DCCDB_USE_SYSTEM_SQLITE=ON
+#   cmake --build build
+#
+# ON requires the SQLite development headers and library, located by CMake's FindSQLite3 module.
+# For a nonstandard SQLite installation, also pass -DCMAKE_PREFIX_PATH=/absolute/path/to/sqlite.
+# The flag defaults to OFF, which keeps CCDB's bundled SQLite amalgamation.
+# GEMC's Meson builds enable the flag automatically for bundled CCDB.
+#
 diff --git a/src/Benchmarks/CMakeLists.txt b/src/Benchmarks/CMakeLists.txt
 index f67a2c6..04f2e44 100644
 --- a/src/Benchmarks/CMakeLists.txt

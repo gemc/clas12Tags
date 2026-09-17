@@ -982,8 +982,13 @@ void goptions::setGoptions()
 	optMap["HALL_FIELD"].type = 1;
 	optMap["HALL_FIELD"].ctgr = "fields";
 
+#ifdef GEMC_DEFAULT_FIELD_DIR
+	optMap["FIELD_DIR"].args = GEMC_DEFAULT_FIELD_DIR;
+	optMap["FIELD_DIR"].help = "Magnetic field maps location. Defaults to " GEMC_DEFAULT_FIELD_DIR ". \n";
+#else
 	optMap["FIELD_DIR"].args = "default";
 	optMap["FIELD_DIR"].help = "Magnetic field maps location. Defaults to ../fields relative to gemc. \n";
+#endif
 	optMap["FIELD_DIR"].name = "Magnetic Field Maps Location";
 	optMap["FIELD_DIR"].type = 1;
 	optMap["FIELD_DIR"].ctgr = "fields";

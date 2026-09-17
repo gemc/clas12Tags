@@ -1,4 +1,26 @@
 option(
+    'use-ccdb-location',
+    type : 'string',
+    value : '',
+    description : 'Use CCDB installed at this absolute path instead of building the ccdb subproject.',
+)
+
+option(
+    'use-hipo-location',
+    type : 'string',
+    value : '',
+    description : 'Use HIPO installed at this absolute path instead of building the hipo-cpp subproject.',
+)
+
+option(
+    'use-clas12-cmag-location',
+    type : 'string',
+    value : '',
+    description : 'Use clas12-cmag installed at this absolute path instead of dependency discovery or '
+                + 'building the clas12-cmag subproject.',
+)
+
+option(
     'use-fields-location',
     type : 'string',
     value : '',
