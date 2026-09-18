@@ -63,8 +63,8 @@ fi
 
 nevents=200
 mkdir -p /root/logs
-log_file=/root/logs/"$ntracks"_tracks.log
 gemc_log=/root/logs/gemc.log
+callgrind_out=/root/logs/callgrind.out.$ntracks
 
 # if $ntracks is clasdis then use clasdis lund file
 if [[ $ntracks == "clasdis_all"  ]]; then
@@ -79,7 +79,10 @@ fi
 
 # same options as on OSG
 echo "Running valgrind on $(which gemc) with options:  -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10 $gcard"
-valgrind --tool=callgrind  --callgrind-out-file=callgrind.out.%p --dump-instr=yes --skip-plt=yes $(which gemc) \
+# Cache and branch simulation add the miss counts the CEst (cycle-estimation) formula needs, so
+# qcachegrind and ci/profile_summary.py can report estimated cycles instead of raw instruction reads.
+valgrind --tool=callgrind --callgrind-out-file="$callgrind_out" \
+	--dump-instr=yes --collect-jumps=yes --skip-plt=yes --cache-sim=yes --branch-sim=yes $(which gemc) \
 	-INPUT_GEN_FILE="lund, events.dat"    -USE_GUI=0 -N=$nevents -PRINT_EVENT=10 -GEN_VERBOSITY=10  -RANDOMIZE_LUND_VZ='-1.94*cm, 2.5*cm, reset ' \
 	-BEAM_SPOT='0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset '   -RASTER_VERTEX='0.0*cm, 0.0*cm, reset ' \
 	-SCALE_FIELD='binary_torus, -1.00' -SCALE_FIELD='binary_solenoid, -1.00' -INTEGRATEDRAW='*' $gcard >$gemc_log
@@ -90,10 +93,27 @@ if [[ $exitCode != 0 ]]; then
 	exit $exitCode
 fi
 
-mv callgrind.* /root/logs/
+# Per-detector CEst category table next to the callgrind file (best effort: needs callgrind_annotate).
+summary_md=/root/logs/summary.$ntracks.md
+if command -v callgrind_annotate >/dev/null 2>&1; then
+	echo "Writing category summary to $summary_md"
+	python3 ci/profile_summary.py "$callgrind_out" --title "$ntracks tracks" > "$summary_md" || \
+		echo "Category summary generation failed; the callgrind file is still available."
+else
+	echo "callgrind_annotate not found; skipping the category summary."
+fi
 
-printf '%s %s %s\n' "$nevents" "$ntracks" "$(grep "Events only time:" $gemc_log | cut -d':' -f3 | cut -d' ' -f2)" > $log_file
+# Show the table in this job's own summary too, so it does not depend on the artifact round-trip.
+if [[ -n "${GITHUB_STEP_SUMMARY:-}" ]]; then
+	if [[ -s "$summary_md" ]]; then
+		cat "$summary_md" >> "$GITHUB_STEP_SUMMARY"
+	else
+		echo "_No category table was produced for $ntracks (see the job log)._" >> "$GITHUB_STEP_SUMMARY"
+	fi
+fi
 
 echo
-cat $log_file
+echo "Category summary:"
+cat "$summary_md" 2>/dev/null || echo "  (none)"
+ls -l /root/logs
 echo
