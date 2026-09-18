@@ -61,14 +61,14 @@ if [[ ! -f "$gcard" ]]; then
 	ExperimentNotExisting $gcard
 fi
 
-nevents=200
+nevents=60
 mkdir -p /root/logs
 gemc_log=/root/logs/gemc.log
 callgrind_out=/root/logs/callgrind.out.$ntracks
 
 # if $ntracks is clasdis then use clasdis lund file
 if [[ $ntracks == "clasdis_all"  ]]; then
-	nevents=100
+	nevents=20
 	cp ci/generated_events/"$ntracks".dat events.dat
 	echo "Using $nevents events from lund file generated with clasdis --trig 200 --docker"
 else
