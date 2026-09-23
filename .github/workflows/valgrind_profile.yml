@@ -71,19 +71,44 @@ jobs:
         run: |
           ./ci/build_gemc.sh DEBUG
 
-      - name: ${{ matrix.ntracks }} test
+      - name: Install Valgrind
+        run: yum install -y valgrind
+
+      - name: Prepare events for ${{ matrix.ntracks }}
+        id: prep
+        shell: bash
         run: |
-          yum install -y valgrind
-          ./ci/profile_gemc.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
-      - name: Upload logs
+          set -euo pipefail
+          [[ -d clas12-config ]] || git clone -b dev https://github.com/JeffersonLab/clas12-config
+          gcard="clas12-config/gemc/dev/rga_spring2019.gcard"
+          if [[ "${{ matrix.ntracks }}" == "clasdis_all" ]]; then
+            nevents=20
+            cp ci/generated_events/clasdis_all.dat events.dat
+          else
+            nevents=60
+            ./ci/generated_events/randomize_particles.py --nevents "$nevents" -o events.dat \
+              --theta-min 7 --theta-max 120 --seed 123 "ci/generated_events/${{ matrix.ntracks }}_tracks.dat"
+          fi
+          echo "gcard=$gcard" >> "$GITHUB_OUTPUT"
+          echo "nevents=$nevents" >> "$GITHUB_OUTPUT"
+
+      - name: Profile ${{ matrix.ntracks }}
+        uses: gemc/Callgrinder@v1
+        with:
+          mode: profile
+          name: ${{ matrix.ntracks }}
+          command: zsh ci/run_gemc.sh ${{ steps.prep.outputs.gcard }} ${{ steps.prep.outputs.nevents }}
+          events: ${{ steps.prep.outputs.nevents }}
+          config: ci/callgrinder.json
+          output-dir: callgrinder-parts
+
+      - name: Upload profile
         uses: actions/upload-artifact@v7
         with:
-          name: tracklogs-${{ matrix.ntracks }}
-          path: |
-            /root/logs/
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+          name: callgrinder-${{ matrix.ntracks }}
+          path: callgrinder-parts
+          if-no-files-found: error
+          retention-days: 30
 
   guidance:
     name: How to read the profiles
@@ -91,71 +116,17 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Collect logs
+      - name: Download profiles
         uses: actions/download-artifact@v5
         with:
-          pattern: tracklogs-*
+          pattern: callgrinder-*
+          path: profiles
 
-      - name: Write category tables and qcachegrind guidance
-        shell: bash
-        run: |
-          {
-            echo "## Valgrind callgrind profiles"
-            echo
-            echo "Each matrix job profiled the RGA Spring 2019 configuration for one track multiplicity"
-            echo "under \`valgrind --tool=callgrind --cache-sim=yes --branch-sim=yes\`, from the generated"
-            echo "lund events."
-            echo
-            echo "### Time per category (CEst)"
-            echo
-            echo "The tables below sum the **inclusive** cost of each category's entry function, in CEst"
-            echo "(cycle estimation: \`Ir + 10*L1_misses + 100*LL_misses\`). Each detector's hit process is"
-            echo "discovered from every \`::integrateDgt\` / \`::multiDgt\` in the profile, so it appears as"
-            echo "its own row (ftof, dc, ecal, ltcc, ...). Categories use inclusive cost and can overlap,"
-            echo "so they do not sum to 100%."
-          } >> "$GITHUB_STEP_SUMMARY"
-
-          # Stitch the per-multiplicity category tables produced next to each callgrind file.
-          for ntracks in 03 05 clasdis_all; do
-            fragment="tracklogs-${ntracks}/root/logs/summary.${ntracks}.md"
-            if [[ -f "$fragment" ]]; then
-              echo >> "$GITHUB_STEP_SUMMARY"
-              cat "$fragment" >> "$GITHUB_STEP_SUMMARY"
-            fi
-          done
-
-          {
-            echo
-            echo "The full callgrind profiles are attached as the \`tracklogs-*\` artifacts"
-            echo "(\`callgrind.out.<ntracks>\`)."
-            echo
-            echo "### Reading a profile with qcachegrind"
-            echo
-            echo "The callgrind output is best explored interactively with **qcachegrind** (Qt) or"
-            echo "**kcachegrind** (KDE). The profiles were dumped with \`--dump-instr=yes\` and"
-            echo "\`--collect-jumps=yes\`, so per-source-line and per-instruction annotation and the"
-            echo "jump/branch arrows are available."
-            echo
-            echo "1. **Install a viewer.** macOS: \`brew install qcachegrind\` (\`brew install graphviz\`"
-            echo "   enables call graphs). Debian/Ubuntu: \`apt-get install kcachegrind graphviz\`."
-            echo "   Fedora/AlmaLinux: \`dnf install kcachegrind graphviz\`."
-            echo "2. **Download and unzip** a \`tracklogs-*\` artifact and open its callgrind file:"
-            echo "   \`qcachegrind callgrind.out.05\` (or File → Open)."
-            echo "3. **Pick the cost type** in the toolbar dropdown. Because the runs enable cache and branch"
-            echo "   simulation, **\`CEst\`** (cycle estimation) is available and matches the tables above;"
-            echo "   \`Ir\` (instruction reads) is the simpler default. Each row shows \`Incl.\` (self +"
-            echo "   callees) and \`Self\` costs; toggle \`%\` (Relative) and \`Cycle Detection\` as needed."
-            echo "4. **Find hotspots** in the left **Flat Profile**: sort by \`Self\` for the functions doing"
-            echo "   the work, or by \`Incl.\` for whole call subtrees (a detector's hit process, field"
-            echo "   swimming, hit collection)."
-            echo "5. **Split by detector** with **Grouping → Source File / Class**: each detector's"
-            echo "   \`<det>_HitProcess\` digitization class and geometry code aggregate into one row."
-            echo "6. **Drill into source** with the **Source** and **Machine Code** tabs for per-line cost, and"
-            echo "   use the **Callers** / **Callees** / **Call Graph** panels to follow the call structure."
-            echo
-            echo "For a non-interactive summary, \`callgrind_annotate callgrind.out.<ntracks>\` prints the top"
-            echo "functions and, with \`--auto=yes\`, annotated source."
-          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Aggregate the category tables and qcachegrind guidance
+        uses: gemc/Callgrinder@v1
+        with:
+          mode: report
+          input-dir: profiles
 
   profile-metrics-final:
     needs:

@@ -1,0 +1,11 @@
+{
+  "cost": "CEst",
+  "top_routines": 10,
+  "categories": [
+    { "label": "Track swimming (field propagation)", "match": "G4PropagatorInField::ComputeStep" },
+    { "label": "Hit collection (sensitive detector)", "match": "sensitiveDetector::ProcessHits" },
+    { "family": "Digitization", "discover": "([A-Za-z_]\\w*)::(?:integrateDgt|multiDgt)", "method": "integrateDgt/multiDgt" },
+    { "family": "Output writing", "discover": "([A-Za-z_]\\w*_output)::writeEvent" },
+    { "family": "Field evaluation", "discover": "([A-Za-z_]\\w*[Ff]ield\\w*)::GetFieldValue" }
+  ]
+}
