@@ -91,13 +91,23 @@ jobs:
           fi
           echo "gcard=$gcard" >> "$GITHUB_OUTPUT"
           echo "nevents=$nevents" >> "$GITHUB_OUTPUT"
+          # Set up the GEMC2 module environment once here (ci/env.sh is zsh) and persist it, so the
+          # Callgrinder action runs gemc directly — only gemc is then profiled under valgrind, not the
+          # module setup. env -0 handles multiline values; PATH entries go to GITHUB_PATH.
+          while IFS='=' read -r -d '' key value; do
+            case "$key" in
+              PATH) printf '%s\n' "$value" | tr ':' '\n' >> "$GITHUB_PATH" ;;
+              PWD|OLDPWD|SHLVL|_|HOME|CI|GITHUB_*|RUNNER_*|INPUT_*) : ;;
+              *) printf '%s<<__CGENV__\n%s\n__CGENV__\n' "$key" "$value" >> "$GITHUB_ENV" ;;
+            esac
+          done < <(zsh -c 'source ci/env.sh >/dev/null 2>&1; env -0')
 
       - name: Profile ${{ matrix.ntracks }}
         uses: gemc/Callgrinder@v1
         with:
           mode: profile
           name: ${{ matrix.ntracks }}
-          command: zsh ci/run_gemc.sh ${{ steps.prep.outputs.gcard }} ${{ steps.prep.outputs.nevents }}
+          command: "gemc -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N={events} -PRINT_EVENT=10 -GEN_VERBOSITY=10 -RANDOMIZE_LUND_VZ='-1.94*cm, 2.5*cm, reset ' -BEAM_SPOT='0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset ' -RASTER_VERTEX='0.0*cm, 0.0*cm, reset ' -SCALE_FIELD='binary_torus, -1.00' -SCALE_FIELD='binary_solenoid, -1.00' -INTEGRATEDRAW='*' ${{ steps.prep.outputs.gcard }}"
           events: ${{ steps.prep.outputs.nevents }}
           config: ci/callgrinder.json
           output-dir: callgrinder-parts
