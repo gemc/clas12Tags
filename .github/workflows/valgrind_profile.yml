@@ -115,7 +115,7 @@ jobs:
           name: callgrinder-${{ matrix.ntracks }}
           path: callgrinder-parts
           if-no-files-found: error
-          retention-days: 30
+          retention-days: 7
 
   guidance:
     name: How to read the profiles

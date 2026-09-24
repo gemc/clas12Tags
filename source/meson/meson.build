@@ -276,7 +276,7 @@ if external_deps.has_key('ccdb')
 else
     # Use the same SQLite library as gemc so ccdb can be linked statically without duplicate SQLite state.
     cmake_opts.add_cmake_defines({
-                                     'CCDB_USE_SYSTEM_SQLITE' : true,
+                                     'USE_SYSTEM_SQLITE' : true,
                                  })
 
     # Meson's CMake converter otherwise treats CCDB's internal object archive, tests, and benchmark as
@@ -287,8 +287,11 @@ else
 
     ccdb_proj = cmake.subproject('ccdb', options : cmake_opts)
     if ccdb_proj.target_list().contains('ccdb_sqlite_static')
-        error('The CCDB system-SQLite wrap patch is missing from the existing subproject checkout. ' +
-              'Run `meson subprojects purge --confirm ccdb`, then configure a clean build directory.')
+        error('CCDB fell back to its bundled SQLite (ccdb_sqlite_static target present). The ' +
+              'USE_SYSTEM_SQLITE CMake option did not take effect: confirm the ccdb checkout is a ' +
+              'revision that defines it (v1.99.8 does, upstream) and that the option name in cmake_opts ' +
+              'matches. If the checkout is stale, run `meson subprojects purge --confirm ccdb` and ' +
+              'reconfigure a clean build directory.')
     endif
     ccdb_static_dep = ccdb_proj.dependency('ccdb_static', include_type : 'system')
 endif
