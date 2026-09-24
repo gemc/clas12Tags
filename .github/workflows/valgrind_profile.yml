@@ -56,7 +56,7 @@ jobs:
 
       - name: Install Git LFS
         run: |
-          dnf -y install git-lfs 
+          dnf -y install git-lfs
 
       - name: Build Coatjava
         run: |
@@ -68,47 +68,77 @@ jobs:
         run: |
           ./ci/build_gemc.sh DEBUG
 
-      - name: ${{ matrix.ntracks }} test
+      - name: Install Valgrind
+        run: yum install -y valgrind
+
+      - name: Prepare events for ${{ matrix.ntracks }}
+        id: prep
+        shell: bash
         run: |
-          yum install -y valgrind
-          ./ci/profile_gemc.sh -g rga_spring2019.gcard -l ${{ matrix.ntracks }}
-      - name: Upload logs
+          set -euo pipefail
+          [[ -d clas12-config ]] || git clone -b dev https://github.com/JeffersonLab/clas12-config
+          gcard="clas12-config/gemc/dev/rga_spring2019.gcard"
+          if [[ "${{ matrix.ntracks }}" == "clasdis_all" ]]; then
+            nevents=100
+            cp ci/generated_events/clasdis_all.dat events.dat
+          else
+            nevents=200
+            ./ci/generated_events/randomize_particles.py --nevents "$nevents" -o events.dat \
+              --theta-min 7 --theta-max 120 --seed 123 "ci/generated_events/${{ matrix.ntracks }}_tracks.dat"
+          fi
+          echo "gcard=$gcard" >> "$GITHUB_OUTPUT"
+          echo "nevents=$nevents" >> "$GITHUB_OUTPUT"
+          # Set up the GEMC2 module environment once here (ci/env.sh is zsh) and persist it, so the
+          # Callgrinder action runs gemc directly — only gemc is then profiled under valgrind, not the
+          # module setup. env -0 handles multiline values; PATH entries go to GITHUB_PATH.
+          while IFS='=' read -r -d '' key value; do
+            case "$key" in
+              PATH) printf '%s\n' "$value" | tr ':' '\n' >> "$GITHUB_PATH" ;;
+              PWD|OLDPWD|SHLVL|_|HOME|CI|GITHUB_*|RUNNER_*|INPUT_*) : ;;
+              *) printf '%s<<__CGENV__\n%s\n__CGENV__\n' "$key" "$value" >> "$GITHUB_ENV" ;;
+            esac
+          done < <(zsh -c 'source ci/env.sh >/dev/null 2>&1; env -0')
+
+      - name: Profile ${{ matrix.ntracks }}
+        uses: gemc/Callgrinder@v1
+        with:
+          mode: profile
+          name: ${{ matrix.ntracks }}
+          command: "gemc -INPUT_GEN_FILE=\"lund, events.dat\" -USE_GUI=0 -N={events} -PRINT_EVENT=10 -GEN_VERBOSITY=10 -RANDOMIZE_LUND_VZ='-1.94*cm, 2.5*cm, reset ' -BEAM_SPOT='0.0*mm, 0.0*mm, 0.0*mm, 0.0*mm, 0*deg, reset ' -RASTER_VERTEX='0.0*cm, 0.0*cm, reset ' -SCALE_FIELD='binary_torus, -1.00' -SCALE_FIELD='binary_solenoid, -1.00' -INTEGRATEDRAW='*' ${{ steps.prep.outputs.gcard }}"
+          events: ${{ steps.prep.outputs.nevents }}
+          config: ci/callgrinder.json
+          output-dir: callgrinder-parts
+
+      - name: Upload profile
         uses: actions/upload-artifact@v7
         with:
-          name: tracklogs-${{ matrix.ntracks }}
-          path: |
-            /root/logs/
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+          name: callgrinder-${{ matrix.ntracks }}
+          path: callgrinder-parts
+          if-no-files-found: error
+          retention-days: 30
 
-  profile-metrics-result:
+  guidance:
+    name: How to read the profiles
     needs: profile-metrics
+    if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Collect logs
+      - name: Download profiles
         uses: actions/download-artifact@v5
         with:
-          pattern: tracklogs-*
-      - name: Generate Table
-        run: |
-          ls -Rl
-          cat */root/logs/*tracks.log > ntracks.log
-          echo "| N. Events | N tracks | Total Time | Time / event|" > Summary.md
-          echo "|-----------|----------|------------|-------------|" >> Summary.md
-          while read -r nevents ntracks time; do
-            [[ -z $nevents || -z $ntracks || -z $time ]] && continue
+          pattern: callgrinder-*
+          path: profiles
 
-            time1t=$(bc -l <<< "scale=4; $time / $nevents ")
-
-            printf "| %9s | %8s | %10s | %22s |\n" "$nevents" "$ntracks" "$time" "$time1t"
-          done < ntracks.log >> Summary.md
-          cat Summary.md 
-          cat Summary.md >> $GITHUB_STEP_SUMMARY
+      - name: Aggregate the category tables and qcachegrind guidance
+        uses: gemc/Callgrinder@v1
+        with:
+          mode: report
+          input-dir: profiles
 
   profile-metrics-final:
     needs:
-      - profile-metrics-result
+      - profile-metrics
+      - guidance
     runs-on: ubuntu-latest
     steps:
       - name: fail
