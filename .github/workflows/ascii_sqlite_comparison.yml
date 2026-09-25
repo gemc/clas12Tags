@@ -46,7 +46,7 @@ jobs:
     needs: [changes, Notary]
     if: needs.changes.outputs.has_geometry == 'true'
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux94
+    container: ghcr.io/gemc/clas12tags:dev-almalinux-10
     strategy:
       fail-fast: false
       matrix:
@@ -73,9 +73,10 @@ jobs:
           git lfs install
           ./install_coatjava.sh -l
           
-      - name: Build GEMC
-        run: |
-          ./ci/build_gemc.sh
+      - name: Set up GEMC environment
+        uses: ./.github/actions/setup-gemc
+      - name: Build GEMC with Meson
+        run: ./ci/build.sh --create-geometry --skip-tests
       - name: Geometry ${{ matrix.detector }} Comparison
         run: |
           ./ci/txt_sql_geometry_comparison.sh -d ${{ matrix.detector }}
@@ -89,7 +90,7 @@ jobs:
     needs: [changes, Notary]
     if: needs.changes.outputs.has_run == 'true'
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux94
+    container: ghcr.io/gemc/clas12tags:dev-almalinux-10
     strategy:
       fail-fast: false
       matrix:
@@ -128,9 +129,10 @@ jobs:
           git lfs install
           ./install_coatjava.sh -l
 
-      - name: Build GEMC
-        run: |
-          ./ci/build_gemc.sh
+      - name: Set up GEMC environment
+        uses: ./.github/actions/setup-gemc
+      - name: Build GEMC with Meson
+        run: ./ci/build.sh --create-geometry --skip-tests
 
       - name: Install Software
         run: |

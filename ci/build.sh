@@ -5,20 +5,26 @@
 # Container run:
 # docker run --rm -it  ghcr.io/gemc/g4install:11.4.0-fedora-40  bash -li
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/build_gemc.sh
+# ./ci/build.sh
 
 function usage {
 	cat <<'EOF'
-Usage: ./ci/build.sh [--install-dir DIR]
+Usage: ./ci/build.sh [--install-dir DIR] [--buildtype TYPE] [--create-geometry] [--skip-tests]
 
 Options:
   -i, --install-dir DIR  Install prefix for local builds. Defaults to $repo_root/install.
+  --buildtype TYPE      Meson build type: release (default), debug, or debugoptimized.
+  --create-geometry     Regenerate geometry before configuring and installing GEMC.
+  --skip-tests          Skip the CLAS12 suite when the caller runs its own tests or profiling.
   -h, --help             Show this help message.
 EOF
 }
 
 repo_root=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
 local_install_dir=
+buildtype=release
+create_geometry=false
+run_tests=true
 
 while [[ $# -gt 0 ]]; do
 	case "$1" in
@@ -30,6 +36,21 @@ while [[ $# -gt 0 ]]; do
 			fi
 			local_install_dir=$2
 			shift 2
+			;;
+		--buildtype)
+			case "${2:-}" in
+				release|debug|debugoptimized) buildtype=$2 ;;
+				*) echo "Invalid or missing Meson build type: ${2:-}" >&2; exit 2 ;;
+			esac
+			shift 2
+			;;
+		--create-geometry)
+			create_geometry=true
+			shift
+			;;
+		--skip-tests)
+			run_tests=false
+			shift
 			;;
 		-h|--help)
 			usage
@@ -49,13 +70,21 @@ fi
 
 source ci/env.sh
 
+if $create_geometry; then
+	echo " > Creating geometry; log: $geo_log"
+	if ! ./create_geometry.sh > "$geo_log" 2>&1; then
+		fail_with_log " > Geometry creation failed. Log:" "$geo_log"
+	fi
+fi
+
 function compile_gemc {
 
 	local install_dir="${GEMC:?GEMC not set}"
 	# meson/meson.build generates geant4.pc into the build tree and puts it on the pkg-config search
-	# path internally (and installs it to <prefix>/lib/pkgconfig), so only the prefix is needed here.
+	# path internally (and installs it to <prefix>/lib/pkgconfig).
 	local meson_option=(
 		"-Dprefix=${install_dir}"
+		"-Dbuildtype=${buildtype}"
 	)
 
 	echo " > Geant-config: $(which geant4-config) : $(geant4-config --version)" | tee $setup_log
@@ -127,7 +156,9 @@ function test_gemc {
 
 compile_gemc
 
-test_gemc
+if $run_tests; then
+	test_gemc
+fi
 
 # log info
 show_gemc_installation
@@ -140,6 +171,9 @@ mkdir -p $ARTIFACT_DIR/bin || fail_with_log "Creating artifact bin directory fai
 cp $GEMC/bin/gemc $ARTIFACT_DIR/bin || fail_with_log "Copying GEMC executable failed. Log:" "$install_log"
 cp -r experiments $ARTIFACT_DIR || fail_with_log "Copying experiments failed. Log:" "$geo_log"
 cp -r api $ARTIFACT_DIR || fail_with_log "Copying API failed. Log:" "$install_log"
+if $create_geometry; then
+	cp clas12.sqlite "$ARTIFACT_DIR" || fail_with_log "Copying SQLite geometry failed. Log:" "$geo_log"
+fi
 echo
 echo "Content of artifacts dir $ARTIFACT_DIR:"
 ls -lrt $ARTIFACT_DIR || fail_with_log "Listing artifact directory failed. Log:" "$install_log"

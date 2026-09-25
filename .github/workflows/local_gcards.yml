@@ -22,7 +22,7 @@ jobs:
   local-gcards-test:
     name: (${{ matrix.detector }})
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux94
+    container: ghcr.io/gemc/clas12tags:dev-almalinux-10
     strategy:
       fail-fast: false
       matrix:
@@ -59,9 +59,10 @@ jobs:
           cd ./geometry_source
           git lfs install
           ./install_coatjava.sh -l
-      - name: Build Gemc
-        run: |
-          ./ci/build_gemc.sh
+      - name: Set up GEMC environment
+        uses: ./.github/actions/setup-gemc
+      - name: Build GEMC with Meson
+        run: ./ci/build.sh --create-geometry --skip-tests
       - name: Gcard ${{ matrix.detector }} Test
         run: |
           ./ci/local_gcards_test.sh -d ${{ matrix.detector }}
@@ -70,9 +71,8 @@ jobs:
         with:
           name: buildlogs-${{ matrix.detector }}
           path: |
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+            logs/
+            geometry_source/build_coatjava.log
 
   local-gcards-test-final:
     name: Local Gcards Test

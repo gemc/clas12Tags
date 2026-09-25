@@ -22,6 +22,7 @@ jobs:
     #   - https://gh.io/using-larger-runners (GitHub.com only)
     # Consider using larger runners or machines with greater resources for possible analysis time improvements.
     runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
+    container: ghcr.io/gemc/clas12tags:dev-almalinux-10
     permissions:
       # required for all workflows
       security-events: write
@@ -99,19 +100,23 @@ jobs:
         run: |
           dnf -y install git-lfs
 
-      - if: matrix.build-mode == 'manual'
-        shell: bash
-        run: |
-          echo "Starting manual build for CodeQL..."
-          chmod +x ./ci/build_gemc.sh
-          ./ci/build_gemc.sh
+      - name: Set up GEMC environment
+        if: matrix.build-mode == 'manual'
+        uses: ./.github/actions/setup-gemc
 
-          # For more details on CodeQL's query packs, refer to: https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-          # queries: security-extended,security-and-quality
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
 
-          - name: Perform CodeQL Analysis
-            uses: github/codeql-action/analyze@v4
-            env:
-              LD_PRELOAD: ""        # suppress trace‑library warning
-            with:
-              category: "/language:${{matrix.language}}"
+      - name: Build GEMC with Meson
+        if: matrix.build-mode == 'manual'
+        run: ./ci/build.sh --create-geometry --skip-tests
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        env:
+          LD_PRELOAD: ""        # suppress trace-library warning
+        with:
+          category: "/language:${{matrix.language}}"

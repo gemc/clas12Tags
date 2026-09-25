@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 
-# Purpose: compiles and installs gemc
+# Purpose: installs software used to compare GEMC output
 
 # Container run:
 # docker run -it --rm --platform linux/amd64 jeffersonlab/gemc:dev-fedora36 sh
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
-# ./ci/build_gemc.sh
+# ./ci/install_comparison_software.sh
 
 source ci/env.sh
 

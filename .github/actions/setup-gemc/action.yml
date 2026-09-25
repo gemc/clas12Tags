@@ -1,0 +1,23 @@
+name: Set up GEMC build environment
+description: Load the Meson container environment and select the workspace installation for later steps.
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        set -euo pipefail
+        export DOCKER_ENTRYPOINT_SOURCE_ONLY=1
+        . /usr/local/bin/docker-entrypoint.sh
+        module load geant4
+        export GEMC="$GITHUB_WORKSPACE/install"
+        export PATH="$GEMC/bin:$PATH"
+        export log_dir="$GITHUB_WORKSPACE/logs"
+        export ARTIFACT_DIR="$GITHUB_WORKSPACE/_artifacts"
+        zsh -e -c 'source ci/env.sh; env -0 > "$RUNNER_TEMP/gemc-env"'
+        while IFS='=' read -r -d '' key value; do
+          case "$key" in
+            PATH) printf '%s\n' "$value" | tr ':' '\n' | tac >> "$GITHUB_PATH" ;;
+            PWD|OLDPWD|SHLVL|_|HOME|CI|GITHUB_*|RUNNER_*|INPUT_*) : ;;
+            *) printf '%s<<__GEMC_ENV__\n%s\n__GEMC_ENV__\n' "$key" "$value" >> "$GITHUB_ENV" ;;
+          esac
+        done < "$RUNNER_TEMP/gemc-env"

@@ -53,7 +53,7 @@ jobs:
     name: ${{ matrix.gcard }}
     needs: generate-matrix
     runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux94
+    container: ghcr.io/gemc/clas12tags:dev-almalinux-10
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.generate-matrix.outputs.matrix)}}
@@ -79,9 +79,10 @@ jobs:
           git lfs install
           ./install_coatjava.sh -l
 
-      - name: Build Gemc
-        run: |
-          ./ci/build_gemc.sh
+      - name: Set up GEMC environment
+        uses: ./.github/actions/setup-gemc
+      - name: Build GEMC with Meson
+        run: ./ci/build.sh --create-geometry --skip-tests
       - name: ${{ matrix.gcard }} tests
         run: |
           ./ci/clas12_config_gcards_test.sh -g ${{ matrix.gcard }}
@@ -90,9 +91,8 @@ jobs:
         with:
           name: buildlogs-${{ matrix.gcard }}
           path: |
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/gemc_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/geo_build.log
-            /cvmfs/oasis.opensciencegrid.org/jlab/geant4/build_coatjava.log
+            logs/
+            geometry_source/build_coatjava.log
 
   clas12-config-gcards-test-final:
     name: Clas12-Config GCards Tests
