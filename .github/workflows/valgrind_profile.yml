@@ -74,10 +74,10 @@ jobs:
           [[ -d clas12-config ]] || git clone -b dev https://github.com/JeffersonLab/clas12-config
           gcard="clas12-config/gemc/dev/rga_spring2019.gcard"
           if [[ "${{ matrix.ntracks }}" == "clasdis_all" ]]; then
-            nevents=100
+            nevents=50
             cp ci/generated_events/clasdis_all.dat events.dat
           else
-            nevents=200
+            nevents=100
             ./ci/generated_events/randomize_particles.py --nevents "$nevents" -o events.dat \
               --theta-min 7 --theta-max 120 --seed 123 "ci/generated_events/${{ matrix.ntracks }}_tracks.dat"
           fi
