@@ -94,15 +94,12 @@ the desired installation path.
 ```shell
 cd source
 meson setup build --prefix=<clas12Tags-install-path>
-meson install -C build
+meson install -C build -q
 ```
 
-The install command installs the executable, public GEMC headers and libraries, APIs, and field maps. Bundled
-subprojects provide static build dependencies and are not installed by default. Configure with
-`-Dinclude-subproject-install=true` to also install their libraries, headers, tools, and metadata.
+This installs (quietly with `-q` ) the executable, public GEMC headers and libraries, APIs, and field maps. 
 
-Use these independent options to reuse existing library installations and magnetic field maps. The three
-library options are upcoming in the next release.
+Use these independent options to reuse existing library installations and magnetic field maps:
 
 | Meson option | Path to supply |
 | ----- | --- |
@@ -121,21 +118,13 @@ meson setup build --prefix=<clas12Tags-install-path> \
   -Duse-fields-location=/absolute/path/to/magfield
 ```
 
-Each option defaults to empty and can be set independently. Leaving an option empty preserves its existing
-dependency setup. A supplied library path must be absolute; it skips that subproject and uses its installed
-headers and library. Invalid library paths fail configuration. Headers are expected under `include/` (also
-`includes/` for older clas12-cmag installations), and libraries under `lib/` or `lib64/`. Static libraries
-are preferred by default; `-Dprefer_static=false` prefers shared libraries.
-Installed CCDB still needs MySQL/MariaDB client development tools and SQLite; installed HIPO needs LZ4 and
-fmt development packages. These external installations are not copied by `meson install`.
+Each option defaults to empty and can be set independently.  
+A supplied library path must be absolute.
 
 By default the magnetic field maps are taken from the `magfield` git-lfs subproject
 ([code.jlab.org/hallb/clas12/magfield](https://code.jlab.org/hallb/clas12/magfield)) and installed under
 `<prefix>/fields`; a working `git-lfs` (run `git lfs install` once) is therefore required for the clone to
-fetch the actual map data. To reuse a set of maps already present on disk instead, pass
-`-Duse-fields-location=<dir>` at `meson setup`: the build then skips the subproject entirely and points
-`FIELD_DIR` at `<dir>`. No maps are downloaded or installed when this option is set.
-
+fetch the actual map data.
 <br/>
 
 ### Tests
@@ -153,12 +142,6 @@ To run only one detector suite:
 meson test -C build --suite ec
 ```
 
-Configure with `-Dinclude-subproject-tests=true` to also build and register the HIPO tests. Those tests can
-then be selected independently:
-
-```shell
-meson test -C build --suite hipo
-```
 
 To list all available tests:
 
