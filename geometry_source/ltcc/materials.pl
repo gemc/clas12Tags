@@ -227,10 +227,15 @@ sub materials
 	$mat{"components"}    = "G4_Ni 0.85 G4_Mo 0.04 G4_Fe 0.11";
 	print_mat(\%configuration, \%mat);
 
-
-
-
-
+	%mat = init_mat();
+	$mat{"name"} = "ltcc_nose";
+	$mat{"description"} =
+		"LTCC nose: 27.4% epoxy + 72.6% steel by volume, " .
+		"mass-conserving over the solid";
+	$mat{"density"} = "3.86";
+	$mat{"ncomponents"} = "4";
+	$mat{"components"} =
+		"G4_STAINLESS-STEEL 0.9464 G4_C 0.0408 G4_H 0.0043 G4_O 0.0085";
+	print_mat(\%configuration, \%mat);
 }
-
 

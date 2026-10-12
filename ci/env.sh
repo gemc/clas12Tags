@@ -119,7 +119,7 @@ variations_for_run_and_system()  {
 		echo "default"
 	elif [[ $1 == "3029" ]]; then
 		echo "rga_spring2018"
-	elif [[ $1 == "4760" ]]; then
+	elif [[ $1 == "4763" || $1 == "4760" ]]; then
 		echo "rga_fall2018"
 	elif [[ $1 == "5674" ]]; then
 		echo "rgk_fall2018"
