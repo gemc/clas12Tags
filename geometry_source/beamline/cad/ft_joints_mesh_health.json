@@ -1,0 +1,623 @@
+{
+  "meshes": {
+    "moller-cone-extension-inner": {
+      "before": {
+        "sha256": "2a84ad71756d5d2dcd2cba42958fb7719fba3c78746d9901007f4e1163bf9637",
+        "bytes": 625084,
+        "triangles": 12500,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 18750,
+          "faces_number": 12500,
+          "genus": 3,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 6246
+        },
+        "volume_mm3": 1431694.095171459,
+        "bounds_mm": [
+          [
+            -47.53644943237305,
+            -47.625,
+            -526.3429565429688
+          ],
+          [
+            47.625,
+            47.625,
+            -55.33295822143555
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "after": {
+        "sha256": "69500089a33801cc884032faab862578496a62bd98eccc2b368b6b8b17611353",
+        "bytes": 560084,
+        "triangles": 11200,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 16800,
+          "faces_number": 11200,
+          "genus": 3,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 5596
+        },
+        "volume_mm3": 1421825.8059429391,
+        "bounds_mm": [
+          [
+            -47.53644943237305,
+            -47.625,
+            -526.3429565429688
+          ],
+          [
+            47.625,
+            47.6249885559082,
+            -55.33295822143555
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "volume_change_percent": -0.6892735858729737,
+      "sampled_distances_mm": [
+        {
+          "RMS": 0.19807618856430054,
+          "diag_mesh_0": 489.8761901855469,
+          "diag_mesh_1": 489.8761887424428,
+          "max": 1.7070159912109375,
+          "mean": 0.046940941363573074,
+          "min": 0.0,
+          "n_samples": 206246
+        },
+        {
+          "RMS": 0.20645064115524292,
+          "diag_mesh_0": 489.8761901855469,
+          "diag_mesh_1": 489.87619096759624,
+          "max": 2.2211389541625977,
+          "mean": 0.053702663630247116,
+          "min": 0.0,
+          "n_samples": 205595
+        }
+      ]
+    },
+    "moller-cone-extension-lead-case": {
+      "before": {
+        "sha256": "6da8aaa2f4ef20cc5e6b25e3c97247044c7c21d6aaec53f5e6897fac4ad9cd11",
+        "bytes": 500084,
+        "triangles": 10000,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 15000,
+          "faces_number": 10000,
+          "genus": 2,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 4998
+        },
+        "volume_mm3": 817759.4208454074,
+        "bounds_mm": [
+          [
+            -120.51636505126953,
+            -120.53667449951172,
+            -523.16796875
+          ],
+          [
+            120.54833221435547,
+            120.55000305175781,
+            -170.63296508789062
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "after": {
+        "sha256": "89acc1332e994a6a170ebb5f5af6926cb79c3afd980a62fc73a0b88aa905d918",
+        "bytes": 800084,
+        "triangles": 16000,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 24000,
+          "faces_number": 16000,
+          "genus": 2,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 7998
+        },
+        "volume_mm3": 807870.0648176387,
+        "bounds_mm": [
+          [
+            -120.51636505126953,
+            -120.53667449951172,
+            -523.16796875
+          ],
+          [
+            120.54833221435547,
+            120.55000305175781,
+            -170.63296508789062
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "volume_change_percent": -1.2093233994840413,
+      "sampled_distances_mm": [
+        {
+          "RMS": 0.042091868817806244,
+          "diag_mesh_0": 490.4241943359375,
+          "diag_mesh_1": 490.4242073628918,
+          "max": 0.45041635632514954,
+          "mean": 0.013160784728825092,
+          "min": 0.0,
+          "n_samples": 204994
+        },
+        {
+          "RMS": 0.06311105191707611,
+          "diag_mesh_0": 490.4241943359375,
+          "diag_mesh_1": 490.4242073628918,
+          "max": 0.4429154694080353,
+          "mean": 0.02748936228454113,
+          "min": 0.0,
+          "n_samples": 207998
+        }
+      ]
+    },
+    "moller-cone-extension-lead-fill": {
+      "before": {
+        "sha256": "ea95201f26dfeeeb6799418cff3dfec97def974fcff8b963d0aecff828ffccd2",
+        "bytes": 400084,
+        "triangles": 8000,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 12000,
+          "faces_number": 8000,
+          "genus": 2,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 3998
+        },
+        "volume_mm3": 11950334.137843952,
+        "bounds_mm": [
+          [
+            -117.0625991821289,
+            -117.37489318847656,
+            -519.9929809570312
+          ],
+          [
+            117.37406158447266,
+            117.375,
+            -170.63296508789062
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "after": {
+        "sha256": "117fa29cdbf33d6ce7ade1337ac9c07da55188c0ca8ef686a1c97658bd01ca87",
+        "bytes": 197984,
+        "triangles": 3958,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 5937,
+          "faces_number": 3958,
+          "genus": 2,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 1977
+        },
+        "volume_mm3": 11927332.433036339,
+        "bounds_mm": [
+          [
+            -117.0625991821289,
+            -117.37489318847656,
+            -519.9929809570312
+          ],
+          [
+            117.37406158447266,
+            117.375,
+            -170.63296508789062
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "volume_change_percent": -0.19247750349316028,
+      "sampled_distances_mm": [
+        {
+          "RMS": 0.12149330973625183,
+          "diag_mesh_0": 481.7888488769531,
+          "diag_mesh_1": 481.78883439893247,
+          "max": 0.8623058199882507,
+          "mean": 0.054691214114427567,
+          "min": 0.0,
+          "n_samples": 203998
+        },
+        {
+          "RMS": 0.17673544585704803,
+          "diag_mesh_0": 481.7888488769531,
+          "diag_mesh_1": 481.78883439893247,
+          "max": 0.8134559392929077,
+          "mean": 0.10052784532308578,
+          "min": 0.0,
+          "n_samples": 201976
+        }
+      ]
+    },
+    "moller-cone-extension-tungsten-addon": {
+      "before": {
+        "sha256": "c01cf671cbda10ad96eca519c1d42edfdf92b77fdf24a75b8f34c81a1e855ea8",
+        "bytes": 600084,
+        "triangles": 12000,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 18000,
+          "faces_number": 12000,
+          "genus": 5,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 5992
+        },
+        "volume_mm3": 3224441.5114843477,
+        "bounds_mm": [
+          [
+            -108.61265563964844,
+            -108.59506225585938,
+            -170.63296508789062
+          ],
+          [
+            108.61973571777344,
+            108.62193298339844,
+            113.69355773925781
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "after": {
+        "sha256": "16f7cbfc45684c433ea6887637321e5bb5a0a492bbe70cf509b3096cd8d6ab50",
+        "bytes": 417884,
+        "triangles": 8356,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 12534,
+          "faces_number": 8356,
+          "genus": 5,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 4170
+        },
+        "volume_mm3": 3212360.127403093,
+        "bounds_mm": [
+          [
+            -108.61265563964844,
+            -108.59506225585938,
+            -170.63296508789062
+          ],
+          [
+            108.61973571777344,
+            108.62193298339844,
+            113.69355773925781
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "volume_change_percent": -0.37468144601863207,
+      "sampled_distances_mm": [
+        {
+          "RMS": 0.07275635749101639,
+          "diag_mesh_0": 418.5865478515625,
+          "diag_mesh_1": 418.5865579048291,
+          "max": 0.4770621657371521,
+          "mean": 0.03428896516561508,
+          "min": 0.0,
+          "n_samples": 205994
+        },
+        {
+          "RMS": 0.08481056988239288,
+          "diag_mesh_0": 418.5865478515625,
+          "diag_mesh_1": 418.5865579048291,
+          "max": 0.46790483593940735,
+          "mean": 0.043275199830532074,
+          "min": 0.0,
+          "n_samples": 204170
+        }
+      ]
+    },
+    "moller_cone": {
+      "before": {
+        "sha256": "6640a8179f48d30242da0fafcc7c4f4c1be97022a73c4d94e0291221dcae96e0",
+        "bytes": 250084,
+        "triangles": 5000,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 7500,
+          "faces_number": 5000,
+          "genus": 1,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 2500
+        },
+        "volume_mm3": 5825708.437762333,
+        "bounds_mm": [
+          [
+            -76.04824829101562,
+            -76.04999542236328,
+            -170.63296508789062
+          ],
+          [
+            75.81954956054688,
+            76.05000305175781,
+            712.0029907226562
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "after": {
+        "sha256": "665beab488b533b5d92d788918048162d3a7831d1dbb8da1672b5f675d91a203",
+        "bytes": 427384,
+        "triangles": 8546,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 12819,
+          "faces_number": 8546,
+          "genus": 1,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 4273
+        },
+        "volume_mm3": 5818802.700862535,
+        "bounds_mm": [
+          [
+            -76.04824829101562,
+            -76.04999542236328,
+            -170.63296508789062
+          ],
+          [
+            75.81954956054688,
+            76.05000305175781,
+            711.9500122070312
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "volume_change_percent": -0.11853900643283843,
+      "sampled_distances_mm": [
+        {
+          "RMS": 0.08609301596879959,
+          "diag_mesh_0": 908.4296875,
+          "diag_mesh_1": 908.3781973225025,
+          "max": 1.2279300689697266,
+          "mean": 0.02234494499862194,
+          "min": 0.0,
+          "n_samples": 202499
+        },
+        {
+          "RMS": 0.06173280254006386,
+          "diag_mesh_0": 908.378173828125,
+          "diag_mesh_1": 908.429671493456,
+          "max": 1.0241808891296387,
+          "mean": 0.016816582530736923,
+          "min": 0.0,
+          "n_samples": 204272
+        }
+      ]
+    }
+  },
+  "input_sha256": {
+    "FTFlange": "8682f9792b4c060a205c73716d281834b57c3b0107735e207e22fde25aa54c74",
+    "FTInnerShield": "0d770b71801eb4c9167c57d325314eb3ac11995431335532fe8828906b48a82a",
+    "moller-cone-extension-inner": "2a84ad71756d5d2dcd2cba42958fb7719fba3c78746d9901007f4e1163bf9637",
+    "moller-cone-extension-lead-case": "6da8aaa2f4ef20cc5e6b25e3c97247044c7c21d6aaec53f5e6897fac4ad9cd11",
+    "moller-cone-extension-lead-fill": "ea95201f26dfeeeb6799418cff3dfec97def974fcff8b963d0aecff828ffccd2",
+    "moller-cone-extension-tungsten-addon": "c01cf671cbda10ad96eca519c1d42edfdf92b77fdf24a75b8f34c81a1e855ea8",
+    "moller_cone": "6640a8179f48d30242da0fafcc7c4f4c1be97022a73c4d94e0291221dcae96e0",
+    "moller_cone_tip": "67382ae73d760a7f2d8ca8a3c79b53710930540227e45ae9c492ecf59902483f"
+  },
+  "archive": "ft_joint_inputs_20261016",
+  "fixed_meshes": [
+    "moller_cone_tip",
+    "FTFlange",
+    "FTInnerShield"
+  ],
+  "case_boolean_reference": {
+    "sha256": "51b821f0f87dca129029ee0386950a77181b910d80d424e402ea4c35f05bec2e",
+    "bytes": 1347884,
+    "triangles": 26956,
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 40434,
+      "faces_number": 26956,
+      "genus": 2,
+      "incident_faces_on_non_two_manifold_edges": 0,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": true,
+      "non_two_manifold_edges": 0,
+      "non_two_manifold_vertices": 0,
+      "number_holes": 0,
+      "unreferenced_vertices": 0,
+      "vertices_number": 13476
+    },
+    "volume_mm3": 807869.9013674834,
+    "bounds_mm": [
+      [
+        -120.51636505126953,
+        -120.53667449951172,
+        -523.16796875
+      ],
+      [
+        120.54833221435547,
+        120.55000305175781,
+        -170.63296508789062
+      ]
+    ],
+    "zero_area_triangles": 0,
+    "self_intersecting_faces": 0
+  },
+  "case_decimation": {
+    "sampled_distances_mm": [
+      {
+        "RMS": 4.379311576485634e-05,
+        "diag_mesh_0": 490.4241943359375,
+        "diag_mesh_1": 490.4242073628918,
+        "max": 0.0076475669629871845,
+        "mean": 1.0910347327808267e-06,
+        "min": 0.0,
+        "n_samples": 213476
+      },
+      {
+        "RMS": 6.368302365444833e-06,
+        "diag_mesh_0": 490.4241943359375,
+        "diag_mesh_1": 490.4242073628918,
+        "max": 0.0010667789028957486,
+        "mean": 5.256120516605733e-07,
+        "min": 0.0,
+        "n_samples": 207998
+      }
+    ],
+    "volume_change_percent": 2.023223726332901e-05,
+    "weld_before_decimation_mm": 0.001,
+    "sharp_angle_deg": 5
+  },
+  "final_float32_weld_mm": 0.0001,
+  "upper_cap_retriangulation": "Angular annular strip at local z=711.95 mm; geometry unchanged",
+  "operations": {
+    "inner_bore": [
+      [
+        -527,
+        40.05
+      ],
+      [
+        -369.63,
+        40.05
+      ]
+    ],
+    "inner_flange_outer_radius_limit_mm": 47.322059970579865,
+    "main_bore_profile_z_r_mm": [
+      [
+        -171,
+        47.725
+      ],
+      [
+        -170.58,
+        47.725
+      ],
+      [
+        -170.48,
+        41.65
+      ],
+      [
+        -169.7,
+        41.65
+      ],
+      [
+        -169.4,
+        40.3
+      ],
+      [
+        -53.43,
+        40.3
+      ]
+    ],
+    "tip_bore_profile_z_r_mm": [
+      [
+        639.369,
+        35.075
+      ],
+      [
+        711.522,
+        35.075
+      ],
+      [
+        711.903,
+        35.456
+      ],
+      [
+        713,
+        35.456
+      ]
+    ],
+    "main_upper_face_z_mm": 711.95,
+    "addon_bore_profile_z_r_mm": [
+      [
+        -170.833,
+        76.15870169538812
+      ],
+      [
+        -55.232959,
+        71.12999926003639
+      ],
+      [
+        113.894,
+        63.881548998620204
+      ]
+    ],
+    "case_envelope_scale": 1.0001711070500436,
+    "case_envelope_minimum_plane_gap_mm": 0.02002,
+    "case_flange_radius_mm": 117.43966486842453
+  },
+  "placement_caveat": "The FT shield is offset -369.73 mm in the common passive cone frame."
+}

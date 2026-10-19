@@ -1,0 +1,263 @@
+{
+  "Downstream_Beam_tube_Segment_1": {
+    "original_name": "Downstream_Beam_tube_Segment_1",
+    "before": {
+      "sha256": "c547bf0a7eaca7e106c9ed1a73e1eea88bd7ef4cc52e0f6c0a9d2bb83156ccbb",
+      "bytes": 257384,
+      "triangles": 5146,
+      "topology": {
+        "boundary_edges": 392,
+        "connected_components_number": 7,
+        "edges_number": 7915,
+        "faces_number": 5146,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 14,
+        "unreferenced_vertices": 0,
+        "vertices_number": 2769
+      },
+      "volume_mm3": null,
+      "bounds_mm": [
+        [
+          -101.03950500488281,
+          -101.12613677978516,
+          4972.15234375
+        ],
+        [
+          101.15428924560547,
+          101.10633087158203,
+          10439.171875
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "cf8d8b809561f532c522d6c8d96bd0e025795386aefb84bb78d90134185e0a15",
+      "bytes": 254884,
+      "triangles": 5096,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 7644,
+        "faces_number": 5096,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 2548
+      },
+      "volume_mm3": 6710837.89736522,
+      "bounds_mm": [
+        [
+          -101.03950500488281,
+          -101.11544799804688,
+          4972.15234375
+        ],
+        [
+          101.15428924560547,
+          101.10633087158203,
+          10439.171875
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "sampled_distances_mm": [
+      {
+        "RMS": 0.2301820069551468,
+        "diag_mesh_0": 5474.49365234375,
+        "diag_mesh_1": 5474.493449932293,
+        "max": 0.7437484860420227,
+        "mean": 0.12792986631393433,
+        "min": 0.0,
+        "n_samples": 202770
+      },
+      {
+        "RMS": 0.21948248147964478,
+        "diag_mesh_0": 5474.49365234375,
+        "diag_mesh_1": 5474.493844774578,
+        "max": 0.7454382181167603,
+        "mean": 0.11658395826816559,
+        "min": 0.0,
+        "n_samples": 202548
+      }
+    ],
+    "volume_change_percent": -0.6209866019934451,
+    "repair": {
+      "added_annular_faces": 392,
+      "reference_volume_mm3": 6752771.704915952,
+      "bores_capped": false,
+      "protected_seam_vertices": 392
+    },
+    "sampled_distance_limit_mm": 0.75,
+    "before_joint_relief": {
+      "sha256": "29fa0f37e458b1308201b97de9f48ba45808c0aa44ca83bad559dc0f3dc13af2",
+      "bytes": 250084,
+      "triangles": 5000,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 7500,
+        "faces_number": 5000,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 2500
+      },
+      "volume_mm3": 6751669.592729331,
+      "bounds_mm": [
+        [
+          -101.03950500488281,
+          -101.11544799804688,
+          4972.15234375
+        ],
+        [
+          101.15428924560547,
+          101.10633087158203,
+          10439.171875
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "joint_relief": [
+      {
+        "neighbor": "Beamline_Adapter_1",
+        "neighbor_sha256": "f389898b641878e7eae770a9d92848109bdd2cda2f5e4baf8e2a6f813ef197d1",
+        "scale": 1.0074049225948583,
+        "radius_before_mm": 60.325,
+        "radius_after_mm": 60.77170195553483,
+        "common_z_mm": [
+          4972.15234375,
+          5048.2763671875
+        ],
+        "old_minimum_support_gap_mm": -0.34286035661962444,
+        "design_normal_gap_mm": 0.1
+      },
+      {
+        "neighbor": "Downstream_Beam_tube_Segment_2",
+        "neighbor_sha256": "3237c5f07ff6e6f0a93faea892848685591467f6e28179d15bbba6983afa0761",
+        "scale": 1.0070684643508419,
+        "radius_before_mm": 70.6628,
+        "radius_after_mm": 71.16227748273067,
+        "common_z_mm": [
+          10310.35546875,
+          10439.171875
+        ],
+        "old_minimum_support_gap_mm": -0.3951843799865742,
+        "design_normal_gap_mm": 0.1
+      }
+    ],
+    "volume_change_vs_previous_percent": -0.6047644186866208
+  },
+  "Downstream_Beam_tube_Segment_2": {
+    "original_name": "Downstream_Beam_tube_Segment_2",
+    "before": {
+      "sha256": "642b186a0466bcb8993ca74fe2da4d83e62cc9b6ee1200e8b1c773d8cfa9ef49",
+      "bytes": 33684,
+      "triangles": 672,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1008,
+        "faces_number": 672,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 336
+      },
+      "volume_mm3": 9047774.900710491,
+      "bounds_mm": [
+        [
+          -100.71903228759766,
+          -100.71903228759766,
+          10310.35546875
+        ],
+        [
+          100.71903228759766,
+          100.71903228759766,
+          13482.8662109375
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "3237c5f07ff6e6f0a93faea892848685591467f6e28179d15bbba6983afa0761",
+      "bytes": 30084,
+      "triangles": 600,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 900,
+        "faces_number": 600,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 300
+      },
+      "volume_mm3": 9047621.523634164,
+      "bounds_mm": [
+        [
+          -100.71903228759766,
+          -100.71903228759766,
+          10310.35546875
+        ],
+        [
+          100.71903228759766,
+          100.71903228759766,
+          13482.8662109375
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "sampled_distances_mm": [
+      {
+        "RMS": 0.012054337188601494,
+        "diag_mesh_0": 3185.275390625,
+        "diag_mesh_1": 3185.2753408480535,
+        "max": 0.45737171173095703,
+        "mean": 0.0007030721753835678,
+        "min": 0.0,
+        "n_samples": 200336
+      },
+      {
+        "RMS": 0.013593393377959728,
+        "diag_mesh_0": 3185.275390625,
+        "diag_mesh_1": 3185.2753408480535,
+        "max": 0.34881889820098877,
+        "mean": 0.0007576252100989223,
+        "min": 0.0,
+        "n_samples": 200300
+      }
+    ],
+    "volume_change_percent": -0.0016951911161688926,
+    "repair": null,
+    "sampled_distance_limit_mm": 0.5
+  }
+}

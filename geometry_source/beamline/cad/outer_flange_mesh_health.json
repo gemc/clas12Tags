@@ -1,0 +1,149 @@
+{
+  "FTOuterFlange": {
+    "original_name": "outerFlange",
+    "before": {
+      "sha256": "ac444ff385c0175ed8c41463cdce499291e967dc8b8c66bc160018e5e10eb7bd",
+      "bytes": 106684,
+      "triangles": 2132,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 3198,
+        "faces_number": 2132,
+        "genus": 13,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1042
+      },
+      "volume_mm3": 389837.40212459915,
+      "bounds_mm": [
+        [
+          -127.0,
+          -127.0,
+          -1480.897216796875
+        ],
+        [
+          127.0,
+          127.0,
+          -1461.8472900390625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "36421b77cfe31f9fd8b31f451feba7fee532bde662125500a3624d4e6d8f4777",
+      "bytes": 41884,
+      "triangles": 836,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1254,
+        "faces_number": 836,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 418
+      },
+      "volume_mm3": 422180.7892837958,
+      "bounds_mm": [
+        [
+          -127.0,
+          -127.0,
+          -1480.897216796875
+        ],
+        [
+          127.0,
+          127.0,
+          -1461.8472900390625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "hole_fill": {
+      "genus_in": 13,
+      "genus_out": 1,
+      "faces_in": 2132,
+      "faces_out": 2084,
+      "boundary_edges": 0,
+      "watertight": true
+    },
+    "filled_reference": {
+      "sha256": "4f236aacaa7a68bd13e4b0c83adf85f4b663feac2022cb92ec426548b6499686",
+      "bytes": 104284,
+      "triangles": 2084,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 3126,
+        "faces_number": 2084,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1042
+      },
+      "volume_mm3": 422180.7892837955,
+      "bounds_mm": [
+        [
+          -127.0,
+          -127.0,
+          -1480.897216796875
+        ],
+        [
+          127.0,
+          127.0,
+          -1461.8472900390625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 8.296635208147407,
+    "retriangulation_volume_change_percent": 6.661338147750939e-14,
+    "sampled_distances_mm": [
+      {
+        "RMS": 3.1802756635850374e-14,
+        "diag_mesh_0": 359.71502685546875,
+        "diag_mesh_1": 359.7150256932257,
+        "max": 2.2737367544323206e-13,
+        "mean": 5.5423008982766545e-15,
+        "min": 0.0,
+        "n_samples": 201043
+      },
+      {
+        "RMS": 3.375282986439743e-08,
+        "diag_mesh_0": 359.71502685546875,
+        "diag_mesh_1": 359.7150256932257,
+        "max": 1.4713084055983927e-05,
+        "mean": 9.05951355600898e-11,
+        "min": 0.0,
+        "n_samples": 200418
+      }
+    ],
+    "model": {
+      "inner_radius_mm": 95.25,
+      "outer_radius_mm": 127.0,
+      "inner_rim_vertices": 97,
+      "outer_rim_vertices": 112,
+      "rim_coordinates_retained": true,
+      "closed_bolt_holes": 12,
+      "central_opening_retained": true
+    }
+  }
+}

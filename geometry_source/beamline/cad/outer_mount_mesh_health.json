@@ -1,0 +1,181 @@
+{
+  "FTOuterMount": {
+    "original_name": "outerMount",
+    "before": {
+      "sha256": "12413bd780a2a8a6408e157c756259c155efb4bed1cb6e68d6cd9542f89828e3",
+      "bytes": 154784,
+      "triangles": 3094,
+      "topology": {
+        "boundary_edges": 12,
+        "connected_components_number": 1,
+        "edges_number": 4647,
+        "faces_number": 3094,
+        "genus": 11,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 4,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1529
+      },
+      "volume_mm3": null,
+      "bounds_mm": [
+        [
+          -95.25,
+          -95.25,
+          -1471.3721923828125
+        ],
+        [
+          95.25,
+          95.25,
+          -1087.197265625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "99024fec3ad474b38fce01df86cc6eb80356266a7dc18b76f72e4ea8208806f4",
+      "bytes": 137084,
+      "triangles": 2740,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 4110,
+        "faces_number": 2740,
+        "genus": 11,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1350
+      },
+      "volume_mm3": 3880136.906136796,
+      "bounds_mm": [
+        [
+          -95.25,
+          -95.25064849853516,
+          -1471.3721923828125
+        ],
+        [
+          95.25,
+          95.25,
+          -1087.197265625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "sealed_reference": {
+      "sha256": "1f8c84daa355a2d43914aa6c7dcc6b04dc3afdf5b2dcef923d1a5907dd7a0701",
+      "bytes": 154984,
+      "triangles": 3098,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 4647,
+        "faces_number": 3098,
+        "genus": 11,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1529
+      },
+      "volume_mm3": 3889831.731170494,
+      "bounds_mm": [
+        [
+          -95.25,
+          -95.25,
+          -1471.3721923828125
+        ],
+        [
+          95.25,
+          95.25,
+          -1087.197265625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "clearance_reference": {
+      "sha256": "844f000d9c20ec527802a1afb7bbbbe268edcd5b6094a1a4a43155915f380d51",
+      "bytes": 154984,
+      "triangles": 3098,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 4647,
+        "faces_number": 3098,
+        "genus": 11,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1529
+      },
+      "volume_mm3": 3880132.616242584,
+      "bounds_mm": [
+        [
+          -95.25,
+          -95.25,
+          -1471.3721923828125
+        ],
+        [
+          95.25,
+          95.25,
+          -1087.197265625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": -0.2492350750293526,
+    "decimation_volume_change_percent": 0.0001105605049289693,
+    "sampled_distances_mm": [
+      {
+        "RMS": 0.0006889505893923342,
+        "diag_mesh_0": 469.22369384765625,
+        "diag_mesh_1": 469.22395657908714,
+        "max": 0.03628753125667572,
+        "mean": 7.253584772115573e-05,
+        "min": 0.0,
+        "n_samples": 201529
+      },
+      {
+        "RMS": 0.0007368389633484185,
+        "diag_mesh_0": 469.2239685058594,
+        "diag_mesh_1": 469.2236932949684,
+        "max": 0.04207812622189522,
+        "mean": 6.631153519265354e-05,
+        "min": 0.0,
+        "n_samples": 201350
+      }
+    ],
+    "flange_sha256": "36421b77cfe31f9fd8b31f451feba7fee532bde662125500a3624d4e6d8f4777",
+    "repair": {
+      "added_faces": 4,
+      "drilled_holes_filled": false
+    },
+    "clearance": {
+      "flange_inradius_mm": 95.20004492937213,
+      "end_rim_radius_mm": 95.15004492937213,
+      "flange_z_offset_in_mount_mm": 0.5,
+      "joint_end_z_mm": -1461.3472900390625,
+      "adjusted_vertices": 97,
+      "protected_faces": 883,
+      "surface_and_Geant4_verification_required": true
+    }
+  }
+}

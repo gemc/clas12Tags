@@ -1,0 +1,159 @@
+{
+  "FTInnerShield": {
+    "original_name": "taggerInnerShield",
+    "before": {
+      "sha256": "29f15d29ac5e1a09adf2bc7fb0fa0cc4d539f3567f2fdd92c084b9f3be56fbe1",
+      "bytes": 2206184,
+      "triangles": 44122,
+      "topology": {
+        "boundary_edges": 7404,
+        "connected_components_number": 67,
+        "edges_number": 69885,
+        "faces_number": 44122,
+        "genus": -1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 1750,
+        "is_mesh_two_manifold": false,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 351,
+        "number_holes": -1,
+        "unreferenced_vertices": 0,
+        "vertices_number": 25353
+      },
+      "volume_mm3": null,
+      "bounds_mm": [
+        [
+          -100.0,
+          -100.0,
+          -665.0
+        ],
+        [
+          100.0,
+          100.0,
+          4.163336342344337e-14
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 1750
+    },
+    "after": {
+      "sha256": "0d770b71801eb4c9167c57d325314eb3ac11995431335532fe8828906b48a82a",
+      "bytes": 325084,
+      "triangles": 6500,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 9750,
+        "faces_number": 6500,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 3250
+      },
+      "volume_mm3": 1946864.5408157746,
+      "bounds_mm": [
+        [
+          -100.0,
+          -100.0,
+          -665.0
+        ],
+        [
+          100.0,
+          100.0,
+          0.0
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "rebuilt_reference": {
+      "sha256": "623a2a25f7b96790a18895dfb825a977d87d43268fd59414b2d9aa9b741abd8c",
+      "bytes": 426884,
+      "triangles": 8536,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 12804,
+        "faces_number": 8536,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 4268
+      },
+      "volume_mm3": 1946881.0044615886,
+      "bounds_mm": [
+        [
+          -100.0,
+          -100.0,
+          -665.0
+        ],
+        [
+          100.0,
+          100.0,
+          0.0
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "decimation_volume_change_percent": -0.0008456421207170273,
+    "sampled_distances_mm": [
+      {
+        "RMS": 0.0023363856598734856,
+        "diag_mesh_0": 722.6513671875,
+        "diag_mesh_1": 722.6513682267542,
+        "max": 0.047852881252765656,
+        "mean": 0.0003353424253873527,
+        "min": 0.0,
+        "n_samples": 204267
+      },
+      {
+        "RMS": 0.002407210413366556,
+        "diag_mesh_0": 722.6513671875,
+        "diag_mesh_1": 722.6513682267542,
+        "max": 0.047311630100011826,
+        "mean": 0.0003122329362668097,
+        "min": 0.0,
+        "n_samples": 203249
+      }
+    ],
+    "protected_faces": 3148,
+    "minimum_triangle_altitude_mm": 0.0003442549949091476,
+    "boolean_weld_tolerance_mm": 1e-06,
+    "model": {
+      "tube_inner_radius_mm": 30,
+      "tube_outer_radius_mm": 40,
+      "length_mm": 665,
+      "flange_radius_mm": 100,
+      "flange_z_mm": [
+        -625,
+        -605
+      ],
+      "angular_segments": 128,
+      "longitudinal_grooves": 2,
+      "groove_width_mm": 6,
+      "groove_depth_mm": 3,
+      "groove_end_radius_mm": 6,
+      "groove_start_z_mm": -575,
+      "groove_end_z_mm": 0,
+      "flange_through_holes_closed": 26,
+      "tube_through_holes_closed": 1,
+      "conical_recesses": 0,
+      "face_chamfers": 0,
+      "stepped_counterbores": 0,
+      "flange_surfaces_smooth": true,
+      "central_passage_retained": true
+    },
+    "volume_caveat": "Original is open and non-manifold; original solid volume is undefined."
+  }
+}
