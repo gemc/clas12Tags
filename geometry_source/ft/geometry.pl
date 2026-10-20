@@ -14,8 +14,7 @@ sub ft_is_off {
     my $configuration_string = clas12_configuration_string(\%configuration);
     return ($configuration_string eq "rgk_winter2018"
         || $configuration_string eq "rgf_spring2020"
-        || $configuration_string eq "rgd_fall2023"
-        || $configuration_string eq "rgc_summer2022");
+        || $configuration_string eq "rgd_fall2023");
 }
 
 
