@@ -2,6 +2,7 @@
 
 	<option name="geometry" value="1400x1200"/>
 
+
 	<detector name="ltcc" factory="TEXT" variation="rgm_fall2021_H"/>
 	<detector name="cad/" factory="CAD"   variation="rgm_fall2021_H"/>
 

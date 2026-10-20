@@ -1,0 +1,321 @@
+{
+  "moller-cone-extension-tungsten-addon": {
+    "original_name": "outer-cone",
+    "before": {
+      "sha256": "3e4378742de0f334b77d1f2bef8f2876f025118ea615706ceffa94dc1a980815",
+      "bytes": 1388984,
+      "triangles": 27778,
+      "topology": {
+        "boundary_edges": 68,
+        "connected_components_number": 1,
+        "edges_number": 41701,
+        "faces_number": 27778,
+        "genus": 4,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 2,
+        "unreferenced_vertices": 0,
+        "vertices_number": 13915
+      },
+      "volume_mm3": null,
+      "bounds_mm": [
+        [
+          -108.61265563964844,
+          -108.59506225585938,
+          -170.63296508789062
+        ],
+        [
+          108.61973571777344,
+          108.62193298339844,
+          113.69355773925781
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "16f7cbfc45684c433ea6887637321e5bb5a0a492bbe70cf509b3096cd8d6ab50",
+      "bytes": 417884,
+      "triangles": 8356,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 12534,
+        "faces_number": 8356,
+        "genus": 5,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 4170
+      },
+      "volume_mm3": 3212360.127403093,
+      "bounds_mm": [
+        [
+          -108.61265563964844,
+          -108.59506225585938,
+          -170.63296508789062
+        ],
+        [
+          108.61973571777344,
+          108.62193298339844,
+          113.69355773925781
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "previous_optimization": {
+      "original_name": "outer-cone",
+      "before": {
+        "sha256": "3e4378742de0f334b77d1f2bef8f2876f025118ea615706ceffa94dc1a980815",
+        "bytes": 1388984,
+        "triangles": 27778,
+        "topology": {
+          "boundary_edges": 68,
+          "connected_components_number": 1,
+          "edges_number": 41701,
+          "faces_number": 27778,
+          "genus": 4,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 2,
+          "unreferenced_vertices": 0,
+          "vertices_number": 13915
+        },
+        "volume_mm3": null,
+        "bounds_mm": [
+          [
+            -108.61265563964844,
+            -108.59506225585938,
+            -170.63296508789062
+          ],
+          [
+            108.61973571777344,
+            108.62193298339844,
+            113.69355773925781
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "after": {
+        "sha256": "c01cf671cbda10ad96eca519c1d42edfdf92b77fdf24a75b8f34c81a1e855ea8",
+        "bytes": 600084,
+        "triangles": 12000,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 18000,
+          "faces_number": 12000,
+          "genus": 5,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 5992
+        },
+        "volume_mm3": 3224441.5114843477,
+        "bounds_mm": [
+          [
+            -108.61265563964844,
+            -108.59506225585938,
+            -170.63296508789062
+          ],
+          [
+            108.61973571777344,
+            108.62193298339844,
+            113.69355773925781
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "repaired_reference": {
+        "sha256": "fd312773dbe468711792c6d906221423e93be44eaed79b18a9845c3e41399638",
+        "bytes": 1392384,
+        "triangles": 27846,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 41769,
+          "faces_number": 27846,
+          "genus": 5,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 13915
+        },
+        "volume_mm3": 3224441.66043089,
+        "bounds_mm": [
+          [
+            -108.61265563964844,
+            -108.59506225585938,
+            -170.63296508789062
+          ],
+          [
+            108.61973571777344,
+            108.62193298339844,
+            113.69355773925781
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "sampled_distances_mm": [
+        {
+          "RMS": 0.00018566675134934485,
+          "diag_mesh_0": 418.5865478515625,
+          "diag_mesh_1": 418.5865579048291,
+          "max": 0.012836853042244911,
+          "mean": 1.679636443441268e-05,
+          "min": 0.0,
+          "n_samples": 213917
+        },
+        {
+          "RMS": 0.00019702351710293442,
+          "diag_mesh_0": 418.5865478515625,
+          "diag_mesh_1": 418.5865579048291,
+          "max": 0.010725393891334534,
+          "mean": 1.2582270755956415e-05,
+          "min": 0.0,
+          "n_samples": 205994
+        }
+      ],
+      "decimation_volume_change_percent": -4.6192971669967164e-06,
+      "protected_faces": 9154,
+      "minimum_triangle_altitude_mm": 0.00047319272109282693,
+      "repair": {
+        "added_port_wall_triangles": 68,
+        "rim_vertices": [
+          33,
+          35
+        ],
+        "port_axis": "positive y, inclined 4.5 degrees toward positive z",
+        "axis_intercept_z_mm": -124.15089,
+        "nominal_port_radius_mm": 6.35,
+        "original_vertices_retained": true,
+        "beam_passage_and_ports_capped": false
+      },
+      "mating_surface": {
+        "neighbor": "moller_cone",
+        "neighbor_sha256": "6640a8179f48d30242da0fafcc7c4f4c1be97022a73c4d94e0291221dcae96e0",
+        "threshold_mm": 0.25,
+        "protected_mating_faces": 7546,
+        "extension_joint_protected_below_z_mm": -169.5
+      },
+      "volume_caveat": "The open original has no valid solid volume; changes use the repaired reference."
+    },
+    "joint_clearance": {
+      "report": "ft_joints_mesh_health.json",
+      "before": {
+        "sha256": "c01cf671cbda10ad96eca519c1d42edfdf92b77fdf24a75b8f34c81a1e855ea8",
+        "bytes": 600084,
+        "triangles": 12000,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 18000,
+          "faces_number": 12000,
+          "genus": 5,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 5992
+        },
+        "volume_mm3": 3224441.5114843477,
+        "bounds_mm": [
+          [
+            -108.61265563964844,
+            -108.59506225585938,
+            -170.63296508789062
+          ],
+          [
+            108.61973571777344,
+            108.62193298339844,
+            113.69355773925781
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "after": {
+        "sha256": "16f7cbfc45684c433ea6887637321e5bb5a0a492bbe70cf509b3096cd8d6ab50",
+        "bytes": 417884,
+        "triangles": 8356,
+        "topology": {
+          "boundary_edges": 0,
+          "connected_components_number": 1,
+          "edges_number": 12534,
+          "faces_number": 8356,
+          "genus": 5,
+          "incident_faces_on_non_two_manifold_edges": 0,
+          "incident_faces_on_non_two_manifold_vertices": 0,
+          "is_mesh_two_manifold": true,
+          "non_two_manifold_edges": 0,
+          "non_two_manifold_vertices": 0,
+          "number_holes": 0,
+          "unreferenced_vertices": 0,
+          "vertices_number": 4170
+        },
+        "volume_mm3": 3212360.127403093,
+        "bounds_mm": [
+          [
+            -108.61265563964844,
+            -108.59506225585938,
+            -170.63296508789062
+          ],
+          [
+            108.61973571777344,
+            108.62193298339844,
+            113.69355773925781
+          ]
+        ],
+        "zero_area_triangles": 0,
+        "self_intersecting_faces": 0
+      },
+      "volume_change_percent": -0.37468144601863207,
+      "sampled_distances_mm": [
+        {
+          "RMS": 0.07275635749101639,
+          "diag_mesh_0": 418.5865478515625,
+          "diag_mesh_1": 418.5865579048291,
+          "max": 0.4770621657371521,
+          "mean": 0.03428896516561508,
+          "min": 0.0,
+          "n_samples": 205994
+        },
+        {
+          "RMS": 0.08481056988239288,
+          "diag_mesh_0": 418.5865478515625,
+          "diag_mesh_1": 418.5865579048291,
+          "max": 0.46790483593940735,
+          "mean": 0.043275199830532074,
+          "min": 0.0,
+          "n_samples": 204170
+        }
+      ]
+    },
+    "scope": "Previous optimization measurements precede the local clearance corrections."
+  }
+}

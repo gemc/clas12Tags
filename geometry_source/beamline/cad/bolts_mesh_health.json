@@ -1,0 +1,866 @@
+{
+  "FTInnerShieldAndFlange_Bolt1": {
+    "original_name": "nut1",
+    "before": {
+      "sha256": "ce332a69411f308d3869d292ccd94b01c63f31ffeead099fb1c74aa55e5ef9b9",
+      "bytes": 84584,
+      "triangles": 1690,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 2535,
+        "faces_number": 1690,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 847
+      },
+      "volume_mm3": 16213.523484789026,
+      "bounds_mm": [
+        [
+          66.67500305175781,
+          -16.497783660888672,
+          -1404.7000732421875
+        ],
+        [
+          116.6812515258789,
+          16.497783660888672,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "9c7a5e205bd1ad1980db6f957762f3d06e0b571b09bdba1b04ec1045bfea46b3",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 16213.524401891775,
+      "bounds_mm": [
+        [
+          66.82500457763672,
+          -14.28753662109375,
+          -1404.7000732421875
+        ],
+        [
+          116.6812515258789,
+          14.28753662109375,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 5.656406210086118e-06,
+    "model": {
+      "sides": 24,
+      "axis": 0,
+      "sign": 1,
+      "centre_mm": [
+        91.67812728881836,
+        0.0,
+        -1390.4125366210938
+      ],
+      "axial_range_mm": [
+        66.82500305175782,
+        116.6812515258789
+      ],
+      "shoulder_mm": 104.7750015258789,
+      "original_tip_mm": 66.67500305175781,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.574077584937275,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt2": {
+    "original_name": "nut2",
+    "before": {
+      "sha256": "391b205d354d6c7e71d446ee9b7d8b3b52f81b3694e134e742d75eca881bb6d8",
+      "bytes": 84584,
+      "triangles": 1690,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 2535,
+        "faces_number": 1690,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 847
+      },
+      "volume_mm3": 16213.521842646853,
+      "bounds_mm": [
+        [
+          -16.497783660888672,
+          66.67500305175781,
+          -1176.0845947265625
+        ],
+        [
+          16.497783660888672,
+          116.6812515258789,
+          -1147.509521484375
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "a9257ba8d31008e76cacb96ea54009bc46ed3910eec51b2c2e20726a9544fa93",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 16213.523577155634,
+      "bounds_mm": [
+        [
+          -14.28753662109375,
+          66.82500457763672,
+          -1176.0845947265625
+        ],
+        [
+          14.28753662109375,
+          116.6812515258789,
+          -1147.509521484375
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 1.0697914976098843e-05,
+    "model": {
+      "sides": 24,
+      "axis": 1,
+      "sign": 1,
+      "centre_mm": [
+        0.0,
+        91.67812728881836,
+        -1161.7970581054688
+      ],
+      "axial_range_mm": [
+        66.82500305175782,
+        116.6812515258789
+      ],
+      "shoulder_mm": 104.7750015258789,
+      "original_tip_mm": 66.67500305175781,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.574076772473266,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt3": {
+    "original_name": "nut3",
+    "before": {
+      "sha256": "5223e3924ee2fb31a7f81a658b6daea9e2ecb977b36edf338f5e0784e3a5b614",
+      "bytes": 84584,
+      "triangles": 1690,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 2535,
+        "faces_number": 1690,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 847
+      },
+      "volume_mm3": 16213.523948553837,
+      "bounds_mm": [
+        [
+          -116.6812515258789,
+          -16.497783660888672,
+          -1176.10009765625
+        ],
+        [
+          -66.67500305175781,
+          16.497783660888672,
+          -1147.5250244140625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "699adaaf498d5ac98e435c8939a6ae581ce0c461d734d035ff674db95e34d834",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 16213.524541000099,
+      "bounds_mm": [
+        [
+          -116.6812515258789,
+          -14.28753662109375,
+          -1176.10009765625
+        ],
+        [
+          -66.82500457763672,
+          14.28753662109375,
+          -1147.5250244140625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 3.654025260146909e-06,
+    "model": {
+      "sides": 24,
+      "axis": 0,
+      "sign": -1,
+      "centre_mm": [
+        -91.67812728881836,
+        0.0,
+        -1161.8125610351562
+      ],
+      "axial_range_mm": [
+        66.82500305175782,
+        116.6812515258789
+      ],
+      "shoulder_mm": 104.7750015258789,
+      "original_tip_mm": 66.67500305175781,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.574077814388902,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt4": {
+    "original_name": "nut4",
+    "before": {
+      "sha256": "0ace2425b0f0efcafafe22331f2127d14399fcc0cd73bd94200cefd7d3a1449c",
+      "bytes": 111284,
+      "triangles": 2224,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 3336,
+        "faces_number": 2224,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1114
+      },
+      "volume_mm3": 18564.26342050837,
+      "bounds_mm": [
+        [
+          -41.89778518676758,
+          -119.85624694824219,
+          -1176.10009765625
+        ],
+        [
+          -8.902215957641602,
+          -57.150001525878906,
+          -1147.5250244140625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "9cc71d5e231919f8c3930003765d7a7889735497d52c885b7c795a75f13e571c",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 18564.280112439024,
+      "bounds_mm": [
+        [
+          -39.687538146972656,
+          -119.85624694824219,
+          -1176.10009765625
+        ],
+        [
+          -11.11246395111084,
+          -57.30000305175781,
+          -1147.5250244140625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 8.991431696969698e-05,
+    "model": {
+      "sides": 24,
+      "axis": 1,
+      "sign": -1,
+      "centre_mm": [
+        -25.40000057220459,
+        -88.50312423706055,
+        -1161.8125610351562
+      ],
+      "axial_range_mm": [
+        57.300001525878905,
+        119.85624694824219
+      ],
+      "shoulder_mm": 107.94999694824219,
+      "original_tip_mm": 57.150001525878906,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.368095348300747,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt5": {
+    "original_name": "nut5",
+    "before": {
+      "sha256": "cdbd6772150ce529e94b71cb2bd4934f452ace2455bd0f8cd0b22c59548232c0",
+      "bytes": 84584,
+      "triangles": 1690,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 2535,
+        "faces_number": 1690,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 847
+      },
+      "volume_mm3": 16213.523948554484,
+      "bounds_mm": [
+        [
+          66.67500305175781,
+          -16.497783660888672,
+          -1176.10009765625
+        ],
+        [
+          116.6812515258789,
+          16.497783660888672,
+          -1147.5250244140625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "56e0e904524cc8c5896de00cd6675d60b584d327ad96e0228e48a32f7e2f37b5",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 16213.524541000099,
+      "bounds_mm": [
+        [
+          66.82500457763672,
+          -14.28753662109375,
+          -1176.10009765625
+        ],
+        [
+          116.6812515258789,
+          14.28753662109375,
+          -1147.5250244140625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 3.654021285548481e-06,
+    "model": {
+      "sides": 24,
+      "axis": 0,
+      "sign": 1,
+      "centre_mm": [
+        91.67812728881836,
+        0.0,
+        -1161.8125610351562
+      ],
+      "axial_range_mm": [
+        66.82500305175782,
+        116.6812515258789
+      ],
+      "shoulder_mm": 104.7750015258789,
+      "original_tip_mm": 66.67500305175781,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.574077814389222,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt6": {
+    "original_name": "nut6",
+    "before": {
+      "sha256": "f9c1663e80df118c0c58f88ca9b9c5786dcdf71fe788b8822538e700de399a6b",
+      "bytes": 84584,
+      "triangles": 1690,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 2535,
+        "faces_number": 1690,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 847
+      },
+      "volume_mm3": 16213.523484786265,
+      "bounds_mm": [
+        [
+          -16.497783660888672,
+          66.67500305175781,
+          -1404.7000732421875
+        ],
+        [
+          16.497783660888672,
+          116.6812515258789,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "24da9387e560a0ee2984db93f6c580a6b6a02514dfbb18d42e46fe795cea7071",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 16213.524401891755,
+      "bounds_mm": [
+        [
+          -14.28753662109375,
+          66.82500457763672,
+          -1404.7000732421875
+        ],
+        [
+          14.28753662109375,
+          116.6812515258789,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 5.656423107680553e-06,
+    "model": {
+      "sides": 24,
+      "axis": 1,
+      "sign": 1,
+      "centre_mm": [
+        0.0,
+        91.67812728881836,
+        -1390.4125366210938
+      ],
+      "axial_range_mm": [
+        66.82500305175782,
+        116.6812515258789
+      ],
+      "shoulder_mm": 104.7750015258789,
+      "original_tip_mm": 66.67500305175781,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.574077584935907,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt7": {
+    "original_name": "nut7",
+    "before": {
+      "sha256": "7814120f683e8bd39a5e1b266bb55ae8763ccd07c5b9bb80c58a4e8fc306221b",
+      "bytes": 84584,
+      "triangles": 1690,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 2535,
+        "faces_number": 1690,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 847
+      },
+      "volume_mm3": 16213.523484786263,
+      "bounds_mm": [
+        [
+          -16.497783660888672,
+          -116.6812515258789,
+          -1404.7000732421875
+        ],
+        [
+          16.497783660888672,
+          -66.67500305175781,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "4fb9628f3040b7c22dc2a730fd8e97898619a64fc0c4e3a8f11f283d1f1f9fdd",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 16213.524401889159,
+      "bounds_mm": [
+        [
+          -14.28753662109375,
+          -116.6812515258789,
+          -1404.7000732421875
+        ],
+        [
+          14.28753662109375,
+          -66.82500457763672,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 5.656407120468998e-06,
+    "model": {
+      "sides": 24,
+      "axis": 1,
+      "sign": -1,
+      "centre_mm": [
+        0.0,
+        -91.67812728881836,
+        -1390.4125366210938
+      ],
+      "axial_range_mm": [
+        66.82500305175782,
+        116.6812515258789
+      ],
+      "shoulder_mm": 104.7750015258789,
+      "original_tip_mm": 66.67500305175781,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.574077584935907,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt8": {
+    "original_name": "nut8",
+    "before": {
+      "sha256": "9b452ec88eb36b0c03cae6b41070a2eaabb147e042a68337d7f8a1d7168a2247",
+      "bytes": 111284,
+      "triangles": 2224,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 3336,
+        "faces_number": 2224,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 1114
+      },
+      "volume_mm3": 18564.245289301387,
+      "bounds_mm": [
+        [
+          8.902215957641602,
+          -119.85624694824219,
+          -1176.0111083984375
+        ],
+        [
+          41.89778518676758,
+          -57.150001525878906,
+          -1147.4361572265625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "bbc2031786d6c57e009abaf8b823439d78ca8b0da6a8543c13b9a44aac379708",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 18564.24583450918,
+      "bounds_mm": [
+        [
+          11.11252498626709,
+          -119.85624694824219,
+          -1176.0111083984375
+        ],
+        [
+          39.687477111816406,
+          -57.30000305175781,
+          -1147.4361572265625
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 2.936870235892286e-06,
+    "model": {
+      "sides": 24,
+      "axis": 1,
+      "sign": -1,
+      "centre_mm": [
+        25.40000057220459,
+        -88.50312423706055,
+        -1161.7236328125
+      ],
+      "axial_range_mm": [
+        57.300001525878905,
+        119.85624694824219
+      ],
+      "shoulder_mm": 107.94999694824219,
+      "original_tip_mm": 57.150001525878906,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.368112958129753,
+      "head_radius_mm": 14.2874755859375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  },
+  "FTInnerShieldAndFlange_Bolt9": {
+    "original_name": "nut9",
+    "before": {
+      "sha256": "25e36f3ede40657c06638e09f86b4da292cd20b757eae4897f7ab9ed9dc70cf2",
+      "bytes": 84584,
+      "triangles": 1690,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 2535,
+        "faces_number": 1690,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 847
+      },
+      "volume_mm3": 16213.5234847884,
+      "bounds_mm": [
+        [
+          -116.6812515258789,
+          -16.497783660888672,
+          -1404.7000732421875
+        ],
+        [
+          -66.67500305175781,
+          16.497783660888672,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "after": {
+      "sha256": "b9c6b36c0d9a86f0154209ee4c7fdd1692b87db1c376639bbd89f4519af06252",
+      "bytes": 9684,
+      "triangles": 192,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 288,
+        "faces_number": 192,
+        "genus": 0,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 98
+      },
+      "volume_mm3": 16213.524401891775,
+      "bounds_mm": [
+        [
+          -116.6812515258789,
+          -14.28753662109375,
+          -1404.7000732421875
+        ],
+        [
+          -66.82500457763672,
+          14.28753662109375,
+          -1376.125
+        ]
+      ],
+      "zero_area_triangles": 0,
+      "self_intersecting_faces": 0
+    },
+    "volume_change_percent": 5.6564100736622436e-06,
+    "model": {
+      "sides": 24,
+      "axis": 0,
+      "sign": -1,
+      "centre_mm": [
+        -91.67812728881836,
+        0.0,
+        -1390.4125366210938
+      ],
+      "axial_range_mm": [
+        66.82500305175782,
+        116.6812515258789
+      ],
+      "shoulder_mm": 104.7750015258789,
+      "original_tip_mm": 66.67500305175781,
+      "tip_clearance_mm": 0.15,
+      "shaft_radius_mm": 8.574077584936964,
+      "head_radius_mm": 14.28753662109375,
+      "hollow": false,
+      "threads_retained": false,
+      "shield_clearance_validation_required": true
+    }
+  }
+}
