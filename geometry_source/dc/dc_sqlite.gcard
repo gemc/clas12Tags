@@ -4,6 +4,8 @@
 	<option name="DATABASE" value="clas12.sqlite"/>
 
 	<detector name="dc"            factory="SQLITE"/>
+	<detector name="dc_cad" factory="SQLITECAD"/>
+	<detector name="dc_copies" factory="SQLITE"/>
 
 	<option name="BEAM_P" value="e-, 5.0*GeV, 25*deg, 0*deg"/>
 	<option name="SPREAD_P" value="1.0*GeV, 15*deg, 180*deg"/>

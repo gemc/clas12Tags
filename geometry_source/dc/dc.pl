@@ -103,3 +103,7 @@ foreach my $run (@runs) {
     $configuration{"run_number"} = $run;
     create_system("default", $run);
 }
+
+# Region-1 back membranes and supports: one CAD solid and five native copies per group.
+require "./cad.pl";
+build_dc_cad();

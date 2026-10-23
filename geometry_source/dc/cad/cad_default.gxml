@@ -1,0 +1,60 @@
+<gxml>
+  <volume name="dcs1r1back" color="ffaaff" material="G4_KAPTON"
+    position="1.130*mm -0.644*mm 1274.299*mm"
+    rotation="180*deg 0*deg -60*deg"
+    copyOf="dcs5r1back"
+  />
+  <volume name="dcs2r1back" color="ffaaff" material="G4_KAPTON"
+    position="0.801*mm 0.653*mm 1273.863*mm"
+    rotation="180*deg 0*deg 0*deg"
+    copyOf="dcs5r1back"
+  />
+  <volume name="dcs3r1back" color="ffaaff" material="G4_KAPTON"
+    position="-0.165*mm 1.020*mm 1273.863*mm"
+    rotation="180*deg 0*deg 60*deg"
+    copyOf="dcs5r1back"
+  />
+  <volume name="dcs4r1back" color="ffaaff" material="G4_KAPTON"
+    position="0.000*mm 0.000*mm 1273.270*mm"
+    rotation="180*deg 0*deg 120*deg"
+    copyOf="dcs5r1back"
+  />
+  <volume name="dcs5r1back" color="ffaaff" material="G4_KAPTON"
+    position="0.000*mm 0.000*mm 1273.270*mm"
+    rotation="0*deg 180*deg 0*deg"
+  />
+  <volume name="dcs6r1back" color="ffaaff" material="G4_KAPTON"
+    position="0.000*mm 0.000*mm 1273.270*mm"
+    rotation="180*deg 0*deg -120*deg"
+    copyOf="dcs5r1back"
+  />
+  <volume name="dcs1r1support" color="ffaaff" material="G4_Al"
+    position="0.000*mm 0.000*mm 1273.270*mm"
+    rotation="0*deg 180*deg 0*deg"
+  />
+  <volume name="dcs2r1support" color="ffaaff" material="G4_Al"
+    position="0.000*mm 0.000*mm 1273.270*mm"
+    rotation="180*deg 0*deg -120*deg"
+    copyOf="dcs1r1support"
+  />
+  <volume name="dcs3r1support" color="ffaaff" material="G4_Al"
+    position="1.341*mm -2.322*mm 1272.463*mm"
+    rotation="180*deg 0*deg -60*deg"
+    copyOf="dcs1r1support"
+  />
+  <volume name="dcs4r1support" color="ffaaff" material="G4_Al"
+    position="2.682*mm 0.000*mm 1272.463*mm"
+    rotation="180*deg 0*deg 0*deg"
+    copyOf="dcs1r1support"
+  />
+  <volume name="dcs5r1support" color="ffaaff" material="G4_Al"
+    position="1.341*mm 2.322*mm 1272.463*mm"
+    rotation="180*deg 0*deg 60*deg"
+    copyOf="dcs1r1support"
+  />
+  <volume name="dcs6r1support" color="ffaaff" material="G4_Al"
+    position="1.065*mm -1.845*mm 1273.914*mm"
+    rotation="180*deg 0*deg 120*deg"
+    copyOf="dcs1r1support"
+  />
+</gxml>
