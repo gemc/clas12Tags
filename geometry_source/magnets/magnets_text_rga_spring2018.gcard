@@ -5,6 +5,7 @@
 
 	<detector name="solenoid"                             factory="TEXT" variation="rga_spring2018"/>
 	<detector name="cad/"                                 factory="CAD"/>
+	<detector name="magnets_copies" factory="TEXT" variation="default"/>
 	<detector name="experiments/clas12/ft/ft"             factory="TEXT"/>
 	<detector name="experiments/clas12/beamline/beamline" factory="TEXT"/>
 

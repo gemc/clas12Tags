@@ -5,6 +5,7 @@
 
 	<detector name="solenoid"    factory="SQLITE"/>
 	<detector name="magnets_cad" factory="SQLITECAD" />
+	<detector name="magnets_copies" factory="SQLITE"/>
 	<detector name="ft"          factory="SQLITE"/>
 	<detector name="beamline"    factory="SQLITE"/>
 

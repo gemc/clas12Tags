@@ -1,0 +1,153 @@
+{
+  "source": "coil1.stl",
+  "output": "coil.stl",
+  "canonical_bytes_unchanged": true,
+  "all_openings_retained": true,
+  "unique_facets_before": 6096,
+  "unique_facets_after": 1016,
+  "placed_facets_before": 6096,
+  "placed_facets_after": 6096,
+  "volume_before_mm3": 691360208.653981,
+  "volume_after_mm3": 691360128.7126459,
+  "volume_change_percent": -1.1562906587769817e-05,
+  "sectors": [
+    {
+      "source": "coil1.stl",
+      "source_sha256": "05113d836511de7e02537fedb41f48bc94e342d76e504a01a2491754f2e02bbe",
+      "max_vertex_error_mm": 0.0,
+      "different_flat_triangles": 0,
+      "facets": 1016,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1524,
+        "faces_number": 1016,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 508
+      },
+      "volume_mm3": 115226688.11877431
+    },
+    {
+      "source": "coil2.stl",
+      "source_sha256": "97f416102034a0cc9de07c8b16c50fb0799b4a92bfc3ce469bde4c3aad408b8a",
+      "max_vertex_error_mm": 0.00022472780241897293,
+      "different_flat_triangles": 2,
+      "facets": 1016,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1524,
+        "faces_number": 1016,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 508
+      },
+      "volume_mm3": 115226707.64887522
+    },
+    {
+      "source": "coil3.stl",
+      "source_sha256": "3f7c2cb4e4e5c8f4b768bfe38cc81696b03ce27a6d9dfae8a1ad547299040873",
+      "max_vertex_error_mm": 0.00022207277369246816,
+      "different_flat_triangles": 2,
+      "facets": 1016,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1524,
+        "faces_number": 1016,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 508
+      },
+      "volume_mm3": 115226708.57886642
+    },
+    {
+      "source": "coil4.stl",
+      "source_sha256": "f763ef2eb0ed910cd7bf8b76cc35ab0c792a5567766d1a45cdec43c552d47f92",
+      "max_vertex_error_mm": 4.156675004196586e-13,
+      "different_flat_triangles": 0,
+      "facets": 1016,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1524,
+        "faces_number": 1016,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 508
+      },
+      "volume_mm3": 115226688.11877431
+    },
+    {
+      "source": "coil5.stl",
+      "source_sha256": "cb6c079236603d7f17012a7e0188eafefe4671c9ee322b7eec25b9a756e1c101",
+      "max_vertex_error_mm": 0.00022472780237166234,
+      "different_flat_triangles": 0,
+      "facets": 1016,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1524,
+        "faces_number": 1016,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 508
+      },
+      "volume_mm3": 115226707.64471938
+    },
+    {
+      "source": "coil6.stl",
+      "source_sha256": "e4bbd7e32e2b0a7b75106ea9690398741c35802020b07b1ff9edf0bd6a8d2e8b",
+      "max_vertex_error_mm": 0.0002220727729073357,
+      "different_flat_triangles": 0,
+      "facets": 1016,
+      "topology": {
+        "boundary_edges": 0,
+        "connected_components_number": 1,
+        "edges_number": 1524,
+        "faces_number": 1016,
+        "genus": 1,
+        "incident_faces_on_non_two_manifold_edges": 0,
+        "incident_faces_on_non_two_manifold_vertices": 0,
+        "is_mesh_two_manifold": true,
+        "non_two_manifold_edges": 0,
+        "non_two_manifold_vertices": 0,
+        "number_holes": 0,
+        "unreferenced_vertices": 0,
+        "vertices_number": 508
+      },
+      "volume_mm3": 115226708.54397133
+    }
+  ]
+}

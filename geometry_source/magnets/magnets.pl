@@ -68,11 +68,6 @@ foreach my $run (@runs) {
 }
 
 
-# port gxml to sqlite
-require "gxml_to_sqlite.pl";
-$configuration{"detector_name"} = "magnets";
-$configuration{"variation"} = "default";
-foreach my $variation (@variations) {
-    $configuration{"run_number"} = clas12_run($variation);
-    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/magnets/cad");
-}
+# Publish shared CAD sources and native copies without duplicating tessellated solids.
+require "./cad_copies.pl";
+build_magnets_cad();

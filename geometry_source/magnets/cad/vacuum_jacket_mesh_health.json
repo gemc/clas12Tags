@@ -1,0 +1,76 @@
+{
+  "vacuumJacket": {
+    "source_sha256": "0b71de638c17eaa8eeacb55065b82b2288efc101b27eb53072883a4d88cb19b7",
+    "output_sha256": "538b9c6fd01bc81b37f7f9b55f541eac8704976b0a46efd0cbaa1a302356a2eb",
+    "original_facets": 8388,
+    "optimized_facets": 8384,
+    "protected_contours": 78,
+    "protected_vertices": 3962,
+    "protected_faces": 8181,
+    "all_protected_triangles_unchanged": true,
+    "bounds_unchanged": true,
+    "original_volume_mm3": 96817902.7750269,
+    "optimized_volume_mm3": 96817902.5959185,
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 12576,
+      "faces_number": 8384,
+      "genus": 38,
+      "incident_faces_on_non_two_manifold_edges": 0,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": true,
+      "non_two_manifold_edges": 0,
+      "non_two_manifold_vertices": 0,
+      "number_holes": 0,
+      "unreferenced_vertices": 0,
+      "vertices_number": 4118
+    },
+    "self_intersecting_faces": 0
+  },
+  "vacuumJacket1b": {
+    "source_sha256": "25e8aaf20adb5e8a5eb037c7816c6dc13a0fc18b514f8e0922a855b08e3eccdf",
+    "output_sha256": "6c3cc8b10d6aa35e95aa9cb06d8b87c57cb8a514f1b48c77d434b8e087ab7e09",
+    "original_facets": 7560,
+    "optimized_facets": 7556,
+    "protected_contours": 73,
+    "protected_vertices": 3567,
+    "protected_faces": 7373,
+    "all_protected_triangles_unchanged": true,
+    "bounds_unchanged": true,
+    "original_volume_mm3": 88885815.57917918,
+    "optimized_volume_mm3": 88885815.3097833,
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 11334,
+      "faces_number": 7556,
+      "genus": 35,
+      "incident_faces_on_non_two_manifold_edges": 0,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": true,
+      "non_two_manifold_edges": 0,
+      "non_two_manifold_vertices": 0,
+      "number_holes": 0,
+      "unreferenced_vertices": 0,
+      "vertices_number": 3710
+    },
+    "self_intersecting_faces": 0
+  },
+  "vacuumJacket2b": {
+    "unchanged": true,
+    "reason": "Preserve original coordinates at a nanometre-sensitive plate contact"
+  },
+  "vacuumJacket3a": {
+    "unchanged": true,
+    "reason": "Preserve original coordinates at a nanometre-sensitive plate contact"
+  },
+  "vacuumJacket5b": {
+    "unchanged": true,
+    "reason": "Preserve original coordinates at a nanometre-sensitive plate contact"
+  },
+  "vacuumJacket6a": {
+    "unchanged": true,
+    "reason": "Preserve its additional disconnected component"
+  }
+}
