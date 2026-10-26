@@ -42,8 +42,8 @@ finer canonical tessellations increase placed facets to 95,754. Total signed ste
 Export tessellations differ slightly within each family. Fitted circular hole parameters agree within 0.0001
 mm; sampled polygonal surfaces differ by up to 0.27 mm. Protected hole geometry is unchanged in the canonical
 sources. Dense assembly checks find no new overlap pair with the retained exceptions. Existing assembly
-overlaps remain. GEMC2 uses the additional native `magnets_copies` bank; supplied cards load it alongside CAD.
-GEMC3 keeps copies in `magnets_cad`.
+overlaps remain. GEMC2 now keeps the native copies in `magnets` alongside the solenoid.
+GEMC3 keeps the source meshes and copies in the single `magnets` system.
 
 ## Torus coils
 
@@ -88,7 +88,7 @@ placements by at most 0.000146485 mm. Positions retain three decimal places and 
 
 Unique shield facets fall from 4,146 to 1,594 (61.55% fewer), with 4,146 placed facets across seven volumes.
 Signed tungsten-alloy volume changes by -0.000002416%. After hub-shield sharing, magnets had 20 STL sources
-and 67,012 unique facets for 39 CAD placements; GEMC2 uses 20 CAD sources and 19 native `magnets_copies`
+and 67,012 unique facets for 39 CAD placements; GEMC2 uses 20 CAD sources and 19 native `magnets`
 rows per run.
 
 ## Cold hub
@@ -129,9 +129,22 @@ comparison matches all three CAD configurations. Name-normalized database rows a
 confirm that the physical placements and clearances are unchanged. Existing assembly overlaps remain.
 Magnets still uses 20 STL sources, 66,960 unique facets, and 39 CAD placements.
 
+## Consolidated geometry banks
+
+Upcoming in the next release: the native system is `magnets`; its copper volume retains the name
+`solenoid`. The 19 native `CopyOf` rows now share that bank. Load native `magnets` and the 20 source
+meshes in `magnets_cad`; the separate copy bank and its TEXT files are retired.
+The 40 physical volumes retain all names, placements, materials, and STL shapes. Regenerate SQLite and
+TEXT output, then refresh runtime copies and cards. The local tungsten material matches the beamline alloy.
+
+GEMC3 uses one SQLite `magnets` system containing the native solid, CAD sources, and copies. Historical
+copy-bank names in the studies below refer to archived configurations. No facets are removed here and
+no additional simulation speedup is established.
+
 # Run Configurations
 
-Torus has only 'default'. Soleinoid has 'default', 'rga_spring2018' and 'rga_fall2018' due to the shifts in the solenoid position.
+The magnets bank has default, rga_spring2018, and rga_fall2018 configurations because the physical solenoid
+position changes. The native torus builder remains disabled.
 
 | variation        | SQL / CCDB Run | 
 |------------------|----------------|
@@ -149,8 +162,7 @@ To build the geometry:
 To compare the two databases (TEXT and SQLITE) the script ` $GEMC/api/perl/db_compare.py` can be used:
 
 ````
-$GEMC/api/perl/db_compare.py torus__geometry_default.txt           ../../clas12.sqlite torus     11   default
-$GEMC/api/perl/db_compare.py solenoid__geometry_default.txt        ../../clas12.sqlite solenoid  11   default
-$GEMC/api/perl/db_compare.py solenoid__geometry_rga_spring2018.txt ../../clas12.sqlite solenoid  3029 default
-$GEMC/api/perl/db_compare.py solenoid__geometry_rga_fall2018.txt   ../../clas12.sqlite solenoid  4763 default
+$GEMC/api/perl/db_compare.py magnets__geometry_default.txt        ../../clas12.sqlite magnets   11   default
+$GEMC/api/perl/db_compare.py magnets__geometry_rga_spring2018.txt ../../clas12.sqlite magnets   3029 default
+$GEMC/api/perl/db_compare.py magnets__geometry_rga_fall2018.txt   ../../clas12.sqlite magnets   4763 default
 ```
