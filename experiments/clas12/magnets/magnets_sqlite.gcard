@@ -3,9 +3,8 @@
 	<option name="geometry" value="1400x1200"/>
 	<option name="DATABASE" value="clas12.sqlite"/>
 
-	<detector name="solenoid"    factory="SQLITE"/>
+	<detector name="magnets"    factory="SQLITE"/>
 	<detector name="magnets_cad" factory="SQLITECAD" />
-	<detector name="magnets_copies" factory="SQLITE"/>
 	<detector name="ft"          factory="SQLITE"/>
 	<detector name="beamline"    factory="SQLITE"/>
 
