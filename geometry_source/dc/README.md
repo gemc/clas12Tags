@@ -33,3 +33,15 @@ $GEMC/api/perl/db_compare.py dc__geometry_default.txt      ../../clas12.sqlite d
 <br/>
 
 ---
+
+## Consolidated CAD copies
+
+Upcoming in the next release: ten region-1 back/support copies are part of the native `dc` geometry.
+The separate copy bank is retired. Default native geometry has 64 rows; DDVCS TEXT has 70. Load the
+two shared source meshes through `dc_cad`, giving 66 or 72 physical volumes in total.
+Both TEXT and SQLite cards load just the native detector and CAD source factory.
+
+GEMC3 publishes native geometry, both CAD sources, and all copies in one SQLite `dc` system. Its survey
+run keys reuse the default chambers and retain all twelve CAD placements; DDVCS keeps its extra shields.
+Mesh bytes, openings, materials, positions, and rotations are unchanged. Duplicate database copy rows
+are removed; repeated generation writes each named placement once.
