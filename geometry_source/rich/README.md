@@ -17,7 +17,7 @@ PMTs and spherical Mirrors
 |----------------|----------------|
 | default        | 11             | 
 | rga_spring2018 | 3029           | 
-| rgc_summer2022 | 16043          | 
+| rgc_summer2022 | 16000          |
 
 To build the geometry:
 
@@ -36,5 +36,14 @@ To compare the two databases (TEXT and SQLITE) the script ` $GEMC/api/perl/db_co
 ````
 $GEMC/api/perl/db_compare.py rich__geometry_default.txt          ../../clas12.sqlite rich  11   default
 $GEMC/api/perl/db_compare.py rich__geometry_rga_spring2018.txt   ../../clas12.sqlite rich  3029 default
-$GEMC/api/perl/db_compare.py rich__geometry_rgc_summer2022.txt   ../../clas12.sqlite rich  16043 default
+$GEMC/api/perl/db_compare.py rich__geometry_rgc_summer2022.txt   ../../clas12.sqlite rich  16000 default
 ````
+
+## GEMC3 HIPO comparison
+
+Upcoming in the next release: the HIPO reference workflow records the actual runtime Geant4 version for
+both field variants. Use the same Geant4 build and 10 mm production cut in both engines. An October 2026
+control study reproduced GEMC2 photon timing with GEMC3 built against Geant4 11.4.2; comparing against the
+Geant4 development build instead introduced a timing shift. Equal random seeds do not imply identical
+primary events across engines, and photons from the same primary are correlated. See the GEMC3 RICH
+validation record for the controlled comparison and event-based statistical uncertainties.
