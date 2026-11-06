@@ -199,13 +199,15 @@ jobs:
       - name: Summary Detector Table
         run: |
           ls */*output_summary.log
-          detectors=$( cat */*_output_summary.log | awk -F: '{print $1}' | sort -u)
+          detectors=$(awk -F: '{print $1}' */*_output_summary.log | sort -u)
           echo "| Detector | Status  |" > Summary.md
           echo "|----------|---------|" >> Summary.md
           for detector in $detectors; do
-            if grep "❌" */*output_summary.log | grep -q $detector ; then
+            if awk -F: -v detector="$detector" \
+              '$1 == detector && /❌/ { found = 1 } END { exit !found }' */*output_summary.log; then
                 echo "| $detector | ❌ |" >> Summary.md
-            elif grep "✅" */*output_summary.log | grep -q $detector; then
+            elif awk -F: -v detector="$detector" \
+              '$1 == detector && /✅/ { found = 1 } END { exit !found }' */*output_summary.log; then
                 echo "| $detector | ✅ |" >> Summary.md
             fi
           done
