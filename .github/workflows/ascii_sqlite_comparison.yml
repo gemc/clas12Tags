@@ -32,55 +32,10 @@ jobs:
   build-coatjava:
     needs: changes
     if: needs.changes.outputs.has_geometry == 'true' || needs.changes.outputs.has_run == 'true'
-    runs-on: ubuntu-latest
-    container: jeffersonlab/gemc:dev-almalinux94
-    env:
-      MAVEN_OPTS: -Dmaven.repo.local=${{ github.workspace }}/.m2/repository
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - name: Set up Java
-        uses: actions/setup-java@v6.0.1
-        with:
-          java-version: '21'
-          distribution: 'zulu'
-      - name: Compute Maven cache week
-        id: cache-key
-        run: echo "week=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
-      - name: Cache Maven dependencies
-        uses: actions/cache@v6
-        with:
-          path: ${{ github.workspace }}/.m2/repository
-          key: >-
-            coatjava-m2-${{ runner.os }}-java21-${{ steps.cache-key.outputs.week
-            }}-${{ hashFiles('geometry_source/install_coatjava.sh') }}
-          restore-keys: |
-            coatjava-m2-${{ runner.os }}-java21-
-      - name: Install Git LFS
-        run: dnf -y --disablerepo=almalinux-synergy install git-lfs
-      - name: Build Coatjava once with retries
-        uses: nick-fields/retry@v4.0.0
-        with:
-          timeout_minutes: 30
-          max_attempts: 3
-          retry_wait_seconds: 90
-          command: cd geometry_source && git lfs install && ./install_coatjava.sh -l
-      - name: Package Coatjava
-        run: |
-          cd geometry_source
-          tar -czf ../coatjava.tar.gz coatjava ./*.jar build_coatjava.log
-      - name: Share Coatjava build
-        uses: actions/upload-artifact@v7
-        with:
-          name: coatjava-build
-          path: coatjava.tar.gz
-          retention-days: 1
-      - name: Upload Coatjava build log
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: coatjava-build-log
-          path: geometry_source/build_coatjava.log
+    uses: ./.github/workflows/coatjava_build.yml
+    with:
+      artifact-name: coatjava-ascii-sqlite-comparison
+      container-image: jeffersonlab/gemc:dev-almalinux94
 
   Notary:
     needs: changes
@@ -119,7 +74,7 @@ jobs:
       - name: Download Coatjava build
         uses: actions/download-artifact@v4
         with:
-          name: coatjava-build
+          name: ${{ needs.build-coatjava.outputs.artifact-name }}
       - name: Extract Coatjava build
         run: |
           tar -xzf coatjava.tar.gz -C geometry_source
@@ -172,7 +127,7 @@ jobs:
       - name: Download Coatjava build
         uses: actions/download-artifact@v4
         with:
-          name: coatjava-build
+          name: ${{ needs.build-coatjava.outputs.artifact-name }}
       - name: Extract Coatjava build
         run: |
           tar -xzf coatjava.tar.gz -C geometry_source

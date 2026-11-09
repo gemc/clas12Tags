@@ -25,6 +25,12 @@ on:
       - "**/*.md"
 
 jobs:
+  build-coatjava:
+    uses: ./.github/workflows/coatjava_build.yml
+    with:
+      artifact-name: coatjava-valgrind-profile
+      container-image: jeffersonlab/gemc:dev-almalinux94
+
   detect-branch:
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +41,7 @@ jobs:
 
 
   profile-metrics:
+    needs: build-coatjava
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -57,15 +64,12 @@ jobs:
           java-version: '21'
           distribution: 'zulu'
 
-      - name: Install Git LFS
-        run: |
-          dnf -y --disablerepo=almalinux-synergy install git-lfs
-
-      - name: Build Coatjava
-        run: |
-          cd ./geometry_source
-          git lfs install
-          ./install_coatjava.sh -l
+      - name: Download Coatjava build
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build-coatjava.outputs.artifact-name }}
+      - name: Extract Coatjava build
+        run: tar -xzf coatjava.tar.gz -C geometry_source
 
       - name: Build Gemc
         run: |

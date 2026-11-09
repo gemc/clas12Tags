@@ -18,7 +18,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  build-coatjava:
+    uses: ./.github/workflows/coatjava_build.yml
+    with:
+      artifact-name: coatjava-build-gemc-ubuntu
+      container-image: jeffersonlab/gemc:dev-ubuntu24
+
   build-on-ubuntu:
+    needs: build-coatjava
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-ubuntu24
     steps:
@@ -29,15 +36,12 @@ jobs:
         with:
           java-version: '21'
           distribution: 'zulu'
-      - name: Install Git LFS
-        run: |
-          apt-get update
-          apt-get install -y git-lfs
-      - name: Build Coatjava
-        run: |
-          cd ./geometry_source
-          git lfs install
-          ./install_coatjava.sh -l
+      - name: Download Coatjava build
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ needs.build-coatjava.outputs.artifact-name }}
+      - name: Extract Coatjava build
+        run: tar -xzf coatjava.tar.gz -C geometry_source
       - name: Build Gemc
         run: |
           ./ci/build_gemc.sh
