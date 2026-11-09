@@ -11,7 +11,12 @@ function mwget() {
 
 }
 
-echo START_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
+log_file="$PWD/build_coatjava.log"
+echo START_INSTALL_COATJAVA $(date) > "$log_file"
+
+if [[ ${GITHUB_ACTIONS:-} == true ]]; then
+	bash ../ci/configure_java_trust.sh || exit 1
+fi
 
 rm -rf coat*jar jcsg*jar vecmath*jar
 
@@ -67,9 +72,9 @@ if [[ $USEDEVEL == "yes" ]]; then
 	echo
 	echo "Cloning $githubRepo and building coatjava"
 	echo
-	git clone $githubRepo $src_dir
+	git clone $githubRepo $src_dir || exit 1
 else
-	git clone  -b $COATJAVA_TAG --recurse-submodules --shallow-submodules --depth 1 $githubRepo $src_dir
+	git clone -b $COATJAVA_TAG --depth 1 $githubRepo $src_dir || exit 1
 fi
 
 # recent versions of Git refuse to touch a repository whose on-disk owner
@@ -78,16 +83,16 @@ fi
 echo "Marking workspace as safe for Git"
 git config --global --add safe.directory '*'
 
-cd $src_dir
-paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
-paralllel=" -T1"
-echo "Running coatjava build with options: --lfs --no-progress --nomaps  $paralllel" >> ../build_coatjava.log | tee -a ../build_coatjava.log
-./build-coatjava.sh --lfs --no-progress --nomaps  $paralllel &>> ../build_coatjava.log
+cd $src_dir || exit 1
+# Limit dependency downloads as well as reactor threads, as in Coatjava's CI.
+maven_options=(--batch-mode -T1 -Dmaven.artifact.threads=1 -Daether.connector.http.retryHandler.count=5)
+echo "Running coatjava build with options: --lfs --no-progress --nomaps $maven_options" | tee -a "$log_file"
+./build-coatjava.sh --lfs --no-progress --nomaps "${maven_options[@]}" &>> "$log_file"
 if [[ $? -ne 0 ]]; then
 	echo "Error: coatjava build failed. Log:"
-	cat ../build_coatjava.log
+	cat "$log_file"
 	exit 1
 fi
-cp coatjava/lib/clas/* ..
-cp -r coatjava ../$install_dir
-echo END_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
+cp coatjava/lib/clas/* .. || exit 1
+cp -r coatjava ../$install_dir || exit 1
+echo END_INSTALL_COATJAVA $(date) >> "$log_file"

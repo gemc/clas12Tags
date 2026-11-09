@@ -117,7 +117,7 @@ if [[ ! -d coatjava || $explicit_coatjava -eq 1 ]]; then
   [[ -d coatjava ]] && echo "Re‑installing coatjava with specified options..."
   ./install_coatjava.sh "${coatjava_args[@]}"
 	if [[ $? -ne 0 ]]; then
-		echo "Error: coatjava build failed. See ../build_coatjava.log for details."
+		echo "Error: coatjava build failed. See build_coatjava.log for details."
 		exit 1
 	fi
 fi
