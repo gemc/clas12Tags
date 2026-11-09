@@ -57,7 +57,7 @@ jobs:
           restore-keys: |
             coatjava-m2-${{ runner.os }}-java21-
       - name: Install Git LFS
-        run: dnf -y install git-lfs
+        run: dnf -y --disablerepo=almalinux-synergy install git-lfs
       - name: Build Coatjava once with retries
         uses: nick-fields/retry@v4.0.0
         with:

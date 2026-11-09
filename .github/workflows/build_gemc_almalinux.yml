@@ -33,7 +33,7 @@ jobs:
 
       - name: Install Git LFS
         run: |
-          dnf -y install git-lfs 
+          dnf -y --disablerepo=almalinux-synergy install git-lfs
 
       - name: Build Coatjava
         run: |

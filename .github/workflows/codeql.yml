@@ -106,7 +106,7 @@ jobs:
     - name: Install Git LFS
       if: matrix.build-mode == 'manual'
       run: |
-        dnf -y install git-lfs
+        dnf -y --disablerepo=almalinux-synergy install git-lfs
 
     - if: matrix.build-mode == 'manual'
       shell: bash
