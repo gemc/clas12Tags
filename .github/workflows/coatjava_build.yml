@@ -54,8 +54,12 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v6.0.1
         with:
-          java-version: '21'
+          # Match the JDK downloaded by Coatjava's successful dependency_info job.
+          java-version: '21.0.13+9'
           distribution: 'zulu'
+          force-download: true
+      - name: Report original Maven trust
+        run: bash ci/report_maven_trust.sh | tee geometry_source/maven_trust_before.log
       - name: Configure Java trust and Maven
         run: |
           bash ci/configure_java_trust.sh 2>&1 | tee geometry_source/build_coatjava.log
@@ -77,6 +81,10 @@ jobs:
           git -C geometry_source/coatjava_src rev-parse HEAD \
             | tee -a "$GITHUB_STEP_SUMMARY" geometry_source/build_coatjava.log
           mvn --version | tee -a geometry_source/build_coatjava.log
+      - name: Report configured Maven trust
+        run: |
+          bash ci/report_maven_trust.sh geometry_source/coatjava_src \
+            | tee geometry_source/maven_trust_after.log
       - name: Compute Maven cache week
         id: cache-key
         run: echo "week=$(date +%G-%V)" >> "$GITHUB_OUTPUT"
@@ -144,4 +152,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.artifact-name }}-log
-          path: geometry_source/build_coatjava.log
+          path: |
+            geometry_source/build_coatjava.log
+            geometry_source/maven_trust_*.log

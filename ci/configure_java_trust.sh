@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# setup-java's JDK has its own trust store; retain the JLab CA trusted by the image.
+# setup-java's JDK has its own trust store; include the CAs needed by JLab repositories.
 set -euo pipefail
 
 : "${JAVA_HOME:?JAVA_HOME must point to the JDK used for the Coatjava build}"
@@ -27,7 +27,14 @@ if [[ ! -r "$truststore" ]]; then
   echo "Selected JDK trust store not found: $truststore" >&2
   exit 1
 fi
-if ! "$keytool" -list -keystore "$truststore" -storepass changeit -alias gemc-jlab-ca >/dev/null 2>&1; then
-  "$keytool" -importcert -noprompt -trustcacerts -keystore "$truststore" -storepass changeit \
-    -alias gemc-jlab-ca -file "$certificate"
-fi
+import_ca() {
+  local alias=$1 certificate=$2
+  if ! "$keytool" -list -keystore "$truststore" -storepass changeit -alias "$alias" >/dev/null 2>&1; then
+    "$keytool" -importcert -noprompt -trustcacerts -keystore "$truststore" -storepass changeit \
+      -alias "$alias" -file "$certificate"
+  fi
+}
+
+import_ca gemc-jlab-ca "$certificate"
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+import_ca gemc-emsign-root-ca-g1 "$script_dir/certificates/emsign-root-ca-g1.pem"
