@@ -7,6 +7,8 @@
 # git clone http://github.com/gemc/clas12Tags /root/clas12Tags && cd /root/clas12Tags
 # ./ci/tracks_validation.sh
 
+set -o pipefail
+
 source ci/env.sh
 target_vz='-3.0*cm'
 gcard="clas12-config/gemc/dev/clas12-default.gcard"
@@ -90,6 +92,12 @@ print -r -- "> $gen_script" "${input[@]}"
 die_with_code "$gen_log" "generator failed" $?
 echo
 
+if [[ ! -s "$event_lund_file" ]]; then
+	print -u2 -- "ERROR: generator did not create a nonempty LUND file: $event_lund_file"
+	cat -- "$gen_log" >&2
+	exit 2
+fi
+
 # run gemc using the generated events
 typeset -a gemc_opts
 gemc_opts=(
@@ -110,7 +118,8 @@ gemc_bin=$(which gemc)
 print -r -- "Running command:"
 print -r -- "> $gemc_bin" "${gemc_opts[@]}" "$gcard"
 
-"$gemc_bin" "${gemc_opts[@]}" "$gcard" | sed '/G4Exception-START/,/G4Exception-END/d' 2>&1 | tee "${gemc_log}"  >/dev/null
+"$gemc_bin" "${gemc_opts[@]}" "$gcard" 2>&1 \
+	| sed '/G4Exception-START/,/G4Exception-END/d' | tee "$gemc_log" >/dev/null
 die_with_code "$gemc_log" "gemc failed" $?
 echo
 

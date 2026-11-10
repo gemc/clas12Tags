@@ -121,7 +121,7 @@ jobs:
           command: |
             set -euo pipefail
             cd geometry_source/coatjava_src
-            ./build-coatjava.sh --lfs --no-progress --nomaps --batch-mode -T1 2>&1 \
+            ./build-coatjava.sh --lfs --no-progress --batch-mode -T1 2>&1 \
               | tee -a ../build_coatjava.log
       - name: Save Maven dependencies
         if: success() && steps.restore.outputs.cache-hit != 'true'
