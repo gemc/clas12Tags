@@ -10,5 +10,4 @@ export MAVEN_OPTS="${MAVEN_OPTS:-} -Dorg.slf4j.simpleLogger.log.$cookie_logger=e
 
 exec "${COATJAVA_MAVEN_EXECUTABLE:?Original Maven executable must be configured}" \
   "${COATJAVA_SNAPSHOT_POLICY:---no-snapshot-updates}" \
-  --batch-mode --no-transfer-progress \
-  -Dmaven.artifact.threads=1 -Daether.connector.http.retryHandler.count=5 "$@"
+  --batch-mode "$@"

@@ -58,6 +58,7 @@ jobs:
           java-version: '21'
           distribution: 'zulu'
           force-download: true
+          show-download-progress: true
       - name: Report original Maven trust
         run: bash ci/report_maven_trust.sh | tee geometry_source/maven_trust_before.log
       - name: Configure Java trust and Maven
@@ -98,20 +99,6 @@ jobs:
             }}-${{ hashFiles('geometry_source/coatjava_src/**/pom.xml') }}
           restore-keys: |
             coatjava-m2-${{ inputs.container-image }}-java21-
-      - name: Resolve dependencies with retries
-        if: steps.restore.outputs.cache-hit != 'true'
-        uses: nick-fields/retry@v4.0.0
-        env:
-          COATJAVA_SNAPSHOT_POLICY: -U
-        with:
-          timeout_minutes: 30
-          max_attempts: 5
-          retry_wait_seconds: 90
-          command: |
-            set -euo pipefail
-            cd geometry_source/coatjava_src
-            mvn -B -ntp -DexcludeReactor=true dependency:go-offline 2>&1 \
-              | tee -a ../build_coatjava.log
       - name: Build Coatjava with retries
         uses: nick-fields/retry@v4.0.0
         with:
@@ -121,7 +108,7 @@ jobs:
           command: |
             set -euo pipefail
             cd geometry_source/coatjava_src
-            ./build-coatjava.sh --lfs --no-progress --batch-mode -T1 2>&1 \
+            ./build-coatjava.sh --lfs --batch-mode -T1 2>&1 \
               | tee -a ../build_coatjava.log
       - name: Save Maven dependencies
         if: success() && steps.restore.outputs.cache-hit != 'true'

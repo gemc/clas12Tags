@@ -12,6 +12,7 @@ function mwget() {
 }
 
 log_file="$PWD/build_coatjava.log"
+ci_dir="${0:A:h:h}/ci"
 echo START_INSTALL_COATJAVA $(date) > "$log_file"
 
 if [[ ${GITHUB_ACTIONS:-} == true ]]; then
@@ -84,10 +85,16 @@ echo "Marking workspace as safe for Git"
 git config --global --add safe.directory '*'
 
 cd $src_dir || exit 1
-# Limit dependency downloads as well as reactor threads, as in Coatjava's CI.
-maven_options=(--batch-mode -T1 -Dmaven.artifact.threads=1 -Daether.connector.http.retryHandler.count=5)
-echo "Running coatjava build with options: --lfs --no-progress --nomaps $maven_options" | tee -a "$log_file"
-./build-coatjava.sh --lfs --no-progress --nomaps "${maven_options[@]}" &>> "$log_file"
+# Apply the CI Maven policy to bare Maven calls in older tags too.
+export COATJAVA_MAVEN_EXECUTABLE=$(command -v mvn)
+wrapper_dir=$(mktemp -d "${TMPDIR:-/tmp}/coatjava-maven.XXXXXX") || exit 1
+trap 'rm -rf -- "$wrapper_dir"' EXIT
+install -m 755 "$ci_dir/coatjava_maven.sh" "$wrapper_dir/mvn" || exit 1
+export PATH="$wrapper_dir:$PATH"
+maven_options=(--batch-mode --no-snapshot-updates -T1)
+echo "Running coatjava build with options: --lfs --nomaps $maven_options" | tee -a "$log_file"
+setopt PIPE_FAIL
+./build-coatjava.sh --lfs --nomaps "${maven_options[@]}" 2>&1 | tee -a "$log_file"
 if [[ $? -ne 0 ]]; then
 	echo "Error: coatjava build failed. Log:"
 	cat "$log_file"
