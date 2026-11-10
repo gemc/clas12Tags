@@ -25,12 +25,6 @@ on:
       - "**/*.md"
 
 jobs:
-  build-coatjava:
-    uses: ./.github/workflows/coatjava_build.yml
-    with:
-      artifact-name: coatjava-valgrind-profile
-      container-image: jeffersonlab/gemc:dev-almalinux94
-
   detect-branch:
     runs-on: ubuntu-latest
     steps:
@@ -41,7 +35,6 @@ jobs:
 
 
   profile-metrics:
-    needs: build-coatjava
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     strategy:
@@ -63,13 +56,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'zulu'
-
-      - name: Download Coatjava build
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.build-coatjava.outputs.artifact-name }}
-      - name: Extract Coatjava build
-        run: tar -xzf coatjava.tar.gz -C geometry_source
+          show-download-progress: true
 
       - name: Build Gemc
         run: |

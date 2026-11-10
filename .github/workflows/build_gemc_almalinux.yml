@@ -18,14 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-coatjava:
-    uses: ./.github/workflows/coatjava_build.yml
-    with:
-      artifact-name: coatjava-build-gemc-almalinux
-      container-image: jeffersonlab/gemc:dev-almalinux94
-
   build-on-almalinux:
-    needs: build-coatjava
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
     steps:
@@ -37,13 +30,8 @@ jobs:
         with:
           java-version: '21'
           distribution: 'zulu'
+          show-download-progress: true
 
-      - name: Download Coatjava build
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.build-coatjava.outputs.artifact-name }}
-      - name: Extract Coatjava build
-        run: tar -xzf coatjava.tar.gz -C geometry_source
       - name: Build Gemc
         run: |
           ./ci/build_gemc.sh

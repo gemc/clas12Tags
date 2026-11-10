@@ -16,10 +16,23 @@ ci_dir="${0:A:h:h}/ci"
 echo START_INSTALL_COATJAVA $(date) > "$log_file"
 
 if [[ ${GITHUB_ACTIONS:-} == true ]]; then
-	bash ../ci/configure_java_trust.sh || exit 1
+	bash "$ci_dir/configure_java_trust.sh" || exit 1
+	export MAVEN_OPTS="${MAVEN_OPTS:-} -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts"
+	export MAVEN_SKIP_RC=true
+	if ! command -v git-lfs >/dev/null 2>&1; then
+		source /etc/os-release
+		case "$ID" in
+			almalinux) dnf -y --disablerepo=almalinux-synergy install git-lfs || exit 1 ;;
+			fedora) dnf -y install git-lfs || exit 1 ;;
+			ubuntu|debian)
+				apt-get update && apt-get install -y git-lfs || exit 1
+				;;
+			*) echo "Install Git LFS before building Coatjava on $ID." >&2; exit 1 ;;
+		esac
+	fi
 fi
 
-rm -rf coat*jar jcsg*jar vecmath*jar
+rm -f -- coat*jar(N) jcsg*jar(N) vecmath*jar(N)
 
 # development. Set to no to use coatjava distribution instead
 USEDEVEL="no"
@@ -47,7 +60,7 @@ elif [[ $1 == "-t" ]]; then
 	USEDEVEL="no"
 	tag_gz="$githubRepo/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
 	echo "Requested Coatjava Tag: $COATJAVA_TAG"
-elif [[ $1 == "-l" ]]; then
+elif [[ $1 == "-l" || $# -eq 0 ]]; then
 	COATJAVA_TAG=$LATEST_RELEASE
 	USEDEVEL="no"
 	tag_gz="$githubRepo/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
@@ -85,16 +98,10 @@ echo "Marking workspace as safe for Git"
 git config --global --add safe.directory '*'
 
 cd $src_dir || exit 1
-# Apply the CI Maven policy to bare Maven calls in older tags too.
-export COATJAVA_MAVEN_EXECUTABLE=$(command -v mvn)
-wrapper_dir=$(mktemp -d "${TMPDIR:-/tmp}/coatjava-maven.XXXXXX") || exit 1
-trap 'rm -rf -- "$wrapper_dir"' EXIT
-install -m 755 "$ci_dir/coatjava_maven.sh" "$wrapper_dir/mvn" || exit 1
-export PATH="$wrapper_dir:$PATH"
 maven_options=(--batch-mode --no-snapshot-updates -T1)
-echo "Running coatjava build with options: --lfs --nomaps $maven_options" | tee -a "$log_file"
+echo "Running coatjava build with options: --lfs $maven_options" | tee -a "$log_file"
 setopt PIPE_FAIL
-./build-coatjava.sh --lfs --nomaps "${maven_options[@]}" 2>&1 | tee -a "$log_file"
+./build-coatjava.sh --lfs "${maven_options[@]}" 2>&1 | tee -a "$log_file"
 if [[ $? -ne 0 ]]; then
 	echo "Error: coatjava build failed. Log:"
 	cat "$log_file"

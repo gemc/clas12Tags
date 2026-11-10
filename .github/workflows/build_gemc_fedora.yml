@@ -18,14 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-coatjava:
-    uses: ./.github/workflows/coatjava_build.yml
-    with:
-      artifact-name: coatjava-build-gemc-fedora
-      container-image: jeffersonlab/gemc:dev-fedora36
-
   build-on-fedora:
-    needs: build-coatjava
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-fedora36
     steps:
@@ -36,12 +29,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'zulu'
-      - name: Download Coatjava build
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.build-coatjava.outputs.artifact-name }}
-      - name: Extract Coatjava build
-        run: tar -xzf coatjava.tar.gz -C geometry_source
+          show-download-progress: true
       - name: Build Gemc
         run: |
           ./ci/build_gemc.sh

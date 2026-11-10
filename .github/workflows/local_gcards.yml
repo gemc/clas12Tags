@@ -18,15 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-coatjava:
-    uses: ./.github/workflows/coatjava_build.yml
-    with:
-      artifact-name: coatjava-local-gcards
-      container-image: jeffersonlab/gemc:dev-almalinux94
-
-
   local-gcards-test:
-    needs: build-coatjava
     name: (${{ matrix.detector }})
     runs-on: ubuntu-latest
     container: jeffersonlab/gemc:dev-almalinux94
@@ -58,12 +50,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'zulu'
-      - name: Download Coatjava build
-        uses: actions/download-artifact@v4
-        with:
-          name: ${{ needs.build-coatjava.outputs.artifact-name }}
-      - name: Extract Coatjava build
-        run: tar -xzf coatjava.tar.gz -C geometry_source
+          show-download-progress: true
       - name: Build Gemc
         run: |
           ./ci/build_gemc.sh

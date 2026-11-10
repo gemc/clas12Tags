@@ -15,14 +15,7 @@ on:
       - "release_notes/**"
 
 jobs:
-  build-coatjava:
-    uses: ./.github/workflows/coatjava_build.yml
-    with:
-      artifact-name: coatjava-codeql
-      container-image: jeffersonlab/gemc:dev-almalinux94
-
   analyze:
-    needs: build-coatjava
     name: Analyze (${{ matrix.language }})
     # Runner size impacts CodeQL analysis time. To learn more, please see:
     #   - https://gh.io/recommended-hardware-resources-for-running-codeql
@@ -97,22 +90,14 @@ jobs:
     # to build your code.
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 See https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsrun
-    # Geometry generation consumes the shared Coatjava runtime with Java 21.
+    # Geometry generation installs Coatjava through create_geometry.sh with Java 21.
     - name: Fix Java Version
       if: matrix.build-mode == 'manual'
       uses: actions/setup-java@v6.0.1
       with:
         java-version: '21'
         distribution: 'zulu'
-
-    - name: Download Coatjava build
-      if: matrix.build-mode == 'manual'
-      uses: actions/download-artifact@v4
-      with:
-        name: ${{ needs.build-coatjava.outputs.artifact-name }}
-    - name: Extract Coatjava build
-      if: matrix.build-mode == 'manual'
-      run: tar -xzf coatjava.tar.gz -C geometry_source
+        show-download-progress: true
 
     - if: matrix.build-mode == 'manual'
       shell: bash
