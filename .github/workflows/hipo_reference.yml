@@ -84,6 +84,10 @@ jobs:
             n_events: 20000
             # Field maps referenced by the gcard's HALL_FIELD. Downloaded on demand below
             fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
+          - system: rich
+            gcard: experiments/clas12/rich/rich_text_default.gcard
+            n_events: 20000
+            fields: "Symm_solenoid_r601_phi1_z1201_13June2018 Symm_torus_r2501_phi16_z251_24Apr2018"
 
     steps:
       - name: Checkout repository
@@ -167,7 +171,7 @@ jobs:
             -FIELD_DIR="$GITHUB_WORKSPACE/fields" \
             -N=${{ matrix.n_events }} \
             -OUTPUT="hipo, $out" \
-            "$gcard_file"
+            "$gcard_file" 2>&1 | tee "$GITHUB_WORKSPACE/${{ matrix.system }}_field.log"
           ls -l "$out"
 
           echo "Running reference without magnetic fields"
@@ -177,23 +181,29 @@ jobs:
             -N=${{ matrix.n_events }} \
             -OUTPUT="hipo, $out_nofield" \
             -NO_FIELD=all \
-            "$gcard_file"
+            "$gcard_file" 2>&1 | tee "$GITHUB_WORKSPACE/${{ matrix.system }}_nofield.log"
           ls -l "$out_nofield"
 
       - name: Write provenance sidecar
         shell: bash
         run: |
-          {
-            echo "source: ${GITHUB_REPOSITORY}@${{ github.event.workflow_run.head_sha || github.sha }}"
-            echo "branch: ${{ github.event.workflow_run.head_branch || github.ref_name }}"
-            echo "date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            echo "system: ${{ matrix.system }}"
-            echo "n_events: ${{ matrix.n_events }}"
-            echo "gcard: ${{ matrix.gcard }}"
-            echo "image: ghcr.io/gemc/clas12tags:dev-almalinux-10 (geometry from image install)"
-            echo "gemc: $(head -n1 gemc_version.txt 2>/dev/null || echo unknown)"
-          } > "${{ matrix.system }}_reference.txt"
-          cat "${{ matrix.system }}_reference.txt"
+          for variant in field nofield; do
+            suffix=""; [[ "$variant" == nofield ]] && suffix="_nofield"
+            {
+              echo "source: ${GITHUB_REPOSITORY}@${{ github.event.workflow_run.head_sha || github.sha }}"
+              echo "branch: ${{ github.event.workflow_run.head_branch || github.ref_name }}"
+              echo "date: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+              echo "system: ${{ matrix.system }}"
+              echo "n_events: ${{ matrix.n_events }}"
+              echo "gcard: ${{ matrix.gcard }}"
+              echo "image: ghcr.io/gemc/clas12tags:dev-almalinux-10 (geometry from image install)"
+              echo "gemc: $(head -n1 gemc_version.txt 2>/dev/null || echo unknown)"
+              echo "variant: $variant"
+              echo "geant4: $(sed -n 's/.*Geant4 version Name: *\([^ ]*\).*/\1/p' \
+                "${{ matrix.system }}_${variant}.log" | head -n1)"
+            } > "${{ matrix.system }}_reference${suffix}.txt"
+            cat "${{ matrix.system }}_reference${suffix}.txt"
+          done
 
       - name: Metrics summary
         if: ${{ always() }}
@@ -223,3 +233,4 @@ jobs:
             ${{ matrix.system }}_reference.hipo
             ${{ matrix.system }}_reference_nofield.hipo
             ${{ matrix.system }}_reference.txt
+            ${{ matrix.system }}_reference_nofield.txt

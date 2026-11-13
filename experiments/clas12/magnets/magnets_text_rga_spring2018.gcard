@@ -3,7 +3,7 @@
 	<option name="geometry" value="1400x1200"/>
 
 
-	<detector name="solenoid"                             factory="TEXT" variation="rga_spring2018"/>
+	<detector name="magnets"                             factory="TEXT" variation="rga_spring2018"/>
 	<detector name="cad/"                                 factory="CAD"/>
 	<detector name="experiments/clas12/ft/ft"             factory="TEXT"/>
 	<detector name="experiments/clas12/beamline/beamline" factory="TEXT"/>

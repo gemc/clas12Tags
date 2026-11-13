@@ -11,7 +11,7 @@
 	<detector name="experiments/clas12/htcc/htcc"      factory="TEXT" variation="original"/>
 
 	<!-- magnets -->
-	<detector name="experiments/clas12/magnets/solenoid" factory="TEXT" variation="original"/>
+	<detector name="experiments/clas12/magnets/magnets" factory="TEXT" variation="original"/>
 	<detector name="experiments/clas12/magnets/cad/"     factory="CAD" />
 
 

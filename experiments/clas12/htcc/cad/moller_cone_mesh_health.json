@@ -1,0 +1,88 @@
+{
+  "source_sha256": "6101a733fa5928cfa83f14b83b0d44c92c548ce44e505f5aa6d60c87be4d63d1",
+  "output_sha256": "90a8d4f0d04342b4054e3304896d8c38536742b17c1790da9bf2becb7674de60",
+  "before": {
+    "vertices": 3071,
+    "facets": 6232,
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 9303,
+      "faces_number": 6232,
+      "genus": -1,
+      "incident_faces_on_non_two_manifold_edges": 180,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": false,
+      "non_two_manifold_edges": 45,
+      "non_two_manifold_vertices": 0,
+      "number_holes": -1,
+      "unreferenced_vertices": 0,
+      "vertices_number": 3071
+    },
+    "degenerate_faces": 0,
+    "self_intersecting_faces": 0,
+    "bounds_mm": [
+      [
+        -124.8184814453125,
+        -124.52340698242188,
+        -1530.3487548828125
+      ],
+      [
+        124.8184814453125,
+        124.53158569335938,
+        -384.9763488769531
+      ]
+    ],
+    "volume_mm3": null
+  },
+  "after": {
+    "vertices": 3451,
+    "facets": 6902,
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 10353,
+      "faces_number": 6902,
+      "genus": 1,
+      "incident_faces_on_non_two_manifold_edges": 0,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": true,
+      "non_two_manifold_edges": 0,
+      "non_two_manifold_vertices": 0,
+      "number_holes": 0,
+      "unreferenced_vertices": 0,
+      "vertices_number": 3451
+    },
+    "degenerate_faces": 0,
+    "self_intersecting_faces": 0,
+    "bounds_mm": [
+      [
+        -124.8184814453125,
+        -124.52340698242188,
+        -1530.3487548828125
+      ],
+      [
+        124.8184814453125,
+        124.53158569335938,
+        -384.9763488769531
+      ]
+    ],
+    "volume_mm3": 783909.7743426368
+  },
+  "engineering_part_facets": [
+    5688,
+    544
+  ],
+  "seam_vertices": 45,
+  "seam_offset_mm": 0.0001,
+  "stl_weld_distance_mm": 0.0002,
+  "adjusted_part_volumes_mm3": [
+    718980.43703917,
+    65179.52643658
+  ],
+  "union_before_stl_volume_mm3": 783909.77844051,
+  "stl_volume_change_percent": -5.22749e-07,
+  "bounds_unchanged": true,
+  "bore_retained": true,
+  "reconstruction": false
+}

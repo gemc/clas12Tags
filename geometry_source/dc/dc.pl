@@ -44,6 +44,11 @@ require "./basePlates.pl";
 require "./endPlates.pl";
 require "./region3_shield.pl";
 require "./utils.pl";
+require "./cad.pl";
+
+unlink glob('dc_copies__*.txt');
+my $dbh = open_db(%configuration);
+$dbh->do("DELETE FROM geometry WHERE system='dc_copies'");
 
 use File::Copy;
 
@@ -78,6 +83,7 @@ sub create_system {
         our @volumes = get_volumes(%configuration);
         coatjava::makeDC();
     }
+    build_dc_copies();
 }
 
 my @variations = ("default");
@@ -104,3 +110,6 @@ foreach my $run (@runs) {
     $configuration{"run_number"} = $run;
     create_system("default", $run);
 }
+
+# Region-1 back membranes and supports: one CAD solid and five native copies per group.
+build_dc_cad();

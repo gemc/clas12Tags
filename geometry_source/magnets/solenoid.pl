@@ -37,7 +37,7 @@ sub makeSolenoid {
 
     $configuration{"variation"} = shift;
     $configuration{"run_number"} = shift;
-    $configuration{"detector_name"} = "solenoid";
+    $configuration{"detector_name"} = "magnets";
 
     my $configuration_string = clas12_configuration_string(\%configuration);
 

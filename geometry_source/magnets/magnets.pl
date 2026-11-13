@@ -33,10 +33,15 @@ our %configuration = load_configuration($ARGV[0]);
 
 require "./solenoid.pl";
 require "./torus.pl";
+require "./materials.pl";
+require "./cad_copies.pl";
 
-# manually removing the txt files because the api does not have the capability to distinguish
-# between the first system and subsequent systems
-system('rm *.txt');
+# Remove obsolete banks from previous geometry generations.
+unlink glob('solenoid__*.txt'), glob('magnets_copies__*.txt');
+my $dbh = open_db(%configuration);
+for my $table ('geometry', 'materials') {
+    $dbh->do("DELETE FROM $table WHERE system IN ('solenoid', 'magnets_copies')");
+}
 
 my @variations = ("default", "rga_spring2018", "rga_fall2018");
 my @runs = clas12_runs(@variations);
@@ -45,12 +50,11 @@ sub create_system {
     my $variation = shift;
     my $runNumber = shift;
     my $factory   = shift;
-    # only make torus for default variation. We actually do not use this, but
-    # if enable this will trigger deletion of all solenoid volumes in the SQLITE due to API
-    # probably not worth fix this perl API for it.
-    # makeTorus($variation, $runNumber, $factory) if $variation eq "default";
+    # Native torus geometry remains disabled; its coils are supplied by CAD.
 
     makeSolenoid($variation, $runNumber);
+    magnet_materials();
+    build_magnets_copies();
 }
 
 # TEXT Factory, include extra variations
@@ -69,11 +73,5 @@ foreach my $run (@runs) {
 }
 
 
-# port gxml to sqlite
-require "gxml_to_sqlite.pl";
-$configuration{"detector_name"} = "magnets";
-$configuration{"variation"} = "default";
-foreach my $variation (@variations) {
-    $configuration{"run_number"} = clas12_run($variation);
-    process_gxml("cad/cad_$variation.gxml", "experiments/clas12/magnets/cad");
-}
+# Publish shared CAD sources and native copies without duplicating tessellated solids.
+build_magnets_cad();

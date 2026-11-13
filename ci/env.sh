@@ -161,7 +161,7 @@ runs_for_system() {
 	elif [[ $system == "ltcc" ]]; then
 		echo "11 3029 4763 6150 11323 15016"
 	elif [[ $system == "rich" ]]; then
-		echo "11 3029 16043"
+		echo "11 3029 16000"
 	elif [[ $system == "ft" ]]; then
 		echo "11 5874 6150 11620 16043 20000"
 	elif [[ $system == "beamline" ]]; then
@@ -314,7 +314,7 @@ else
 	enable_git_describe
 	log_dir=${log_dir:-/root/clas12Tags/logs}
 	default_gemc=$SIM_HOME/clas12Tags/dev
-	default_artifact_dir=/cvmfs/oasis.opensciencegrid.org/jlab/geant4
+	default_artifact_dir=/cvmfs/jlab.opensciencegrid.org/geant4
 fi
 
 mkdir -p $log_dir

@@ -31,51 +31,57 @@ $GEMC/api/perl/db_compare.py htcc__geometry_rga_fall2018.txt   ../../clas12.sqli
 
 ## CAD meshes
 
-The following improvements are upcoming in the next release. The three active meshes in `cad/` use the
-cured HTCC assets from `clas12-systems`; their original engineering inputs are retained in `cad_original/`.
-The runtime copies in `../../experiments/clas12/htcc/cad/` contain the same active meshes.
+Upcoming in the next release: the engineering Moller cone and collar are united into one closed manifold STL,
+resolving the tessellated-solid orientation warning. All source and runtime meshes match the GEMC3 assets. The
+archived engineering inputs remain unchanged.
 
-| Mesh | Original triangles | Active triangles | Original boundary edges | Active boundary edges |
-|------|-------------------:|-----------------:|------------------------:|----------------------:|
-| `htccCone` | 18,818 | 6,000 | 144 | 0 |
-| `htccMollerCone` | 6,232 | 5,866 | 0 | 0 |
-| `htccMollerConeExt` | 1,748 | 1,748 | 0 | 0 |
+| Mesh | Engineering facets | Active facets | Boundary edges | Non-manifold edges |
+|---|---:|---:|---:|---:|
+| htccCone | 18,818 | 6,000 | 0 | 0 |
+| htccMollerCone | 6,232 | 6,902 | 0 | 0 |
+| htccMollerConeExt | 1,748 | 1,748 | 0 | 0 |
 
-The entry cone and extension are manifold. The Moller cone retains 24 non-manifold edges, reduced from 45
-in the original with the current PyMeshLab topology check, and can still produce a Geant4 tessellated-solid
-orientation warning. It remains closed, with its original bounds. The entry cone's bounds change by at most
-0.74 mm after simplification; the extension retains its original bounds.
+The replacement starts from the unchanged archived engineering export. Only the collar's 45 shared ring
+vertices move radially inward by 0.0001 mm, resolving the zero-width seam for an exact Boolean union.
+Intersection vertices that coincide after binary-STL rounding are welded at 0.0002 mm; null and duplicate
+faces are removed, winding is made coherent, and faces are ordered deterministically. No Poisson
+reconstruction, engineering-hole filling, or bore cap is applied. Repeated processes reproduce the final STL
+and audit report byte for byte with the recorded software versions.
 
-Names, Rohacell material, rotations, and survey shifts are retained for all three variations, including the
-extension's additional 1 mm z shift. The existing GXML and SQLite CAD rows resolve the replacement meshes
-without regeneration.
+The final mesh has 3,451 vertices and 6,902 facets in one closed manifold component of genus one. It has zero
+boundary edges, non-manifold edges or vertices, degenerate triangles, or detected intersecting faces. All six
+engineering bounds remain identical. A final-to-engineering surface comparison samples 153,451 points and
+finds a maximum distance of 0.000096786 mm. The reference includes both engineering surfaces, including
+internal contact faces; this is a one-direction sampled comparison, not a global distance proof. The main bore
+remains outside the solid at all 200 tested axial points in direct Geant4 classification.
 
-To reproduce the curing recipe, use a Python environment containing `pygemc` and `pymeshlab`, and run from
-this directory:
+The repaired mesh replaces the former 5,866-facet active Moller cone, adding 1,036 facets. The entry cone and
+extension remain byte-identical at 6,000 and 1,748 facets. Total active HTCC CAD facets therefore rise from
+13,614 to 14,650; this is still 45.33% fewer than the 26,798 engineering facets. This update repairs the
+material geometry and winding; no new repeated loading or tracking benchmark was run, and no simulation
+speedup is assigned to it.
 
-```python
-from pygemc.utilities import cure_mesh
+All nine repaired native-plus-CAD initializations succeed for runs 11, 3029, and 4763: GEMC3 with Geant4
+11.3.2, and GEMC2 SQLite/CAD and TEXT/CAD with Geant4 10.7.4. Every repaired process has zero GeomSolids
+warnings. The GEMC3 fixtures explicitly select their named survey variations and require all 541 constructed
+rows including the world. Direct Geant4 11.4.3 solid checks accept all 6,902 facets without rejection or solid
+warnings; the unchanged other two meshes also pass. Native comparison matches 537 geometry and eight material
+rows per configuration, and nine CAD placements match in name, material, passive rotation, and survey shift.
+All four active source/runtime mesh trees are synchronized, and engineering originals are unchanged.
 
-for name, faces, intersections in (
-    ("htccCone", 6000, False),
-    ("htccMollerCone", 6000, True),
-    ("htccMollerConeExt", 0, False),
-):
-    cure_mesh(f"cad_original/{name}.stl", f"cad/{name}.stl",
-              target_faces=faces, remove_self_intersections=intersections, verbose=False)
+The existing contact between htccCone and htccEntryWindow is separate from the Moller repair and remains
+visible in some GEMC2 overlap checks. No sampled overlap warning involving the repaired Moller cone is present
+in these nine logs. Successful construction and sampled checks do not establish full particle-navigation or
+detector-response equivalence.
+
+The builder now reads archived engineering inputs instead of repeatedly processing active CAD meshes.
+From this directory, rebuild only the Moller cone with the mesh-enabled Python environment:
+
+```shell
+<mesh-python>/python3 ../../../clas12-systems/geometry_src/htcc/build_cad_meshes.py \
+  --mesh htccMollerCone --source cad_original --output cad
 ```
 
-Keep the cones' engineering openings; do not apply hole filling or Poisson reconstruction. Poisson
-reconstruction inflated the Moller cone radius by about 53% in the original study. Regenerate the runtime
-copies with the standard geometry-generation script after rebuilding the meshes. Mesh output can vary with
-the PyMeshLab version.
-
-### Validation and remaining contact
-
-GEMC 6.2 with Geant4 10.7.4 initialized all three variations through both TEXT/CAD and SQLite/CAD using
-the local CCDB database. Each variation matched all 537 native TEXT/SQLite rows and all three CAD placements.
-
-The full default SQLite overlap check reported contact between `htccCone` and `htccEntryWindow`. An isolated
-cone/window check with `CHECK_OVERLAPS=1000` and `RANDOM=12345` confirmed about 0.053 mm penetration for the
-cured entry cone; the same check with the archived raw cone reported none. This contact remains unresolved
-in the transferred mesh. The two Moller cones passed the default assembly overlap check.
+Refresh experiments/clas12/htcc/cad/ afterward. Placements, materials, all three variations, and the
+extension's additional 1 mm z shift need no database regeneration. Do not substitute generic hole filling
+or Poisson reconstruction for the dedicated cone/collar union.

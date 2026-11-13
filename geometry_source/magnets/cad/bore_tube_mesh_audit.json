@@ -1,0 +1,170 @@
+{
+  "BoreShield": {
+    "source": "BoreShield.stl",
+    "sha256": "523f0c380337cfb1d7283d7436fbc3ba8bc5559e98de6db8cca9a969a9f2c1ad",
+    "vertices": 178,
+    "facets_before": 356,
+    "facets_after": 356,
+    "facet_reduction_percent": 0.0,
+    "bytes_unchanged": true,
+    "rings": [
+      {
+        "z_mm": -3634.304443359375,
+        "inner": true,
+        "corners": 44,
+        "min_turn_cross_mm2": 9.462317318109854
+      },
+      {
+        "z_mm": -3634.304443359375,
+        "inner": false,
+        "corners": 45,
+        "min_turn_cross_mm2": 9.857746648754983
+      },
+      {
+        "z_mm": -1491.1795654296875,
+        "inner": true,
+        "corners": 44,
+        "min_turn_cross_mm2": 9.462317318109854
+      },
+      {
+        "z_mm": -1491.1795654296875,
+        "inner": false,
+        "corners": 45,
+        "min_turn_cross_mm2": 9.857746648754983
+      }
+    ],
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 534,
+      "faces_number": 356,
+      "genus": 1,
+      "incident_faces_on_non_two_manifold_edges": 0,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": true,
+      "non_two_manifold_edges": 0,
+      "non_two_manifold_vertices": 0,
+      "number_holes": 0,
+      "unreferenced_vertices": 0,
+      "vertices_number": 178
+    },
+    "self_intersecting_faces": 0,
+    "degenerate_faces": 0,
+    "coherently_oriented": true,
+    "volume_mm3": 2506356.59216817,
+    "minimal_for_existing_rim_corners": true,
+    "all_holes_unchanged": true
+  },
+  "BoreCenterTube": {
+    "source": "CenterTube.stl",
+    "sha256": "7404fcfdbee19d9e1296968787f377a3e257b1d289e6ddc9b2dafdb31d43371d",
+    "vertices": 203,
+    "facets_before": 406,
+    "facets_after": 406,
+    "facet_reduction_percent": 0.0,
+    "bytes_unchanged": true,
+    "rings": [
+      {
+        "z_mm": -3577.535888671875,
+        "inner": true,
+        "corners": 50,
+        "min_turn_cross_mm2": 10.540374244679667
+      },
+      {
+        "z_mm": -3577.535888671875,
+        "inner": false,
+        "corners": 52,
+        "min_turn_cross_mm2": 10.205889997596387
+      },
+      {
+        "z_mm": -1557.994140625,
+        "inner": true,
+        "corners": 50,
+        "min_turn_cross_mm2": 10.540374244679267
+      },
+      {
+        "z_mm": -1557.994140625,
+        "inner": false,
+        "corners": 51,
+        "min_turn_cross_mm2": 10.81649637271039
+      }
+    ],
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 609,
+      "faces_number": 406,
+      "genus": 1,
+      "incident_faces_on_non_two_manifold_edges": 0,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": true,
+      "non_two_manifold_edges": 0,
+      "non_two_manifold_vertices": 0,
+      "number_holes": 0,
+      "unreferenced_vertices": 0,
+      "vertices_number": 203
+    },
+    "self_intersecting_faces": 0,
+    "degenerate_faces": 0,
+    "coherently_oriented": true,
+    "volume_mm3": 3018843.484308937,
+    "minimal_for_existing_rim_corners": true,
+    "all_holes_unchanged": true
+  },
+  "WarmBoreTube": {
+    "source": "WarmBoreTube.stl",
+    "sha256": "60a3fb221953d0dd3be812bb10e1caf2544187fc3f457bdf0f4f698287199d0f",
+    "vertices": 184,
+    "facets_before": 368,
+    "facets_after": 368,
+    "facet_reduction_percent": 0.0,
+    "bytes_unchanged": true,
+    "rings": [
+      {
+        "z_mm": -3623.216064453125,
+        "inner": true,
+        "corners": 46,
+        "min_turn_cross_mm2": 9.722864019451663
+      },
+      {
+        "z_mm": -3623.216064453125,
+        "inner": false,
+        "corners": 46,
+        "min_turn_cross_mm2": 10.227879087411566
+      },
+      {
+        "z_mm": -1512.3160400390625,
+        "inner": true,
+        "corners": 46,
+        "min_turn_cross_mm2": 9.722864019451663
+      },
+      {
+        "z_mm": -1512.3160400390625,
+        "inner": false,
+        "corners": 46,
+        "min_turn_cross_mm2": 10.227879087411566
+      }
+    ],
+    "topology": {
+      "boundary_edges": 0,
+      "connected_components_number": 1,
+      "edges_number": 552,
+      "faces_number": 368,
+      "genus": 1,
+      "incident_faces_on_non_two_manifold_edges": 0,
+      "incident_faces_on_non_two_manifold_vertices": 0,
+      "is_mesh_two_manifold": true,
+      "non_two_manifold_edges": 0,
+      "non_two_manifold_vertices": 0,
+      "number_holes": 0,
+      "unreferenced_vertices": 0,
+      "vertices_number": 184
+    },
+    "self_intersecting_faces": 0,
+    "degenerate_faces": 0,
+    "coherently_oriented": true,
+    "volume_mm3": 1316196.3336428017,
+    "minimal_for_existing_rim_corners": true,
+    "all_holes_unchanged": true
+  }
+}

@@ -11,43 +11,28 @@ function mwget() {
 
 }
 
-function install_package() {
-	local package="$1"
+log_file="$PWD/build_coatjava.log"
+ci_dir="${0:A:h:h}/ci"
+echo START_INSTALL_COATJAVA $(date) > "$log_file"
 
-	echo "Installing $package..."
-	if command -v apt-get &>/dev/null; then
-		apt-get update
-		DEBIAN_FRONTEND=noninteractive apt-get install -y -q --no-install-recommends "$package"
-	elif command -v dnf &>/dev/null; then
-		dnf -y -q install "$package" || {
-			dnf -y -q install epel-release
-			dnf -y -q install "$package"
-		}
-	elif command -v pacman &>/dev/null; then
-		pacman -Sy --noconfirm --needed "$package"
-	else
-		echo "ERROR: no supported package manager found to install $package"
-		exit 1
+if [[ ${GITHUB_ACTIONS:-} == true ]]; then
+	bash "$ci_dir/configure_java_trust.sh" || exit 1
+	export MAVEN_OPTS="${MAVEN_OPTS:-} -Djavax.net.ssl.trustStore=$JAVA_HOME/lib/security/cacerts"
+	export MAVEN_SKIP_RC=true
+	if ! command -v git-lfs >/dev/null 2>&1; then
+		source /etc/os-release
+		case "$ID" in
+			almalinux) dnf -y --disablerepo=almalinux-synergy install git-lfs || exit 1 ;;
+			fedora) dnf -y install git-lfs || exit 1 ;;
+			ubuntu|debian)
+				apt-get update && apt-get install -y git-lfs || exit 1
+				;;
+			*) echo "Install Git LFS before building Coatjava on $ID." >&2; exit 1 ;;
+		esac
 	fi
-}
+fi
 
-function ensure_command() {
-	local command_name="$1"
-	local package="$2"
-
-	if ! command -v "$command_name" &>/dev/null; then
-		echo "$command_name not found."
-		install_package "$package"
-	fi
-	if ! command -v "$command_name" &>/dev/null; then
-		echo "ERROR: $command_name not found after installing $package"
-		exit 1
-	fi
-}
-
-echo START_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
-
-rm -rf coat*jar jcsg*jar vecmath*jar
+rm -f -- coat*jar(N) jcsg*jar(N) vecmath*jar(N)
 
 # development. Set to no to use coatjava distribution instead
 USEDEVEL="no"
@@ -82,7 +67,7 @@ elif [[ $1 == "-t" ]]; then
 	USEDEVEL="no"
 	tag_gz="$githubRepo/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
 	echo "Requested Coatjava Tag: $COATJAVA_TAG"
-elif [[ $1 == "-l" ]]; then
+elif [[ $1 == "-l" || $# -eq 0 ]]; then
 	COATJAVA_TAG=$LATEST_RELEASE
 	USEDEVEL="no"
 	tag_gz="$githubRepo/archive/refs/tags/$COATJAVA_TAG"".tar.gz"
@@ -108,9 +93,9 @@ if [[ $USEDEVEL == "yes" ]]; then
 	echo
 	echo "Cloning $githubRepo and building coatjava"
 	echo
-	git clone $githubRepo $src_dir
+	git clone $githubRepo $src_dir || exit 1
 else
-	git clone  -b $COATJAVA_TAG --recurse-submodules --shallow-submodules --depth 1 $githubRepo $src_dir
+	git clone -b $COATJAVA_TAG --depth 1 $githubRepo $src_dir || exit 1
 fi
 
 # recent versions of Git refuse to touch a repository whose on-disk owner
@@ -119,21 +104,19 @@ fi
 echo "Marking workspace as safe for Git"
 git config --global --add safe.directory '*'
 
-cd $src_dir
-
-# Ensure build dependencies are available; containers run as root in CI.
-ensure_command git-lfs git-lfs
-ensure_command mvn maven
-
-paralllel=" -T"$(getconf _NPROCESSORS_ONLN)
-paralllel=" -T1"
-echo "Running coatjava build with options: --lfs --no-progress --nomaps $paralllel" >> ../build_coatjava.log
-./build-coatjava.sh --lfs --no-progress --nomaps $paralllel &>> ../build_coatjava.log
+cd $src_dir || exit 1
+# Suppress cookie-parser warnings while retaining dependency and transfer errors.
+cookie_logger=org.apache.http.client.protocol.ResponseProcessCookies
+export MAVEN_OPTS="${MAVEN_OPTS:-} -Dorg.slf4j.simpleLogger.log.$cookie_logger=error"
+maven_options=(--batch-mode --no-snapshot-updates -T1)
+echo "Running coatjava build with options: --lfs --no-progress $maven_options" | tee -a "$log_file"
+setopt PIPE_FAIL
+./build-coatjava.sh --lfs --no-progress "${maven_options[@]}" 2>&1 | tee -a "$log_file"
 if [[ $? -ne 0 ]]; then
 	echo "Error: coatjava build failed. Log:"
-	cat ../build_coatjava.log
+	cat "$log_file"
 	exit 1
 fi
-cp coatjava/lib/clas/* ..
-cp -r coatjava ../$install_dir
-echo END_INSTALL_COATJAVA $(date) >  ../build_coatjava.log
+cp coatjava/lib/clas/* .. || exit 1
+cp -r coatjava ../$install_dir || exit 1
+echo END_INSTALL_COATJAVA $(date) >> "$log_file"
