@@ -60,7 +60,7 @@ jobs:
         uses: actions/setup-java@v6.0.1
         with:
           java-version: '21'
-          distribution: 'zulu'
+          distribution: 'temurin'
           show-download-progress: true
       - name: Set up GEMC environment
         uses: ./.github/actions/setup-gemc
