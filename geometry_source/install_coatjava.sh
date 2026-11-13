@@ -98,10 +98,13 @@ echo "Marking workspace as safe for Git"
 git config --global --add safe.directory '*'
 
 cd $src_dir || exit 1
+# Suppress cookie-parser warnings while retaining dependency and transfer errors.
+cookie_logger=org.apache.http.client.protocol.ResponseProcessCookies
+export MAVEN_OPTS="${MAVEN_OPTS:-} -Dorg.slf4j.simpleLogger.log.$cookie_logger=error"
 maven_options=(--batch-mode --no-snapshot-updates -T1)
-echo "Running coatjava build with options: --lfs $maven_options" | tee -a "$log_file"
+echo "Running coatjava build with options: --lfs --no-progress $maven_options" | tee -a "$log_file"
 setopt PIPE_FAIL
-./build-coatjava.sh --lfs "${maven_options[@]}" 2>&1 | tee -a "$log_file"
+./build-coatjava.sh --lfs --no-progress "${maven_options[@]}" 2>&1 | tee -a "$log_file"
 if [[ $? -ne 0 ]]; then
 	echo "Error: coatjava build failed. Log:"
 	cat "$log_file"
