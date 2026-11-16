@@ -156,6 +156,13 @@ function test_gemc {
 
 compile_gemc
 
+# gemc resolves the geometry database from the current directory first, then from the installed
+# data root ($GEMC). Install the freshly generated clas12.sqlite there so sqlite gcards run from
+# any directory - the local gcards test runs gemc from geometry_source/<det>, which has no copy.
+if $create_geometry; then
+	cp clas12.sqlite "$GEMC/" || fail_with_log "Copying SQLite geometry to \$GEMC failed. Log:" "$geo_log"
+fi
+
 if $run_tests; then
 	test_gemc
 fi
