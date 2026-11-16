@@ -61,6 +61,8 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
+      # Limit simultaneous fresh Coatjava dependency downloads against the JLab Maven repository.
+      max-parallel: 3
       matrix: ${{ fromJSON(needs.discover.outputs.matrix_build) }}
     container: ${{ matrix.container }}
 
