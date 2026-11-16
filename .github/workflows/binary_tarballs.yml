@@ -21,15 +21,11 @@ on:
   workflow_run:
     workflows: [ "Deploy" ]
     types: [ completed ]
-    branches: [ meson ]
+    branches: [ main ]
 
 jobs:
   release-tarballs:
-    if: >-
-      ${{
-        github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.head_branch == 'meson'
-      }}
+    if: github.event.workflow_run.conclusion == 'success'
     name: Attach clas12Tags tarballs to dev release
     runs-on: ubuntu-latest
     env:
@@ -70,21 +66,18 @@ jobs:
     if: >-
       ${{
         github.event_name == 'workflow_dispatch' ||
-        (
-          github.event.workflow_run.conclusion == 'success' &&
-          github.event.workflow_run.head_branch == 'meson'
-        )
+        github.event.workflow_run.conclusion == 'success'
       }}
     name: Create Job Matrix
     runs-on: ubuntu-latest
     outputs:
       matrix_build: ${{ steps.scan.outputs.matrix_build }}
     steps:
-      - name: Require meson for manual runs
-        if: ${{ github.event_name == 'workflow_dispatch' && github.ref_name != 'meson' }}
+      - name: Require main for manual runs
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref_name != 'main' }}
         shell: bash
         run: |
-          echo "::error title=Unsupported branch::Select meson in the Run workflow branch dropdown."
+          echo "::error title=Unsupported branch::Select main in the Run workflow branch dropdown."
           exit 1
 
       - name: Checkout repository

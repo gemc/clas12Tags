@@ -181,9 +181,9 @@ def install_gemc(geant4_version: str, gemc_version: str, source: str = "clone") 
 		return commands
 
 	clone_arguments = '-c advice.detachedHead=false --recurse-submodules --single-branch'
+	# Development builds follow the repository's default branch; releases select an explicit tag.
 	if gemc_version == "dev":
 		clone_arguments += " --depth 1"
-		clone_arguments += ' --branch meson'
 	else:
 		clone_arguments += f' --branch "{gemc_version}"'
 

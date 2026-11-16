@@ -29,17 +29,14 @@ on:
   workflow_run:
     workflows: [ "Deploy" ]
     types: [ completed ]
-    branches: [ meson ]
+    branches: [ main ]
 
 jobs:
   reference:
     if: >-
       ${{
         github.event_name != 'workflow_run' ||
-        (
-          github.event.workflow_run.conclusion == 'success' &&
-          github.event.workflow_run.head_branch == 'meson'
-        )
+        github.event.workflow_run.conclusion == 'success'
       }}
     name: Reference ${{ matrix.system }} (${{ matrix.n_events }} events)
     runs-on: ubuntu-latest
@@ -93,7 +90,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
         # Geometry (gcard + TEXT/CAD files) is taken from the image's installed
-        # clas12Tags (meson installs experiments/ into the prefix), so no LFS pull is
+        # clas12Tags (including experiments/ under its install prefix), so no LFS pull is
         # needed here; this checkout is only for the workflow context and provenance.
         with:
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}

@@ -20,7 +20,7 @@ on:
   workflow_run:
     workflows: [ "Test" ]
     types: [ completed ]
-    branches: [ meson ]
+    branches: [ main ]
 
 jobs:
   overview:
