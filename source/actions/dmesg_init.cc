@@ -108,13 +108,16 @@ vector<string> init_dvmesg(goptions gemcOpt, G4VisManager *VM)
 	double newxpos = 700 + get_number(wpos[0]);
 	string newpos = "+" + stringify(newxpos) + "+" + wpos[1];
 
-	// OpenGL immediate mode
+	// TOOLSSG_QT_GLES
 	if(use_gui==1)
 		commands.push_back("/vis/open TOOLSSG_QT_GLES " + gemcOpt.optMap["geometry"].args + newpos);
 	// openGL stored mode
 	else if(use_gui==2)
-		commands.push_back("/vis/open TOOLSSG_QT_GLES " + gemcOpt.optMap["geometry"].args + newpos);
-	
+		commands.push_back("/vis/open OpenGLStoredQt " + gemcOpt.optMap["geometry"].args + newpos);
+	// openGL immediate mode mode
+	else if(use_gui==3)
+		commands.push_back("/vis/open OGLIQt " + gemcOpt.optMap["geometry"].args + newpos);
+
 
 	commands.push_back("/vis/viewer/set/autoRefresh false");
 	commands.push_back("/vis/viewer/set/culling coveredDaughters true");

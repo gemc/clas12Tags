@@ -1,0 +1,22 @@
+<gcard>
+
+	<option name="geometry" value="1400x1200"/>
+
+	<!-- OLD CAD import for FT: the FT shielding lives in the beamline CAD
+	     set, so this loads the beamline original meshes from
+	     beamline/cad_original/. Compare against ft_text_default_cad.gcard
+	     (optimized beamline/cad/). -->
+	<detector name="ft" factory="TEXT"/>
+	<detector name="experiments/clas12/beamline/cad_original/" factory="CAD"/>
+
+	<option name="BEAM_P" value="e-, 2.0*GeV, 3*deg, 10*deg"/>
+	<option name="SPREAD_P" value="0.0*GeV, 00*deg, 180*deg"/>
+
+	<option name="SAVE_ALL_MOTHERS" value="1"/>
+	<option name="INTEGRATEDRAW" value="ft_cal, ft_hodo, ft_trk"/>
+
+	<option name="RUNNO" value="11"/>
+	<option name="OUTPUT" value="hipo, out.hipo"/>
+	<option name="PHYSICS" value="STD + FTFP_BERT"/>
+
+</gcard>
