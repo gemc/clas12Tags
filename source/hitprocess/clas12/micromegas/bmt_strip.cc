@@ -25,7 +25,7 @@ vector<double> bmt_strip::FindStrip(int layer, int sector, G4ThreeVector lxyz, d
 	
 	int Nel = (int) (1e6*Edep/bmtc.w_i);
 	// the return vector is always in pairs the first index is the strip number, the second is the Edep on the strip
-	if (bmtc.HV_DRIFT[layer-1][sector-1]==0||bmtc.HV_STRIPS[layer-1][sector-1]==0) Nel=0;
+	if (bmtc.tiles.driftVoltage[layer-1][sector-1]==0||bmtc.tiles.stripVoltage[layer-1][sector-1]==0) Nel=0;
 	vector<double> strip_id;
 	
 	double Delta_drift = sqrt( lx*lx+ly*ly) - bmtc.RADIUS[layer-1];

@@ -67,6 +67,8 @@ public:
 	// containing hit sharing information
 	vector<identifier> processID(vector<identifier>, G4Step*, detector) override;
 
+	static vector<string> prepareRuns(const vector<int>& runs, const goptions& options, bool writesDigitizedHits);
+
 	// creates the HitProcess
 	static HitProcess* createHitClass() { return new BMT_HitProcess; }
 

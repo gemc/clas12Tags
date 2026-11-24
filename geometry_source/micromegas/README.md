@@ -70,26 +70,69 @@ $GEMC/api/perl/db_compare.py micromegas__geometry_rgm_fall2021_H.txt ../../clas1
 
 ## BMT tile hit efficiency
 
-Enable the BMT efficiency model with GEMC's `-DETECTOR_INEFFICIENCY=1`. The BMT
-digitizer reads `/calibration/mvt/bmt_tile_efficiency` for the event's run number,
-`DIGITIZATION_VARIATION` and `DIGITIZATION_TIMESTAMP`. Both `RUNNO` and
-`RUN_WEIGHTS` use this lookup. GEMC prints the assignment request when it loads
-the table. With the switch off (the default), BMT skips the lookup. If CCDB
-returns no assignment with the switch on, GEMC reports the request and uses
-unit efficiency for that run.
+Enable tile efficiency with `-DETECTOR_INEFFICIENCY=1`. GEMC reads
+`/calibration/mvt/bmt_tile_efficiency` using the real run number,
+`DIGITIZATION_VARIATION` and optional `DIGITIZATION_TIMESTAMP`. Before transport,
+it checks the single `RUNNO` or every entry in `RUN_WEIGHTS`, including runs
+allocated zero events. The startup log and job summary give the efficiency
+request and CCDB assignment ID for each run.
 
-Each assignment has 18 rows. The columns, in order, are integer `sector` (1–3),
-integer `layer` (1–6), integer `component` (0 for the whole tile), and double
-`efficiency` (0–1). Each sector/layer pair occurs once. A malformed assignment
-stops digitization. Use a new CCDB assignment with its own run range to supply
-measured probabilities later.
+Each assignment has 18 rows. Its columns are integer `sector` (1–3), integer
+`layer` (1–6), integer `component` (0 for the whole tile), and double
+`efficiency` (0–1 inclusive). Each sector/layer pair occurs once. Missing or
+invalid constants stop the job. For studies that explicitly permit a missing
+efficiency table or assignment, set `-BMT_ALLOW_MISSING_EFFICIENCY=1`. This
+gives powered tiles efficiency 1 and unpowered tiles efficiency 0 for that run.
+The fallback is recorded in the log. It applies only to the efficiency table.
+Every run with efficiency enabled requires complete assignments for both drift
+and strip voltage, including runs using the fallback. Missing voltage constants
+or an invalid assignment stop startup.
 
-The probability applies to an otherwise detectable signal. In one event, all
-steps and strips from a Geant4 track on a tile share one decision. This includes
-a track revisiting the same tile. If tracks share a strip, its ADC uses the
-accepted tracks' energy deposits. Imported background hits bypass this model.
-Set `-SKIPREJECTEDHITS=0` to retain rejected simulated hits in integrated truth
-output for efficiency studies.
+### Measuring a tile efficiency
+
+For one run and tile, divide the number of eligible charged tracks with at least
+one matched strip signal by the number of eligible charged tracks crossing the
+active area. Count a given track once per tile, including a track that revisits
+the tile. Use the following reference sample when extracting probabilities from data.
+
+- Select well-reconstructed charged tracks using an independent track seed and
+  fit that exclude hits from the tile under test. Extrapolate to the active gas.
+  Require the predicted intercept and its uncertainty to lie inside the fiducial
+  area. Record the track-quality and fiducial cuts with the assignment.
+- Require a crossing capable of producing ionization. In GEMC at least one step
+  must produce one or more electrons (`int(1e6 * Edep_MeV / w_i_eV) > 0`) on
+  a geometrically valid strip. In data use the reference track's path length
+  and expected ionization to select this sample independently of tile readout.
+  If the target production applies a BMT strip mask, exclude crossings whose
+  predicted signal falls entirely on dead or masked strips. Use the same mask
+  in reconstruction and efficiency extraction. This BMT digitizer does not
+  apply a strip mask merely by setting `HARDWARESTATUS=1`.
+- Count a success when at least one eligible strip signal matches the predicted
+  crossing. Fix and record the spatial and timing windows, channel mask and
+  ionization selection. Use the same cuts for data and MC.
+- Use the run's drift and strip voltages from `/calibration/mvt/bmt_voltage`
+  and `/calibration/mvt/bmt_strip_voltage`. If either is zero, exclude the
+  tile-run from the measurement and store efficiency 0. A positive entry on an
+  unpowered tile stops GEMC. Include losses at reduced, nonzero voltage in the
+  measured efficiency. GEMC uses these voltages as on/off conditions. With the
+  efficiency model disabled, GEMC reads drift voltage and always uses nominal
+  strip voltage (520 V). A missing drift assignment in that mode leaves all
+  tiles unpowered and prints a warning.
+
+### Digitization and truth
+
+Within an event, every step and strip from the same Geant4 track on a tile
+shares one acceptance decision. On a shared strip, `BMT::adc` uses only
+accepted tracks' deposits. Integrated `MC::True` describes the Geant4 hit
+before readout and retains its full deposit, including contributions from tracks
+rejected on that strip. Imported background hits bypass the efficiency decision.
+With efficiency enabled a zero-efficiency tile emits no simulated ADC rows,
+including the former empty rows with component −1 and ADC 0.
+
+For production with pre-readout truth, include `bmt` in `INTEGRATEDRAW` and
+set `SKIPREJECTEDHITS` to 0 in the gcard. The default value 1 omits fully
+rejected hits from integrated truth. GEMC warns when digitizing BMT output
+with efficiency enabled and this setting.
 
 ### Local test assignment
 
@@ -116,7 +159,17 @@ zero in this fixture, and sector 2, layer 3 has probability 0.50.
 ```sh
 cd experiments/clas12/micromegas
 gemc micromegas_text_rgd_fall2023.gcard -USE_GUI=0 -N=1000 \
-    -RUNNO=18305 -DIGITIZATION_VARIATION=rgd_fall2023_mc -DETECTOR_INEFFICIENCY=1 \
+    -RUNNO=18305 -DIGITIZATION_VARIATION=rgd_fall2023_mc -DETECTOR_INEFFICIENCY=1 -SKIPREJECTEDHITS=0 \
     '-BEAM_P=mu-, 2*GeV, 80*deg, 90*deg' '-SPREAD_P=0*GeV, 0*deg, 0*deg' \
     '-OUTPUT=hipo, bmt-efficiency.hipo'
+```
+
+From the repository root, run the end-to-end regression with GEMC, the CCDB
+CLI, sqlite3 and coatjava's `run-groovy` on PATH. Supply a calibration snapshot
+covering run 10000 and runs 18305–18307 before addition of the efficiency table. The script
+creates its own writable copy and prints the directory containing the HIPO files
+and logs.
+
+```sh
+ci/bmt_efficiency/run.sh /path/to/clas12-calibration.sqlite
 ```
