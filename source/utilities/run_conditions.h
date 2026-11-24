@@ -121,6 +121,7 @@ class runWeights
 
 		int runNo;
 		int getRunNumber(int n);
+		vector<int> configuredRuns(int firstEvent, int eventCount) const;
 		bool isNewRun;
 		int defaultRunNumber;
 	
