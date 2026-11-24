@@ -27,6 +27,12 @@ outputFactory *getOutputFactory(map<string, outputFactoryInMap> *outputFactoryMa
 	return (*outputFactoryMap)[outputType]();
 }
 
+string outputContainer::outputType(const goptions& options)
+{
+    const auto& value = options.optMap.at("OUTPUT").args;
+    return value.substr(0, value.find(','));
+}
+
 outputContainer::outputContainer(goptions Opts)
 {
 	
@@ -36,7 +42,7 @@ outputContainer::outputContainer(goptions Opts)
 	string hd_msg  = gemcOpt.optMap["LOG_MSG"].args + " Output File: >> ";
 
 	string optf = gemcOpt.optMap["OUTPUT"].args;
-	outType.assign(optf, 0, optf.find(",")) ;
+	outType = outputType(gemcOpt);
 	outFile.assign(optf,    optf.find(",") + 1, optf.size()) ;
 	outFile.erase(remove(outFile.begin(), outFile.end(), ' '), outFile.end());
 

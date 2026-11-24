@@ -701,7 +701,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 				}
 			}
 
-			if (WRITE_INTDGT.find(hitType) == string::npos && (fastMCMode == 0 || fastMCMode > 9)) {
+			if (writesIntegratedDgt(hitType)) {
 				hitProcessRoutine->initWithRunNumber(rw.runNo);
 
 				for (int h = 0; h < nhits; h++) {

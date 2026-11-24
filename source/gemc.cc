@@ -251,16 +251,41 @@ int main(int argc, char **argv) {
     }
 
 
+    // Initialize G4 kernel
+    gemc_splash.message(" Initializing Run Manager...\n");
+    // physical volumes, sensitive detectors are built here
+    runManager->Initialize();
+
+    // Geometry initialization builds the active sensitive detector map. Resolve
+    // their run constants before opening output or running user commands.
+    const auto& evt = *gActions->evtAction;
+    const auto runs = evt.rw.configuredRuns(evt.evtN, evt.requestedNevents);
+    const bool hasOutput = outputContainer::outputType(gemcOpt) != "no";
+    map<string, vector<string>> runSources;
+    for (const auto& detector : ExpHall->SeDe_Map) {
+        const auto& name = detector.first;
+        auto factory = hitProcessMap.find(name);
+        if (factory == hitProcessMap.end() || !factory->second.prepareRuns) continue;
+        try {
+            auto sources = factory->second.prepareRuns(runs, gemcOpt, hasOutput && evt.writesIntegratedDgt(name));
+            for (const auto& source : sources) cout << " > " << name << " startup: " << source << endl;
+            runSources.emplace(name, std::move(sources));
+        } catch (const std::exception& error) {
+            cerr << name << " startup failed: " << error.what() << endl;
+            return EXIT_FAILURE;
+        }
+    }
+    const auto printRunSummary = [&runSources]() {
+        for (const auto& detector : runSources)
+            for (const auto& source : detector.second)
+                cout << " > " << detector.first << " job summary: " << source << endl;
+    };
+
     // Output File: registering output type, output process factory,
     // sensitive detectors into Event Action
     gemc_splash.message(" Initializing Output Action...");
     outputContainer outContainer(gemcOpt);
     map <string, outputFactoryInMap> outputFactoryMap = registerOutputFactories();
-
-    // Initialize G4 kernel
-    gemc_splash.message(" Initializing Run Manager...\n");
-    // physical volumes, sensitive detectors are built here
-    runManager->Initialize();
 
     // registering activated field in the option so they're written out
     if (ExpHall->activeFields.size()) {
@@ -378,7 +403,9 @@ int main(int argc, char **argv) {
             UImanager->ApplyCommand(command);
         }
 
-        return qApp->exec();
+        const int status = qApp->exec();
+        printRunSummary();
+        return status;
         // deleting runManager is now taken care
         // in the gemc_quit slot
         delete visManager;
@@ -413,6 +440,8 @@ int main(int argc, char **argv) {
 
     cout << " > Total gemc time: " << clockAllTaken / (double) CLOCKS_PER_SEC << " seconds. "
          << " Events only time: " << clockEventTaken / (double) CLOCKS_PER_SEC << " seconds. " << endl;
+
+    printRunSummary();
 
     // closing db connection
     closeGdb();
