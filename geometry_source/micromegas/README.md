@@ -77,16 +77,19 @@ it checks the single `RUNNO` or every entry in `RUN_WEIGHTS`, including runs
 allocated zero events. The startup log and job summary give the efficiency
 request and CCDB assignment ID for each run.
 
+`RUN_WEIGHTS` parsing accepts only complete run-number and weight pairs. This
+fixes the old loop, which could reuse stale or uninitialised values after a
+failed read at the end of the file.
+
 Each assignment has 18 rows. Its columns are integer `sector` (1–3), integer
 `layer` (1–6), integer `component` (0 for the whole tile), and double
 `efficiency` (0–1 inclusive). Each sector/layer pair occurs once. Missing or
 invalid constants stop the job. For studies that explicitly permit a missing
 efficiency table or assignment, set `-BMT_ALLOW_MISSING_EFFICIENCY=1`. This
 gives powered tiles efficiency 1 and unpowered tiles efficiency 0 for that run.
-The fallback is recorded in the log. It applies only to the efficiency table.
-Every run with efficiency enabled requires complete assignments for both drift
-and strip voltage, including runs using the fallback. Missing voltage constants
-or an invalid assignment stop startup.
+GEMC logs each fallback. `BMT_ALLOW_MISSING_EFFICIENCY` covers only the
+efficiency table. With efficiency enabled, a missing drift- or strip-voltage
+assignment still aborts startup, even with the fallback enabled.
 
 ### Measuring a tile efficiency
 
