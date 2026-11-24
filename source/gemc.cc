@@ -66,6 +66,8 @@ const char *GEMC_VERSION = "gemc 7.0" ;
 #include "ActionInitialization.h"
 
 // c++ headers
+#include <cstdlib>
+#include <stdexcept>
 #include <unistd.h>  // needed for get_pid
 
 /////////////////////////
@@ -223,7 +225,13 @@ int main(int argc, char **argv) {
 
     // User action initialization
     gemc_splash.message(" Initializing User Actions...");
-    ActionInitialization *gActions = new ActionInitialization(&gemcOpt, &gParameters);
+    ActionInitialization *gActions;
+    try {
+        gActions = new ActionInitialization(&gemcOpt, &gParameters);
+    } catch (const std::runtime_error& error) {
+        cerr << error.what() << endl;
+        return EXIT_FAILURE;
+    }
     runManager->SetUserInitialization(gActions);
 
     ///< User Interface manager

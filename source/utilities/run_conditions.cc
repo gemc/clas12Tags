@@ -223,12 +223,15 @@ runWeights::runWeights(goptions opts) {
     int rr;
     double ww;
     while (in >> rr) {
-        if (!(in >> ww)) throw runtime_error("Missing run weight for " + to_string(rr) + " in " + fname);
+        if (!(in >> ww))
+            throw runtime_error("RUN_WEIGHTS error: Missing run weight for " + to_string(rr) + " in " + fname);
         w[rr] = ww;
         n[rr] = 0;
     }
 
-    if (!in.eof() || w.empty()) throw runtime_error("Invalid run weights in " + fname);
+    if (!in.eof() || w.empty())
+        throw runtime_error("RUN_WEIGHTS error: Invalid run weights in " + fname
+                            + " (job RUNNO " + to_string(defaultRunNumber) + ")");
 
     // now randomizing the run / event map based on number of events
     for (int i = 0; i < nevts; i++) {
