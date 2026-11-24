@@ -9,6 +9,7 @@
 using namespace CLHEP;
 
 // c++
+#include <array>
 #include <vector>
 #include <string>
 #include "Lorentz.h"
@@ -29,7 +30,7 @@ public:
 	~bmtConstants() = default;
 
 	// database
-	int    runNo;
+	int    runNo = -1;
 	string date;
 	string connection;
 	char   database[80];
@@ -62,6 +63,9 @@ public:
 	vector<vector<int> >     GROUP;   // Number of strips with same width
 	vector<vector<double> >  PITCH;   // the width of the corresponding group of strips
 	
+	using TileEfficiencies = std::array<std::array<double, NSECTORS>, NLAYERS>;
+	TileEfficiencies tileEfficiency{};
+
 	// Detector response characteristics
 	double HV_DRIFT[NLAYERS][NSECTORS]; //Need to know the HV to compute the lorentz angle
 	double HV_STRIPS[NLAYERS][NSECTORS]; //Might be needed for the gain

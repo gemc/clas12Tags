@@ -9,25 +9,54 @@
 #include "G4ChargedGeantino.hh"
 #include "G4Poisson.hh"
 
+#include <cmath>
+#include <sstream>
+#include <stdexcept>
 #include <CCDB/Calibration.h>
 #include <CCDB/Model/Assignment.h>
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
 
-static bmtConstants initializeBMTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no",  [[ maybe_unused ]] bool accountForHardwareStatus = false)
+static bmtConstants::TileEfficiencies loadTileEfficiencies(Calibration& calib, const string& request)
 {
-	// all these constants should be read from CCDB
-	bmtConstants bmtc;
-	if(runno == -1) return bmtc;
-	
+	vector<vector<string>> rows;
+	bmtConstants::TileEfficiencies efficiencies;
+	if (!calib.GetCalib(rows, request)) {
+		// Older snapshots and runs without an assignment retain the original BMT response.
+		cerr << " > BMT: no efficiency assignment for " << request << ", using 1 for all tiles" << endl;
+		for (auto& layer : efficiencies) layer.fill(1);
+		return efficiencies;
+	}
+	if (rows.size() != bmtConstants::NLAYERS * bmtConstants::NSECTORS)
+		throw runtime_error("Expected one CCDB row per BMT tile in " + request);
+
+	for (auto& layer : efficiencies) layer.fill(-1);
+	for (const auto& row : rows) {
+		if (row.size() != 4) throw runtime_error("Expected sector layer component efficiency in " + request);
+		int sector, layer, component;
+		double efficiency;
+		// Parse the complete fields so malformed constants cannot silently turn a tile off.
+		istringstream fields(row[0] + " " + row[1] + " " + row[2] + " " + row[3]);
+		if (!(fields >> sector >> layer >> component >> efficiency) || !(fields >> ws).eof()
+		    || sector < 1 || sector > bmtConstants::NSECTORS || layer < 1 || layer > bmtConstants::NLAYERS
+		    || component != 0 || !std::isfinite(efficiency) || efficiency < 0 || efficiency > 1)
+			throw runtime_error("Invalid BMT tile row in " + request);
+		double& value = efficiencies[layer-1][sector-1];
+		if (value >= 0) throw runtime_error("Duplicate BMT tile in " + request);
+		value = efficiency;
+	}
+	cout << " > BMT tile efficiencies loaded from " << request << endl;
+	return efficiencies;
+}
+
+static bmtConstants initializeBMTConstants(int runno, const string& digiVariation, const string& digiSnapshotTime, bool applyInefficiencies)
+{
+	bmtConstants bmtc{};
 	string timestamp = "";
 	if(digiSnapshotTime != "no") {
 		timestamp = ":"+digiSnapshotTime;
 	}
-	
-	// do not initialize at the beginning, only after the end of the first event,
-	// with the proper run number coming from options or run table
 	
 	bmtc.runNo = runno;
 	
@@ -40,6 +69,11 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	vector<vector<double> > data;
 	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(bmtc.connection));
 	
+	if (applyInefficiencies) {
+		const string request = "/calibration/mvt/bmt_tile_efficiency:" + to_string(runno) + ":" + digiVariation + timestamp;
+		bmtc.tileEfficiency = loadTileEfficiencies(*calib, request);
+	}
+
 	// Load the geometrical constant for each layer
     snprintf(bmtc.database, sizeof(bmtc.database), "/geometry/cvt/mvt/bmt_layer_noshim:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,bmtc.database);
@@ -119,6 +153,13 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	return bmtc;
 }
 
+bool BMT_HitProcess::acceptTrack(int sector, int layer, int track, double efficiency)
+{
+	auto entry = acceptedTrackTile.try_emplace(make_tuple(sector, layer, track), false);
+	if (entry.second) entry.first->second = G4UniformRand() < efficiency;
+	return entry.first->second;
+}
+
 map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused ]] int hitn)
 {
 	map<string, double>  dgtz;
@@ -152,9 +193,37 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused
 	int layer  = identity[0].id;
 	int sector = identity[2].id;
 	int strip  = identity[3].id;
-	trueInfos tInfos(aHit);
-	
+	double energy = 0;
+	int pid = aHit->GetPID();
+	const double efficiency = applyInefficiencies ? bmtc.tileEfficiency.at(layer-1).at(sector-1) : 1;
+	if (efficiency == 0) {
+		writeHit = false;
+		return dgtz;
+	}
+
+	const auto deposits = aHit->GetEdep();
+	if (efficiency == 1) {
+		for (double deposit : deposits) energy += deposit;
+	} else {
+		// Tracks can also share a strip within the electronics time window.
+		const auto tracks = aHit->GetTIds();
+		const auto pids = aHit->GetPIDs();
+		bool accepted = false;
+		for (size_t i = 0; i < deposits.size(); ++i) {
+			if (acceptTrack(sector, layer, tracks[i], efficiency)) {
+				if (!accepted) pid = pids[i];
+				accepted = true;
+				energy += deposits[i];
+			}
+		}
+		if (!accepted) {
+			writeHit = false;
+			return dgtz;
+		}
+	}
+
 	if(verbosity>4) {
+		trueInfos tInfos(aHit);
 		cout <<  log_msg << " layer: " << layer << "  sector: " << sector << "  Strip: " << strip
 		<< " x=" << tInfos.x << " y=" << tInfos.y << " z=" << tInfos.z << endl;
 	}
@@ -165,11 +234,11 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused
 	dgtz["layer"]     = layer;
 	dgtz["component"] = strip;  // strip number
 	dgtz["ADC_order"] = 0;
-	dgtz["ADC_ADC"]   = int(1e6*tInfos.eTot/bmtc.w_i);
+	dgtz["ADC_ADC"]   = int(1e6*energy/bmtc.w_i);
 	
 	// for geantinos, assigning ADC = 1
 	// notice for geant4 < 10.7, the pid of 0 conflicts with the optical photon
-	if (aHit->GetPID() == 0) {
+	if (pid == 0) {
 		dgtz["ADC_ADC"]   = 1.0;
 	}
 	
@@ -347,24 +416,13 @@ double BMT_HitProcess :: voltage( [[ maybe_unused ]] double charge,  [[ maybe_un
 }
 
 
-void BMT_HitProcess::initWithRunNumber(int runno)
+void BMT_HitProcess::initForTracking(int runno, const goptions& options)
 {
-	string digiVariation    = gemcOpt.optMap["DIGITIZATION_VARIATION"].args;
-	string digiSnapshotTime = gemcOpt.optMap["DIGITIZATION_TIMESTAMP"].args;
-	
-	if(bmtc.runNo != runno) {
-		cout << " > Initializing " << HCname << " digitization for run number " << runno << endl;
-		bmtc = initializeBMTConstants(runno, digiVariation, digiSnapshotTime, accountForHardwareStatus);
-		bmtc.runNo = runno;
-	}
+	if (bmtc.runNo == runno) return;
+	cout << " > Initializing bmt digitization for run number " << runno << endl;
+	bmtc = initializeBMTConstants(runno, options.optMap.at("DIGITIZATION_VARIATION").args,
+	                              options.optMap.at("DIGITIZATION_TIMESTAMP").args,
+	                              options.optMap.at("DETECTOR_INEFFICIENCY").arg);
 }
 
-
-// this static function will be loaded first thing by the executable
-bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
-
-
-
-
-
-
+bmtConstants BMT_HitProcess::bmtc{};

@@ -43,6 +43,8 @@ public:
 	virtual G4bool ProcessHits(G4Step*, G4TouchableHistory*);    ///< Virtual Method called for each step of each hit
 	virtual void EndOfEvent(G4HCofThisEvent*);                   ///< Virtual Method called at the end of each hit event
 
+	void setEventRunNumber(int runno) { eventRunNumber = runno; }
+
 	G4String HCname;                                             ///< Sensitive Detector/Hit Collection Name
 	map<string, detector>           *hallMap;                    ///< detector map
 	map<string, HitProcess_Factory> *hitProcessMap;              ///< Hit Process Routine Factory Map
@@ -55,6 +57,7 @@ public:
 	
 
 private:
+	int eventRunNumber;
 	MHitCollection *hitCollection;                               ///< G4THitsCollection<MHit>
 	HitProcess     *ProcessHitRoutine;                           ///< To call PID
 	int             HCID;                                        ///< HCID increases every new hit collection.

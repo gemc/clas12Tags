@@ -99,6 +99,9 @@ public:
 
 	virtual void initWithRunNumber([[maybe_unused]] int runno) {;}
 
+	// Called before the first processID of the event for detectors with run-dependent strip formation.
+	virtual void initForTracking(int, const goptions&) {}
+
 	// - integrateRaw: returns geant4 raw information integrated over the hit
 	// - add the info in the bank if INTEGRATEDRAW is TRUE
 	map<string, double> integrateRaw(MHit*, int, bool);

@@ -200,6 +200,7 @@ void MEventAction::BeginOfEventAction([[maybe_unused]] const G4Event* evt) {
 		evtN = pga->rerunEvent();
 
 	rw.getRunNumber(evtN);
+	for (const auto& detector : SeDe_Map) detector.second->setEventRunNumber(rw.runNo);
 	bgMap.clear();
 
 	static int lastEvtN = -1;

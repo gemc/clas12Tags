@@ -67,3 +67,56 @@ $GEMC/api/perl/db_compare.py micromegas__geometry_rgm_fall2021_H.txt ../../clas1
 <br/>
 
 ---
+
+## BMT tile hit efficiency
+
+Enable the BMT efficiency model with GEMC's `-DETECTOR_INEFFICIENCY=1`. The BMT
+digitizer reads `/calibration/mvt/bmt_tile_efficiency` for the event's run number,
+`DIGITIZATION_VARIATION` and `DIGITIZATION_TIMESTAMP`. Both `RUNNO` and
+`RUN_WEIGHTS` use this lookup. GEMC prints the assignment request when it loads
+the table. With the switch off (the default), BMT skips the lookup. If CCDB
+returns no assignment with the switch on, GEMC reports the request and uses
+unit efficiency for that run.
+
+Each assignment has 18 rows. The columns, in order, are integer `sector` (1–3),
+integer `layer` (1–6), integer `component` (0 for the whole tile), and double
+`efficiency` (0–1). Each sector/layer pair occurs once. A malformed assignment
+stops digitization. Use a new CCDB assignment with its own run range to supply
+measured probabilities later.
+
+The probability applies to an otherwise detectable signal. In one event, all
+steps and strips from a Geant4 track on a tile share one decision. This includes
+a track revisiting the same tile. If tracks share a strip, its ADC uses the
+accepted tracks' energy deposits. Imported background hits bypass this model.
+Set `-SKIPREJECTEDHITS=0` to retain rejected simulated hits in integrated truth
+output for efficiency studies.
+
+### Local test assignment
+
+Run these commands from the repository root with the CCDB CLI available.
+Use a fresh local copy of your calibration snapshot and a CCDB user defined in
+that snapshot. The example assigns synthetic probabilities only to run 18305 in
+the RGD MC variation.
+
+```sh
+cp /path/to/clas12-calibration.sqlite bmt-test.sqlite
+export CCDB_CONNECTION="sqlite:///$PWD/bmt-test.sqlite"
+export CCDB_USER="$USER"
+table=/calibration/mvt/bmt_tile_efficiency
+ccdb mktbl "$table" -r 18 sector=int layer=int component=int efficiency=double
+ccdb add "$table" -v rgd_fall2023_mc -r 18305-18305 \
+    geometry_source/micromegas/ccdb/bmt_tile_efficiency_test.txt
+ccdb dump "$table:18305:rgd_fall2023_mc"
+```
+
+To generate a micromegas-only sample with the modified GEMC, run the text
+geometry card from its detector directory. Sector 2, layer 2 has probability
+zero in this fixture, and sector 2, layer 3 has probability 0.50.
+
+```sh
+cd experiments/clas12/micromegas
+gemc micromegas_text_rgd_fall2023.gcard -USE_GUI=0 -N=1000 \
+    -RUNNO=18305 -DIGITIZATION_VARIATION=rgd_fall2023_mc -DETECTOR_INEFFICIENCY=1 \
+    '-BEAM_P=mu-, 2*GeV, 80*deg, 90*deg' '-SPREAD_P=0*GeV, 0*deg, 0*deg' \
+    '-OUTPUT=hipo, bmt-efficiency.hipo'
+```

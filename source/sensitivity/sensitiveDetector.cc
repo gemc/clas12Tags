@@ -14,7 +14,7 @@
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-sensitiveDetector::sensitiveDetector(G4String name, goptions opt, string factory, int run, string variation, string system):G4VSensitiveDetector(name), gemcOpt(opt), HCID(-1)
+sensitiveDetector::sensitiveDetector(G4String name, goptions opt, string factory, int run, string variation, string system):G4VSensitiveDetector(name), gemcOpt(opt), eventRunNumber(run), HCID(-1)
 {
 	HCname = name;
 	collectionName.insert(HCname);
@@ -146,6 +146,7 @@ G4bool sensitiveDetector::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 	// Get the ProcessHitRoutine to calculate the new vector<identifier>
 	if(ProcessHitRoutine == nullptr) {
 		ProcessHitRoutine = getHitProcess(hitProcessMap, GetDetectorHitType(name));
+		if (ProcessHitRoutine) ProcessHitRoutine->initForTracking(eventRunNumber, gemcOpt);
 	}
 	
 	// if not existing, exit
