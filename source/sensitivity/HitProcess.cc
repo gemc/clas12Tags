@@ -17,14 +17,14 @@ HitProcess *getHitProcess(map<string, HitProcess_Factory> *hitProcessMap, string
 		// list entries in hitProcessMap
 		cout << " List of entries in the map:" << endl;
 		for (auto& [name, pointer]: *hitProcessMap) {
-			cout << name << ": " << pointer << endl;
+			cout << name << ": " << pointer.create << endl;
 		}
 
 		cout << endl << " exiting." << endl;
 
 		exit(1);
 	}
-	return (*hitProcessMap)[HCname]();
+	return hitProcessMap->at(HCname).create();
 }
 
 // returns the list of Hit Factories registered

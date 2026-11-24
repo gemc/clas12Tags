@@ -771,6 +771,12 @@ void goptions::setGoptions()
 	optMap["DETECTOR_INEFFICIENCY"].help += "This flag can be used by the digitization routines to account for hardware status\n";
 	optMap["DETECTOR_INEFFICIENCY"].type = 0;
 	optMap["DETECTOR_INEFFICIENCY"].ctgr = "control";
+	optMap["BMT_ALLOW_MISSING_EFFICIENCY"].arg  = 0;
+	optMap["BMT_ALLOW_MISSING_EFFICIENCY"].name = "Allow missing BMT tile efficiencies";
+	optMap["BMT_ALLOW_MISSING_EFFICIENCY"].help = "Use unit efficiency on powered BMT tiles if CCDB has no efficiency assignment.";
+	optMap["BMT_ALLOW_MISSING_EFFICIENCY"].type = 0;
+	optMap["BMT_ALLOW_MISSING_EFFICIENCY"].ctgr = "control";
+
 
 	optMap["APPLY_THRESHOLDS"].arg  = 0;
 	optMap["APPLY_THRESHOLDS"].name = "Accounts for detector thresholds";

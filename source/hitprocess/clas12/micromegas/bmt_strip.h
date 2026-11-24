@@ -9,6 +9,7 @@
 using namespace CLHEP;
 
 // c++
+#include <array>
 #include <vector>
 #include <string>
 #include "Lorentz.h"
@@ -17,6 +18,14 @@ using namespace std;
 /// \class bmt_strip
 /// <b> bmt_strip </b>\n\n
 /// Micromegas strip finding routine\n
+
+struct BmtTileConditions {
+	static constexpr int NLAYERS = 6;
+	static constexpr int NSECTORS = 3;
+	using Table = std::array<std::array<double, NSECTORS>, NLAYERS>;
+	Table driftVoltage{}, stripVoltage{}, efficiency{};
+	std::string efficiencySource;
+};
 
 // constants to be used in the digitization routine
 // warning: since fieldScale is also used by processID, the plugin loading
@@ -29,7 +38,7 @@ public:
 	~bmtConstants() = default;
 
 	// database
-	int    runNo;
+	int    runNo = -1;
 	string date;
 	string connection;
 	char   database[80];
@@ -46,8 +55,8 @@ public:
 	double Tsigma;           // sigma of the hit time distribution
 	
 	// THE GEOMETRY CONSTANTS
-	const static int NLAYERS = 6  ;	// 6 layers of MM
-	const static int NSECTORS = 3  ;	// 3 tiles per layer of MM
+	const static int NLAYERS = BmtTileConditions::NLAYERS  ;	// 6 layers of MM
+	const static int NSECTORS = BmtTileConditions::NSECTORS  ;	// 3 tiles per layer of MM
 	
 	// Detector geometrical characteristics
 	double RADIUS[NLAYERS] ; 	// the radius of the Z detector in mm
@@ -62,9 +71,7 @@ public:
 	vector<vector<int> >     GROUP;   // Number of strips with same width
 	vector<vector<double> >  PITCH;   // the width of the corresponding group of strips
 	
-	// Detector response characteristics
-	double HV_DRIFT[NLAYERS][NSECTORS]; //Need to know the HV to compute the lorentz angle
-	double HV_STRIPS[NLAYERS][NSECTORS]; //Might be needed for the gain
+	BmtTileConditions tiles;
 	vector<vector<int> >     STRIP_STATUS; // Say if strip is dead or alive
 	vector<vector<double> >     STRIP_GAIN; // Give the gain where the strip is
 	vector<vector<double> >     STRIP_EFFICIENCY; // Give the efficiency (correlated to gain fluctuation)

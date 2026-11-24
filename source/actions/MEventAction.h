@@ -205,6 +205,10 @@ public:
     void EndOfEventAction(const G4Event *);              ///< Routine at the end of each event
     void SetEvtNumber(int N) { evtN = N; }                 ///< Sets Event Number
 
+    bool writesIntegratedDgt(const string& hitType) const {
+        return WRITE_INTDGT.find(hitType) == string::npos && (fastMCMode == 0 || fastMCMode > 9);
+    }
+
     runWeights rw;
 
 };

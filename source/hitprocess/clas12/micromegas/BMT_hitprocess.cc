@@ -9,37 +9,140 @@
 #include "G4ChargedGeantino.hh"
 #include "G4Poisson.hh"
 
+#include <cmath>
+#include <sstream>
+#include <stdexcept>
 #include <CCDB/Calibration.h>
 #include <CCDB/Model/Assignment.h>
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
 
-static bmtConstants initializeBMTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no",  [[ maybe_unused ]] bool accountForHardwareStatus = false)
+namespace {
+// The serial GEMC run manager prepares these immutable tile settings before transport.
+map<int, BmtTileConditions> preparedTiles;
+
+string ccdbConnection()
 {
-	// all these constants should be read from CCDB
-	bmtConstants bmtc;
-	if(runno == -1) return bmtc;
-	
-	string timestamp = "";
-	if(digiSnapshotTime != "no") {
-		timestamp = ":"+digiSnapshotTime;
+	const char* connection = getenv("CCDB_CONNECTION");
+	return connection ? connection : "mysql://clas12reader@clasdb.jlab.org/clas12";
+}
+
+string requestSuffix(int runno, const goptions& options)
+{
+	string suffix = ":" + to_string(runno) + ":" + options.optMap.at("DIGITIZATION_VARIATION").args;
+	const string& time = options.optMap.at("DIGITIZATION_TIMESTAMP").args;
+	if (time != "no") suffix += ":" + time;
+	return suffix;
+}
+
+BmtTileConditions::Table readTileTable(const Assignment& assignment, const string& request, bool probability)
+{
+	BmtTileConditions::Table table{};
+	bool seen[BmtTileConditions::NLAYERS][BmtTileConditions::NSECTORS]{};
+	const auto rows = assignment.GetData();
+	for (size_t i = 0; i < rows.size(); ++i) {
+		ostringstream line;
+		for (const auto& field : rows[i]) line << field << ' ';
+		const string location = request + " row " + to_string(i + 1) + " [" + line.str() + "]";
+		istringstream fields(line.str());
+		int sector, layer, component;
+		double value;
+		if (rows[i].size() != 4 || !(fields >> sector >> layer >> component >> value) || !(fields >> ws).eof()
+		    || sector < 1 || sector > BmtTileConditions::NSECTORS || layer < 1 || layer > BmtTileConditions::NLAYERS
+		    || component != 0 || !std::isfinite(value) || (probability && (value < 0 || value > 1)))
+			throw runtime_error("Invalid BMT tile in " + location);
+		if (seen[layer-1][sector-1]) throw runtime_error("Duplicate BMT tile in " + location);
+		seen[layer-1][sector-1] = true;
+		table[layer-1][sector-1] = value;
 	}
-	
-	// do not initialize at the beginning, only after the end of the first event,
-	// with the proper run number coming from options or run table
-	
-	bmtc.runNo = runno;
-	
-	if(getenv ("CCDB_CONNECTION") != nullptr) {
-		bmtc.connection = (string) getenv("CCDB_CONNECTION");
+	for (int l = 0; l < BmtTileConditions::NLAYERS; ++l)
+		for (int s = 0; s < BmtTileConditions::NSECTORS; ++s)
+			if (!seen[l][s]) throw runtime_error("Missing sector " + to_string(s+1) + " layer " + to_string(l+1) + " in " + request);
+	return table;
+}
+
+BmtTileConditions loadTiles(Calibration& calib, const string& suffix, const goptions& options)
+{
+	BmtTileConditions tiles;
+	const bool enabled = options.optMap.at("DETECTOR_INEFFICIENCY").arg;
+	const string base = "/calibration/mvt/";
+	const string drift = base + "bmt_voltage" + suffix;
+	unique_ptr<Assignment> driftHV(calib.GetAssignment(drift));
+	if (driftHV) {
+		tiles.driftVoltage = readTileTable(*driftHV, drift, false);
+	} else if (enabled) {
+		throw runtime_error("Missing BMT drift-voltage assignment " + drift);
 	} else {
-		bmtc.connection = "mysql://clas12reader@clasdb.jlab.org/clas12";
+		cerr << " > BMT: no assignment for " << drift << ", using zero drift voltage on all tiles" << endl;
 	}
-	
-	vector<vector<double> > data;
+	if (!enabled) {
+		// Existing MC uses the nominal strip voltage, even for runs with a measured assignment.
+		for (auto& layer : tiles.stripVoltage) layer.fill(520);
+		return tiles;
+	}
+
+	const string strip = base + "bmt_strip_voltage" + suffix;
+	unique_ptr<Assignment> stripHV(calib.GetAssignment(strip));
+	if (!stripHV) throw runtime_error("Missing BMT strip-voltage assignment " + strip);
+	tiles.stripVoltage = readTileTable(*stripHV, strip, false);
+
+	const string request = base + "bmt_tile_efficiency" + suffix;
+	unique_ptr<Assignment> assignment(calib.GetAssignment(request));
+	if (assignment) {
+		tiles.efficiency = readTileTable(*assignment, request, true);
+		tiles.efficiencySource = request + " assignment " + to_string(assignment->GetId());
+	} else {
+		if (!options.optMap.at("BMT_ALLOW_MISSING_EFFICIENCY").arg)
+			throw runtime_error("Missing BMT efficiency assignment " + request);
+		tiles.efficiencySource = request + " MISSING: explicit unity fallback on powered tiles";
+		for (auto& layer : tiles.efficiency) layer.fill(1);
+	}
+	for (int l = 0; l < BmtTileConditions::NLAYERS; ++l) {
+		for (int s = 0; s < BmtTileConditions::NSECTORS; ++s) {
+			if (tiles.driftVoltage[l][s] != 0 && tiles.stripVoltage[l][s] != 0) continue;
+			if (assignment && tiles.efficiency[l][s] > 0)
+				throw runtime_error("BMT sector " + to_string(s+1) + " layer " + to_string(l+1)
+				    + " has zero drift or strip voltage but efficiency " + to_string(tiles.efficiency[l][s]) + " in " + request);
+			tiles.efficiency[l][s] = 0;
+		}
+	}
+	return tiles;
+}
+}
+
+vector<string> BMT_HitProcess::prepareRuns(const vector<int>& runs, const goptions& options, bool writesDigitizedHits)
+{
+	preparedTiles.clear();
+	if (!options.optMap.at("DETECTOR_INEFFICIENCY").arg) return {};
+	if (writesDigitizedHits && options.optMap.at("SKIPREJECTEDHITS").arg)
+		cerr << " > BMT warning: SKIPREJECTEDHITS=1 drops fully rejected hits from MC::True; "
+		        "use SKIPREJECTEDHITS=0 for pre-readout truth." << endl;
+	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(ccdbConnection()));
+	if (!calib) throw runtime_error("Could not open the BMT calibration database");
+	vector<string> sources;
+	for (int run : runs) {
+		auto tiles = loadTiles(*calib, requestSuffix(run, options), options);
+		sources.push_back(tiles.efficiencySource);
+		preparedTiles.emplace(run, std::move(tiles));
+	}
+	return sources;
+}
+
+static bmtConstants initializeBMTConstants(int runno, const goptions& options)
+{
+	bmtConstants bmtc{};
+	bmtc.runNo = runno;
+	bmtc.connection = ccdbConnection();
+	const string& digiVariation = options.optMap.at("DIGITIZATION_VARIATION").args;
+	const string& snapshot = options.optMap.at("DIGITIZATION_TIMESTAMP").args;
+	const string timestamp = snapshot == "no" ? "" : ":" + snapshot;
+	vector<vector<double>> data;
 	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(bmtc.connection));
-	
+	if (!calib) throw runtime_error("Could not open the BMT calibration database");
+	const auto prepared = preparedTiles.find(runno);
+	bmtc.tiles = prepared != preparedTiles.end() ? prepared->second : loadTiles(*calib, requestSuffix(runno, options), options);
+
 	// Load the geometrical constant for each layer
     snprintf(bmtc.database, sizeof(bmtc.database), "/geometry/cvt/mvt/bmt_layer_noshim:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,bmtc.database);
@@ -82,19 +185,6 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 		}
 	}
 
-	// load drift HV for Lorentz angle calculation
-	snprintf(bmtc.database, sizeof(bmtc.database), "/calibration/mvt/bmt_voltage:%d:%s%s", bmtc.runNo,
-			 digiVariation.c_str(), timestamp.c_str());
-	data.clear();
-	calib->GetCalib(data, bmtc.database);
-	for(unsigned row = 0; row < data.size(); row++)
-	{
-		int sector = data[row][0];
-		int layer  = data[row][1];
-		bmtc.HV_DRIFT[layer-1][sector-1] = data[row][3];
-		bmtc.HV_STRIPS[layer-1][sector-1] = 520;
-	}
-	
 	// all dimensions are in mm
 	bmtc.SigmaDrift = 0.036; //mm-1
 	bmtc.hStrip2Det = bmtc.hDrift/2.;
@@ -119,6 +209,13 @@ static bmtConstants initializeBMTConstants(int runno, string digiVariation = "de
 	return bmtc;
 }
 
+bool BMT_HitProcess::acceptTrack(int sector, int layer, int track, double efficiency)
+{
+	auto entry = acceptedTrackTile.try_emplace(make_tuple(sector, layer, track), false);
+	if (entry.second) entry.first->second = G4UniformRand() < efficiency;
+	return entry.first->second;
+}
+
 map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused ]] int hitn)
 {
 	map<string, double>  dgtz;
@@ -126,6 +223,7 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused
 	rejectHitConditions = false;
 	writeHit = true;
 
+	// Imported background already contains the detector response.
 	if(aHit->isBackgroundHit == 1) {
 		
 		// background hit has all the energy in the first step.
@@ -152,9 +250,37 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused
 	int layer  = identity[0].id;
 	int sector = identity[2].id;
 	int strip  = identity[3].id;
-	trueInfos tInfos(aHit);
-	
+	double energy = 0;
+	int pid = aHit->GetPID();
+	const double efficiency = applyInefficiencies ? bmtc.tiles.efficiency.at(layer-1).at(sector-1) : 1;
+	if (efficiency == 0) {
+		writeHit = false;
+		return dgtz;
+	}
+
+	const auto deposits = aHit->GetEdep();
+	if (efficiency == 1) {
+		for (double deposit : deposits) energy += deposit;
+	} else {
+		// Tracks can also share a strip within the electronics time window.
+		const auto tracks = aHit->GetTIds();
+		const auto pids = aHit->GetPIDs();
+		bool accepted = false;
+		for (size_t i = 0; i < deposits.size(); ++i) {
+			if (acceptTrack(sector, layer, tracks[i], efficiency)) {
+				if (!accepted) pid = pids[i];
+				accepted = true;
+				energy += deposits[i];
+			}
+		}
+		if (!accepted) {
+			writeHit = false;
+			return dgtz;
+		}
+	}
+
 	if(verbosity>4) {
+		trueInfos tInfos(aHit);
 		cout <<  log_msg << " layer: " << layer << "  sector: " << sector << "  Strip: " << strip
 		<< " x=" << tInfos.x << " y=" << tInfos.y << " z=" << tInfos.z << endl;
 	}
@@ -165,11 +291,11 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit,  [[ maybe_unused
 	dgtz["layer"]     = layer;
 	dgtz["component"] = strip;  // strip number
 	dgtz["ADC_order"] = 0;
-	dgtz["ADC_ADC"]   = int(1e6*tInfos.eTot/bmtc.w_i);
+	dgtz["ADC_ADC"]   = int(1e6*energy/bmtc.w_i);
 	
 	// for geantinos, assigning ADC = 1
 	// notice for geant4 < 10.7, the pid of 0 conflicts with the optical photon
-	if (aHit->GetPID() == 0) {
+	if (pid == 0) {
 		dgtz["ADC_ADC"]   = 1.0;
 	}
 	
@@ -221,13 +347,13 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 		G4ThreeVector BField(fieldValue[0],fieldValue[1],fieldValue[2]);
 		G4ThreeVector qEField(cos(phi_p),sin(phi_p),0); //Product qE
 		G4ThreeVector Fdir=qEField.cross(BField); //Direction of lorentz drift
-		bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+		bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.tiles.driftVoltage[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 		bmtc.Theta_Ls_Z=Fdir.angle(dm_Z);
 		bmtc.Theta_Ls_C=dm_C.angle(Fdir);
 		
 		if(bmtc.runNo == 0){
 			cout << " > BMT: Field found with value " << fieldValue[2]/gauss << " gauss. Setting Lorentz angle accordingly." << endl;
-			bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+			bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.tiles.driftVoltage[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 			bmtc.Theta_Ls_Z=Fdir.angle(dm_Z);
 			bmtc.Theta_Ls_C=dm_C.angle(Fdir);
 		}
@@ -240,7 +366,7 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 	}
 	
 	double depe = aStep->GetTotalEnergyDeposit();
-	if(bmtc.HV_DRIFT[layer-1][sector-1] == 0) depe = 0;
+	if(bmtc.tiles.driftVoltage[layer-1][sector-1] == 0) depe = 0;
 	
 	// resetting depe for geantinos
 	if (aStep->GetTrack()->GetDefinition() == G4ChargedGeantino::ChargedGeantinoDefinition() ){
@@ -347,24 +473,11 @@ double BMT_HitProcess :: voltage( [[ maybe_unused ]] double charge,  [[ maybe_un
 }
 
 
-void BMT_HitProcess::initWithRunNumber(int runno)
+void BMT_HitProcess::initForTracking(int runno, const goptions& options)
 {
-	string digiVariation    = gemcOpt.optMap["DIGITIZATION_VARIATION"].args;
-	string digiSnapshotTime = gemcOpt.optMap["DIGITIZATION_TIMESTAMP"].args;
-	
-	if(bmtc.runNo != runno) {
-		cout << " > Initializing " << HCname << " digitization for run number " << runno << endl;
-		bmtc = initializeBMTConstants(runno, digiVariation, digiSnapshotTime, accountForHardwareStatus);
-		bmtc.runNo = runno;
-	}
+	if (bmtc.runNo == runno) return;
+	cout << " > Initializing bmt digitization for run number " << runno << endl;
+	bmtc = initializeBMTConstants(runno, options);
 }
 
-
-// this static function will be loaded first thing by the executable
-bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
-
-
-
-
-
-
+bmtConstants BMT_HitProcess::bmtc{};

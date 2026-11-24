@@ -11,6 +11,8 @@
 #include "HitProcess.h"
 #include "bmt_strip.h"
 
+#include <tuple>
+
 
 // Class definition
 
@@ -65,6 +67,8 @@ public:
 	// containing hit sharing information
 	vector<identifier> processID(vector<identifier>, G4Step*, detector) override;
 
+	static vector<string> prepareRuns(const vector<int>& runs, const goptions& options, bool writesDigitizedHits);
+
 	// creates the HitProcess
 	static HitProcess* createHitClass() { return new BMT_HitProcess; }
 
@@ -72,7 +76,11 @@ private:
 	// constants initialized with initWithRunNumber
 	static bmtConstants bmtc;
 
-	void initWithRunNumber(int runno) override;
+	// A digitizer instance handles one event. A track's charge can span many strips.
+	map<tuple<int, int, int>, bool> acceptedTrackTile;
+	bool acceptTrack(int sector, int layer, int track, double efficiency);
+	void initForTracking(int runno, const goptions& options) override;
+	void initWithRunNumber(int runno) override { initForTracking(runno, gemcOpt); }
 
 	// - electronicNoise: returns a vector of hits generated / by electronics.
 	vector<MHit*> electronicNoise() override;

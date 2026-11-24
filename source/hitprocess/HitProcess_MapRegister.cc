@@ -74,7 +74,7 @@ map<string, HitProcess_Factory> HitProcess_Map(string experiments)
 			hitMap["atof"]   = &atof_HitProcess::createHitClass;
 			hitMap["ahdc"]    = &ahdc_HitProcess::createHitClass;
 			hitMap["band"]	     = &band_HitProcess::createHitClass;
-			hitMap["bmt"]       = &BMT_HitProcess::createHitClass;
+			hitMap["bmt"]       = {&BMT_HitProcess::createHitClass, &BMT_HitProcess::prepareRuns};
 			hitMap["fmt"]       = &FMT_HitProcess::createHitClass;
 			hitMap["ftm"]       = &ftm_HitProcess::createHitClass;
 			hitMap["bst"]       = &bst_HitProcess::createHitClass;

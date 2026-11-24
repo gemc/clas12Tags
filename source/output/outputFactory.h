@@ -232,6 +232,7 @@ public:
 class outputContainer
 {
 public:
+	static string outputType(const goptions& options);
 	outputContainer(goptions);
 	~outputContainer();
 
