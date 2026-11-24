@@ -1,5 +1,6 @@
 // gemc headers
 #include "run_conditions.h"
+#include <stdexcept>
 #include "string_utilities.h"
 #include "gemcUtils.h"
 
@@ -202,7 +203,7 @@ runWeights::runWeights(goptions opts) {
 
     isNewRun = FALSE;
 
-    if (nevts == 0) return;
+    runNo = defaultRunNumber;
 
     // by default there is only 1 weight, the run number is defaultRunNumber for all events
     if (fname == "no") {
@@ -219,13 +220,18 @@ runWeights::runWeights(goptions opts) {
     }
 
     // filling weight map
-    while (!in.eof()) {
-        int rr;
-        double ww;
-        in >> rr >> ww;
+    int rr;
+    double ww;
+    while (in >> rr) {
+        if (!(in >> ww))
+            throw runtime_error("RUN_WEIGHTS error: Missing run weight for " + to_string(rr) + " in " + fname);
         w[rr] = ww;
         n[rr] = 0;
     }
+
+    if (!in.eof() || w.empty())
+        throw runtime_error("RUN_WEIGHTS error: Invalid run weights in " + fname
+                            + " (job RUNNO " + to_string(defaultRunNumber) + ")");
 
     // now randomizing the run / event map based on number of events
     for (int i = 0; i < nevts; i++) {
@@ -248,6 +254,19 @@ runWeights::runWeights(goptions opts) {
 }
 
 
+vector<int> runWeights::configuredRuns(int firstEvent, int eventCount) const {
+    vector<int> runs;
+    long long allocated = 0;
+    for (const auto& entry : n) {
+        runs.push_back(entry.first); // Include entries that drew zero events.
+        allocated += entry.second;
+    }
+    if ((eventCount == 0 || static_cast<long long>(firstEvent) + eventCount - startEvent > allocated)
+        && n.count(defaultRunNumber) == 0)
+        runs.push_back(defaultRunNumber);
+    return runs;
+}
+
 int runWeights::getRunNumber(int evn) {
     int dn = evn - startEvent;
 
@@ -268,6 +287,7 @@ int runWeights::getRunNumber(int evn) {
     }
 
     // else, return the default coming from the option RUNNO
+    isNewRun = runNo != defaultRunNumber;
     runNo = defaultRunNumber;
 
     return runNo;
