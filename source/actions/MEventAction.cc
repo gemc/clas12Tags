@@ -759,7 +759,8 @@ void MEventAction::EndOfEventAction(const G4Event* evt) {
 				string hitType = it->first;
 
 				if (WRITE_INTRAW.find(hitType) != string::npos || WRITE_INTRAW == "*") {
-					configuration[hitType] = MHC->GetSize() - hit_skipped_for_detector[hitType].size();
+					configuration[hitType] = MHC->GetSize();
+					if (SKIPREJECTEDHITS) configuration[hitType] -= hit_skipped_for_detector[hitType].size();
 				}
 			}
 		}

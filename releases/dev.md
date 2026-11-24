@@ -2,6 +2,7 @@ Based on [Coatjava Release](https://github.com/JeffersonLab/coatjava/releases) 1
 
 ## In progress
 
+- Integrated MC truth allocates rows for rejected hits when `SKIPREJECTEDHITS=0` for all detectors.
 - Band in real run numbers
 - Torus + Shielding beamline CAD geometry (in progress) 
 - DC v2
