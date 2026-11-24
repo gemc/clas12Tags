@@ -194,8 +194,18 @@ protected:
 
 };
 
-// Define HitProcess as a pointer to a function that returns a pointer
-typedef HitProcess *(*HitProcess_Factory)();
+// Most hit processes only need a constructor. A detector can also register a
+// job-level calibration check that returns the assignment descriptions to log.
+struct HitProcess_Factory {
+    using Create = HitProcess *(*)();
+    using PrepareRuns = vector<string> (*)(const vector<int>& runs, const goptions& options, bool writesDigitizedHits);
+
+    HitProcess_Factory(Create constructor = nullptr, PrepareRuns prepare = nullptr)
+        : create(constructor), prepareRuns(prepare) {}
+
+    Create create;
+    PrepareRuns prepareRuns;
+};
 
 // Return HitProcess from the Hit Process Map
 HitProcess *getHitProcess(map<string, HitProcess_Factory> *hitProcessMap, string);
