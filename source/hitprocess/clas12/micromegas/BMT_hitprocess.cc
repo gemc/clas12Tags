@@ -18,10 +18,12 @@
 using namespace ccdb;
 
 
-static bmtConstants::TileEfficiencies loadTileEfficiencies(Calibration& calib, const string& request)
+// found is false when the run has no efficiency assignment and every tile defaults to 1
+static bmtConstants::TileEfficiencies loadTileEfficiencies(Calibration& calib, const string& request, bool& found)
 {
 	vector<vector<string>> rows;
 	bmtConstants::TileEfficiencies efficiencies;
+	found = false;
 	if (!calib.GetCalib(rows, request)) {
 		// Older snapshots and runs without an assignment retain the original BMT response.
 		cerr << " > BMT: no efficiency assignment for " << request << ", using 1 for all tiles" << endl;
@@ -47,6 +49,7 @@ static bmtConstants::TileEfficiencies loadTileEfficiencies(Calibration& calib, c
 		value = efficiency;
 	}
 	cout << " > BMT tile efficiencies loaded from " << request << endl;
+	found = true;
 	return efficiencies;
 }
 
@@ -69,9 +72,11 @@ static bmtConstants initializeBMTConstants(int runno, const string& digiVariatio
 	vector<vector<double> > data;
 	unique_ptr<Calibration> calib(CalibrationGenerator::CreateCalibration(bmtc.connection));
 	
+	bool efficienciesFound = false;
+	string efficiencyRequest;
 	if (applyInefficiencies) {
-		const string request = "/calibration/mvt/bmt_tile_efficiency:" + to_string(runno) + ":" + digiVariation + timestamp;
-		bmtc.tileEfficiency = loadTileEfficiencies(*calib, request);
+		efficiencyRequest = "/calibration/mvt/bmt_tile_efficiency:" + to_string(runno) + ":" + digiVariation + timestamp;
+		bmtc.tileEfficiency = loadTileEfficiencies(*calib, efficiencyRequest, efficienciesFound);
 	}
 
 	// Load the geometrical constant for each layer
@@ -128,7 +133,21 @@ static bmtConstants initializeBMTConstants(int runno, const string& digiVariatio
 		bmtc.HV_DRIFT[layer-1][sector-1] = data[row][3];
 		bmtc.HV_STRIPS[layer-1][sector-1] = 520;
 	}
-	
+
+	// GEMC already gives no signal on a tile with zero drift or strip voltage. Its efficiency must be 0,
+	// otherwise the table describes a tile that is not in the state the simulation will use.
+	if (efficienciesFound) {
+		for (int layer = 0; layer < bmtc.NLAYERS; layer++) {
+			for (int sector = 0; sector < bmtc.NSECTORS; sector++) {
+				const double efficiency = bmtc.tileEfficiency[layer][sector];
+				if ((bmtc.HV_DRIFT[layer][sector] == 0 || bmtc.HV_STRIPS[layer][sector] == 0) && efficiency > 0)
+					throw runtime_error("BMT sector " + to_string(sector+1) + " layer " + to_string(layer+1)
+					                    + " has zero drift or strip voltage but efficiency " + to_string(efficiency)
+					                    + " > 0 in " + efficiencyRequest);
+			}
+		}
+	}
+
 	// all dimensions are in mm
 	bmtc.SigmaDrift = 0.036; //mm-1
 	bmtc.hStrip2Det = bmtc.hDrift/2.;
